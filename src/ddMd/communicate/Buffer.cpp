@@ -1,10 +1,7 @@
-#ifndef DDMD_BUFFER_CPP
-#define DDMD_BUFFER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +19,7 @@ namespace DdMd
    /*
    * Constructor.
    */
-   Buffer::Buffer() 
+   Buffer::Buffer()
     : ParamComposite(),
       #ifdef UTIL_MPI
       sendBufferBegin_(0),
@@ -142,7 +139,7 @@ namespace DdMd
       ar << atomCapacity_;
       ar << ghostCapacity_;
    }
-  
+
    /*
    * Maximum number of atoms for which space is available.
    */
@@ -165,9 +162,9 @@ namespace DdMd
    /*
    * Allocate send and recv buffers (private method).
    *
-   * This method uses values of atomCapacity_ and ghostCapacity_ that 
-   * must have been set previously. It is called by allocate(int, int) 
-   * and readParameters() to do the actual allocation. 
+   * This method uses values of atomCapacity_ and ghostCapacity_ that
+   * must have been set previously. It is called by allocate(int, int)
+   * and readParameters() to do the actual allocation.
    */
    void Buffer::allocate()
    {
@@ -198,7 +195,7 @@ namespace DdMd
       // Leave space for a 4 byte header
       bufferCapacity_ += dataCapacity_ + 4 * sizeof(int);
 
-      // Allocate memory for the send buffer 
+      // Allocate memory for the send buffer
       Memory::allocate<char>(sendBufferBegin_, bufferCapacity_);
       sendBufferEnd_ = sendBufferBegin_ + bufferCapacity_;
 
@@ -213,7 +210,7 @@ namespace DdMd
    * Clear the send buffer prior to packing, and set the sendType.
    */
    void Buffer::clearSendBuffer()
-   { 
+   {
       sendPtr_ = sendBufferBegin_;
       sendSize_ = 0;
       sendType_ = NONE;
@@ -269,7 +266,7 @@ namespace DdMd
    }
 
    /*
-   * Begin receiving block. Extract prefix data. 
+   * Begin receiving block. Extract prefix data.
    */
    bool Buffer::beginRecvBlock()
    {
@@ -287,7 +284,7 @@ namespace DdMd
       int recvBytes = *(recvBuffPtr + 1);
       recvType_  = *(recvBuffPtr + 2);
       bool isComplete = (bool) *(recvBuffPtr + 3);
-    
+
       // Calculate address of expected end of recv block
       recvBlockEnd_ = recvBlockBegin_ + recvBytes;
 
@@ -342,7 +339,7 @@ namespace DdMd
       }
 
       // Start nonblocking receive.
-      request[0] = comm.Irecv(recvBufferBegin_, bufferCapacity_ , 
+      request[0] = comm.Irecv(recvBufferBegin_, bufferCapacity_ ,
                               MPI::CHAR, source, 5);
 
       // Start nonblocking send.
@@ -407,7 +404,7 @@ namespace DdMd
          UTIL_THROW("Source and destination identical");
       }
 
-      request = comm.Irecv(recvBufferBegin_, bufferCapacity_, 
+      request = comm.Irecv(recvBufferBegin_, bufferCapacity_,
                            MPI::CHAR, source, 5);
       request.Wait();
       recvType_ = NONE;
@@ -471,7 +468,7 @@ namespace DdMd
       maxSendLocal_ = 0;
       maxSend_.unset();
    }
-      
+
    /*
    * Output statistics.
    */
@@ -480,20 +477,20 @@ namespace DdMd
 
       out << std::endl;
       out << "Buffer" << std::endl;
-      out << "sendBytes: max, capacity " 
+      out << "sendBytes: max, capacity "
           << Int(maxSend_.value(), 10)
           << Int(bufferCapacity_, 10)
           << std::endl;
    }
 
    /*
-   * Number of items packed thus far in current data send block. 
+   * Number of items packed thus far in current data send block.
    */
    int Buffer::sendSize() const
    {  return sendSize_; }
 
    /*
-   * Number of unread items left in the current receive block. 
+   * Number of unread items left in the current receive block.
    */
    int Buffer::recvSize() const
    {  return recvSize_; }
@@ -506,4 +503,3 @@ namespace DdMd
    #endif
 
 }
-#endif

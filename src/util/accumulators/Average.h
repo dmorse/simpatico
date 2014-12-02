@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,49 +20,49 @@ namespace Util
    /**
    * Calculates the average and variance of a sampled property.
    *
-   * Average calculates block and global averages of a sampled value and 
+   * Average calculates block and global averages of a sampled value and
    * its square, from which it obtains a global average and variance for
    * a sequence. A heirarchical blocking algorithm is used to estimate
    * the error on the average. No error estimate is provided for the
    * variance.
    *
-   * The sample method also optionally outputs the block averages to file. 
-   * The parameter nSamplePerBlock is the number of samples per block 
+   * The sample method also optionally outputs the block averages to file.
+   * The parameter nSamplePerBlock is the number of samples per block
    * average. Setting this to zero suppresses output of block averages.
    *
    * \ingroup Accumulators_Module
    */
    class Average : public AverageStage, public ParamComposite
    {
-   
+
    public:
 
-      /**   
+      /**
       * Constructor
       *
       * \param blockFactor ratio of block sizes for subsequent stages.
       */
       Average(int blockFactor = 2);
-   
-      /**   
+
+      /**
       * Destructor
       */
       virtual ~Average();
-   
+
       /**
       * Initialize accumulators to zero initial state.
       */
       void clear();
-   
+
       /**
       * Read parameter nSamplePerBlock from file and initialize.
       *
       * See setNSamplePerBlock() for discussion of value.
       *
-      * \param in input stream 
+      * \param in input stream
       */
       void readParameters(std::istream& in);
-   
+
       /**
       * Set nSamplePerBlock
       *
@@ -74,21 +74,21 @@ namespace Util
       * \param nSamplePerBlock number of samples per block average output
       */
       void setNSamplePerBlock(int nSamplePerBlock);
-  
+
       /**
       * Load internal state from an archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
-   
+
       /**
       * Save internal state to an archive.
       *
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-   
+
       /**
       * Serialize this Average to or from an archive.
       *
@@ -105,7 +105,7 @@ namespace Util
       * \param out  output stream to which to write block averages
       */
       void sample(double value, std::ostream& out);
- 
+
       /**
       * Add a sampled value to the ensemble.
       *
@@ -115,21 +115,21 @@ namespace Util
       * \param value  sampled value
       */
       void sample(double value);
- 
+
       /**
       * Output final statistical properties to file.
       *
       * \param out output stream
       */
       void output(std::ostream& out);
- 
+
       /**
       * Return estimated error on average from blocking analysis.
       */
       double blockingError() const;
- 
+
       /**
-      * Get nSamplePerBlock. 
+      * Get nSamplePerBlock.
       *
       * A zero value indicates that no block averages will be output.
       */
@@ -139,9 +139,9 @@ namespace Util
       * Add pointer to a descendant to an array.
       */
       virtual void registerDescendant(AverageStage* descendantPtr);
-         
+
    private:
-   
+
       /**
       * Add a sampled value to the ensemble, and output block averages.
       *
@@ -154,34 +154,34 @@ namespace Util
 
       /// Array of pointers to descendants.
       std::vector<AverageStage*>  descendants_;
- 
+
       /// Sum of values in current output block
-      double  blockSum_;    
+      double  blockSum_;
 
       /// Number of samples in current output block.
-      int  iBlock_;     
-      
+      int  iBlock_;
+
       /// Number of sampled values per output block.
-      int  nSamplePerBlock_;  
+      int  nSamplePerBlock_;
 
       /// Private and not implemented to prohibit copying.
       Average(const Average& other);
 
       /// Private and not implemented to prohibit assignment.
       Average& operator = (const Average& other);
-     
+
    };
-   
+
    // Inline method definitions
- 
+
    /*
    * Add a sampled value to the ensemble, and output block averages.
    */
    inline void Average::sample(double value, std::ostream& out)
    {  sample(value, &out); }
- 
+
    /*
-   * Get nSamplePerBlock. 
+   * Get nSamplePerBlock.
    */
    inline int Average::nSamplePerBlock() const
    {  return nSamplePerBlock_; }
@@ -193,10 +193,10 @@ namespace Util
    void Average::serialize(Archive& ar, const unsigned int version)
    {
       AverageStage::serialize(ar, version);
-      ar & blockSum_;    
-      ar & iBlock_;     
-      ar & nSamplePerBlock_;  
+      ar & blockSum_;
+      ar & iBlock_;
+      ar & nSamplePerBlock_;
    }
- 
+
 }
 #endif

@@ -62,7 +62,21 @@ Simulation{
      LogEnergy{
         interval  1000
      }
- 
+
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory
+     } 
+
+     DdMdGroupTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.0
+        groupId         0 
+     } 
+
+  }
+}
+
      OutputEnergy{
         interval        1000
         outputFileName  energy
@@ -73,13 +87,11 @@ Simulation{
         outputFileName  pressure
      }
 
-  }
-}
-
      WriteConfig{
         interval          2000
         outputFileName  config
      }
 
+  hasAtomContext     1
   nAngleType         0
   hasExternal        0

@@ -1,6 +1,4 @@
 #ifdef UTIL_MPI
-#ifndef UTIL_MPI_STRUCT_BUILDER_CPP
-#define UTIL_MPI_STRUCT_BUILDER_CPP
 
 #include "MpiStructBuilder.h"
 #include <util/global.h>
@@ -49,5 +47,4 @@ namespace Util
    }
 
 }
-#endif
 #endif

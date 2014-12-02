@@ -1,0 +1,61 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(TOOLS_DEFS) that is passed to the processor to define 
+#     any preprocessor flags that effect the code in the tools/ directory. 
+#
+#   - A variable $(TOOLS_SUFFIX) which is added as a suffix to the name of
+#     the tools library and (by default) the main executables. 
+#
+#   - Name $(TOOLS_LIB) and $(mdPp_BIN) of the DdMd library and 
+#     executable files.
+#
+# This file is included by every makefile in the tools directory. 
+# It should be included after $(SRC_DIR)/config.mk and after the
+# $(SRC_DIR)/util/config.mk and $(SRC_DIR)/inter/config.mk files,
+# but before $(SRC_DIR)/mcmd/patterns.mk.
+# 
+# Note: The structure of this file is the same as that of config.mk
+# files in the src/util, src/inter and src/mcMd directories, but this
+# one does not yet define any preprocessor macros. The TOOLS_DEFS and
+# TOOLS_SUFFIX strings are thus left empty. 
+#
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros.
+
+#-----------------------------------------------------------------------
+# The following code defines the variables TOOLS_DEFS and TOOLS_SUFFIX.
+# Most uers should not need to modify anything below this point.
+#
+# The variable TOOLS_DEFS is a string containg preprocessor definitions 
+# as command line options for the compiler, using the "-D" compiler 
+# option.
+#
+# The variable TOOLS_SUFFIX is appended to the names of the tools library
+# and (by default) of the ddSim executable.
+#
+
+TOOLS_DEFS=
+TOOLS_SUFFIX:=
+
+# Note that TOOLS_DEFS is a recursive (normal) makefile variable, and so
+# may be extended using the += operator, but that TOOLS_SUFFIX is a 
+# non-recursive makefile variable, which may be extended using the := 
+# operator, as TOOLS_SUFFIX:=$(TOOLS_SUFFIX)_u. 
+
+#-----------------------------------------------------------------------
+# Path to tools library
+# Note: BLD_DIR is defined in src/config.mk.
+
+TOOLS_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(TOOLS_SUFFIX)
+
+tools_LIBNAME=tools$(TOOLS_ALL_SUFFIX)
+tools_LIB=$(BLD_DIR)/tools/lib$(tools_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Path to executables
+# BIN_DIR is defined in src/config.mk.
+
+# Path to serial MD postprocessor (mdPp) program
+mdPp_BIN=$(BIN_DIR)/mdPp
+#-----------------------------------------------------------------------

@@ -1,10 +1,7 @@
-#ifndef UTIL_BINARY_FILE_O_ARCHIVE_CPP
-#define UTIL_BINARY_FILE_O_ARCHIVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -57,4 +54,3 @@ namespace Util
    {  return *filePtr_; }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_TEST_CPP
-#define DDMD_TEST_CPP
-
 /*
 * This program runs all unit tests in the DdMd directory.
 */ 
@@ -61,4 +58,3 @@ int main(int argc, char* argv[])
    #endif
 
 }
-#endif

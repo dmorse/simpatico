@@ -11,7 +11,7 @@ include $(SRC_DIR)/ddMd/tests/sources.mk
 
 TEST=ddMd/tests/Test
 
-all: $(ddMd_tests_OBJS)
+all: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 	$(MPIRUN) 6 $(BLD_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log
@@ -22,6 +22,8 @@ run: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST)
+	rm -f log count
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd chemistry; $(MAKE) clean
 	cd communicate; $(MAKE) clean
 	cd configIos; $(MAKE) clean
@@ -29,10 +31,11 @@ clean:
 	cd potentials; $(MAKE) clean
 	cd simulation; $(MAKE) clean
 	cd storage; $(MAKE) clean
-	$(MAKE) clean-outputs
+else
+	cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
+endif
 
 clean-outputs:
-	rm -f log count
 	cd chemistry; $(MAKE) clean-outputs
 	cd configIos; $(MAKE) clean-outputs
         

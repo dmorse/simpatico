@@ -4,11 +4,13 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
-namespace DdMd{
+namespace DdMd
+{
+
    /**
    * Descriptor for context of an Atom within a molecule and species.
    *
@@ -16,7 +18,8 @@ namespace DdMd{
    * of the essential algorithms of ddSim, but may be used by some
    * analyzers or modifiers.
    */
-   struct AtomContext{
+   struct AtomContext
+   {
 
       /**
       * Index of the species of molecule.
@@ -40,11 +43,26 @@ namespace DdMd{
       int atomId;
 
       /**
+      * Default constructor.
+      */
+      AtomContext();
+
+      /**
       * Set all data members to null default values. 
       */
       void clear();
 
    };
+
+   /*
+   * Set all data members to null default values. 
+   */
+   inline 
+   AtomContext::AtomContext()
+    : speciesId(-1),
+      moleculeId(-1),
+      atomId(-1)
+   {}
 
    /*
    * Set all data members to null default values. 

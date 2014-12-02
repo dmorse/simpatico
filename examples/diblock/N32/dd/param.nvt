@@ -84,3 +84,4 @@ Simulation{
 
   nAngleType         0
   hasExternal        0
+  hasAtomContext     1

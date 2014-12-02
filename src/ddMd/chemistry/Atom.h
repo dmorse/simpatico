@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -82,7 +82,7 @@ namespace DdMd
  
       #ifdef UTIL_MPI
       /**
-      * Return size of an atom packed into buffer for exchange, in bytes.
+      * Return max size of an atom packed for exchange, in bytes.
       */
       static int packedAtomSize();
 
@@ -161,7 +161,9 @@ namespace DdMd
       Plan& plan();
 
       /**
-      * Get the AtomContext struct.
+      * Get the AtomContext struct by non-const reference.
+      *
+      * Throws and Exception if atom context data is disabled.
       *
       * A DdMd::AtomContext struct contains public members speciesId,
       * moleculeId and atomId that identify the species of molecule
@@ -170,6 +172,25 @@ namespace DdMd
       */
       AtomContext& context();
 
+      /**
+      * Get groups bit field by non-const reference.
+      *
+      * The unsigned int groups is used as a bit field in which bit 
+      * number i (with i=0 the least signficant bit), is set true/1 
+      * if this atom belongs to group i, and is false/0 if this atom 
+      * of not belong to group i. By default, all bits are clear.
+      *
+      * Individual bits may be set, unset and queried using an 
+      * instance of class Util::Bit.
+      */
+      unsigned int& groups();
+
+      #if 0
+      /**
+      * Get the shift IntVector by non-const reference.
+      */
+      IntVector& shift();
+      #endif
       //@}
       /// \name Accessors (return by value or const references).
       //@{
@@ -210,23 +231,33 @@ namespace DdMd
       const Mask& mask() const;
 
       /**
-      * Get communication plan (const reference).
+      * Get communication plan by const reference.
       */
       const Plan& plan() const;
 
       /**
-      * Get the context by reference (const reference).
+      * Get the AtomContext struct by const reference.
+      *
+      * Throws an Exception if atom context data is disabled.
+      *
+      * \sa AtomContext& context() non-const accessor for
       */
       const AtomContext& context() const;
 
-      //@}
-      #if 0
-      /// Get the shift IntVector by reference.
-      IntVector& shift();
+      /**
+      * Get bit field of groups to which this atom belongs.
+      *
+      * \sa Atom::groups() non-const accessor.
+      */
+      unsigned int groups() const;
 
-      /// Get the shift IntVector by const reference.
+      #if 0
+      /**
+      * Get the shift IntVector by const reference.
+      */
       const IntVector& shift() const;
       #endif
+      //@}
 
       #ifdef UTIL_MPI
       /// \name Pack and Unpack Methods (Interprocessor Communication)
@@ -505,22 +536,38 @@ namespace DdMd
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
    /* 
-   * Get non-const reference to context.
+   * Get AtomContext by non-const reference.
    */
    inline AtomContext& Atom::context()
    {  
-      assert(hasAtomContext_); 
+      if (!hasAtomContext_) {
+         UTIL_THROW("Atom does not have AtomContext");
+      }
       return arrayPtr_->contexts_[localId_ >> 1]; 
    }
 
    /*
-   * Get context by const reference.
+   * Get AtomContext by const reference.
    */
    inline const AtomContext& Atom::context() const
    {
-      assert(hasAtomContext_); 
+      if (!hasAtomContext_) {
+         UTIL_THROW("Atom does not have AtomContext");
+      }
       return arrayPtr_->contexts_[localId_ >> 1]; 
    }
+
+   /* 
+   * Get group bit map by non-const reference.
+   */
+   inline unsigned int& Atom::groups()
+   {  return arrayPtr_->groups_[localId_ >> 1]; }
+
+   /*
+   * Get groups bit map by value.
+   */
+   inline unsigned int Atom::groups() const
+   {  return arrayPtr_->groups_[localId_ >> 1]; }
 
    /*
    * Is AtomContext data enabled?

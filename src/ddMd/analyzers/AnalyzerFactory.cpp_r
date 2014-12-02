@@ -1,10 +1,7 @@
-#ifndef ANALYZER_FACTORY
-#define ANALYZER_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -28,10 +25,13 @@
 #include "VanHove.h"
 #include "ExternalEnergyAverage.h"
 #include "PairEnergyAverage.h"
+#include "StressAutoCorr.h"
 #include "StressAutoCorrelation.h"
+#include "BondTensorAutoCorr.h"
 
 // Trajectory Writer Analyzers
 #include "DdMdTrajectoryWriter.h"
+#include "DdMdGroupTrajectoryWriter.h"
 #include "LammpsDumpWriter.h"
 
 namespace DdMd
@@ -103,12 +103,21 @@ namespace DdMd
       if (className == "PairEnergyAverage") {
          ptr = new PairEnergyAverage(simulation());
       } else
+      if (className == "StressAutoCorr") {
+         ptr = new StressAutoCorr(simulation());
+      } else
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
-      }
+      } else
+      if (className == "BondTensorAutoCorr") {
+         ptr = new BondTensorAutoCorr(simulation());
+      } else
       if (className == "DdMdTrajectoryWriter") {
          ptr = new DdMdTrajectoryWriter(simulation());
-      }
+      } else
+      if (className == "DdMdGroupTrajectoryWriter") {
+         ptr = new DdMdGroupTrajectoryWriter(simulation());
+      } else
       if (className == "LammpsDumpWriter") {
          ptr = new LammpsDumpWriter(simulation());
       }
@@ -116,4 +125,3 @@ namespace DdMd
    }
 
 }
-#endif

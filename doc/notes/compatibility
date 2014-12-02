@@ -9,7 +9,3 @@ Proposed compatibility breaking changes:
    code. These functions are only called in a limited number of 
    places within the package, so the change does not look difficult.
 
-- File locations:
-
-  (1) Reorganize util subdirectories. Separate directories for 
-  string, observer, misc.

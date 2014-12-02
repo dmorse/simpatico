@@ -1,10 +1,7 @@
-#ifndef MCMD_HOMOPOLYMER_CPP
-#define MCMD_HOMOPOLYMER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -40,7 +37,7 @@ namespace McMd
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
 
-      #if INTER_ANGLE
+      #ifdef INTER_ANGLE
       hasAngles_ = 0;
       read<int>(in, "hasAngles", hasAngles_, false); // optional
       if (hasAngles_) {
@@ -54,7 +51,7 @@ namespace McMd
       }
       #endif
 
-      #if INTER_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       hasDihedrals_ = 0;
       read<int>(in, "hasDihedrals", hasDihedrals_, false); // optional
       if (hasDihedrals_) {
@@ -164,4 +161,3 @@ namespace McMd
    #endif
  
 } 
-#endif

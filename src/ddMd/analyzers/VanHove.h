@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 #include <ddMd/analyzers/Analyzer.h>
@@ -72,7 +72,7 @@ namespace DdMd
    * 
    * \sa \ref ddMd_analyzer_VanHove_page "param file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Module
    */
    class VanHove : public Analyzer
    {

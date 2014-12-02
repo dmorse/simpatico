@@ -1,10 +1,7 @@
-#ifndef MD_ANALYZER_FACTORY
-#define MD_ANALYZER_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -15,7 +12,7 @@
 #include "MdPotentialEnergyAverage.h"
 #include "MdKineticEnergyAverage.h"
 #include "MdPressureAverage.h"
-#include "MdStressAutoCorrelation.h"
+#include "MdStressAutoCorr.h"
 #include "MdIntraBondStressAutoCorr.h"
 #include "MdIntraBondTensorAutoCorr.h"
 #include "MdPairEnergyCoefficients.h"
@@ -67,8 +64,8 @@ namespace McMd
       if (className == "MdIntraBondTensorAutoCorr") {
          ptr = new MdIntraBondTensorAutoCorr(system());
       } else 
-      if (className == "MdStressAutoCorrelation") {
-         ptr = new MdStressAutoCorrelation(system());
+      if (className == "MdStressAutoCorr") {
+         ptr = new MdStressAutoCorr(system());
       } 
       #ifndef INTER_NOPAIR
       else
@@ -86,5 +83,3 @@ namespace McMd
    }
 
 }
-
-#endif

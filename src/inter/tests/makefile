@@ -9,7 +9,7 @@ include $(SRC_DIR)/inter/tests/sources.mk
 
 TEST=inter/tests/Test
 
-all: $(inter_tests_OBJS)
+all: $(inter_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(inter_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
@@ -20,10 +20,17 @@ run: $(inter_tests_OBJS)
 clean:
 	rm -f $(inter_tests_OBJS) $(inter_tests_OBJS:.o=.d) $(BLD_DIR)/$(TEST)
 	rm -f log count
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd pair; $(MAKE) clean
 	cd bond; $(MAKE) clean
 	cd angle; $(MAKE) clean
 	cd dihedral; $(MAKE) clean
+else
+	cd $(SRC_DIR)/inter/tests; $(MAKE) clean-outputs
+endif
+
+clean-outputs:
+	cd pair; $(MAKE) clean-outputs
 
 $(BLD_DIR)/$(TEST): $(BLD_DIR)/$(TEST).o $(LIBS)
 

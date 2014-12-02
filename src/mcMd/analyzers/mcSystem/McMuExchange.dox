@@ -1,0 +1,62 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_McMuExchange_page  McMuExchange
+
+\section mcMd_analyzer_McMuExchange_synopsis_sec Synopsis
+
+Computes the excess exchange chemical potential for alchemical semi-grand ensemble. 
+
+This quantity calculates the average of the Boltzmann weight exp(-delE/ kT) associated with the change delE in nonbonded pair potential energy caused by a hypothetical "alchemical" change of the atom types for atoms within molecules of a specified species. The transformation is defined by specifying new atom type ids for all atoms in molecules of this species, some of which may be identical to the existing atom types. 
+
+\sa McMd::McMuExchange
+
+\section mcMd_analyzer_McMuExchange_param_sec Parameters
+The parameter file format is:
+\code
+  McMuExchange{
+    interval           int
+    outputFileName     string
+    speciesId          int
+    newTypeIds         DArray<int>
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average</td>
+  </tr>
+  <tr> 
+     <td>speciesId</td>
+     <td> integer index of molecule species</td>
+  </tr>
+  <tr> 
+     <td>newTypeIds</td>
+     <td> Array of new integer type ids for all atoms after transformation. The number of elements must equal the number of atoms per molecule in species speciesId
+     </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_McMuExchange_output_sec Output
+
+During the simulation, if nSamplePerBlock > 0, block averages are output to the file 
+{outputFileName}.dat. If nSamplePerBlock == 0, this file is not created.
+
+At the end of the simulation:
+
+  - parameters are echoed to file {outputFileName}.prm 
+
+  - the average and error analysis info are output to {outputFileName}.ave
+
+*/
+
+}

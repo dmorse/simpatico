@@ -1,6 +1,3 @@
-#ifndef LABEL_BUFFER_CPP
-#define LABEL_BUFFER_CPP
-
 #include "LabelBuffer.h"
 #include <util/global.h>
 
@@ -45,4 +42,3 @@ namespace Util
    bool LabelBuffer::isLoaded()
    {  return isLoaded_; }
 }
-#endif

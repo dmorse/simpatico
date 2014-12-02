@@ -1,6 +1,3 @@
-#ifndef UTIL_MONOCLINIC_BOUNDARY_CPP
-#define UTIL_MONOCLINIC_BOUNDARY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -232,5 +229,3 @@ namespace Util
    #endif
 
 }
-
-#endif

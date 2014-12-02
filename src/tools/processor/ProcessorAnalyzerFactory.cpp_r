@@ -1,0 +1,49 @@
+/*
+* Simpatico - Processor Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "ProcessorAnalyzerFactory.h" // Class header
+
+#include <tools/processor/Processor.h>
+
+// Analyzers 
+#include <tools/analyzers/LogStep.h>
+#include <tools/analyzers/LammpsDumpWriter.h>
+
+namespace Tools
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   ProcessorAnalyzerFactory::ProcessorAnalyzerFactory(Processor& processor)
+    : processorPtr_(&processor)
+   {}
+
+   /* 
+   * Return a pointer to an instance of Analyzer subclass className.
+   */
+   Analyzer* ProcessorAnalyzerFactory::factory(const std::string &className) const
+   {
+      Analyzer* ptr = 0;
+
+      // Try subfactories first (if any)
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      // Analyzers
+      if (className == "LogStep") {
+         ptr = new LogStep(processor());
+      } else
+      if (className == "LammpsDumpWriter") {
+         ptr = new LammpsDumpWriter(processor());
+      } 
+      return ptr;
+   }
+
+}

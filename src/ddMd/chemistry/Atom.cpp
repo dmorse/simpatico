@@ -1,10 +1,7 @@
-#ifndef DDMD_ATOM_CPP
-#define DDMD_ATOM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -52,15 +49,16 @@ namespace DdMd
    {
       position_ = other.position_;
       typeId_ = other.typeId_;
-      setIsGhost(other.isGhost());
       force_ = other.force_;
+      setIsGhost(other.isGhost());
       velocity() = other.velocity();
+      setId(other.id());
+      plan() = other.plan();
+      groups() = other.groups();
       if (hasAtomContext_) {
          context() = other.context();
       }
       mask() = other.mask();
-      plan() = other.plan();
-      setId(other.id());
       return *this;
    }
 
@@ -71,12 +69,13 @@ namespace DdMd
    {
       typeId_ = -1;
       setIsGhost(false);
-      mask().clear();
-      plan().clearFlags();
       setId(-1);
+      plan().clearFlags();
+      groups() = 0;
       if (hasAtomContext_) {
          context().clear();
       }
+      mask().clear();
    }
 
    #ifdef UTIL_MPI
@@ -89,10 +88,11 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<Vector>(velocity());
+      buffer.pack<unsigned int>(plan().flags());
+      buffer.pack<unsigned int>(groups());
       if (hasAtomContext_) {
          buffer.pack<AtomContext>(context());
       }
-      buffer.pack<unsigned int>(plan().flags());
 
       // Pack Mask
       Mask& m = mask();
@@ -117,13 +117,16 @@ namespace DdMd
       setTypeId(i);
       buffer.unpack<Vector>(position());
       buffer.unpack<Vector>(velocity());
-      if (hasAtomContext_) {
-         buffer.unpack<AtomContext>(context());
-      }
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
+      buffer.unpack<unsigned int>(ui);
+      groups() = ui;
+      if (hasAtomContext_) {
+         buffer.unpack<AtomContext>(context());
+      }
 
+      // Unpack Mask
       Mask& m = mask();
       m.clear();
       int size;
@@ -133,23 +136,24 @@ namespace DdMd
          m.append(i);
       }
       assert(m.size() == size);
+
       buffer.decrementRecvSize();
    }
 
    /*
-   * Return size of packed Atom, in bytes.
+   * Return maximum size of packed Atom, in bytes.
    */
    int Atom::packedAtomSize()
    {  
       int size = 0;
-      size += 2*sizeof(int);
+      size += 2*sizeof(int);               // id + typeId
+      size += 2*sizeof(Vector);            // position + velocity
+      size += 2*sizeof(unsigned int);      // plan + groups
       if (hasAtomContext_) {
-         size += sizeof(AtomContext);
+         size += sizeof(AtomContext);      // context
       }
-      size += 2*sizeof(Vector); 
-      size += sizeof(unsigned int);
-      size += sizeof(int);
-      size += Mask::Capacity*sizeof(int); 
+      size += sizeof(int);                 // mask size
+      size += Mask::Capacity*sizeof(int);  // mask ids
       return size;
    }
 
@@ -235,4 +239,3 @@ namespace DdMd
    #endif
 
 }
-#endif

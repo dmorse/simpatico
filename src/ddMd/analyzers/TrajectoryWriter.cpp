@@ -1,10 +1,7 @@
-#ifndef DDMD_TRAJECTORY_WRITER_CPP
-#define DDMD_TRAJECTORY_WRITER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -25,7 +22,6 @@ namespace DdMd
    */
    TrajectoryWriter::TrajectoryWriter(Simulation& simulation, bool isBinary)
     : Analyzer(simulation),
-      nSample_(0),
       isInitialized_(false),
       isBinary_(isBinary),
       domainPtr_(0),
@@ -74,10 +70,6 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSample_);
-
       isInitialized_ = true;
    }
 
@@ -88,7 +80,6 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSample_;
    }
 
    /*
@@ -115,7 +106,6 @@ namespace DdMd
    {
       if (isAtInterval(iStep))  {
          writeFrame(outputFile_, iStep);
-         ++nSample_;
       }
    }
 
@@ -124,7 +114,6 @@ namespace DdMd
    */
    void TrajectoryWriter::clear()
    {
-      nSample_ = 0;
       if (outputFile_.is_open()) {
          outputFile_.close();
       }
@@ -137,4 +126,3 @@ namespace DdMd
    {  clear(); }
 
 }
-#endif

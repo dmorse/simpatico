@@ -1,11 +1,7 @@
-#ifndef INTER_NOPAIR
-#ifndef MCMD_MD_PAIR_POTENTIAL_CPP
-#define MCMD_MD_PAIR_POTENTIAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -90,5 +86,3 @@ namespace McMd
    { return pairList_.isCurrent(boundary()); }
 
 }
-#endif
-#endif

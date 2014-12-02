@@ -1,18 +1,3 @@
-Command-Line interface
-----------------------
-
-- Change command line interface to specify parameter and command files 
-  as options -p param -c commands, with default file names
-
-- On restart, allow specification of restart and command files with
-  separate options
-
-Perturbation:
--------------
-
-- Add perturbation class and class hierarchy for use with multi-system
-  parallel simulations
-
 Exchanger:
 ----------
 
@@ -52,6 +37,12 @@ AtomStorage:
 - Make sure memory statistics include all usage, including setup, so
   that the user has a better indication of when the ghost capacity 
   needs to be increased
+
+Perturbation:
+-------------
+
+- Add perturbation class and class hierarchy for use with multi-system
+  parallel simulations
 
 Moving GroupStorage to Potential class:
 ---------------------------------------

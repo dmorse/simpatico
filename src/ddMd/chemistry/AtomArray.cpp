@@ -1,10 +1,7 @@
-#ifndef DDMD_ATOM_ARRAY_CPP
-#define DDMD_ATOM_ARRAY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -30,6 +27,7 @@ namespace DdMd
       masks_(0),
       plans_(0),
       ids_(0),
+      groups_(0),
       contexts_(0)
    {}
 
@@ -44,6 +42,7 @@ namespace DdMd
          Memory::deallocate<Mask>(masks_, capacity_);
          Memory::deallocate<Plan>(plans_, capacity_);
          Memory::deallocate<int>(ids_, capacity_);
+         Memory::deallocate<unsigned int>(groups_, capacity_);
          if (contexts_) {
             Memory::deallocate<AtomContext>(contexts_, capacity_);
          }
@@ -75,6 +74,7 @@ namespace DdMd
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);
       Memory::allocate<int>(ids_, capacity);
+      Memory::allocate<unsigned int>(groups_, capacity);
       if (Atom::hasAtomContext()) {
          Memory::allocate<AtomContext>(contexts_, capacity);
       }
@@ -84,9 +84,10 @@ namespace DdMd
       for (int i = 0; i < capacity_; ++i) {
         data_[i].localId_ = (i << 1);
         data_[i].arrayPtr_ = this;
-        ids_[i] = -1;
         masks_[i].clear();
         plans_[i].clearFlags();
+        ids_[i] = -1;
+        groups_[i] = 0;
         if (Atom::hasAtomContext()) {
            contexts_[i].clear();
         }
@@ -113,4 +114,3 @@ namespace DdMd
    {  return (bool)data_; }
 
 }
-#endif

@@ -1,6 +1,6 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: all mcMd mcMd-mpi ddMd spAn \
+.PHONY: all mcMd mcMd-mpi ddMd tools \
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html
@@ -9,10 +9,10 @@ include src/config.mk
 # Main build targets
 
 all:
+	cd bld/serial; $(MAKE) tools
 	cd bld/serial; $(MAKE) mcMd
-	cd bld/parallel; $(MAKE) ddMd
 	cd bld/parallel; $(MAKE) mcMd-mpi
-	cd bld/serial; $(MAKE) spAn
+	cd bld/parallel; $(MAKE) ddMd
 
 # Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
@@ -27,8 +27,8 @@ ddMd:
 	cd bld/parallel; $(MAKE) ddMd
 
 # Build single-processor analysis program in bld/serial
-spAn:
-	cd bld/serial; $(MAKE) spAn
+tools:
+	cd bld/serial; $(MAKE) tools
 
 # ==============================================================================
 # Test targets
@@ -37,17 +37,20 @@ test-serial:
 	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/spAn/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/tools/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/inter/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
-	@cat bld/serial/spAn/tests/count >> count
+	@cat bld/serial/tools/tests/count >> count
+	@echo " "
+	@echo "Summary"
 	@cat count
 	@rm -f count
 
 test-parallel:
 	cd bld/parallel/ddMd/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/parallel/ddMd/tests/count >> count
+	@echo " "
 	@cat count
 	@rm -f count
 
@@ -60,6 +63,11 @@ clean-serial:
 clean-parallel:
 	cd bld/parallel; $(MAKE) clean
 
+clean-tests:
+	cd src/; $(MAKE) clean-tests
+	cd bld/serial; $(MAKE) clean-tests
+	cd bld/parallel; $(MAKE) clean-tests
+
 clean:
 	cd src; $(MAKE) clean
 	cd bld/serial; $(MAKE) clean
@@ -69,14 +77,24 @@ clean-bin:
 	-rm -f $(BIN_DIR)/mcSim*
 	-rm -f $(BIN_DIR)/mdSim*
 	-rm -f $(BIN_DIR)/ddSim*
+	-rm -f $(BIN_DIR)/mdPp*
+	-rm -f $(BIN_DIR)/*Maker*
  
 veryclean:
-	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile spAn/makefile
-	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile  spAn/makefile
-	cd doc; $(MAKE) clean
+	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/serial; rm -f util/makefile inter/makefile 
+	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/serial; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/serial; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
+	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/parallel; rm -f util/makefile inter/makefile 
+	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/parallel; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
 	$(MAKE) clean-bin
+	-rm -f $(BIN_DIR)/makeDep
+	-rm -f scripts/python/*.pyc
+	cd doc; $(MAKE) clean
 	cd src; $(MAKE) veryclean
 
 # =========================================================================

@@ -12,10 +12,9 @@ include $(SRC_DIR)/mcMd/tests/mdIntegrators/sources.mk
 all: $(mcMd_tests_mdIntegrators_OBJS) Test
 
 clean:
-	rm -f $(mcMd_tests_mdIntegrators_OBJS) Test $(mcMd_tests_mdIntegrators_OBJS:.o=.d)
-
-clean-deps:
+	rm -f $(mcMd_tests_mdIntegrators_OBJS)
 	rm -f $(mcMd_tests_mdIntegrators_OBJS:.o=.d)
+	rm -f Test
 
 Test: Test.o $(mcMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \

@@ -1,10 +1,7 @@
-#ifndef DDMD_ATOM_DISTRIBUTOR_CPP
-#define DDMD_ATOM_DISTRIBUTOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -27,7 +24,7 @@ namespace DdMd
    * Constructor.
    */
    AtomDistributor::AtomDistributor() :
-      #ifdef UTIL_MPI 
+      #ifdef UTIL_MPI
       sendArrays_(),
       sendSizes_(),
       #endif
@@ -49,13 +46,13 @@ namespace DdMd
    /*
    * Destructor.
    */
-   AtomDistributor::~AtomDistributor() 
+   AtomDistributor::~AtomDistributor()
    {}
 
    /*
    * Retain pointers to associated objects (call on all domain processors).
    */
-   void AtomDistributor::associate(Domain& domain, Boundary& boundary, 
+   void AtomDistributor::associate(Domain& domain, Boundary& boundary,
                                    AtomStorage& storage, Buffer& buffer)
    {
       domainPtr_ = &domain;
@@ -70,11 +67,11 @@ namespace DdMd
    * Set cache capacity.
    */
    void AtomDistributor::setCapacity(int cacheCapacity)
-   {  
-      if (cache_.capacity() > 0) { 
+   {
+      if (cache_.capacity() > 0) {
          UTIL_THROW("Attempt to set cacheCapacity after allocation");
-      } 
-      cacheCapacity_ = cacheCapacity; 
+      }
+      cacheCapacity_ = cacheCapacity;
    }
 
    /*
@@ -117,7 +114,7 @@ namespace DdMd
          cacheCapacity_ = gridSize * sendCapacity_;
       }
 
-      // Allocate atom cache and reservoir on the master processor. 
+      // Allocate atom cache and reservoir on the master processor.
       cache_.allocate(cacheCapacity_);
       reservoir_.allocate(cacheCapacity_);
 
@@ -131,9 +128,9 @@ namespace DdMd
       sendArrays_.allocate(gridSize, sendCapacity_);
       sendSizes_.allocate(gridSize);
       for (int i = 0; i < gridSize; ++i) {
-         sendSizes_[i] = 0; 
+         sendSizes_[i] = 0;
          for (int j = 0; j < sendCapacity_; ++j) {
-            sendArrays_(i, j) = 0;      
+            sendArrays_(i, j) = 0;
          }
       }
       #endif
@@ -145,9 +142,9 @@ namespace DdMd
    #ifdef UTIL_MPI
    /*
    * Initialize the send buffer.
-   */ 
-   void AtomDistributor::setup() 
-   {  
+   */
+   void AtomDistributor::setup()
+   {
       // Preconditions
       if (domainPtr_ == 0) {
          UTIL_THROW("AtomDistributor not initialized");
@@ -170,14 +167,14 @@ namespace DdMd
          allocate();
       }
 
-      // Check post-allocation conditions 
+      // Check post-allocation conditions
       if (reservoir_.size() != reservoir_.capacity()) {
          UTIL_THROW("Atom reservoir not full in setup");
       }
       int gridSize  = domainPtr_->grid().size();
       for (int i = 0; i < gridSize; ++i) {
          if (sendSizes_[i] != 0) {
-            UTIL_THROW("A sendArray size is not zero in setup"); 
+            UTIL_THROW("A sendArray size is not zero in setup");
          }
       }
 
@@ -191,7 +188,7 @@ namespace DdMd
 
    /*
    * Returns address for a new local Atom.
-   */ 
+   */
    Atom* AtomDistributor::newAtomPtr()
    {
       // Preconditions
@@ -252,7 +249,7 @@ namespace DdMd
       if (reservoir_.size() == 0) {
          UTIL_THROW("Empty cache reservoir (This should not happen)");
       }
- 
+
       // Pop pointer to new atom from reservoir and return that pointer.
       newPtr_ = &reservoir_.pop();
       newPtr_->clear();
@@ -261,8 +258,8 @@ namespace DdMd
 
    /*
    * Add an atom to the list to be sent.
-   */ 
-   int AtomDistributor::addAtom() 
+   */
+   int AtomDistributor::addAtom()
    {
       // Preconditions
       if (domainPtr_ == 0) {
@@ -324,7 +321,7 @@ namespace DdMd
                rankMaxSendSize_ = rank;
             }
          }
- 
+
          // If buffer for the relevant processor is full, send it now.
          if (sendSizes_[rank] == sendCapacity_) {
 
@@ -362,7 +359,7 @@ namespace DdMd
       int sendSizeSum = 0;
       int gridSize  = domainPtr_->grid().size();
       for (int i = 0; i < gridSize; ++i) {
-         sendSizeSum += sendSizes_[i]; 
+         sendSizeSum += sendSizes_[i];
       }
       if (sendSizeSum + reservoir_.size() != cacheCapacity_) {
          UTIL_THROW("Error: Inconsistent cache atom count");
@@ -456,7 +453,7 @@ namespace DdMd
    * Receive all atoms sent by the master processor.
    *
    * Called by all domain processors except the master.
-   */ 
+   */
    void AtomDistributor::receive()
    {
       Atom* ptr;                 // Ptr to atom for storage
@@ -536,10 +533,9 @@ namespace DdMd
                UTIL_THROW("coordinate >= domainBound(i, 1)");
             }
          }
-      } 
+      }
 
       return nAtomTotal; // Only valid on master, returns 0 otherwise.
    }
 
-} // namespace DdMd
-#endif
+}

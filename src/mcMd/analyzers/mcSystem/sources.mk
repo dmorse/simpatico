@@ -8,6 +8,7 @@ mcMd_analyzers_mcSystem_=\
     mcMd/analyzers/mcSystem/McIntraBondStressAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McIntraBondTensorAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McNVTChemicalPotential.cpp \
+    mcMd/analyzers/mcSystem/McMuExchange.cpp \
     mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp 
 
 ifdef INTER_EXTERNAL

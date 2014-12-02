@@ -1,10 +1,7 @@
-#ifndef DDMD_SIMULATION_CPP
-#define DDMD_SIMULATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -57,6 +54,7 @@
 #include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
+#include <util/misc/Bit.h>
 #include <util/misc/initStatic.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -1401,6 +1399,9 @@ namespace DdMd
                dihedralPotential().set(paramName, typeId, value);
             } else
             #endif
+            if (command == "SET_GROUP") {
+               setGroup(inBuffer);
+            } else
             if (command == "FINISH") {
                // Terminate loop over commands.
                readNext = false;
@@ -2145,6 +2146,61 @@ namespace DdMd
       configIoPtr_ = ptr;
    }
 
+   // --- Group Management ---------------------------------------------
+   
+   /*
+   * Return true if this Simulation is valid, or throw an Exception.
+   */
+   void Simulation::setGroup(std::stringstream& inBuffer)
+   {
+
+      // Read groupId and create a corresponding bit mask
+      unsigned int groupId;
+      inBuffer >> groupId;
+      Bit bit(groupId);
+
+      // Read the group style
+      std::string groupStyle;
+      inBuffer >> groupStyle;
+
+      AtomIterator iter;
+      if (groupStyle == "delete") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.clear(iter->groups());
+         }
+      } else 
+      if (groupStyle == "all") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.set(iter->groups());
+         }
+      } else 
+      if (groupStyle == "atomType") {
+         int typeId;
+         inBuffer >> typeId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->typeId() == typeId) {
+               bit.set(iter->groups());
+            }
+         }
+      } else
+      if (groupStyle == "species") {
+         if (!Atom::hasAtomContext()) {
+            UTIL_THROW("AtomContext is not enabled");
+         }
+         int speciesId;
+         inBuffer >> speciesId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->context().speciesId == speciesId) {
+               bit.set(iter->groups());
+            }
+         }
+      } else {
+         std::string msg = "SET_GROUP command with unknown group style ";
+         msg += groupStyle;
+         UTIL_THROW(msg.c_str());
+      }
+   }
+
    // --- Validation ---------------------------------------------------
 
    /*
@@ -2235,4 +2291,3 @@ namespace DdMd
    }
 
 }
-#endif

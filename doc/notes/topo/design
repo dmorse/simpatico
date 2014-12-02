@@ -1,0 +1,75 @@
+Possible names for new namespace: Topo, Chem, or Struc.
+Use Topo as an example in what follows.
+
+namespace Topo{
+
+   class Topo::Group -> replaces current McMd::SpeciesGroup
+   class Topo::Species -> replaces current McMd::Species
+   class Topo::SpeciesBuilder -> code to build a species
+
+}
+
+---------------------------------------------------------------
+SpeciesBuilder (Design):
+
+   1) Use pimpl idiom for SpeciesBuilder within a Species. 
+   2) Have Species::readParameters call SpeciesBuilder::readParameters.
+   3) Make SpeciesBuilder a friend of Species, provide data access
+   4) Make a hierarchy of SpeciesBuilder classes, keep Species generic.
+
+   class Species {
+
+      Species(SpeciesBuilder& builder)
+       : builderPtr_(&builder)
+      {}
+
+      void readParameters(std::istream& in) 
+      {
+         bool nextIndent = false;
+         addComposite(*builderPtr_, nextIndent);
+         builderPtr_->readParameters(in);
+      }
+
+   private:
+
+      SpeciesBuilder* builderPtr_;
+
+   //friend:
+
+      friend class SpeciesBuilder; 
+   };
+
+   class SpeciesBuilder {
+
+      void readParameters(){
+         ....
+      }
+
+   protected:
+
+      void setSpecies(Species& species);
+
+      void addBond(...);
+      void addAngle(...);
+
+      accessor to structure data;
+
+   private:
+
+      Species& speciesPtr_;
+
+   };
+
+---------------------------------------------------------------
+Generators (Design):
+
+   Introduce a Generator template in McMd and Tools namespaces. 
+   Unimplemented functions should throw errors.
+
+   Introduce explicit specializations for Linear, Atom, etc.
+
+   The factory should create a SpeciesBuilder, a Generator, and
+   then link them to an associated Species object. All specialized
+   functions are called through the associated Builder and Generator
+   objects.
+   

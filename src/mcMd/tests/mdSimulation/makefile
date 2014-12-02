@@ -21,6 +21,7 @@ clean:
 
 clean-outputs:
 	rm -f *.rst *.cfg
+	rm -f begin middle middle2
 
 -include $(mcMd_tests_mdSimulation_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

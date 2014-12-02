@@ -1,6 +1,3 @@
-#ifndef IN_FILE_CPP
-#define IN_FILE_CPP
-
 #include "Infile.h"
 
 namespace Util
@@ -37,4 +34,3 @@ namespace Util
    {  return filename_; }
    
 }
-#endif

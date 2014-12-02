@@ -1,11 +1,8 @@
 #ifdef  MCMD_LINK
-#ifndef MCMD_LINK_MASTER_CPP
-#define MCMD_LINK_MASTER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, Veronica Chappa and The Regents of the University of Minnesota
+* Copyright 2010 - 2014, Veronica Chappa and The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -332,5 +329,4 @@ namespace McMd
    }
 
 } 
-#endif
 #endif

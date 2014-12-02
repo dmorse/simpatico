@@ -1,4 +1,2 @@
 The examples in this directory contain a blend of two species of
-flexible homopolymer, of equal length. The directory name indicates
-the chain length (the number of atoms per chain): N8 contains two 
-types of chains, each of 8 atoms.
+flexible homopolymer, each containing 8 atoms per chain.

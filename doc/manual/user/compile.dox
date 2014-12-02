@@ -31,7 +31,7 @@ Throughout this documentation, we assume that the root project directory is name
 
 Here is a brief summary of instructions for compiling all of the simpatico programs:
 
-   - Add simpatico/bin to the users PATH, and add simpatico/tools/python to PYTHONPATH (as discussed \ref compile_environment_section "here").
+   - Add simpatico/bin to the users PATH, and add simpatico/scripts/python to PYTHONPATH (as discussed \ref compile_environment_section "here").
 
    - cd simpatico/ (i.e., cd to the simpatico root directory)
 
@@ -55,17 +55,17 @@ Before compiling any code, you should:
 
   - Add simpatico/bin to the PATH shell environment variable (the shell command search path)
 
-  - Add simpatico/tools/python to the PYTHONPATH environment variable (the python module search path)
+  - Add simpatico/scripts/python to the PYTHONPATH environment variable (the python module search path)
 
 To do this, you must add some variant of the following lines to your the .profile or .bash_profile file in your user home directory:
 \code
 SIMPATICO_DIR=${HOME}/simpatico
 export PATH=${PATH}:/${SIMPATICO_DIR}/bin
-export PYTHONPATH=${PYTHONPATH}:/${SIMPATICO_DIR}/tools/python
+export PYTHONPATH=${PYTHONPATH}:/${SIMPATICO_DIR}/scripts/python
 \endcode
 The value of SIMPATICO_DIR should be set to the path to the simpatico root directory. In the above example, this is assumed to be a subdirectory of the users home directory. After adding an appropriate variant of these lines to .profile or .bash_profile, log out, log back in, and then enter "echo $PATH" and "echo $PYTHONPATH" to make sure that these variables have been set correctly. 
 
-Explanation: The simpatico/bin directory is the default location for installing executable files created by the build system. This must be added to the users PATH to allow the operating system to find the executable files needed to run a simulation. The simpatico/tools/python directory contains a python script that is used by the build system to generate information about dependencies among C++ files, as discussed in more detail \ref compile_dependency_section "below".
+Explanation: The simpatico/bin directory is the default location for installing executable files created by the build system. This must be added to the users PATH to allow the operating system to find the executable files needed to run a simulation. The simpatico/scripts/python directory contains a python script that is used by the build system to generate information about dependencies among C++ files, as discussed in more detail \ref compile_dependency_section "below".
 
 \section compile_setup_section Setup script
 
@@ -86,7 +86,7 @@ To execute an in-source build, one must invoke make from the simpatico/src direc
 
 We recommend that most users execute out-of-source builds, by executing make from the root directory, as described above. In-source builds are convenient for developers during development of a new class. In the remainder of this page, we assume that make will be executed from the simpatico/ root directory.
 
-In what follows, we refer to bld/serial, bld/parallel, and src/ collectively as build directories. Each build directory contains a tree of subdirectories identical to that of the src/ directory. After the setup script is run, each of the three build directories will contain a set of build configuration files. The main build configuration file is a file named config.mk in the root directory of each build directory tree (i.e., in bld/serial, bld/parallel, or src/). In addition, the util/, inter/, mcMd/ and ddMd/, and spAn/ subdirectories of each build directory tree also contains a namespace level configuration file, which is also named config.mk. The six config.mk files in each build directory are makefile fragments that are included by other makefiles, which together specify choices of compiler options and optional features that will be applied to any program that is built in that build directory.
+In what follows, we refer to bld/serial, bld/parallel, and src/ collectively as build directories. Each build directory contains a tree of subdirectories identical to that of the src/ directory. After the setup script is run, each of the three build directories will contain a set of build configuration files. The main build configuration file is a file named config.mk in the root directory of each build directory tree (i.e., in bld/serial, bld/parallel, or src/). In addition, the util/, inter/, mcMd/ and ddMd/, and tools/ subdirectories of each build directory tree also contains a namespace level configuration file, which is also named config.mk. The six config.mk files in each build directory are makefile fragments that are included by other makefiles, which together specify choices of compiler options and optional features that will be applied to any program that is built in that build directory.
 
 The src/ directory also contains a corresponding set of files named config.mk_r. Each of these is a default repository version of a corresponding config.mk files. Only the config.mk_r files are kept under version control in the git repository. (The suffix _r stands for "repository"). The setup script creates each config.mk file by copying the corresponding config.mk_r file and (in some cases) editing a few lines. Users may then edit the config.mk build configuration files as needed to configure the program, but should avoid modifying the config.mk_r default versions. The default configuration can then always be recovered, if necessary, by re-running the setup script.
 
@@ -225,13 +225,13 @@ from the simpatico/ root directory.
 
 By default, the simpatico build system automatically generates a "dependency" file, with a suffix *.d, whenever it compiles a *.cpp source file. The dependency file is placed in the build directory tree in same directory as the corresponding object *.o file. 
 
-The system for generating dependency files uses the g++ compiler, which does the actual analysis of dependencies among C++ files, and a python script named simpatico/tools/python/makeDepend.py. To function, the system requires that:
+The system for generating dependency files uses the g++ compiler, which does the actual analysis of dependencies among C++ files, and a python script named simpatico/scripts/python/makeDepend.py. To function, the system requires that:
  
   - A g++ compiler (or a link with this name) must be in the user's PATH environment variable
 
   - A python interpreter must be in the user's PATH
 
-  - The simpatico/tools/python/ directory must be in the PYTHONPATH environment variable
+  - The simpatico/scripts/python/ directory must be in the PYTHONPATH environment variable
 
 Note that the g++ compiler is used for dependency analysis even if another compiler (e.g., the intel compiler) is used for compilation. A g++ compiler and python interpreter is normally available on any modern linux distribution and any Mac OS X environment that is correctly set up for C++ development.
 

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -36,7 +36,7 @@ namespace DdMd
    /**
    * A container for all the Group<N> objects on this processor.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    template <int N>
    class GroupStorage : public ParamComposite, public GroupExchanger
@@ -203,8 +203,18 @@ namespace DdMd
       */
       void clearGroups(); 
 
+      /**
+      * Return current number of groups on this processor.
+      */
+      int size() const;
+
+      /**
+      * Return capacity for groups on this processor.
+      */
+      int capacity() const;
+
       //@}
-      /// \name Iterator Interface
+      /// \name Iteration and Search
       //@{
  
       /**
@@ -221,10 +231,6 @@ namespace DdMd
       */
       void begin(ConstGroupIterator<N>& iterator) const;
 
-      //@}
-      /// \name Accessors
-      //@{
-
       /**
       * Find local Group<N> indexed by global id.
       * 
@@ -232,28 +238,24 @@ namespace DdMd
       */
       Group<N>* find(int id) const;
 
-      /**
-      * Return current number of groups on this processor.
-      */
-      int size() const;
+      //@}
+      /// \name Global Group Counting
+      //@{
 
       /**
-      * Return capacity for groups on this processor.
-      */
-      int capacity() const;
-
-      /**
-      * Return maximum allowable number of groups on all processors.
+      * Return maximum allowed number of groups on all processors.
       *
-      * Note: Group ids must be in range 0, ..., totalCapacity-1
+      * The return value is one greater than the maximum allowed value
+      * for an integer group id, i.e., group ids must be in the range 
+      * 0 <= id <= totalCapacity - 1.
       */
       int totalCapacity() const;
 
       /**
       * Compute and store the number of distinct groups on all processors.
       *
-      * This is an MPI reduce operation. The correct result is stored only
-      * on the rank 0 processor. 
+      * This is an MPI reduce operation, and so must be invoked on all
+      * processors. The resulting sum is stored only on the rank 0 processor. 
       *
       * Algorithm: For purposes of counting, each group is assigned to the
       * processor that owns its first atom (index 0), and then values from
@@ -271,22 +273,17 @@ namespace DdMd
       /**
       * Return total number of distinct groups on all processors.
       *
-      * This function should be called only on the master processor, 
-      * after a previous call to computeNTotal() on all processors.
+      * This function should be called only on the master (rank 0)
+      * processor, after calling computeNTotal() on all processors.
       */
       int nTotal() const;
 
       /**
-      *  Mark nTotal as unknown.
+      * Mark nTotal as unknown.
       *
-      *  Call on all processors.
+      * Call on all processors.
       */
       void unsetNTotal();
-
-      /**
-      * Return true if the container is valid, or throw an Exception.
-      */
-      bool isValid();
 
       //@}
       /// \name GroupExchanger Interface (Interprocessor Communication)
@@ -416,6 +413,8 @@ namespace DdMd
       int maxNGroup() const;
 
       //@}
+      /// \name Miscellaneous Accessors
+      //@{
 
       /**
       *  Get the GroupDistributor by reference.
@@ -427,20 +426,27 @@ namespace DdMd
       */
       GroupCollector<N>& collector();
 
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      */
+      bool isValid();
+
+      //@}
+
    private:
 
       // Memory pool that holds all available group objects.
-      DArray< Group<N> >  groups_;
+      DArray< Group<N> > groups_;
 
       // Set of pointers to local groups.
-      ArraySet< Group<N> >  groupSet_;
+      ArraySet< Group<N> > groupSet_;
 
       // Stack of pointers to unused local Group objects.
-      ArrayStack< Group<N> >  reservoir_;
+      ArrayStack< Group<N> > reservoir_;
 
       // Array of pointers to groups, indexed by global group Id.
       // Elements corresponding to absent groups hold null pointers.
-      DArray< Group<N>* >  groupPtrs_;
+      DArray< Group<N>* > groupPtrs_;
 
       // Array identifying empty groups, marked for later removal 
       GPArray< Group<N> > emptyGroups_;
@@ -455,17 +461,17 @@ namespace DdMd
       int totalCapacity_;
 
       /// Maximum of nAtom1_ on this proc since stats cleared.
-      int  maxNGroupLocal_;     
+      int maxNGroupLocal_;     
    
       /// Maximum of nAtom1_ on all procs (defined only on master).
-      Setable<int>  maxNGroup_;     
+      Setable<int> maxNGroup_;     
       
       // Total number of distinct groups on all processors.
       Setable<int> nTotal_;
 
       // Distributor and Collector objects
       GroupDistributor<N> distributor_;
-      GroupCollector<N>   collector_;
+      GroupCollector<N> collector_;
 
       /*
       * Allocate and initialize all private containers.
@@ -522,5 +528,5 @@ namespace DdMd
    inline GroupCollector<N>& GroupStorage<N>::collector()
    {  return collector_; }
 
-} // namespace DdMd
-#endif // ifndef DDMD_GROUP_STORAGE_H
+} 
+#endif 

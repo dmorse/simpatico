@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -24,7 +24,8 @@ using namespace Util;
 *                       [-p paramFile] [-r restartFile] [-c command] 
 *
 *    Here, P is the number of processors and paramFile is a parameter 
-*    file that is read from standard input.
+*    file that is read from standard input. The -p and -r options are
+*    incompatible: It is illegal to invoke both. 
 *
 * Options:
 *

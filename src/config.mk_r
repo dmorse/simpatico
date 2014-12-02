@@ -129,7 +129,7 @@ MPI_LIB=mpicxx
 # namespace-level directories. In each of these, the basic pattern is
 #
 # %.o:%.cpp
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 #
 # The variable $(CPPDEFS), which contains a list of C preprocessor
 # macro definitions, is not defined in this file. Instead, it is assigned 
@@ -181,14 +181,14 @@ ifeq ($(COMPILER),intel)
    ifneq ($(UTIL_MPI),1)
       # Serial intel icpc compiler (no mpi)
       CXX=icpc
-      CXXFLAGS= -fast -strict-ansi $(CXX_STD)
-      TESTFLAGS= -strict-ansi $(CXX_STD)
+      CXXFLAGS= -fast -ansi $(CXX_STD)
+      TESTFLAGS= -ansi $(CXX_STD)
    else
       ifeq ($(MPI_LIB),mpicxx)
          # Intel icpc compiler using linux modules and mpicxx script
          CXX=mpicxx
-         CXXFLAGS= -strict-ansi $(CXX_STD)
-         TESTFLAGS= -strict-ansi $(CXX_STD)
+         CXXFLAGS= -ansi $(CXX_STD)
+         TESTFLAGS= -ansi $(CXX_STD)
       endif
    endif
 endif
@@ -211,4 +211,3 @@ endif
 # or C++ source file, in order to force a clean rebuild.
  
 MAKEDEP=$(ROOT_DIR)/bin/makeDep
-

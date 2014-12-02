@@ -96,7 +96,7 @@ Short instructions for compiling the default single-processor
 versions of mcSim and mdSim (for the impatient) are:
 
 - Add the simpatico/bin directory to your linux command search
-  PATH environment variable, and add the simpatico/tools/python 
+  PATH environment variable, and add the simpatico/scripts/python 
   directory to your PYTHONPATH environment variable.
 
 - cd to the simpatico/ root directory

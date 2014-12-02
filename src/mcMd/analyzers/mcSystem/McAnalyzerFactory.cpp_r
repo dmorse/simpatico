@@ -1,10 +1,7 @@
-#ifndef MC_ANALYZER_FACTORY
-#define MC_ANALYZER_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -13,13 +10,14 @@
 #include "McEnergyOutput.h"
 #include "McEnergyAverage.h"
 #include "McPairEnergyAverage.h"
-#include "McNVTChemicalPotential.h"
 #include "McExternalEnergyAverage.h"
 #include "McBondEnergyAverage.h"
 #include "McPressureAverage.h"
 #include "McVirialStressTensorAverage.h"
 #include "McIntraBondStressAutoCorr.h"
 #include "McIntraBondTensorAutoCorr.h"
+#include "McNVTChemicalPotential.h"
+#include "McMuExchange.h"
 
 #include <mcMd/analyzers/mutable/TypeDistribution.h>
 #include <mcMd/analyzers/mutable/SemiGrandDistribution.h>
@@ -78,14 +76,17 @@ namespace McMd
       if (className == "McVirialStressTensorAverage") {
          ptr = new McVirialStressTensorAverage(system());
       } else
-      if (className == "McNVTChemicalPotential") {
-         ptr = new McNVTChemicalPotential(system());
-      } else
       if (className == "McIntraBondStressAutoCorr") {
          ptr = new McIntraBondStressAutoCorr(system());
       } else
       if (className == "McIntraBondTensorAutoCorr") {
          ptr = new McIntraBondTensorAutoCorr(system());
+      } else
+      if (className == "McNVTChemicalPotential") {
+         ptr = new McNVTChemicalPotential(system());
+      } else
+      if (className == "McMuExchange") {
+         ptr = new McMuExchange(system());
       } else
       if (className == "TypeDistribution") {
          ptr = new TypeDistribution(system());
@@ -103,5 +104,3 @@ namespace McMd
    }
 
 }
-
-#endif

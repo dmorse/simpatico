@@ -34,7 +34,7 @@ namespace McMd
    /**
    * Bennett's method estimates free energy difference between two states.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BennettsMethod : public SystemAnalyzer<System>
    {
