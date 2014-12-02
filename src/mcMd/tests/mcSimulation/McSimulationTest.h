@@ -249,7 +249,6 @@ void McSimulationTest::testActivate()
    int speciesId = 1;
    int moleculeId = 1;
    int atomId = 2;
-   int i, j; 
    Species& species = simulation_.species(speciesId);
    Molecule& molecule = system_.molecule(speciesId, moleculeId);
    Atom& atom = molecule.atom(atomId);
@@ -257,7 +256,7 @@ void McSimulationTest::testActivate()
  
    // Test initial state 
    TEST_ASSERT(atom.isActive());
-   for (i = 0; i < bondIds.size(); ++i) {
+   for (int i = 0; i < bondIds.size(); ++i) {
       TEST_ASSERT(molecule.bond(bondIds[i]).isActive());
    }
    for (int i = 0; i < molecule.nBond(); ++i) {
@@ -265,7 +264,7 @@ void McSimulationTest::testActivate()
       TEST_ASSERT(molecule.bond(i).checkInactive());
    }
 
-   // Deactivate atom 2 
+   // Deactivate atom atomId 
    Activate::deactivate(molecule.atom(atomId));
    TEST_ASSERT(!atom.isActive());
    for (int i = 0; i < bondIds.size(); ++i) {
@@ -276,8 +275,7 @@ void McSimulationTest::testActivate()
       TEST_ASSERT(molecule.bond(i).checkInactive());
    }
 
-
-   // Deactivate atom 3
+   // Deactivate atom atomId + 1
    Activate::deactivate(molecule.atom(atomId+1));
    TEST_ASSERT(!atom.isActive());
    TEST_ASSERT(!molecule.atom(atomId+1).isActive());
@@ -288,6 +286,7 @@ void McSimulationTest::testActivate()
       TEST_ASSERT(molecule.bond(i).checkInactive());
    }
 
+   // Reactivate both atoms
    Activate::reactivate(molecule.atom(atomId));
    Activate::reactivate(molecule.atom(atomId+1));
    TEST_ASSERT(atom.isActive());
@@ -300,7 +299,6 @@ void McSimulationTest::testActivate()
       TEST_ASSERT(molecule.bond(i).isActive());
       TEST_ASSERT(molecule.bond(i).checkInactive());
    }
-
 }
 
 void McSimulationTest::testMdSystemCopy()

@@ -21,13 +21,8 @@ class MdSimulationTest : public UnitTest
 
 public:
 
-   MdSimulationTest()
-    : UnitTest(),
-      system_(simulation_.system())
-   {} 
-
-   virtual void setUp()
-   {  simulation_.fileMaster().setRootPrefix(filePrefix()); }
+   MdSimulationTest();
+   virtual void setUp();
 
    void testReadParam();
    void testSetZeroVelocities();
@@ -51,18 +46,27 @@ private:
 };
 
 
+MdSimulationTest::MdSimulationTest()
+ : UnitTest(),
+   system_(simulation_.system())
+{} 
+
+void MdSimulationTest::setUp()
+{  
+   simulation_.fileMaster().setRootPrefix(filePrefix()); 
+   //setVerbose(2);
+}
 
 void MdSimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
-   Util::ParamComponent::setEcho(true);
+   //ParamComponent::setEcho(true);
    simulation_.readParam(paramFile);
-   Util::ParamComponent::setEcho(false);
+   //ParamComponent::setEcho(false);
    simulation_.readCommands();
    std::cout << std::endl;
 
@@ -77,6 +81,7 @@ void MdSimulationTest::testReadParam()
       simulation_.writeParam(std::cout);
       simulation_.system().writeConfig(std::cout);
    }
+
 }
 
 void MdSimulationTest::testSetZeroVelocities()
@@ -307,7 +312,7 @@ void MdSimulationTest::testWriteRestart()
    std::string baseFileName("begin");
    simulation_.save(baseFileName);
 
-   simulation_.simulate(100000);
+   simulation_.simulate(10000);
 
    baseFileName = "middle";
    simulation_.save(baseFileName);
@@ -317,7 +322,7 @@ void MdSimulationTest::testWriteRestart()
    configFile.close();
 
    bool isContinuation = true;
-   simulation_.simulate(100100, isContinuation);
+   simulation_.simulate(10100, isContinuation);
 
    configFile.open("end.cfg");
    simulation_.system().writeConfig(configFile);
@@ -341,7 +346,7 @@ void MdSimulationTest::testReadRestart()
    configFile.close();
 
    bool isContinuation = true;
-   simulation_.simulate(100100, isContinuation);
+   simulation_.simulate(10100, isContinuation);
 
    configFile.open("end2.cfg");
    simulation_.system().writeConfig(configFile);
