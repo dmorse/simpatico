@@ -35,6 +35,8 @@ namespace McMd
    * be called only by members of Activate, we can guarantee 
    * that associated Atom and Group<N> objects maintain 
    * consistent states.
+   * 
+   * \ingroup McMd_Chemistry_Module
    */
    class Activate
    {
