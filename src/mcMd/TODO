@@ -1,3 +1,31 @@
+AtomType
+--------
+
+  - Add static bool atomHaveDiameters_ and non-static double diameter_ members
+
+  - Make Simulation a friend of AtomType
+
+  - Add optional atomHaveDiameters_ parameter in Simulation::readParameters
+
+  - Optionally read and write diameter_ members. Initialize to 1.0 by default.
+
+Generator
+---------
+
+  - Add CellList to Generator base class, and method to test proximity to
+    existing atoms.
+
+  - Allow user to pass a scale parameter to generate() method. Positions
+    that are greater than scale x additive diameter from all other are
+    accepted.
+
+  - Use explicit dynamic casting to determine which private generation 
+    function to call within the generate() method. 
+
+  - Write specialized generator for Point molecules
+
+  - Rewrite the function for Linear Molecules
+
 Species
 -------
 
@@ -10,7 +38,8 @@ Species
 Cfb Moves
 ----------
 
-- Fix CfbEndBase to work correctly with angles
+- Fix CfbEndBase to work correctly with angles. Add sign parameter to add
+  and remove functions. 
 
 - Fix CfbReptation to work with angles
 
