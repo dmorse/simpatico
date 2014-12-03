@@ -24,8 +24,10 @@ namespace McMd
     : simulationPtr_(parent.simulationPtr_),
       systemPtr_(&parent),
       moleculeSetsPtr_(parent.moleculeSetsPtr_),
-      boundaryPtr_(parent.boundaryPtr_),
-      hasBonds_(parent.simulation().nBondType() > 0)
+      boundaryPtr_(parent.boundaryPtr_)
+      #ifdef INTER_BOND
+      , hasBonds_(parent.simulation().nBondType() > 0)
+      #endif
       #ifdef INTER_ANGLE
       , hasAngles_(parent.simulation().nAngleType() > 0)
       #endif

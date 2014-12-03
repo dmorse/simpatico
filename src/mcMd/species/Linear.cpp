@@ -11,6 +11,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/neighbor/CellList.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#include <mcMd/chemistry/Molecule.h>
 
 #include <sstream>
 
@@ -204,9 +205,10 @@ namespace McMd
       if (nMolecule > capacity())
          UTIL_THROW("nMolecule > Species.capacity()!"); 
 
+      Simulation& sim = system.simulation();
       for (iMol = 0; iMol < nMolecule; ++iMol) {
          // Add a new molecule to the system
-         Molecule &newMolecule= reservoir().pop();
+         Molecule &newMolecule= sim.getMolecule(id());
          system.addMolecule(newMolecule);
 
          // Try placing atoms

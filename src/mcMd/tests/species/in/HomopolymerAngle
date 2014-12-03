@@ -1,0 +1,8 @@
+Homopolymer{
+  moleculeCapacity             5
+  nAtom                        5
+  atomType                     0
+  bondType                     0
+  hasAngles                    1
+  angleType                    0
+}

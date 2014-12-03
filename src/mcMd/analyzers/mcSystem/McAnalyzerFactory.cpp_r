@@ -54,19 +54,6 @@ namespace McMd
       if (className == "McEnergyOutput") {
          ptr = new McEnergyOutput(system());
       } else
-      #ifndef INTER_NOPAIR
-      if (className == "McPairEnergyAverage") {
-         ptr = new McPairEnergyAverage(system());
-      } else
-      #endif
-      if (className == "McBondEnergyAverage") {
-         ptr = new McBondEnergyAverage(system());
-      } else
-      #ifdef INTER_EXTERNAL
-      if (className == "McExternalEnergyAverage") {
-         ptr = new McExternalEnergyAverage(system());
-      } else
-      #endif
       if (className == "McEnergyAverage") {
          ptr = new McEnergyAverage(system());
       } else
@@ -76,15 +63,6 @@ namespace McMd
       if (className == "McVirialStressTensorAverage") {
          ptr = new McVirialStressTensorAverage(system());
       } else
-      if (className == "McIntraBondStressAutoCorr") {
-         ptr = new McIntraBondStressAutoCorr(system());
-      } else
-      if (className == "McIntraBondTensorAutoCorr") {
-         ptr = new McIntraBondTensorAutoCorr(system());
-      } else
-      if (className == "McNVTChemicalPotential") {
-         ptr = new McNVTChemicalPotential(system());
-      } else
       if (className == "McMuExchange") {
          ptr = new McMuExchange(system());
       } else
@@ -93,7 +71,37 @@ namespace McMd
       } else 
       if (className == "SemiGrandDistribution") {
          ptr = new SemiGrandDistribution(system());
+      }
+
+      #ifndef INTER_NOPAIR
+      else
+      if (className == "McPairEnergyAverage") {
+         ptr = new McPairEnergyAverage(system());
       } 
+      #endif
+
+      #ifdef INTER_BOND
+      else 
+      if (className == "McBondEnergyAverage") {
+         ptr = new McBondEnergyAverage(system());
+      } else
+      if (className == "McIntraBondStressAutoCorr") {
+         ptr = new McIntraBondStressAutoCorr(system());
+      } else
+      if (className == "McIntraBondTensorAutoCorr") {
+         ptr = new McIntraBondTensorAutoCorr(system());
+      } else
+      if (className == "McNVTChemicalPotential") {
+         ptr = new McNVTChemicalPotential(system());
+      }
+      #endif 
+
+      #ifdef INTER_EXTERNAL
+      else
+      if (className == "McExternalEnergyAverage") {
+         ptr = new McExternalEnergyAverage(system());
+      } 
+      #endif
 
       // If none of the above are matched, try SystemAnalyzerFactory
       if (!ptr) {

@@ -1,0 +1,61 @@
+Idea: Introduce scheme for organizing computed quantities, in a form that
+can be accessed by analyzers that output results or calculate statistical
+properties. Inspired by "Compute" class hierarchy in Lammps and Hoomd-Blue.
+
+-------------------------------------------------------------------------
+class ComputeManager:
+
+  - Provides methods that provide access to a compute by name. 
+
+  - Question: Do we provide different methods to access different types
+    of compute or provide multiple methods for each type?
+
+-------------------------------------------------------------------------
+Proposal:
+
+  - Have compute manager maintain separate lists for each type of compute,
+    and different accessors, getGlobalScalar(std::string ....)
+
+  - Have different subclasses of Compute with interfaces appropriate for
+    different types of values.
+
+  - Each compute class will have a Setable value. 
+
+  - Computes do not need intervals - they are called and computed as needed
+
+  - Do we need to generalize a "value" to include an array?
+
+-------------------------------------------------------------------------
+Compute and its subclasses:
+
+  - Compute
+
+    - GlobalScalar
+    - GlobalVector
+    - GlobalTensor
+
+    - AtomCompute
+    - AtomScalarCompute
+    - AtomVectorCompute
+    - AtomTensorCompute
+
+    - MoleculeScalarCompute
+    - MoleculeVectorCompute
+    - MoleculeTensorCompute
+
+I need an example of a MoleculeCompute that can be efficiently calculated
+on-the-fly to convince me that it makes sense to have molecular quantities.
+
+AtomCompute classes may need a mechanism to migrate data with the Atom.
+-------------------------------------------------------------------------
+Pre-existing computed quantities:
+
+    - Question: How to handle compute classes that are already provided 
+      by the main simulation class?
+
+    - Proposal: Define a set of simple classes whose functions are just 
+      wrappers around calls to methods of Simulation or Potential classes.
+
+    - First call to return one of these pre-existing classes will create
+      the wrapper object, so that they are always available if needed. 
+

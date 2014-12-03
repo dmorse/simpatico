@@ -68,7 +68,7 @@ namespace McMd
          in >> Label("nMolecule") >> nMolecule;
          for (iMol = 0; iMol < nMolecule; ++iMol) {
             in >> moleculeLabel >> iMolIn;
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpecies));
             system().addMolecule(*molPtr);
 
             if (iMolIn != iMol) {

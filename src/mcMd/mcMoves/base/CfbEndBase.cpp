@@ -10,7 +10,7 @@
 #include <mcMd/mcSimulation/mc_potentials.h>
 
 #include <util/boundary/Boundary.h>
-#include <mcMd/species/Species.h>
+#include <mcMd/chemistry/getAtomGroups.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -77,7 +77,7 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      Species::AtomAngleArray angles;
+      AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
       Vector dr1, dr2;
@@ -87,7 +87,7 @@ namespace McMd
       if (system().hasAnglePotential()) {
 
          // Get the angle type and pointers of atoms forming the angle.
-         endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+         getAtomAngles(*endPtr, angles);
          for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
             anglePtr = angles[iAngle];
             if (&anglePtr->atom(1) == pvtPtr) {
@@ -143,7 +143,7 @@ namespace McMd
          if (system().hasAnglePotential()) {
 
             // Get the angle type and atom pointer at the angle.
-            endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+            getAtomAngles(*endPtr, angles);
             for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
                anglePtr = angles[iAngle];
                if (&anglePtr->atom(1) == pvtPtr) {
@@ -196,7 +196,7 @@ namespace McMd
       int    iTrial;
 
       #ifdef INTER_ANGLE
-      Species::AtomAngleArray angles;
+      AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
       Vector dr1, dr2;
@@ -227,7 +227,7 @@ namespace McMd
          #ifdef INTER_ANGLE
          if (system().hasAnglePotential()) {
 
-            endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+            getAtomAngles(*endPtr, angles);
             for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
                anglePtr = angles[iAngle];
                if (&anglePtr->atom(1) == pvtPtr) {

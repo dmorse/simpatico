@@ -1,7 +1,12 @@
 
-mcMd_chemistry_=mcMd/chemistry/Atom.cpp \
-    mcMd/chemistry/AtomType.cpp mcMd/chemistry/Mask.cpp \
-    mcMd/chemistry/MaskPolicy.cpp 
+mcMd_chemistry_= \
+    mcMd/chemistry/Atom.cpp \
+    mcMd/chemistry/AtomType.cpp \
+    mcMd/chemistry/Mask.cpp \
+    mcMd/chemistry/MaskPolicy.cpp \
+    mcMd/chemistry/Molecule.cpp \
+    mcMd/chemistry/Activate.cpp \
+    mcMd/chemistry/getAtomGroups.cpp 
 
 mcMd_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_chemistry_))

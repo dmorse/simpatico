@@ -13,9 +13,11 @@
 #include "MdKineticEnergyAverage.h"
 #include "MdPressureAverage.h"
 #include "MdStressAutoCorr.h"
+#include "MdPairEnergyCoefficients.h"
+#ifdef INTER_BOND
 #include "MdIntraBondStressAutoCorr.h"
 #include "MdIntraBondTensorAutoCorr.h"
-#include "MdPairEnergyCoefficients.h"
+#endif
 
 #include <mcMd/mdSimulation/MdSimulation.h>
 
@@ -58,20 +60,25 @@ namespace McMd
       if (className == "MdPressureAverage") {
          ptr = new MdPressureAverage(system());
       } else 
-      if (className == "MdIntraBondStressAutoCorr") {
-         ptr = new MdIntraBondStressAutoCorr(system());
-      } else 
-      if (className == "MdIntraBondTensorAutoCorr") {
-         ptr = new MdIntraBondTensorAutoCorr(system());
-      } else 
       if (className == "MdStressAutoCorr") {
          ptr = new MdStressAutoCorr(system());
       } 
+
       #ifndef INTER_NOPAIR
       else
       if (className == "MdPairEnergyCoefficients") {
          ptr = new MdPairEnergyCoefficients(system());
       }
+      #endif
+
+      #ifdef INTER_BOND
+      else 
+      if (className == "MdIntraBondStressAutoCorr") {
+         ptr = new MdIntraBondStressAutoCorr(system());
+      } else 
+      if (className == "MdIntraBondTensorAutoCorr") {
+         ptr = new MdIntraBondTensorAutoCorr(system());
+      } 
       #endif
 
       // If none of the above, try the SystemAnalyzerFactory

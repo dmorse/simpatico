@@ -21,7 +21,9 @@ namespace McMd
    #ifndef INTER_NOPAIR
    class McPairPotential;
    #endif
+   #ifdef INTER_BOND
    class BondPotential;
+   #endif
    #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
@@ -159,10 +161,12 @@ namespace McMd
       */
       bool hasBondPotential() const;
 
+      #ifdef INTER_BOND
       /**
       * Return the BondPotential by reference.
       */
       BondPotential& bondPotential() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -254,7 +258,9 @@ namespace McMd
       McPairPotential* pairPotentialPtr_;
       #endif
 
+      #ifdef INTER_BOND
       BondPotential* bondPotentialPtr_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Pointer to an AnglePotential.
@@ -311,6 +317,7 @@ namespace McMd
    {  return *pairPotentialPtr_; }
    #endif
 
+   #ifdef INTER_BOND
    /*
    * Does a bond potential exist?
    */
@@ -322,6 +329,7 @@ namespace McMd
    */
    inline BondPotential& McSystem::bondPotential() const
    {  return *bondPotentialPtr_; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*

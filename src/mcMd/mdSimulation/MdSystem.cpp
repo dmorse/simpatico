@@ -18,8 +18,10 @@
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
 
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondFactory.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #include <mcMd/potentials/angle/AngleFactory.h>
@@ -65,7 +67,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotentialPtr_(0),
       #endif
+      #ifdef INTER_BOND
       bondPotentialPtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       anglePotentialPtr_(0),
       #endif
@@ -97,7 +101,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotentialPtr_(0),
       #endif
-      bondPotentialPtr_(&system.bondPotential()),
+      #ifdef INTER_BOND
+      bondPotentialPtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       anglePotentialPtr_(0),
       #endif
@@ -126,6 +132,11 @@ namespace McMd
       pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
       if (pairPotentialPtr_ == 0) {
          UTIL_THROW("Failed attempt to clone McPairPotential");
+      }
+      #endif
+      #ifdef INTER_BOND
+      if (system.hasBondPotential()) {
+         bondPotentialPtr_ = &system.bondPotential();
       }
       #endif
       #ifdef INTER_ANGLE
@@ -170,7 +181,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       if (pairPotentialPtr_) delete pairPotentialPtr_;
       #endif
+      #ifdef INTER_BOND
       if (!isCopy() && bondPotentialPtr_) delete bondPotentialPtr_;
+      #endif
       #ifdef INTER_ANGLE
       if (!isCopy() && anglePotentialPtr_) delete anglePotentialPtr_;
       #endif
@@ -239,6 +252,7 @@ namespace McMd
 
       if (!isCopy()) {
 
+         #ifdef INTER_BOND
          assert(bondPotentialPtr_ == 0);
          if (simulation().nBondType() > 0) {
             bondPotentialPtr_ = bondFactory().factory(bondStyle());
@@ -247,6 +261,7 @@ namespace McMd
             }
             readParamComposite(in, *bondPotentialPtr_);
          }
+         #endif
 
          #ifdef INTER_ANGLE
          assert(anglePotentialPtr_ == 0);
@@ -374,6 +389,7 @@ namespace McMd
 
       if (!isCopy()) {
 
+         #ifdef INTER_BOND
          assert(bondPotentialPtr_ == 0);
          if (simulation().nBondType() > 0) {
             bondPotentialPtr_ = bondFactory().factory(bondStyle());
@@ -382,6 +398,7 @@ namespace McMd
             }
             loadParamComposite(ar, *bondPotentialPtr_);
          }
+         #endif
 
          #ifdef INTER_ANGLE
          assert(anglePotentialPtr_ == 0);
@@ -498,9 +515,11 @@ namespace McMd
       pairPotentialPtr_->save(ar);
       #endif
       if (!isCopy()) {
+         #ifdef INTER_BOND
          if (simulation().nBondType() > 0) {
             bondPotentialPtr_->save(ar);
          }
+         #endif
          #ifdef INTER_ANGLE
          if (simulation().nAngleType() > 0) {
             anglePotentialPtr_->save(ar);
@@ -708,9 +727,11 @@ namespace McMd
       // it builds the pair list.
       pairPotential().addForces();
       #endif
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          bondPotential().addForces();
       }
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          anglePotential().addForces();
@@ -752,9 +773,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       energy += pairPotential().energy();
       #endif
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          energy += bondPotential().energy();
       }
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          energy += anglePotential().energy();
@@ -868,12 +891,13 @@ namespace McMd
       stress += pairStress;
       #endif
 
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          T bondStress;
          bondPotential().computeStress(bondStress);
          stress += bondStress;
       }
-
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          T angleStress;

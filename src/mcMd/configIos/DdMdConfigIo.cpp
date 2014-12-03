@@ -52,8 +52,10 @@ namespace McMd
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
-         atomCapacity   += speciesCapacity*speciesPtr->nAtom();
-         bondCapacity   += speciesCapacity*speciesPtr->nBond();
+         atomCapacity += speciesCapacity*speciesPtr->nAtom();
+         #ifdef INTER_BOND
+         bondCapacity += speciesCapacity*speciesPtr->nBond();
+         #endif
       }
 
       // Read boundary
@@ -77,7 +79,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = speciesPtr->capacity();
          for (iMol = 0; iMol < nMolecule; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
    
             // Read positions
@@ -117,7 +119,9 @@ namespace McMd
       Species  *speciesPtr;
       int iSpec, nMolecule;
       int nAtom = 0;
+      #ifdef INTER_BOND
       int nBond = 0;
+      #endif
       #ifdef INTER_ANGLE
       int nAngle = 0;
       #endif
@@ -128,7 +132,9 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
+         #ifdef INTER_BOND
          nBond += nMolecule*(speciesPtr->nBond());
+         #endif
          #ifdef INTER_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
@@ -174,6 +180,7 @@ namespace McMd
       }
       out << std::endl;
 
+      #ifdef INTER_BOND
       // Write Bonds
       out << "BONDS" << std::endl;
       out << "nBond  " << nBond << std::endl;
@@ -195,6 +202,7 @@ namespace McMd
          }
       }
       out << std::endl;
+      #endif
 
       #ifdef INTER_ANGLE
       // Write Angles

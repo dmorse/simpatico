@@ -35,7 +35,10 @@ namespace McMd
       } else
       if (className == "Point") {
          ptr = new Point();
-      } else
+      }
+
+      #ifdef INTER_BOND 
+      else
       if (className == "Homopolymer") {
          ptr = new Homopolymer();
       } else
@@ -48,6 +51,8 @@ namespace McMd
       if (className == "HomopolymerSG") {
          ptr = new HomopolymerSG();
       } 
+      #endif
+
       return ptr;
    }
 

@@ -17,7 +17,9 @@
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
@@ -580,7 +582,9 @@ namespace McMd
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   species(iSpecies).generateMolecules(
                      capacities[iSpecies], ExclusionRadii, system(),
+                     #ifdef INTER_BOND
                      &system().bondPotential(),
+                     #endif
                      system().boundary());   
                }
 
@@ -658,7 +662,8 @@ namespace McMd
                system().pairPotential()
                        .set(paramName, typeId1, typeId2, value);
             } else 
-            #endif // ifndef INTER_NOPAIR
+            #endif 
+            #ifdef INTER_BOND
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -668,6 +673,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().bondPotential().set(paramName, typeId, value);
             } else 
+            #endif
             #ifdef INTER_ANGLE
             if (command == "SET_ANGLE") {
                std::string paramName;
@@ -678,7 +684,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().anglePotential().set(paramName, typeId, value);
             } else 
-            #endif // ifdef INTER_ANGLE
+            #endif 
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;

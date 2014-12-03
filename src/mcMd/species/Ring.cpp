@@ -20,6 +20,12 @@ namespace McMd
    {}
 
    /*
+   * Destructor.
+   */
+   Ring::~Ring() 
+   {}
+
+   /*
    * Build the chemical structure of a flexible loop molecule.
    */
    void Ring::buildRing() 

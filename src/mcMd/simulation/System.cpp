@@ -21,7 +21,9 @@
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondFactory.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AngleFactory.h>
 #endif
@@ -82,7 +84,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairFactoryPtr_(0),
       #endif
+      #ifdef INTER_BOND
       bondFactoryPtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleFactoryPtr_(0),
       #endif
@@ -116,7 +120,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairStyle_(),
       #endif
+      #ifdef INTER_BOND
       bondStyle_(),
+      #endif
       #ifdef INTER_ANGLE
       angleStyle_(),
       #endif
@@ -171,7 +177,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairFactoryPtr_(other.pairFactoryPtr_),
       #endif
+      #ifdef INTER_BOND
       bondFactoryPtr_(other.bondFactoryPtr_),
+      #endif
       #ifdef INTER_ANGLE
       angleFactoryPtr_(other.angleFactoryPtr_),
       #endif
@@ -205,7 +213,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairStyle_(other.pairStyle_),
       #endif 
+      #ifdef INTER_BOND
       bondStyle_(other.bondStyle_),
+      #endif
       #ifdef INTER_ANGLE
       angleStyle_(other.angleStyle_),
       #endif
@@ -253,9 +263,11 @@ namespace McMd
             delete pairFactoryPtr_;
          }
          #endif
+         #ifdef INTER_BOND
          if (bondFactoryPtr_) {
             delete bondFactoryPtr_;
          }
+         #endif
          #ifdef INTER_ANGLE
          if (angleFactoryPtr_) {
             delete angleFactoryPtr_;
@@ -438,9 +450,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          read<std::string>(in, "bondStyle", bondStyle_);
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
@@ -481,9 +495,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          loadParameter<std::string>(ar, "angleStyle", angleStyle_);
@@ -524,9 +540,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       ar << pairStyle_;
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          ar << bondStyle_;
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          ar << angleStyle_;
@@ -643,21 +661,19 @@ namespace McMd
    {
       ar >> boundary();
 
-      Species* speciesPtr;
-      int nSpecies = simulation().nSpecies();
       Molecule* molPtr;
       Molecule::AtomIterator atomIter;
       int iSpeciesIn, nMoleculeIn;
+      const int nSpecies = simulation().nSpecies();
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
          ar >> iSpeciesIn;
          if (iSpeciesIn != iSpecies) {
             UTIL_THROW("Error: iSpeciesIn != iSpecies");
          }
          ar >> nMoleculeIn;
          for (int iMol = 0; iMol < nMoleculeIn; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpecies));
             addMolecule(*molPtr);
             if (molPtr != &molecule(iSpecies, iMol)) {
                UTIL_THROW("Molecule index error");
@@ -684,10 +700,10 @@ namespace McMd
    {
       ar << boundary();
 
-      int nSpecies = simulation().nSpecies();
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
+      Molecule::AtomIterator atomIter;
       int nMoleculeOut;
+      const int nSpecies = simulation().nSpecies();
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          ar << iSpecies;
@@ -985,7 +1001,7 @@ namespace McMd
       assert(simulationPtr_);
 
       // Allocate an array of nSpecies empty MoleculeSet objects.
-      int nSpecies = simulationPtr_->nSpecies();
+      const int nSpecies = simulation().nSpecies();
       moleculeSetsPtr_->allocate(nSpecies);
 
       // Allocate and initialize the MoleculeSet for each species.
@@ -1048,16 +1064,15 @@ namespace McMd
    */
    void System::removeAllMolecules()
    {
-      Species*  speciesPtr;
       Molecule* molPtr;
-      int       iSpecies, nMol;
-      for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
-         nMol  = nMolecule(iSpecies);
+      int iSpecies, nMol;
+      const int nSpecies = simulation().nSpecies();
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         nMol = nMolecule(iSpecies);
          while (nMol > 0) {
             molPtr = &molecule(iSpecies, nMol - 1);
             removeMolecule(*molPtr);
-            speciesPtr->reservoir().push(*molPtr);
+            simulation().returnMolecule(*molPtr);
             nMol = nMolecule(iSpecies);
          }
       }
@@ -1129,6 +1144,7 @@ namespace McMd
    {  return pairStyle_;  }
    #endif
 
+   #ifdef INTER_BOND
    /*
    * Return the BondFactory by reference.
    */
@@ -1146,6 +1162,7 @@ namespace McMd
    */
    std::string System::bondStyle() const
    {  return bondStyle_;  }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -1273,7 +1290,7 @@ namespace McMd
    bool System::isValid() const
    {
       Molecule* molPtr;
-      int       iSpecies, iMolecule;
+      int iSpecies, iMolecule;
       if (!simulationPtr_) {
          UTIL_THROW("Null simulationPtr_");
       }

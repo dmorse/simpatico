@@ -1,4 +1,5 @@
-mcMd_mcMoves_base_=mcMd/mcMoves/base/CfbEndBase.cpp \
+mcMd_mcMoves_base_=\
+    mcMd/mcMoves/base/CfbEndBase.cpp \
     mcMd/mcMoves/base/CfbRebridgeBase.cpp \
     mcMd/mcMoves/base/GroupRebridgeBase.cpp 
 

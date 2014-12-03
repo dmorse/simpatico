@@ -15,7 +15,6 @@ Begin reading restart, base file name restart
    Message : Cannot allocate ArrayStack with capacity <= 0
 
 --------------------------------------------------------------------------------
-Error running example worm/N8/mc/CfbReptation:
+CfbEndBase does not work correctly with angle potentials.
 
-Segmentation fault occurs after reading param file and entering main loop. 
 --------------------------------------------------------------------------------

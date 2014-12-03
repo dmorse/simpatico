@@ -12,38 +12,38 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+   /*
    * Default constructor.
    */
    Point::Point()
     : Species(),
       type_(-1)
-   {  
-      nAtom_ = 1; 
-      nBond_ = 0;
+   {
+      nAtom_ = 1;
+      // nBond_, nAngle_, & nDihedral_ initialized to 0 in Species.
    }
-   
-   /* 
+
+   /*
    * Read type.
    */
    void Point::readSpeciesParam(std::istream &in)
-   {  
-      read<int>(in,"type", type_); 
+   {
+      read<int>(in,"type", type_);
       allocate();
       atomTypeIds_[0] = type_;
    }
-   
-   /* 
+
+   /*
    * Read type.
    */
    void Point::loadSpeciesParam(Serializable::IArchive &ar)
-   {  
-      loadParameter<int>(ar,"type", type_); 
+   {
+      loadParameter<int>(ar,"type", type_);
       allocate();
       atomTypeIds_[0] = type_;
    }
-   
-   /* 
+
+   /*
    * Save atom type.
    */
    void Point::save(Serializable::OArchive &ar)
@@ -51,11 +51,5 @@ namespace McMd
       ar << moleculeCapacity_;
       ar << type_;
    }
-    
-   int Point::getAtomTypeId(Molecule& molecule, int index)
-   {
-      assert(index == 0);  
-      return type_; 
-   }
-   
-} 
+
+}

@@ -10,24 +10,27 @@
 // Analyzers for any System (Mc or Md)
 #include <mcMd/analyzers/simulation/LogProgress.h>
 #include "ConfigWriter.h"
+#include "AtomMSD.h"
 #include "RDF.h"
 #include "StructureFactorP.h"
 #include "StructureFactorPGrid.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
-#include "IntraStructureFactor.h"
-#include "IntraStructureFactorGrid.h"
+#include "CompositionProfile.h"
 #include "VanHove.h"
+#include "BoundaryAverage.h"
+
+#ifdef INTER_BOND
 #include "RadiusGyration.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
-#include "CompositionProfile.h"
-#include "AtomMSD.h"
+#include "IntraStructureFactor.h"
+#include "IntraStructureFactorGrid.h"
 #include "ComMSD.h"
 #include "IntraPairAutoCorr.h"
 #include "RingRouseAutoCorr.h"
 #include "LinearRouseAutoCorr.h"
-#include "BoundaryAverage.h"
+#endif
 
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
@@ -78,17 +81,26 @@ namespace McMd
       if (className == "StructureFactorGrid") {
          ptr = new StructureFactorGrid(system());
       } else 
+      if (className == "BoundaryAverage") {
+         ptr = new BoundaryAverage(system());
+      } else 
+      if (className == "CompositionProfile") {
+         ptr = new CompositionProfile(system());
+      } else 
+      if (className == "AtomMSD") {
+         ptr = new AtomMSD(system());
+      }
+      if (className == "VanHove") {
+         ptr = new VanHove(system());
+      }
+
+      #ifdef INTER_BOND 
+      else
       if (className == "IntraStructureFactor") {
          ptr = new IntraStructureFactor(system());
       } else 
       if (className == "IntraStructureFactorGrid") {
          ptr = new IntraStructureFactorGrid(system());
-      } else 
-      if (className == "VanHove") {
-         ptr = new VanHove(system());
-      } else 
-      if (className == "BoundaryAverage") {
-         ptr = new BoundaryAverage(system());
       } else 
       if (className == "RadiusGyration") {
          ptr = new RadiusGyration(system());
@@ -99,12 +111,6 @@ namespace McMd
       if (className == "BondLengthDist") {
          ptr = new BondLengthDist(system());
       } else 
-      if (className == "CompositionProfile") {
-         ptr = new CompositionProfile(system());
-      } else 
-      if (className == "AtomMSD") {
-         ptr = new AtomMSD(system());
-      } else
       if (className == "ComMSD") {
          ptr = new ComMSD(system());
       } else
@@ -117,14 +123,14 @@ namespace McMd
       if (className == "RingRouseAutoCorr") {
          ptr = new RingRouseAutoCorr(system());
       } 
+      #endif
 
+      #ifdef UTIL_MPI
       #ifdef MCMD_PERTURB
       else 
       if (className == "PerturbDerivative") {
          ptr = new PerturbDerivative(system());
-      }
-      #ifdef UTIL_MPI
-      else 
+      } else 
       if (className == "BennettsMethod") {
          ptr = new BennettsMethod(system());
       } 
