@@ -16,6 +16,7 @@ namespace McMd
    using namespace Util;
 
    class Atom;
+   class Molecule;
    class McSystem;
 
    /**
@@ -74,7 +75,7 @@ namespace McMd
       * \param rosenbluth nonbonded Rosenbluth factor of deleted atom (out)
       * \param energy     total potential energy of deleted atom (out)
       */
-      void deleteAtom(Molecule& molecule, int atomId, int sign
+      void deleteAtom(Molecule& molecule, int atomId, int sign,
                       double &rosenbluth, double &energy);
 
       /**
@@ -99,7 +100,7 @@ namespace McMd
       * \param rosenbluth Rosenbluth factor of added atom (out)
       * \param energy     potential energy of deleted atom (out)
       */
-      void addAtom(Molecule& molecule, int atomId, int sign
+      void addAtom(Molecule& molecule, int atomId, int sign,
                    double &rosenbluth, double &energy);
 
    protected:

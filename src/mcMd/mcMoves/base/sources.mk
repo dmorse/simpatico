@@ -1,7 +1,8 @@
 mcMd_mcMoves_base_=\
     mcMd/mcMoves/base/CfbEndBase.cpp \
     mcMd/mcMoves/base/CfbRebridgeBase.cpp \
-    mcMd/mcMoves/base/GroupRebridgeBase.cpp 
+    mcMd/mcMoves/base/GroupRebridgeBase.cpp \
+    mcMd/mcMoves/base/CfbLinear.cpp 
 
 mcMd_mcMoves_base_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mcMoves_base_))
