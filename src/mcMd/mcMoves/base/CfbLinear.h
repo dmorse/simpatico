@@ -54,7 +54,7 @@ namespace McMd
       // can be directly loaded and saved by subclasses.
 
       /**
-      * CFB algorithm for deleting an end atom from a flexible chain.
+      * CFB algorithm for deleting an end atom from a Linear molecule.
       *
       * This function computes the energy of an end atom and a Rosenbluth
       * factor for removing it. It does not remove the end atom from the
@@ -69,17 +69,18 @@ namespace McMd
       *   - energy is the total energy (bonded + nonbonded) of the end atom
       *     before it was deleted.
       *
-      * \param molecule   molecule
-      * \param atomId     id of atom to be deleted
-      * \param sign       end from which deletion is occuring
-      * \param rosenbluth nonbonded Rosenbluth factor of deleted atom (out)
-      * \param energy     total potential energy of deleted atom (out)
+      * \param molecule  molecule
+      * \param atom0  atom to be deleted
+      * \param atomId  id of atom to be deleted
+      * \param sign  end from which deletion is occuring
+      * \param rosenbluth  nonbonded Rosenbluth factor of deleted atom (out)
+      * \param energy  total potential energy of deleted atom (out)
       */
-      void deleteAtom(Molecule& molecule, int atomId, int sign,
+      void deleteAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
                       double &rosenbluth, double &energy);
 
       /**
-      * Configuration bias algorithm for adding an atom to a chain end.
+      * Configuration bias algorithm for adding an atom to a Linear molecule.
       *
       * This function generates and computes Rosenbluth factors for nTrial
       * trial positions, chooses one, updates the atomic position. It does
@@ -87,20 +88,21 @@ namespace McMd
       *
       * Upon return:
       *
-      *   - rosenbluth is the nonbonded Rosenblush factor for the added
+      *   - rosenbluth is assigned nonbonded Rosenblush factor for the added
       *     atom, i.e., the sum of Boltzmann factors from nonbonded pair
       *     interactions for all nTrial_ trial positions.
       *
-      *   - energy is the total energy (bonded + nonbonded) of the new end
-      *     atom in its chosen position.
+      *   - energy assigned the total energy (bonded + nonbonded) of the new
+      *     atom atom in its chosen position.
       *
-      * \param molecule   molecule
-      * \param atomId     id of atom to be deleted
-      * \param sign       end from which deletion is occuring
-      * \param rosenbluth Rosenbluth factor of added atom (out)
-      * \param energy     potential energy of deleted atom (out)
+      * \param molecule  molecule
+      * \param atom0 atom to be added
+      * \param atomId  id of atom to be deleted
+      * \param sign  end from which deletion is occuring
+      * \param rosenbluth  Rosenbluth factor of added atom (out)
+      * \param energy  potential energy of deleted atom (out)
       */
-      void addAtom(Molecule& molecule, int atomId, int sign,
+      void addAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
                    double &rosenbluth, double &energy);
 
    protected:

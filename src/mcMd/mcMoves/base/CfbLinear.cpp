@@ -59,22 +59,29 @@ namespace McMd
    * Configuration bias algorithm for deleting one atom from chain end.
    */
    void
-   CfbLinear::deleteAtom(Molecule& molecule, int atomId, int sign,
+   CfbLinear::deleteAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
                             double &rosenbluth, double &energy)
    {
+      // sign == 0, direction == -1  -> atomId = 0, 1,... end
+      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, etc.
+      assert(sign == 0 || sign == 1);
       int direction = sign ? 1 : -1;
-      Atom& atom0 = molecule.atom(atomId);
       Vector& pos0 = atom0.position();
+      Vector& pos1 = molecule.atom(atomId - direction).position();
 
-      // Calculate length of end bond
-      Atom& atom1 = molecule.atom(atomId - direction);
-      Vector& pos1 = atom1.position();
-      Vector v1;
-      double r1sq = boundary().distanceSq(pos1, pos0, v1);
-      double r1 = sqrt(r1sq);
-      double trialEnergy;
+      // Calculate bond length and energy
+      Vector v1, u1;
+      double r1, bondEnergy;
+      int bondType;
+      r1 = boundary().distanceSq(pos1, pos0, v1); // v1 = pos1 - pos0
+      bondType = molecule.bond(atomId - sign).typeId();
+      bondEnergy = system().bondPotential().energy(r1, bondType);
+      r1 = sqrt(r1); // bond length
+      u1 = v1;
+      u1 /= r1;      // unit vector
 
-      // Calculate current nonbonded pair energy of end atom
+      // Calculate other initial energies (excluding bond)
+
       #ifndef INTER_NOPAIR
       energy = system().pairPotential().atomEnergy(atom0);
       #else
@@ -82,17 +89,18 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      Vector v2;
+      Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
       int angleType;
-
       if (molecule.nAngle()) {
          pos2Ptr = molecule.atom(atomId - 2*direction).position();
-         r2 = boundary().distanceSq(*pos2Ptr, *pos1Ptr, v2);
+         r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); // v2 = pos2 - pos1
          r2 = sqrt(r2);
-         cosTheta = v1.dot(v2) / (r1*r2);
-         int angleType = molecule.bond(atomId - 2*sign).typeId();
+         u2 = v2;
+         u2 /= r2; // unit vector
+         double cosTheta = u1.dot(u2);
+         angleType = molecule.bond(atomId - 2*sign).typeId();
          energy += system().anglePotential().energy(cosTheta, angleType);
       }
       #endif
@@ -106,38 +114,36 @@ namespace McMd
       // Rosenbluth factor = exp(-beta*(pair + angle + external))
       rosenbluth = boltzmann(energy);
 
-      // Add current bond energy to energy.
-      int bondType = molecule.bond(atomId - sign).typeId();
-      energy += system().bondPotential().energy(r1sq, bondType);
+      // Add bond energy to total energy in current position
+      energy += bondEnergy;
 
       // Loop over nTrial - 1 additional trial positions:
-      Vector bondVec;
-      for (int iTrial=0; iTrial < nTrial_ - 1; ++iTrial) {
+      double trialEnergy;
+      for (int iTrial = 0; iTrial < nTrial_ - 1; ++iTrial) {
 
-         random().unitVector(v1);
+         // Generate trial position
+         random().unitVector(u1);
+         v1 = u1;
          v1 *= r1;
          pos0.subtract(pos1, v1);
          boundary().shift(pos0);
 
+         // Evaluate trial energy (excluding bond energy)
          #ifndef INTER_NOPAIR
          trialEnergy = system().pairPotential().atomEnergy(atom0);
          #else
          trialEnergy = 0.0;
          #endif
-
          #ifdef INTER_ANGLE
          if (molecule.nAngle()) {
-
-            cosTheta = v1.dot(v2) / (r1*r2);
+            cosTheta = u1.dot(u2);
             trialEnergy += system().anglePotential()
-                                   .energy(cosTheta, angleTypeId);
+                                   .energy(cosTheta, angleType);
          }
          #endif
-
          #ifdef INTER_EXTERNAL
          if (system().hasExternalPotential()) {
-            trialEnergy += system().externalPotential()
-                                   .atomEnergy(*endPtr);
+            trialEnergy += system().externalPotential().atomEnergy(atom0);
          }
          #endif
 
@@ -150,61 +156,64 @@ namespace McMd
    * Configuration bias algorithm for adding one atom to a chain end.
    */
    void
-   CfbLinear::addAtom(Molecule& molecule, int atomId, int sign,
-                       double &rosenbluth, double &energy)
+   CfbLinear::addAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
+                      double &rosenbluth, double &energy)
    {
-      Vector trialPos[MaxTrial_];
-      Vector v1;
+      Vector trialPos[MaxTrial_], v1, u1;
       double trialProb[MaxTrial_], trialEnergy[MaxTrial_];
 
       int direction = sign ? 1 : -1;
-      Atom& atom0 = molecule.atom(atomId);
-      Atom& atom1 = molecule.atom(atomId - direction);
       Vector& pos0 = atom0.position();
-      Vector& pos1 = atom1.position();
+      Vector& pos1 = molecule.atom(atomId - direction).position();
 
       // Generate a random bond length
       double beta, r1;
       int bondType, iTrial;
       beta = energyEnsemble().beta();
-      bondType = molecule.bond(atomId - sign).typeId();
       r1 = system().bondPotential().randomBondLength(&random(), beta, bondType);
+      bondType = molecule.bond(atomId - sign).typeId();
 
       #ifdef INTER_ANGLE
-      Vector v2;
+      // Calculate vector v2 = pos2 - pos1, r2 = |v2|
+      Vector v2, u2;
       double r2, cosTheta;
+      Vector* pos2Ptr;
       int angleType;
       if (molecule().nAngle()) {
          angleType = molecule.bond(atomId - 2*sign).typeId();
-         Vector* pos2Ptr = molecule.atom(atomId - 2*direction).position();
-         r2 = boundary().distanceSq(*pos2Ptr, *pos1Ptr, v2);
+         pos2Ptr = molecule.atom(atomId - 2*direction).position();
+         r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
          r2 = sqrt(r2);
+         u2 = v2;
+         u2 /= r2;
       }
       #endif
 
       // Loop over nTrial trial positions:
       rosenbluth = 0.0;
-      for (iTrial=0; iTrial < nTrial_; ++iTrial) {
-         random().unitVector(v1);
+      for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
+
+         // Generate trial position
+         random().unitVector(u1);
+         v1 = u1;
          v1 *= r1;
          trialPos[iTrial].subtract(pos1, v1);
          boundary().shift(trialPos[iTrial]);
          pos0 = trialPos[iTrial];
 
+         // Compute trial energy (excluding bond energy)
          #ifndef INTER_NOPAIR
          trialEnergy[iTrial] = system().pairPotential().atomEnergy(atom0);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
-
          #ifdef INTER_ANGLE
          if (molecule().nAngle()) {
-            cosTheta = v1.dot(v2) / (r1*r2);
+            cosTheta = u1.dot(u2);
             trialEnergy[iTrial] += system().anglePotential().
                                    energy(cosTheta, angleTypeId);
          }
          #endif
-
          #ifdef INTER_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy[iTrial] +=
@@ -228,9 +237,8 @@ namespace McMd
       energy = trialEnergy[iTrial];
       energy += system().bondPotential().energy(r1*r1, bondType);
 
-      // Set position of new end atom to chosen value
+      // Set position of end atom to chosen value
       pos0 = trialPos[iTrial];
-
    }
 
 }
