@@ -7,11 +7,11 @@
 
 #include "CfbLinear.h"
 #include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
-
-#include <mcMd/chemistry/getAtomGroups.h>
+#include <mcMd/Simulation/Simulation.h>
+#include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
-#include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
 
 #include <util/boundary/Boundary.h>
@@ -28,15 +28,9 @@ namespace McMd
    */
    CfbLinear::CfbLinear(McSystem& system) :
       SystemMove(system),
+      speciesId_(-1),
       nTrial_(-1)
-   {
-      // Precondition
-      #ifdef INTER_DIHEDRAL
-      if (system.hasDihedralPotential()) {
-         UTIL_THROW("CfbLinear is unusable with dihedrals");
-      }
-      #endif
-   }
+   {}
 
    /*
    * Destructor
@@ -45,8 +39,34 @@ namespace McMd
    {}
 
    /*
-   * Read parameter nTrial.
+   * Read and validate parameter nTrial.
    */
+   void CfbLinear::readSpeciesId(std::istream& in)
+   {
+      read<int>(in, "speciesId", speciesId_);
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+
+      // Identify species
+      Species& species = simulation().species(speciesId_);
+      #ifdef INTER_ANGLE
+      hasAngles_ = system().hasAnglePotential() && species.nAngle() > 0;
+      assert(species.nAngle() == species.nAtom() - 2);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      hasDihedrals_ = system().hasAnglePotential() && species.nDihedral() > 0;
+      assert(species.nDihedral() == species.nAtom() - 3);
+      #endif
+      #ifdef INTER_EXTERNAL
+      hasExternal_ = system().hasExternalPotential();
+      #endif
+   }
+
+   // Read and validate parameter nTrial.
    void CfbLinear::readParameters(std::istream& in)
    {
       read<int>(in, "nTrial", nTrial_);
@@ -59,23 +79,25 @@ namespace McMd
    * Configuration bias algorithm for deleting one atom from chain end.
    */
    void
-   CfbLinear::deleteAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
-                            double &rosenbluth, double &energy)
+   CfbLinear::deleteAtom(Molecule& molecule, int atomId, 
+                         int sign, double &rosenbluth, double &energy)
    {
       // sign == 0, direction == -1  -> atomId = 0, 1,... end
       // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, etc.
       assert(sign == 0 || sign == 1);
       int direction = sign ? 1 : -1;
+      Atom& atom0 = molecule.atom(atomId);
+      Atom& atom1 = molecule.atom(atomId - direction);
       Vector& pos0 = atom0.position();
-      Vector& pos1 = molecule.atom(atomId - direction).position();
+      Vector& pos1 = atom1.position();
 
       // Calculate bond length and energy
       Vector v1, u1;
       double r1, bondEnergy;
-      int bondType;
+      int bondTypeId;
       r1 = boundary().distanceSq(pos1, pos0, v1); // v1 = pos1 - pos0
-      bondType = molecule.bond(atomId - sign).typeId();
-      bondEnergy = system().bondPotential().energy(r1, bondType);
+      bondTypeId = molecule.bond(atomId - sign).typeId();
+      bondEnergy = system().bondPotential().energy(r1, bondTypeId);
       r1 = sqrt(r1); // bond length
       u1 = v1;
       u1 /= r1;      // unit vector
@@ -92,16 +114,16 @@ namespace McMd
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
-      int angleType;
+      int angleTypeId;
       if (molecule.nAngle()) {
-         pos2Ptr = molecule.atom(atomId - 2*direction).position();
+         pos2Ptr = &(molecule.atom(atomId - 2*direction).position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); // v2 = pos2 - pos1
          r2 = sqrt(r2);
          u2 = v2;
          u2 /= r2; // unit vector
          double cosTheta = u1.dot(u2);
-         angleType = molecule.bond(atomId - 2*sign).typeId();
-         energy += system().anglePotential().energy(cosTheta, angleType);
+         angleTypeId = molecule.bond(atomId - 2*sign).typeId();
+         energy += system().anglePotential().energy(cosTheta, angleTypeId);
       }
       #endif
 
@@ -138,7 +160,7 @@ namespace McMd
          if (molecule.nAngle()) {
             cosTheta = u1.dot(u2);
             trialEnergy += system().anglePotential()
-                                   .energy(cosTheta, angleType);
+                                   .energy(cosTheta, angleTypeId);
          }
          #endif
          #ifdef INTER_EXTERNAL
@@ -156,36 +178,40 @@ namespace McMd
    * Configuration bias algorithm for adding one atom to a chain end.
    */
    void
-   CfbLinear::addAtom(Molecule& molecule, Atom& atom0, int atomId, int sign,
-                      double &rosenbluth, double &energy)
+   CfbLinear::addAtom(Molecule& molecule, Atom& atom0, Atom& atom1, int atomId, 
+                      int sign, double &rosenbluth, double &energy)
    {
       Vector trialPos[MaxTrial_], v1, u1;
       double trialProb[MaxTrial_], trialEnergy[MaxTrial_];
 
+      // sign == 0, direction == -1  -> atomId = 0, 1,... end
+      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, etc.
+      assert(sign == 0 || sign == 1);
       int direction = sign ? 1 : -1;
       Vector& pos0 = atom0.position();
-      Vector& pos1 = molecule.atom(atomId - direction).position();
+      Vector& pos1 = atom1.position();
 
       // Generate a random bond length
       double beta, r1;
-      int bondType, iTrial;
+      int bondTypeId, iTrial;
       beta = energyEnsemble().beta();
-      r1 = system().bondPotential().randomBondLength(&random(), beta, bondType);
-      bondType = molecule.bond(atomId - sign).typeId();
+      r1 = system().bondPotential().randomBondLength(&random(), beta, bondTypeId);
+      bondTypeId = molecule.bond(atomId - sign).typeId();
 
       #ifdef INTER_ANGLE
       // Calculate vector v2 = pos2 - pos1, r2 = |v2|
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
-      int angleType;
-      if (molecule().nAngle()) {
-         angleType = molecule.bond(atomId - 2*sign).typeId();
-         pos2Ptr = molecule.atom(atomId - 2*direction).position();
+      int angleTypeId;
+      if (hasAngles_) {
+         angleTypeId = molecule.bond(atomId - 2*sign).typeId();
+         Atom* atom2Ptr = &atom1 - direction;
+         pos2Ptr = &(atom2Ptr->position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
          r2 = sqrt(r2);
          u2 = v2;
-         u2 /= r2;
+         u2 /= r2;  // unit vector
       }
       #endif
 
@@ -208,14 +234,14 @@ namespace McMd
          trialEnergy[iTrial] = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (molecule().nAngle()) {
+         if (hasAngles_) {
             cosTheta = u1.dot(u2);
             trialEnergy[iTrial] += system().anglePotential().
                                    energy(cosTheta, angleTypeId);
          }
          #endif
          #ifdef INTER_EXTERNAL
-         if (system().hasExternalPotential()) {
+         if (hasExternal_) {
             trialEnergy[iTrial] +=
                         system().externalPotential().atomEnergy(atom0);
          }
@@ -235,7 +261,7 @@ namespace McMd
 
       // Calculate total energy for chosen trial.
       energy = trialEnergy[iTrial];
-      energy += system().bondPotential().energy(r1*r1, bondType);
+      energy += system().bondPotential().energy(r1*r1, bondTypeId);
 
       // Set position of end atom to chosen value
       pos0 = trialPos[iTrial];

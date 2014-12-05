@@ -14,7 +14,7 @@
 #include "common/MdMove.h"
 #include "common/DpdMove.h"
 
-#if INTER_BOND
+#ifdef INTER_BOND
 #include "linear/EndSwapMove.h"
 #include "linear/CfbEndMove.h"
 #include "linear/CfbReptationMove.h"

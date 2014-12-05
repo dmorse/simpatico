@@ -149,10 +149,10 @@ namespace McMd
    private:
 
       /// Pointer to parent Simulation.
-      Simulation*       simulationPtr_;
+      Simulation* simulationPtr_;
 
       /// Pointer to parent System.
-      System*           systemPtr_;
+      System* systemPtr_;
 
       /**
       * Pointer to DArray containing one System::MoleculeSet for each Species.
@@ -195,7 +195,7 @@ namespace McMd
       bool hasTethers_;
       #endif
 
-   }; 
+   };
 
    // Inline functions
 
@@ -294,7 +294,6 @@ namespace McMd
    inline bool SubSystem::hasTethers() const
    { return hasTethers_; }
    #endif
-
 
 }
 #endif

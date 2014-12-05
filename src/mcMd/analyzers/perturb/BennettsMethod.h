@@ -100,11 +100,9 @@ namespace McMd
       /// Value of shift constant for lower replica system.
       double lowerShift_;
 
-      #if UTIL_MPI
-
+      #ifdef UTIL_MPI
       // Values of shift constants for all replicas.
       DArray<double> shifts_;
-
       #endif
      
    private:
