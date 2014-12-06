@@ -1,5 +1,5 @@
-#ifndef MCMD_CFB_END_BASE_H
-#define MCMD_CFB_END_BASE_H
+#ifndef MCMD_CFB_LINEAR_H
+#define MCMD_CFB_LINEAR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -61,11 +61,6 @@ namespace McMd
       * This function computes the energy of an end atom and a Rosenbluth
       * factor for removing it. It does not remove the end atom from the
       * system cell list.
-      *
-      * Note: Reference to atom0 and atom1 are passed as parameter to allow 
-      * the use of this algorithm in reptation algorithm, in which a memory 
-      * location from the tail (removal) end is used to temporarily 
-      * represented the head (added) atom.
       *
       * Upon return:
       *
@@ -140,24 +135,22 @@ namespace McMd
       /**
       * Get nTrial.
       */
-      int nTrial() const
-      {  return nTrial_; }
+      int nTrial() const;
 
       /**
       * Get speciesId.
       */
-      int nspeciesId() const
-      {  return nTrial_; }
+      int speciesId() const;
 
    private:
 
-      /// Maximum allowed number of trial positions for a regrown atom.
+      /// Maximum allowed number of trial positions
       static const int MaxTrial_ = 20;
 
       /// Integer identifier of molecular species
       int  speciesId_;
 
-      /// Actual number of trial positions for each regrown atom.
+      /// Number of trial positions for regrown atom (<= MaxTrial_)
       int  nTrial_;
 
       #ifdef INTER_ANGLE
@@ -173,6 +166,20 @@ namespace McMd
       #endif
 
    };
+
+   // Inline functions
+
+   /*
+   * Get nTrial.
+   */
+   inline int CfbLinear::nTrial() const
+   {  return nTrial_; }
+
+   /*
+   * Get speciesId.
+   */
+   inline int CfbLinear::speciesId() const
+   {  return speciesId_; }
 
 }
 #endif

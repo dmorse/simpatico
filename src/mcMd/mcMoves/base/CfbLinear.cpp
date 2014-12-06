@@ -5,18 +5,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
+
 #include "CfbLinear.h"
 #include <mcMd/mcSimulation/McSystem.h>
-#include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
-#include <mcMd/Simulation/Simulation.h>
+#include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
+#include <mcMd/species/Linear.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 
 #include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
-#include <util/global.h>
 
 namespace McMd
 {
@@ -30,7 +31,11 @@ namespace McMd
       SystemMove(system),
       speciesId_(-1),
       nTrial_(-1)
-   {}
+   {
+      #ifndef INTER_BOND
+      UTIL_THROW("CfbLinear requires that bonds be enabled");
+      #endif
+   }
 
    /*
    * Destructor
@@ -51,8 +56,13 @@ namespace McMd
          UTIL_THROW("speciesId > nSpecies");
       }
 
-      // Identify species
+      // Check that Species is a subclass of Linear
       Species& species = simulation().species(speciesId_);
+      Linear* linearPtr = dynamic_cast<Linear*>(&species);
+      if (linearPtr == 0) {
+         UTIL_THROW("Species is not Linear in CfbLinear");
+      }
+
       #ifdef INTER_ANGLE
       hasAngles_ = system().hasAnglePotential() && species.nAngle() > 0;
       assert(species.nAngle() == species.nAtom() - 2);
@@ -71,7 +81,7 @@ namespace McMd
    {
       read<int>(in, "nTrial", nTrial_);
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
-         UTIL_THROW("Invalid value input for nTrial");
+         UTIL_THROW("Invalid parameter value for nTrial");
       }
    }
 
@@ -82,8 +92,8 @@ namespace McMd
    CfbLinear::deleteAtom(Molecule& molecule, int atomId, 
                          int sign, double &rosenbluth, double &energy)
    {
-      // sign == 0, direction == -1  -> atomId = 0, 1,... end
-      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, etc.
+      // sign == 0, direction == -1 -> atomId = 0, 1, 2, ... 
+      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, ...
       assert(sign == 0 || sign == 1);
       int direction = sign ? 1 : -1;
       Atom& atom0 = molecule.atom(atomId);
@@ -92,20 +102,20 @@ namespace McMd
       Vector& pos1 = atom1.position();
 
       // Calculate bond length and energy
-      Vector v1, u1;
+      Vector v1; // Vector between atoms 0 and 1
+      Vector u1; // Unit vector parallel to v1
       double r1, bondEnergy;
-      int bondTypeId;
-      r1 = boundary().distanceSq(pos1, pos0, v1); // v1 = pos1 - pos0
-      bondTypeId = molecule.bond(atomId - sign).typeId();
+      int bondTypeId = molecule.bond(atomId - sign).typeId();
+      r1 = boundary().distanceSq(pos1, pos0, v1); 
+      // Here: r1 = bond length square, v1 = pos1 - pos0
       bondEnergy = system().bondPotential().energy(r1, bondTypeId);
       r1 = sqrt(r1); // bond length
       u1 = v1;
       u1 /= r1;      // unit vector
 
-      // Calculate other initial energies (excluding bond)
-
       #ifndef INTER_NOPAIR
-      energy = system().pairPotential().atomEnergy(atom0);
+      McPairPotential& pairPotential = system().pairPotential();
+      energy = pairPotential.atomEnergy(atom0);
       #else
       energy = 0.0;
       #endif
@@ -114,25 +124,29 @@ namespace McMd
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
+      AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
       if (molecule.nAngle()) {
-         pos2Ptr = &(molecule.atom(atomId - 2*direction).position());
+         Atom& atom2 = molecule.atom(atomId - 2*direction);
+         pos2Ptr = &(atom2.position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); // v2 = pos2 - pos1
-         r2 = sqrt(r2);
+         r2 = sqrt(r2); // bond length
          u2 = v2;
          u2 /= r2; // unit vector
-         double cosTheta = u1.dot(u2);
-         angleTypeId = molecule.bond(atomId - 2*sign).typeId();
-         energy += system().anglePotential().energy(cosTheta, angleTypeId);
+         cosTheta = u1.dot(u2);
+         angleTypeId = atom2.typeId();
+         energy += anglePotential.energy(cosTheta, angleTypeId);
       }
       #endif
 
       #ifdef INTER_EXTERNAL
+      ExternalPotential& externalPotential = system().externalPotential();
       if (system().hasExternalPotential()) {
-         energy += system().externalPotential().atomEnergy(atom0);
+         energy += externalPotential.atomEnergy(atom0);
       }
       #endif
 
+      // Here: energy = total energy - bond energy
       // Rosenbluth factor = exp(-beta*(pair + angle + external))
       rosenbluth = boltzmann(energy);
 
@@ -150,22 +164,21 @@ namespace McMd
          pos0.subtract(pos1, v1);
          boundary().shift(pos0);
 
-         // Evaluate trial energy (excluding bond energy)
+         // Compute trial energy (excluding bond energy)
          #ifndef INTER_NOPAIR
          trialEnergy = system().pairPotential().atomEnergy(atom0);
          #else
          trialEnergy = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (molecule.nAngle()) {
+         if (hasAngles_) {
             cosTheta = u1.dot(u2);
-            trialEnergy += system().anglePotential()
-                                   .energy(cosTheta, angleTypeId);
+            trialEnergy += anglePotential.energy(cosTheta, angleTypeId);
          }
          #endif
          #ifdef INTER_EXTERNAL
-         if (system().hasExternalPotential()) {
-            trialEnergy += system().externalPotential().atomEnergy(atom0);
+         if (hasExternal_) {
+            trialEnergy += externalPotential.atomEnergy(atom0);
          }
          #endif
 
@@ -181,31 +194,34 @@ namespace McMd
    CfbLinear::addAtom(Molecule& molecule, Atom& atom0, Atom& atom1, int atomId, 
                       int sign, double &rosenbluth, double &energy)
    {
-      Vector trialPos[MaxTrial_], v1, u1;
-      double trialProb[MaxTrial_], trialEnergy[MaxTrial_];
-
-      // sign == 0, direction == -1  -> atomId = 0, 1,... end
-      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, etc.
+      // sign == 0, direction == -1 -> atomId = 0, 1, 2, ...
+      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, ...
       assert(sign == 0 || sign == 1);
-      int direction = sign ? 1 : -1;
+      assert(atom0.typeId() == molecule.species(speciesId_).typeId(atomId));
       Vector& pos0 = atom0.position();
       Vector& pos1 = atom1.position();
 
-      // Generate a random bond length
+      // Generate a random bond length r1
       double beta, r1;
       int bondTypeId, iTrial;
+      bondTypeId = molecule.bond(atomId - sign).typeId();
       beta = energyEnsemble().beta();
       r1 = system().bondPotential().randomBondLength(&random(), beta, bondTypeId);
-      bondTypeId = molecule.bond(atomId - sign).typeId();
+
+      #ifndef INTER_NOPAIR
+      McPairPotential& pairPotential = system().pairPotential();
+      #endif
 
       #ifdef INTER_ANGLE
       // Calculate vector v2 = pos2 - pos1, r2 = |v2|
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
+      AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
       if (hasAngles_) {
          angleTypeId = molecule.bond(atomId - 2*sign).typeId();
+         int direction = sign ? 1 : -1;
          Atom* atom2Ptr = &atom1 - direction;
          pos2Ptr = &(atom2Ptr->position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
@@ -214,12 +230,18 @@ namespace McMd
          u2 /= r2;  // unit vector
       }
       #endif
+      #ifdef INTER_EXTERNAL
+      ExternalPotential& externalPotential = system().externalPotential();
+      #endif
 
       // Loop over nTrial trial positions:
+      Vector v1, u1;
+      Vector trialPos[MaxTrial_];
+      double trialProb[MaxTrial_], trialEnergy[MaxTrial_];
       rosenbluth = 0.0;
       for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
 
-         // Generate trial position
+         // Generate trial bond vector v1 and position pos0
          random().unitVector(u1);
          v1 = u1;
          v1 *= r1;
@@ -229,24 +251,24 @@ namespace McMd
 
          // Compute trial energy (excluding bond energy)
          #ifndef INTER_NOPAIR
-         trialEnergy[iTrial] = system().pairPotential().atomEnergy(atom0);
+         trialEnergy[iTrial] = pairPotential.atomEnergy(atom0);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
          #ifdef INTER_ANGLE
          if (hasAngles_) {
             cosTheta = u1.dot(u2);
-            trialEnergy[iTrial] += system().anglePotential().
-                                   energy(cosTheta, angleTypeId);
+            trialEnergy[iTrial] += anglePotential.energy(cosTheta, angleTypeId);
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (hasExternal_) {
             trialEnergy[iTrial] +=
-                        system().externalPotential().atomEnergy(atom0);
+                        externalPotential.atomEnergy(atom0);
          }
          #endif
 
+         // Compute unnormalized probability, increment rosenbluth weigth
          trialProb[iTrial] = boltzmann(trialEnergy[iTrial]);
          rosenbluth += trialProb[iTrial];
       }
@@ -259,11 +281,11 @@ namespace McMd
       // Choose trial position
       iTrial = random().drawFrom(trialProb, nTrial_);
 
-      // Calculate total energy for chosen trial.
+      // Calculate total energy for chosen trial, including bond energy 
       energy = trialEnergy[iTrial];
       energy += system().bondPotential().energy(r1*r1, bondTypeId);
 
-      // Set position of end atom to chosen value
+      // Set position to chosen value
       pos0 = trialPos[iTrial];
    }
 
