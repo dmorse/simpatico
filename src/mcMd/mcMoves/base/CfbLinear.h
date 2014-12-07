@@ -45,15 +45,23 @@ namespace McMd
       virtual ~CfbLinear();
 
       /**
-      * Read parameter nTrial.
-      *
-      * This function is used only for testing. Subclasses read the
-      * protected member nTrial directly.
+      * Read and validate speciesId and nTrial.
       */
       virtual void readParameters(std::istream& in);
 
-      // No loadParameters or save methods are needed. The nTrial
-      // can be directly loaded and saved by subclasses.
+      /**
+      * Load and validate speciesId and nTrial.
+      *
+      * \param ar input (loading) archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save speciesId and nTrial.
+      *
+      * \param ar output (loading) archive
+      */
+      virtual void save(Serializable::OArchive& ar);
 
       /**
       * CFB algorithm for deleting an end atom from a Linear molecule.
@@ -73,7 +81,7 @@ namespace McMd
       *
       * \param molecule  molecule
       * \param atomId  id of atom to be deleted
-      * \param sign  end from which deletion is occuring
+      * \param sign  end from which deletion is occuring (= +-1)
       * \param rosenbluth  nonbonded Rosenbluth factor of deleted atom (out)
       * \param energy  total potential energy of deleted atom (out)
       */
@@ -109,7 +117,7 @@ namespace McMd
       * \param atom0  atom to be added
       * \param atom1  atom to which atom0 is bonded (pivot atom)
       * \param atomId  local id of atom0 (0 <= id < molecule.nAtom())
-      * \param sign  end from which deletion is occuring
+      * \param sign  end from which deletion is occuring (=+-1)
       * \param rosenbluth  Rosenbluth factor of added atom (out)
       * \param energy  potential energy of deleted atom (out)
       */
@@ -117,20 +125,6 @@ namespace McMd
                    int sign, double &rosenbluth, double &energy);
 
    protected:
-
-      /**
-      * Read and validate speciesId parameter.
-      *
-      * \param in input parameter file
-      */
-      void readSpeciesId(std::istream& in);
-
-      /**
-      * Read and validate nTrial parameter.
-      *
-      * \param in input parameter file
-      */
-      void readnTrial(std::istream& in);
 
       /**
       * Get nTrial.
@@ -164,6 +158,11 @@ namespace McMd
       #ifdef INTER_EXTERNAL
       bool hasExternal_;
       #endif
+
+      /**
+      * Validate and process parameters speciesId and nTrial.
+      */
+      void processParameters();
 
    };
 

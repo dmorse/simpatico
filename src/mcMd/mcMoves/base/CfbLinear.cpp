@@ -44,11 +44,10 @@ namespace McMd
    {}
 
    /*
-   * Read and validate parameter nTrial.
+   * Read and validate parameters speciesId and nTrial.
    */
-   void CfbLinear::readSpeciesId(std::istream& in)
+   void CfbLinear::processParameters()
    {
-      read<int>(in, "speciesId", speciesId_);
       if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
       }
@@ -74,15 +73,40 @@ namespace McMd
       #ifdef INTER_EXTERNAL
       hasExternal_ = system().hasExternalPotential();
       #endif
-   }
 
-   // Read and validate parameter nTrial.
-   void CfbLinear::readParameters(std::istream& in)
-   {
-      read<int>(in, "nTrial", nTrial_);
+      // Read and validate parameter nTrial.
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
          UTIL_THROW("Invalid parameter value for nTrial");
       }
+   }
+
+   /*
+   * Read and validate parameters speciesId and nTrial.
+   */
+   void CfbLinear::readParameters(std::istream& in)
+   {
+      read<int>(in, "speciesId", speciesId_);
+      read<int>(in, "nTrial", nTrial_);
+      processParameters();
+   }
+
+   /*
+   * Load and validate parameters speciesId and nTrial.
+   */
+   void CfbLinear::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nTrial", nTrial_);
+      processParameters();
+   }
+
+   /*
+   * Save parameters speciesId and nTrial.
+   */
+   void CfbLinear::save(Serializable::OArchive& ar)
+   {
+      ar & speciesId_;
+      ar & nTrial_;
    }
 
    /*
@@ -92,12 +116,12 @@ namespace McMd
    CfbLinear::deleteAtom(Molecule& molecule, int atomId, 
                          int sign, double &rosenbluth, double &energy)
    {
-      // sign == 0, direction == -1 -> atomId = 0, 1, 2, ... 
-      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, ...
-      assert(sign == 0 || sign == 1);
-      int direction = sign ? 1 : -1;
+      // sign == -1, shift == 0 -> atomId = 0, 1, 2, ... 
+      // sign == +1, shift == 1 -> atomId = nAtom-1, nAtom-2, ...
+      assert(sign == 1 || sign == -1);
+      int shift = (sign == 1) ? 1 : 0;
       Atom& atom0 = molecule.atom(atomId);
-      Atom& atom1 = molecule.atom(atomId - direction);
+      Atom& atom1 = molecule.atom(atomId - sign);
       Vector& pos0 = atom0.position();
       Vector& pos1 = atom1.position();
 
@@ -105,7 +129,7 @@ namespace McMd
       Vector v1; // Vector between atoms 0 and 1
       Vector u1; // Unit vector parallel to v1
       double r1, bondEnergy;
-      int bondTypeId = molecule.bond(atomId - sign).typeId();
+      int bondTypeId = molecule.bond(atomId - shift).typeId();
       r1 = boundary().distanceSq(pos1, pos0, v1); 
       // Here: r1 = bond length square, v1 = pos1 - pos0
       bondEnergy = system().bondPotential().energy(r1, bondTypeId);
@@ -127,7 +151,7 @@ namespace McMd
       AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
       if (molecule.nAngle()) {
-         Atom& atom2 = molecule.atom(atomId - 2*direction);
+         Atom& atom2 = molecule.atom(atomId - 2*sign);
          pos2Ptr = &(atom2.position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); // v2 = pos2 - pos1
          r2 = sqrt(r2); // bond length
@@ -194,9 +218,11 @@ namespace McMd
    CfbLinear::addAtom(Molecule& molecule, Atom& atom0, Atom& atom1, int atomId, 
                       int sign, double &rosenbluth, double &energy)
    {
-      // sign == 0, direction == -1 -> atomId = 0, 1, 2, ...
-      // sign == 1, direction == +1 -> atomId = nAtom-1, nAtom-2, ...
-      assert(sign == 0 || sign == 1);
+      // sign == -1, shift == 0 -> atomId = 0, 1, 2, ... 
+      // sign == +1, shift == 1 -> atomId = nAtom-1, nAtom-2, ...
+      assert(sign == 1 || sign == -1);
+      int shift = (sign == 1) ? 1 : 0;
+
       assert(atom0.typeId() == molecule.species(speciesId_).typeId(atomId));
       Vector& pos0 = atom0.position();
       Vector& pos1 = atom1.position();
@@ -204,7 +230,7 @@ namespace McMd
       // Generate a random bond length r1
       double beta, r1;
       int bondTypeId, iTrial;
-      bondTypeId = molecule.bond(atomId - sign).typeId();
+      bondTypeId = molecule.bond(atomId - shift).typeId();
       beta = energyEnsemble().beta();
       r1 = system().bondPotential().randomBondLength(&random(), beta, bondTypeId);
 
@@ -220,9 +246,8 @@ namespace McMd
       AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
       if (hasAngles_) {
-         angleTypeId = molecule.bond(atomId - 2*sign).typeId();
-         int direction = sign ? 1 : -1;
-         Atom* atom2Ptr = &atom1 - direction;
+         angleTypeId = molecule.bond(atomId - 2*shift).typeId();
+         Atom* atom2Ptr = &atom1 - sign;
          pos2Ptr = &(atom2Ptr->position());
          r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
          r2 = sqrt(r2);
