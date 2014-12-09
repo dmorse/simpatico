@@ -23,18 +23,18 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+   /*
    * Constructor
    */
-   CfbLinearEndMove::CfbLinearEndMove(McSystem& system) : 
+   CfbLinearEndMove::CfbLinearEndMove(McSystem& system) :
       CfbLinear(system),
       nRegrow_(-1)
-   {  setClassName("CfbLinearEndMove"); } 
-   
-   /* 
+   {  setClassName("CfbLinearEndMove"); }
+
+   /*
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbLinearEndMove::readParameters(std::istream& in) 
+   void CfbLinearEndMove::readParameters(std::istream& in)
    {
       // Read parameters
       readProbability(in);
@@ -50,14 +50,14 @@ namespace McMd
          UTIL_THROW("nRegrow_  >= nAtom");
       }
 
-      // Allocate 
-      oldPos_.allocate(nRegrow_); 
+      // Allocate
+      oldPos_.allocate(nRegrow_);
    }
 
-   /* 
+   /*
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbLinearEndMove::loadParameters(Serializable::IArchive& ar) 
+   void CfbLinearEndMove::loadParameters(Serializable::IArchive& ar)
    {
       // Read parameters
       McMove::loadParameters(ar);
@@ -73,24 +73,24 @@ namespace McMd
          UTIL_THROW("nRegrow_  >= nAtom");
       }
 
-      // Allocate array to store old positions 
-      oldPos_.allocate(nRegrow_); 
+      // Allocate array to store old positions
+      oldPos_.allocate(nRegrow_);
    }
 
-   /* 
+   /*
    * Save state to archive.
    */
-   void CfbLinearEndMove::save(Serializable::OArchive& ar) 
+   void CfbLinearEndMove::save(Serializable::OArchive& ar)
    {
       McMove::save(ar);
       CfbLinear::save(ar);
       ar & nRegrow_;
    }
 
-   /* 
+   /*
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
-   bool CfbLinearEndMove::move() 
+   bool CfbLinearEndMove::move()
    {
       double rosenbluth, rosen_r,  rosen_f;
       double energy, energy_r, energy_f;
@@ -99,9 +99,9 @@ namespace McMd
       Atom* atom1Ptr; // pointer to "pivot" atom, which is bonded to atom0
       int nAtom, sign, beginId, endId, atomId, i;
       bool accept;
-     
+
       incrementNAttempt();
-    
+
       // Choose a molecule at random
       molPtr = &(system().randomMolecule(speciesId()));
       nAtom = molPtr->nAtom();
@@ -121,16 +121,16 @@ namespace McMd
          beginId = nRegrow_ - 1;
          endId   = 0;
       }
-   
+
       // Store current atomic positions from segment to be regrown
       atomId = beginId;
       for (i = 0; i < nRegrow_; ++i) {
          oldPos_[i] = molPtr->atom(atomId).position();
          atomId += sign;
       }
-   
+
       // Delete monomers, starting from chain end
-      rosen_r  = 1.0;
+      rosen_r = 1.0;
       energy_r = 0.0;
       atomId = endId;
       for (i = 0; i < nRegrow_; ++i) {
@@ -143,9 +143,10 @@ namespace McMd
          energy_r += energy;
          atomId -= sign;
       }
-   
+      assert(atomId == beginId - sign);
+
       // Regrow monomers
-      rosen_f  = 1.0;
+      rosen_f = 1.0;
       energy_f = 0.0;
       atomId = beginId;
       for (i = 0; i < nRegrow_; ++i) {
@@ -160,15 +161,16 @@ namespace McMd
          #endif
          atomId += sign;
       }
-   
+      assert(atomId == endId + sign);
+
       // Accept or reject the move
       accept = random().metropolis(rosen_f/rosen_r);
       if (accept) {
-         // If the move is accepted, keep current positions.
+         // If accepted, keep current positions.
          // Increment counter for accepted moves.
          incrementNAccept();
       } else {
-         // If the move is rejected, restore original positions
+         // If rejected, restore original atom positions
          atomId = beginId;
          for (i = 0; i < nRegrow_; ++i) {
             atom0Ptr = &(molPtr->atom(atomId));

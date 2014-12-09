@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/mcMoves/base/CfbLinear.h>  // base class
-#include <util/containers/DArray.h>        // member template
+#include <mcMd/mcMoves/linear/CfbLinear.h>  // base class
+#include <util/containers/DArray.h>         // member template
 #include <util/space/Vector.h>              // member template parameter
 
 namespace McMd

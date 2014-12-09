@@ -1,0 +1,410 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "CfbReptateMove.h"
+#include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mcSimulation/mc_potentials.h>
+#include <mcMd/simulation/Simulation.h>
+#include <mcMd/species/Linear.h>
+#include <util/boundary/Boundary.h>
+#include <mcMd/chemistry/Molecule.h>
+#include <mcMd/chemistry/Atom.h>
+#include <mcMd/chemistry/Bond.h>
+#include <util/space/Vector.h>
+#include <util/global.h>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   CfbReptateMove::CfbReptateMove(McSystem& system) :
+      CfbLinear(system),
+      bondTypeId_(-1),
+      nJunction_(0),
+      junctions_(),
+      lTypes_(),
+      uTypes_(),
+      maskPolicy_(MaskBonded),
+      hasAutoCorr_(0),
+      autoCorrCapacity_(0),
+      outputFileName_(),
+      acceptedStepsAccumulators_()
+   {  setClassName("CfbReptateMove"); }
+
+   /*
+   * Read parameters speciesId, nRegrow, and nTrial
+   * Also read bool asAutoCorr and, if hasAutoCorr,
+   * read autoCorrCapacity and outputFileName
+   */
+   void CfbReptateMove::readParameters(std::istream& in)
+   {
+      // Read parameters
+      readProbability(in);
+      CfbLinear::readParameters(in);
+      read<int>(in, "hasAutoCorr", hasAutoCorr_);
+      if (hasAutoCorr_) {
+         read<int>(in, "autoCorrCapacity", autoCorrCapacity_);
+         read<std::string>(in, "outputFileName", outputFileName_);
+      }
+
+      // Identify bond type, check that it is same for all bonds
+      Species* speciesPtr = &simulation().species(speciesId());
+      int nBond = speciesPtr->nBond();
+      bondTypeId_ = speciesPtr->speciesBond(0).typeId();
+      for (int i = 1; i < nBond; ++i) {
+         if (bondTypeId_ != speciesPtr->speciesBond(i).typeId()) {
+            UTIL_THROW("Unequal bond type ids");
+         }
+      }
+      std::cout << "Finished bond type check" << std::endl;
+
+      // Identify policy for masking nonbonded interactions.
+      maskPolicy_ = simulation().maskedPairPolicy();
+
+      // Allocate memory for junction arrays
+      int nAtom = speciesPtr->nAtom();
+      junctions_.allocate(nAtom-1);
+      lTypes_.allocate(nAtom-1);
+      uTypes_.allocate(nAtom-1);
+      std::cout << "Finished allocating junction arrays" << std::endl;
+
+      // Identify junctions between atoms of different types
+      int lType, uType;
+      nJunction_ = 0;
+      for (int i = 0; i < nAtom - 1; ++i) {
+         lType = speciesPtr->atomTypeId(i);
+         uType = speciesPtr->atomTypeId(i+1);
+         if (lType != uType) {
+            junctions_[nJunction_] = i;
+            lTypes_[nJunction_] = lType;
+            uTypes_[nJunction_] = uType;
+            //std::cout << nJunction_ << "  " << i << "  "
+                     // << lType << "  " << uType << std::endl;
+            ++nJunction_;
+         }
+      }
+      std::cout << "Finished allocating junction arrays" << std::endl;
+
+      if (hasAutoCorr_) {
+         // Allocate memory for autocorrelation accumulators
+         int moleculeCapacity = simulation().species(speciesId()).capacity();
+         acceptedStepsAccumulators_.allocate(moleculeCapacity);
+         for (int i = 0; i < moleculeCapacity; i++) {
+            acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
+         }
+      }
+
+   }
+
+   /*
+   * Load from archive.
+   */
+   void CfbReptateMove::loadParameters(Serializable::IArchive& ar)
+   {
+      // Read parameters
+      McMove::loadParameters(ar);
+      CfbLinear::loadParameters(ar);
+
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & junctions_;
+      ar & lTypes_;
+      ar & uTypes_;
+
+      // Read autocorrelation parameters
+      loadParameter<int>(ar, "hasAutoCorr", hasAutoCorr_);
+      if (hasAutoCorr_) {
+         loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
+         loadParameter<std::string>(ar, "outputFileName", outputFileName_);
+         ar & acceptedStepsAccumulators_;
+      }
+
+      // Validate
+      Species* speciesPtr = &simulation().species(speciesId());
+      int nBond = speciesPtr->nBond();
+      for (int i = 0; i < nBond; ++i) {
+         if (bondTypeId_ != speciesPtr->speciesBond(i).typeId()) {
+            UTIL_THROW("Inconsistent or unequal bond type ids");
+         }
+      }
+      if (maskPolicy_ != simulation().maskedPairPolicy()) {
+         UTIL_THROW("Inconsistent values of maskPolicy_");
+      }
+
+   }
+
+   /*
+   * Load from archive.
+   */
+   void CfbReptateMove::save(Serializable::OArchive& ar)
+   {
+      McMove::save(ar);
+      CfbLinear::save(ar);
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & junctions_;
+      ar & lTypes_;
+      ar & uTypes_;
+      ar & hasAutoCorr_;
+      if (hasAutoCorr_) {
+         ar & autoCorrCapacity_;
+         ar & outputFileName_;
+         ar & acceptedStepsAccumulators_;
+      }
+   }
+
+   /*
+   * Generate, attempt and accept or reject a Monte Carlo move.
+   */
+   bool CfbReptateMove::move()
+   {
+      Vector oldPos, newPos;
+      double rosen_r,  rosen_f, ratio;
+      double energy_r, energy_f;
+      Atom *tailPtr; // pointer to the tail atom (to be removed)
+      Atom *atomPtr; // resetable atom pointer
+      Molecule *molPtr; // pointer to chosen molecule
+      int nAtom, sign, headId, tailId, oldType, i;
+      bool accept;
+
+      incrementNAttempt();
+
+      // Choose a molecule of specific species at random
+      molPtr = &(system().randomMolecule(speciesId()));
+      nAtom = molPtr->nAtom();
+
+      // Choose which chain end to regrow.
+      // "tail" = deletion end, "head" = addition end
+      if (random().uniform(0.0, 1.0) > 0.5) {
+         sign = +1;
+         headId = nAtom - 1;
+         tailId = 0;
+      } else {
+         sign = -1;
+         headId = 0;
+         tailId = nAtom - 1;
+      }
+
+      // Store current position and type of tail atom
+      tailPtr = &(molPtr->atom(tailId));
+      oldPos = tailPtr->position();
+      oldType = tailPtr->typeId();
+
+      // Delete tail atom
+      deleteAtom(*molPtr, tailId, -sign, rosen_r, energy_r);
+      #ifndef INTER_NOPAIR
+      // Delete from McSystem cell list
+      system().pairPotential().deleteAtom(*tailPtr);
+      #endif
+
+      // Regrow head, using tailPtr to store properties of the new head.
+      atomPtr = &(molPtr->atom(headId)); // new pivot atom
+      tailPtr->setTypeId(atomPtr->typeId()); // new head atom
+      tailPtr->mask().clear();
+      if (maskPolicy_ == MaskBonded) {
+         tailPtr->mask().append(*atomPtr);
+      }
+      addAtom(*molPtr, *tailPtr, *atomPtr, headId, sign, rosen_f, energy_f);
+
+      // Calculate junction factor for heteropolymers.
+      double jFactor;
+      if (nJunction_ > 0) {
+         jFactor = junctionFactor(molPtr, sign);
+         // Upon return, type ids are restored to original values.
+      } else {
+         jFactor = 1.0;
+      }
+
+      // Decide whether to accept or reject
+      ratio = jFactor * rosen_f / rosen_r;
+      accept = random().metropolis(ratio);
+
+      // Restore original type and connectivity mask for tail Atom
+      tailPtr->setTypeId(oldType);
+      tailPtr->mask().clear();
+      if (maskPolicy_ == MaskBonded) {
+         atomPtr = tailPtr + sign;
+         tailPtr->mask().append(*atomPtr);
+      }
+
+      if (accept) {
+
+         // Store position of new head atom
+         newPos = tailPtr->position();
+
+         // Shift position of tail
+         atomPtr = tailPtr + sign;
+         tailPtr->position() = atomPtr->position();
+         #ifndef INTER_NOPAIR
+         // Add tail back to system cell list
+         system().pairPotential().addAtom(*tailPtr);
+         #endif
+
+         // Shift atom positions towards the head
+         for (i = 1; i < nAtom - 1; ++i) {
+            atomPtr->position() = (atomPtr+sign)->position();
+            #ifndef INTER_NOPAIR
+            system().pairPotential().updateAtomCell(*atomPtr);
+            #endif
+            atomPtr += sign;
+         }
+         assert(atomPtr == &molPtr->atom(headId));
+
+         // Move head atom to new chosen position
+         atomPtr->position() = newPos;
+         #ifndef INTER_NOPAIR
+         system().pairPotential().updateAtomCell(*atomPtr);
+         #endif
+
+         // Increment the number of accepted moves.
+         incrementNAccept();
+
+         if (hasAutoCorr_) {
+            acceptedStepsAccumulators_[molPtr->id()].sample((double) sign);
+         }
+
+      } else {
+
+         // Restore old position of tail
+         tailPtr->position() = oldPos;
+         #ifndef INTER_NOPAIR
+         // Add tail back to System cell list.
+         system().pairPotential().addAtom(*tailPtr);
+         #endif
+
+      }
+
+      return accept;
+   }
+
+   /**
+   * Calculate Boltzmann factor associated with all junctions.
+   */
+   double CfbReptateMove::junctionFactor(Molecule* molPtr, int sign)
+   {
+      double oldEnergy, newEnergy, factor;
+      Atom* hAtomPtr; // Pointer to atom nearer head
+      int hType;      // type id of atom nearer head
+      int tType;      // type id of atom nearer tail
+      int i;          // junction index
+      int j;          // id of atom at below junction (lower)
+
+
+      // Calculate factor by looping over junctions
+      factor = 1.0;
+      for (i = 0; i < nJunction_; ++i) {
+         j = junctions_[i];
+         if (sign == 1) {
+            hAtomPtr = &(molPtr->atom(j+1));
+            tType    = lTypes_[i];
+         } else {
+            hAtomPtr = &(molPtr->atom(j));
+            tType    = uTypes_[i];
+         }
+
+         #ifndef INTER_NOPAIR
+         oldEnergy = system().pairPotential().atomEnergy(*hAtomPtr);
+         #else
+         oldEnergy = 0.0;
+         #endif
+         #ifdef INTER_EXTERNAL
+         oldEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         #endif
+
+         #ifndef INTER_NOPAIR
+         hAtomPtr->setTypeId(tType);
+         newEnergy = system().pairPotential().atomEnergy(*hAtomPtr);
+         #else
+         newEnergy = 0.0;
+         #endif
+         #ifdef INTER_EXTERNAL
+         newEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         #endif
+
+         factor *= boltzmann(newEnergy - oldEnergy);
+      }
+
+      // Revert modified atom type Ids to original values
+      #ifndef INTER_NOPAIR
+      for (i = 0; i < nJunction_; ++i) {
+         j = junctions_[i];
+         if (sign == 1) {
+            hAtomPtr = &(molPtr->atom(j+1));
+            hType    = uTypes_[i];
+         } else {
+            hAtomPtr = &(molPtr->atom(j));
+            hType    = lTypes_[i];
+         }
+         hAtomPtr->setTypeId(hType);
+      }
+      return factor;
+
+      #else //ifdef INTER_NOPAIR
+      return 1.0;
+      #endif
+   }
+
+   /**
+   * Output statistics about accepted reptation steps
+   */
+   void CfbReptateMove::output()
+   {
+      if (hasAutoCorr_)
+      {
+         DArray< double > autoCorrAvg;
+         autoCorrAvg.allocate(autoCorrCapacity_);
+
+         // Calculate average autocorrelation function over all
+         // accumulators
+         for (int i = 0; i < autoCorrCapacity_; i++) {
+            int nAvg = 0;
+            autoCorrAvg[i] = 0;
+            for (int j = 0; j < system().nMolecule(speciesId()); j++) {
+               if (acceptedStepsAccumulators_[j].nSample() > i) {
+                  nAvg++;
+                  autoCorrAvg[i] += acceptedStepsAccumulators_[j].
+                                          autoCorrelation(i);
+               }
+            }
+            autoCorrAvg[i] /= nAvg;
+         }
+
+         std::ofstream outputFile;
+
+         // Write out average autocorrelation
+         system().fileMaster().openOutputFile(outputFileName_+".dat",
+            outputFile);
+
+         for (int i = 0; i <  autoCorrCapacity_; i++)
+         {
+            outputFile << Int(i);
+            write<double>(outputFile, autoCorrAvg[i]);
+            outputFile << std::endl;
+         }
+
+         outputFile.close();
+
+         // Sum over autocorrelation (only positive time lags)
+         // Count first element with a factor 1/2, due to symmetry
+         double acSum = 0;
+         acSum = 0.5*autoCorrAvg[0];
+         for (int i = 1; i < autoCorrCapacity_; i++)
+            acSum += autoCorrAvg[i];
+
+         // write sum in .ave file
+         system().fileMaster().openOutputFile(outputFileName_+".ave",
+            outputFile);
+         outputFile << "autoCorrSum " << acSum << std::endl;
+         outputFile.close();
+      }
+   }
+
+}

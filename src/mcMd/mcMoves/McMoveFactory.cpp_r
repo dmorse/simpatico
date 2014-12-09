@@ -17,7 +17,9 @@
 #ifdef INTER_BOND
 #include "linear/EndSwapMove.h"
 #include "linear/CfbEndMove.h"
+#include "linear/CfbLinearEndMove.h"
 #include "linear/CfbReptationMove.h"
+#include "linear/CfbReptateMove.h"
 #include "linear/CfbRebridgeMove.h"
 #include "linear/CfbDoubleRebridgeMove.h"
 
@@ -70,8 +72,14 @@ namespace McMd
       if (className == "CfbEndMove") {
          ptr = new CfbEndMove(*systemPtr_);
       } else 
+      if (className == "CfbLinearEndMove") {
+         ptr = new CfbLinearEndMove(*systemPtr_);
+      } else 
       if (className == "CfbReptationMove") {
          ptr = new CfbReptationMove(*systemPtr_);
+      } else 
+      if (className == "CfbReptateMove") {
+         ptr = new CfbReptateMove(*systemPtr_);
       } else 
       if (className == "CfbRebridgeMove") {
          ptr = new CfbRebridgeMove(*systemPtr_);

@@ -64,11 +64,9 @@ namespace McMd
 
       #ifdef INTER_ANGLE
       hasAngles_ = system().hasAnglePotential() && species.nAngle() > 0;
-      assert(species.nAngle() == species.nAtom() >= 3 ? species.nAtom() - 2 : 0);
       #endif
       #ifdef INTER_DIHEDRAL
       hasDihedrals_ = system().hasAnglePotential() && species.nDihedral() > 0;
-      assert(species.nAngle() == species.nAtom() >= 4 ? species.nAtom() - 3 : 0);
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = system().hasExternalPotential();
