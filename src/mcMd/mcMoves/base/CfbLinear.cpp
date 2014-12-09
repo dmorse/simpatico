@@ -64,11 +64,11 @@ namespace McMd
 
       #ifdef INTER_ANGLE
       hasAngles_ = system().hasAnglePotential() && species.nAngle() > 0;
-      assert(species.nAngle() == species.nAtom() - 2);
+      assert(species.nAngle() == species.nAtom() >= 3 ? species.nAtom() - 2 : 0);
       #endif
       #ifdef INTER_DIHEDRAL
       hasDihedrals_ = system().hasAnglePotential() && species.nDihedral() > 0;
-      assert(species.nDihedral() == species.nAtom() - 3);
+      assert(species.nAngle() == species.nAtom() >= 4 ? species.nAtom() - 3 : 0);
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = system().hasExternalPotential();
@@ -150,13 +150,15 @@ namespace McMd
       Vector* pos2Ptr;
       AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
-      bool hasAngle;
+      bool hasAngle = false;
       if (hasAngles_) {
-         int atom2Id = atomId - 2*sign
-         if (sign) {
+         int atom2Id = atomId - 2*sign;
+         if (shift) {
+            assert(sign == 1);
             hasAngle = (atom2Id >= 0);
          } else {
-            hasAngle = (atom2Id < nAtom);
+            assert(sign == -1);
+            hasAngle = (atom2Id < molecule.nAtom());
          }
          if (hasAngle) {
             Atom& atom2 = molecule.atom(atom2Id);
@@ -204,7 +206,7 @@ namespace McMd
          trialEnergy = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngles_ && hasAngle) {
+         if (hasAngle) {
             cosTheta = u1.dot(u2);
             trialEnergy += anglePotential.energy(cosTheta, angleTypeId);
          }
@@ -232,7 +234,7 @@ namespace McMd
       assert(sign == 1 || sign == -1);
       int shift = (sign == 1) ? 1 : 0;
 
-      assert(atom0.typeId() == molecule.species(speciesId_).typeId(atomId));
+      assert(atom0.typeId() == molecule.species().atomTypeId(atomId));
       Vector& pos0 = atom0.position();
       Vector& pos1 = atom1.position();
 
@@ -254,13 +256,15 @@ namespace McMd
       Vector* pos2Ptr;
       AnglePotential& anglePotential = system().anglePotential();
       int angleTypeId;
-      bool hasAngle;
+      bool hasAngle = false;
       if (hasAngles_) {
-         int atom2Id = atomId - 2*sign
-         if (sign) {
+         int atom2Id = atomId - 2*sign;
+         if (shift) {
+            assert(sign == 1);
             hasAngle = (atom2Id >= 0);
          } else {
-            hasAngle = (atom2Id < nAtom);
+            assert(sign == -1);
+            hasAngle = (atom2Id < molecule.nAtom());
          }
          if (hasAngle) {
             angleTypeId = molecule.bond(atomId - 2*shift).typeId();
@@ -300,7 +304,7 @@ namespace McMd
          trialEnergy[iTrial] = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngles_ && hasAngle) {
+         if (hasAngle) {
             cosTheta = u1.dot(u2);
             trialEnergy[iTrial] += 
                         anglePotential.energy(cosTheta, angleTypeId);

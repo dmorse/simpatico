@@ -41,6 +41,15 @@ namespace McMd
       CfbLinear::readParameters(in);
       read<int>(in, "nRegrow", nRegrow_);
 
+      // Validate
+      if (nRegrow_ <= 0) {
+         UTIL_THROW("nRegrow_  <= 0");
+      }
+      int nAtom = system().simulation().species(speciesId()).nAtom();
+      if (nRegrow_ >= nAtom) {
+         UTIL_THROW("nRegrow_  >= nAtom");
+      }
+
       // Allocate 
       oldPos_.allocate(nRegrow_); 
    }
@@ -56,6 +65,13 @@ namespace McMd
       loadParameter<int>(ar, "nRegrow", nRegrow_);
 
       // Validate
+      if (nRegrow_ <= 0) {
+         UTIL_THROW("nRegrow_  <= 0");
+      }
+      int nAtom = system().simulation().species(speciesId()).nAtom();
+      if (nRegrow_ >= nAtom) {
+         UTIL_THROW("nRegrow_  >= nAtom");
+      }
 
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 
@@ -80,8 +96,8 @@ namespace McMd
       double energy, energy_r, energy_f;
       Molecule *molPtr; // pointer to randomly chosen molecule
       Atom* atom0Ptr; // pointer to the current end atom
-      Atom* atom1Ptr; // pointer to "pivot" atom, which is bonded to the end atom
-      int nAtom, sign, beginId, endId, i;
+      Atom* atom1Ptr; // pointer to "pivot" atom, which is bonded to atom0
+      int nAtom, sign, beginId, endId, atomId, i;
       bool accept;
      
       incrementNAttempt();
@@ -92,7 +108,7 @@ namespace McMd
 
       // Require that chain nAtom > nRegrow
       if (nRegrow_ >= nAtom) {
-         UTIL_THROW("nRegrow_  >= chain nAtom");
+         UTIL_THROW("nRegrow_  >= nAtom");
       }
 
       // Choose which chain end to regrow
@@ -107,58 +123,61 @@ namespace McMd
       }
    
       // Store current atomic positions from segment to be regrown
-      for (i = beginId; i <= endId; ++i) {
-         oldPos_[i] = molPtr->atom(i).position();
+      atomId = beginId;
+      for (i = 0; i < nRegrow_; ++i) {
+         oldPos_[i] = molPtr->atom(atomId).position();
+         atomId += sign;
       }
    
       // Delete monomers, starting from chain end
       rosen_r  = 1.0;
       energy_r = 0.0;
-      for (i = endId; i >= beginId; --i) {
-         deleteAtom(*molPtr, i, sign, rosenbluth, energy);
+      atomId = endId;
+      for (i = 0; i < nRegrow_; ++i) {
+         deleteAtom(*molPtr, atomId, sign, rosenbluth, energy);
          #ifndef INTER_NOPAIR
-         system().pairPotential().deleteAtom(molPtr->atom(i));
+         // Add end atom from cell list
+         system().pairPotential().deleteAtom(molPtr->atom(atomId));
          #endif
          rosen_r *= rosenbluth;
          energy_r += energy;
+         atomId -= sign;
       }
    
       // Regrow monomers
       rosen_f  = 1.0;
       energy_f = 0.0;
-      for (i = beginId; i <= endId; ++i) {
-         atom0Ptr = &molPtr->atom(i);
+      atomId = beginId;
+      for (i = 0; i < nRegrow_; ++i) {
+         atom0Ptr = &molPtr->atom(atomId);
          atom1Ptr = atom0Ptr - sign;
-         addAtom(*molPtr, *atom0Ptr, *atom1Ptr, i, sign, rosenbluth, energy);
+         addAtom(*molPtr, *atom0Ptr, *atom1Ptr, atomId, sign, rosenbluth, energy);
          rosen_f  *= rosenbluth;
          energy_f += energy;
-
          #ifndef INTER_NOPAIR
-         // Add end atom to McSystem cell list
+         // Add end atom to cell list
          system().pairPotential().addAtom(*atom0Ptr);
          #endif
+         atomId += sign;
       }
    
-      // Decide whether to accept or reject
+      // Accept or reject the move
       accept = random().metropolis(rosen_f/rosen_r);
       if (accept) {
-
-         // Increment counter for accepted moves of this class.
-         incrementNAccept();
-
          // If the move is accepted, keep current positions.
-
+         // Increment counter for accepted moves.
+         incrementNAccept();
       } else {
-
-         // If the move is rejected, restore old positions
-         for (i = beginId; i <= endId; ++i) {
-            atom0Ptr = &(molPtr->atom(i));
+         // If the move is rejected, restore original positions
+         atomId = beginId;
+         for (i = 0; i < nRegrow_; ++i) {
+            atom0Ptr = &(molPtr->atom(atomId));
             atom0Ptr->position() = oldPos_[i];
             #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*atom0Ptr);
             #endif
+            atomId += sign;
          }
-   
       }
 
       return accept;
