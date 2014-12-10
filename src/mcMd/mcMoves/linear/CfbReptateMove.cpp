@@ -33,7 +33,7 @@ namespace McMd
       lTypes_(),
       uTypes_(),
       maskPolicy_(MaskBonded),
-      hasAutoCorr_(0),
+      hasAutoCorr_(false),
       autoCorrCapacity_(0),
       outputFileName_(),
       acceptedStepsAccumulators_()
@@ -49,7 +49,8 @@ namespace McMd
       // Read parameters
       readProbability(in);
       CfbLinear::readParameters(in);
-      read<int>(in, "hasAutoCorr", hasAutoCorr_);
+      bool isRequired = false;
+      read<bool>(in, "hasAutoCorr", hasAutoCorr_, isRequired);
       if (hasAutoCorr_) {
          read<int>(in, "autoCorrCapacity", autoCorrCapacity_);
          read<std::string>(in, "outputFileName", outputFileName_);
@@ -120,7 +121,7 @@ namespace McMd
       ar & uTypes_;
 
       // Read autocorrelation parameters
-      loadParameter<int>(ar, "hasAutoCorr", hasAutoCorr_);
+      loadParameter<bool>(ar, "hasAutoCorr", hasAutoCorr_);
       if (hasAutoCorr_) {
          loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
          loadParameter<std::string>(ar, "outputFileName", outputFileName_);
@@ -268,7 +269,9 @@ namespace McMd
          incrementNAccept();
 
          if (hasAutoCorr_) {
-            acceptedStepsAccumulators_[molPtr->id()].sample((double) sign);
+            int molId = molPtr->id();
+            double rsign = (double) sign;
+            acceptedStepsAccumulators_[molId].sample(rsign);
          }
 
       } else {

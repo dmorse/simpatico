@@ -6,7 +6,7 @@
 */
 
 #include "McSystemAccess.h"
-#include <mcMd/McSimulation/McSystem.h>  
+#include <mcMd/mcSimulation/McSystem.h>  
 
 namespace McMd
 {

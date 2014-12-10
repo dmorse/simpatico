@@ -94,7 +94,7 @@ namespace McMd
       MaskPolicy maskPolicy_;
 
       /// Do we calculate the autocorrelation of accepted MC steps?
-      int hasAutoCorr_;
+      bool hasAutoCorr_;
 
       /// Capacity of accepted step autocorrelation
       int autoCorrCapacity_;
