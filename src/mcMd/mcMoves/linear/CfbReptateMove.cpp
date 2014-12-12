@@ -36,19 +36,19 @@ namespace McMd
       hasAutoCorr_(false),
       autoCorrCapacity_(0),
       outputFileName_(),
-      acceptedStepsAccumulators_()
+      accumulators_()
    {  setClassName("CfbReptateMove"); }
 
    /*
-   * Read parameters speciesId, nRegrow, and nTrial
-   * Also read bool asAutoCorr and, if hasAutoCorr,
-   * read autoCorrCapacity and outputFileName
+   * Read parameters and initialize.
    */
    void CfbReptateMove::readParameters(std::istream& in)
    {
       // Read parameters
       readProbability(in);
-      CfbLinear::readParameters(in);
+      CfbLinear::readParameters(in); // read speciesId_ and nTrial_
+
+      hasAutoCorr_ = false;
       bool isRequired = false;
       read<bool>(in, "hasAutoCorr", hasAutoCorr_, isRequired);
       if (hasAutoCorr_) {
@@ -65,7 +65,6 @@ namespace McMd
             UTIL_THROW("Unequal bond type ids");
          }
       }
-      std::cout << "Finished bond type check" << std::endl;
 
       // Identify policy for masking nonbonded interactions.
       maskPolicy_ = simulation().maskedPairPolicy();
@@ -75,7 +74,6 @@ namespace McMd
       junctions_.allocate(nAtom-1);
       lTypes_.allocate(nAtom-1);
       uTypes_.allocate(nAtom-1);
-      std::cout << "Finished allocating junction arrays" << std::endl;
 
       // Identify junctions between atoms of different types
       int lType, uType;
@@ -87,19 +85,16 @@ namespace McMd
             junctions_[nJunction_] = i;
             lTypes_[nJunction_] = lType;
             uTypes_[nJunction_] = uType;
-            //std::cout << nJunction_ << "  " << i << "  "
-                     // << lType << "  " << uType << std::endl;
             ++nJunction_;
          }
       }
-      std::cout << "Finished allocating junction arrays" << std::endl;
 
       if (hasAutoCorr_) {
          // Allocate memory for autocorrelation accumulators
          int moleculeCapacity = simulation().species(speciesId()).capacity();
-         acceptedStepsAccumulators_.allocate(moleculeCapacity);
+         accumulators_.allocate(moleculeCapacity);
          for (int i = 0; i < moleculeCapacity; i++) {
-            acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
+            accumulators_[i].setParam(autoCorrCapacity_);
          }
       }
 
@@ -114,19 +109,19 @@ namespace McMd
       McMove::loadParameters(ar);
       CfbLinear::loadParameters(ar);
 
-      ar & bondTypeId_;
-      ar & maskPolicy_;
-      ar & junctions_;
-      ar & lTypes_;
-      ar & uTypes_;
-
       // Read autocorrelation parameters
       loadParameter<bool>(ar, "hasAutoCorr", hasAutoCorr_);
       if (hasAutoCorr_) {
          loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
          loadParameter<std::string>(ar, "outputFileName", outputFileName_);
-         ar & acceptedStepsAccumulators_;
+         ar & accumulators_;
       }
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & nJunction_;
+      ar & junctions_;
+      ar & lTypes_;
+      ar & uTypes_;
 
       // Validate
       Species* speciesPtr = &simulation().species(speciesId());
@@ -139,27 +134,27 @@ namespace McMd
       if (maskPolicy_ != simulation().maskedPairPolicy()) {
          UTIL_THROW("Inconsistent values of maskPolicy_");
       }
-
    }
 
    /*
-   * Load from archive.
+   * Save to archive.
    */
    void CfbReptateMove::save(Serializable::OArchive& ar)
    {
       McMove::save(ar);
       CfbLinear::save(ar);
-      ar & bondTypeId_;
-      ar & maskPolicy_;
-      ar & junctions_;
-      ar & lTypes_;
-      ar & uTypes_;
       ar & hasAutoCorr_;
       if (hasAutoCorr_) {
          ar & autoCorrCapacity_;
          ar & outputFileName_;
-         ar & acceptedStepsAccumulators_;
+         ar & accumulators_;
       }
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & nJunction_;
+      ar & junctions_;
+      ar & lTypes_;
+      ar & uTypes_;
    }
 
    /*
@@ -271,7 +266,8 @@ namespace McMd
          if (hasAutoCorr_) {
             int molId = molPtr->id();
             double rsign = (double) sign;
-            acceptedStepsAccumulators_[molId].sample(rsign);
+            accumulators_[molId].sample(rsign);
+            //accumulators_[molPtr->id()].sample((double) sign);
          }
 
       } else {
@@ -300,17 +296,16 @@ namespace McMd
       int i;          // junction index
       int j;          // id of atom at below junction (lower)
 
-
       // Calculate factor by looping over junctions
       factor = 1.0;
       for (i = 0; i < nJunction_; ++i) {
          j = junctions_[i];
          if (sign == 1) {
             hAtomPtr = &(molPtr->atom(j+1));
-            tType    = lTypes_[i];
+            tType = lTypes_[i];
          } else {
             hAtomPtr = &(molPtr->atom(j));
-            tType    = uTypes_[i];
+            tType = uTypes_[i];
          }
 
          #ifndef INTER_NOPAIR
@@ -360,51 +355,47 @@ namespace McMd
    */
    void CfbReptateMove::output()
    {
-      if (hasAutoCorr_)
-      {
+      if (hasAutoCorr_) {
          DArray< double > autoCorrAvg;
          autoCorrAvg.allocate(autoCorrCapacity_);
 
-         // Calculate average autocorrelation function over all
-         // accumulators
+         // Compute average autocorrelation function over molecules
          for (int i = 0; i < autoCorrCapacity_; i++) {
             int nAvg = 0;
             autoCorrAvg[i] = 0;
             for (int j = 0; j < system().nMolecule(speciesId()); j++) {
-               if (acceptedStepsAccumulators_[j].nSample() > i) {
+               if (accumulators_[j].nSample() > i) {
                   nAvg++;
-                  autoCorrAvg[i] += acceptedStepsAccumulators_[j].
-                                          autoCorrelation(i);
+                  autoCorrAvg[i] += accumulators_[j].autoCorrelation(i);
                }
             }
             autoCorrAvg[i] /= nAvg;
          }
 
-         std::ofstream outputFile;
-
          // Write out average autocorrelation
-         system().fileMaster().openOutputFile(outputFileName_+".dat",
-            outputFile);
-
-         for (int i = 0; i <  autoCorrCapacity_; i++)
-         {
+         std::ofstream outputFile;
+         std::string fileName = outputFileName_;
+         fileName += ".dat";
+         system().fileMaster().openOutputFile(fileName, outputFile);
+         for (int i = 0; i <  autoCorrCapacity_; i++) {
             outputFile << Int(i);
             write<double>(outputFile, autoCorrAvg[i]);
             outputFile << std::endl;
          }
-
          outputFile.close();
 
          // Sum over autocorrelation (only positive time lags)
          // Count first element with a factor 1/2, due to symmetry
          double acSum = 0;
          acSum = 0.5*autoCorrAvg[0];
-         for (int i = 1; i < autoCorrCapacity_; i++)
+         for (int i = 1; i < autoCorrCapacity_; i++) {
             acSum += autoCorrAvg[i];
+         }
 
-         // write sum in .ave file
-         system().fileMaster().openOutputFile(outputFileName_+".ave",
-            outputFile);
+         // Write sum in .ave file
+         fileName = outputFileName_;
+         fileName += ".ave";
+         system().fileMaster().openOutputFile(fileName, outputFile);
          outputFile << "autoCorrSum " << acSum << std::endl;
          outputFile.close();
       }

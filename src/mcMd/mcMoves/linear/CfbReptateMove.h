@@ -102,9 +102,12 @@ namespace McMd
       /// Filename for autocorrelation output
       std::string outputFileName_;
 
-      /// Array of autocorrelators for accepted steps
-      DArray<AutoCorr<double, double> > acceptedStepsAccumulators_;
+      /// Array of autocorrelators for sign of accepted steps
+      DArray<AutoCorr<double, double> > accumulators_;
 
+      /**
+      * Calculate Boltzmann factor arising from atom type heterogeneity.
+      */
       double junctionFactor(Molecule* molPtr, int sign);
 
    };
