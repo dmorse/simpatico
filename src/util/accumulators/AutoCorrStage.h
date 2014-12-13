@@ -35,19 +35,17 @@ namespace Util
    *
    * This class implements a hierarchical algorithm to calculate C(j).
    * The algorithm is implemented by a linked list of AutoCorrStage 
-   * objects, in which each object in the list (except the first) 
-   * calculates an autocorrelation for a sequence in which each value
-   * in the sequence is the average of block of consecutive values in 
-   * the primary sequence of measured values. Each object in this list
-   * is assigned an integer chainId.  The "primary" AutoCorrStage 
-   * object in this list, with chainId=0, calculates the autocorrelation 
-   * for a "primary" sequence of values that are passed to the sample 
-   * method of this object. For all n > 0, the object with chainId = n 
-   * calculates the autocorrelation function for a sequence in which 
-   * each value is an average of blockFactor values of the sequence 
-   * managed by the parent object with chainId = n-1 or (equivalently) 
-   * an average of blockFactor**n values of the primary sequence. New 
-   * stages are added to this list dynamically as needed.
+   * objects. Each object in this list is assigned an integer chainId.  
+   * The "primary" AutoCorrStage object in this list, with chainId=0, 
+   * calculates the autocorrelation for a primary sequence of primary
+   * Data values that are passed to the sample method of this object. 
+   * For each n > 0, the object with chainId = n calculates the 
+   * autocorrelation function for a sequence of values in which each
+   * value is an average of a block of blockFactor**n consecutive 
+   * values of the primary sequence or, equivalently, an average of 
+   * blockFactor consecutive values of the sequence maintained by the 
+   * parent object with chainId = n-1. Additional stages are added to 
+   * this list dynamically as needed.
    *
    * \ingroup Accumulators_Module
    */
@@ -80,7 +78,8 @@ namespace Util
       * \param maxStageId maximum stage index (0=primary)
       * \param blockFactor ratio of block sizes of subsequent stages
       */
-      void setParam(int bufferCapacity=64, int maxStageId=0, int blockFactor=2);
+      void setParam(int bufferCapacity=64, int maxStageId=0, 
+                    int blockFactor=2);
 
       /**
       * Sample a value.
@@ -108,17 +107,20 @@ namespace Util
       //@{
 
       /**
-      * Output the autocorrelation function
+      * Output the autocorrelation function, assuming zero mean.
+      *
+      * This calls output(std::ostream out, Product aveSq) with 
+      * a zero value for aveSq.
       *
       * \param out output stream.
       */
       void output(std::ostream& out);
 
       /**
-      * Output the autocorrelation function
+      * Output the autocorrelation function.
       *
       * \param out output stream.
-      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      * \param aveSq square of average <x>^2 subtracted from <x(t)x(0)>
       */
       void output(std::ostream& out, Product aveSq);
 
@@ -138,36 +140,39 @@ namespace Util
       long nSample() const;
 
       /**
-      * Return the number of sampled values per block at this stage.
+      * Return the number of primary values per block at this stage.
       */
       long stageInterval() const;
 
       /**
-      * Return autocorrelation at a given lag time
+      * Return autocorrelation at a given time, assuming zero average.
+      *
+      * This calls autoCorrelations(t, aveSq) with a zero value for
+      * for aveSq.
       *
       * \param t the lag time, in Data samples
       */
       Product autoCorrelation(int t) const;
 
       /**
-      * Return autocorrelation at a given lag time
+      * Return autocorrelation at a given lag time.
       *
       * \param t the lag time, in Data samples
-      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      * \param aveSq square average <x>^2 subtracted from <x(t)x(0)>
       */
       Product autoCorrelation(int t, Product aveSq) const;
 
       /**
       * Estimate of autocorrelation time, in samples.
       *
-      * This variant assumes a zero average.
+      * This variant assumes a zero average. 
       */
       double corrTime() const;
 
       /**
       * Numerical integration of autocorrelation function.
       *
-      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      * \param aveSq square average <x>^2 subtracted from <x(t)x(0)>
       */
       double corrTime(Product aveSq) const;
 
