@@ -86,36 +86,36 @@ namespace Util
       /**
       * Add tensor dt to this tensor.
       *
-      * Upon return, *this = this + dt.
+      * Upon return, *this = *this + dt.
       *
-      * \param  dt   tensor increment (input)
+      * \param dt  tensor increment (input)
       */
       void operator+=(const Tensor& dt);
 
       /**
       * Subtract tensor dt from this tensor.
       *
-      * Upon return, *this = this + dt.
+      * Upon return, *this = *this - dt.
       *
-      * \param  dt   tensor increment (input)
+      * \param dt   tensor increment (input)
       */
       void operator-=(const Tensor& dt);
 
       /**
       * Multiply this tensor by scalar s.
       *
-      * Upon return, *this = this*s.
+      * Upon return, *this = (*this)*s.
       *
-      * \param  s  scalar multiplier
+      * \param s  scalar multiplier
       */
       void operator*=(double s);
 
       /**
       * Divide this tensor by scalar s.
       *
-      * Upon return, *this = this/s.
+      * Upon return, *this = (*this)/s.
       *
-      * \param  s  scalar divisor (input)
+      * \param s  scalar divisor (input)
       */
       void operator/=(double s);
 
@@ -124,19 +124,19 @@ namespace Util
       //@{
       
       /**
-      * Return one Cartesian element by value.
+      * Return one element by value.
       *
-      * \param   i row element index
-      * \param   j column element index
-      * \return  element i of the tensor
+      * \param i  row element index
+      * \param j  column element index
+      * \return element (i, j) of the tensor
       */
       const double& operator ()(int i, int j) const;
 
       /**
-      * Return a reference to one element of the tensor.
+      * Return one element by non-const reference.
       *
-      * \param   i row element index
-      * \param   j column element index
+      * \param i  row element index
+      * \param j  column element index
       * \return  element i of the tensor
       */
       double& operator () (int i, int j);
@@ -153,14 +153,14 @@ namespace Util
       Tensor& zero();
 
       /**
-      * Set row i of the tensor to elements of vector r.
+      * Set row i of this Tensor to elements of Vector r.
       *
       * \return reference to this tensor
       */
       Tensor& setRow(int i, Vector r);
 
       /**
-      * Set row i of the tensor to elements of vector r.
+      * Set column i of this Tensor to elements of Vector r.
       *
       * \return reference to this tensor
       */
@@ -171,8 +171,8 @@ namespace Util
       *
       * Upon return, *this = t1 + t2.
       *
-      * \param  t1   tensor
-      * \param  t2   tensor
+      * \param t1  tensor
+      * \param t2  tensor
       * \return reference to this tensor
       */
       Tensor& add(const Tensor& t1, const Tensor& t2);
@@ -182,8 +182,8 @@ namespace Util
       *
       * Upon return, *this == t1 - t2.
       *
-      * \param  t1    tensor (input)
-      * \param  t2    tensor (input)
+      * \param t1  tensor (input)
+      * \param t2  tensor (input)
       * \return reference to this tensor
       */
       Tensor& subtract(const Tensor& t1, const Tensor& t2);
@@ -193,19 +193,19 @@ namespace Util
       *
       * Upon return, *this == v*s.
       *
-      * \param  t  tensor factor
-      * \param  s  scalar factor
+      * \param t  tensor factor
+      * \param s  scalar factor
       * \return reference to this tensor
       */
       Tensor& multiply(const Tensor& t, double s);
 
       /**
-      * Divide tensor t by scalar s.
+      * Divide a Tensor t by a scalar s.
       *
       * Upon return, *this = v/s;
       *
-      * \param  t  tensor input
-      * \param  s  scalar denominator
+      * \param t  tensor input
+      * \param s  scalar denominator
       * \return reference to this tensor
       */
       Tensor& divide(const Tensor& t, double s);
@@ -221,16 +221,16 @@ namespace Util
       Tensor& transpose(const Tensor& t);
 
       /**
-      * Compute transpose of this tensor.
+      * Transpose this tensor.
       *
-      * Upon return, this is transposed
+      * Upon return, *this is transposed.
       *
       * \return reference to this tensor
       */
       Tensor& transpose();
 
       /**
-      * Compute symmetric part of a tensor.
+      * Compute symmetric part of a tensor t.
       *
       * Upon return, *this = [t + t.transpose()]/2
       *
@@ -240,9 +240,10 @@ namespace Util
       Tensor& symmetrize(const Tensor& t);
 
       /**
-      * Compute symmetric part of this tensor.
+      * Symmetrize this tensor.
       *
-      * Upon return, this is symmetrized.
+      * Upon return, this is symmetrized, equal to half the
+      * sum of the original tensor and its transpose.
       *
       * \return reference to this tensor
       */
@@ -252,7 +253,7 @@ namespace Util
       * Create dyad of two vectors.
       *
       * Upon return, *this equals the dyad v1 ^ v2.
-      * Equivalenty, (*this)(i , j) == v1[i]*v2[j]
+      * Equivalently: (*this)(i , j) == v1[i]*v2[j]
       *
       * \param  v1 vector input
       * \param  v2 vector input
@@ -265,12 +266,12 @@ namespace Util
       //@{ 
 
       /**
-      * Return trace this tensor.
+      * Return the trace of this tensor.
       */
       double trace() const; 
 
       /**
-      * Serialize to/from an archive.
+      * Serialize this to/from an archive.
       *
       * \param ar       archive
       * \param version  archive version id
@@ -283,12 +284,12 @@ namespace Util
       //@{ 
      
       /** 
-      * Constant Tensor::Zero with all zero elements.
+      * Constant Tensor with all zero elements.
       */
       static const Tensor Zero;
 
       /**
-      * Guarantee initialization of Tensor::Zero tensor.
+      * Call to guarantee initialization of Tensor::Zero tensor.
       */
       static void initStatic();
 
@@ -304,10 +305,10 @@ namespace Util
    private:
 
       /// Width of field in stream IO
-      static const int Width     = 13;
+      static const int Width = 13;
 
       /// Precision in stream IO of Tensor coordinates
-      static const int Precision =  5;
+      static const int Precision = 5;
 
       /// Elements of the tensor.
       double elem_[DimensionSq];
@@ -364,7 +365,6 @@ namespace Util
    std::ostream& operator << (std::ostream& out, const Tensor &tensor);
 
    #ifdef UTIL_MPI
-
    /**
    * Explicit specialization MpiTraits<Tensor>.
    */
@@ -375,7 +375,6 @@ namespace Util
       static MPI::Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
-
    #endif
 
    // Inline methods
@@ -440,7 +439,7 @@ namespace Util
    inline
    Tensor& Tensor::setRow(int i, Vector r)
    {
-      for (int j = 0; j < DimensionSq; j++) {
+      for (int j = 0; j < Dimension; j++) {
          elem_[i*Dimension+j] = r[j];
       }
       return *this;
@@ -452,7 +451,7 @@ namespace Util
    inline
    Tensor& Tensor::setColumn(int j, Vector r)
    {
-      for (int i = 0; i < DimensionSq; i++) {
+      for (int i = 0; i < Dimension; i++) {
          elem_[i*Dimension+j] = r[i];
       }
       return *this;
