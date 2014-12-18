@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/space/Dimension.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
@@ -241,7 +242,11 @@ namespace Util
       * \return  element i of the vector
       */
       const int& operator[](int i) const
-      { return elem_[i]; }
+      {
+         assert(i >= 0);      
+         assert(i < Dimension);      
+         return elem_[i]; 
+      }
 
       /**
       * Return a reference to one element of the vector.
@@ -250,7 +255,11 @@ namespace Util
       * \return  element i of the vector
       */
       int& operator[](int i)
-      { return elem_[i]; }
+      { 
+         assert(i >= 0);      
+         assert(i < Dimension);      
+         return elem_[i]; 
+      }
 
       //@}
       /// \name Scalar valued functions
@@ -267,7 +276,7 @@ namespace Util
       /**
       * Return dot product of this vector and vector v.
       *
-      * \param  v input vector
+      * \param v  input vector
       * \return dot product of this vector and vector v
       */
       int dot(const IntVector& v) const
@@ -284,8 +293,8 @@ namespace Util
       *
       * Upon return, *this = v1 + v2.
       *
-      * \param  v1   vector
-      * \param  v2   vector
+      * \param v1  vector (input)
+      * \param v2  vector (input)
       */
       IntVector& add(const IntVector& v1, const IntVector& v2)
       {
@@ -300,8 +309,8 @@ namespace Util
       *
       * Upon return, *this = v1 - v2.
       *
-      * \param  v1    vector (input)
-      * \param  v2    vector (input)
+      * \param v1  vector (input)
+      * \param v2  vector (input)
       * \return modified invoking vector
       */
       IntVector& subtract(const IntVector& v1, const IntVector& v2)
@@ -317,8 +326,8 @@ namespace Util
       *
       * Upon return, *this = v*s.
       *
-      * \param  v   vector input
-      * \param  s   scalar input
+      * \param v  vector input
+      * \param s  scalar input
       * \return modified invoking vector
       */
       IntVector& multiply(const IntVector& v, int s)
@@ -334,8 +343,8 @@ namespace Util
       *
       * Upon return, *this = v1 x v2.
       *
-      * \param  v1 input  vector
-      * \param  v2 input  vector
+      * \param v1  input  vector
+      * \param v2  input  vector
       * \return modified invoking vector
       */
       IntVector& cross(const IntVector& v1, const IntVector& v2)
@@ -358,7 +367,6 @@ namespace Util
       * Initialize static IntVector::Zero.
       */
       static void initStatic();
-
 
       #ifdef UTIL_MPI
       /**

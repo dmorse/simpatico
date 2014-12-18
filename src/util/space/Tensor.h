@@ -8,7 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+
 #include <util/space/Dimension.h>
+#include <util/global.h>
 
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
@@ -508,14 +510,26 @@ namespace Util
    */
    inline
    const double& Tensor::operator()(int i, int j) const
-   {  return elem_[i*Dimension + j]; }
+   {
+      assert(i >=0);  
+      assert(i < Dimension);  
+      assert(j >=0);  
+      assert(j < Dimension);  
+      return elem_[i*Dimension + j]; 
+   }
 
    /*
    * Return a reference to one element of the tensor.
    */
    inline
    double& Tensor::operator()(int i, int j)
-   {  return elem_[i*Dimension + j]; }
+   {  
+      assert(i >=0);  
+      assert(i < Dimension);  
+      assert(j >=0);  
+      assert(j < Dimension);  
+      return elem_[i*Dimension + j]; 
+   }
 
    /*
    * Add tensors t1 and t2.
