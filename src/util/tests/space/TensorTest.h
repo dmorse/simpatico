@@ -120,6 +120,46 @@ public:
       TEST_ASSERT(v != u);
    }
  
+   void testSetRow()
+   {
+      printMethod(TEST_FUNC);
+      double a[3][3] = {{-0.2, 1.0, 0.3}, {-0.7, 0.8, 0.0}, {2.0, 0.0, 0.0}};
+      Tensor v(a);
+      Tensor u = v;
+      double b[3] = {3.0, 4.0, 5.0};
+      Vector t(b);
+      u.setRow(1, t);
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(1,i), t[i]));
+      }
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(0,i), v(0,i)));
+      }
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(2,i), v(2,i)));
+      }
+   }
+ 
+   void testSetColumn()
+   {
+      printMethod(TEST_FUNC);
+      double a[3][3] = {{-0.2, 1.0, 0.3}, {-0.7, 0.8, 0.0}, {2.0, 0.0, 0.0}};
+      Tensor v(a);
+      Tensor u = v;
+      double b[3] = {3.0, 4.0, 5.0};
+      Vector t(b);
+      u.setColumn(1, t);
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(i, 1), t[i]));
+      }
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(i, 0), v(i, 0)));
+      }
+      for (int i = 0; i < 3; ++i) {
+         TEST_ASSERT(eq(u(i, 2), v(i, 2)));
+      }
+   }
+
    void testAdd() 
    {
       printMethod(TEST_FUNC);
@@ -267,6 +307,8 @@ TEST_ADD(TensorTest, testConstructor3)
 TEST_ADD(TensorTest, testCopyConstructor)
 TEST_ADD(TensorTest, testEquality)
 TEST_ADD(TensorTest, testAssignment)
+TEST_ADD(TensorTest, testSetRow)
+TEST_ADD(TensorTest, testSetColumn)
 TEST_ADD(TensorTest, testAdd)
 TEST_ADD(TensorTest, testSubtract)
 TEST_ADD(TensorTest, testMultiply)

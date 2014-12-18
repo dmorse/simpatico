@@ -6,7 +6,6 @@
 */
 
 #include "Tensor.h"
-#include "Dimension.h"
 #include <util/global.h>
 
 #ifdef UTIL_MPI

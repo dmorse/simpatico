@@ -8,8 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+
 #include <util/space/Dimension.h>
-#include <util/space/Vector.h>
+#include <util/global.h>
 
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
@@ -157,14 +158,14 @@ namespace Util
       *
       * \return reference to this tensor
       */
-      Tensor& setRow(int i, Vector r);
+      Tensor& setRow(int i, const Vector& r);
 
       /**
       * Set column i of this Tensor to elements of Vector r.
       *
       * \return reference to this tensor
       */
-      Tensor& setColumn(int i, Vector r);
+      Tensor& setColumn(int i, const Vector& r);
 
       /**
       * Add tensors t1 and t2.
@@ -434,30 +435,6 @@ namespace Util
    }
 
    /*
-   * Set row i of the tensor to elements of vector r.
-   */
-   inline
-   Tensor& Tensor::setRow(int i, Vector r)
-   {
-      for (int j = 0; j < Dimension; j++) {
-         elem_[i*Dimension+j] = r[j];
-      }
-      return *this;
-   }
-
-   /*
-   * Set column i of the tensor to elements of vector r.
-   */
-   inline
-   Tensor& Tensor::setColumn(int j, Vector r)
-   {
-      for (int i = 0; i < Dimension; i++) {
-         elem_[i*Dimension+j] = r[i];
-      }
-      return *this;
-   }
-
-   /*
    * Assignment.
    */
    inline
@@ -533,14 +510,26 @@ namespace Util
    */
    inline
    const double& Tensor::operator()(int i, int j) const
-   {  return elem_[i*Dimension + j]; }
+   {
+      assert(i >=0);  
+      assert(i < Dimension);  
+      assert(j >=0);  
+      assert(j < Dimension);  
+      return elem_[i*Dimension + j]; 
+   }
 
    /*
    * Return a reference to one element of the tensor.
    */
    inline
    double& Tensor::operator()(int i, int j)
-   {  return elem_[i*Dimension + j]; }
+   {  
+      assert(i >=0);  
+      assert(i < Dimension);  
+      assert(j >=0);  
+      assert(j < Dimension);  
+      return elem_[i*Dimension + j]; 
+   }
 
    /*
    * Add tensors t1 and t2.
@@ -713,6 +702,30 @@ namespace Util
 #include <util/space/Vector.h>
 namespace Util
 {
+
+   /*
+   * Set row i of the tensor to elements of vector r.
+   */
+   inline
+   Tensor& Tensor::setRow(int i, const Vector& r)
+   {
+      for (int j = 0; j < Dimension; j++) {
+         elem_[i*Dimension+j] = r[j];
+      }
+      return *this;
+   }
+
+   /*
+   * Set column i of the tensor to elements of vector r.
+   */
+   inline
+   Tensor& Tensor::setColumn(int j, const Vector& r)
+   {
+      for (int i = 0; i < Dimension; i++) {
+         elem_[i*Dimension+j] = r[i];
+      }
+      return *this;
+   }
 
    /*
    * Multiply two vectors to create a dyadic tensor.
