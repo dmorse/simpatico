@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/space/IntVector.h>
 
 namespace Util
@@ -41,6 +42,8 @@ namespace Util
 
       /**
       * Constructor
+      *
+      * \param dimensions  IntVector of grid dimensions
       */
       Grid(const IntVector& dimensions);
 
@@ -51,19 +54,19 @@ namespace Util
       /**
       * Set the grid dimensions in all directions.
       *
-      * \param dimensions IntVector of grid dimensions.
+      * \param dimensions  IntVector of grid dimensions.
       */
       void setDimensions(const IntVector& dimensions);
 
       /**
-      * Get an IntVector of grid dimensions.
+      * Get an IntVector of the grid dimensions.
       */
       IntVector dimensions() const;
 
       /**
       * Get grid dimension along Cartesian direction i.
       *
-      * \param i index of Cartesian direction 0 <=i < Util::Dimension
+      * \param i  index of Cartesian direction 0 <=i < Util::Dimension
       */
       int dimension(int i) const;
 
@@ -75,7 +78,7 @@ namespace Util
       /**
       * Get the position IntVector of a grid point with a specified rank.
       *
-      * \param  rank integer rank of a grid point.
+      * \param rank  integer rank of a grid point.
       * \return IntVector containing coordinates of specified point.
       */
       IntVector position(int rank) const;
@@ -83,7 +86,7 @@ namespace Util
       /**
       * Get the rank of a grid point with specified position.
       *
-      * \param  position integer position of a grid point
+      * \param position  integer position of a grid point
       * \return integer rank of specified grid point
       */
       int rank(const IntVector& position) const;
@@ -91,18 +94,20 @@ namespace Util
       /**
       * Is this coordinate in range?
       *
-      * Returns true iff 0 <= coordinate < dimension(i).
-      * \param coordinate coordinate value for direction i
-      * \param i          index for Cartesian direction
+      * 
+      * \param coordinate  coordinate value for direction i
+      * \param i  index for Cartesian direction
+      * \return true iff 0 <= coordinate < dimension(i).
       */
       bool isInGrid(int coordinate, int i) const;
 
       /**
-      * Is this position within the grid?
+      * Is this IntVector grid position within the grid?
       *
       * Returns true iff 0 <= coordinate[i] < dimension(i) for all i.
       *
-      * \param position grid point position
+      * \param position  grid point position
+      * \return true iff 0 <= coordinate[i] < dimension(i) for all i.
       */
       bool isInGrid(IntVector& position) const;
 
@@ -114,8 +119,8 @@ namespace Util
       * multiple of dimension(i), giving coordinate - shift*dimension(i). 
       * The return value is the required integer `shift'.
       *
-      * \param  coordinate  coordinate in Cartesian direction i.
-      * \param  i           index of Cartesian direction, i >= 0. 
+      * \param coordinate  coordinate in Cartesian direction i.
+      * \param i  index of Cartesian direction, i >= 0. 
       * \return multiple of dimension(i) subtracted from input value.
       */
       int shift(int& coordinate, int i) const;
@@ -128,7 +133,7 @@ namespace Util
       * adding or subtracting an integer multiple of dimension(i). The 
       * IntVector of shift values is returned.
       *
-      * \param  position IntVector position within a grid.
+      * \param position  IntVector position within a grid.
       * \return IntVector of integer shifts.
       */
       IntVector shift(IntVector& position) const;
@@ -152,7 +157,11 @@ namespace Util
    {  return dimensions_; }
 
    inline int Grid::dimension(int i) const
-   {  return dimensions_[i]; }
+   {
+      assert(i >=0);
+      assert(i < Dimension);  
+      return dimensions_[i]; 
+   }
 
    inline int Grid::size() const
    {  return size_; }

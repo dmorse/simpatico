@@ -76,7 +76,7 @@ int main(int argc, char **argv)
    // Read command script to run simulation
    simulation.readCommands();
 
-   #if UTIL_MPI
+   #ifdef UTIL_MPI
    if (MPI::Is_initialized()) {
       MPI::Finalize();
    }

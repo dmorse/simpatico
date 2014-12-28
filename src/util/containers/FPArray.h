@@ -18,19 +18,21 @@ namespace Util
    /**
    * Statically allocated pointer array.
    *
-   * A FPArray is a statically allocated array that only holds pointers
+   * A FPArray is a statically allocated array that actually holds pointers
    * to Data objects, but for which the [] operator returns a reference to 
-   * the associated data. It is implemented as a wrapper for a statically 
-   * allocated C array of Data* pointers. A FPArray is not responsible
-   * for destroying the associated Data objects.
+   * the associated object. It is implemented as a wrapper for a statically 
+   * allocated C array of Data* pointers. A FPArray is not responsible for
+   * destroying the associated Data objects.
    *
    * The interface of an FPArray is identical to that of an FSArray.
-   * An FPArray has both a capacity, which is the physical size of the
-   * underlying C array, and a size, which is the number of contiguous
-   * elements (from 0 to one less than size) that contain initialized 
-   * data.  The size can only be increased only by the append() method,
-   * which adds an element to the end of the array. When bounds checking
-   * is on, the operator [] checks that the index is less than the size.
+   * An FPArray has both a capacity that is set at compile time, which is 
+   * the physical size of the underlying C array, and a size, which is the 
+   * number of contiguous elements (indexed from 0 to size-1) that contain 
+   * valid pointers.  The size can only be increased only by the append() 
+   * method, which adds an element to the end of the array. 
+   *
+   * When compiled in debug mode, the operator [] checks that the index is 
+   * less than the size and non-negative.
    *
    * \ingroup Pointer_Array_Module
    */
@@ -55,6 +57,11 @@ namespace Util
       FPArray(const FPArray<Data, Capacity>& other);
 
       /**
+      * Destructor.
+      */
+      ~FPArray();
+
+      /**
       * Assignment, element by element.
       *
       * \param other the rhs FPArray 
@@ -62,12 +69,7 @@ namespace Util
       FPArray<Data, Capacity>& operator=(const FPArray<Data, Capacity>& other);
 
       /**
-      * Destructor.
-      */
-      ~FPArray();
-
-      /**
-      * Append data to the end of the array.
+      * Append an element to the end of the array.
       *
       * \param data Data to add to end of array.
       */
@@ -89,21 +91,21 @@ namespace Util
       int size() const;
 
       /**
-      * Set a PArrayIterator to the beginning of this Array.
+      * Set an iterator to begin this container.
       *
       * \param iterator PArrayIterator, initialized on output. 
       */
       void begin(PArrayIterator<Data> &iterator);
 
       /**
-      * Set a ConstPArrayIterator to the beginning of this Array.
+      * Set a const iterator to begin this container.
       *
       * \param iterator ConstPArrayIterator, initialized on output. 
       */
       void begin(ConstPArrayIterator<Data> &iterator) const;
 
       /**
-      * Mimic C array subscripting.
+      * Get an element by reference (mimic C-array subscripting).
       *
       * \param  i array index
       * \return reference to element i
@@ -111,7 +113,7 @@ namespace Util
       Data& operator[] (int i);
 
       /**
-      * Mimic C array subscripting.
+      * Get an element by const reference (mimic C-array subscripting).
       *
       * \param i array index
       * \return const reference to element i

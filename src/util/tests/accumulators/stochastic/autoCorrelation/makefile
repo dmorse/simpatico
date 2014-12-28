@@ -12,6 +12,7 @@ clean:
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS) 
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS:.o=.d)
 	rm -f AutoCorrelationTest
+	rm -f binary
 
 clean-deps:
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS:.o=.d)
