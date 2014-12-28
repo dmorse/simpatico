@@ -246,7 +246,7 @@ namespace McMd
       }
       out << endl;
 
-      #if INTER_BOND
+      #ifdef INTER_BOND
       // Write bond topology
       out << "Bonds" << endl;
       out << endl;
