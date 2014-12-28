@@ -6,11 +6,11 @@
 */
 
 #include "PairEnergy.h"
-#include <tools/chemistry/Atom.h>
 #include <tools/storage/Configuration.h>
-#include <util/space/Vector.h>
 #include <tools/neighbor/CellList.h>
 #include <tools/neighbor/Cell.h>
+#include <tools/chemistry/Atom.h>
+#include <util/space/Vector.h>
 
 namespace Tools
 {
@@ -42,7 +42,8 @@ namespace Tools
    /*
    * Constructor.
    */
-   PairEnergy::PairEnergy(Configuration& configuration, FileMaster& fileMaster)
+   PairEnergy::PairEnergy(Configuration& configuration, 
+                          FileMaster& fileMaster)
     : Analyzer(configuration, fileMaster),
       interaction_(),
       cellList_(),
@@ -77,9 +78,9 @@ namespace Tools
          UTIL_THROW("Error: object is not initialized");
       }
 
-      // setup cell List
+      // Setup cell List
       Vector lengths = configuration().boundary().lengths();
-      
+
       Vector lower(0.0, 0.0, 0.0);
       Vector upper = lengths; 
       Vector cutoffs(cutoff_, cutoff_, cutoff_); 
@@ -92,15 +93,17 @@ namespace Tools
    {
       if (!isAtInterval(iStep)) return;
 
-      // clear cell list
+      // Clear cell list
       cellList_.clear();
 
+      // Place all atoms
       AtomStorage::Iterator atomIter;
-      for (configuration().atoms().begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      configuration().atoms().begin(atomIter); 
+      for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
-      // build/update cell list
+      // Build/update cell list
       cellList_.build();
       cellList_.update();
 
@@ -108,40 +111,52 @@ namespace Tools
          UTIL_THROW("Cell List Invalid\n");
       }
 
-      // Find all neighbor pairs within a cutoff (using cell list)
-      Cell::NeighborArray neighbors;
-      CellAtom* cellAtomPtr1;
-      CellAtom* cellAtomPtr2;
+      // Compute pair energy using loop over cells
       Vector dr;
-      int   na = 0; // total number of atoms
-      int   nn = 0; // number of neighbors in a cell
-      int   np = 0; // Number of pairs within cutoff
-
-      const Cell* cellPtr = cellList_.begin();
       double energy = 0.0;
+      double rsq;
+      Cell::NeighborArray neighbors;
+      Boundary& boundary = configuration().boundary();
+      CellAtom* cellAtomPtr1 = 0;
+      CellAtom* cellAtomPtr2 = 0;
+      const Cell* cellPtr = 0;
+      int na = 0; // total number of atoms
+      int nn = 0; // number of neighbors in a cell
+      int np = 0; // Number of pairs within cutoff
 
+      // Loop over cells in CellList
+      cellPtr = cellList_.begin();
       while (cellPtr) {
          cellPtr->getNeighbors(neighbors);
          na = cellPtr->nAtom();
          nn = neighbors.size();
+         // Loop over primary atoms, from this cell
          for (int i = 0; i < na; ++i) {
             cellAtomPtr1 = neighbors[i];
+            // Loop over secondary atoms in this cell
             for (int j = 0; j < na; ++j) {
                cellAtomPtr2 = neighbors[j];
                if (cellAtomPtr2 > cellAtomPtr1) {
-                  double rsq = configuration().boundary().distanceSq(cellAtomPtr1->ptr()->position, cellAtomPtr2->ptr()->position, dr);
+                  rsq = boundary.distanceSq(cellAtomPtr1->ptr()->position, 
+                                            cellAtomPtr2->ptr()->position, dr);
                   if (rsq <= cutoff_*cutoff_) {
                      ++np;
-                     energy += interaction_.energy( rsq, cellAtomPtr1->ptr()->typeId, cellAtomPtr2->ptr()->typeId );
+                     energy += interaction_.energy(rsq, 
+                                            cellAtomPtr1->ptr()->typeId,
+                                            cellAtomPtr2->ptr()->typeId);
                   }
                }
             }
+            // Loop over atoms in neighboring cells
             for (int j = na; j < nn; ++j) {
                cellAtomPtr2 = neighbors[j];
-               double rsq = configuration().boundary().distanceSq(cellAtomPtr1->ptr()->position, cellAtomPtr2->ptr()->position, dr);
+               rsq = boundary.distanceSq(cellAtomPtr1->ptr()->position, 
+                                         cellAtomPtr2->ptr()->position, dr);
                if (rsq <= cutoff_*cutoff_) {
                   ++np;
-                  energy += interaction_.energy( rsq, cellAtomPtr1->ptr()->typeId, cellAtomPtr2->ptr()->typeId );
+                  energy += interaction_.energy(rsq, 
+                                         cellAtomPtr1->ptr()->typeId, 
+                                         cellAtomPtr2->ptr()->typeId);
                }
             }
          }
@@ -152,7 +167,9 @@ namespace Tools
       energies_.append(energy);
    }
 
-   /// Output results to file after simulation is completed.
+   /*
+   * Output results to file after simulation is completed.
+   */
    void PairEnergy::output() 
    {
       // Output parameters
@@ -160,18 +177,17 @@ namespace Tools
       writeParam(outputFile_); 
       outputFile_.close();
 
-      fileMaster().openOutputFile(outputFileName(), 
-                                              outputFile_);
+      // Output energies
+      fileMaster().openOutputFile(outputFileName(), outputFile_);
       char str[50];
       sprintf(&str[0], "%10s       %-7s", "TIMESTEP", "ENERGY");
-
       outputFile_ << str << std::endl;
       for (int i = 0; i < timesteps_.size(); i++) {
          sprintf(&str[0], "%10i       %-12.7e", timesteps_[i], energies_[i]);
          outputFile_ << str << std::endl;
       }
-
       outputFile_.close();
+
    }
 
 }

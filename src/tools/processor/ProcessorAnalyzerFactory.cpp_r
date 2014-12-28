@@ -12,6 +12,7 @@
 // Analyzers 
 #include <tools/analyzers/LogStep.h>
 #include <tools/analyzers/LammpsDumpWriter.h>
+#include <tools/analyzers/PairEnergy.h>
 
 namespace Tools
 {
@@ -42,6 +43,9 @@ namespace Tools
       } else
       if (className == "LammpsDumpWriter") {
          ptr = new LammpsDumpWriter(processor());
+      }  else
+      if (className == "PairEnergy") {
+         ptr = new PairEnergy(processor());
       } 
       return ptr;
    }
