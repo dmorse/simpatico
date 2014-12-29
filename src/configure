@@ -3,17 +3,32 @@
 #-----------------------------------------------------------------------
 # Name: configure
 #
-# Purpose: Sets macros that control conditional compilation of features
+# Purpose: Sets macros enable or disable features prior to compiling.
+#
+# This script should be called prior to compiling in order to enable or
+# disable particular compile time features. See the usage examples at the 
+# bottom of this documentation block. This version of the script must be
+# called from the root of the build directory tree in which a corresponding
+# version of the code will built. It should thus be called from the
+# bld/serial directory for standard out-of-source build of serial 
+# programs (without MPI), from bld/parallel for a standard out-of-source 
+# build with MPI, or from src/ for an in source build. Each of these build 
+# directories contains a copy of this script.  Invoking the configure script 
+# in a specific build directory only affects code that is built in that
+# directory.
+#
+# The configure script works by editing the config.mk makefile fragments 
+# in the build directory from which it is called. These files control
+# which preprocessor macros are passed to the compiler for code compiled 
+# in that build directory.
 #
 # Synopsis:
 #
-#      configure [options]
+#      ./configure [options]
 #
-#      The script must be called from the Simpatico root directory
-#
-# Enabling / Disabling Features: 
+# Command Line Options: 
 #   
-# Each of the following option enables or disables a feature. Each such
+# Each of the following options enables or disables a feature. Each such
 # options takes 0 or 1 as a required argument, using 1 to denote "enable"
 # and 0 to denote "disable".
 #
@@ -29,23 +44,23 @@
 #   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
 #   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
 #
-# Other Command Line Options:
+# These command line options do not enable or disable features: 
 #
-#   -h compiler  Chooses a compiler, set COMPILER=compiler in config.mk
+#   -j compiler  Chooses a compiler, set COMPILER=compiler in config.mk
 #   -q           query: prints report of options that are enabled / disabled.
 #
 # Examples:
 #
-# To disable debugging, but enable angle and dihedral potentials:
+# To disable debugging and enable angle and dihedral potentials:
 #
 #   >  ./configure -g0 -a1 -d1
 #
 # To set COMPILER=intel in config.mk
 #
-#   >  ./configure -h intel
+#   >  ./configure -j intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:u:k:c:h:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -129,7 +144,7 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:h:q" opt; do
         ;;
       esac
       ;;
-    h)
+    j)
       FILE=config.mk
       cp "$FILE" temp
       sed "s/COMPILER=.*$/COMPILER=$OPTARG/" temp > "$FILE"
