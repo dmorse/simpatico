@@ -73,8 +73,11 @@ namespace McMd
       #endif
 
       // Read and validate parameter nTrial.
-      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
-         UTIL_THROW("Invalid parameter value for nTrial");
+      if (nTrial_ <=0) {
+         UTIL_THROW("Invalid parameter value, nTrial <= 0");
+      }
+      if (nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid parameter value, nTrial > MaxTrial_");
       }
    }
 

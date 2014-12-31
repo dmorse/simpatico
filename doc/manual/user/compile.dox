@@ -118,7 +118,7 @@ If you are using a system that does not use environment modules, and the setting
 
 If make is invoked from the simpatico/ root directory, however, MPI will be automatically enabled in the bld/parallel directory and disabled in the bld/serial directory before attempting to compile any code. When make is invoked from the simpatico/ root directory (as we recommend), there is thus no need for users to manually edit configuration files to enable or disable MPI in different build directories.
 
-When make is invoked from the src/ directory in order to execute an in-source build, however, users are responsible for disabling MPI before compiling serial programs (serial versions of mcSim and mdSim) and enabling MPI before compiling parallel programs (ddSim and parallel versions of mcSim and mdSim). The use of MPI in a particular build directory is enabled if the main config.mk file in the build directory contains a line that defines "UTIL_MPI=1", and is disabled when this line of the config.mk file is commented out. The simplest way to enable or disable is to use the configure script with the "-m" option, by entering "./configure -m0" from the src/ directory to enable MPI, or "./configure -m1" to disable MPI. The configure script is discussed in more detail below. 
+When make is invoked from the src/ directory in order to execute an in-source build, however, users are responsible for disabling MPI before compiling serial programs (serial versions of mcSim and mdSim) and enabling MPI before compiling parallel programs (ddSim and parallel versions of mcSim and mdSim). The use of MPI in a particular build directory is enabled if the main config.mk file in the build directory contains a line that defines "UTIL_MPI=1", and is disabled when this line of the config.mk file is commented out. The simplest way to enable or disable is to invoke the configure script with the "-m" option, by entering "./configure -m0" from the src/ directory to enable MPI, or "./configure -m1" to disable MPI. The configure script is discussed in more detail below. 
 
 \section compile_ddMd_section Compiling ddSim
 
@@ -144,9 +144,9 @@ To compile multi-processor versions of mcSim and mdSim, enter:
 \endcode
 from the simpatico/ root directory.  This should create executable files named mcSim_m and mdSim_m in the simpatico/bin/ directory. The suffix "_m" on these executable names denotes "MPI", and is used to distinguish multi-processor versions of the mcSim and mdSim executables from single processor versions.
  
-\section compile_configure_section The configure script
+\section compile_configure_section The configure script (build directories)
 
-Each build directory (i.e., bld/serial, bld/parallel, and src/) also contains a copy of a bash script named "configure" that can be invoked before compilation to specify which optional features should be enabled or disabled in any program that is built in that directory. The configure script changes settings by programmatically editing the config.mk configuration files. The configure script must be invoked from the root of a build directory (i.e., from bld/serial, bld/parallel, and src/), and only affects programs that are built in that directory.
+Each build directory (i.e., bld/serial, bld/parallel, and src/) contains a copy of a bash script named "configure". This can be invoked before compiling to specify which features should be enabled or disabled in any program that is built in that directory. The configure script changes settings by programmatically editing the config.mk configuration files. The configure script must be invoked from the root of a build directory (i.e., from bld/serial, bld/parallel, and src/), and only affects programs that are built in that directory.
 
 The -q command line option of the configure script may be used to query which optional features are currently set to be enabled or disabled. To see how this works, after the setup script has been run, cd to the bld/serial directory and enter
 \code
@@ -188,6 +188,10 @@ The configure script may also be used to reset the value of the COMPILER identif
 from the relevant build directory (i.e., from bld/serial and/or bld/parallel) before compiling. The same effect could be achieved by manually editing the line that defines COMPILER in the main config.mk file.
 
 The configure script in each build directory only modifies the configuration files in the same build directory tree, and thus only effects programs built in that directory. Choices that you make by invoking the configure script from the bld/serial directory thus only affect serial programs that are built in that directory, whereas choices that you make by invoking configure from bld/parallel only affect parallel programs that are built there. Invoking configure from the src/ directory will affects the configuration of any serial or parallel program that is built in-source.
+
+\section compile_root_configure_section The configure script (root directory)
+
+The root simpatico/ directory also contains a bash script named "configure" that can be used to apply changes simultaneously to the bld/serial and bld/parallel directories. This version of the script must be invoked from the root directory. It accepts the same options as the configure scripts in the build directories, with one exception: It does not accept the "-m" option, which enables or disables MPI, because MPI should normally be enabled in one of these build directories and disabled in the other. The root directory configure script works by simply invoking the ./configure scripts in the bld/serial and bld/parallel directories with the same options. It does not invoke the ./configure script in the src/ directory, and thus has no effect upon in-source builds. The output of this script simply echoes the outputs produced by the build-directory configure scripts, and thus appears more verbose. The "-q" option can be used to show the current configuration in both build directories.
 
 \section compile_suffix_section Executable File Name Suffixes
 

@@ -50,10 +50,10 @@ McSimulation{
   }
   McMoveManager{
     
-    CfbReptationMove{
+    CfbReptateMove{
       probability      1.0000000000e+00
       speciesId                       0
-      nTrial                         20
+      nTrial                         40
       hasAutoCorr                     0
     } 
 
