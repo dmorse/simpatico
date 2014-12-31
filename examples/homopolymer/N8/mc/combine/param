@@ -49,14 +49,14 @@ McSimulation{
       delta                               0.04
     }
 
-    CfbEndMove{
+    CfbLinearEndMove{
       probability           0.100000000000e+00
       speciesId                              0
       nRegrow                                4
       nTrial                                20
     }
 
-    CfbReptationMove{
+    CfbReptateMove{
       probability           0.100000000000e+00
       speciesId                              0
       nTrial                                20
