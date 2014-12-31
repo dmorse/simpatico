@@ -43,7 +43,7 @@ McSimulation{
   }
   McMoveManager{
 
-    CfbReptationMove{
+    CfbReptateMove{
       probability            1.00000000000e+00
       speciesId                              0
       nTrial                                20
