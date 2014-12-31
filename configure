@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------
+# Name: configure
+#
+# Purpose: Globally disable or enable features prior to compiling.
+#
+# This script should be called prior to compiling in order to enable or
+# disable particular compile time features. This version of the script
+# must be called from the simpatico/ root directory, and applies all
+# changes to both serial code built in the bld/serial directory and to
+# the parallel MPI code build in the bld/parallel directory. To instead
+# apply changes to code compiled in one build directory, one must invoke
+# ./configure from that build directory. 
+
+# This "global" version of the configure script works by simply recursively 
+# invoking the configure scripts in the bld/serial and bld/parallel build
+# directories. It accepts all of the same  options that are accepted by 
+# the configure scripts in the build directories, with one exception: It
+# does not except the -m option, which enables or disables MPI, because
+# MPI should normally be left enabled in src/parallel and disabled in
+# src/serial.
+#
+# Synopsis:
+#
+#      configure [options]
+#
+# Enabling / Disabling Features: 
+#   
+# Each of the following option enables or disables a feature. Each such
+# options takes 0 or 1 as a required argument, using 1 to denote "enable"
+# and 0 to denote "disable".
+#
+#   -m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)
+#   -g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)
+#   -b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)
+#   -a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)
+#   -d (0|1)   dihedral potentials         (defines/undefines INTER_DIHEDRAL)
+#   -e (0|1)   external potentials         (defines/undefines INTER_EXTERNAL)
+#   -l (0|1)   McMd links (mutable bonds)  (defines/undefines MCMD_LINK)
+#   -s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)
+#   -f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)
+#   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
+#   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
+#
+# Other Command Line Options:
+#
+#   -j compiler  Chooses a compiler, set COMPILER=compiler in config.mk
+#   -q           query: prints report of options that are enabled / disabled.
+#
+# Examples:
+#
+# To disable debugging and enable angle and dihedral potentials in all code:
+#
+#   >  ./configure -g0 -a1 -d1
+#
+# To set COMPILER=intel in config.mk
+#
+#   >  ./configure -j intel
+#
+#-----------------------------------------------------------------------
+ROOT=$PWD 
+opt=""
+OPTARG=""
+while getopts "g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
+
+  if [[ "$opt" != "?" ]]; then
+    cd $ROOT
+    cd bld/serial; 
+    echo "In build directory $PWD":
+    ./configure -"$opt" "$OPTARG"
+    cd $ROOT
+    cd bld/parallel; 
+    echo "In build directory $PWD":
+    ./configure -"$opt" "$OPTARG"
+    opt=""
+    OPTARG=""
+  fi
+
+done
+

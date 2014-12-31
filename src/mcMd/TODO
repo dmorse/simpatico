@@ -7,13 +7,6 @@ Species
 - Move Species, SpeciesGroup etc. to a new Chem namespace, so it can be 
   used in Tool namespace.
 
-Cfb Moves
-----------
-
-- Fix CfbEndBase to work correctly with angles
-
-- Fix CfbReptation to work with angles
-
 ConfigIos
 ---------
 

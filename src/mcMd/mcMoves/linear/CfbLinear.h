@@ -139,7 +139,7 @@ namespace McMd
    private:
 
       /// Maximum allowed number of trial positions
-      static const int MaxTrial_ = 20;
+      static const int MaxTrial_ = 200;
 
       /// Integer identifier of molecular species
       int  speciesId_;

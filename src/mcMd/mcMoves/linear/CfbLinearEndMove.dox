@@ -1,0 +1,46 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_CfbLinearEndMove_page CfbLinearEndMove
+
+\section mcMd_mcMove_CfbLinearEndMove_overview_sec Synopsis
+
+This mcMove implements the configuration bias algorithm for regrowing segments at either end of a flexible linear polymer. It generates trial positions with bond lengths chosen from a Boltzmann distribution, with random bond orientations. Angle and external potentials are included in the Rosenbluth weight, but not in the generation probabilities.
+
+This algorithm is designed for use with flexible linear chains with stiff bond potentials, and chains with soft angle potentials. It is correct but inefficient for models with stiff angle potentials.  
+
+\sa McMd::CfbLinearEndMove
+
+\section mcMd_mcMove_CfbLinearEndMove_param_sec Parameters
+The parameter file format is:
+\code
+   CfbLinearEndMove{ 
+      probability        double
+      speciesId          int
+      nRegrow            int
+      nTrial             int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> nRegrow </td>
+     <td> number of atoms to attempt to regrow at either chain end.</td>
+  </tr>
+  <tr> 
+     <td> nTrial </td>
+     <td> number of trial positions per added atom. </td>
+  </tr>
+</table>
+
+*/
+
+}

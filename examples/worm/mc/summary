@@ -1,0 +1,8 @@
+System of 100 wormlike chains of N=8 atoms
+
+LJPair:        epsilon=sigma=1.0 cutoff=1.12246
+HarmonicBond:  kappa=400, length=1.0
+CosineAngle:   kappa=4.0
+
+                             Potential         Pressure          RgSq
+HMD, dt=0.008, nstep=200   1163.7 +- 0.3   2.6249 +- 0.0007  3.6207 +- 0.0009
