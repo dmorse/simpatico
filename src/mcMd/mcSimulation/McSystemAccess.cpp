@@ -50,7 +50,7 @@ namespace McMd
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (hasDihedral()) {
+      if (hasDihedrals()) {
          dihedralPotentialPtr_ = &mcSystem.dihedralPotential();
       }
       #endif
