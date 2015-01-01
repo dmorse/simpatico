@@ -80,25 +80,23 @@ This simplified (but functional) version of the program has only four executable
 
   - The second line invokes the McMd::McSimulation::setOptions() member function. This function processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref section_options "below".
 
-  - The third line invokes the readParam() member function. This function reads a parameter file and initializes the simulation.  Invoking readParam() with no argument, as done here, reads the parameter file from standard input. 
+  - The third line invokes the readParam() member function. This function reads the parameter file that was specified as an argument to the -p command line option and initializes the simulation.  
 
-  - The fourth line invokes the readCommands() member function. This function reads the command file, and executes each command in sequence, until it encounters a command that tells it to stop execution.
+  - The fourth line invokes the readCommands() member function. This function reads the command file that was specified as an argument to -c command line option and executes each command in sequence, until it encounters a command that tells it to stop execution.
 
-The readParam() method does more than read parameters: It is an initialization function that reads parameters, allocates any required memory, and leaves the main simulation object ready for use. 
-
-The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of DdMd::Simulation. McMd is the name of a C++ namespace that contains the code for single-processor MC and MD simulations. DdMd is a namespace that contains code for parallel domain decomposition MD simulations.
+The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of class McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of class DdMd::Simulation. McMd is the name of a C++ namespace that contains the code for single-processor MC and MD simulations. DdMd is a namespace that contains code for parallel domain decomposition MD simulations.
 
 \section usage_parameter_section Parameter file
 
-The parameter file contains all the data required to initialize a simulation, i.e., to initialize all variables to valid values and to allocate all required memory. This data includes: 
+The parameter file contains all the data required to initialize a simulation, i.e., to initialize all variables to valid values, allocate all required memory, and leave the main simulation object ready for use. These data includes: 
 
  - Parameters that control how much memory should be allocated for use during a simulation, such as the maximum allowable number of atoms or molecules.
  - Physical parameters such as the temperature and potential energy parameters.
- - Choices of specific simulation algorithms, such as the set of Monte Carlo moves for a MC simulation or the integration algorithm for an MD simulation, and parameters requierd by these algorithms (e.g,. the time step for an MD integrator). 
+ - Choices of specific simulation algorithms, such as a set of Monte Carlo moves for a MC simulation or the integration algorithm for an MD simulation, and parameters required by these algorithms (e.g,. the time step for an MD integrator). 
  - Specification of any data analysis and/or data output operations that should be executed during execution, for "on-the-fly" analysis.
  - File name prefixes for input and output files.
 
-In mcSim and mdSim simulations, the parameter file also contains data required to describe the chemical structure (topology) of every molecular species that can appear in the simulation. In ddSim simulations, this information about molecular structure is instead embedded in the configuration file (discussed below). Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
+In mcSim and mdSim simulations, the parameter file also contains a description of the chemical structure (topology) of every molecular species that can appear in the simulation. In ddSim simulations, this information about molecular structure is instead embedded in the configuration file (discussed below). Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
 
 \section usage_command_section Command file
 
