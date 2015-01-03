@@ -87,20 +87,26 @@ Lammps:
         Lammps formats: atom, custom and local
         Standard formats: dcd, xtc, xyz, molfile and cfg
 
-        DCD is a nonportable binary format used by CHARMM, NAMD and XPlor. The number of 
-        atoms per snapshot is fixed.
+        DCD is a nonportable binary format used by CHARMM, NAMD and XPlor. 
+        The number of atoms per snapshot is fixed.
 
         Atoms sorting is off by default for atom, custom, and local and cfg
-        Atom sorting is on by default (and may be required) for dcd, xtc, xyz and molfile
+        Atom sorting is on by default (and may be required) for dcd, xtc, xyz 
+        and molfile 
  
-        The default atom text file format is contains box information and atoms with the
-        format: id type xs ys zs with scaled coordinates.
+        The default atom text file format contains box information and 
+        atoms with the format: id type xs ys zs with scaled coordinates.
 
         VMD can read atom, custom, dcd xtc and zyz files.
  
-        The lammps styles can write either one file per snapshot, if the * character appears         
-        in the file name, or one big file, if no such character apppears. This is not 
-        available for dcd and xtc files.
+        The lammps styles can write either one file per snapshot, if 
+        the '*' character appears in the file name, or one big file, 
+        if no such character apppears. This is not available for dcd 
+        and xtc files.
+
+        The lammps dump format has no notion of a "header" section -
+        each frame is independent. This format normally contains atom
+        type id for each atom in each frame. 
 
    ----------
 
