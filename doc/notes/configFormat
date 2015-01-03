@@ -1,80 +1,82 @@
-Goal: Design configuration file format that can be used to initialize
-any program and interchanged among programs.
+Goal: Design files that can be used by multiple programs.
 
-Requirements / wishes:
+Requirements / proposals:
 
-   - Self-documenting format (allows adaptation and validation)
-   - McMd programs should read all configuration and trajectory 
-     formats produced by DdMd (ordered or disordered)
-   - McMd programs should write a format that can initialize DdMd
+   - Three shared file types: configuration (initialization), 
+     trajectory (analysis), and topology (molecule structure).
 
-   - Use compact trajectory files for data analysis, verbose
-     configuration files for initializatin.
-   - MdPp programs must read formats produced by DdMd (molecular or not)
+   - Don't worry about compatibility with other programs - this
+     is a separate problem, to be handled separately
 
+   - Self-documenting configuration and trajectory formats (allows 
+     adaptation and validation) with several format variants. A 
+     single class should be able to read any usable variant of 
+     this format, with appropriate error checking.
 
-   Convention: Interchange between DdMd and McMd is only possible if
-   the atom ids used by DdMd are in conventional order and consecutive, 
-   ordered by species, and molecule. McMd should be able to cope with
-   atoms that are not ordered
+   - Configuration and trajectory files that are intended for use
+     by McMd programs must have atom ids in canonical molecule order, 
+     i.e., consecutive from 0, and ordered by species, molecule and 
+     atom. Files that obey this convention should document this fact,
+     and should indicate the size of each species (# of molecules)
+     and molecules (# of atoms).
 
-Configuration file organization:
+   - McMd programs should read configuration and trajectory format
+     variants produced by DdMd (ordered or disordered). The reader
+     should require only that atom ids be in canonical molecule
+     order, but not that they be listed that in order in the file.
 
-   FORMAT
+   - McMd programs should write a configuration format that can be 
+     used to initialize DdMd, which must include groups. Atom ids
+     used in this format must be in canonical molecular order. The
+     format should contain information about species and molecule
+     sizes, to allow it to be read back by McMd.
+
+   - MdPp programs must read formats produced by DdMd, with atom
+     ids in canonical molecule order or not, and should be able to
+     make use of molecule information when included in the file.
+
+   - Allow verbose configuration files, but provide very compact
+     trajectory file formats
+
+   - Allow but do not require trajectory files to contain 
+     configuration information (molecule and species sizes, fixed
+     atom info (types, etc.), groups). Readers should check for 
+     consistency of redundant data.
+
+   - Provide a separate topology file format. This can be written
+     by (md|mc)Sim and read by MdPp for molecule based analysis. 
+     It will not normally be used by ddSim, except perhaps by a
+     SnapShot.
+
+Configuration file:
+
    BOUNDARY (same as current)
-   [SPECIES] (number of atoms per molecule and molecules per species)
-   ATOMS
+   [MOLECULES] - presence indicates canonical atom id order
+   ATOMS - format variable, indicated within block
    [BONDS]
    [LINKS]
    [ANGLES]
    [DIHEDRALS]
 
-   Separate file formats will be developed for:
-     - Trajectory files
-     - Topology files
+Trajectory file (binary):
 
-FORMAT
+   Header:
+      NATOM int
+      FRAME_FORMAT - bitfield with flags that include: molecular?, 
+                     fixed? ordered?, velocity? shift? (other?)
+      HEADER_FORMAT - bitfield indicating which optional info follows
+      [MOLECULES] - molecule & species sizes, required iff molecular 
+      [ATOMTYPES] - Format, followed by per atom: typeId, [charge]
+      [BONDS][ANGLES][DIHEDRALS]
+   Frame:
+      ISTEP
+      BOUNDARY
+      ATOMS (optionally include shift, velocity)
 
-   Flags (true or false)
-   -----
-   Molecular: all atoms belong to molecular species
-   Ordered:   atoms ordered in file by consecutive atom ids
-   Groups:    file includes groups, using global atom ids
+---------------------------------------------------------------------
+Blocks in configuration file:
 
-   String: [Molecular]|[Ordered]|[Groups]
-
-   If ORDERED:   atoms must appear ordered by atom id
-
-   If MOLECULAR: atom ids must be ordered by species and molecule
-                 molecule ids must be consecutive from 0
-                 atom ids must be consecutive 
-                 config file must contain a SPECIES section
-
-   Conventions for particular programs:
-
-      McMd writing - always MOLECULAR 
-                     always ORDERED
-                     Optional GROUPS (when intended for DdMd)
-                     Write atom ids in consecutive order
-                     Do NOT use internal atom ids, which need not be ordered
-
-      McMd reading - Require MOLECULAR
-                     Optional ORDERED
-                     Optional GROUPS
-                     Push all molecules first, before reading atoms
-                     Require consecutive atom ids (check validity if in file)
-                     Require atom ids be in file if file is not ordered
-                     Check atom typeId validity
-                     If GROUPS are in file, check validity
-
-      DdMd writing - Require MOLECULAR for use by McMd (is data available?)
-                     Require GROUPS (to allow reading by ddSim)
-                     Optional ORDERED (how to control?)
-
-      DdMd reading - Require GROUPS
-                     Read and store species, if present
-
-SPECIES:
+MOLECULES:
 
    nSpecies  [int]
 
@@ -83,27 +85,37 @@ SPECIES:
 
 ATOMS: 
 
-   FORMAT [i][m][t]p[v][s]
+   FORMAT [i][m][t]p[v][s][c]
    NATOM integer
 
    Format flags:
    i = global id                         only required for DdMd
    m = context (species, molecule, atom) only required for DdMd
    t = type id                           only required for DdMd
+   s = shift                             optional for MD simulations
    p = position                          always required
    v = velocity                          required by MD simulations
-   s = shift                             optional for MD simulations
+   c = charge                            (possibility, for future)
 
-   Convention: 
+   Default output formats by different programs:
 
-       mdSim writes all of the above, shift if activated
+       mdSim writes all of the above, shift when possible
        mcSim writes all of the above except velocity and shift
        ddSim writes all that it can (context and shift optional)
-       all programs use consecutive atom ids
 
-BONDS: 
+       Note: ddSim must know if atoms are in canonical molecular order
 
-   Convention:
+GROUP<N>: BONDS, ANGLES, DIHEDRALS
 
-       mcSim and mdSim write using ordered global atom ids, in a
-       loop over molecules and loop over groups in SpeciesGroup<N>
+   nGroup
+   For each{
+      atomId0 ... atomId(N-1) typeId
+   }
+
+---------------------------------------------------------------------
+Blocks in trajectory frame:
+
+  FRAME:
+     For each atom {
+        id position(as 3xuint) [shift - 32 bit] [velocity]
+     }
