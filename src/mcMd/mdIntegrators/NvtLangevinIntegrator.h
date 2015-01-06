@@ -59,16 +59,25 @@ namespace McMd
    * \f]
    * The coefficient \f$c_{r}\f$ for the random force is then chosen so 
    * that, in the absence of conservative forces, the mapping would exactly 
-   * preserve the equipartion value
+   * preserve a variance 
    * \f[ 
-   *     \langle v_{i} v_{j} \rangle = \delta_{ij} k_{B}T/m . 
+   *     \langle v_{i} v_{j} \rangle = \delta_{ij} d k_{B}T/m . 
    * \f] 
-   * for Cartesian component of velocity at temperature \f$T\f$. Applying 
-   * this criteria, and using the identity 
+   * for Cartesian components of the midstep velocities at temperature \f$T\f$. 
+   * The coefficient \f$d\f$ is a dimensionless constant that approaches unit 
+   * in the limit \f$\gamma\Delta t \rightarrow 0\f$, but that is chosen here
+   * such that the velocity at the beginning and end of each step (rather than
+   * at the midstep) satisfies the usual equipartition theorem, with d=1.
+   * Applying this criteria, and using the identity 
    * \f$\langle u_{i} u_{j} \rangle = \delta_{ij}/12\f$ 
    * for the Cartesian components of \f${\bf u}\f$, we obtain:
    * \f[
-   *     c_{r} = \sqrt{12 m k_{B}T ( 1 - e^{-2\gamma\Delta t})}/\Delta t
+   *     c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t
+   * \f]
+   * Requiring that the end-of-step velocity satisfy equipartitions in the
+   * absence of external forces then yields a coefficient
+   * \f[
+   *    d = 2/(1 + e^{-\gamma\Delta t}) .
    * \f]
    * 
    * \ingroup McMd_MdIntegrator_Module

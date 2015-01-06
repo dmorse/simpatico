@@ -86,9 +86,10 @@ namespace McMd
       if (!energyEnsemble.isIsothermal()) {
          UTIL_THROW("Energy ensemble is not isothermal");
       }
-      double temp = energyEnsemble.temperature();
       double cv = (exp(-dt_*gamma_) - 1.0)/dt_;
-      double cr = 12.0*temp*(1.0 - exp(-2.0*dt_*gamma_))/(dt_*dt_);
+      double temp = energyEnsemble.temperature();
+      double d = 2.0/(1.0 + exp(-dt_*gamma_));
+      double cr = 12.0*temp*d*(1.0 - exp(-2.0*dt_*gamma_))/(dt_*dt_);
 
       // Loop over atom types
       double mass;
