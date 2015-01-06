@@ -5,7 +5,7 @@ Requirements / proposals:
    - Three shared file types: configuration (initialization), 
      trajectory (analysis), and topology (molecule structure).
 
-   - Don't worry about compatibility with other programs - this
+   - Don't worry about compatibility with other MD programs - this
      is a separate problem, to be handled separately
 
    - Self-documenting configuration and trajectory formats (allows 
@@ -61,17 +61,17 @@ Configuration file:
 Trajectory file (binary):
 
    Header:
-      NATOM int
-      FRAME_FORMAT - bitfield with flags that include: molecular?, 
+      nAtom int
+      frameFormat - bitfield with flags that include: molecular?, 
                      fixed? ordered?, velocity? shift? (other?)
-      HEADER_FORMAT - bitfield indicating which optional info follows
+      headerFormat - bitfield indicating which optional info follows
       [MOLECULES] - molecule & species sizes, required iff molecular 
       [ATOMTYPES] - Format, followed by per atom: typeId, [charge]
       [BONDS][ANGLES][DIHEDRALS]
    Frame:
-      ISTEP
-      BOUNDARY
-      ATOMS (optionally include shift, velocity)
+      iStep
+      boundary
+      ATOMS (id, position, optionally shift, velocity)
 
 ---------------------------------------------------------------------
 Blocks in configuration file:
@@ -117,5 +117,14 @@ Blocks in trajectory frame:
 
   FRAME:
      For each atom {
-        id position(as 3xuint) [shift - 32 bit] [velocity]
+        id position(as 3xuint) [shift 3 x int] [velocity]
      }
+---------------------------------------------------------------------
+Plan:
+
+   1) McMd ConfigIo for configuration format      (SmcConfigIo)
+   2) McMd TrajectoryIo for trajectory format     (SmtTrajectoryIo)
+   3) Add simple species to DdMd::Simulation
+   4) DdMd ConfigIo for configuration format      (SmcConfigIo)
+   5) DdMd writer for trajectory format           (SmtTrajectoryReader)
+   6) Tools reader                                (SmtTrajectoryReader)
