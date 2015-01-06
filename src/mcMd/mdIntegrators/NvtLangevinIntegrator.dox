@@ -1,31 +1,34 @@
-namespace McMd
+namespace McMd 
 {
 
 /*! \page mcMd_integrator_NvtLangevinIntegrator_page NvtLangevinIntegrator
 
 \section mcMd_integrator_NvtLangevinIntegrator_overview_sec Synopsis
 
-NvtLangevinIntegrator implements an NVT velocity-Verlet integrator using a
-stochastic Langevin thermostat.
+NvtLangevinIntegrator implements an NVT velocity-Verlet integrator using a stochastic Langevin thermostat.
 
-This integrator requires that the Util::EnergyEnsemble of the associated system 
-must be set to "isothermal". The target temperature is the temperature returned 
-by the function Util::EnergyEnsemble::temperature().
+This integrator requires that the Util::EnergyEnsemble object of the associated System must be set to "isothermal". The target temperature is the temperature returned by the function Util::EnergyEnsemble::temperature().
 
-Equations of motion:
-\f{eqnarray*}
-   \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m}( {\bf f}_{i} -  {\bf f}_{i}^{(r)} )
-                             - \Gamma {\bf v}_{i} \\
-\f}
+The integrator approximates the Langevin equations of motion, given for each particle by:
+\f[
+   m\frac{d{\bf v}}{dt}  =  {\bf f}
+                         - m\gamma {\bf v}
+                         +  {\bf f}^{\rm (r)} ,
+\f]
 in which:
 
-   - \f${\bf v}_{i}\f$ is the velocity of particle i
+   - \f${\bf v}\f$ is the particle velocity
 
-   - \f${\bf f}_{i}\f$ is the deterministic force on particle i
+   - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
 
-   - \f${\bf f}_{i}^{(r)}\f$ is a random force on particle i
+   - \f${\bf f}\f$ is the conservative force
 
-   - \f$\gammaf$ is a velocity relaxation rate (inverse time) parameter
+   - \f${\bf f}^{\rm (r)}\f$ is a random force on particle i
+
+The random force must be chosen to have 
+\f$\langle {\bf f}^{\rm (r)}\rangle = 0 \f$ and 
+\f$\langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle = 2 m kT \gamma \delta (t-t') \f$.
+Details of the discrete time stepping algorithm are discussed in the class documentation.
 
 \sa McMd::NvtLangevinIntegrator
 \sa Util::EnergyEnsemble
@@ -51,5 +54,4 @@ with parameters
 </table>
 
 */
-
 }

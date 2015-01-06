@@ -28,8 +28,8 @@ namespace McMd
    NvtLangevinIntegrator::NvtLangevinIntegrator(MdSystem& system)
    : MdIntegrator(system),
      prefactors_(),
-     vcoeff_(),
-     fcoeff_(),
+     cv_(),
+     cr_(),
      gamma_()
    {  setClassName("NvtLangevinIntegrator"); }
 
@@ -48,8 +48,8 @@ namespace McMd
       read<double>(in, "gamma", gamma_);
       int nAtomType = simulation().nAtomType();
       prefactors_.allocate(nAtomType);
-      vcoeff_.allocate(nAtomType);
-      fcoeff_.allocate(nAtomType);
+      cv_.allocate(nAtomType);
+      cr_.allocate(nAtomType);
    }
 
    /*
@@ -61,8 +61,8 @@ namespace McMd
       int nAtomType = simulation().nAtomType();
       prefactors_.allocate(nAtomType);
       ar & prefactors_;
-      ar & vcoeff_;
-      ar & fcoeff_;
+      ar & cv_;
+      ar & cr_;
    }
 
    /*
@@ -73,8 +73,8 @@ namespace McMd
       ar & dt_;
       ar & gamma_;
       ar & prefactors_;
-      ar & vcoeff_;
-      ar & fcoeff_;
+      ar & cv_;
+      ar & cr_;
    }
 
    /*
@@ -87,8 +87,8 @@ namespace McMd
          UTIL_THROW("Energy ensemble is not isothermal");
       }
       double temp = energyEnsemble.temperature();
-      double vc = (exp(-dt_*gamma_) - 1.0)/dt_;
-      double fc = 12.0*temp*(1.0 - exp(-2.0*dt_*gamma_))/(dt_*dt_);
+      double cv = (exp(-dt_*gamma_) - 1.0)/dt_;
+      double cr = 12.0*temp*(1.0 - exp(-2.0*dt_*gamma_))/(dt_*dt_);
 
       // Loop over atom types
       double mass;
@@ -96,8 +96,8 @@ namespace McMd
       for (int i = 0; i < nAtomType; ++i) {
          mass = simulation().atomType(i).mass();
          prefactors_[i] = 0.5*dt_/mass;
-         vcoeff_[i] = mass*vc;
-         fcoeff_[i] = sqrt(mass*fc);
+         cv_[i] = mass*cv;
+         cr_[i] = sqrt(mass*cr);
       }
 
    }
@@ -110,20 +110,20 @@ namespace McMd
    *        vm(n)  = v(n) + 0.5*a(n)*dt
    *        x(n+1) = x(n) + vm(n)*dt
    *
-   *        calculate determinstic force a(n+1)
-   *        add Langevin force
+   *        calculate determinstic force f(n+1)
+   *        add Langevin force, calculated using vm(n)
    *      
-   *        v(n+1) = vm(n) + 0.5*a(n+1)*dt
+   *        v(n+1) = vm(n) + 0.5*f(n+1)*dt/m
    *
-   * where x is position, v is velocity, and a is acceleration.
+   * where x is position, v is velocity, and f is force.
    */
    void NvtLangevinIntegrator::step()
    {
       Vector dr;
       Vector dv;
       Vector df;
+      double cr;
       System::MoleculeIterator molIter;
-      double fc;
       int iSpecies, nSpecies, typeId;
 
       nSpecies = simulation().nSpecies();
@@ -138,11 +138,11 @@ namespace McMd
             for ( ; atomIter.notEnd(); ++atomIter) {
                typeId = atomIter->typeId();
 
-               // Velocity update (half step)
+               // Update velocity one half step, prefactor = dt/(2m)
                dv.multiply(atomIter->force(), prefactors_[typeId]);
                atomIter->velocity() += dv;
 
-               // Position update (full step)
+               // Update position (full step)
                dr.multiply(atomIter->velocity(), dt_);
                atomIter->position() += dr;
             }
@@ -158,7 +158,7 @@ namespace McMd
                atomPtr = &molIter->atom(ia);
                typeId = atomPtr->typeId();
 
-               // Velocity update (half step)
+               // Update velocity one half step, prefactor = dt/(2m)
                dv.multiply(atomPtr->force(), prefactors_[typeId]);
                atomPtr->velocity() += dv;
 
@@ -170,6 +170,7 @@ namespace McMd
       }
       #endif
 
+      // Calculate conservative force
       system().calculateForces();
 
       // 2nd half velocity Verlet, loop over atoms
@@ -183,15 +184,15 @@ namespace McMd
             for ( ; atomIter.notEnd(); ++atomIter) {
                typeId = atomIter->typeId();
 
-               // Add Langevin force to atomic force
-               df.multiply(atomIter->velocity(), vcoeff_[typeId]);
-               fc = fcoeff_[typeId];
+               // Add Langevin drag and random force to atomic force
+               df.multiply(atomIter->velocity(), cv_[typeId]);
+               cr = cr_[typeId];
                for (j=0; j < Dimension; ++j) {
-                  df[j] += (random.uniform() - 0.5)*fc;
+                  df[j] += (random.uniform() - 0.5)*cr;
                }
                atomIter->force() += df;
 
-               // Velocity update
+               // Velocity update by half step
                dv.multiply(atomIter->force(), prefactors_[typeId]);
                atomIter->velocity() += dv;
             }
@@ -205,15 +206,15 @@ namespace McMd
                atomPtr = &molIter->atom(ia);
                typeId = atomPtr->typeId();
 
-               // Add to Langevin force to atomic force
-               df.multiply(atomPtr->velocity(), vcoeff_[typeId]);
-               fc = fcoeff_[typeId];
+               // Add Langevin drag and random force to atomic force
+               df.multiply(atomPtr->velocity(), cv_[typeId]);
+               cr = cr_[typeId];
                for (j=0; j < Dimension; ++j) {
-                  df[j] += (random.uniform() - 0.5)*fc;
+                  df[j] += (random.uniform() - 0.5)*cr;
                }
                atomPtr->force() += df;
 
-               // Velocity update
+               // Velocity update by half step
                dv.multiply(atomPtr->force(), prefactors_[typeId]);
                atomPtr->velocity() += dv;
             }
