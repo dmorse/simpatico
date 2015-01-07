@@ -19,12 +19,7 @@ in which:
 
    - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
 
-   - \f${\bf f}^{\rm (r)}\f$ is a random force on particle i
-
-The random force must be chosen to have 
-\f$\langle {\bf f}^{\rm (r)}\rangle = 0 \f$ and 
-\f$\langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle = 2 m kT \gamma \delta (t-t') \f$.
-Details of the discrete time stepping algorithm are discussed in the class documentation.
+   - \f${\bf f}^{\rm (r)}\f$ is a random force
 
 \sa DdMd::NvtLangevinIntegrator
 \sa Util::EnergyEnsemble
@@ -46,7 +41,7 @@ with parameters
   </tr>
   <tr> 
      <td> gamma</td>
-     <td> velocity relaxation rate (inverse autocorrelation time) </td>
+     <td> velocity relaxation rate \f$\gamma\f$ (inverse autocorrelation time) </td>
   </tr>
 </table>
 

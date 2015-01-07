@@ -41,7 +41,7 @@ with parameters
   </tr>
   <tr> 
      <td> gamma</td>
-     <td> velocity relaxation rate (inverse autocorrelation time) </td>
+     <td> velocity relaxation rate \f$\gamma\f$ (inverse autocorrelation time) </td>
   </tr>
 </table>
 
