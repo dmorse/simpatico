@@ -1,5 +1,5 @@
-#ifndef MCMD_NVT_LANGEVIN_INTEGRATOR_H
-#define MCMD_NVT_LANGEVIN_INTEGRATOR_H
+#ifndef DDMD_NVT_LANGEVIN_INTEGRATOR_H
+#define DDMD_NVT_LANGEVIN_INTEGRATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,13 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/mdIntegrators/MdIntegrator.h>
+#include "TwoStepIntegrator.h"      // base class
 
-#include <iostream>
-
-namespace McMd
+namespace DdMd
 {
 
+   class Simulation;
    using namespace Util;
 
    /**
@@ -69,71 +68,94 @@ namespace McMd
    * \f[ 
    *     \langle v_{i} v_{j} \rangle = \delta_{ij} d k_{B}T/m . 
    * \f] 
-   * for Cartesian components of the midstep velocities at temperature \f$T\f$. 
-   * The coefficient \f$d\f$ is a dimensionless constant that approaches unit 
-   * in the limit \f$\gamma\Delta t \rightarrow 0\f$, but that is chosen here
-   * such that the velocity at the beginning and end of each step (rather than
-   * at the midstep) satisfies the usual equipartition theorem, with d=1.
-   * Applying this criteria, and using the identity 
-   * \f$\langle u_{i} u_{j} \rangle = \delta_{ij}/12\f$ 
+   * for Cartesian components of the midstep velocities at temperature 
+   * \f$T\f$.  The coefficient \f$d\f$ is a dimensionless constant that 
+   * approaches unity in the limit \f$\gamma\Delta t \rightarrow 0\f$, 
+   * but that is chosen here such that the velocity at the beginning 
+   * and end of each step (rather than at the midstep) satisfies the 
+   * usual equipartition theorem, with d=1. Applying this criteria, and
+   * using the identity \f$\langle u_{i} u_{j} \rangle = \delta_{ij}/12\f$ 
    * for the Cartesian components of \f${\bf u}\f$, we obtain:
    * \f[
    *     c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t
    * \f]
-   * Requiring that the end-of-step velocity satisfy equipartitions in the
-   * absence of external forces then yields a coefficient
+   * Requiring that the end-of-step velocity satisfy equipartitions in 
+   * the absence of external forces then yields a coefficient
    * \f[
    *    d = 2/(1 + e^{-\gamma\Delta t}) .
    * \f]
    * 
-   * \ingroup McMd_MdIntegrator_Module
+   * \ingroup DdMd_Integrator_Module
    */
-   class NvtLangevinIntegrator : public MdIntegrator
+   class NvtLangevinIntegrator : public TwoStepIntegrator
    {
-   
+
    public:
 
-      /// Constructor. 
-      NvtLangevinIntegrator(MdSystem& system);
- 
-      /// Destructor.   
-      virtual ~NvtLangevinIntegrator();
+      /**
+      * Constructor.
+      */
+      NvtLangevinIntegrator(Simulation& simulation);
 
       /**
-      * Read parameters from file and initialize this MdSystem.
+      * Destructor.
+      */
+      ~NvtLangevinIntegrator();
+
+      /**
+      * Read required parameters.
       *
-      * \param in input file stream.
+      * Reads the time step dt.
       */
-      virtual void readParameters(std::istream &in);
+      void readParameters(std::istream& in);
 
       /**
-      * Load the internal state to an archive.
+      * Load internal state from an archive.
       *
-      * \param ar archive object.
+      * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchive& ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save the internal state to an archive.
+      * Save internal state to an archive.
       *
-      * \param ar archive object.
+      * \param ar output/saving archive
       */
-      virtual void save(Serializable::OArchive& ar);
+      virtual void save(Serializable::OArchive &ar);
+  
+   protected:
 
       /**
-      * Setup private variables before main loop.
+      * Setup state just before main loop.
+      *
+      * Calls Integrator::setupAtoms(), initializes prefactors_ array.
       */
-      virtual void setup();
+      void setup();
 
       /**
-      * Take a complete NVE MD integration step.
+      * Execute first step of two-step integrator.
+      *
+      * Update positions and half-update velocities.
       */
-      virtual void step();
+      virtual void integrateStep1();
+
+      /**
+      * Execute second step of two-step integrator.
+      *
+      * Second half-update of velocities.
+      */
+      virtual void integrateStep2();
 
    private:
 
-      /// Factors of 0.5*dt/mass for different atom types.
-      DArray<double> prefactors_;
+      /// Time step (parameter)
+      double  dt_;
+  
+      /// Velocity autocorrelation decay rate (parameter)
+      double gamma_;
+
+      /// Factors of 0.5*dt_/mass, calculated in setup().
+      DArray<double> prefactors_;      
 
       /// Constant for friction force.
       DArray<double> cv_;
@@ -141,10 +163,7 @@ namespace McMd
       /// Constant for random force.
       DArray<double> cr_;
 
-      /// Velocity autocorrelation decay rate.
-      double gamma_;
-
    };
 
-} 
+}
 #endif

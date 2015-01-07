@@ -11,7 +11,7 @@ This integrator requires that the Util::EnergyEnsemble object of the associated 
 
 The integrator approximates the Langevin equations of motion, given for each particle by:
 \f[
-   m\frac{d{\bf v}}{dt}  =  {\bf f}
+   m\frac{d{\bf v}}{dt}  =  -\frac{\partial U}{\partial {\bf r}}
                          - m\gamma {\bf v}
                          +  {\bf f}^{\rm (r)} ,
 \f]
@@ -20,8 +20,6 @@ in which:
    - \f${\bf v}\f$ is the particle velocity
 
    - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
-
-   - \f${\bf f}\f$ is the conservative force
 
    - \f${\bf f}^{\rm (r)}\f$ is a random force on particle i
 
