@@ -1,9 +1,9 @@
-namespace McMd 
+namespace DdMd 
 {
 
-/*! \page mcMd_integrator_NvtLangevinIntegrator_page NvtLangevinIntegrator
+/*! \page ddMd_integrator_NvtLangevinIntegrator_page NvtLangevinIntegrator
 
-\section mcMd_integrator_NvtLangevinIntegrator_overview_sec Synopsis
+\section ddMd_integrator_NvtLangevinIntegrator_overview_sec Synopsis
 
 NvtLangevinIntegrator implements an NVT velocity-Verlet integrator using a stochastic Langevin thermostat.
 
@@ -19,13 +19,18 @@ in which:
 
    - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
 
-   - \f${\bf f}^{\rm (r)}\f$ is a random force 
+   - \f${\bf f}^{\rm (r)}\f$ is a random force on particle i
 
-\sa McMd::NvtLangevinIntegrator
+The random force must be chosen to have 
+\f$\langle {\bf f}^{\rm (r)}\rangle = 0 \f$ and 
+\f$\langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle = 2 m kT \gamma \delta (t-t') \f$.
+Details of the discrete time stepping algorithm are discussed in the class documentation.
+
+\sa DdMd::NvtLangevinIntegrator
 \sa Util::EnergyEnsemble
 \sa \ref algorithms_Langevin_page "algorithm"
 
-\section mcMd_integrator_NvtLangevinIntegrator_param_sec Parameters
+\section ddMd_integrator_NvtLangevinIntegrator_param_sec Parameters
 The parameter file format is:
 \code
    NvtLangevinIntegrator{ 

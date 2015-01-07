@@ -16,6 +16,7 @@ MD program.
 <ul style="list-style: none;">
   <li> \subpage ddMd_integrator_NveIntegrator_page </li>
   <li> \subpage ddMd_integrator_NvtIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NvtLangevinIntegrator_page </li>
   <li> \subpage ddMd_integrator_NphIntegrator_page </li>
   <li> \subpage ddMd_integrator_NptIntegrator_page </li>
 </ul>
