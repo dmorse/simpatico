@@ -15,6 +15,7 @@
 // Bond interaction classes
 #include <inter/bond/HarmonicBond.h>
 #include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
 
 namespace DdMd
 {
