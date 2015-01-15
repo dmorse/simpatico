@@ -194,8 +194,8 @@ namespace McMd
       }
       #ifdef INTER_BOND
       read<int>(in, "nBondType", nBondType_);
-      if (nBondType_ <= 0) {
-         UTIL_THROW("nBondType must be > 0");
+      if (nBondType_ < 0) {
+         UTIL_THROW("nBondType must be >= 0");
       }
       #endif
       #ifdef INTER_ANGLE
