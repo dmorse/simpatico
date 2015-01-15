@@ -460,12 +460,17 @@ namespace DdMd
       /// \name Potential Energy Classes (Objects, Style Strings and Factories)
       //@{
 
+      #ifndef INTER_NOPAIR
+      /**
+      * Get the PairPotential by const reference.
+      */
+      const PairPotential& pairPotential() const;
+
       /**
       * Get the PairPotential by reference.
       */
       PairPotential& pairPotential();
 
-      #ifndef INTER_NOPAIR
       /**
       * Return nonbonded pair style string.
       */
@@ -478,6 +483,11 @@ namespace DdMd
       #endif
 
       #ifdef INTER_BOND
+      /**
+      * Get the PairPotential by const reference.
+      */
+      const BondPotential& bondPotential() const;
+
       /**
       * Get the PairPotential by reference.
       */
@@ -496,6 +506,11 @@ namespace DdMd
 
       #ifdef INTER_ANGLE
       /**
+      * Get the AnglePotential by const reference.
+      */
+      const AnglePotential& anglePotential() const;
+
+      /**
       * Get the AnglePotential by reference.
       */
       AnglePotential& anglePotential();
@@ -513,6 +528,11 @@ namespace DdMd
 
       #ifdef INTER_DIHEDRAL
       /**
+      * Get the DihedralPotential by const reference.
+      */
+      const DihedralPotential& dihedralPotential() const;
+
+      /**
       * Get the DihedralPotential by reference.
       */
       DihedralPotential& dihedralPotential();
@@ -529,6 +549,11 @@ namespace DdMd
       #endif
 
       #ifdef INTER_EXTERNAL
+      /**
+      * Get the ExternalPotential by reference.
+      */
+      const ExternalPotential& externalPotential() const;
+
       /**
       * Get the ExternalPotential by reference.
       */
@@ -1054,6 +1079,12 @@ namespace DdMd
    inline Buffer& Simulation::buffer()
    { return buffer_; }
 
+   inline const PairPotential& Simulation::pairPotential() const
+   {
+      assert(pairPotentialPtr_);
+      return *pairPotentialPtr_;
+   }
+
    inline PairPotential& Simulation::pairPotential()
    {
       assert(pairPotentialPtr_);
@@ -1061,6 +1092,12 @@ namespace DdMd
    }
 
    #ifdef INTER_BOND
+   inline const BondPotential& Simulation::bondPotential() const
+   {
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_;
+   }
+
    inline BondPotential& Simulation::bondPotential()
    {
       assert(bondPotentialPtr_);
@@ -1069,6 +1106,12 @@ namespace DdMd
    #endif
 
    #ifdef INTER_ANGLE
+   inline const AnglePotential& Simulation::anglePotential() const
+   {
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_;
+   }
+
    inline AnglePotential& Simulation::anglePotential()
    {
       assert(anglePotentialPtr_);
@@ -1077,9 +1120,12 @@ namespace DdMd
    #endif
 
    #ifdef INTER_DIHEDRAL
-   /*
-   * Get the DihedralPotential by reference.
-   */
+   inline const DihedralPotential& Simulation::dihedralPotential() const
+   {
+      assert(dihedralPotentialPtr_);
+      return *dihedralPotentialPtr_;
+   }
+
    inline DihedralPotential& Simulation::dihedralPotential()
    {
       assert(dihedralPotentialPtr_);
@@ -1088,9 +1134,12 @@ namespace DdMd
    #endif
 
    #ifdef INTER_EXTERNAL
-   /*
-   * Get the ExternalPotential by reference.
-   */
+   inline const ExternalPotential& Simulation::externalPotential() const
+   {
+      assert(externalPotentialPtr_);
+      return *externalPotentialPtr_;
+   }
+
    inline ExternalPotential& Simulation::externalPotential()
    {
       assert(externalPotentialPtr_);
@@ -1098,9 +1147,6 @@ namespace DdMd
    }
    #endif
 
-   /*
-   * Get the Integrator by reference.
-   */
    inline Integrator& Simulation::integrator()
    {
       assert(integratorPtr_);
@@ -1110,9 +1156,6 @@ namespace DdMd
    inline Random& Simulation::random()
    { return random_; }
 
-   /*
-   * Get the EnergyEnsemble by reference.
-   */
    inline EnergyEnsemble& Simulation::energyEnsemble()
    {
       assert(energyEnsemblePtr_);

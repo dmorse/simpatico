@@ -303,7 +303,7 @@ namespace DdMd
    #ifdef INTER_BOND
    inline GroupStorage<2>& SimulationAccess::bondStorage()
    {  
-      assert(bondStoragePtr);  
+      assert(bondStoragePtr_);  
       return *bondStoragePtr_; 
    }
    #endif
@@ -311,7 +311,7 @@ namespace DdMd
    #ifdef INTER_ANGLE
    inline GroupStorage<3>& SimulationAccess::angleStorage()
    {  
-      assert(angleStoragePtr);  
+      assert(angleStoragePtr_);  
       return *angleStoragePtr_; 
    }
    #endif
@@ -319,21 +319,21 @@ namespace DdMd
    #ifdef INTER_DIHEDRAL
    inline GroupStorage<4>& SimulationAccess::dihedralStorage()
    {  
-      assert(dihedralStoragePtr);  
+      assert(dihedralStoragePtr_);  
       return *dihedralStoragePtr_; 
    }
    #endif
 
    inline PairPotential& SimulationAccess::pairPotential()
    {  
-      assert(pairPotentialPtr);  
+      assert(pairPotentialPtr_);  
       return *pairPotentialPtr_; 
    }
 
    #ifdef INTER_BOND
    inline BondPotential& SimulationAccess::bondPotential()
    {  
-      assert(bondPotentialPtr);  
+      assert(bondPotentialPtr_);  
       return *bondPotentialPtr_; 
    }
    #endif
@@ -341,7 +341,7 @@ namespace DdMd
    #ifdef INTER_ANGLE
    inline AnglePotential& SimulationAccess::anglePotential()
    {  
-      assert(dihedralPotentialPtr);  
+      assert(anglePotentialPtr_);  
       return *anglePotentialPtr_; 
    }
    #endif
@@ -349,7 +349,7 @@ namespace DdMd
    #ifdef INTER_DIHEDRAL
    inline DihedralPotential& SimulationAccess::dihedralPotential()
    {
-      assert(dihedralPotentialPtr);  
+      assert(dihedralPotentialPtr_);  
       return *dihedralPotentialPtr_; 
    }
    #endif
@@ -357,7 +357,7 @@ namespace DdMd
    #ifdef INTER_EXTERNAL
    inline ExternalPotential& SimulationAccess::externalPotential()
    {  
-      assert(externalPotentialPtr);  
+      assert(externalPotentialPtr_);  
       return *externalPotentialPtr_; 
    }
    #endif
