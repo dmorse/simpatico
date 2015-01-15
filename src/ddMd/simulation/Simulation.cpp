@@ -514,9 +514,9 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
+      pairPotential().setNAtomType(nAtomType_);
       readParamComposite(in, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -527,7 +527,7 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
+         bondPotential().setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -540,7 +540,7 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
+         anglePotential().setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -553,7 +553,7 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
+         dihedralPotential().setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -566,7 +566,7 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
+         externalPotential().setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -592,7 +592,7 @@ namespace DdMd
 
       // Finished reading parameter file. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -711,9 +711,9 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
+      pairPotential().setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -724,7 +724,7 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
+         bondPotential().setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -737,7 +737,7 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
+         anglePotential().setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -750,7 +750,7 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
+         dihedralPotential().setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -763,7 +763,7 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
+         externalPotential().setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -788,7 +788,7 @@ namespace DdMd
 
       // Finished loading data from archive. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -908,31 +908,26 @@ namespace DdMd
       // Potential energy styles and potential classes
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
-      assert(pairPotentialPtr_);
-      pairPotentialPtr_->save(ar);
+      pairPotential().save(ar);
       #endif
       #ifdef INTER_BOND
       if (nBondType_) {
-         assert(bondPotentialPtr_);
-         bondPotentialPtr_->save(ar);
+         bondPotential().save(ar);
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         assert(anglePotentialPtr_);
-         anglePotentialPtr_->save(ar);
+         anglePotential().save(ar);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         assert(dihedralPotentialPtr_);
-         dihedralPotentialPtr_->save(ar);
+         dihedralPotential().save(ar);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         assert(externalPotentialPtr_);
-         externalPotentialPtr_->save(ar);
+         externalPotential().save(ar);
       }
       #endif
 
@@ -1432,7 +1427,7 @@ namespace DdMd
    {
       reverseUpdateFlag_ = reverseUpdateFlag;
       if (pairPotentialPtr_) {
-         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
+         pairPotential().setReverseUpdateFlag(reverseUpdateFlag);
       }
    }
 
@@ -1736,25 +1731,25 @@ namespace DdMd
       // Note: Pointers used here because ...Potential() accessors
       // return non-const references, which violate the method const.
       double energy = 0.0;
-      energy += pairPotentialPtr_->energy();
+      energy += pairPotential().energy();
       #ifdef INTER_BOND
       if (nBondType_) {
-         energy += bondPotentialPtr_->energy();
+         energy += bondPotential().energy();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         energy += anglePotentialPtr_->energy();
+         energy += anglePotential().energy();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         energy += dihedralPotentialPtr_->energy();
+         energy += dihedralPotential().energy();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         energy += externalPotentialPtr_->energy();
+         energy += externalPotential().energy();
       }
       #endif
       return energy;
@@ -1847,20 +1842,20 @@ namespace DdMd
       // return non-const references, which violate the method const.
       Tensor stress;
       stress.zero();
-      stress += pairPotentialPtr_->stress();
+      stress += pairPotential().stress();
       #ifdef INTER_BOND
       if (nBondType_) {
-         stress += bondPotentialPtr_->stress();
+         stress += bondPotential().stress();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         stress += anglePotentialPtr_->stress();
+         stress += anglePotential().stress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         stress += dihedralPotentialPtr_->stress();
+         stress += dihedralPotential().stress();
       }
       #endif
       return stress;
@@ -1873,20 +1868,20 @@ namespace DdMd
    {
       double pressure;
       pressure = 0;
-      pressure += pairPotentialPtr_->pressure();
+      pressure += pairPotential().pressure();
       #ifdef INTER_BOND
       if (nBondType_) {
-         pressure += bondPotentialPtr_->pressure();
+         pressure += bondPotential().pressure();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         pressure += anglePotentialPtr_->pressure();
+         pressure += anglePotential().pressure();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         pressure += dihedralPotentialPtr_->pressure();
+         pressure += dihedralPotential().pressure();
       }
       #endif
       return pressure;
@@ -1913,7 +1908,7 @@ namespace DdMd
    {
       DMatrix<double> pairEnergies;
       pairEnergies.allocate(nAtomType_, nAtomType_);
-      pairEnergies = pairPotentialPtr_->pairEnergies();
+      pairEnergies = pairPotential().pairEnergies();
       return pairEnergies;
    }
 
