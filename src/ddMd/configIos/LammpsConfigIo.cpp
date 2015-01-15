@@ -254,8 +254,8 @@ namespace DdMd
          }
       }
 
-      #ifdef INTER_BOND
       bool hasGhosts = false;
+      #ifdef INTER_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -263,6 +263,20 @@ namespace DdMd
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
          }
+      }
+      #endif
+       
+      #ifdef INTER_ANGLE
+      if (angleStorage().capacity()) {
+         readGroups<3>(file, "Angles", nAngle, angleDistributor());
+         angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      }
+      #endif
+       
+      #ifdef INTER_DIHEDRAL
+      if (dihedralStorage().capacity()) {
+         readGroups<4>(file, "Dihedrals", nDihedral, dihedralDistributor());
+         dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
       }
       #endif
        
