@@ -1,0 +1,102 @@
+Idea:
+----- 
+
+  - Move test for interval outside the analyzer class
+
+  - Develop base classes and file formats to help standardize
+    analyzers into recognizable types
+
+  - Standardize file names and formats
+
+  - Include time step in all streaming output formats
+
+  - Move on-the-fly output outside of Average class to allow
+    more flexible output formats.
+
+  - Develop python and matlab classes to analyze and plot the
+    outputs
+
+Analyzer Types (or base classes):
+---------------------------------
+
+T = data type
+K = key or name type
+
+Average:                 Average of a single global scalar
+                         Total energy
+                         Total kinetic energy
+                         Total pressure
+AverageArray             container of averages, accessible by int id
+AverageMap<K>            container of averages, accessible by id or key
+                         Energy components (map numbers to keys)
+                         Pressure components (map numbers to keys)
+                         StructureFactor
+AverageMatrix:           container of averages, accessible by id pair
+                         PairEnergyAverage
+AverageEnsemble:         RadiusGyration
+TensorAverage:           Stress
+TensorAverageMap<Key>:   Stress components
+
+AutoCorr<T>:             StressAutoCorr
+MsdEnsmeble<T>:          AtomMsd, MoleculeComMsd
+AutoCorrEnsemble<T>:     IntraPairAutoCorr
+                         IntraBondTensorAutoCorr
+AutoCorrArray:        
+AutoCorrMap<Key>:        VanHove functions (mapped by Miller indices)
+
+Distribution:            Box size distribution
+DistributionArray:       list of distributions
+DistributionMap<Key>:    list of distributions, accessible by name
+DistributionArray:       Bond distribution (multiple types)
+DistributionMap<K>:      Bond distribution (multiple types)
+
+File Types:
+-----------
+
+Each analyzer may produce several files of different types, with the same base name
+but different extensions:
+
+  - Parameter files: A parameter file, with extension *.prm, reproduces the parameter
+    file block associated with an analyzer.
+
+  - Data files: A data file, with extension *.dat contains a sequence of values,
+    along with corresponding time step stamps
+
+  - Format files: A format file, with extension *.fmt, gives names for the comments
+    in the associated *.dat file
+
+  - An average file contains final average values, with error estimates, for one
+    or more quantities.
+
+  - An average-error file, with extension type *.aer, contains further information 
+    about hierarchical error analysis of averages
+
+Data Files:
+-----------
+
+  Data file is a multicolumn text file format for a time sequence of data. The first
+  column contains a time step identifier. Any number of subsequent columns may follow,
+  separated by spaces. 
+
+
+Average Files:
+--------------
+
+  An average file contains average values for one or more quantities. Each quantity
+  is on a line of the form:
+
+  [variable name] = [average] +- [error]
+
+
+Format Files
+------------
+
+   A format file gives names for the columns in a corresponding data file.
+   The first line gives the number of columns
+   The next gives a list of column names, the first of which must be "iStep".
+   For example, for a analyzer that analyzes all the components of energy, this
+   might be:
+
+   5
+   iStep  pair  bond  kinetic  total
+
