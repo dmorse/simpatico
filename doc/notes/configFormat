@@ -5,13 +5,14 @@ Requirements / proposals:
    - Three shared file types: configuration (initialization), 
      trajectory (analysis), and topology (molecule structure).
 
-   - Don't worry about compatibility with other programs - this
+   - Don't worry about compatibility with other MD programs - this
      is a separate problem, to be handled separately
 
    - Self-documenting configuration and trajectory formats (allows 
-     adaptation and validation) with several format variants. A 
-     single class should be able to read any usable variant of 
-     this format, with appropriate error checking.
+     adaptation and validation) with several format variants. A single 
+     class should be able to read any usable variant of this format, 
+     with appropriate error checking, and throw exceptions for 
+     variants that they cannot handle.
 
    - Configuration and trajectory files that are intended for use
      by McMd programs must have atom ids in canonical molecule order, 
@@ -20,23 +21,31 @@ Requirements / proposals:
      and should indicate the size of each species (# of molecules)
      and molecules (# of atoms).
 
+   - DdMd will need to be able to read, store, and write back out
+     basic information about species (number of molecules of each
+     type, and number of atoms per molecule) in order to allow it
+     to validate (on input) and document (on output) that a 
+     configuration is in canonical molecular order.
+
    - McMd programs should read configuration and trajectory format
      variants produced by DdMd (ordered or disordered). The reader
      should require only that atom ids be in canonical molecule
-     order, but not that they be listed that in order in the file.
+     order, but not that atoms be ordered by id in the config file.
 
    - McMd programs should write a configuration format that can be 
      used to initialize DdMd, which must include groups. Atom ids
      used in this format must be in canonical molecular order. The
      format should contain information about species and molecule
-     sizes, to allow it to be read back by McMd.
+     sizes.
 
-   - MdPp programs must read formats produced by DdMd, with atom
-     ids in canonical molecule order or not, and should be able to
-     make use of molecule information when included in the file.
+   - MdPp should read all configuration and trajectory formats 
+     produced by DdMd, with atom ids in canonical molecule order 
+     or not, and should be able to make use of molecule information 
+     when it is available.
 
-   - Allow verbose configuration files, but provide very compact
-     trajectory file formats
+   - Configuration files can be asii files, and somewhat verbose, but 
+     trajectory formats should be binary and very compact. Only 
+     trajectory formats are intended for use for data analysis.
 
    - Allow but do not require trajectory files to contain 
      configuration information (molecule and species sizes, fixed
@@ -46,12 +55,12 @@ Requirements / proposals:
    - Provide a separate topology file format. This can be written
      by (md|mc)Sim and read by MdPp for molecule based analysis. 
      It will not normally be used by ddSim, except perhaps by a
-     SnapShot.
+     SnapShot, for on-the-fly analysis.
 
-Configuration file:
+Configuration file (ascii):
 
    BOUNDARY (same as current)
-   [MOLECULES] - presence indicates canonical atom id order
+   [MOLECULES] - presence of this block indicates canonical atom id order
    ATOMS - format variable, indicated within block
    [BONDS]
    [LINKS]
@@ -61,17 +70,17 @@ Configuration file:
 Trajectory file (binary):
 
    Header:
-      NATOM int
-      FRAME_FORMAT - bitfield with flags that include: molecular?, 
+      nAtom int
+      frameFormat - bitfield with flags that include: molecular?, 
                      fixed? ordered?, velocity? shift? (other?)
-      HEADER_FORMAT - bitfield indicating which optional info follows
+      headerFormat - bitfield indicating which optional info follows
       [MOLECULES] - molecule & species sizes, required iff molecular 
       [ATOMTYPES] - Format, followed by per atom: typeId, [charge]
       [BONDS][ANGLES][DIHEDRALS]
    Frame:
-      ISTEP
-      BOUNDARY
-      ATOMS (optionally include shift, velocity)
+      iStep
+      boundary
+      ATOMS (id, position, optionally shift, velocity)
 
 ---------------------------------------------------------------------
 Blocks in configuration file:
@@ -85,8 +94,8 @@ MOLECULES:
 
 ATOMS: 
 
-   FORMAT [i][m][t]p[v][s][c]
-   NATOM integer
+   format [i][m][t]p[v][s][c]
+   nAtom integer
 
    Format flags:
    i = global id                         only required for DdMd
@@ -117,5 +126,16 @@ Blocks in trajectory frame:
 
   FRAME:
      For each atom {
-        id position(as 3xuint) [shift - 32 bit] [velocity]
+        id position(scaled, as 3xuint) [shift 3 x int] [velocity]
      }
+---------------------------------------------------------------------
+Plan:
+
+   1) McMd ConfigIo for configuration format      (SpcConfigIo)
+   2) McMd TrajectoryIo for trajectory format     (SptTrajectoryIo)
+   3) Add simple species to DdMd::Simulation
+   4) DdMd ConfigIo for configuration format      (SpcConfigIo)
+   5) DdMd Writer for trajectory format           (SptTrajectoryWriter)
+   6) Tools reader                                (SptTrajectoryReader)
+   7) Allow optional arguments in command lines
+   8) Divide readers and writers for McMd
