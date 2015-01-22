@@ -173,6 +173,8 @@ namespace McMd
       int iSpec, nMolecule;
       int nAtom = 0;
       int nBond = 0;
+      int nAngle = 0;
+      int nDihedral = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          nMolecule = system().nMolecule(iSpec);
@@ -180,27 +182,41 @@ namespace McMd
          #ifdef INTER_BOND
          nBond += nMolecule*(speciesPtr->nBond());
          #endif
+         #ifdef INTER_ANGLE
+         nAngle += nMolecule*(speciesPtr->nAngle());
+         #endif
+         #ifdef INTER_ANGLE
+         nDihedral += nMolecule*(speciesPtr->nDihedral());
+         #endif
       }
 
       // Write numbers of atoms, bonds, etc.
       Format::setDefaultWidth(8);
-      out << Int(nAtom) << " atoms    " << endl;
-      out << Int(nBond) << " bonds    " << endl;
-      out << Int(0)     << " angles   " << endl;
-      out << Int(0)     << " dihedrals" << endl;
-      out << Int(0)     << " impropers" << endl;
+      out << Int(nAtom)  << " atoms    " << endl;
+      out << Int(nBond)  << " bonds    " << endl;
+      out << Int(nAngle) << " angles   " << endl;
+      out << Int(nDihedral) << " dihedrals" << endl;
+      out << Int(0) << " impropers" << endl;
       out << endl;
 
       // Write numbers of atom types, bond types, etc.
       Format::setDefaultWidth(5);
       out << Int(simulation().nAtomType()) << " atom types" << endl;
+      int nBondType = 0;
+      int nAngleType = 0;
+      int nDihedralType = 0;
       #ifdef INTER_BOND
-      out << Int(simulation().nBondType()) << " bond types" << endl;
-      #else
-      out << Int(0) << " bond types" << endl;
+      nBondType = simulation().nBondType();
       #endif
-      out << Int(0) << " angle types" << endl;
-      out << Int(0) << " dihedral types" << endl;
+      #ifdef INTER_ANGLE
+      nAngleType = simulation().nAngleType();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      nDihedralType = simulation().nDihedralType();
+      #endif
+      out << Int(nBondType) << " bond types" << endl;
+      out << Int(nAngleType) << " angle types" << endl;
+      out << Int(nDihedralType) << " dihedral types" << endl;
       out << Int(0) << " improper types" << endl;
       out << endl;
 
@@ -247,23 +263,71 @@ namespace McMd
       out << endl;
 
       #ifdef INTER_BOND
-      // Write bond topology
-      out << "Bonds" << endl;
-      out << endl;
-      Molecule::BondIterator bondIter;
-      int iBond = 1;
-      for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
-            for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-               out << Int(iBond, 8 ) << Int(bondIter->typeId() + 1, 5);
-               out << Int(bondIter->atom(0).id() + 1, 8);
-               out << Int(bondIter->atom(1).id() + 1, 8);
-               out << endl;
-               ++iBond;
+      if (nBond > 0) {
+         out << "Bonds" << endl;
+         out << endl;
+         Molecule::BondIterator bondIter;
+         int iBond = 1;
+         for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+            for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
+                  out << Int(iBond, 8 ) << Int(bondIter->typeId() + 1, 5);
+                  out << Int(bondIter->atom(0).id() + 1, 8);
+                  out << Int(bondIter->atom(1).id() + 1, 8);
+                  out << endl;
+                  ++iBond;
+               }
             }
          }
+         out << endl;
       }
-      out << endl;
+      #endif
+
+      #ifdef INTER_ANGLE
+      if (nAngle > 0) {
+         out << "Angles" << endl;
+         out << endl;
+         Molecule::AngleIterator angleIter;
+         int iAngle = 1;
+         for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+            for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(angleIter); angleIter.notEnd(); ++angleIter) {
+                  out << Int(iAngle, 8) << Int(angleIter->typeId() + 1, 5);
+                  out << Int(angleIter->atom(0).id() + 1, 8);
+                  out << Int(angleIter->atom(1).id() + 1, 8);
+                  out << Int(angleIter->atom(2).id() + 1, 8);
+                  out << endl;
+                  ++iAngle;
+               }
+            }
+         }
+         out << endl;
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      if (nDihedral > 0) {
+         out << "Dihedrals" << endl;
+         out << endl;
+         Molecule::DihedralIterator dihedralIter;
+         int iDihedral = 1;
+         for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+            for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               molIter->begin(dihedralIter); 
+               for ( ; dihedralIter.notEnd(); ++dihedralIter) {
+                  out << Int(iDihedral, 8); 
+                  out << Int(dihedralIter->typeId() + 1, 5);
+                  out << Int(dihedralIter->atom(0).id() + 1, 8);
+                  out << Int(dihedralIter->atom(1).id() + 1, 8);
+                  out << Int(dihedralIter->atom(2).id() + 1, 8);
+                  out << Int(dihedralIter->atom(3).id() + 1, 8);
+                  out << endl;
+                  ++iDihedral;
+               }
+            }
+         }
+         out << endl;
+      }
       #endif
 
       // Reset Format defaults to initialization values

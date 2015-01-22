@@ -78,34 +78,34 @@ namespace DdMd
    void LogEnergy::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         Simulation& sys = simulation();
-         sys.computeKineticEnergy();
-         sys.computePotentialEnergies();
-         if (sys.domain().isMaster()) {
-            double kinetic   = sys.kineticEnergy();
+         Simulation& sim = simulation();
+         sim.computeKineticEnergy();
+         sim.computePotentialEnergies();
+         if (sim.domain().isMaster()) {
+            double kinetic = sim.kineticEnergy();
             Log::file() << Int(iStep, 10)
                         << Dbl(kinetic, 15);
             double potential = 0.0;
-            double pair = sys.pairPotential().energy();
+            double pair = sim.pairPotential().energy();
             potential += pair;
             Log::file() << Dbl(pair, 15);
             #ifdef INTER_BOND
-            if (sys.nBondType()) {
-               double bond = sys.bondPotential().energy();
+            if (sim.nBondType()) {
+               double bond = sim.bondPotential().energy();
                potential += bond;
                Log::file() << Dbl(bond, 15);
             }
             #endif
             #ifdef INTER_ANGLE
-            if (sys.nAngleType()) {
-               double angle = sys.anglePotential().energy();
+            if (sim.nAngleType()) {
+               double angle = sim.anglePotential().energy();
                potential += angle;
                Log::file() << Dbl(angle, 15);
             }
             #endif
             #ifdef INTER_DIHEDRAL
-            if (sys.nDihedralType()) {
-               double dihedral  = sys.dihedralPotential().energy();
+            if (sim.nDihedralType()) {
+               double dihedral = sim.dihedralPotential().energy();
                potential += dihedral;
                Log::file() << Dbl(dihedral, 15);
             }

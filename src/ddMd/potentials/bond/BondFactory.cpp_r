@@ -15,6 +15,7 @@
 // Bond interaction classes
 #include <inter/bond/HarmonicBond.h>
 #include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
 
 namespace DdMd
 {
@@ -46,13 +47,10 @@ namespace DdMd
       } else
       if (name == "HarmonicL0Bond") {
          ptr = new BondPotentialImpl<HarmonicL0Bond>(*simulationPtr_);
-      } //else
-      //if (name == "FeneBond") {
-      //   ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
-      //} else
-      //if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
-      //   ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*simulationPtr_);
-      //}
+      } else
+      if (name == "FeneBond") {
+         ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
+      } // else
       return ptr;
    }
 
