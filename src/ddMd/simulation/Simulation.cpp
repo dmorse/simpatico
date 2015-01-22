@@ -1220,6 +1220,7 @@ namespace DdMd
                double temperature;
                inBuffer >> temperature;
                setBoltzmannVelocities(temperature);
+               removeDriftVelocity();
             } else
             if (command == "SIMULATE") {
                int nStep;
@@ -1434,19 +1435,71 @@ namespace DdMd
    /*
    * Choose velocities from a Boltzmann distribution.
    */
-   void Simulation::setBoltzmannVelocities(double temperature)
+    void Simulation::setBoltzmannVelocities(double temperature)
    {
-      double scale = sqrt(temperature);
+      double mass;
+      double scale;
       AtomIterator atomIter;
       int i;
-
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         assert(mass > 0);
+         scale = sqrt(temperature/mass);
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+
+      // Publish notification of change in velocities
       velocitySignal().notify();
+   }
+
+   /*
+   * Remove the drift velocity
+   */
+   Vector Simulation::removeDriftVelocity()
+   {
+      Vector momentum(0.0);      // atom momentum
+      Vector momentumLocal(0.0); // sum of momenta on processor
+      Vector momentumTotal(0.0); // total momentum of system
+      double mass;               // atom mass
+      double massLocal = 0.0;    // sum of masses on processor
+      double massTotal = 0.0;    // total momentum of system
+      int j;
+
+      // Calculate total momentum and mass on processor
+      AtomIterator atomIter;
+      atomStorage_.begin(atomIter);
+      for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         massLocal = massLocal + mass;
+         for(j = 0; j<Dimension; ++j) {
+            momentum[j] = atomIter->velocity()[j];
+            momentum[j] *= mass;
+         }
+         momentumLocal += momentum;
+      }
+
+      // Compute total momentum and mass for system, by MPI all reduce
+      domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
+                                       MPI::DOUBLE, MPI::SUM);
+      domain_.communicator().Allreduce(&momentumLocal[0],
+                                       &momentumTotal[0], Dimension,
+                                       MPI::DOUBLE, MPI::SUM);
+
+      // Subtract average drift velocity
+      Vector drift = momentumTotal;
+      drift /= massTotal;
+      atomStorage_.begin(atomIter); 
+      for( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->velocity() -= drift;
+      }
+
+      // Publish notification of change in velocities
+      velocitySignal().notify();
+
+      return drift;
    }
 
    /*

@@ -235,6 +235,15 @@ namespace DdMd
       void setBoltzmannVelocities(double temperature);
 
       /**
+      * Subract system center of mass velocity from atom velocities.
+      *
+      * Call on all processors. Does all-reduce internally. 
+      *
+      * \return drift velocity of system before subtraction.
+      */
+      Vector removeDriftVelocity();
+
+      /**
       * Set forces for all local atoms to zero.
       */
       void zeroForces();
