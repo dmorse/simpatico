@@ -1220,6 +1220,7 @@ namespace DdMd
                double temperature;
                inBuffer >> temperature;
                setBoltzmannVelocities(temperature);
+               removeDriftVelocity();
             } else
             if (command == "SIMULATE") {
                int nStep;
@@ -1434,21 +1435,48 @@ namespace DdMd
    /*
    * Choose velocities from a Boltzmann distribution.
    */
-   void Simulation::setBoltzmannVelocities(double temperature)
+    void Simulation::setBoltzmannVelocities(double temperature)
    {
       double scale = sqrt(temperature);
       AtomIterator atomIter;
       int i;
-
+      double mass;
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
          for (i = 0; i < Dimension; ++i) {
-            atomIter->velocity()[i] = scale*random_.gaussian();
+            atomIter->velocity()[i] = scale/sqrt(mass)*random_.gaussian();
          }
       }
       velocitySignal().notify();
    }
-
+   /*
+   * Remove the drift velocity
+   */
+   void Simulation::removeDriftVelocity()
+   {
+    Vector average(0.0);
+    AtomIterator atomIter;
+    int j;
+    Vector momentum(0.0);
+    double mass;
+    double massTotal=0;
+    atomStorage_.begin(atomIter);
+    for( ; atomIter.notEnd(); ++atomIter){
+       mass =  atomType(atomIter->typeId()).mass();
+       massTotal=massTotal+mass;
+       for(j = 0; j<Dimension; ++j) {
+          momentum[j]=atomIter->velocity()[j];
+          momentum[j] *=mass;
+       }
+       average +=momentum;
+    }
+    average /= massTotal;
+    atomStorage_.begin(atomIter);
+    for( ; atomIter.notEnd(); ++atomIter){
+       atomIter->velocity() -= average;
+    }
+   }
    /*
    * Set forces on all local atoms to zero.
    * If reverseUpdateFlag(), also zero ghost atom forces.

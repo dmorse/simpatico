@@ -235,6 +235,14 @@ namespace DdMd
       void setBoltzmannVelocities(double temperature);
 
       /**
+      *
+      * Remove the system center of mass velocity
+      *
+      */
+
+      void removeDriftVelocity();
+
+      /**
       * Set forces for all local atoms to zero.
       */
       void zeroForces();
