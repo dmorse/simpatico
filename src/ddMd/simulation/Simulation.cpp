@@ -1437,46 +1437,71 @@ namespace DdMd
    */
     void Simulation::setBoltzmannVelocities(double temperature)
    {
-      double scale = sqrt(temperature);
+      double mass;
+      double scale;
       AtomIterator atomIter;
       int i;
-      double mass;
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
          mass = atomType(atomIter->typeId()).mass();
+         assert(mass > 0);
+         scale = sqrt(temperature/mass);
          for (i = 0; i < Dimension; ++i) {
-            atomIter->velocity()[i] = scale/sqrt(mass)*random_.gaussian();
+            atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+
+      // Publish notification of change in velocities
       velocitySignal().notify();
    }
+
    /*
    * Remove the drift velocity
    */
-   void Simulation::removeDriftVelocity()
+   Vector Simulation::removeDriftVelocity()
    {
-    Vector average(0.0);
-    AtomIterator atomIter;
-    int j;
-    Vector momentum(0.0);
-    double mass;
-    double massTotal=0;
-    atomStorage_.begin(atomIter);
-    for( ; atomIter.notEnd(); ++atomIter){
-       mass =  atomType(atomIter->typeId()).mass();
-       massTotal=massTotal+mass;
-       for(j = 0; j<Dimension; ++j) {
-          momentum[j]=atomIter->velocity()[j];
-          momentum[j] *=mass;
-       }
-       average +=momentum;
-    }
-    average /= massTotal;
-    atomStorage_.begin(atomIter);
-    for( ; atomIter.notEnd(); ++atomIter){
-       atomIter->velocity() -= average;
-    }
+      Vector momentum(0.0);      // atom momentum
+      Vector momentumLocal(0.0); // sum of momenta on processor
+      Vector momentumTotal(0.0); // total momentum of system
+      double mass;               // atom mass
+      double massLocal = 0.0;    // sum of masses on processor
+      double massTotal = 0.0;    // total momentum of system
+      int j;
+
+      // Calculate total momentum and mass on processor
+      AtomIterator atomIter;
+      atomStorage_.begin(atomIter);
+      for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         massLocal = massLocal + mass;
+         for(j = 0; j<Dimension; ++j) {
+            momentum[j] = atomIter->velocity()[j];
+            momentum[j] *= mass;
+         }
+         momentumLocal += momentum;
+      }
+
+      // Compute total momentum and mass for system, by MPI all reduce
+      domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
+                                       MPI::DOUBLE, MPI::SUM);
+      domain_.communicator().Allreduce(&momentumLocal[0],
+                                       &momentumTotal[0], Dimension,
+                                       MPI::DOUBLE, MPI::SUM);
+
+      // Subtract average drift velocity
+      Vector drift = momentumTotal;
+      drift /= massTotal;
+      atomStorage_.begin(atomIter); 
+      for( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->velocity() -= drift;
+      }
+
+      // Publish notification of change in velocities
+      velocitySignal().notify();
+
+      return drift;
    }
+
    /*
    * Set forces on all local atoms to zero.
    * If reverseUpdateFlag(), also zero ghost atom forces.
