@@ -1,61 +1,69 @@
-Idea: Introduce scheme for organizing computed quantities, in a form that
+Proposal: Introduce scheme for organizing computed quantities, in a form that 
 can be accessed by analyzers that output results or calculate statistical
 properties. Inspired by "Compute" class hierarchy in Lammps and Hoomd-Blue.
+
+This would generalize the idea of a "Setable" to provide a function to 
+allow computation of the quantity.  Each class that currently owns or has 
+responsibility for a Setable function would instead provide access to the 
+corresponding "Compute" subclass. The compute class would provide a pure 
+virtual "compute" method, public methods to clear or unset the value, and 
+a protected method to set the value, which can be called in the 
+implementation of the compute method. 
+
+Make Compute a template, which can be applied to double, Vector, Tensor or 
+even a DArray of any of these. 
+
+-------------------------------------------------------------------------
+Compute class:
+
+template <typename T>
+class Compute : protected Setable<T> 
+{
+
+public:
+
+   /// Compute the quantity
+   void compute() = 0;
+
+   /// Access the value
+   using Setable<T>::value();
+
+   /// Unset the value
+   using Setable<T>::unset();
+
+   /// Query whether the value is set.
+   using Setable<T>::isSet();
+
+}
+
+Note: The implementation of the compute() function would have access to the 
+inherited set and assignment operators of Setable<T>, either of which could 
+be used to set the value. 
+
+Often, a compute would be associated with a parent class that is naturally
+responsible for computation of the value, such as a potential energy class
+or the main Simulation class. In order to provide a single interface for
+computing a quantity, the parent class could provide a private function 
+for the computation, but then be declared a "friend" of the compute class.
+The private compute method of the potential energy or Simulation class
+could then be called by the public "compute()" method of the associated
+Compute sublcass, which could also set the value of the associated Setable
+object. This would be functionally equivalent to the current arrangement 
+of providing private "Setable" objects, but would provide a standard
+interface for manipulating each computable value, reduce the number of
+functions in the main object, and allow the design of a container to 
+Manage all computed quantities available for logging or analysis. 
 
 -------------------------------------------------------------------------
 class ComputeManager:
 
-  - Provides methods that provide access to a compute by name. 
+ - Provides methods that provide access to a compute by name or by index.
 
-  - Question: Do we provide different methods to access different types
-    of compute or provide multiple methods for each type?
+ - Have compute manager maintain separate lists for each type of compute,
+   and different accessors, getScalarCompute(std::string ....)
 
--------------------------------------------------------------------------
-Proposal:
-
-  - Have compute manager maintain separate lists for each type of compute,
-    and different accessors, getGlobalScalar(std::string ....)
-
-  - Have different subclasses of Compute with interfaces appropriate for
-    different types of values.
-
-  - Each compute class will have a Setable value. 
-
-  - Computes do not need intervals - they are called and computed as needed
-
-  - Do we need to generalize a "value" to include an array?
+ - Start with global scalar (double), Vector and Tensor, which can be 
+   used to represent energies, pressures, and stress. Think about whether 
+   the notion is useful for per atom or per molecule quantities. 
 
 -------------------------------------------------------------------------
-Compute and its subclasses:
-
-  - Compute
-
-    - GlobalScalar
-    - GlobalVector
-    - GlobalTensor
-
-    - AtomCompute
-    - AtomScalarCompute
-    - AtomVectorCompute
-    - AtomTensorCompute
-
-    - MoleculeScalarCompute
-    - MoleculeVectorCompute
-    - MoleculeTensorCompute
-
-I need an example of a MoleculeCompute that can be efficiently calculated
-on-the-fly to convince me that it makes sense to have molecular quantities.
-
-AtomCompute classes may need a mechanism to migrate data with the Atom.
--------------------------------------------------------------------------
-Pre-existing computed quantities:
-
-    - Question: How to handle compute classes that are already provided 
-      by the main simulation class?
-
-    - Proposal: Define a set of simple classes whose functions are just 
-      wrappers around calls to methods of Simulation or Potential classes.
-
-    - First call to return one of these pre-existing classes will create
-      the wrapper object, so that they are always available if needed. 
-
