@@ -52,70 +52,59 @@ namespace McMd
       // Molecular species
       Species* speciesPtr;
       Molecule* molPtr;
-      int iSpecies, iSpeciesIn, nMolecule, nAtom, nAtomTot;
+      int iSpecies, iSpeciesIn, nMolecule, nAtomSpecies, nAtomTot, iMol;
       int nSpecies = simulation().nSpecies();
-      bool isRequired = false;
-      bool isMolecular = false;
-      in >> Label("SPECIES", isRequired);
-      if (Label::isClear()) {
-         isMolecular = true;
-         nAtomTot = 0;
-         iSpecies = 0;
-         for ( ; iSpecies < nSpecies; ++iSpecies) {
-            in >> iSpeciesIn;
-            if (iSpeciesIn != iSpecies) {
-               UTIL_THROW("Error: iSpeciesIn != iSpecies");
-            }
-            speciesPtr = &simulation().species(iSpecies);
-            in >> nMolecule;
-            in >> nAtom;
-            if (nMolecule > speciesPtr->capacity()) {
-               UTIL_THROW("Error: nMolecule > species.capacity()");
-            }
-            if (nAtom != speciesPtr->nAtom()) {
-               UTIL_THROW("Error: nAtom != species.nAtom() ");
-            }
-            // Add all molecules of this species
-            for (iMol = 0; iMol < nMolecule; ++iMol) {
-               molPtr = &(simulation().getMolecule(iSpecies));
-               system().addMolecule(*molPtr);
-               if (molPtr != &system().molecule(iSpecies, iMol)) {
-                  UTIL_THROW("Molecule index error");
-               }
-            }
-            nAtomTot += nMolecule*nAtom;
-         }
-      }
-
-      in >> Label("ATOMS");
-      int nAtom, atomId, iMol; iAtom;
-      in >> Label("nAtom") >> nAtom;
-      Molecule::AtomIterator atomIter;
-      for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
-         in >> atomId;
+      in >> Label("SPECIES");
+      nAtomTot = 0;
+      for (iSpecies = 0 ; iSpecies < nSpecies; ++iSpecies) {
          in >> iSpeciesIn;
          if (iSpeciesIn != iSpecies) {
             UTIL_THROW("Error: iSpeciesIn != iSpecies");
          }
-         in >> Label("nMolecule") >> nMolecule;
+         speciesPtr = &simulation().species(iSpecies);
+         in >> nMolecule;
+         in >> nAtomSpecies;
+         if (nMolecule > speciesPtr->capacity()) {
+            UTIL_THROW("Error: nMolecule > species.capacity()");
+         }
+         if (nAtomSpecies != speciesPtr->nAtom()) {
+            UTIL_THROW("Error: nAtom != species.nAtom() ");
+         }
+         // Add all molecules of this species
          for (iMol = 0; iMol < nMolecule; ++iMol) {
-            in >> moleculeLabel >> iMolIn;
             molPtr = &(simulation().getMolecule(iSpecies));
             system().addMolecule(*molPtr);
-
-            if (iMolIn != iMol) {
-               UTIL_THROW("Error: iMolIn != iMol");
+            if (molPtr != &system().molecule(iSpecies, iMol)) {
+               UTIL_THROW("Molecule index error");
             }
+         }
+         nAtomTot += nMolecule*nAtomSpecies;
+      }
 
-            // If mutable, read molecule state id
-            if (speciesPtr->isMutable()) {
-               speciesPtr->mutator().readMoleculeState(in, *molPtr);
-            }
+      in >> Label("ATOMS");
+      int nAtomTotIn, atomId, atomIdIn, iMolIn, iAtom, iAtomIn;
+      in >> Label("nAtom") >> nAtomTotIn;
+      // Check consistency
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         speciesPtr = &simulation().species(iSpecies);
+
+         iMol = 0;
+         system().begin(iSpecies, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
 
             // Read positions, shift into primary cell
-            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               readAtom(in, *atomIter);
+            iAtom = 0;
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               // ReadAtom
+               in >> atomIdIn;
+               in >> iSpeciesIn;
+               in >> iMolIn;
+               in >> iAtomIn;
+               if (iSpeciesIn != iSpecies) {
+                  UTIL_THROW("Error: iSpeciesIn != iSpecies");
+               }
             }
 
          }
@@ -132,14 +121,14 @@ namespace McMd
          in >> Label("nTether") >> nTether;
          for (iTether = 0; iTether < nTether; ++iTether) {
             in >> iSpecies >> iMol >> iAtom >> anchor;
-            if (iSpecies >= simulation().nSpecies()) {
+            if (iSpecies > = simulation().nSpecies()) {
                UTIL_THROW("Invalid species index for tether");
             }
-            if (iMol >= system().nMolecule(iSpecies)) {
+            if (iMol > = system().nMolecule(iSpecies)) {
                UTIL_THROW("Invalid molecule index for tether");
             }
-            molPtr  = &system().molecule(iSpecies, iMol);
-            if (iAtom >= molPtr->nAtom()) {
+            molPtr = &system().molecule(iSpecies, iMol);
+            if (iAtom > = molPtr->nAtom()) {
                Log::file() << iAtom << "   " << molPtr->nAtom() << std::endl;
                UTIL_THROW("Invalid atom index for tether");
             }
@@ -164,16 +153,16 @@ namespace McMd
 
             // Read atom 0
             in >> iSpecies >> iMol >> iAtom;
-            if (iSpecies < 0 || iSpecies >= simulation().nSpecies()) {
+            if (iSpecies < 0 || iSpecies > = simulation().nSpecies()) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iSpecies0 index in link");
             }
-            if (iMol < 0 || iMol >= system().nMolecule(iSpecies)) {
+            if (iMol < 0 || iMol > = system().nMolecule(iSpecies)) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iMol0 index in link");
             }
-            molPtr  = &system().molecule(iSpecies, iMol);
-            if (iAtom < 0 || iAtom >= molPtr->nAtom()) {
+            molPtr = &system().molecule(iSpecies, iMol);
+            if (iAtom < 0 || iAtom > = molPtr->nAtom()) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iAtom0 index for link");
             }
@@ -181,16 +170,16 @@ namespace McMd
 
             // Read atom 1
             in >> iSpecies >> iMol >> iAtom;
-            if (iSpecies < 0 || iSpecies >= simulation().nSpecies()) {
+            if (iSpecies < 0 || iSpecies > = simulation().nSpecies()) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iSpecies1 index in link");
             }
-            if (iMol < 0 || iMol >= system().nMolecule(iSpecies)) {
+            if (iMol < 0 || iMol > = system().nMolecule(iSpecies)) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iMol1 index in link");
             }
-            molPtr  = &system().molecule(iSpecies, iMol);
-            if (iAtom < 0 || iAtom >= molPtr->nAtom()) {
+            molPtr = &system().molecule(iSpecies, iMol);
+            if (iAtom < 0 || iAtom > = molPtr->nAtom()) {
                Log::file() << "iLink = " << iLink << std::endl;
                UTIL_THROW("Invalid iAtom1 index for link");
             }
@@ -219,46 +208,50 @@ namespace McMd
 
       // Write species information
       Species* speciesPtr;
-      int iSpecies, nSpecies;
+      int iSpecies, nSpecies, nMolecule, nAtomSpecies, nAtomTot;
       out << endl << "SPECIES" << endl;
-      nSpecies = simulation().nSpecies;
-      out << "nSpecies   " << iSpecies << endl;
-      for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
+      nSpecies = simulation().nSpecies();
+      out << "nSpecies   " << nSpecies << endl;
+      nAtomTot = 0;
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
          out << iSpecies << "  ";
          out << speciesPtr->capacity() << "  ";
-         out << speciesPtr->nAtom() << endl;
+         nAtomSpecies = speciesPtr->nAtom();
+         out << nAtomSpecies << endl;
+         nMolecule = system().nMolecule(iSpecies);
+         nAtomTot += nAtomSpecies*nMolecule;
       }
 
       // Write atomic positions
       System::ConstMoleculeIterator molIter;
-      Molecule::ConstAtomIterator   atomIter;
-      Species* speciesPtr;
-      int iSpecies, iMolecule, iAtom, atomId;
+      Molecule::ConstAtomIterator atomIter;
+      int iMol, iAtom, atomId;
       out << endl << "ATOMS" << endl << endl;
+      out << "format ";
+      std::string format = "imtp";
+      out << format << endl;
+      out << "nAtom " << nAtomTot << endl;
+
       atomId = 0;
-      iSpecies = 0;
-      for ( ; iSpecies < simulation().nSpecies(); ++iSpecies) {
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
-         iMolecule = 0;
+         iMol = 0;
          system().begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
-            // if (speciesPtr->isMutable()) {
-            //   speciesPtr->mutator().writeMoleculeState(out, *molIter);
-            // }
             iAtom = 0;
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                writeAtom(out, *atomIter);
                out << atomId << "  ";
                out << iSpecies << "  ";
-               out << iMolecule << "  ";
+               out << iMol << "  ";
                out << iAtom << "  ";
                out << atomIter->typeId() << "  ";
                out << atomIter->position() << "  ";
                out << endl;
                ++iAtom;
             }
-            ++iMolecule;
+            ++iMol;
          }
       }
 
@@ -277,12 +270,12 @@ namespace McMd
          out << Label("nTether") << nTether << std::endl;
          for (iTether = 0; iTether < nTether; ++iTether) {
             tetherPtr = &(system().tetherMaster().tether(iTether));
-            atomPtr   = &tetherPtr->atom();
-            molPtr    = &atomPtr->molecule();
-            iAtom     = atomPtr->indexInMolecule();
-            iMolecule = system().moleculeId(*molPtr);
-            iSpecies  = molPtr->species().id();
-            out << Int(iSpecies,5) << Int(iMolecule,9) << Int(iAtom,6) 
+            atomPtr = &tetherPtr->atom();
+            molPtr = &atomPtr->molecule();
+            iAtom = atomPtr->indexInMolecule();
+            iMol = system().moleculeId(*molPtr);
+            iSpecies = molPtr->species().id();
+            out << Int(iSpecies,5) << Int(iMol,9) << Int(iAtom,6) 
                 << tetherPtr->anchor() << std::endl;
          }
 
@@ -304,24 +297,24 @@ namespace McMd
          nLink = system().linkMaster().nLink();
          out << Label("nLink") << nLink << std::endl;
          for (iLink = 0; iLink < nLink; ++iLink) {
-            linkPtr  = &(system().linkMaster().link(iLink));
+            linkPtr = &(system().linkMaster().link(iLink));
 
             // Output species, molecule, atom ids for atom 0
-            atomPtr   = &(linkPtr->atom0());
-            molPtr    = &atomPtr->molecule();
-            iAtom     = atomPtr->indexInMolecule();
-            iMolecule = system().moleculeId(*molPtr);
-            iSpecies  = molPtr->species().id();
-            out << Int(iSpecies,8) << Int(iMolecule,8) << Int(iAtom,8);
+            atomPtr = &(linkPtr->atom0());
+            molPtr = &atomPtr->molecule();
+            iAtom = atomPtr->indexInMolecule();
+            iMol = system().moleculeId(*molPtr);
+            iSpecies = molPtr->species().id();
+            out << Int(iSpecies,8) << Int(iMol,8) << Int(iAtom,8);
             out << "   ";
 
             // Output species, molecule, atom ids for atom 1
-            atomPtr   = &(linkPtr->atom1());
-            molPtr    = &atomPtr->molecule();
-            iAtom     = atomPtr->indexInMolecule();
-            iMolecule = system().moleculeId(*molPtr);
-            iSpecies  = molPtr->species().id();
-            out << Int(iSpecies,8) << Int(iMolecule,8) << Int(iAtom,8);
+            atomPtr = &(linkPtr->atom1());
+            molPtr = &atomPtr->molecule();
+            iAtom = atomPtr->indexInMolecule();
+            iMol = system().moleculeId(*molPtr);
+            iSpecies = molPtr->species().id();
+            out << Int(iSpecies,8) << Int(iMol,8) << Int(iAtom,8);
             out << "   ";
 
             out << Int(linkPtr->typeId(),8) << std::endl;
