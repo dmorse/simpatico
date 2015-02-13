@@ -43,21 +43,18 @@ McSimulation{
   }
   McMoveManager{
    
-    CfbLinearEndMove{
-      probability           0.125000000000e+00
+    CfbEndMove{
+      probability           0.500000000000e+00
       speciesId                              0
+      nRegrow                                4
       nTrial                                20
-      nRegrow                                1
     }
 
-    CfbRebridgeMove{
-      probability             0.8750000000e+00
+    CfbLinearEndMove{
+      probability           0.500000000000e+00
       speciesId                              0
-      nRegrow                                1
-      nTrial                                10
-      length21                             1.0
-      length10                             1.0
-      kappa10                            400.0
+      nTrial                                20
+      nRegrow                                4
     }
 
   }

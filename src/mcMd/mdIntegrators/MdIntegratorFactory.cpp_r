@@ -10,6 +10,7 @@
 // Subclasses of MdIntegrator 
 #include "NveVvIntegrator.h"
 #include "NvtNhIntegrator.h"
+#include "NvtLangevinIntegrator.h"
 #include "NvtDpdVvIntegrator.h"
 #include "NphIntegrator.h"
 
@@ -43,6 +44,9 @@ namespace McMd
       } else
       if (className == "NvtNhIntegrator") {
          ptr = new NvtNhIntegrator(*systemPtr_);
+      } else
+      if (className == "NvtLangevinIntegrator") {
+         ptr = new NvtLangevinIntegrator(*systemPtr_);
       } else
       if (className == "NvtDpdVvIntegrator") {
          ptr = new NvtDpdVvIntegrator(*systemPtr_);

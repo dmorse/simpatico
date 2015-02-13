@@ -9,17 +9,17 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <ddMd/communicate/Domain.h>             // member 
-#include <ddMd/communicate/Buffer.h>             // member 
-#include <ddMd/communicate/Exchanger.h>          // member 
-#include <ddMd/storage/AtomStorage.h>            // member 
-#include <ddMd/storage/BondStorage.h>            // member 
-#include <ddMd/storage/AngleStorage.h>           // member 
-#include <ddMd/storage/DihedralStorage.h>        // member 
+#include <ddMd/communicate/Domain.h>             // member
+#include <ddMd/communicate/Buffer.h>             // member
+#include <ddMd/communicate/Exchanger.h>          // member
+#include <ddMd/storage/AtomStorage.h>            // member
+#include <ddMd/storage/BondStorage.h>            // member
+#include <ddMd/storage/AngleStorage.h>           // member
+#include <ddMd/storage/DihedralStorage.h>        // member
 #include <ddMd/chemistry/AtomType.h>             // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>           // member
-#include <util/random/Random.h>                  // member 
-#include <util/boundary/Boundary.h>              // member 
+#include <util/random/Random.h>                  // member
+#include <util/boundary/Boundary.h>              // member
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
 #include <util/containers/DMatrix.h>             // member (template)
@@ -29,9 +29,9 @@
 
 #include <fstream>
 
-namespace Util { 
+namespace Util {
    class FileMaster;
-   template <typename T> class Factory; 
+   template <typename T> class Factory;
    class EnergyEnsemble;
    class BoundaryEnsemble;
 }
@@ -49,7 +49,7 @@ namespace DdMd
    class PairPotential;
    #ifdef INTER_BOND
    class BondPotential;
-   #endif 
+   #endif
    #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
@@ -65,8 +65,8 @@ namespace DdMd
    /**
    * Main object for a domain-decomposition MD simulation.
    *
-   * A DdMd::Simulation contains and coordinates all the components of a 
-   * parallel MD simulation. 
+   * A DdMd::Simulation contains and coordinates all the components of a
+   * parallel MD simulation.
    *
    * \ingroup DdMd_Simulation_Module
    */
@@ -79,7 +79,7 @@ namespace DdMd
       using ParamComposite::load;
 
       // Lifetime
-      
+
       #ifdef UTIL_MPI
       /**
       * Constructor.
@@ -111,14 +111,14 @@ namespace DdMd
       *       is read.
       *
       *   -s  nSystem [int]
-      *       Enable multi system simulation, using different groups of 
-      *       processors for different systems. Integer argument nSystem 
+      *       Enable multi system simulation, using different groups of
+      *       processors for different systems. Integer argument nSystem
       *       is the number of systems. The rank of the communicator passed
       *       to the constructor must be an integer multiple of nSystem.
       *
       *   -r  filename [string]
       *       Restarts a simulation from a checkpoint file. The name of
-      *       the checkpoint file is filename + ".rst", i..e., it is 
+      *       the checkpoint file is filename + ".rst", i..e., it is
       *       obtained by adding a suffix ".rst" to the filename argument.
       *       Also sets the default command file name to filename + ".cmd".
       *
@@ -158,13 +158,13 @@ namespace DdMd
       //@}
       /// \name Serialization (Restart files)
       //@{
-  
+
       /**
       * Load internal state from a restart file.
       *
-      * Call on all processors. This function opens an archive file with 
-      * a name given by concatentaing filename + ".rst" on the ioProcessor, 
-      * calls load(Serializable::OArchive& ), and closes the file. It also 
+      * Call on all processors. This function opens an archive file with
+      * a name given by concatentaing filename + ".rst" on the ioProcessor,
+      * calls load(Serializable::OArchive& ), and closes the file. It also
       * sets the default command file name to filename + ".cmd".
       *
       * \param filename base filename (add suffixes ".rst" and ".cmd")
@@ -176,9 +176,9 @@ namespace DdMd
       *
       * Call on all processors, but loads from archive only on ioProcessor.
       * This function loads both parameter information and the system
-      * configuration. 
-      *  
-      * Do not call this directly. Instead call load(const std::string&) 
+      * configuration.
+      *
+      * Do not call this directly. Instead call load(const std::string&)
       * or load(Serializable::IArchive& ).
       *
       * \param ar input archive (open for reading on ioProcessor).
@@ -189,8 +189,8 @@ namespace DdMd
       * Save state to a restart file.
       *
       * Call on all processors. Only writes from communicator ioProcessor.
-      * This function opens an archive file with a name given by filename 
-      * + ".rst" on the ioProcessor, calls save(Serializable::OArchive& ), 
+      * This function opens an archive file with a name given by filename
+      * + ".rst" on the ioProcessor, calls save(Serializable::OArchive& ),
       * and closes the file.
       */
       void save(const std::string& filename);
@@ -211,7 +211,7 @@ namespace DdMd
       *
       * This function calls readCommands(std::istream&) internally. The
       * default command file is defined by the FileMaster. The file name
-      * is normally input in the parameter file.  
+      * is normally input in the parameter file.
       *
       * \pre Same as readCommands(std::istream&)
       */
@@ -226,13 +226,22 @@ namespace DdMd
       * \param in command file
       */
       void readCommands(std::istream &in);
-  
+
       /**
       * Set random velocities chosen from Boltzmann distribution.
-      *  
-      * \param temperature absolute temperature kT, in energy units. 
+      *
+      * \param temperature absolute temperature kT, in energy units.
       */
       void setBoltzmannVelocities(double temperature);
+
+      /**
+      * Subract system center of mass velocity from atom velocities.
+      *
+      * Call on all processors. Does all-reduce internally. 
+      *
+      * \return drift velocity of system before subtraction.
+      */
+      Vector removeDriftVelocity();
 
       /**
       * Set forces for all local atoms to zero.
@@ -260,7 +269,7 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * \pre AtomStorage coordinates are generalized / scaled 
+      * \pre AtomStorage coordinates are generalized / scaled
       *
       * \param filename name of output configuration file.
       */
@@ -284,16 +293,16 @@ namespace DdMd
       //@}
       /// \name Force, energy and stress calculators
       //@{
-      
+
       /**
       * Compute forces for all local atoms.
       *
-      * Upon return, forces are correct for all local atoms. Values 
+      * Upon return, forces are correct for all local atoms. Values
       * of the forces on ghost atoms are undefined.
       *
       * This method zeros all forces, adds forces from all potential
-      * energies, and carries out reverse communication if required 
-      * (i.e., if reverseUpdateFlag is true). 
+      * energies, and carries out reverse communication if required
+      * (i.e., if reverseUpdateFlag is true).
       */
       void computeForces();
 
@@ -301,11 +310,11 @@ namespace DdMd
       * Compute forces for all local atoms and virial stress.
       *
       * Upon return, forces are correct for all local atoms and virial
-      * stress values are set for all Potential objects. Values of the 
+      * stress values are set for all Potential objects. Values of the
       * forces on ghost atoms are undefined.
       *
       * This method zeros all forces, adds forces from all potential
-      * energies, and carries out reverse communication if required 
+      * energies, and carries out reverse communication if required
       * (i.e., if reverseUpdateFlag is true). It also calculates and
       * sets each virial stress contribution.
       */
@@ -313,7 +322,7 @@ namespace DdMd
 
       /**
       * Compute total kinetic energy.
-      * 
+      *
       * Reduce operation: Must be called on all processors.
       * Value is returned by calling kineticEnergy on master.
       */
@@ -321,8 +330,8 @@ namespace DdMd
 
       /**
       * Return precomputed total kinetic energy.
-      * 
-      * Call only on master node. 
+      *
+      * Call only on master node.
       *
       * \return total kinetic energy for all nodes on master.
       */
@@ -335,7 +344,7 @@ namespace DdMd
 
       /**
       * Calculate and store total potential energy on all processors.
-      * 
+      *
       * Reduce operation: Must be called on all nodes.
       */
       void computePotentialEnergies();
@@ -345,7 +354,7 @@ namespace DdMd
       *
       * Call only on master processor, after computePotentialEnergies.
       * Calls the energy() methods of each of the potential classes.
-      * 
+      *
       * \return total potential energy (only correct on master node).
       */
       double potentialEnergy() const;
@@ -357,7 +366,7 @@ namespace DdMd
 
       /**
       * Compute pair energies for each pair of atom types.
-      * 
+      *
       * Reduce operation: Must be called on all nodes.
       */
       void computePairEnergies();
@@ -366,15 +375,15 @@ namespace DdMd
       * Return precomputed pair energies.
       *
       * Call only on master processor, after computePairEnergies.
-      * 
+      *
       * \return total pair energies (only correct on master node).
       */
       DMatrix<double> pairEnergies() const;
-     
+
       #ifdef INTER_EXTERNAL
       /**
       * Compute pair energies for each pair of atom types.
-      * 
+      *
       * Reduce operation: Must be called on all nodes.
       */
       void computeExternalEnergy();
@@ -383,7 +392,7 @@ namespace DdMd
       * Return precomputed pair energies.
       *
       * Call only on master processor, after computePairEnergies.
-      * 
+      *
       * \return total pair energies (only correct on master node).
       */
       double externalEnergy() const;
@@ -391,7 +400,7 @@ namespace DdMd
 
       /**
       * Calculate and store kinetic stress.
-      * 
+      *
       * Reduce operation: Must be called on all nodes.
       */
       void computeKineticStress();
@@ -400,7 +409,7 @@ namespace DdMd
       * Return total kinetic stress.
       *
       * Call only on master processor, after computeKineticStress.
-      * 
+      *
       * \return total kinetic stress (only correct on master node).
       */
       Tensor kineticStress() const;
@@ -409,7 +418,7 @@ namespace DdMd
       * Return total kinetic pressure.
       *
       * Call only on master processor, after computeKineticStress.
-      * 
+      *
       * \return total kinetic pressure only correct on master node).
       */
       double kineticPressure() const;
@@ -433,7 +442,7 @@ namespace DdMd
       * Call only on master processor, after computeVirialStress. This
       * method calls the stress() method of each potential class (pair,
       * bond, etc.) and adds and returns the sum.
-      * 
+      *
       * \return total virial stress (only correct on master node).
       */
       Tensor virialStress() const;
@@ -444,7 +453,7 @@ namespace DdMd
       * Call only on master processor, after computeVirialStress.
       * Similar to virialStress, but returns average of diagonal
       * elements.
-      * 
+      *
       * \return total virial pressure (only correct on master node).
       */
       double virialPressure() const;
@@ -460,12 +469,17 @@ namespace DdMd
       /// \name Potential Energy Classes (Objects, Style Strings and Factories)
       //@{
 
+      #ifndef INTER_NOPAIR
+      /**
+      * Get the PairPotential by const reference.
+      */
+      const PairPotential& pairPotential() const;
+
       /**
       * Get the PairPotential by reference.
       */
       PairPotential& pairPotential();
-   
-      #ifndef INTER_NOPAIR
+
       /**
       * Return nonbonded pair style string.
       */
@@ -478,6 +492,11 @@ namespace DdMd
       #endif
 
       #ifdef INTER_BOND
+      /**
+      * Get the PairPotential by const reference.
+      */
+      const BondPotential& bondPotential() const;
+
       /**
       * Get the PairPotential by reference.
       */
@@ -493,8 +512,13 @@ namespace DdMd
       */
       Factory<BondPotential>& bondFactory();
       #endif
-  
-      #ifdef INTER_ANGLE 
+
+      #ifdef INTER_ANGLE
+      /**
+      * Get the AnglePotential by const reference.
+      */
+      const AnglePotential& anglePotential() const;
+
       /**
       * Get the AnglePotential by reference.
       */
@@ -504,7 +528,7 @@ namespace DdMd
       * Return angle potential style string.
       */
       std::string angleStyle() const;
-   
+
       /**
       * Get the AngleFactory by reference.
       */
@@ -512,6 +536,11 @@ namespace DdMd
       #endif
 
       #ifdef INTER_DIHEDRAL
+      /**
+      * Get the DihedralPotential by const reference.
+      */
+      const DihedralPotential& dihedralPotential() const;
+
       /**
       * Get the DihedralPotential by reference.
       */
@@ -521,7 +550,7 @@ namespace DdMd
       * Return dihedral potential style string.
       */
       std::string dihedralStyle() const;
-   
+
       /**
       * Get the associated Dihedral Factory by reference.
       */
@@ -529,6 +558,11 @@ namespace DdMd
       #endif
 
       #ifdef INTER_EXTERNAL
+      /**
+      * Get the ExternalPotential by reference.
+      */
+      const ExternalPotential& externalPotential() const;
+
       /**
       * Get the ExternalPotential by reference.
       */
@@ -548,33 +582,33 @@ namespace DdMd
       //@}
       /// \name Atom and Group Containers
       //@{
-      
+
       /**
       * Get the AtomStorage by reference.
       */
       AtomStorage& atomStorage();
-  
-      #ifdef INTER_BOND 
+
+      #ifdef INTER_BOND
       /**
       * Get the BondStorage by reference.
       */
       BondStorage& bondStorage();
       #endif
-  
-      #ifdef INTER_ANGLE 
+
+      #ifdef INTER_ANGLE
       /**
       * Get the AngleStorage by reference.
       */
       AngleStorage& angleStorage();
       #endif
-   
+
       #ifdef INTER_DIHEDRAL
       /**
       * Get the DihedralStorage by reference.
       */
       DihedralStorage& dihedralStorage();
       #endif
-   
+
       //@}
       /// \name Miscellaneous Accessors (return members by reference)
       //@{
@@ -588,7 +622,7 @@ namespace DdMd
       * Get the Boundary by reference.
       */
       Boundary& boundary();
-   
+
       /**
       * Get an AtomType descriptor by reference.
       *
@@ -600,8 +634,8 @@ namespace DdMd
       * Get the Integrator by reference.
       */
       Integrator& integrator();
-  
-      /** 
+
+      /**
       * Get the EnergyEnsemble by reference.
       */
       EnergyEnsemble& energyEnsemble();
@@ -625,13 +659,13 @@ namespace DdMd
       * Get the Exchanger by reference.
       */
       Exchanger& exchanger();
-  
+
       /**
       * Get the Buffer by reference.
       */
       Buffer& buffer();
- 
-      #ifdef DDMD_MODIFIERS 
+
+      #ifdef DDMD_MODIFIERS
       /**
       * Return the ModifierManager by reference.
       */
@@ -651,13 +685,13 @@ namespace DdMd
       //@}
       /// \name Accessors (return by value)
       //@{
-      
+
       /**
       * Get maximum number of atom types.
       */
       int nAtomType();
 
-      #ifdef INTER_BOND 
+      #ifdef INTER_BOND
       /**
       * Get maximum number of bond types.
       */
@@ -697,9 +731,9 @@ namespace DdMd
 
       //@}
       /// \name Signals
-      //@{ 
-     
-      /** 
+      //@{
+
+      /**
       * Signal to force unsetting of quantities that depend on x, v, or f.
       */
       Signal<>& modifySignal();
@@ -720,7 +754,7 @@ namespace DdMd
       Signal<>& exchangeSignal();
 
       //@}
-      
+
       /**
       * Return true if this Simulation is valid, or throw an Exception.
       */
@@ -796,7 +830,7 @@ namespace DdMd
       /// Container for all atoms and ghosts.
       AtomStorage atomStorage_;
 
-      #ifdef INTER_BOND 
+      #ifdef INTER_BOND
       /// Container for bonds.
       BondStorage bondStorage_;
       #endif
@@ -841,7 +875,7 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
-      #ifdef INTER_BOND 
+      #ifdef INTER_BOND
       /// Pointer to covalent bond potential.
       BondPotential* bondPotentialPtr_;
       #endif
@@ -875,11 +909,11 @@ namespace DdMd
 
       /// Pointer to a configuration reader/writer.
       ConfigIo* configIoPtr_;
-   
+
       /// Pointer to a configuration reader/writer for restart.
       SerializeConfigIo* serializeConfigIoPtr_;
-  
-      #ifdef DDMD_MODIFIERS 
+
+      #ifdef DDMD_MODIFIERS
       /// ModifierManager
       ModifierManager* modifierManagerPtr_;
       #endif
@@ -1054,65 +1088,83 @@ namespace DdMd
    inline Buffer& Simulation::buffer()
    { return buffer_; }
 
+   inline const PairPotential& Simulation::pairPotential() const
+   {
+      assert(pairPotentialPtr_);
+      return *pairPotentialPtr_;
+   }
+
    inline PairPotential& Simulation::pairPotential()
-   { 
-      assert(pairPotentialPtr_); 
-      return *pairPotentialPtr_; 
+   {
+      assert(pairPotentialPtr_);
+      return *pairPotentialPtr_;
    }
- 
+
    #ifdef INTER_BOND
-   inline BondPotential& Simulation::bondPotential()
-   { 
-      assert(bondPotentialPtr_); 
-      return *bondPotentialPtr_; 
+   inline const BondPotential& Simulation::bondPotential() const
+   {
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_;
    }
-   #endif 
+
+   inline BondPotential& Simulation::bondPotential()
+   {
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_;
+   }
+   #endif
 
    #ifdef INTER_ANGLE
+   inline const AnglePotential& Simulation::anglePotential() const
+   {
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_;
+   }
+
    inline AnglePotential& Simulation::anglePotential()
-   { 
-      assert(anglePotentialPtr_); 
-      return *anglePotentialPtr_; 
+   {
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_;
    }
    #endif
 
    #ifdef INTER_DIHEDRAL
-   /*
-   * Get the DihedralPotential by reference.
-   */
+   inline const DihedralPotential& Simulation::dihedralPotential() const
+   {
+      assert(dihedralPotentialPtr_);
+      return *dihedralPotentialPtr_;
+   }
+
    inline DihedralPotential& Simulation::dihedralPotential()
-   { 
-      assert(dihedralPotentialPtr_); 
-      return *dihedralPotentialPtr_; 
+   {
+      assert(dihedralPotentialPtr_);
+      return *dihedralPotentialPtr_;
    }
    #endif
 
    #ifdef INTER_EXTERNAL
-   /*
-   * Get the ExternalPotential by reference.
-   */
+   inline const ExternalPotential& Simulation::externalPotential() const
+   {
+      assert(externalPotentialPtr_);
+      return *externalPotentialPtr_;
+   }
+
    inline ExternalPotential& Simulation::externalPotential()
-   { 
-      assert(externalPotentialPtr_); 
-      return *externalPotentialPtr_; 
+   {
+      assert(externalPotentialPtr_);
+      return *externalPotentialPtr_;
    }
    #endif
 
-   /*
-   * Get the Integrator by reference.
-   */
    inline Integrator& Simulation::integrator()
    {
-      assert(integratorPtr_); 
-      return *integratorPtr_; 
+      assert(integratorPtr_);
+      return *integratorPtr_;
    }
 
    inline Random& Simulation::random()
    { return random_; }
 
-   /*
-   * Get the EnergyEnsemble by reference.
-   */
    inline EnergyEnsemble& Simulation::energyEnsemble()
    {
       assert(energyEnsemblePtr_);
@@ -1169,7 +1221,7 @@ namespace DdMd
    */
    inline int Simulation::nBondType()
    {  return nBondType_; }
-   #endif 
+   #endif
 
    #ifdef INTER_ANGLE
    /*

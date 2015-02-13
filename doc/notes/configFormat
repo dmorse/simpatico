@@ -131,6 +131,7 @@ Blocks in trajectory frame:
 ---------------------------------------------------------------------
 Plan:
 
+<<<<<<< HEAD
    1) McMd ConfigIo for configuration format      (SpcConfigIo)
    2) McMd TrajectoryIo for trajectory format     (SptTrajectoryIo)
    3) Add simple species to DdMd::Simulation
@@ -139,3 +140,11 @@ Plan:
    6) Tools reader                                (SptTrajectoryReader)
    7) Allow optional arguments in command lines
    8) Divide readers and writers for McMd
+=======
+   1) McMd ConfigIo for configuration format      (SmcConfigIo)
+   2) McMd TrajectoryIo for trajectory format     (SmtTrajectoryIo)
+   3) Add simple species to DdMd::Simulation
+   4) DdMd ConfigIo for configuration format      (SmcConfigIo)
+   5) DdMd writer for trajectory format           (SmtTrajectoryReader)
+   6) Tools reader                                (SmtTrajectoryReader)
+>>>>>>> devel

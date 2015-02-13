@@ -52,8 +52,8 @@ McSimulation{
     CfbLinearEndMove{
       probability           0.100000000000e+00
       speciesId                              0
-      nRegrow                                4
       nTrial                                20
+      nRegrow                                4
     }
 
     CfbReptateMove{

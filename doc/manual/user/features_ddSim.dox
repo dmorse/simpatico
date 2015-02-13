@@ -16,12 +16,14 @@ MD program.
 <ul style="list-style: none;">
   <li> \subpage ddMd_integrator_NveIntegrator_page </li>
   <li> \subpage ddMd_integrator_NvtIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NvtLangevinIntegrator_page </li>
   <li> \subpage ddMd_integrator_NphIntegrator_page </li>
   <li> \subpage ddMd_integrator_NptIntegrator_page </li>
 </ul>
  
 <h2> Data Analysis and Output (subclasses of DdMd::Analyzer): </h2>
 <ul style="list-style: none;">
+  <li> \subpage ddMd_analyzer_KineticEnergyAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_LogEnergy_page </li>
   <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>

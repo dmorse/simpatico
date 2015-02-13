@@ -15,6 +15,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/StructureFactorGrid.cpp\
      ddMd/analyzers/VanHove.cpp\
      ddMd/analyzers/OrderParamNucleation.cpp\
+     ddMd/analyzers/KineticEnergyAnalyzer.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
      ddMd/analyzers/StressAutoCorr.cpp\

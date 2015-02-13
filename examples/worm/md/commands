@@ -2,5 +2,8 @@ SET_CONFIG_IO    McConfigIo
 READ_CONFIG      config
 THERMALIZE       1.0
 SIMULATE         50000
+WRITE_PARAM      param
 WRITE_CONFIG     config
+SET_CONFIG_IO    LammpsConfigIo
+WRITE_CONFIG     config.lmp
 FINISH
