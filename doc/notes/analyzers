@@ -59,20 +59,28 @@ File Types:
 Each analyzer may produce several files of different types, with the same 
 base name but different extensions:
 
+   Parameter file:         <basename>.prm
+   Data *.dat file format: <basename>.dfm
+   Data file:              <basename>.dat
+   Average output file:    <basename>.ave
+   Error analysis file:    <basename>.era
+
+Discussion:
+
   - Parameter files: A parameter file, with extension *.prm, reproduces 
     the parameter file block associated with an analyzer. The first line
     of this can be used by a parser to determine which analyzer this is.
 
   - Data files: A data file, with extension *.dat contains a sequence of 
-    values, along with corresponding time step stamps
+    values. The first column should always be a time stamp. 
 
-  - Format files: A format file, with extension *.fmt, gives names and 
-    data types for the columns in the associated *.dat file
+  - Format files: A data format file, with extension *.dfm, gives names 
+    and data types for the columns in the associated *.dat file
 
   - An average file contains final average values, with error estimates, 
     for one or more quantities.
 
-  - An average-error file, with extension type *.aer, contains further 
+  - An error-analysis file, with extension type *.era, contains further 
     information about hierarchical error analysis of averages
 
 Parser Design:
