@@ -21,9 +21,10 @@ in which:
 
    - \f${\bf f}^{\rm (r)}\f$ is a random force
 
+For a detailed discussion of the time stepping algorithm, see: \subpage algorithms_Langevin_page "algorithm"
+
 \sa DdMd::NvtLangevinIntegrator
 \sa Util::EnergyEnsemble
-\sa \ref algorithms_Langevin_page "algorithm"
 
 \section ddMd_integrator_NvtLangevinIntegrator_param_sec Parameters
 The parameter file format is:
