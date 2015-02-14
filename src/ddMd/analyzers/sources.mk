@@ -2,6 +2,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/Analyzer.cpp\
      ddMd/analyzers/AnalyzerManager.cpp\
      ddMd/analyzers/AnalyzerFactory.cpp\
+     ddMd/analyzers/AverageAnalyzer.cpp\
      ddMd/analyzers/LogEnergy.cpp\
      ddMd/analyzers/OutputEnergy.cpp\
      ddMd/analyzers/OutputPressure.cpp\
