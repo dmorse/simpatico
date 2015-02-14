@@ -109,15 +109,6 @@ namespace Util
       virtual void clear();
 
       /**
-      * Register the creation of a descendant stage.
-      *
-      * This should be called only by a root stage.
-      *
-      * \param descendantPtr pointer to a descendant AverageStage.
-      */
-      virtual void registerDescendant(AverageStage* descendantPtr);
-
-      /**
       * Add a sampled value to the ensemble.
       *
       * \param value sampled value
@@ -235,6 +226,15 @@ namespace Util
       * Assignment - private and not implemented.
       */
       AverageStage& operator = (const AverageStage& other);
+
+      /**
+      * Register the creation of a descendant stage.
+      *
+      * This should be called only by a root stage.
+      *
+      * \param descendantPtr pointer to a descendant AverageStage.
+      */
+      virtual void registerDescendant(AverageStage* descendantPtr);
 
    };
 

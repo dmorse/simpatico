@@ -80,26 +80,32 @@ namespace Util
    */
    void Average::sample(double value)
    {
-      std::ostream* outFilePtr = 0;
-      sample(value, outFilePtr);
-   }
-
-   /*
-   * Add a sampled value to the ensemble (private method)
-   *
-   * If outFilePtr != 0, output block averages to outFilePtr
-   */
-   void Average::sample(double value, std::ostream* outFilePtr)
-   {
       AverageStage::sample(value);
 
-      // Process block average for output
-      if (nSamplePerBlock_ && outFilePtr) {
+      // Increment block average
+      if (nSamplePerBlock_) {
          blockSum_ += value;
          ++iBlock_;
          if (iBlock_ == nSamplePerBlock_) {
-            *outFilePtr << Dbl(blockSum_/double(nSamplePerBlock_))
-                        << std::endl;
+            blockSum_ = 0.0;
+            iBlock_  = 0;
+         }
+      }
+   }
+
+   /*
+   * Add a sampled value and output block average if complete.
+   */
+   void Average::sample(double value, std::ostream& out)
+   {
+      AverageStage::sample(value);
+
+      // Increment block average for output
+      if (nSamplePerBlock_) {
+         blockSum_ += value;
+         ++iBlock_;
+         if (iBlock_ == nSamplePerBlock_) {
+            out << Dbl(blockSum_/double(iBlock_)) << std::endl;
             blockSum_ = 0.0;
             iBlock_  = 0;
          }
@@ -150,7 +156,6 @@ namespace Util
       }
       return aveErr;
    }
-
 
    /*
    * Output statistical properties to file

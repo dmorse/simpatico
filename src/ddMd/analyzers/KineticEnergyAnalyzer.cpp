@@ -25,7 +25,7 @@ namespace DdMd
    KineticEnergyAnalyzer::KineticEnergyAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
       outputFile_(),
-      accumulator_(NULL),
+      accumulatorPtr_(0),
       nSamplePerBlock_(1),
       isInitialized_(false)
    {  setClassName("KineticEnergyAnalyzer"); }
@@ -35,8 +35,8 @@ namespace DdMd
    */
    KineticEnergyAnalyzer::~KineticEnergyAnalyzer() 
    {  
-      if(accumulator_ != NULL) {
-         delete accumulator_;
+      if (accumulatorPtr_) {
+         delete accumulatorPtr_;
       }
    }
 
@@ -50,8 +50,8 @@ namespace DdMd
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
-         accumulator_ = new Average;
-         accumulator_->setNSamplePerBlock(nSamplePerBlock_);
+         accumulatorPtr_ = new Average;
+         accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
 
       isInitialized_ = true;
@@ -67,11 +67,11 @@ namespace DdMd
       loader.load(nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
-         accumulator_ = new Average;
-         accumulator_->loadParameters(ar);
+         accumulatorPtr_ = new Average;
+         accumulatorPtr_->loadParameters(ar);
       }
 
-      if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
+      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
          UTIL_THROW("Inconsistent values of nSamplePerBlock");
       }
 
@@ -87,18 +87,35 @@ namespace DdMd
       saveOutputFileName(ar);
 
       if (simulation().domain().isMaster()){
-         ar << *accumulator_;
+         ar << *accumulatorPtr_;
       }
    }
 
    /*
-   * Reset nSample.
+   * Clear accumulator (do nothing on slave processors).
    */
    void KineticEnergyAnalyzer::clear() 
    {   
       if (simulation().domain().isMaster()){ 
-         accumulator_->clear();
+         accumulatorPtr_->clear();
       }
+   }
+ 
+   /*
+   * Compute current value.
+   */
+   void KineticEnergyAnalyzer::compute() 
+   {  simulation().computeKineticEnergy(); }
+
+   /*
+   * Get value current value (call only on master)
+   */
+   double KineticEnergyAnalyzer::value() 
+   {
+      if (!simulation().domain().isMaster()) {
+         UTIL_THROW("Error: Not master processor");
+      }
+      return simulation().kineticEnergy();
    }
 
    /*
@@ -107,11 +124,14 @@ namespace DdMd
    void KineticEnergyAnalyzer::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         double energy = 0.0;
-         simulation().computeKineticEnergy();
+         compute();
          if (simulation().domain().isMaster()) {
-            energy =  simulation().kineticEnergy();
-            accumulator_->sample(energy);
+            double data = value();
+            accumulatorPtr_->sample(data);
+            if (accumulatorPtr_->isBlockComplete()) {
+               double block = accumulatorPtr_->blockAverage();
+               outputFile_ << Int(iStep) << Dbl(block) << "\n"
+            }
          }
       }
    }
@@ -127,7 +147,7 @@ namespace DdMd
          outputFile_.close();
 
          simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-         accumulator_->output(outputFile_);
+         accumulatorPtr_->output(outputFile_);
          outputFile_.close();
       }
    }

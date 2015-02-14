@@ -68,7 +68,7 @@ namespace DdMd
       virtual void clear();
   
       /**
-      * Dump configuration to file
+      * Compute and a sampled value and add it to a sequence.
       *
       * \param iStep MD step index
       */
@@ -79,19 +79,38 @@ namespace DdMd
       */
       virtual void output();
 
+   protected:
+
+      /**
+      * Function to compute value.
+      *
+      * Call on all processors.
+      */
+      virtual void compute();
+
+      /**
+      * Current value, set by compute function.
+      *
+      * Call only on master.
+      */
+      virtual double& value();
+
    private:
 
       /// Output file stream.
       std::ofstream  outputFile_;
 
-      /// Average object is to be set in the master processor!
-      Average  *accumulator_;
+      /// Pointer to Average object (only instantiated on master processor)
+      Average *accumulatorPtr_;
 
+      /// Current value (set by compute function)
+      double value_;
+      
       /// Number of samples per block average output.
-      int  nSamplePerBlock_;
+      int nSamplePerBlock_;
    
       /// Has readParam been called?
-      bool  isInitialized_;
+      bool isInitialized_;
    
    };
 
