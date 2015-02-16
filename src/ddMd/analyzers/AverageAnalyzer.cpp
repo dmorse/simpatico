@@ -108,9 +108,10 @@ namespace DdMd
    void AverageAnalyzer::setup()
    {
       if (simulation().domain().isMaster()) {
-         std::string filename;
-         filename  = outputFileName();
-         simulation().fileMaster().openOutputFile(filename, outputFile_);
+         if (nSamplePerBlock_) {
+            std::string filename  = outputFileName(".dat");
+            simulation().fileMaster().openOutputFile(filename, outputFile_);
+         }
       }
    }
 
@@ -124,9 +125,10 @@ namespace DdMd
          if (simulation().domain().isMaster()) {
             double data = value();
             accumulatorPtr_->sample(data);
-            if (accumulatorPtr_->isBlockComplete()) {
+            if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
                double block = accumulatorPtr_->blockAverage();
-               outputFile_ << Int(iStep) << Dbl(block) << "\n";
+               int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
+               outputFile_ << Int(beginStep) << Dbl(block) << "\n";
             }
          }
       }
@@ -138,10 +140,15 @@ namespace DdMd
    void AverageAnalyzer::output()
    {
       if (simulation().domain().isMaster()) {
+         // Close data (*.dat) file, if any
+         if (outputFile_.is_open()) {
+            outputFile_.close();
+         }
+         // Write parameter (*.prm) file
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
-
+         // Write average (*.ave) file
          simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
          accumulatorPtr_->output(outputFile_);
          outputFile_.close();

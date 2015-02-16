@@ -11,7 +11,7 @@
 
 // Analyzers 
 #include "LogEnergy.h"
-#include "ConfigWriter.h"
+#include "KineticEnergyAnalyzer.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
 #include "OutputStressTensor.h"
@@ -29,7 +29,8 @@
 #include "StressAutoCorrelation.h"
 #include "BondTensorAutoCorr.h"
 
-// Trajectory Writer Analyzers
+// Config and Trajectory Writers
+#include "ConfigWriter.h"
 #include "DdMdTrajectoryWriter.h"
 #include "DdMdGroupTrajectoryWriter.h"
 #include "LammpsDumpWriter.h"
@@ -58,11 +59,11 @@ namespace DdMd
       if (ptr) return ptr;
 
       // Simulation Analyzers
-      if (className == "ConfigWriter") {
-         ptr = new ConfigWriter(simulation());
-      } else 
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());
+      } else 
+      if (className == "KineticEnergyAnalyzer") {
+         ptr = new KineticEnergyAnalyzer(simulation());
       } else 
       if (className == "OutputEnergy") {
          ptr = new OutputEnergy(simulation());
@@ -112,6 +113,9 @@ namespace DdMd
       if (className == "BondTensorAutoCorr") {
          ptr = new BondTensorAutoCorr(simulation());
       } else
+      if (className == "ConfigWriter") {
+         ptr = new ConfigWriter(simulation());
+      } else 
       if (className == "DdMdTrajectoryWriter") {
          ptr = new DdMdTrajectoryWriter(simulation());
       } else

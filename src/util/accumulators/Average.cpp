@@ -50,13 +50,23 @@ namespace Util
    * Read nSamplePerBlock from file.
    */
    void Average::readParameters(std::istream& in)
-   {  read<int>(in, "nSamplePerBlock", nSamplePerBlock_); }
+   {  
+      read<int>(in, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Invalid input: nSamplePerBlock < 0");
+      }
+   }
 
    /*
    * Set nSamplePerBlock parameter.
    */
    void Average::setNSamplePerBlock(int nSamplePerBlock)
-   {  nSamplePerBlock_ = nSamplePerBlock; }
+   {  
+      if (nSamplePerBlock < 0) {
+         UTIL_THROW("Attempt to set nSamplePerBlock < 0");
+      }
+      nSamplePerBlock_ = nSamplePerBlock; 
+   }
 
    /*
    * Load internal state from archive.
@@ -67,6 +77,9 @@ namespace Util
       ar & blockSum_;
       ar & iBlock_;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Loading value nSamplePerBlock < 0");
+      }
    }
 
    /*
@@ -84,12 +97,12 @@ namespace Util
 
       // Increment block average
       if (nSamplePerBlock_) {
-         blockSum_ += value;
-         ++iBlock_;
          if (iBlock_ == nSamplePerBlock_) {
             blockSum_ = 0.0;
             iBlock_  = 0;
          }
+         blockSum_ += value;
+         ++iBlock_;
       }
    }
 
@@ -102,12 +115,14 @@ namespace Util
 
       // Increment block average for output
       if (nSamplePerBlock_) {
+         if (iBlock_ == nSamplePerBlock_) {
+            blockSum_ = 0.0;
+            iBlock_  = 0;
+         }
          blockSum_ += value;
          ++iBlock_;
          if (iBlock_ == nSamplePerBlock_) {
-            out << Dbl(blockSum_/double(iBlock_)) << std::endl;
-            blockSum_ = 0.0;
-            iBlock_  = 0;
+            out << Dbl(blockSum_/double(iBlock_)) << "\n";
          }
       }
    }
