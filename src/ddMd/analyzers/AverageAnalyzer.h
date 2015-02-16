@@ -9,8 +9,6 @@
 */
 
 #include <ddMd/analyzers/Analyzer.h>
-//#include <ddMd/simulation/Simulation.h>
-//#include <util/accumulators/Average.h>
 
 namespace Util { 
    class Average;

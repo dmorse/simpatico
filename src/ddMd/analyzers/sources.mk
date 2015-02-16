@@ -4,6 +4,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/AnalyzerFactory.cpp\
      ddMd/analyzers/AverageAnalyzer.cpp\
      ddMd/analyzers/LogEnergy.cpp\
+     ddMd/analyzers/KineticEnergyAnalyzer.cpp\
      ddMd/analyzers/OutputEnergy.cpp\
      ddMd/analyzers/OutputPressure.cpp\
      ddMd/analyzers/OutputStressTensor.cpp\
@@ -16,9 +17,8 @@ ddMd_analyzers_=\
      ddMd/analyzers/StructureFactorGrid.cpp\
      ddMd/analyzers/VanHove.cpp\
      ddMd/analyzers/OrderParamNucleation.cpp\
-     ddMd/analyzers/KineticEnergyAnalyzer.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
-     ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/PairEnergyAnalyzer.cpp\
      ddMd/analyzers/StressAutoCorr.cpp\
      ddMd/analyzers/StressAutoCorrelation.cpp\
      ddMd/analyzers/BondTensorAutoCorr.cpp\
@@ -27,6 +27,12 @@ ddMd_analyzers_=\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\
      ddMd/analyzers/DdMdGroupTrajectoryWriter.cpp\
      ddMd/analyzers/LammpsDumpWriter.cpp
+
+ifdef INTER_EXTERNAL
+ddMd_analyzers_+=\
+     ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/ExternalEnergyAnalyzer.cpp
+endif
 
 ddMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_analyzers_))
