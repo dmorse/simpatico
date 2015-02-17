@@ -1,5 +1,5 @@
-#ifndef UTIL_TENSOR_AVERAGE_H
-#define UTIL_TENSOR_AVERAGE_H
+#ifndef UTIL_SYMM_TENSOR_AVERAGE_H
+#define UTIL_SYMM_TENSOR_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,13 +22,13 @@ namespace Util
    /**
    * Calculates averages of all components of a Tensor-valued variable.
    *
-   * TensorAverage is a simple container for an array of Average objects,
+   * SymmTensorAverage is a simple container for an array of Average objects,
    * each of which calculates averages and error estimates for one
    * component of a Tensor.
    *
    * \ingroup Accumulators_Module
    */
-   class TensorAverage : public ParamComposite
+   class SymmTensorAverage : public ParamComposite
    {
 
    public:
@@ -38,12 +38,12 @@ namespace Util
       *
       * \param blockFactor ratio of block sizes for subsequent stages.
       */
-      TensorAverage(int blockFactor = 2);
+      SymmTensorAverage(int blockFactor = 2);
 
       /**
       * Destructor
       */
-      virtual ~TensorAverage();
+      virtual ~SymmTensorAverage();
 
       /**
       * Set nSamplePerBlock.
@@ -138,7 +138,7 @@ namespace Util
    
    private:
 
-      FArray<Average, Dimension*Dimension> accumulators_;
+      FArray<Average, Dimension*(Dimension+1)/2 > accumulators_;
 
       /// Number of sampled values per output block.
       int nSamplePerBlock_;
@@ -147,10 +147,10 @@ namespace Util
       int iBlock_;
 
       /// Private and not implemented to prohibit copying.
-      TensorAverage(const TensorAverage& other);
+      SymmTensorAverage(const SymmTensorAverage& other);
 
       /// Private and not implemented to prohibit assignment.
-      TensorAverage& operator = (const TensorAverage& other);
+      SymmTensorAverage& operator = (const SymmTensorAverage& other);
 
    };
 
@@ -159,33 +159,33 @@ namespace Util
    /*
    * Get nSamplePerBlock, number of samples per block average.
    */
-   inline int TensorAverage::nSamplePerBlock() const
+   inline int SymmTensorAverage::nSamplePerBlock() const
    {  return nSamplePerBlock_; }
 
    /*
    * Get iBlock, number of samples in current block average.
    */
-   inline int TensorAverage::iBlock() const
+   inline int SymmTensorAverage::iBlock() const
    {  return iBlock_; }
 
    /*
    * Is the current block average complete?
    */
-   inline bool TensorAverage::isBlockComplete() const
+   inline bool SymmTensorAverage::isBlockComplete() const
    { return (iBlock_ && (iBlock_ == nSamplePerBlock_)); }
 
    /*
    * Serialize this Average.
    */
    template <class Archive>
-   void TensorAverage::serialize(Archive& ar, const unsigned int version)
+   void SymmTensorAverage::serialize(Archive& ar, const unsigned int version)
    {
       ar & nSamplePerBlock_;
       ar & iBlock_;
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             ar << accumulators_[k];
             ++k;
          }
