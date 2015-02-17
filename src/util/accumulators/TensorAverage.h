@@ -1,5 +1,5 @@
-#ifndef UTIL_AVERAGE_H
-#define UTIL_AVERAGE_H
+#ifndef UTIL_TENSOR_AVERAGE_H
+#define UTIL_TENSOR_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/accumulators/AverageStage.h>  // base class
-#include <util/param/ParamComposite.h>       // base class
+#include <util/param/ParamComposite.h>  // base class
+#include <util/accumulators/Average.h>  // member 
 #include <util/global.h>
 
 #include <vector>
@@ -18,13 +18,11 @@ namespace Util
 {
 
    /**
-   * Calculates the average and variance of a sampled property.
+   * Calculates the averages of components of a Tensor.
    *
-   * Average calculates block and global averages of a sampled value 
-   * and its square, from which it obtains a global average and 
-   * variance for a sequence. A hierarchical blocking algorithm is 
-   * used to estimate the error on the average. No error estimate 
-   * is provided for the variance.
+   * TensorAverage calculates block and global averages of components
+   * of a sampled Tensor.  A hierarchical blocking algorithm is used 
+   * to estimate the error on the average of each component. 
    *
    * The sample function of also optionally calculates block averages,
    * which can be useful for reducing how frequently values are logged
@@ -36,7 +34,7 @@ namespace Util
    *
    * \ingroup Accumulators_Module
    */
-   class Average : public AverageStage, public ParamComposite
+   class TensorAverage : public ParamComposite
    {
 
    public:
@@ -46,12 +44,12 @@ namespace Util
       *
       * \param blockFactor ratio of block sizes for subsequent stages.
       */
-      Average(int blockFactor = 2);
+      TensorAverage(int blockFactor = 2);
 
       /**
       * Destructor
       */
-      virtual ~Average();
+      virtual ~TensorAverage();
 
       /**
       * Read parameter nSamplePerBlock from file and initialize.
@@ -111,37 +109,11 @@ namespace Util
       void sample(double value);
 
       /**
-      * Add a sampled value to ensemble, and output block averages.
-      *
-      * \param value  sampled value
-      * \param out  output stream to which to write block averages
-      */
-      void sample(double value, std::ostream& out);
-
-      /**
       * Output final statistical properties to file.
-      *
-      * This function outputs the average value, an estimate of the
-      * error on the average, the variance. It also outputs a sequence
-      * of naive values for the error on the average obtained from 
-      * sequences of block averages, with different levels of blocking.
-      * The naive estimate obtained from each stage is calculated as if
-      * subsequent values were uncorrelated. This gives sqrt(variance/nSample),
-      * where variance is the variance of the sequence of block averages
-      * processed by that stage, and nSample is the number of such block
-      * averages thus far. The final estimate of the error on the average
-      * is obtained by trying to identify several stages of block
-      * averaging that yield statistically indistinguishable naive 
-      * estimates.
       *
       * \param out output stream
       */
       void output(std::ostream& out);
-
-      /**
-      * Return estimated error on average from blocking analysis.
-      */
-      double blockingError() const;
 
       /**
       * Get number of samples per block average.
@@ -164,27 +136,9 @@ namespace Util
       */
       bool isBlockComplete() const;
    
-      /*
-      * Get current block average value.
-      *
-      * \throw Exception if block is empty, or blocking disabled.
-      */
-      double blockAverage() const;
-
    private:
 
-      /**
-      * Add pointer to a descendant to an array.
-      *
-      *\param descendantPtr Pointer to descendant AverageStage.
-      */
-      virtual void registerDescendant(AverageStage* descendantPtr);
-
-      /// Array of pointers to descendants.
-      std::vector<AverageStage*> descendants_;
-
-      /// Sum of values in current output block
-      double blockSum_;
+      FArray<Average, Dimension*Dimension> accumulators_;
 
       /// Number of samples in current output block.
       int iBlock_;
@@ -193,22 +147,14 @@ namespace Util
       int nSamplePerBlock_;
 
       /// Private and not implemented to prohibit copying.
-      Average(const Average& other);
+      TensorAverage(const TensorAverage& other);
 
       /// Private and not implemented to prohibit assignment.
-      Average& operator = (const Average& other);
+      TensorAverage& operator = (const TensorAverage& other);
 
    };
 
    // Inline method definitions
-
-   #if 0
-   /*
-   * Add a sampled value to the ensemble, and output block averages.
-   */
-   inline void Average::sample(double value, std::ostream& out)
-   {  sample(value, &out); }
-   #endif
 
    /*
    * Get nSamplePerBlock, number of samples per block average.
@@ -233,8 +179,9 @@ namespace Util
    /*
    * Get current block average.
    */
-   inline double Average::blockAverage() const
+   inline Tensor Average::blockAverage() const
    {
+      Tensor average;
       if (iBlock_ == 0) {
          UTIL_THROW("Attempt to get block average with no data");
       }
@@ -247,8 +194,14 @@ namespace Util
    template <class Archive>
    void Average::serialize(Archive& ar, const unsigned int version)
    {
-      AverageStage::serialize(ar, version);
-      ar & blockSum_;
+      int i, j, k;
+      k = 0;
+      for (i = 0; i < Dimension; ++i) {
+         for (j = 0; j < Dimension; ++j) {
+            ar << accumulators_[k];
+            ++k;
+         }
+      }
       ar & iBlock_;
       ar & nSamplePerBlock_;
    }
