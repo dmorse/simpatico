@@ -83,10 +83,9 @@ namespace DdMd
    */
    void SymmTensorAverageAnalyzer::save(Serializable::OArchive &ar)
    {
-      saveInterval(ar);
-      saveOutputFileName(ar);
-
       if (simulation().domain().isMaster()){
+         saveInterval(ar);
+         saveOutputFileName(ar);
          ar << *accumulatorPtr_;
       }
    }
