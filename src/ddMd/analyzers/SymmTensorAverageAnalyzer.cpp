@@ -8,9 +8,9 @@
 #include "SymmTensorAverageAnalyzer.h"
 #include <ddMd/simulation/Simulation.h>
 #include <util/accumulators/SymmTensorAverage.h>   
+#include <util/space/Tensor.h>   
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
-#include <util/mpi/MpiLoader.h>
 #include <util/misc/ioUtil.h>
 
 #include <sstream>
@@ -121,18 +121,17 @@ namespace DdMd
       if (isAtInterval(iStep))  {
          compute();
          if (simulation().domain().isMaster()) {
-            double data = value();
+            Tensor data = value();
             accumulatorPtr_->sample(data);
             if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
                int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
                outputFile_ << Int(beginStep) << "  ";
-               double value;
-               int i, j, k;
-               k = 0;
+               double ave;
+               int i, j;
                for (i = 0; i < Dimension; ++i) {
                  for (j = 0; j <= i; ++j) {
-                    value << (*accumulatorPtr_)(i, j).blockAverage();
-                    outputFile_ << Dbl(value) << "  ";
+                    ave = (*accumulatorPtr_)(i, j).blockAverage();
+                    outputFile_ << Dbl(ave) << "  ";
                  }
                }
                outputFile_ << "\n";
@@ -160,8 +159,7 @@ namespace DdMd
 
          // Write average (*.ave) file
          fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);
-         int i, j, k;
-         k = 0;
+         int i, j;
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j <= i ; ++j) {
                (*accumulatorPtr_)(i, j).output(outputFile_);

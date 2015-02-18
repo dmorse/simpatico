@@ -11,7 +11,8 @@
 #include <ddMd/analyzers/Analyzer.h>
 
 namespace Util { 
-   class TensorAverage;
+   class Tensor;
+   class SymmTensorAverage;
 }
 
 namespace DdMd
@@ -103,7 +104,7 @@ namespace DdMd
       *
       * Call only on master.
       */
-      virtual double value() = 0;
+      virtual Tensor value() = 0;
 
    private:
 
@@ -111,7 +112,7 @@ namespace DdMd
       std::ofstream  outputFile_;
 
       /// Pointer to Average object (only instantiated on master processor)
-      TensorAverage *accumulatorPtr_;
+      SymmTensorAverage *accumulatorPtr_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;

@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/Analyzer.h>
+#include <ddMd/analyzers/Analyzer.h>  // Base class header
 
 namespace Util { 
+   class Tensor;
    class TensorAverage;
 }
 
@@ -29,7 +30,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class TensorTensorAverageAnalyzer : public Analyzer
+   class TensorAverageAnalyzer : public Analyzer
    {
    
    public:
@@ -103,7 +104,7 @@ namespace DdMd
       *
       * Call only on master.
       */
-      virtual double value() = 0;
+      virtual Tensor value() = 0;
 
    private:
 
