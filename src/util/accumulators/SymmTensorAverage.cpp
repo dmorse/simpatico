@@ -5,9 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "TensorAverage.h"         // class header
-#include <util/format/Dbl.h>
-#include <util/format/Int.h>
+#include "SymmTensorAverage.h"         // class header
 
 #include <math.h>
 
@@ -17,16 +15,16 @@ namespace Util
    /*
    * Default constructor.
    */
-   TensorAverage::TensorAverage(int blockFactor)
+   SymmTensorAverage::SymmTensorAverage(int blockFactor)
     : ParamComposite(),
       nSamplePerBlock_(0),
       iBlock_(0)
    {
-      setClassName("TensorAverage");
+      setClassName("SymmTensorAverage");
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             accumulators_[k].setBlockFactor(blockFactor);
             ++k;
          }
@@ -36,13 +34,13 @@ namespace Util
    /*
    * Destructor.
    */
-   TensorAverage::~TensorAverage()
+   SymmTensorAverage::~SymmTensorAverage()
    {}
 
    /*
    * Set nSamplePerBlock parameter.
    */
-   void TensorAverage::setNSamplePerBlock(int nSamplePerBlock)
+   void SymmTensorAverage::setNSamplePerBlock(int nSamplePerBlock)
    {  
       if (nSamplePerBlock < 0) {
          UTIL_THROW("Attempt to set nSamplePerBlock < 0");
@@ -51,7 +49,7 @@ namespace Util
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             accumulators_[k].setNSamplePerBlock(nSamplePerBlock);
             ++k;
          }
@@ -61,7 +59,7 @@ namespace Util
    /*
    * Read nSamplePerBlock from file.
    */
-   void TensorAverage::readParameters(std::istream& in)
+   void SymmTensorAverage::readParameters(std::istream& in)
    {  
       read<int>(in, "nSamplePerBlock", nSamplePerBlock_); 
       if (nSamplePerBlock_ < 0) {
@@ -70,7 +68,7 @@ namespace Util
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             accumulators_[k].setNSamplePerBlock(nSamplePerBlock_);
             ++k;
          }
@@ -80,7 +78,7 @@ namespace Util
    /*
    * Load internal state from archive.
    */
-   void TensorAverage::loadParameters(Serializable::IArchive &ar)
+   void SymmTensorAverage::loadParameters(Serializable::IArchive &ar)
    {
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
       if (nSamplePerBlock_ < 0) {
@@ -90,7 +88,7 @@ namespace Util
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             ar & accumulators_[k];
             ++k;
          }
@@ -100,19 +98,19 @@ namespace Util
    /*
    * Save internal state to archive.
    */
-   void TensorAverage::save(Serializable::OArchive &ar)
+   void SymmTensorAverage::save(Serializable::OArchive &ar)
    {  ar & *this; }
-   
+ 
    /*
    * Reset all accumulators and counters to zero.
    */
-   void TensorAverage::clear()
+   void SymmTensorAverage::clear()
    {
       iBlock_   = 0;
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             accumulators_[k].clear();
             ++k;
          }
@@ -122,12 +120,12 @@ namespace Util
    /*
    * Add a sampled value to the ensemble.
    */
-   void TensorAverage::sample(const Tensor& value)
+   void SymmTensorAverage::sample(const Tensor& value)
    {
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
+         for (j = 0; j <= i; ++j) {
             accumulators_[k].sample(value(i,j));
             ++k;
          }
@@ -143,9 +141,15 @@ namespace Util
    /*
    * Access accumulator associated with one component.
    */
-   const Average& TensorAverage::operator () (int i, int j)
+   const Average& SymmTensorAverage::operator () (int i, int j)
    {
-      int k = i*Dimension + j; 
+      int k;
+      if (j > i) {
+        k = i;
+        i = j;
+        j = k;
+      }
+      k = i*(i+1)/2 + j;
       return accumulators_[k];
    }
 
