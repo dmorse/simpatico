@@ -136,7 +136,7 @@ namespace Util
       *
       * \param out output stream
       */
-      void output(std::ostream& out);
+      void output(std::ostream& out) const;
 
       /**
       * Return estimated error on average from blocking analysis.

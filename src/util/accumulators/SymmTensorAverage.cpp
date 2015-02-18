@@ -5,7 +5,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "SymmTensorAverage.h"         // class header
+#include "SymmTensorAverage.h"   // class header
+#include <util/space/Tensor.h>
 
 #include <math.h>
 
@@ -41,7 +42,7 @@ namespace Util
    * Set nSamplePerBlock parameter.
    */
    void SymmTensorAverage::setNSamplePerBlock(int nSamplePerBlock)
-   {  
+   {
       if (nSamplePerBlock < 0) {
          UTIL_THROW("Attempt to set nSamplePerBlock < 0");
       }
@@ -60,8 +61,8 @@ namespace Util
    * Read nSamplePerBlock from file.
    */
    void SymmTensorAverage::readParameters(std::istream& in)
-   {  
-      read<int>(in, "nSamplePerBlock", nSamplePerBlock_); 
+   {
+      read<int>(in, "nSamplePerBlock", nSamplePerBlock_);
       if (nSamplePerBlock_ < 0) {
          UTIL_THROW("Invalid input: nSamplePerBlock < 0");
       }
@@ -80,7 +81,7 @@ namespace Util
    */
    void SymmTensorAverage::loadParameters(Serializable::IArchive &ar)
    {
-      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
+      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_);
       if (nSamplePerBlock_ < 0) {
          UTIL_THROW("Loading value nSamplePerBlock < 0");
       }
@@ -100,13 +101,13 @@ namespace Util
    */
    void SymmTensorAverage::save(Serializable::OArchive &ar)
    {  ar & *this; }
- 
+
    /*
    * Reset all accumulators and counters to zero.
    */
    void SymmTensorAverage::clear()
    {
-      iBlock_   = 0;
+      iBlock_ = 0;
       int i, j, k;
       k = 0;
       for (i = 0; i < Dimension; ++i) {

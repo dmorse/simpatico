@@ -11,13 +11,14 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <util/accumulators/Average.h>  // member template argument
 #include <util/containers/FArray.h>     // member template
-#include <util/space/Tensor.h>     
 #include <util/global.h>
 
 #include <vector>
 
 namespace Util
 {
+
+   class Tensor;
 
    /**
    * Calculates averages of all components of a Tensor-valued variable.
@@ -54,7 +55,7 @@ namespace Util
       * If nSamplePerBlock == 0, block averaging is disabled. This is the
       * default (i.e., the initial value set in the constructor).
       *
-      * \param nSamplePerBlock number of samples per block average output
+      * \param nSamplePerBlock  number of samples per block average output
       */
       void setNSamplePerBlock(int nSamplePerBlock);
 
@@ -63,28 +64,28 @@ namespace Util
       *
       * See setNSamplePerBlock() for discussion of value.
       *
-      * \param in input stream
+      * \param in  input stream
       */
       void readParameters(std::istream& in);
 
       /**
       * Load internal state from an archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
 
       /**
       * Serialize this to or from an archive.
       *
-      * \param ar       input or output archive
+      * \param ar  input or output archive
       * \param version  file version id
       */
       template <class Archive>
@@ -98,16 +99,16 @@ namespace Util
       /**
       * Add a sampled value to the ensemble.
       *
-      * \param value sampled value
+      * \param value  sampled value
       */
       void sample(const Tensor& value);
 
       /**
       * Access the Average object for one tensor component.
       *
-      * \param i first index of associated tensor component
-      * \param j second index of associated tensor component
-      * \return Average object associated with element (i, j)
+      * \param i  first index of associated tensor component
+      * \param j  second index of associated tensor component
+      * \return  Average object associated with element (i, j)
       */
       const Average& operator () (int i, int j);
 
@@ -115,8 +116,8 @@ namespace Util
       * Get number of samples per block average.
       *
       * Returns zero if block averaging is disabled.
-      * 
-      * \return number of samples per block (or 0 if disabled).
+      *
+      * \return  number of samples per block (or 0 if disabled).
       */
       int nSamplePerBlock() const;
 
@@ -125,19 +126,22 @@ namespace Util
       *
       * Returns 0 if block averaging is disabled (i.e., nSamplePerBlock == 0).
       *
-      * \return number of samples in current block (or 0 if disabled).
+      * \return  number of samples in current block (or 0 if disabled)
       */
       int iBlock() const;
 
       /**
       * Is the current block average complete?
-      * 
+      *
+      * Returns true iff blocking is enabled and iBlock == nSamplePerBlock
+      *
       * \return (iBlock > 0) && (iBlock == nSamplePerBlock)
       */
       bool isBlockComplete() const;
-   
+
    private:
 
+      /// Array of average accumulators, one per tensor component.
       FArray<Average, Dimension*Dimension> accumulators_;
 
       /// Number of sampled values per output block.

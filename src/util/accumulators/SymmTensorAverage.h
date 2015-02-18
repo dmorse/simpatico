@@ -11,13 +11,13 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <util/accumulators/Average.h>  // member template argument
 #include <util/containers/FArray.h>     // member template
-#include <util/space/Tensor.h>     
+//#include <util/space/Tensor.h>     
 #include <util/global.h>
-
-#include <vector>
 
 namespace Util
 {
+
+   class Tensor;
 
    /**
    * Calculates averages of all components of a Tensor-valued variable.

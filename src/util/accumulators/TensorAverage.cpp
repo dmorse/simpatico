@@ -6,6 +6,7 @@
 */
 
 #include "TensorAverage.h"         // class header
+#include <util/space/Tensor.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 
