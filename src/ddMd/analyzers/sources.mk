@@ -3,6 +3,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/AnalyzerManager.cpp\
      ddMd/analyzers/AnalyzerFactory.cpp\
      ddMd/analyzers/AverageAnalyzer.cpp\
+     ddMd/analyzers/TensorAverageAnalyzer.cpp\
      ddMd/analyzers/LogEnergy.cpp\
      ddMd/analyzers/KineticEnergyAnalyzer.cpp\
      ddMd/analyzers/OutputEnergy.cpp\

@@ -5,9 +5,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "TensorAverageAnalyzer.h"
+#include "SymmTensorAverageAnalyzer.h"
 #include <ddMd/simulation/Simulation.h>
-#include <util/accumulators/TensorAverage.h>   
+#include <util/accumulators/SymmTensorAverage.h>   
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLoader.h>
@@ -23,18 +23,18 @@ namespace DdMd
    /*
    * Constructor.
    */
-   TensorAverageAnalyzer::TensorAverageAnalyzer(Simulation& simulation) 
+   SymmTensorAverageAnalyzer::SymmTensorAverageAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {  setClassName("TensorAverageAnalyzer"); }
+   {  setClassName("SymmTensorAverageAnalyzer"); }
 
    /*
    * Destructor.
    */
-   TensorAverageAnalyzer::~TensorAverageAnalyzer() 
+   SymmTensorAverageAnalyzer::~SymmTensorAverageAnalyzer() 
    {  
       if (accumulatorPtr_) {
          delete accumulatorPtr_;
@@ -44,14 +44,14 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void TensorAverageAnalyzer::readParameters(std::istream& in) 
+   void SymmTensorAverageAnalyzer::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
-         accumulatorPtr_ = new TensorAverage;
+         accumulatorPtr_ = new SymmTensorAverage;
          accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
 
@@ -61,13 +61,13 @@ namespace DdMd
    /*
    * Load internal state from an archive.
    */
-   void TensorAverageAnalyzer::loadParameters(Serializable::IArchive &ar)
+   void SymmTensorAverageAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
-         accumulatorPtr_ = new TensorAverage;
+         accumulatorPtr_ = new SymmTensorAverage;
          accumulatorPtr_->loadParameters(ar);
       }
 
@@ -81,7 +81,7 @@ namespace DdMd
    /*
    * Save internal state to an archive.
    */
-   void TensorAverageAnalyzer::save(Serializable::OArchive &ar)
+   void SymmTensorAverageAnalyzer::save(Serializable::OArchive &ar)
    {
       saveInterval(ar);
       saveOutputFileName(ar);
@@ -94,7 +94,7 @@ namespace DdMd
    /*
    * Clear accumulator (do nothing on slave processors).
    */
-   void TensorAverageAnalyzer::clear() 
+   void SymmTensorAverageAnalyzer::clear() 
    {   
       if (simulation().domain().isMaster()){ 
          accumulatorPtr_->clear();
@@ -104,7 +104,7 @@ namespace DdMd
    /*
    * Open outputfile
    */ 
-   void TensorAverageAnalyzer::setup()
+   void SymmTensorAverageAnalyzer::setup()
    {
       if (simulation().domain().isMaster()) {
          if (nSamplePerBlock_) {
@@ -115,9 +115,9 @@ namespace DdMd
    }
 
    /*
-   * Compute value.
+   * Compute value and add to sequence.
    */
-   void TensorAverageAnalyzer::sample(long iStep) 
+   void SymmTensorAverageAnalyzer::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
          compute();
@@ -131,10 +131,10 @@ namespace DdMd
                int i, j, k;
                k = 0;
                for (i = 0; i < Dimension; ++i) {
-                  for (j = 0; j < Dimension; ++j) {
-                     value << (*accumulatorPtr_)(i, j).blockAverage();
-                     outputFile_ << Dbl(value) << "  ";
-                  }
+                 for (j = 0; j <= i; ++j) {
+                    value << (*accumulatorPtr_)(i, j).blockAverage();
+                    outputFile_ << Dbl(value) << "  ";
+                 }
                }
                outputFile_ << "\n";
             }
@@ -145,7 +145,7 @@ namespace DdMd
    /*
    * Output results to file after simulation is completed.
    */
-   void TensorAverageAnalyzer::output()
+   void SymmTensorAverageAnalyzer::output()
    {
       if (simulation().domain().isMaster()) {
          // Close data (*.dat) file, if any
@@ -164,7 +164,7 @@ namespace DdMd
          int i, j, k;
          k = 0;
          for (i = 0; i < Dimension; ++i) {
-            for (j = 0; j < Dimension; ++j) {
+            for (j = 0; j <= i ; ++j) {
                (*accumulatorPtr_)(i, j).output(outputFile_);
                outputFile_ << "\n";
             }
