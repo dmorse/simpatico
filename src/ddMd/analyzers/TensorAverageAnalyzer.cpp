@@ -120,24 +120,25 @@ namespace DdMd
    */
    void TensorAverageAnalyzer::sample(long iStep) 
    {
-      if (isAtInterval(iStep))  {
-         compute();
-         if (simulation().domain().isMaster()) {
-            Tensor data = value();
-            accumulatorPtr_->sample(data);
-            if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
-               int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-               outputFile_ << Int(beginStep) << "  ";
-               double ave;
-               int i, j;
-               for (i = 0; i < Dimension; ++i) {
-                  for (j = 0; j < Dimension; ++j) {
-                     ave = (*accumulatorPtr_)(i, j).blockAverage();
-                     outputFile_ << Dbl(ave) << "  ";
-                  }
+      if (!isAtInterval(iStep))  {
+         UTIL_THROW("Time step index is not a multiple of interval");
+      }
+      compute();
+      if (simulation().domain().isMaster()) {
+         Tensor data = value();
+         accumulatorPtr_->sample(data);
+         if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
+            int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
+            outputFile_ << Int(beginStep);
+            double ave;
+            int i, j;
+            for (i = 0; i < Dimension; ++i) {
+               for (j = 0; j < Dimension; ++j) {
+                  ave = (*accumulatorPtr_)(i, j).blockAverage();
+                  outputFile_ << " " << Dbl(ave);
                }
-               outputFile_ << "\n";
             }
+            outputFile_ << "\n";
          }
       }
    }

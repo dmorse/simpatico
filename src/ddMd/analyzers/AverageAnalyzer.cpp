@@ -120,16 +120,17 @@ namespace DdMd
    */
    void AverageAnalyzer::sample(long iStep) 
    {
-      if (isAtInterval(iStep))  {
-         compute();
-         if (simulation().domain().isMaster()) {
-            double data = value();
-            accumulatorPtr_->sample(data);
-            if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
-               double block = accumulatorPtr_->blockAverage();
-               int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-               outputFile_ << Int(beginStep) << Dbl(block) << "\n";
-            }
+      if (!isAtInterval(iStep)) {
+         UTIL_THROW("Time step index is not a multiple of interval");
+      }
+      compute();
+      if (simulation().domain().isMaster()) {
+         double data = value();
+         accumulatorPtr_->sample(data);
+         if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
+            double block = accumulatorPtr_->blockAverage();
+            int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
+            outputFile_ << Int(beginStep) << Dbl(block) << "\n";
          }
       }
    }
