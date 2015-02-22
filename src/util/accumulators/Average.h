@@ -34,6 +34,10 @@ namespace Util
    * the sample function that takes an std::ostream file as an argument 
    * outputs block averages to file as blocks are completed.
    *
+   * The hierarchical blocking algorithm is implemented using a linked
+   * list of Util::AverageStage objects. See documentation of that class
+   * for further details, and a literature reference.
+   *
    * \ingroup Accumulators_Module
    */
    class Average : public AverageStage, public ParamComposite
