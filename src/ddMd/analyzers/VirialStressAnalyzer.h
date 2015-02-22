@@ -1,5 +1,5 @@
-#ifndef DDMD_PRESSURE_ANALYZER_H
-#define DDMD_PRESSURE_ANALYZER_H
+#ifndef DDMD_VIRIAL_STRESS_ANALYZER_H
+#define DDMD_VIRIAL_STRESS_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/AverageAnalyzer.h>
+#include <ddMd/analyzers/SymmTensorAverageAnalyzer.h>
 
 namespace DdMd
 {
@@ -16,13 +16,13 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Sample and evaluate average of pressure.
+   * Output and evaluate average of stress tensor.
    *
-   * \sa \ref ddMd_analyzer_PressureAnalyzer_page "param file format"
+   * \sa \ref ddMd_analyzer_VirialStressAnalyzer_page "param file format"
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class PressureAnalyzer : public AverageAnalyzer
+   class VirialStressAnalyzer : public SymmTensorAverageAnalyzer
    {
 
    public:
@@ -32,28 +32,28 @@ namespace DdMd
       *
       * \param simulation parent Simulation object.
       */
-      PressureAnalyzer(Simulation& simulation);
+      VirialStressAnalyzer(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      virtual ~PressureAnalyzer();
+      virtual ~VirialStressAnalyzer();
 
    protected:
 
       /**
-      * Compute value of pressure.
+      * Compute current value of stress tensor.
       *
       * Call on all processors.
       */
       virtual void compute();
 
       /**
-      * Get current value of pressure.
+      * Get current value, set by compute function.
       *
       * Call only on master.
       */
-      virtual double value();
+      virtual Tensor value();
 
    };
 

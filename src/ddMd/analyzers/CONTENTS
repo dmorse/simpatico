@@ -1,7 +1,7 @@
 
 Classes in src/ddMd/analyzer
 -----------------------------------------------------
-Average and Output of Global Scalar Variables
+Global Scalar Variables, Average and Output
 
 AverageAnalyzer.h              (base class)
 
@@ -29,9 +29,11 @@ TensorAverage.h             (base class, full tensors)
 SymmTensorAverage.h         (base class, symm tensors)
 
 StressAnalyzer.h
-OutputStressTensor.h
-VirialStressTensor.h
-VirialStressTensorAverage.h
+VirialStressAnalyzer.h
+
+OutputStressTensor.h          <- deprecated
+VirialStressTensor.h          <- deprecated
+VirialStressTensorAverage.h   <- deprecated
 
 -----------------------------------------------------
 Autocorrelation of global quantities:

@@ -11,14 +11,15 @@ ddMd_analyzers_=\
      ddMd/analyzers/OutputTemperature.cpp\
      ddMd/analyzers/PressureAnalyzer.cpp\
      ddMd/analyzers/OutputPressure.cpp\
-     ddMd/analyzers/StressAnalyzer.cpp\
-     ddMd/analyzers/OutputStressTensor.cpp\
-     ddMd/analyzers/VirialStressTensorAverage.cpp\
-     ddMd/analyzers/VirialStressTensor.cpp\
      ddMd/analyzers/OutputBoxdim.cpp \
      ddMd/analyzers/PairEnergyAverage.cpp\
      ddMd/analyzers/PairEnergyAnalyzer.cpp\
      ddMd/analyzers/OutputPairEnergies.cpp\
+     ddMd/analyzers/StressAnalyzer.cpp\
+     ddMd/analyzers/VirialStressAnalyzer.cpp\
+     ddMd/analyzers/OutputStressTensor.cpp\
+     ddMd/analyzers/VirialStressTensorAverage.cpp\
+     ddMd/analyzers/VirialStressTensor.cpp\
      ddMd/analyzers/StructureFactor.cpp\
      ddMd/analyzers/StructureFactorGrid.cpp\
      ddMd/analyzers/VanHove.cpp\
