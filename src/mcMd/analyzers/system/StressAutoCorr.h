@@ -101,6 +101,7 @@ namespace McMd
       using SystemAnalyzer<SystemType>::readInterval;
       using SystemAnalyzer<SystemType>::readOutputFileName;
       using SystemAnalyzer<SystemType>::read;
+      using SystemAnalyzer<SystemType>::readOptional;
       using SystemAnalyzer<SystemType>::writeParam;
       using SystemAnalyzer<SystemType>::loadParameter;
       using SystemAnalyzer<SystemType>::isAtInterval;
@@ -160,8 +161,7 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       read(in, "capacity", capacity_);
-      bool isRequired = false;
-      read(in, "maxStageId", maxStageId_, isRequired);
+      readOptional(in, "maxStageId", maxStageId_);
 
       accumulator_.setParam(capacity_, maxStageId_, blockFactor_);
       accumulator_.clear();

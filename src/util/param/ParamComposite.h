@@ -292,18 +292,6 @@ namespace Util
                                 ParamComposite &child, bool next = true);
 
       /**
-      * Add a new ScalarParam < Type > object, and read its value.
-      *
-      * \param in  input stream for reading
-      * \param label  Label string
-      * \param value  reference to new ScalarParam< Type >
-      * \param isRequired  Is this a required parameter?
-      */
-      template <typename Type>
-      ScalarParam<Type>& read(std::istream &in, const char *label, 
-                              Type &value, bool isRequired);
-
-      /**
       * Add and read a new required ScalarParam < Type > object.
       *
       * This is equivalent to ScalarParam<Type>(in, label, value, true).
@@ -330,21 +318,6 @@ namespace Util
       readOptional(std::istream &in, const char *label, Type &value);
 
       /**
-      * Add and read a C array parameter.
-      *
-      * \param in  input stream for reading
-      * \param label  Label string for new array
-      * \param value  pointer to array
-      * \param n  number of elements
-      * \param isRequired  Is this a required parameter?
-      * \return reference to the new CArrayParam<Type> object
-      */
-      template <typename Type>
-      CArrayParam<Type>&
-      readCArray(std::istream &in, const char *label, Type *value, 
-                 int n, bool isRequired);
-
-      /**
       * Add and read a required C array parameter.
       *
       * \param in  input stream for reading
@@ -369,21 +342,6 @@ namespace Util
       template <typename Type>
       CArrayParam<Type>&
       readOptionalCArray(std::istream &in, const char *label, Type *value, int n);
-
-      /**
-      * Add and read a DArray < Type > parameter.
-      *
-      * \param in  input stream for reading
-      * \param label  Label string for new array
-      * \param array  DArray object
-      * \param n  number of elements
-      * \param isRequired  Is this a required parameter?
-      * \return reference to the new DArrayParam<Type> object
-      */
-      template <typename Type> 
-      DArrayParam<Type>& 
-      readDArray(std::istream &in, const char *label,
-                 DArray<Type>& array, int n, bool isRequired);
 
       /**
       * Add and read a required DArray < Type > parameter.
@@ -414,20 +372,6 @@ namespace Util
                          DArray<Type>& array, int n);
 
       /**
-      * Add and read an FArray < Type, N > fixed-size array parameter.
-      *
-      * \param in  input stream for reading
-      * \param label  Label string for new array
-      * \param array  FArray object
-      * \param isRequired  Is this a required parameter?
-      * \return reference to the new FArrayParam<Type, N> object
-      */
-      template <typename Type, int N>
-      FArrayParam<Type, N>&
-      readFArray(std::istream &in, const char *label, 
-                 FArray<Type, N >& array, bool isRequired);
-
-      /**
       * Add and read a required FArray < Type, N > array parameter.
       *
       * \param in  input stream for reading
@@ -452,25 +396,6 @@ namespace Util
       FArrayParam<Type, N>&
       readOptionalFArray(std::istream &in, const char *label, 
                          FArray<Type, N >& array);
-
-      /**
-      * Add and read a CArray2DParam < Type > 2D C-array parameter.
-      *
-      * Reads m rows of n elements into a C-array of type array[][np].
-      *
-      * \param in  input stream for reading
-      * \param label  Label string for new array
-      * \param value  pointer to array
-      * \param m  number of rows (1st dimension)
-      * \param n  logical number of columns (2nd dimension)
-      * \param np  physical number of columns (elemnts allocated per row)
-      * \param isRequired  Is this a required parameter?
-      * \return reference to the CArray2DParam<Type> object
-      */
-      template <typename Type>
-      CArray2DParam<Type>&
-      readCArray2D(std::istream &in, const char *label,
-                   Type *value, int m, int n, int np, bool isRequired);
 
       /**
       * Add and read a required CArray2DParam < Type > 2D C-array parameter.
@@ -502,23 +427,7 @@ namespace Util
       template <typename Type>
       CArray2DParam<Type>&
       readOptionalCArray2D(std::istream &in, const char *label,
-                   Type *value, int m, int n, int np);
-
-      /**
-      * Add and read a DMatrix < Type > matrix parameter.
-      *
-      * \param in  input stream for reading
-      * \param label  Label string for new array
-      * \param matrix  DMatrix object
-      * \param m  number of rows (1st dimension)
-      * \param n  number of columns (2nd dimension)
-      * \param  isRequired  Is this a required parameter?
-      * \return reference to the DMatrixParam<Type> object
-      */
-      template <typename Type>
-      DMatrixParam<Type>&
-      readDMatrix(std::istream &in, const char *label, 
-                  DMatrix<Type>& matrix, int m, int n, bool isRequired);
+                           Type *value, int m, int n, int np);
 
       /**
       * Add and read a required DMatrix < Type > C matrix parameter.
@@ -534,6 +443,21 @@ namespace Util
       DMatrixParam<Type>&
       readDMatrix(std::istream &in, const char *label,
                   DMatrix<Type>& matrix, int m, int n);
+
+      /**
+      * Add and read an optional DMatrix < Type > C matrix parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \return reference to the DMatrixParam<Type> object
+      */
+      template <typename Type>
+      DMatrixParam<Type>&
+      readOptionalDMatrix(std::istream &in, const char *label,
+                          DMatrix<Type>& matrix, int m, int n);
 
       /**
       * Add and read a class label and opening bracket.
@@ -626,8 +550,7 @@ namespace Util
       */
       template <typename Type>
       ScalarParam<Type>& loadParameter(Serializable::IArchive &ar,
-                                       const char *label, Type &value)
-      {  return loadParameter<Type>(ar, label, value, true); }
+                                       const char *label, Type &value);
 
       /**
       * Add a C array parameter and load its elements.
@@ -658,11 +581,10 @@ namespace Util
       template <typename Type>
       CArrayParam<Type>&
       loadCArray(Serializable::IArchive &ar, const char *label,
-                 Type *value, int n)
-      {  return loadCArray<Type>(ar, label, value, n, true); }
+                 Type *value, int n);
 
       /**
-      * Add a DArray < Type > parameter, and load its elements.
+      * Add an load a DArray < Type > array parameter.
       *
       * \param ar  archive for loading
       * \param label  Label string for new array
@@ -690,8 +612,7 @@ namespace Util
       template <typename Type>
       DArrayParam<Type>&
       loadDArray(Serializable::IArchive &ar, const char *label,
-                 DArray<Type>& array, int n)
-      {  return loadDArray<Type>(ar, label, array, n, true); }
+                 DArray<Type>& array, int n);
 
       /**
       * Add and load an FArray < Type, N > fixed-size array parameter.
@@ -756,8 +677,7 @@ namespace Util
       template <typename Type>
       CArray2DParam<Type>&
       loadCArray2D(Serializable::IArchive &ar, const char *label,
-                   Type *value, int m, int n, int np)
-      {  return loadCArray2D<Type>(ar, label, value, m, n, np, true); }
+                   Type *value, int m, int n, int np);
 
       /**
       * Add and load a DMatrixParam < Type > matrix parameter.
@@ -776,9 +696,7 @@ namespace Util
                   DMatrix<Type>& matrix, int m, int n, bool isRequired);
 
       /**
-      * Add and load a required DMatrixParam < Type > parameter.
-      * 
-      * Equivalent to loadDMatrix < Type > (ar, label, value, m, n, true).
+      * Add and load a required DMatrixParam < Type > matrix parameter.
       *
       * \param ar  archive for loading
       * \param label  Label string for new array
@@ -790,8 +708,7 @@ namespace Util
       template <typename Type>
       DMatrixParam<Type>&
       loadDMatrix(Serializable::IArchive &ar, const char *label,
-                  DMatrix<Type>& matrix, int m, int n)
-      {  return loadDMatrix<Type>(ar, label, matrix, m, n, true); }
+                  DMatrix<Type>& matrix, int m, int n);
 
       //@}
 
@@ -917,6 +834,97 @@ namespace Util
       /// Is this parameter active ?
       bool isActive_;
 
+      /**
+      * Add and read a scalar parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string
+      * \param value  reference to new ScalarParam< Type >
+      * \param isRequired  Is this a required parameter?
+      */
+      template <typename Type>
+      ScalarParam<Type>& read_(std::istream &in, const char *label, 
+                               Type &value, bool isRequired);
+
+      /**
+      * Add and read a C array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param n  number of elements
+      * \param isRequired  Is this a required parameter?
+      * \return reference to the new CArrayParam<Type> object
+      */
+      template <typename Type>
+      CArrayParam<Type>&
+      readCArray_(std::istream &in, const char *label, Type *value, 
+                  int n, bool isRequired);
+
+      /**
+      * Add and read a DArray < Type > parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  DArray object
+      * \param n  number of elements
+      * \param isRequired  Is this a required parameter?
+      * \return reference to the new DArrayParam<Type> object
+      */
+      template <typename Type> 
+      DArrayParam<Type>& 
+      readDArray_(std::istream &in, const char *label,
+                  DArray<Type>& array, int n, bool isRequired);
+
+      /**
+      * Add and read an FArray < Type, N > fixed-size array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  FArray object
+      * \param isRequired  Is this a required parameter?
+      * \return reference to the new FArrayParam<Type, N> object
+      */
+      template <typename Type, int N>
+      FArrayParam<Type, N>&
+      readFArray_(std::istream &in, const char *label, 
+                 FArray<Type, N >& array, bool isRequired);
+
+      /**
+      * Add and read a 2D C-array parameter.
+      *
+      * Reads m rows of n elements into a C-array of type array[][np].
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elemnts allocated per row)
+      * \param isRequired  Is this a required parameter?
+      * \return reference to the CArray2DParam<Type> object
+      */
+      template <typename Type>
+      CArray2DParam<Type>&
+      readCArray2D_(std::istream &in, const char *label,
+                   Type *value, int m, int n, int np, bool isRequired);
+
+      /**
+      * Add and read a DMatrix < Type > matrix parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \param  isRequired  Is this a required parameter?
+      * \return reference to the DMatrixParam<Type> object
+      */
+      template <typename Type>
+      DMatrixParam<Type>&
+      readDMatrix_(std::istream &in, const char *label, 
+                   DMatrix<Type>& matrix, int m, int n, bool isRequired);
+
    };
 
    // Inline accessor functions
@@ -942,11 +950,11 @@ namespace Util
    // Function templates for scalar parameters
 
    /*
-   * Add a ScalarParam to the format array, and read its contents from file.
+   * Add and read a scalar parameter (private).
    */
    template <typename Type>
    ScalarParam<Type>&
-   ParamComposite::read(std::istream &in, const char *label, Type &value,
+   ParamComposite::read_(std::istream &in, const char *label, Type &value,
                         bool isRequired)
    {
       ScalarParam<Type>* ptr;
@@ -958,12 +966,12 @@ namespace Util
    }
 
    /*
-   * Add and read a new required ScalarParam < Type > object.
+   * Add and read a required scalar parameter.
    */
    template <typename Type>
    ScalarParam<Type>& 
    ParamComposite::read(std::istream &in, const char *label, Type &value)
-   {  return read<Type>(in, label, value, true); }
+   {  return read_<Type>(in, label, value, true); }
 
    /*
    * Add and read a new optional ScalarParam < Type > object.
@@ -972,7 +980,7 @@ namespace Util
    inline ScalarParam<Type>& 
    ParamComposite::readOptional(std::istream &in, const char *label, 
                                 Type &value)
-   {  return read<Type>(in, label, value, false); }
+   {  return read_<Type>(in, label, value, false); }
 
    /*
    * Add a new ScalarParam< Type > object, and load its value from an archive.
@@ -990,14 +998,23 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Add a new required ScalarParam< Type > object, and load its value from an archive.
+   */
+   template <typename Type>
+   inline ScalarParam<Type>&
+   ParamComposite::loadParameter(Serializable::IArchive &ar, const char *label,
+                                 Type &value)
+   {  return loadParameter<Type>(ar, label, value, true); }
+
    // Templates for 1D C Arrays
 
    /*
-   * Add a a CArrayParam associated with a built-in array, and read it.
+   * Add and read a CArrayParam associated with a built-in C-array (private).
    */
    template <typename Type>
    CArrayParam<Type>&
-   ParamComposite::readCArray(std::istream &in, const char *label,
+   ParamComposite::readCArray_(std::istream &in, const char *label,
                               Type *value, int n, bool isRequired)
    {
       CArrayParam<Type>* ptr;
@@ -1009,25 +1026,25 @@ namespace Util
    }
 
    /*
-   * Read a required CArrayParam.
+   * Add and read a required CArrayParam.
    */
    template <typename Type>
    inline CArrayParam<Type>&
    ParamComposite::readCArray(std::istream &in, const char *label, 
                               Type *value, int n)
-   {  return readCArray<Type>(in, label, value, n, true); }
+   {  return readCArray_<Type>(in, label, value, n, true); }
 
    /*
-   * Read an optional CArrayParam.
+   * Add and read an optional CArrayParam.
    */
    template <typename Type>
    inline CArrayParam<Type>&
    ParamComposite::readOptionalCArray(std::istream &in, const char *label, 
                                       Type *value, int n)
-   {  return readCArray<Type>(in, label, value, n, false); }
+   {  return readCArray_<Type>(in, label, value, n, false); }
 
    /*
-   * Add a C array parameter, and load its elements.
+   * Add and load a C array parameter.
    */
    template <typename Type>
    CArrayParam<Type>&
@@ -1042,14 +1059,23 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Add and load a required C array parameter.
+   */
+   template <typename Type>
+   inline CArrayParam<Type>&
+   ParamComposite::loadCArray(Serializable::IArchive &ar, const char *label,
+                              Type *value, int n)
+   {  return loadCArray<Type>(ar, label, value, n, true); }
+
    // Templates for DArray parameters
 
    /*
-   * Add and read a DArrayParam associated with a DArray<Type> parameter.
+   * Add and read a DArrayParam associated with a DArray<Type> (private).
    */
    template <typename Type>
    DArrayParam<Type>&
-   ParamComposite::readDArray(std::istream &in, const char *label,
+   ParamComposite::readDArray_(std::istream &in, const char *label,
                               DArray<Type>& array, int n, bool isRequired)
    {
       DArrayParam<Type>* ptr;
@@ -1068,17 +1094,17 @@ namespace Util
    DArrayParam<Type>&
    ParamComposite::readDArray(std::istream &in, const char *label,
               DArray<Type>& array, int n)
-   {  return readDArray<Type>(in, label, array, n, true); }
+   {  return readDArray_<Type>(in, label, array, n, true); }
 
    /*
-   * Add and read a required DArrayParam.
+   * Add and read an optional DArrayParam.
    */
    template <typename Type>
    inline 
    DArrayParam<Type>&
    ParamComposite::readOptionalDArray(std::istream &in, const char *label,
               DArray<Type>& array, int n)
-   {  return readDArray<Type>(in, label, array, n, false); }
+   {  return readDArray_<Type>(in, label, array, n, false); }
 
    /*
    * Add a DArray < Type > parameter, and load its elements.
@@ -1096,14 +1122,23 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Add a required DArray < Type > parameter, and load its elements.
+   */
+   template <typename Type>
+   inline DArrayParam<Type>&
+   ParamComposite::loadDArray(Serializable::IArchive &ar, const char *label,
+                              DArray<Type>& array, int n)
+   {  return loadDArray<Type>(ar, label, array, n, true); }
+
    // Templates for fixed size FArray array objects.
 
    /*
-   * Add and read an FArray<Type, N> fixed size array.
+   * Add and read an FArrayParam<Type, N> fixed size array (private).
    */
    template <typename Type, int N>
    FArrayParam<Type, N>&
-   ParamComposite::readFArray(std::istream &in, const char *label,
+   ParamComposite::readFArray_(std::istream &in, const char *label,
                               FArray<Type, N>& array, bool isRequired)
    {
       FArrayParam<Type, N>* ptr;
@@ -1122,7 +1157,7 @@ namespace Util
    FArrayParam<Type, N>&
    ParamComposite::readFArray(std::istream &in, const char *label, 
                               FArray<Type, N >& array)
-   {  return readFArray<Type>(in, label, array, true); }
+   {  return readFArray_<Type>(in, label, array, true); }
 
    /*
    * Add and read an optional FArray < Type, N > array parameter.
@@ -1132,7 +1167,7 @@ namespace Util
    FArrayParam<Type, N>&
    ParamComposite::readOptionalFArray(std::istream &in, const char *label, 
                                       FArray<Type, N >& array)
-   {  return readFArray<Type>(in, label, array, false); }
+   {  return readFArray_<Type>(in, label, array, false); }
 
    /*
    * Add and load an FArray < Type, N > fixed-size array parameter.
@@ -1153,11 +1188,11 @@ namespace Util
    // Templates for built-in two-dimensional C Arrays
 
    /*
-   * Add and read a CArray2DParam associated with a built-in 2D array.
+   * Add and read a CArray2DParam 2D C array (private).
    */
    template <typename Type>
    CArray2DParam<Type>&
-   ParamComposite::readCArray2D(std::istream &in, const char *label,
+   ParamComposite::readCArray2D_(std::istream &in, const char *label,
                                 Type *value, int m, int n, int np,
                                 bool isRequired)
    {
@@ -1176,7 +1211,7 @@ namespace Util
    inline CArray2DParam<Type>&
    ParamComposite::readCArray2D(std::istream &in, const char *label,
                                 Type *value, int m, int n, int np)
-   {  return readCArray2D<Type>(in, label, value, m, n, np, true); }
+   {  return readCArray2D_<Type>(in, label, value, m, n, np, true); }
 
    /*
    * Add and read an optional CArray2DParam.
@@ -1185,10 +1220,10 @@ namespace Util
    inline CArray2DParam<Type>&
    ParamComposite::readOptionalCArray2D(std::istream &in, const char *label,
                                 Type *value, int m, int n, int np)
-   {  return readCArray2D<Type>(in, label, value, m, n, np, false); }
+   {  return readCArray2D_<Type>(in, label, value, m, n, np, false); }
 
    /*
-   * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
+   * Add and load a CArray2DParam < Type > 2D C array parameter.
    */
    template <typename Type>
    CArray2DParam<Type>&
@@ -1204,14 +1239,23 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Add and load a required CArray2DParam < Type > two-dimensional C array parameter.
+   */
+   template <typename Type>
+   CArray2DParam<Type>&
+   ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label,
+                                Type *value, int m, int n, int np)
+   {  return loadCArray2D<Type>(ar, label, value, m, n, np, true); }
+
    // Templates for DMatrix containers
 
    /*
-   * Add and read a DMatrixParam.
+   * Add and read a DMatrixParam DMatrix<Type> parameter (private).
    */
    template <typename Type>
    DMatrixParam<Type>&
-   ParamComposite::readDMatrix(std::istream &in, const char *label,
+   ParamComposite::readDMatrix_(std::istream &in, const char *label,
                                DMatrix<Type>& matrix, int m, int n,
                                bool isRequired)
    {
@@ -1230,7 +1274,16 @@ namespace Util
    inline DMatrixParam<Type>&
    ParamComposite::readDMatrix(std::istream &in, const char *label,
                                DMatrix<Type>& matrix, int m, int n)
-   {  return readDMatrix<Type>(in, label, matrix, m, n, true); }
+   {  return readDMatrix_<Type>(in, label, matrix, m, n, true); }
+
+   /*
+   * Add and read an optional DMatrixParam.
+   */
+   template <typename Type>
+   inline DMatrixParam<Type>&
+   ParamComposite::readOptionalDMatrix(std::istream &in, const char *label,
+                               DMatrix<Type>& matrix, int m, int n)
+   {  return readDMatrix_<Type>(in, label, matrix, m, n, false); }
 
    /*
    * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
@@ -1248,6 +1301,15 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
+
+   /*
+   * Add and load a required DMatrixParam< Type> matrix parameter.
+   */
+   template <typename Type>
+   inline DMatrixParam<Type>&
+   ParamComposite::loadDMatrix(Serializable::IArchive &ar, const char *label,
+                               DMatrix<Type>& matrix, int m, int n)
+   {  return loadDMatrix<Type>(ar, label, matrix, m, n, true); }
 
 }
 #endif
