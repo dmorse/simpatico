@@ -199,29 +199,29 @@ namespace McMd
       }
       #endif
       #ifdef INTER_ANGLE
-      nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      nAngleType_ = 0; // Default value
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_ < 0) {
          UTIL_THROW("nAngleType must be >= 0");
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      nDihedralType_ = 0; // Default value 
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_ < 0) {
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_ = 0;
-      read<int>(in, "hasExternal", hasExternal_, false); // optional
+      hasExternal_ = 0; // Default value 
+      readOptional<int>(in, "hasExternal", hasExternal_); 
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");
       }
       #endif
       #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      read<int>(in, "nLinkType", nLinkType_, false); // optional
+      nLinkType_ = 0; // Default value
+      readOptional<int>(in, "nLinkType", nLinkType_); 
       if (nLinkType_ < 0) {
          UTIL_THROW("nLinkType must be >= 0");
       }
