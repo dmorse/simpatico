@@ -147,6 +147,7 @@ namespace DdMd
    void SymmTensorAverageAnalyzer::output()
    {
       if (simulation().domain().isMaster()) {
+
          // Close data (*.dat) file, if any
          if (outputFile_.is_open()) {
             outputFile_.close();
@@ -158,16 +159,32 @@ namespace DdMd
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
 
-         // Write average (*.ave) file
+         // Write average (*.ave) file with averages for all elements
          fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);
+         double ave, err;
          int i, j;
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j <= i ; ++j) {
-               (*accumulatorPtr_)(i, j).output(outputFile_);
-               outputFile_ << "\n";
+               ave = (*accumulatorPtr_)(i, j).average();
+               err = (*accumulatorPtr_)(i, j).blockingError();
+               outputFile_ << "Average(" << i << ", " << j << ") = ";
+               outputFile_ << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
             }
          }
          outputFile_.close();
+
+         // Write average error analysis (*.aer) file
+         fileMaster.openOutputFile(outputFileName(".aer"), outputFile_);
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j <= i ; ++j) {
+               outputFile_ << "Element(" << i << ", " << j << "): \n\n";
+               (*accumulatorPtr_)(i, j).output(outputFile_);
+               outputFile_ << 
+               "----------------------------------------------------------------------------\n";
+            }
+         }
+         outputFile_.close();
+
       }
    }
 

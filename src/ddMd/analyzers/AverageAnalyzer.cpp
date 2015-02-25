@@ -149,8 +149,16 @@ namespace DdMd
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
+
          // Write average (*.ave) file
          simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+         double ave = accumulatorPtr_->average();
+         double err = accumulatorPtr_->blockingError();
+         outputFile_ << "Average   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_.close();
+
+         // Write error analysis (*.aer) file
+         simulation().fileMaster().openOutputFile(outputFileName(".aer"), outputFile_);
          accumulatorPtr_->output(outputFile_);
          outputFile_.close();
       }
