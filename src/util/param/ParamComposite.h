@@ -332,10 +332,10 @@ namespace Util
       /**
       * Add and read a C array parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param n      number of elements
+      * \param n  number of elements
       * \param isRequired  Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
@@ -346,10 +346,29 @@ namespace Util
 
       /**
       * Add and read a required C array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param n  number of elements
+      * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
       CArrayParam<Type>&
       readCArray(std::istream &in, const char *label, Type *value, int n);
+
+      /**
+      * Add and read an optional C array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param n  number of elements
+      * \return reference to the new CArrayParam<Type> object
+      */
+      template <typename Type>
+      CArrayParam<Type>&
+      readOptionalCArray(std::istream &in, const char *label, Type *value, int n);
 
       /**
       * Add and read a DArray < Type > parameter.
@@ -381,6 +400,20 @@ namespace Util
                  DArray<Type>& array, int n);
 
       /**
+      * Add and read an optional DArray < Type > parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  DArray object
+      * \param n  number of elements
+      * \return reference to the new DArrayParam<Type> object
+      */
+      template <typename Type>
+      DArrayParam<Type>&
+      readOptionalDArray(std::istream &in, const char *label,
+                         DArray<Type>& array, int n);
+
+      /**
       * Add and read an FArray < Type, N > fixed-size array parameter.
       *
       * \param in  input stream for reading
@@ -406,6 +439,19 @@ namespace Util
       FArrayParam<Type, N>&
       readFArray(std::istream &in, const char *label, 
                  FArray<Type, N >& array);
+
+      /**
+      * Add and read an optional FArray < Type, N > array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  FArray object
+      * \return reference to the new FArrayParam<Type, N> object
+      */
+      template <typename Type, int N>
+      FArrayParam<Type, N>&
+      readOptionalFArray(std::istream &in, const char *label, 
+                         FArray<Type, N >& array);
 
       /**
       * Add and read a CArray2DParam < Type > 2D C-array parameter.
@@ -440,8 +486,23 @@ namespace Util
       template <typename Type>
       CArray2DParam<Type>&
       readCArray2D(std::istream &in, const char *label,
-                   Type *value, int m, int n, int np)
-      {  return readCArray2D<Type>(in, label, value, m, n, np, true); }
+                   Type *value, int m, int n, int np);
+
+      /**
+      * Add and read an optional CArray2DParam < Type > 2D C-array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
+      * \return reference to the CArray2DParam<Type> object
+      */
+      template <typename Type>
+      CArray2DParam<Type>&
+      readOptionalCArray2D(std::istream &in, const char *label,
+                   Type *value, int m, int n, int np);
 
       /**
       * Add and read a DMatrix < Type > matrix parameter.
@@ -472,8 +533,7 @@ namespace Util
       template <typename Type>
       DMatrixParam<Type>&
       readDMatrix(std::istream &in, const char *label,
-                  DMatrix<Type>& matrix, int m, int n)
-      {  return readDMatrix<Type>(in, label, matrix, m, n, true); }
+                  DMatrix<Type>& matrix, int m, int n);
 
       /**
       * Add and read a class label and opening bracket.
@@ -952,10 +1012,19 @@ namespace Util
    * Read a required CArrayParam.
    */
    template <typename Type>
-   CArrayParam<Type>&
+   inline CArrayParam<Type>&
    ParamComposite::readCArray(std::istream &in, const char *label, 
                               Type *value, int n)
    {  return readCArray<Type>(in, label, value, n, true); }
+
+   /*
+   * Read an optional CArrayParam.
+   */
+   template <typename Type>
+   inline CArrayParam<Type>&
+   ParamComposite::readOptionalCArray(std::istream &in, const char *label, 
+                                      Type *value, int n)
+   {  return readCArray<Type>(in, label, value, n, false); }
 
    /*
    * Add a C array parameter, and load its elements.
@@ -997,9 +1066,19 @@ namespace Util
    template <typename Type>
    inline 
    DArrayParam<Type>&
-   readDArray(std::istream &in, const char *label,
+   ParamComposite::readDArray(std::istream &in, const char *label,
               DArray<Type>& array, int n)
    {  return readDArray<Type>(in, label, array, n, true); }
+
+   /*
+   * Add and read a required DArrayParam.
+   */
+   template <typename Type>
+   inline 
+   DArrayParam<Type>&
+   ParamComposite::readOptionalDArray(std::istream &in, const char *label,
+              DArray<Type>& array, int n)
+   {  return readDArray<Type>(in, label, array, n, false); }
 
    /*
    * Add a DArray < Type > parameter, and load its elements.
@@ -1046,6 +1125,16 @@ namespace Util
    {  return readFArray<Type>(in, label, array, true); }
 
    /*
+   * Add and read an optional FArray < Type, N > array parameter.
+   */
+   template <typename Type, int N>
+   inline 
+   FArrayParam<Type, N>&
+   ParamComposite::readOptionalFArray(std::istream &in, const char *label, 
+                                      FArray<Type, N >& array)
+   {  return readFArray<Type>(in, label, array, false); }
+
+   /*
    * Add and load an FArray < Type, N > fixed-size array parameter.
    */
    template <typename Type, int N>
@@ -1081,6 +1170,24 @@ namespace Util
    }
 
    /*
+   * Add and read a required CArray2DParam.
+   */
+   template <typename Type>
+   inline CArray2DParam<Type>&
+   ParamComposite::readCArray2D(std::istream &in, const char *label,
+                                Type *value, int m, int n, int np)
+   {  return readCArray2D<Type>(in, label, value, m, n, np, true); }
+
+   /*
+   * Add and read an optional CArray2DParam.
+   */
+   template <typename Type>
+   inline CArray2DParam<Type>&
+   ParamComposite::readOptionalCArray2D(std::istream &in, const char *label,
+                                Type *value, int m, int n, int np)
+   {  return readCArray2D<Type>(in, label, value, m, n, np, false); }
+
+   /*
    * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
    */
    template <typename Type>
@@ -1100,7 +1207,7 @@ namespace Util
    // Templates for DMatrix containers
 
    /*
-   * Add and read a DMatrixParam associated with a built-in array.
+   * Add and read a DMatrixParam.
    */
    template <typename Type>
    DMatrixParam<Type>&
@@ -1115,6 +1222,15 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
+
+   /*
+   * Add and read a required DMatrixParam.
+   */
+   template <typename Type>
+   inline DMatrixParam<Type>&
+   ParamComposite::readDMatrix(std::istream &in, const char *label,
+                               DMatrix<Type>& matrix, int m, int n)
+   {  return readDMatrix<Type>(in, label, matrix, m, n, true); }
 
    /*
    * Add and load a DMatrix < Type > C two-dimensional matrix parameter.

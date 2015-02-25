@@ -160,6 +160,7 @@ namespace DdMd
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
 
+         #if 0
          // Write average (*.ave) file
          fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);
          int i, j;
@@ -170,6 +171,34 @@ namespace DdMd
             }
          }
          outputFile_.close();
+         #endif
+
+         // Write average (*.ave) file with averages for all elements
+         fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);
+         double ave, err;
+         int i, j;
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < Dimension ; ++j) {
+               ave = (*accumulatorPtr_)(i, j).average();
+               err = (*accumulatorPtr_)(i, j).blockingError();
+               outputFile_ << "Average(" << i << ", " << j << ") = ";
+               outputFile_ << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+            }
+         }
+         outputFile_.close();
+
+         // Write average error analysis (*.aer) file
+         fileMaster.openOutputFile(outputFileName(".aer"), outputFile_);
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < Dimension ; ++j) {
+               outputFile_ << "Element(" << i << ", " << j << "): \n\n";
+               (*accumulatorPtr_)(i, j).output(outputFile_);
+               outputFile_ << 
+               "----------------------------------------------------------------------------\n";
+            }
+         }
+         outputFile_.close();
+
       }
    }
 

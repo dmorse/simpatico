@@ -180,12 +180,12 @@ namespace Util
       double aveErr = blockingError();
 
       out <<  "Average   " << Dbl(average())         
-          <<  "  +- "      << Dbl(aveErr, 9, 2) << std::endl;
-      out <<  "Variance  " << Dbl(variance())        << std::endl;
-      out <<  "Std Dev   " << Dbl(stdDeviation())    << std::endl;
-      out <<  std::endl;
+          <<  "  +- "      << Dbl(aveErr, 9, 2) << "\n";
+      out <<  "Variance  " << Dbl(variance())        << "\n";
+      out <<  "Std Dev   " << Dbl(stdDeviation())    << "\n";
+      out <<  "\n";
 
-      out << "Hierarchichal Error Analysis:" << std::endl;
+      out << "Hierarchichal Error Analysis:" << "\n";
       AverageStage* ptr = 0;
       double error;
       int interval;
@@ -201,10 +201,10 @@ namespace Util
                 << Int(interval) 
                 << Dbl(error) 
                 << Dbl(error/sqrt(double(nSample)))
-                << Int(nSample) << std::endl;
+                << Int(nSample) << "\n";
          }
       }
-      out << std::endl;
+      out << "\n";
    }
 
    /*

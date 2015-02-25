@@ -449,32 +449,32 @@ namespace DdMd
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
       nBondType_ = 0;
-      read<int>(in, "nBondType", nBondType_, false); // optional
+      readOptional<int>(in, "nBondType", nBondType_); 
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
-      read<bool>(in, "hasExternal", hasExternal_, false); // optional
+      readOptional<bool>(in, "hasExternal", hasExternal_); 
       #endif
 
       hasAtomContext_ = false;
-      read<bool>(in, "hasAtomContext", hasAtomContext_, false); // optional
+      readOptional<bool>(in, "hasAtomContext", hasAtomContext_); 
       Atom::setHasAtomContext(hasAtomContext_);
 
       // Read array of atom type descriptors
