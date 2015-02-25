@@ -18,37 +18,46 @@ namespace Util
    *
    * This class implements an algorithm to evaluate the average of a 
    * sequence, using a hierarchical blocking algorithm to estimate the
-   * error on the average. The algorithm calculates works by calculating 
+   * error on the average. The algorithm is based on the calculation of
    * variances for sequences of block averages for multiple levels of
-   * block sizes.
+   * block sizes, as described in the following reference:
    *
-   * The algorithm is implemented by a linked list of AverageStage objects, 
-   * in which each object is assigned an integer chainId. The first
-   * AverageStage object in this list, with chainId=0, calculates the average 
-   * and variance for a "primary" sequence of measured values that are 
-   * passed as parameters to its sample method. This object has a pointer 
-   * to an AverageStage with chainId=1 that calculates the variance of a 
-   * secondary sequence in which each value is the average of blockFactor 
-   * consecutive values in the primary sequence. The object with chainId=1 
-   * then has a pointer to an object with chainId=2 that calculates the 
-   * variance of a sequence in which each value is the average of a block 
-   * of blockFactor**2 consecutive values of the primary sequence.  In 
-   * general, the object with chainId=n, calculates the variance of a
-   * sequence in which each value is an average of blockFactor**n values 
-   * of the primary sequence. Each value for the sequence analyzed by the
-   * object with chainId=n+1 is caculated by the object with chainId=n
-   * by calculating an average of a block of blockFactor consecutive values
-   * of its own sequence, and passing this block average as a parameter
-   * the sample method of the object with chainId=n+1. New stages are 
-   * added to this link list as needed as the length of the primary 
-   * sequence grows: Once an object with chainId=n has been passed a
-   * sequence of blockFactor values, this object creates a child with
-   * chainId=n+1 and passes the average of these first blockFactor values 
-   * to the sample function of the child object.
+   * ``Error estimates on averages of correlated data", H. Flyvbjerg 
+   *  and H.G. Petersen, J. Chem. Phys. 91, pgs. 461-466 (1989).
+   *
+   * The blocking algorithm is implemented here by a creating a linked 
+   * list of AverageStage objects, each of which is responsible for
+   * computing the variance on block averages using a different level
+   * of blocking. Each object in this list is assigned an integer chainId.
+   * The first AverageStage object in the list, with chainId=0, calculates 
+   * the average and variance for a "primary" sequence of measured values 
+   * that are passed as parameters to its sample method. This first object
+   * is normally an instance of the Average class, which is a subclass of
+   * AverageStage that implements features that are only required by the 
+   * primary stage. This object has a pointer to a child AverageStage with 
+   * chainId=1 that calculates the variance of a secondary sequence in which 
+   * each value is the average of blockFactor consecutive values in the 
+   * primary sequence. The object with chainId=1 in turn has has a pointer 
+   * to a child object with chainId=2 that calculates the variance of a 
+   * sequence in which each value is the average of a block of blockFactor**2 
+   * consecutive values of the primary sequence, and so on. In general, the 
+   * object with chainId=n, calculates the variance of a sequence in which 
+   * each value is an average of blockFactor**n values of the primary 
+   * sequence. Each value in the sequence analyzed by the object with 
+   * chainId=n+1 is calculated by the parent object with chainId=n, by 
+   * calculating an average of a block of blockFactor consecutive values
+   * of its own sequence and passing this block average as a parameter
+   * the sample() function of the object with chainId=n+1. New stages in
+   * this linked list are instantiated and to the list as needed as the 
+   * length of the primary sequence grows: When an object with chainId=n 
+   * has been passed a sequence of exactly blockFactor values, it creates 
+   * a child AverageStage object with chainId=n+1 and passes the average 
+   * of these first blockFactor values to the sample function of the 
+   * child object as the first value in its sequence.
    *
    * A value of the integer parameter blockFactor is passed to the 
    * constructor of the primary AverageStage object. This parameter is 
-   * set to blockFactor=2 by default. The value may be reset using the 
+   * set to blockFactor=2 by default. Its value may be reset using the 
    * setBlockFactor() function before any data is sampled, but may not
    * be changed thereafter.
    *
