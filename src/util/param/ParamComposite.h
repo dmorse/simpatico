@@ -8,15 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComponent.h>     // base class
-#include <util/param/ScalarParam.h>        // template class
-#include <util/param/CArrayParam.h>        // template class
-#include <util/param/DArrayParam.h>        // template class
-#include <util/param/FArrayParam.h>        // template class
-#include <util/param/CArray2DParam.h>      // template class
-#include <util/param/DMatrixParam.h>       // template class
-#include <util/archives/Serializable_includes.h>
 #include <util/global.h>
+#include <util/param/ParamComponent.h>     // base class
+#include <util/param/ScalarParam.h>        // member function template
+#include <util/param/CArrayParam.h>        // member function template
+#include <util/param/DArrayParam.h>        // member function template
+#include <util/param/FArrayParam.h>        // member function template
+#include <util/param/CArray2DParam.h>      // member function template
+#include <util/param/DMatrixParam.h>       // member function template
+#include <util/archives/Serializable_includes.h>
 
 #include <vector>
 
@@ -130,13 +130,16 @@ namespace Util
       /**
       * Read the parameter file block.
       *
-      * Inherited from ParamComponent. This function reads the entire parameter
-      * block for this ParamComposite, including the opening line "ClassName{" 
-      * and the closing bracket "}". The default implementation calls the virtual 
-      * readParameters function to read the body of the block, and adds Begin and 
-      * End objects.
+      * Inherited from ParamComponent. This function reads the entire 
+      * parameter block for this ParamComposite, including an opening 
+      * line, which is of the form "ClassName{", and the closing line,
+      * which contains only a closing bracket, "}". The default 
+      * implementation reads the opening line (a Begin object), calls
+      * the virtual readParameters function to read the body of the 
+      * block, and reads the closing line (an End object).
       *
-      * \throw Throws if the string in the opening line does not match classname().
+      * \throw Throws if the string in the opening line does not match 
+      * the string returned by the classname() function.
       *
       * \param in input stream for reading
       */
@@ -145,11 +148,15 @@ namespace Util
       /**
       * Read optional parameter file block.
       *
-      * Read an optional ParamComposite. This function attempts to reads the
-      * beginning "ClassName{" line, and then continues to read the rest of
-      * the block if and only if the beginning line matches.  The default 
-      * implementation calls the readParameters(std::istream&) member 
-      * function to read the body of the block.
+      * Read an optional ParamComposite. This function must use a 
+      * Label() object to read the opening "ClassName{" line, and 
+      * then continues to read the rest of the block if and only 
+      * if the class name in the opening line matches the string 
+      * returned by the classname() function. 
+      * 
+      * If the first line matches, the default implementation calls 
+      * the readParameters() member function to read the body of 
+      * the block, and then reads the ending line. 
       *
       * \param in input stream for reading
       */
@@ -158,9 +165,14 @@ namespace Util
       /**
       * Read the body of parameter block, without begin and end lines.
       *
-      * Most subclasses of ParamComposite should overload this function.
-      * The default implementation is empty. Every subclass must overload
-      * either readParameters or readParam, but not both.
+      * Most subclasses of ParamComposite should re-implement this 
+      * function, which has an empty default implementation. Every
+      * subclass of Paramcomposite must either: (1) Re-implement this
+      * function and rely on the default implementation of readParam(),
+      * which calls this function. (2) Re-implement readParam() itself.
+      * Option (1) is far more common. Option (2) is required only
+      * for classes that require a non-standard treatment of the
+      * beginning and ending lines (e.g., the Manager class template).
       *
       * \param in input stream for reading
       */
@@ -171,8 +183,8 @@ namespace Util
       * Write all parameters to an output stream.
       *
       * The default implementation iterates through the format array, and
-      * calls the readParam member function of each ParamComponent in the
-      * array.  
+      * calls the readParam() member function of each ParamComponent in 
+      * the array. This is sufficient for most subclasses.
       *
       * \param out output stream for reading
       */
@@ -186,10 +198,10 @@ namespace Util
       * Load all parameters from an input archive.
       *
       * This function is inherited from Serializable. The default
-      * implementation for a ParamComposite calls loadParameters, and
-      * adds Begin and End lines to the format array.. All subclasses 
-      * of ParamComposite should overload the virtual loadParameters 
-      * member function.
+      * implementation of ParamComposite::load() calls loadParameters, 
+      * and adds Begin and End lines to the format array.. All 
+      * subclasses of ParamComposite should overload the virtual 
+      * loadParameters member function.
       *
       * \param ar input/loading archive.
       */
@@ -207,11 +219,13 @@ namespace Util
       /**
       * Load state from archive, without adding Begin and End lines.
       *
-      * This default implementation is empty, and should be re-implemented
-      * by all subclasses that have an internal state which should be saved
-      * in a restart file. Subclass implementations should load the entire
-      * internal state from the archive, including persistent private data
-      * that does not appear in the parameter file format.
+      * This function should be re-implemented by all subclasses that
+      * have an internal state that should be saved in a restart file.
+      * The default implementation is empty. Subclass implementations 
+      * should load the entire internal state from the archive, 
+      * including parameters that appear in the parameter file and 
+      * any persistent private member variables that do not appear 
+      * in the parameter file.
       *
       * \param ar input/loading archive.
       */
@@ -221,14 +235,15 @@ namespace Util
       /**
       * Saves all parameters to an archive.
       *
-      * This simple default implementation calls the save function for all items
-      * in the parameter file format array. This is not sufficient for classes
-      * that contain any persistent private data that does not appear in the
-      * parameter file format.
+      * The default implementation simply calls the save function for 
+      * all items in the parameter file format array. This is often 
+      * not sufficient. Specifically, it is not sufficient for classes 
+      * that contain any persistent member variables that do not 
+      * appear in the parameter file format.
       *
-      * If a class also defines a serialize function template, which allows
-      * instances to be serialized to any type of archive, then the save
-      * function can be implemented as follows:
+      * If a class also defines a serialize function template, which 
+      * allows instances to be serialized to any type of archive, then 
+      * the save function can often be implemented as follows:
       * \code
       *    void save(Serializable::OArchive& ar)
       *    { ar & *this; }
@@ -247,10 +262,11 @@ namespace Util
 
       //@}
       /// \name read* functions for child components
-      /// \brief Each of these functions invokes an associated add* function to
-      /// create a new ParamComponent object, and then invoke the readParam()
-      /// function of the new object to read the associated line or block of 
-      /// a parameter file.
+      /// \brief Each of these functions invokes an associated add* 
+      /// function to create a new instance of a particular subclass
+      /// of ParamComponent, and then invokes the readParam()
+      /// function of the new object to read the associated line or 
+      /// block of a parameter file.
       //@{
 
       /**
@@ -267,25 +283,25 @@ namespace Util
       /**
       * Add and attempt to read an optional child ParamComposite.
       *
-      * \param in    input stream for reading
-      * \param child child ParamComposite object
+      * \param in  input stream for reading
+      * \param child  child ParamComposite object
       * \param next  true if the indent level is one higher than parent.
       */
       void
       readParamCompositeOptional(std::istream &in,
-                                 ParamComposite &child, bool next = true);
+                                ParamComposite &child, bool next = true);
 
       /**
       * Add a new ScalarParam < Type > object, and read its value.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string
       * \param value  reference to new ScalarParam< Type >
       * \param isRequired  Is this a required parameter?
       */
       template <typename Type>
-      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value,
-                              bool isRequired);
+      ScalarParam<Type>& read(std::istream &in, const char *label, 
+                              Type &value, bool isRequired);
 
       /**
       * Add and read a new required ScalarParam < Type > object.
@@ -297,7 +313,21 @@ namespace Util
       * \param value  reference to new ScalarParam< Type >
       */
       template <typename Type>
-      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value);
+      ScalarParam<Type>& read(std::istream &in, const char *label, 
+                              Type &value);
+
+      /**
+      * Add and read a new optional ScalarParam < Type > object.
+      *
+      * This is equivalent to ScalarParam<Type>(in, label, value, false).
+      *
+      * \param in     input stream for reading
+      * \param label  Label string
+      * \param value  reference to new ScalarParam< Type >
+      */
+      template <typename Type>
+      ScalarParam<Type>& 
+      readOptional(std::istream &in, const char *label, Type &value);
 
       /**
       * Add and read a C array parameter.
@@ -311,16 +341,15 @@ namespace Util
       */
       template <typename Type>
       CArrayParam<Type>&
-      readCArray(std::istream &in, const char *label, Type *value, int n,
-                 bool isRequired);
+      readCArray(std::istream &in, const char *label, Type *value, 
+                 int n, bool isRequired);
 
       /**
       * Add and read a required C array parameter.
       */
       template <typename Type>
       CArrayParam<Type>&
-      readCArray(std::istream &in, const char *label, Type *value, int n)
-      {  return readCArray<Type>(in, label, value, n, true); }
+      readCArray(std::istream &in, const char *label, Type *value, int n);
 
       /**
       * Add and read a DArray < Type > parameter.
@@ -332,19 +361,24 @@ namespace Util
       * \param isRequired  Is this a required parameter?
       * \return reference to the new DArrayParam<Type> object
       */
-      template <typename Type>
-      DArrayParam<Type>&
+      template <typename Type> 
+      DArrayParam<Type>& 
       readDArray(std::istream &in, const char *label,
                  DArray<Type>& array, int n, bool isRequired);
 
       /**
-      * Add a required DArray < Type > parameter.
+      * Add and read a required DArray < Type > parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  DArray object
+      * \param n  number of elements
+      * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
       DArrayParam<Type>&
       readDArray(std::istream &in, const char *label,
-                 DArray<Type>& array, int n)
-      {  return readDArray<Type>(in, label, array, n, true); }
+                 DArray<Type>& array, int n);
 
       /**
       * Add and read an FArray < Type, N > fixed-size array parameter.
@@ -357,28 +391,33 @@ namespace Util
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
-      readFArray(std::istream &in, const char *label, FArray<Type, N >& array,
-                 bool isRequired);
+      readFArray(std::istream &in, const char *label, 
+                 FArray<Type, N >& array, bool isRequired);
 
       /**
       * Add and read a required FArray < Type, N > array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param array  FArray object
+      * \return reference to the new FArrayParam<Type, N> object
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
-      readFArray(std::istream &in, const char *label, FArray<Type, N >& array)
-      {  return readFArray<Type>(in, label, array, true); }
+      readFArray(std::istream &in, const char *label, 
+                 FArray<Type, N >& array);
 
       /**
-      * Add and read a CArray2DParam < Type > C 2D array parameter.
+      * Add and read a CArray2DParam < Type > 2D C-array parameter.
       *
-      * This reads m rows of n elements into an array of type array[][np].
+      * Reads m rows of n elements into a C-array of type array[][np].
       *
       * \param in  input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
       * \param m  number of rows (1st dimension)
       * \param n  logical number of columns (2nd dimension)
-      * \param np  physical number of columns (elements allocated per row)
+      * \param np  physical number of columns (elemnts allocated per row)
       * \param isRequired  Is this a required parameter?
       * \return reference to the CArray2DParam<Type> object
       */
@@ -388,7 +427,15 @@ namespace Util
                    Type *value, int m, int n, int np, bool isRequired);
 
       /**
-      * Add and read a required CArray2DParam < Type > C 2D array parameter.
+      * Add and read a required CArray2DParam < Type > 2D C-array parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
+      * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
@@ -397,7 +444,7 @@ namespace Util
       {  return readCArray2D<Type>(in, label, value, m, n, np, true); }
 
       /**
-      * Add and read a DMatrix < Type > C two-dimensional matrix parameter.
+      * Add and read a DMatrix < Type > matrix parameter.
       *
       * \param in  input stream for reading
       * \param label  Label string for new array
@@ -409,11 +456,18 @@ namespace Util
       */
       template <typename Type>
       DMatrixParam<Type>&
-      readDMatrix(std::istream &in, const char *label, DMatrix<Type>& matrix,
-                  int m, int n, bool isRequired);
+      readDMatrix(std::istream &in, const char *label, 
+                  DMatrix<Type>& matrix, int m, int n, bool isRequired);
 
       /**
       * Add and read a required DMatrix < Type > C matrix parameter.
+      *
+      * \param in  input stream for reading
+      * \param label  Label string for new array
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \return reference to the DMatrixParam<Type> object
       */
       template <typename Type>
       DMatrixParam<Type>&
@@ -450,10 +504,15 @@ namespace Util
 
       //@}
       /// \name load* functions for child components
-      /// \brief Each of these functions invokes an associated add*() function
-      /// to create a new ParamComponent object, and then invokes the load()
-      /// function of the new object to load the associated parameter value
-      /// from an input archive.
+      /// \brief Load parameters from an Archive, for restarting.
+      ///
+      /// Each of these functions invokes an associated add*() 
+      /// function to create a new instance of a subclass of 
+      /// ParamComponent, and then invokes the load() function of 
+      /// that new object to load the associated parameter value
+      /// from an input archive. These functions are used to load
+      /// parameters when a program is restarted from a checkpoint
+      /// file. 
       //@{
 
       /**
@@ -464,8 +523,8 @@ namespace Util
       * \param next  true if the indent level is one higher than parent.
       */
       void
-      loadParamComposite(Serializable::IArchive &ar, ParamComposite &child,
-                         bool next = true);
+      loadParamComposite(Serializable::IArchive &ar, 
+                         ParamComposite &child, bool next = true);
 
       /**
       * Add and load an optional child ParamComposite if isActive.
@@ -847,7 +906,16 @@ namespace Util
    {  return read<Type>(in, label, value, true); }
 
    /*
-   * Add a new ScalarParam< Type > object, and load its value.
+   * Add and read a new optional ScalarParam < Type > object.
+   */
+   template <typename Type>
+   inline ScalarParam<Type>& 
+   ParamComposite::readOptional(std::istream &in, const char *label, 
+                                Type &value)
+   {  return read<Type>(in, label, value, false); }
+
+   /*
+   * Add a new ScalarParam< Type > object, and load its value from an archive.
    */
    template <typename Type>
    ScalarParam<Type>&
@@ -881,6 +949,15 @@ namespace Util
    }
 
    /*
+   * Read a required CArrayParam.
+   */
+   template <typename Type>
+   CArrayParam<Type>&
+   ParamComposite::readCArray(std::istream &in, const char *label, 
+                              Type *value, int n)
+   {  return readCArray<Type>(in, label, value, n, true); }
+
+   /*
    * Add a C array parameter, and load its elements.
    */
    template <typename Type>
@@ -899,7 +976,7 @@ namespace Util
    // Templates for DArray parameters
 
    /*
-   * Add a a DArrayParam associated with a DArray<Type> container, and read it.
+   * Add and read a DArrayParam associated with a DArray<Type> parameter.
    */
    template <typename Type>
    DArrayParam<Type>&
@@ -913,6 +990,16 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
+
+   /*
+   * Add and read a required DArrayParam.
+   */
+   template <typename Type>
+   inline 
+   DArrayParam<Type>&
+   readDArray(std::istream &in, const char *label,
+              DArray<Type>& array, int n)
+   {  return readDArray<Type>(in, label, array, n, true); }
 
    /*
    * Add a DArray < Type > parameter, and load its elements.
@@ -947,6 +1034,16 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
+
+   /*
+   * Add and read a required FArray < Type, N > array parameter.
+   */
+   template <typename Type, int N>
+   inline 
+   FArrayParam<Type, N>&
+   ParamComposite::readFArray(std::istream &in, const char *label, 
+                              FArray<Type, N >& array)
+   {  return readFArray<Type>(in, label, array, true); }
 
    /*
    * Add and load an FArray < Type, N > fixed-size array parameter.
