@@ -32,10 +32,9 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrelation<Data, Product>::readParameters(std::istream& in)
    {
-      bool isRequired = false;
-      read(in, "bufferCapacity", bufferCapacity_, isRequired);
-      read(in, "maxStageId", maxStageId_, isRequired);
-      read(in, "blockFactor", blockFactor_, isRequired);
+      readOptional(in, "bufferCapacity", bufferCapacity_);
+      readOptional(in, "maxStageId", maxStageId_);
+      readOptional(in, "blockFactor", blockFactor_);
       allocate();
    }
 
