@@ -21,7 +21,7 @@ namespace Util
    *
    * The memory for a Matrix is stored in a single one-dimensional C array.
    *
-   * A Matrix is abstract because it cannot allocate memory.
+   * Matrix is an abstract class because it cannot allocate memory.
    * Concrete subclasses: DMatrix and FMatrix.
    *
    * \ingroup Matrix_Module
@@ -42,16 +42,12 @@ namespace Util
       virtual ~Matrix();
 
       /**
-      * Get number of rows.
-      *
-      * \return Number of columns (i.e., range of first array index)
+      * Get number of rows (range of the first array index).
       */
       int capacity1();
 
       /**
-      * Get number of columns.
-      *
-      * \return Number of columns (i.e., range of second array index)
+      * Get number of columns (range of the second array index).
       */
       int capacity2();
 
