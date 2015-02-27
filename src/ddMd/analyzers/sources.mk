@@ -8,6 +8,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/LogEnergy.cpp\
      ddMd/analyzers/OutputEnergy.cpp\
      ddMd/analyzers/KineticEnergyAnalyzer.cpp\
+     ddMd/analyzers/EnergyAnalyzer.cpp\
      ddMd/analyzers/OutputTemperature.cpp\
      ddMd/analyzers/PressureAnalyzer.cpp\
      ddMd/analyzers/OutputPressure.cpp\

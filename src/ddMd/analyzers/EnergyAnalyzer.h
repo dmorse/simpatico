@@ -1,0 +1,123 @@
+#ifndef DDMD_ENERGY_ANALYZER_H
+#define DDMD_ENERGY_ANALYZER_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <ddMd/analyzers/Analyzer.h>
+#include <ddMd/simulation/Simulation.h>
+
+namespace Util{
+   class Average;
+}
+
+namespace DdMd
+{
+
+   class Simulation;
+   using namespace Util;
+
+   /**
+   * Periodically write simulation energies to file.
+   *
+   * \sa \ref ddMd_analyzer_EnergyAnalyzer_page "param file format"
+   *
+   * \ingroup DdMd_Analyzer_Module
+   */
+   class EnergyAnalyzer : public Analyzer
+   {
+   
+   public:
+   
+      /**
+      * Constructor.
+      *
+      * \param simulation parent Simulation object. 
+      */
+      EnergyAnalyzer(Simulation& simulation);
+   
+      /**
+      * Destructor.
+      */
+      virtual ~EnergyAnalyzer()
+      {} 
+   
+      /**
+      * Read interval and output file name.
+      *
+      * \param in input parameter file
+      */
+      virtual void readParameters(std::istream& in);
+   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+  
+      /**
+      * Clear nSample counter.
+      */
+      virtual void clear();
+  
+      /**
+      * Setup - open output file.
+      */
+      virtual void setup();
+
+      /**
+      * Write energy to file
+      *
+      * \param iStep MC step index
+      */
+      virtual void sample(long iStep);
+
+      /**
+      * Write file averages and error analysis to file
+      */
+      virtual void output();
+
+   private:
+ 
+      // Output file stream
+      std::ofstream outputFile_;
+
+      // Pointers to average accumulators for energy and components
+      Average* totalAveragePtr_;
+      Average* kineticAveragePtr_;
+      Average* pairAveragePtr_;
+      #ifdef INTER_BOND
+      Average* bondAveragePtr_;
+      #endif
+      #ifdef INTER_ANGLE
+      Average* angleAveragePtr_;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      Average* dihedralAveragePtr_;
+      #endif
+      #ifdef INTER_EXTERNAL
+      Average* externalAveragePtr_;
+      #endif
+
+      // Number of sample per block average
+      int nSamplePerBlock_;
+
+      /// Has readParam been called?
+      long isInitialized_;
+   
+   };
+
+}
+#endif 

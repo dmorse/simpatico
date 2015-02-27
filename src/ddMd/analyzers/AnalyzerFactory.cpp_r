@@ -11,6 +11,7 @@
 
 // Analyzers 
 #include "LogEnergy.h"
+#include "EnergyAnalyzer.h"
 #include "OutputEnergy.h"
 #include "KineticEnergyAnalyzer.h"
 #include "OutputTemperature.h"
@@ -66,6 +67,9 @@ namespace DdMd
       // Simulation Analyzers
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());
+      } else 
+      if (className == "EnergyAnalyzer") {
+         ptr = new EnergyAnalyzer(simulation());
       } else 
       if (className == "OutputEnergy") {
          ptr = new OutputEnergy(simulation());
