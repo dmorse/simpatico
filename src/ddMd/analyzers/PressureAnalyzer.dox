@@ -1,22 +1,23 @@
 namespace DdMd
 {
 
-/*! \page ddMd_analyzer_KineticEnergyAnalyzer_page  KineticEnergyAnalyzer
+/*! \page ddMd_analyzer_PressureAnalyzer_page  PressureAnalyzer
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_synopsis_sec Synopsis
+\section ddMd_analyzer_PressureAnalyzer_synopsis_sec Synopsis
 
-This analyzer computes the average of the total kinetic energy, and optionally outputs sampled values or block averages during
+This analyzer computes the average of the total pressure, and optionally outputs sampled values or block averages during
 the simulation. 
 
-\sa DdMd::KineticEnergyAnalyzer
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_param_sec Parameters
+\sa DdMd::PressureAnalyzer
+
+\section ddMd_analyzer_PressureAnalyzer_param_sec Parameters
 The parameter file format is:
 \code
-   KineticEnergyAnalyzer{
-     interval           int
-     outputFileName     string
-     [nSamplePerBlock]  int
+   PressureAnalyzer{
+     interval             int
+     outputFileName       string
+     [nSamplePerBlock]    int
    }
 \endcode
 in which 
@@ -36,9 +37,9 @@ in which
 </table>
 If nSamplePerBlock > 0, this analyzer outputs block average values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.
 
-The nSamplePerBlock parameter is optional, as indicated by the square brackets in the file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
+The nSamplePerBlock parameter is optional, as indicated by the use of square brackets in the above file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_output_sec Output
+\section ddMd_analyzer_PressureAnalyzer_output_sec Output
 
 If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat, with extension ".dat", during the simulation. Each line of this file contains the value of the time step associated with the first value in the block average and the value of the block average of nSamplePerBlock values. If nSamplePerBlock = 0, no such file is created. 
 
@@ -51,4 +52,5 @@ At the end of the simulation, when the OUTPUT_ANALYZERS command is invoked:
    - Details of the hierarchical block-averaging analysis of the error on the average, along with the value of the variance, are output to a file {outputFileName}.aer.
 
 */
+
 }

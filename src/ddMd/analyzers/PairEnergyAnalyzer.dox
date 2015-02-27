@@ -1,22 +1,22 @@
 namespace DdMd
 {
 
-/*! \page ddMd_analyzer_KineticEnergyAnalyzer_page  KineticEnergyAnalyzer
+/*! \page ddMd_analyzer_PairEnergyAnalyzer_page  PairEnergyAnalyzer
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_synopsis_sec Synopsis
+\section ddMd_analyzer_PairEnergyAnalyzer_synopsis_sec Synopsis
 
-This analyzer computes the average of the total kinetic energy, and optionally outputs sampled values or block averages during
-the simulation. 
+This analyzer computes the average of the nonbonded pair energy between atoms with a specified pair of types, and optionally outputs sampled values or block averages of this quantity during the simulation. The typeIdPair parameter specifies the a pair of atom type indices: This analyzer computes the nonbonded pair energy arising from interactions between pairs of atoms which one atom is of type (typeIdPair[0]) and the one atom is the other (typeIdPair[1]).
 
-\sa DdMd::KineticEnergyAnalyzer
+\sa DdMd::PairEnergyAnalyzer
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_param_sec Parameters
+\section ddMd_analyzer_PairEnergyAnalyzer_param_sec Parameters
 The parameter file format is:
 \code
-   KineticEnergyAnalyzer{
+   PairEnergyAnalyzer{
      interval           int
      outputFileName     string
      [nSamplePerBlock]  int
+     typeIdPair         FArray<int, 2>
    }
 \endcode
 in which 
@@ -33,12 +33,19 @@ in which
      <td>nSamplePerBlock</td>
      <td>number of samples per block average (optional, default = 0)</td>
   </tr>
+  <tr> 
+     <td>typeIdPair</td>
+     <td>An array of two elements containing two atom type ids for the pairs of interest</td>
+  </tr>
 </table>
 If nSamplePerBlock > 0, this analyzer outputs block average values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.
 
 The nSamplePerBlock parameter is optional, as indicated by the square brackets in the file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
 
-\section ddMd_analyzer_KineticEnergyAnalyzer_output_sec Output
+Example: The following parameter block causes the total pair energy arising from interactions between atoms of types 0 and 1 to be calculated every 10 time steps, with block averages of 10 sampled values output every 1000 time steps:
+
+
+\section ddMd_analyzer_PairEnergyAnalyzer_output_sec Output
 
 If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat, with extension ".dat", during the simulation. Each line of this file contains the value of the time step associated with the first value in the block average and the value of the block average of nSamplePerBlock values. If nSamplePerBlock = 0, no such file is created. 
 
@@ -51,4 +58,5 @@ At the end of the simulation, when the OUTPUT_ANALYZERS command is invoked:
    - Details of the hierarchical block-averaging analysis of the error on the average, along with the value of the variance, are output to a file {outputFileName}.aer.
 
 */
+
 }

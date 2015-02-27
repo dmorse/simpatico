@@ -89,7 +89,7 @@ namespace Util
       *
       * Equivalent to set(value). Sets the value and marks it as set.
       *
-      * \param other  object on RHS of assignment
+      * \param value T value on RHS of assignment
       * \return this object
       */
       Setable<T>& operator = (const T& value)
