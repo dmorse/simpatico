@@ -1,4 +1,4 @@
-/*! \page inter_bond_page 2.8.1.2 Bond Interactions
+/*! \page inter_bond_page Bond Interactions
 
 Each of the bond interaction classes defines a potential \f$V(r)\f$ as a function of the separation \f$r\f$ between a pair of covalently bonded atoms. Each bond is assigned a bond type index, and different values of the parameters in the bond potential function are used for different bond types.
 

@@ -14,23 +14,48 @@ namespace Tools
 
    using namespace Inter;
    using namespace Util;
-   
+
+   /**
+   * Generates a simulation box full of randomly generated linear polymers.
+   */   
    class ChainMaker : public ParamComposite
    {
    
    public:
-  
+ 
+      /*
+      * Constructor
+      */ 
       ChainMaker();
+
+      /*
+      * Destructor.
+      */ 
       ~ChainMaker();
 
+      /*
+      * Read parameters from input file.
+      */ 
       void readParam(std::istream& in);
    
+      /*
+      * Write configuration.
+      */ 
       void writeChains(std::ostream& out);
    
+      /*
+      * Write configuration in default McMd format.
+      */ 
       void writeChainsMcMd(std::ostream& out);
    
+      /*
+      * Write configuration in default DdMd format.
+      */ 
       void writeChainsDdMd(std::ostream& out);
    
+      /*
+      * Write configuration in default DdMd molecular format.
+      */ 
       void writeChainsDdMdMole(std::ostream& out);
    
    private:

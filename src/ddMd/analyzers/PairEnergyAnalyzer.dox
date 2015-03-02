@@ -42,7 +42,16 @@ If nSamplePerBlock > 0, this analyzer outputs block average values every interva
 
 The nSamplePerBlock parameter is optional, as indicated by the square brackets in the file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
 
-Example: The following parameter block causes the total pair energy arising from interactions between atoms of types 0 and 1 to be calculated every 10 time steps, with block averages of 10 sampled values output every 1000 time steps:
+Example: The following parameter block causes the total pair energy arising from interactions between atoms of types 0 and 1 to be calculated at an interval of 100 time steps, with block averages of 10 sampled values output every 1000 time steps, and data output to files with a common basename "pairEnergy".
+\code
+   PairEnergyAnalyzer{
+     interval           100
+     outputFileName     pairEnergy
+     nSamplePerBlock    10
+     typeIdPair         1
+                        0
+   }
+\endcode
 
 
 \section ddMd_analyzer_PairEnergyAnalyzer_output_sec Output
