@@ -30,8 +30,6 @@ namespace McMd
    * chosen at random. The only parameter is nTrial, the number of trial 
    * positions for the new position of the head monomer.
    *
-   * \sa \ref mcMd_mcMove_CfbReptationMove_page "param file format"
-   *
    * \ingroup McMd_McMove_Module
    */
    class CfbReptationMove : public CfbEndBase
