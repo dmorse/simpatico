@@ -20,6 +20,7 @@
 #include <mcMd/links/LinkMaster.h>
 #endif
 #include <util/param/Label.h>
+#include <util/misc/FlagSet.h>
 #include <util/format/Int.h>
 
 namespace McMd
@@ -76,10 +77,13 @@ namespace McMd
          hasDihedrals = label.isClear();
       }
       #endif
+      int nSpecies = simulation().nSpecies();
+      int nSpeciesIn;
+      in >> Label("nSpecies") >> nSpeciesIn;
+      UTIL_CHECK(nSpeciesIn == nSpecies);
       Species* speciesPtr;
       Molecule* molPtr;
       int iSpeciesIn, nMolecule, nAtomIn;
-      int nSpecies = simulation().nSpecies();
       int nAtomTot = 0;
       for (int iSpecies = 0 ; iSpecies < nSpecies; ++iSpecies) {
          in >> iSpeciesIn;
@@ -88,7 +92,7 @@ namespace McMd
          in >> nMolecule;
          UTIL_CHECK(nMolecule <= speciesPtr->capacity()) 
          in >> nAtomIn;
-         UTIL_CHECK(nAtomIn != speciesPtr->nAtom())
+         UTIL_CHECK(nAtomIn == speciesPtr->nAtom())
          nAtomTot += nMolecule*nAtomIn;
          #ifdef INTER_BOND
          if (hasBonds) {
@@ -121,10 +125,21 @@ namespace McMd
          }
       }
 
+      // Atoms block
       in >> Label("ATOMS");
       Label orderedLabel("ordered", false);
       in >> orderedLabel;
       bool isOrdered = orderedLabel.isClear();
+      std::string format;
+      in >> Label("format") >> format;
+      FlagSet flags("imtpvsc");
+      flags.setActualOrdered(format);
+      UTIL_CHECK(flags.isActive('i'));
+      UTIL_CHECK(flags.isActive('m'));
+      UTIL_CHECK(flags.isActive('t'));
+      UTIL_CHECK(flags.isActive('p'));
+      bool hasVelocity = flags.isActive('v');
+      //bool hasShifts = flags.isActive('s');
       in >> Label("nAtom") >> nAtomIn;
       UTIL_CHECK(nAtomIn == nAtomTot);
       
@@ -132,6 +147,7 @@ namespace McMd
          System::MoleculeIterator molIter;
          Molecule::AtomIterator atomIter;
          int atomId, atomIdIn, iMol, iMolIn, iAtom, iAtomIn, typeId;
+         atomId = 0;
          for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             speciesPtr = &simulation().species(iSpecies);
             iMol = 0;
@@ -150,8 +166,11 @@ namespace McMd
                   in >> typeId;
                   atomIter->setTypeId(typeId);
                   in >> atomIter->position();
-                  ++iAtom;
+                  if (hasVelocity) {
+                     in >> atomIter->velocity();
+                  }
                   ++atomId;
+                  ++iAtom;
                }
                ++iMol; 
             }
@@ -308,6 +327,7 @@ namespace McMd
 
       // Write atomic positions
       out << "ATOMS\n";
+      out << "ordered\n";
       out << "format ";
       std::string format = "imtp";
       out << format << "\n";
@@ -332,6 +352,7 @@ namespace McMd
                out << atomIter->position() << "  ";
                out << "\n";
                ++iAtom;
+               ++atomId;
             }
             ++iMol;
          }
