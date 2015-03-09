@@ -10,6 +10,7 @@
 #include <mcMd/simulation/System.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/species/SpeciesMutator.h>
+#include <mcMd/chemistry/Group.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #ifdef INTER_TETHER
@@ -82,7 +83,7 @@ namespace McMd
       }
 
       in >> Label("ATOMS");
-      int nAtomTotIn, atomId, atomIdIn, iMolIn, iAtom, iAtomIn;
+      int nAtomTotIn, atomIdIn, iMolIn, iAtom, iAtomIn;
       in >> Label("nAtom") >> nAtomTotIn;
       // Check consistency
       System::MoleculeIterator molIter;
@@ -203,37 +204,72 @@ namespace McMd
       using std::endl;
 
       // Write Boundary dimensions
-      out << "BOUNDARY" << endl << endl;
+      out << "BOUNDARY\n";
       out << boundary() << endl;
 
       // Write species information
+      out << endl << "SPECIES\n";
+      #ifdef INTER_BOND
+      bool hasBonds = (bool)simulation().nBondType();
+      if (hasBonds) {
+         out << "hasBonds\n";
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      bool hasAngles = (bool)simulation().nAngleType();
+      if (hasAngles) {
+         out << "hasAngles\n";
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      bool hasDihedrals = (bool)simulation().nDihedralType();
+      if (hasDihedrals) {
+         out << "hasDihedrals\n";
+      }
+      #endif
       Species* speciesPtr;
       int iSpecies, nSpecies, nMolecule, nAtomSpecies, nAtomTot;
-      out << endl << "SPECIES" << endl;
       nSpecies = simulation().nSpecies();
-      out << "nSpecies   " << nSpecies << endl;
+      out << "nSpecies  " << nSpecies << "\n";
       nAtomTot = 0;
       for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
-         out << iSpecies << "  ";
-         out << speciesPtr->capacity() << "  ";
+         out << iSpecies;
+         out << "  " << speciesPtr->capacity();
          nAtomSpecies = speciesPtr->nAtom();
-         out << nAtomSpecies << endl;
+         out << "  " << nAtomSpecies;
          nMolecule = system().nMolecule(iSpecies);
          nAtomTot += nAtomSpecies*nMolecule;
+         #ifdef INTER_BOND
+         if (hasBonds) {
+            out << "  " << speciesPtr->nBond();
+         }
+         #endif
+         #ifdef INTER_ANGLE
+         if (hasAngles) {
+            out << "  " << speciesPtr->nAngle();
+         }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (hasDihedrals) {
+            out << "  " << speciesPtr->nDihedral();
+         }
+         #endif
+         out << "\n";
       }
+      out << "\n";
 
       // Write atomic positions
-      System::ConstMoleculeIterator molIter;
-      Molecule::ConstAtomIterator atomIter;
-      int iMol, iAtom, atomId;
-      out << endl << "ATOMS" << endl << endl;
+      out << "ATOMS\n";
       out << "format ";
       std::string format = "imtp";
-      out << format << endl;
-      out << "nAtom " << nAtomTot << endl;
+      out << format << "\n";
+      out << "nAtom " << nAtomTot << "\n";
 
-      atomId = 0;
+      System::ConstMoleculeIterator molIter;
+      Molecule::ConstAtomIterator atomIter;
+      int iMol, iAtom;
+      int atomId = 0;
       for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
          iMol = 0;
@@ -241,19 +277,38 @@ namespace McMd
          for ( ; molIter.notEnd(); ++molIter) {
             iAtom = 0;
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               writeAtom(out, *atomIter);
                out << atomId << "  ";
                out << iSpecies << "  ";
                out << iMol << "  ";
                out << iAtom << "  ";
                out << atomIter->typeId() << "  ";
                out << atomIter->position() << "  ";
-               out << endl;
+               out << "\n";
                ++iAtom;
             }
             ++iMol;
          }
       }
+      out << "\n";
+
+      #ifdef INTER_BOND
+      if (hasBonds) {
+         out << "BONDS\n";
+         writeGroups<2>(out);
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      if (hasAngles) {
+         out << "ANGLES\n";
+         writeGroups<3>(out);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedrals) {
+         out << "DIHEDRALS\n";
+         writeGroups<4>(out);
+      }
+      #endif
 
       #if 0
       #ifdef INTER_TETHER
@@ -324,6 +379,36 @@ namespace McMd
       #endif
       #endif
 
+   }
+
+   /* 
+   * Write the configuration file.
+   */
+   template <int N>
+   void SpcConfigIo::writeGroups(std::ostream &out)
+   {
+      System::ConstMoleculeIterator molIter;
+      ConstArrayIterator< Group<N> > groupIter;
+      Species* speciesPtr;
+      int i;
+      int nSpecies = simulation().nSpecies();
+      int groupId = 0;
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         speciesPtr = &simulation().species(iSpecies);
+         system().begin(iSpecies, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(groupIter); groupIter.notEnd(); ++groupIter) {
+               out << "  " << groupId;
+               out << "  " << groupIter->typeId();
+               for (i = 0; i < N; ++i) {
+                  out << "  " << groupIter->atom(i).id();
+               }
+               out << "\n";
+               ++groupId;
+            }
+         }
+      }
+      out << "\n";
    }
 
 } 
