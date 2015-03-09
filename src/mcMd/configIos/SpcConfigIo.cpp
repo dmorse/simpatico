@@ -277,18 +277,21 @@ namespace McMd
       out << endl << "SPECIES\n";
       #ifdef INTER_BOND
       bool hasBonds = (bool)simulation().nBondType();
+      int  nBondTot = 0;
       if (hasBonds) {
          out << "hasBonds\n";
       }
       #endif
       #ifdef INTER_ANGLE
       bool hasAngles = (bool)simulation().nAngleType();
+      int  nAngleTot = 0;
       if (hasAngles) {
          out << "hasAngles\n";
       }
       #endif
       #ifdef INTER_DIHEDRAL
       bool hasDihedrals = (bool)simulation().nDihedralType();
+      int  nDihedralTot = 0;
       if (hasDihedrals) {
          out << "hasDihedrals\n";
       }
@@ -309,16 +312,19 @@ namespace McMd
          #ifdef INTER_BOND
          if (hasBonds) {
             out << "  " << speciesPtr->nBond();
+            nBondTot += nMolecule*(speciesPtr->nBond());
          }
          #endif
          #ifdef INTER_ANGLE
          if (hasAngles) {
             out << "  " << speciesPtr->nAngle();
+            nAngleTot += nMolecule*(speciesPtr->nAngle());
          }
          #endif
          #ifdef INTER_DIHEDRAL
          if (hasDihedrals) {
             out << "  " << speciesPtr->nDihedral();
+            nDihedralTot += nMolecule*(speciesPtr->nDihedral());
          }
          #endif
          out << "\n";
@@ -362,17 +368,20 @@ namespace McMd
       #ifdef INTER_BOND
       if (hasBonds) {
          out << "BONDS\n";
+         out << "nBond  " << nBondTot << "\n";
          writeGroups<2>(out);
       }
       #endif
       #ifdef INTER_ANGLE
       if (hasAngles) {
          out << "ANGLES\n";
+         out << "nAngle  " << nAngleTot << "\n";
          writeGroups<3>(out);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedrals) {
+         out << "nDihedral  " << nDihedralTot << "\n";
          out << "DIHEDRALS\n";
          writeGroups<4>(out);
       }
