@@ -29,7 +29,7 @@ namespace Util
    */
    void FlagSet::setAllowed(std::string allowed)
    {
-      // Copy string
+      // Copy actual
       allowed_ = allowed;
 
       // Create map, initializing active flag to false for all.
@@ -43,33 +43,38 @@ namespace Util
    }
 
    /*
-   * Set root prefix for all path names.
+   * Set string of actual character flags.
    */
-   void FlagSet::readOrdered(std::string string)
+   void FlagSet::setActualOrdered(std::string actual)
    {
+      actual_ = actual;
+
       // Set all isActive flags to false.
       MapType::iterator iter;
       for (iter = map_.begin(); iter != map_.end(); ++iter) {
          iter->second = false;
       }
  
-      // Set flags for characters in string to true.
+      // Set flags for characters in actual to true.
       int n = allowed_.size();
       if (n > 0) {
          char c, m;
          int j = 0;
-         m = string[j];
-         for (int i; i < n; ++i) {
-            c = string[i];
+         m = allowed_[j];
+         for (unsigned int i = 0; i < actual.size(); ++i) {
+            c = actual[i];
             while (c != m) {
                ++j;
                if (j == n) {
-                  UTIL_THROW("Unknown character");
+                  std::string msg = "Unknown character ";
+                  msg += c; 
+                  UTIL_THROW(msg.c_str());
                }
-               m = string[j];
+               m = allowed_[j];
                assert(map_.count(m));
             }
             iter = map_.find(m);
+            assert(iter != map_.end());
             iter->second = true;
          }
       }
@@ -78,14 +83,14 @@ namespace Util
    #if 0
    /*
    */
-   void FlagSet::readUnordered(std::string string)
+   void FlagSet::readUnordered(std::string actual)
    {
       int n = allowed_.size();
       if (n > 0) {
          int i = 0;
          int j = 0;
          MapType::iterator = iter;
-         c = string[i];
+         c = actual[i];
          while (i < n) {
             iter = map_.find(c);
             if (iter == MaptType::end) {

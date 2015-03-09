@@ -47,16 +47,30 @@ namespace Util
       void setAllowed(std::string allowed);
   
       /**
-      * Parse a flag string.
+      * Set the string of actual flag characters.
       *
-      * \param string  string containing a subset of allowed charaters
+      * This method requires that the characters in the actual string
+      * appear in the same order as in the allowed string, though they
+      * may be separated by absent characters.
+      *
+      * \param actual string containing a subset of allowed characters
       */ 
-      void readOrdered(std::string string);
+      void setActualOrdered(std::string actual);
   
       /**
       * Is the flag associated with character c active?
       */ 
       bool isActive(char c) const;
+  
+      /**
+      * Return the string of allowed characters.
+      */ 
+      const std::string& allowed() const;
+  
+      /**
+      * Return the string of actual character flags.
+      */ 
+      const std::string& actual() const;
   
    private:
 
@@ -65,6 +79,9 @@ namespace Util
 
       /// String containing all allowed characters.
       std::string allowed_;
+
+      /// String containing actual flag characters.
+      std::string actual_;
 
       /// Map containing isActive flags for all characters.
       MapType map_;
@@ -84,6 +101,18 @@ namespace Util
       } 
       return iter->second;
    }
+
+   /*
+   * Return the string of allowed characters.
+   */ 
+   inline const std::string& FlagSet::allowed() const
+   {   return allowed_; }
+  
+   /*
+   * Return the string of actual character flags.
+   */ 
+   inline const std::string& FlagSet::actual() const
+   {   return actual_; }
 
 }
 #endif
