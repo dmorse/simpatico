@@ -1,4 +1,4 @@
-/*! \page inter_external_page 2.8.1.5 External Interactions
+/*! \page inter_external_page External Interactions
 
 An external potential is a potential that acts on each atom, whose value depends only on the atomic position and atom type index. 
 

@@ -5,8 +5,9 @@ namespace DdMd
 
 \section ddMd_analyzer_LogEnergy_synopsis_sec Synopsis
 
-This analyzer outputs the energy and its components to the log stream,
-which is set to standard output by default.
+This analyzer outputs the energy and its components to the log stream, which is set to standard output by default.
+
+LogEnergy differs from EnergyAnalyzer in that EnergyAnalyzer calculates total and block averages, as well as outputting block averages to a file, whereas LogEnergy outputs sampled values (by default) to standard output.
 
 \sa DdMd::LogEnergy
 
@@ -28,12 +29,11 @@ with parameters
 
 \section ddMd_analyzer_LogEnergy_output_sec Output
 
-Instantaneous energy values are output to the log stream every interval
-steps, with all components in one line. Within each output line componentsappear in the order:
-
-    kinetic pair  bond  angle dihedral total
-
-Unused components of the energy will not appear. A component of the energy may be unused either because it was not enabled at compile time (e.g., if the program was not compiled with INTER_ANGLE defined) or if was not enabled in the parameter file (e.g., if nAngleType == 0).
+Instantaneous energy values are output to the log stream every interval steps, with all components in one line. Within each output line components appear in the order:
+\code
+    iStep  kinetic  pair  [bond]  [angle]  [dihedral]  [external]  total
+\endcode
+where iStep is the molecular dynamics step index, total is the total energy, kinetic is the kinetic energy, and the other entries are components of the potential energy.  The bond, angle, dihedral and external components, which are shown in square brackets, will each appear only if actually used in the current simulation. A component of the energy may be unused either because it was not enabled at compile time (e.g., if the program was not compiled with INTER_ANGLE defined) or if was not enabled in the parameter file (e.g., if nAngleType == 0 or hasExternal = false).
 
 */
 

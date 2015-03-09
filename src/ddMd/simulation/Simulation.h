@@ -68,6 +68,12 @@ namespace DdMd
    * A DdMd::Simulation contains and coordinates all the components of a
    * parallel MD simulation.
    *
+   * Most member functions of this class should be called simultaneously 
+   * on all processors. Assume this is the case unless the documentation
+   * says otherwise. Member functions that should only be called on the
+   * master processor of the communicator associated with a spatial grid
+   * decomposition are identified explicitly as such.
+   *
    * \ingroup DdMd_Simulation_Module
    */
    class Simulation : public ParamComposite
@@ -116,14 +122,28 @@ namespace DdMd
       *       is the number of systems. The rank of the communicator passed
       *       to the constructor must be an integer multiple of nSystem.
       *
+      *   -p  filename [string]
+      *       Specifies the name of a parameter file. If not specified here, 
+      *       the parameter file for a single-system simulation may be read
+      *       from standard input by default.
+      *
       *   -r  filename [string]
       *       Restarts a simulation from a checkpoint file. The name of
-      *       the checkpoint file is filename + ".rst", i..e., it is
+      *       the checkpoint file is restartFilename + ".rst", i..e., it is
       *       obtained by adding a suffix ".rst" to the filename argument.
       *       Also sets the default command file name to filename + ".cmd".
       *
-      * The parameters are the same as those passed to any C/C++ main
-      * program, which contain the command line arguments:
+      *   -c  filename [string]
+      *       Specifies the name of a command file. If not specified here,
+      *       the command file name may be specified in the FileMaster block
+      *       of the parameter file. 
+      *
+      * The -p (parameter file) and -r (restart) options are incompatible:
+      * A simulation may either be initialized from a parameter file or a 
+      * restart file, but not both. A command file is required in both cases.
+      *
+      * This function is passed two arguments that should contain the command 
+      * line arguments that were passed to the main program:
       *
       * \param argc number of command line arguments
       * \param argv C-array of C-string argument strings

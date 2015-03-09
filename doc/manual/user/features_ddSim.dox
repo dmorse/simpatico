@@ -4,10 +4,7 @@
 \ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Click on any of the links below for user information about classes 
-that implement algorithms for molecular dynamics integration or 
-on-the fly data analysis that can be used with the ddSim parallel 
-MD program.
+Click on any of the links below for user information about classes that implement algorithms for molecular dynamics integration or on-the fly data analysis that can be used with the ddSim parallel MD program.
 
 \sa DdMd_Integrator_Module
 \sa DdMd_Analyzer_Module
@@ -23,19 +20,29 @@ MD program.
  
 <h2> Data Analysis and Output (subclasses of DdMd::Analyzer): </h2>
 <ul style="list-style: none;">
-  <li> \subpage ddMd_analyzer_KineticEnergyAnalyzer_page </li>
-  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_LogEnergy_page </li>
-  <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
-  <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
-  <li> \subpage ddMd_analyzer_OutputPressure_page </li>
-  <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
-  <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
+  <li> \subpage ddMd_analyzer_EnergyAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_KineticEnergyAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_ExternalEnergyAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_PairEnergyAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
+  <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
+  <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
+  <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
+  <li> \subpage ddMd_analyzer_PressureAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_OutputPressure_page </li>
+  <li> \subpage ddMd_analyzer_StressAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_VirialStressAnalyzer_page </li>
+  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
   <li> \subpage ddMd_analyzer_StructureFactor_page </li>
   <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage ddMd_analyzer_VanHove_page </li>
-  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+</ul>
+
+<h2> Configuration and Trajectory File Writers (subclasses of DdMd::Analyzer): </h2>
+<ul style="list-style: none;">
   <li> \subpage ddMd_analyzer_ConfigWriter_page </li>
   <li> \subpage ddMd_analyzer_DdMdTrajectoryWriter_page </li>
   <li> \subpage ddMd_analyzer_LammpsDumpWriter_page </li>

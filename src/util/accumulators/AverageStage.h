@@ -14,69 +14,52 @@ namespace Util
 {
 
    /**
-   * A hierarchical block average algorithm.
+   * Evaluate average with hierarchical blocking error analysis.
    *
-   * This class implements a hierarchical block averaging algorithm
-   * that calculates the average and variance of a sequence of values,
-   * and also calculates the variance for sequences of block averages,
-   * for multiple block sizes. The algorithm is implemented by a
-   * chain of AverageStage objects, in which each object is assigned
-   * an integer chainId. The "primary" AverageStage object (chainId=0)
-   * in this chain calculates the average and variance for a "primary"
-   * sequence of measured values that are passed as parameters to
-   * its sample method. This object hold a pointer to an AverageStage
-   * with chainId=1 that calculates the variance of a sequence in which
-   * each value is the average of a block of blockFactor consecutive
-   * values in the primary sequence. The object with chainId=1 holds a
-   * pointer to an object with chainId=2 that calculates the variance
-   * of a sequence in which each value is the average of a block of
-   * blockFactor values of the sequence processed by chainId=1, or
-   * blockFactor**2 values of the primary sequence. In general, the
-   * object with chainId=n calculates the variance of a sequence in
-   * which each value is an average of blockFactor**n values of the
-   * primary sequence.  The integer parameter blockFactor is passed
-   * to the constructor of the primary AverageStage object as a
-   * parameter, which is set to blockFactor=2 by default. New stages
-   * are added to this chain of objects dynamically as the length of
-   * the primary sequence grows: After the primary AverageStage has
-   * sampled m values, there exists one AverageStage objects for each
-   * value of 0 <= * stageId <= n, where n is the largest integer for
-   * which blockFactor**n <= m.
+   * This class implements an algorithm to evaluate the average of a 
+   * sequence, using a hierarchical blocking algorithm to estimate the
+   * error on the average. The algorithm is based on the calculation of
+   * variances for sequences of block averages for multiple levels of
+   * block sizes, as described in the following reference:
    *
-   * The outputError() method of the primary AverageStage outputs
-   * a sequence of estimates of the error of the average that are
-   * derived different stages of block averaging. The estimate
-   * obtained from each stage is given by sqrt(variance/nSample),
-   * where variance is the variance of the sequence of block averages
-   * processed by that stage, and nSample is the number of such block
-   * averages thus far. This estimate is accurate only when the block
-   * averages are long enough to be uncorrelated. A reliable
-   * estimate of the error of the average can be obtained if and
-   * only if several stages of block averaging yield statistically
-   * indistinguishable error estimates.
+   * ``Error estimates on averages of correlated data", H. Flyvbjerg 
+   *  and H.G. Petersen, J. Chem. Phys. 91, pgs. 461-466 (1989).
    *
-   * Algorithm:
+   * The blocking algorithm is implemented here by a creating a linked 
+   * list of AverageStage objects, each of which is responsible for
+   * computing the variance on block averages using a different level
+   * of blocking. Each object in this list is assigned an integer chainId.
+   * The first AverageStage object in the list, with chainId=0, calculates 
+   * the average and variance for a "primary" sequence of measured values 
+   * that are passed as parameters to its sample method. This first object
+   * is normally an instance of the Average class, which is a subclass of
+   * AverageStage that implements features that are only required by the 
+   * primary stage. This object has a pointer to a child AverageStage with 
+   * chainId=1 that calculates the variance of a secondary sequence in which 
+   * each value is the average of blockFactor consecutive values in the 
+   * primary sequence. The object with chainId=1 in turn has has a pointer 
+   * to a child object with chainId=2 that calculates the variance of a 
+   * sequence in which each value is the average of a block of blockFactor**2 
+   * consecutive values of the primary sequence, and so on. In general, the 
+   * object with chainId=n, calculates the variance of a sequence in which 
+   * each value is an average of blockFactor**n values of the primary 
+   * sequence. Each value in the sequence analyzed by the object with 
+   * chainId=n+1 is calculated by the parent object with chainId=n, by 
+   * calculating an average of a block of blockFactor consecutive values
+   * of its own sequence and passing this block average as a parameter
+   * the sample() function of the object with chainId=n+1. New stages in
+   * this linked list are instantiated and to the list as needed as the 
+   * length of the primary sequence grows: When an object with chainId=n 
+   * has been passed a sequence of exactly blockFactor values, it creates 
+   * a child AverageStage object with chainId=n+1 and passes the average 
+   * of these first blockFactor values to the sample function of the 
+   * child object as the first value in its sequence.
    *
-   * The averaging algorithm is implemented by the sample() method.
-   * Each time the sample method is called with a new value, the
-   * method increments a sum of values and sum of squares,from which
-   * the average and variance can be calculated. It also increments a
-   * block sum that is reset to zero every blockFactor samples. Each
-   * AverageStage object can hold a pointer to a child AverageStage
-   * object. When an AverageStage is instantiated, that pointer is
-   * null. After the first blockFactor samples, however, the sample
-   * method creates a new child object. At this point, and every
-   * blockFactor steps thereafter, the sample method of the parent
-   * passes a block average to the sample method of its child and
-   * then resets the block sum to zero. The resulting chain of objects
-   * is extended as needed: After blockFactor*blockFactor samples have 
-   * been passed to a parent, so that blockFactor block average values
-   * have been passed to a child object, the child will create a
-   * grandchild. The public interface of the primary AverageStage
-   * object allows all of the objects in the resulting chain to
-   * report error estimates, via the recursive outputError() method,
-   * but does not allow any other form of access to descendants of
-   * the primary AverageStage object.
+   * A value of the integer parameter blockFactor is passed to the 
+   * constructor of the primary AverageStage object. This parameter is 
+   * set to blockFactor=2 by default. Its value may be reset using the 
+   * setBlockFactor() function before any data is sampled, but may not
+   * be changed thereafter.
    *
    * \ingroup Accumulators_Module
    */
@@ -104,18 +87,16 @@ namespace Util
       virtual ~AverageStage();
 
       /**
+      * Reset the value of blockFactor.
+      *
+      * \throw Exception if called when nSample > 0.
+      */
+      void setBlockFactor(int blockFactor);
+
+      /**
       * Initialize all accumulators and recursively destroy all children.
       */
       virtual void clear();
-
-      /**
-      * Register the creation of a descendant stage.
-      *
-      * This should be called only by a root stage.
-      *
-      * \param descendantPtr pointer to a descendant AverageStage.
-      */
-      virtual void registerDescendant(AverageStage* descendantPtr);
 
       /**
       * Add a sampled value to the ensemble.
@@ -154,14 +135,14 @@ namespace Util
       double stdDeviation() const;
 
       /**
-      * Return an estimate for the std deviation of the average.
+      * Return a naive estimate for the std deviation of the average.
       *
       * \return sqrt(variance()/nSample())
       */
       double error() const;
 
       /**
-      * Return the number of sampled values.
+      * Return the number of sampled values in this sequence.
       */
       long nSample() const;
 
@@ -196,13 +177,13 @@ namespace Util
       double blockSum_;
 
       /// Number of sampled values.
-      long   nSample_;
+      long nSample_;
 
       /// Number of values in the current block.
-      long   nBlockSample_;
+      long nBlockSample_;
 
       /// Number of measured values per sampled value at this stage.
-      long   stageInterval_;
+      long stageInterval_;
 
       /// Pointer to child stage, if any.
       AverageStage* childPtr_;
@@ -217,24 +198,34 @@ namespace Util
       int blockFactor_;
 
       /**
-      * Constructor for child objects.
+      * Constructor for child objects (private).
       *
-      * \param stageInterval number of measured values per sample at this stage
-      * \param stageId       integer id for this stage
-      * \param rootPtr       pointer to root AverageStage
-      * \param blockFactor   ratio of block sizes of subsequent stages
+      * \param stageInterval  number of values per sample at this stage
+      * \param stageId  integer id for this stage
+      * \param rootPtr  pointer to root AverageStage
+      * \param blockFactor  ratio of block sizes of subsequent stages
       */
-      AverageStage(long stageInterval, int stageId, AverageStage* rootPtr, int blockFactor);
+      AverageStage(long stageInterval, int stageId, 
+                   AverageStage* rootPtr, int blockFactor);
 
       /**
-      * Copy constructor - private and not implemented.
+      * Copy constructor (private and not implemented).
       */
       AverageStage(const AverageStage& other);
 
       /**
-      * Assignment - private and not implemented.
+      * Assignment (private and not implemented).
       */
       AverageStage& operator = (const AverageStage& other);
+
+      /**
+      * Register the creation of a descendant stage.
+      *
+      * This should be called only by a root stage.
+      *
+      * \param descendantPtr pointer to a descendant AverageStage.
+      */
+      virtual void registerDescendant(AverageStage* descendantPtr);
 
    };
 

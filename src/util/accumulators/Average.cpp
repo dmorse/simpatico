@@ -50,13 +50,23 @@ namespace Util
    * Read nSamplePerBlock from file.
    */
    void Average::readParameters(std::istream& in)
-   {  read<int>(in, "nSamplePerBlock", nSamplePerBlock_); }
+   {  
+      read<int>(in, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Invalid input: nSamplePerBlock < 0");
+      }
+   }
 
    /*
    * Set nSamplePerBlock parameter.
    */
    void Average::setNSamplePerBlock(int nSamplePerBlock)
-   {  nSamplePerBlock_ = nSamplePerBlock; }
+   {  
+      if (nSamplePerBlock < 0) {
+         UTIL_THROW("Attempt to set nSamplePerBlock < 0");
+      }
+      nSamplePerBlock_ = nSamplePerBlock; 
+   }
 
    /*
    * Load internal state from archive.
@@ -67,6 +77,9 @@ namespace Util
       ar & blockSum_;
       ar & iBlock_;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Loading value nSamplePerBlock < 0");
+      }
    }
 
    /*
@@ -80,28 +93,36 @@ namespace Util
    */
    void Average::sample(double value)
    {
-      std::ostream* outFilePtr = 0;
-      sample(value, outFilePtr);
+      AverageStage::sample(value);
+
+      // Increment block average
+      if (nSamplePerBlock_) {
+         if (iBlock_ == nSamplePerBlock_) {
+            blockSum_ = 0.0;
+            iBlock_  = 0;
+         }
+         blockSum_ += value;
+         ++iBlock_;
+      }
    }
 
    /*
-   * Add a sampled value to the ensemble (private method)
-   *
-   * If outFilePtr != 0, output block averages to outFilePtr
+   * Add a sampled value and output block average if complete.
    */
-   void Average::sample(double value, std::ostream* outFilePtr)
+   void Average::sample(double value, std::ostream& out)
    {
       AverageStage::sample(value);
 
-      // Process block average for output
-      if (nSamplePerBlock_ && outFilePtr) {
+      // Increment block average for output
+      if (nSamplePerBlock_) {
+         if (iBlock_ == nSamplePerBlock_) {
+            blockSum_ = 0.0;
+            iBlock_  = 0;
+         }
          blockSum_ += value;
          ++iBlock_;
          if (iBlock_ == nSamplePerBlock_) {
-            *outFilePtr << Dbl(blockSum_/double(nSamplePerBlock_))
-                        << std::endl;
-            blockSum_ = 0.0;
-            iBlock_  = 0;
+            out << Dbl(blockSum_/double(iBlock_)) << "\n";
          }
       }
    }
@@ -151,61 +172,20 @@ namespace Util
       return aveErr;
    }
 
-
    /*
    * Output statistical properties to file
    */
-   void Average::output(std::ostream& out)
+   void Average::output(std::ostream& out) const
    {
       double aveErr = blockingError();
- 
-      #if 0
-      // Find first stage (descending) with nSample >= 16
-      AverageStage* ptr = 0;
-      int n = descendants_.size();
-      int i = n;
-      int nSample = 1;
-      while (nSample < 16 && i > 0) {
-         --i;
-         ptr = descendants_[i];
-         nSample = ptr->nSample();
-      }
-
-      double error  = ptr->error();
-      double sigma  = error/sqrt(2.0*double(nSample-1));
-      double weight = 1.0/(sigma*sigma);
-      double sum    = error*weight;
-      double norm   = weight;
-      double aveErr = error;
-      double oldSig;
-
-      // Find weighted average within plateau
-      bool next = true;
-      while (next && i > 0) {
-         oldSig = sigma;
-         --i;
-         ptr = descendants_[i];
-         error = ptr->error();
-         if (fabs(error - aveErr) < 2.0*oldSig) {
-            nSample = ptr->nSample();
-            sigma  = error/sqrt(2.0*double(nSample-1));
-            weight = 1.0/(sigma*sigma);
-            sum   += error*weight;
-            norm  += weight;
-            aveErr = sum/norm;
-         } else {
-            next = false;
-         }
-      }
-      #endif
 
       out <<  "Average   " << Dbl(average())         
-          <<  "  +- "      << Dbl(aveErr, 9, 2) << std::endl;
-      out <<  "Variance  " << Dbl(variance())        << std::endl;
-      out <<  "Std Dev   " << Dbl(stdDeviation())    << std::endl;
-      out <<  std::endl;
+          <<  "  +- "      << Dbl(aveErr, 9, 2) << "\n";
+      out <<  "Variance  " << Dbl(variance())        << "\n";
+      out <<  "Std Dev   " << Dbl(stdDeviation())    << "\n";
+      out <<  "\n";
 
-      out << "Hierarchichal Error Analysis:" << std::endl;
+      out << "Hierarchichal Error Analysis:" << "\n";
       AverageStage* ptr = 0;
       double error;
       int interval;
@@ -221,10 +201,10 @@ namespace Util
                 << Int(interval) 
                 << Dbl(error) 
                 << Dbl(error/sqrt(double(nSample)))
-                << Int(nSample) << std::endl;
+                << Int(nSample) << "\n";
          }
       }
-      out << std::endl;
+      out << "\n";
    }
 
    /*

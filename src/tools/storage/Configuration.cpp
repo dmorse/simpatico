@@ -54,12 +54,9 @@ namespace Tools
 
       atoms_.allocate(atomCapacity_);
 
-      bool isRequired; // Used to label optional arguments
-
       #ifdef INTER_BOND
-      bondCapacity_ = 0;
-      isRequired = false;
-      read<int>(in, "bondCapacity", bondCapacity_, isRequired); 
+      bondCapacity_ = 0; // default value
+      readOptional<int>(in, "bondCapacity", bondCapacity_); 
       // If bondCapacity is absent, it is set to zero by default
       if (bondCapacity_ > 0) {
          bonds_.allocate(bondCapacity_);
@@ -67,34 +64,30 @@ namespace Tools
       #endif
 
       #ifdef INTER_ANGLE
-      angleCapacity_ = 0;
-      isRequired = false;
-      read<int>(in, "angleCapacity", angleCapacity_, isRequired); 
+      angleCapacity_ = 0; // default value
+      readOptional<int>(in, "angleCapacity", angleCapacity_); 
       if (angleCapacity_ > 0) {
          angles_.allocate(angleCapacity_);
       }
       #endif
 
       #ifdef INTER_DIHEDRAL
-      dihedralCapacity_ = 0;
-      isRequired = false;
-      read<int>(in, "dihedralCapacity", dihedralCapacity_, isRequired); 
+      dihedralCapacity_ = 0; // default value
+      readOptional<int>(in, "dihedralCapacity", dihedralCapacity_); 
       if (dihedralCapacity_ > 0) {
          dihedrals_.allocate(dihedralCapacity_);
       }
 
-      improperCapacity_ = 0;
-      isRequired = false;
-      read<int>(in, "improperCapacity", improperCapacity_, isRequired); 
+      improperCapacity_ = 0; // default value
+      readOptional<int>(in, "improperCapacity", improperCapacity_); 
       if (improperCapacity_ > 0) {
          impropers_.allocate(improperCapacity_);
       }
       #endif
 
       // Optionally read species info
-      nSpecies_ = 0;
-      isRequired = false;
-      read<int>(in, "nSpecies", nSpecies_, isRequired);
+      nSpecies_ = 0; // default value
+      readOptional<int>(in, "nSpecies", nSpecies_);
       if (nSpecies_ > 0) {
          species_.allocate(nSpecies_);
          for (int i = 0; i < nSpecies_; ++i) {

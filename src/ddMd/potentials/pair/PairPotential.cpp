@@ -89,8 +89,8 @@ namespace DdMd
    void PairPotential::readParameters(std::istream& in)
    {
       read<double>(in, "skin", skin_);
-      nCellCut_ = 1; // Default value
-      read<int>(in, "nCellCut", nCellCut_, false);  // optional parameter
+      nCellCut_ = 1; // Default value for optional parameter
+      readOptional<int>(in, "nCellCut", nCellCut_); 
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;

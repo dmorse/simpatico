@@ -1,0 +1,71 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_PairEnergyAnalyzer_page  PairEnergyAnalyzer
+
+\section ddMd_analyzer_PairEnergyAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes the average of the nonbonded pair energy between atoms with a specified pair of types, and optionally outputs sampled values or block averages of this quantity during the simulation. The typeIdPair parameter specifies the a pair of atom type indices: This analyzer computes the nonbonded pair energy arising from interactions between pairs of atoms which one atom is of type (typeIdPair[0]) and the one atom is the other (typeIdPair[1]).
+
+\sa DdMd::PairEnergyAnalyzer
+
+\section ddMd_analyzer_PairEnergyAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+   PairEnergyAnalyzer{
+     interval           int
+     outputFileName     string
+     [nSamplePerBlock]  int
+     typeIdPair         FArray<int, 2>
+   }
+\endcode
+in which 
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average (optional, default = 0)</td>
+  </tr>
+  <tr> 
+     <td>typeIdPair</td>
+     <td>An array of two elements containing two atom type ids for the pairs of interest</td>
+  </tr>
+</table>
+If nSamplePerBlock > 0, this analyzer outputs block average values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.
+
+The nSamplePerBlock parameter is optional, as indicated by the square brackets in the file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
+
+Example: The following parameter block causes the total pair energy arising from interactions between atoms of types 0 and 1 to be calculated at an interval of 100 time steps, with block averages of 10 sampled values output every 1000 time steps, and data output to files with a common basename "pairEnergy".
+\code
+   PairEnergyAnalyzer{
+     interval           100
+     outputFileName     pairEnergy
+     nSamplePerBlock    10
+     typeIdPair         1
+                        0
+   }
+\endcode
+
+
+\section ddMd_analyzer_PairEnergyAnalyzer_output_sec Output
+
+If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat, with extension ".dat", during the simulation. Each line of this file contains the value of the time step associated with the first value in the block average and the value of the block average of nSamplePerBlock values. If nSamplePerBlock = 0, no such file is created. 
+
+At the end of the simulation, when the OUTPUT_ANALYZERS command is invoked:
+
+   - A copy of the parameter file block associated with this analyzer is echoed to file {outputFileName}.prm.
+
+   - The final average value and estimated error on the average is output to file {outputFileName}.ave.
+
+   - Details of the hierarchical block-averaging analysis of the error on the average, along with the value of the variance, are output to a file {outputFileName}.aer.
+
+*/
+
+}

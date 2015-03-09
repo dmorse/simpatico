@@ -1,0 +1,70 @@
+
+Classes in src/ddMd/analyzer
+-----------------------------------------------------
+Global Scalar Variables, Average and Output
+
+AverageAnalyzer.h              (base class)
+
+KineticEnergyAnalyzer.h
+OutputTemperature.h         <- deprecated
+
+ExternalEnergyAnalyzer.h
+ExternalEnergyAverage.h     <- deprecated
+
+PairEnergyAnalyzer.h
+PairEnergyAverage.h         <- deprecated
+OutputPairEnergies.h        <- deprecated
+
+PressureAnalyzer.h
+OutputPressure.h            <- deprecated
+
+OutputBoxdim.h
+
+OutputEnergy.h
+
+-----------------------------------------------------
+Tensor-Valued Variables, Average and Output:
+
+TensorAverage.h             (base class, full tensors)
+SymmTensorAverage.h         (base class, symm tensors)
+
+StressAnalyzer.h
+VirialStressAnalyzer.h
+
+OutputStressTensor.h          <- deprecated
+VirialStressTensor.h          <- deprecated
+VirialStressTensorAverage.h   <- deprecated
+
+-----------------------------------------------------
+Autocorrelation of global quantities:
+
+AutoCorrAnalyzer.h (base class)
+
+BondTensorAutoCorr.h
+StressAutoCorrelation.h : public AutoCorrAnalyzer
+StressAutoCorr.h          <- deprecate ?
+
+-----------------------------------------------------
+Static and Dynamic Structure Factor Analyzers:
+
+AsymmSF.h                 <- deprecate ?
+AsymmSFGrid.h             <- deprecate ?
+StructureFactor.h
+StructureFactorGrid.h
+VanHove.h
+
+-----------------------------------------------------
+Configuration and Trajector Writers:
+
+ConfigWriter.h
+
+TrajectoryWriter.h
+DdMdGroupTrajectoryWriter.h
+DdMdTrajectoryWriter.h
+LammpsDumpWriter.h
+
+-----------------------------------------------------
+Miscellaneous:
+
+LogEnergy.h
+OrderParamNucleation.h   <- deprecate

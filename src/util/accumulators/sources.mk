@@ -1,6 +1,8 @@
 
 util_accumulators_=util/accumulators/Average.cpp \
     util/accumulators/AverageStage.cpp \
+    util/accumulators/TensorAverage.cpp \
+    util/accumulators/SymmTensorAverage.cpp \
     util/accumulators/Distribution.cpp \
     util/accumulators/IntDistribution.cpp \
     util/accumulators/RadialDistribution.cpp 
