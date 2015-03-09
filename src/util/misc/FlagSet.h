@@ -16,8 +16,13 @@ namespace Util
 {
 
    /**
-   * Represents a set of boolean flags represented by characters.
+   * A set of boolean variables represented by characters.
    *
+   * A FlagSet has a string of allowed characters, each of which
+   * which represents a boolean variable (i.e., a flag), and a
+   * string of actual characters containing the subset of the
+   * allowed characters that should be set on (i.e., true).
+   * 
    * \ingroup Misc_Module
    */
    class FlagSet 
@@ -33,6 +38,8 @@ namespace Util
       /**
       * Constructor.
       *
+      * This function calls setAllowed(string) internally.
+      *
       * \param allowed  string of all allowed characters.
       */ 
       FlagSet(std::string allowed);
@@ -40,7 +47,8 @@ namespace Util
       /**
       * Set or reset the string of allowed flags.
       *
-      * This function also clears all isActive flags.
+      * This function sets isActive false for all flags and
+      * clears the actual string.
       *
       * \param allowed  string of all allowed characters
       */ 
@@ -49,9 +57,12 @@ namespace Util
       /**
       * Set the string of actual flag characters.
       *
-      * This method requires that the characters in the actual string
-      * appear in the same order as in the allowed string, though they
-      * may be separated by absent characters.
+      * This function requires that the characters in the actual string
+      * appear in the same order as they do in the allowed string, but
+      * allows some allowed characters to be absent.
+      *
+      * An Exception is thrown if actual contains a character that is 
+      * not allowed, or if it is not in order.
       *
       * \param actual string containing a subset of allowed characters
       */ 
@@ -59,6 +70,8 @@ namespace Util
   
       /**
       * Is the flag associated with character c active?
+      * 
+      * \param c  character to be tested.
       */ 
       bool isActive(char c) const;
   
@@ -68,7 +81,7 @@ namespace Util
       const std::string& allowed() const;
   
       /**
-      * Return the string of actual character flags.
+      * Return the string of character for which flags are set.
       */ 
       const std::string& actual() const;
   
@@ -80,7 +93,7 @@ namespace Util
       /// String containing all allowed characters.
       std::string allowed_;
 
-      /// String containing actual flag characters.
+      /// String containing characters for which flags are set on.
       std::string actual_;
 
       /// Map containing isActive flags for all characters.
@@ -93,7 +106,8 @@ namespace Util
    /*
    * Is this flag active?
    */
-   inline bool FlagSet::isActive(char c) const
+   inline 
+   bool FlagSet::isActive(char c) const
    {
       MapType::const_iterator iter = map_.find(c);
       if (iter == map_.end()) {
@@ -105,14 +119,16 @@ namespace Util
    /*
    * Return the string of allowed characters.
    */ 
-   inline const std::string& FlagSet::allowed() const
-   {   return allowed_; }
+   inline 
+   const std::string& FlagSet::allowed() const
+   {  return allowed_; }
   
    /*
    * Return the string of actual character flags.
    */ 
-   inline const std::string& FlagSet::actual() const
-   {   return actual_; }
+   inline 
+   const std::string& FlagSet::actual() const
+   {  return actual_; }
 
 }
 #endif

@@ -91,6 +91,42 @@ public:
       TEST_ASSERT(flags.isActive('f') == true);
    }
 
+   void testReadOrdered3() 
+   {
+      printMethod(TEST_FUNC);
+
+      FlagSet flags;
+      std::string allowed = "abcdef";
+      flags.setAllowed(allowed);
+      TEST_ASSERT(flags.allowed() == allowed);
+      bool success = false;
+      std::string actual = "afc";
+      try {
+         flags.setActualOrdered(actual);
+      } catch (Exception e) {
+         success = true;
+      }
+      TEST_ASSERT(success);
+   }
+
+   void testReadOrdered4() 
+   {
+      printMethod(TEST_FUNC);
+
+      FlagSet flags;
+      std::string allowed = "abcdef";
+      flags.setAllowed(allowed);
+      TEST_ASSERT(flags.allowed() == allowed);
+      bool success = false;
+      std::string actual = "ag";
+      try {
+         flags.setActualOrdered(actual);
+      } catch (Exception e) {
+         success = true;
+      }
+      TEST_ASSERT(success);
+   }
+
 };
 
 TEST_BEGIN(FlagSetTest)
@@ -98,6 +134,8 @@ TEST_ADD(FlagSetTest, testConstructor)
 TEST_ADD(FlagSetTest, testSetAllowed)
 TEST_ADD(FlagSetTest, testReadOrdered1)
 TEST_ADD(FlagSetTest, testReadOrdered2)
+TEST_ADD(FlagSetTest, testReadOrdered3)
+TEST_ADD(FlagSetTest, testReadOrdered4)
 TEST_END(FlagSetTest)
 
 #endif

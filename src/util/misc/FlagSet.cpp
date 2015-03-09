@@ -6,7 +6,6 @@
 */
 
 #include <util/global.h>
-
 #include <util/misc/FlagSet.h>
 
 namespace Util
@@ -19,20 +18,20 @@ namespace Util
    {}
 
    /*
-   * Constructor.
+   * Constructor, sets allowed string.
    */
    FlagSet::FlagSet(std::string allowed)
    {  setAllowed(allowed); }
 
    /*
-   * Set root prefix for all path names.
+   * Set allowed string, clear actual string.
    */
    void FlagSet::setAllowed(std::string allowed)
    {
-      // Copy actual
       allowed_ = allowed;
+      actual_.clear();
 
-      // Create map, initializing active flag to false for all.
+      // Create map, initializing isActive to false for all.
       map_.clear();
       char c;
       int n = allowed_.size();
@@ -49,15 +48,16 @@ namespace Util
    {
       actual_ = actual;
 
-      // Set all isActive flags to false.
-      MapType::iterator iter;
-      for (iter = map_.begin(); iter != map_.end(); ++iter) {
-         iter->second = false;
-      }
- 
-      // Set flags for characters in actual to true.
       int n = allowed_.size();
       if (n > 0) {
+
+         // Set isActive to false for all allowed characters
+         MapType::iterator iter = map_.begin();
+         for ( ; iter != map_.end(); ++iter) {
+            iter->second = false;
+         }
+ 
+         // Set isActive true for actual characters
          char c, m;
          int j = 0;
          m = allowed_[j];
@@ -77,28 +77,8 @@ namespace Util
             assert(iter != map_.end());
             iter->second = true;
          }
+
       }
    }
 
-   #if 0
-   /*
-   */
-   void FlagSet::readUnordered(std::string actual)
-   {
-      int n = allowed_.size();
-      if (n > 0) {
-         int i = 0;
-         int j = 0;
-         MapType::iterator = iter;
-         c = actual[i];
-         while (i < n) {
-            iter = map_.find(c);
-            if (iter == MaptType::end) {
-               UTIL_THROW("Unknown character");
-            }
-            
-         }
-      }
-   }
-   #endif
 }
