@@ -63,12 +63,19 @@
 #endif
 
 /**
-* Assertion macro suitable for use in parallel code.
+* Assertion macro suitable for serial or parallel production code.
+*/
+#define UTIL_CHECK(condition) \
+  if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
+
+/**
+* Assertion macro suitable for debugging serial or parallel code.
 */
 #ifdef NDEBUG
 #define UTIL_ASSERT(condition) {}
 #else
-#define UTIL_ASSERT(condition) if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
+#define UTIL_ASSERT(condition) \
+  if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
 #endif
 
 #endif

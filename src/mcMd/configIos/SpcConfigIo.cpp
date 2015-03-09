@@ -48,66 +48,113 @@ namespace McMd
 
       // System boundary.
       in >> Label("BOUNDARY");
-      in >> boundary() ;
+      in >> boundary();
 
       // Molecular species
+      in >> Label("SPECIES");
+      #ifdef INTER_BOND
+      bool hasBonds = (bool)simulation().nBondType();
+      if (hasBonds) {
+         Label label("hasBonds", false);
+         in >> label;
+         hasBonds = label.isClear();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      bool hasAngles = (bool)simulation().nAngleType();
+      if (hasAngles) {
+         Label label("hasAngles", false);
+         in >> label;
+         hasAngles = label.isClear();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      bool hasDihedrals = (bool)simulation().nDihedralType();
+      if (hasDihedrals) {
+         Label label("hasDihedrals", false);
+         in >> label;
+         hasDihedrals = label.isClear();
+      }
+      #endif
       Species* speciesPtr;
       Molecule* molPtr;
-      int iSpecies, iSpeciesIn, nMolecule, nAtomSpecies, nAtomTot, iMol;
+      int iSpeciesIn, nMolecule, nAtomIn;
       int nSpecies = simulation().nSpecies();
-      in >> Label("SPECIES");
-      nAtomTot = 0;
-      for (iSpecies = 0 ; iSpecies < nSpecies; ++iSpecies) {
+      int nAtomTot = 0;
+      for (int iSpecies = 0 ; iSpecies < nSpecies; ++iSpecies) {
          in >> iSpeciesIn;
-         if (iSpeciesIn != iSpecies) {
-            UTIL_THROW("Error: iSpeciesIn != iSpecies");
-         }
+         UTIL_CHECK(iSpeciesIn == iSpecies);
          speciesPtr = &simulation().species(iSpecies);
          in >> nMolecule;
-         in >> nAtomSpecies;
-         if (nMolecule > speciesPtr->capacity()) {
-            UTIL_THROW("Error: nMolecule > species.capacity()");
+         UTIL_CHECK(nMolecule <= speciesPtr->capacity()) 
+         in >> nAtomIn;
+         UTIL_CHECK(nAtomIn != speciesPtr->nAtom())
+         nAtomTot += nMolecule*nAtomIn;
+         #ifdef INTER_BOND
+         if (hasBonds) {
+            int nBondIn;
+            in >> nBondIn;
+            UTIL_CHECK(nBondIn == speciesPtr->nBond());
          }
-         if (nAtomSpecies != speciesPtr->nAtom()) {
-            UTIL_THROW("Error: nAtom != species.nAtom() ");
+         #endif
+         #ifdef INTER_ANGLE
+         if (hasAngles) {
+            int nAngleIn;
+            in >> nAngleIn;
+            UTIL_CHECK(nAngleIn == speciesPtr->nAngle());
          }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (hasDihedrals) {
+            int nDihedralIn;
+            in >> nDihedralIn;
+            UTIL_CHECK(nDihedralIn == speciesPtr->nDihedral());
+         }
+         #endif
          // Add all molecules of this species
-         for (iMol = 0; iMol < nMolecule; ++iMol) {
+         for (int iMol = 0; iMol < nMolecule; ++iMol) {
             molPtr = &(simulation().getMolecule(iSpecies));
             system().addMolecule(*molPtr);
             if (molPtr != &system().molecule(iSpecies, iMol)) {
                UTIL_THROW("Molecule index error");
             }
          }
-         nAtomTot += nMolecule*nAtomSpecies;
       }
 
       in >> Label("ATOMS");
-      int nAtomTotIn, atomIdIn, iMolIn, iAtom, iAtomIn;
-      in >> Label("nAtom") >> nAtomTotIn;
-      // Check consistency
-      System::MoleculeIterator molIter;
-      Molecule::AtomIterator atomIter;
-      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
-
-         iMol = 0;
-         system().begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-
-            // Read positions, shift into primary cell
-            iAtom = 0;
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               // ReadAtom
-               in >> atomIdIn;
-               in >> iSpeciesIn;
-               in >> iMolIn;
-               in >> iAtomIn;
-               if (iSpeciesIn != iSpecies) {
-                  UTIL_THROW("Error: iSpeciesIn != iSpecies");
+      Label orderedLabel("ordered", false);
+      in >> orderedLabel;
+      bool isOrdered = orderedLabel.isClear();
+      in >> Label("nAtom") >> nAtomIn;
+      UTIL_CHECK(nAtomIn == nAtomTot);
+      
+      if (isOrdered) {   
+         System::MoleculeIterator molIter;
+         Molecule::AtomIterator atomIter;
+         int atomId, atomIdIn, iMol, iMolIn, iAtom, iAtomIn, typeId;
+         for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+            speciesPtr = &simulation().species(iSpecies);
+            iMol = 0;
+            system().begin(iSpecies, molIter); 
+            for ( ; molIter.notEnd(); ++molIter) {
+               iAtom = 0;
+               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+                  in >> atomIdIn;
+                  UTIL_CHECK(atomIdIn == atomId);
+                  in >> iSpeciesIn;
+                  UTIL_CHECK(iSpeciesIn == iSpecies);
+                  in >> iMolIn;
+                  UTIL_CHECK(iMolIn == iMol);
+                  in >> iAtomIn;
+                  UTIL_CHECK(iAtomIn == iAtom);
+                  in >> typeId;
+                  atomIter->setTypeId(typeId);
+                  in >> atomIter->position();
+                  ++iAtom;
+                  ++atomId;
                }
+               ++iMol; 
             }
-
          }
       }
 
