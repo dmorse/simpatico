@@ -1,6 +1,31 @@
-Possible names for new namespace: Topo, Chem, or Struc.
-Use Topo as an example in what follows.
+Possible names for new namespace: Topo, Chem, or Struc. Use Topo as an 
+example in what follows.
 
+===================================================================
+Design idea #1:
+
+   - Have a new namespace that contains information about species.
+
+   - Classes in this namespace would define only information and data 
+     types that can be used in any program (e.g., no pointers to specific
+     atom types)
+
+   - Subclasses within other namespaces could be specialized for the 
+     namespace.
+
+   - File formats for exchange would be defined by code in the common
+     namespace.
+
+
+namespace Topo{
+
+   class Topo::Group -> replaces current McMd::SpeciesGroup
+   class Topo::Species -> replaces current McMd::Species
+   class Topo::SpeciesBuilder -> code to build a species
+
+}
+
+===================================================================
 namespace Topo{
 
    class Topo::Group -> replaces current McMd::SpeciesGroup

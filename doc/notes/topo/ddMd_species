@@ -1,0 +1,22 @@
+Species data in DdMd::Simulation
+--------------------------------
+
+   - Data for reach species (minimal): Number of molecules of this type,
+     number of atoms, bonds, angles, and dihedrals per molecule.
+
+   - Add a member listing the first id for atoms, bonds, etc. for each 
+     species. Provide functions allowing conversion between molecule and 
+     local atom/group number and global atom/group ids.
+
+   - Data structures: Define class Species. DdMd::Simulation could have
+     a DArray<Species> species array, and a bool hasSpecies flag.
+ 
+   - Question: Should there be a way to access more detailed topological 
+     information? Possibility: Auxiliary data structure (class MoleculeType)
+     that takes a Species as a required parameter to its constructor. The
+     Species could have a pointer to the Topology, which would be null if
+     no topology exists.
+
+   - Question: What namespace should this be? Should it be accessible to
+     both DdMd and Tools? How to prevent name clashes with McMd species?
+
