@@ -48,7 +48,8 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
+      nSamplePerBlock_ = 0;
+      readOptional<int>(in,"nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new Average;
@@ -64,8 +65,10 @@ namespace DdMd
    void AverageAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSamplePerBlock_);
+      loadOutputFileName(ar);
+      nSamplePerBlock_ = 0;
+      bool isRequired = false;
+      load(ar, nSamplePerBlock_, isRequired);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new Average;
@@ -86,6 +89,8 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
+      bool isActive = (bool)nSamplePerBlock_;
+      Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
 
       if (simulation().domain().isMaster()){
          ar << *accumulatorPtr_;

@@ -148,7 +148,8 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSamplePerBlock_;
+      bool isActive = bool(nSamplePerBlock_);
+      Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
 
       // Save average accumulators
       ar << *totalAveragePtr_;
