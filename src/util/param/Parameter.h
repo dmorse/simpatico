@@ -19,18 +19,26 @@ namespace Util
    /**
    * A single variable in a parameter file.
    *
-   * Parameter is a base class for objects that read and write the
-   * value of a single C++ variable from or to a parameter file. The file
-   * format for a parameter contains a string label followed by a value.
+   * Parameter is a base class for objects that read and write the value
+   * of a single C++ variable from or to a parameter file. The parameter
+   * file format for a parameter contains a string label followed by a 
+   * value for the variable. Different subclasses of parameter are 
+   * specialized for different variable types, which can include primitive
+   * C/C++ variables, user defined types that overload the << and >> 
+   * operators, or any of several different types of container.
    *
    * A Parameter may be required or optional element in a parameter file,
    * depending on the value of the bool isRequired parameter of the
    * constructor. An optional element becomes "active" when an entry
-   * with the correct label is read from a parameter file, or when a
-   * value is loaded from an archive. By convention, a required Parameter
-   * is always active, even before its value is read or loaded. The
-   * bool functions isRequired() and isActive() can be used to query
+   * with the correct label is read from a parameter file, or when an
+   * active value is loaded from an archive. By convention, a required 
+   * Parameter is always active, even before its value is read or loaded. 
+   * The bool functions isRequired() and isActive() can be used to query
    * the state of a Parameter.
+   *
+   * The overloaded saveOptional() static member functions can be used
+   * to save optional parameters to an archive in a form that records
+   * whether or not they are active.
    *
    * \ingroup Param_Module
    */
@@ -51,8 +59,8 @@ namespace Util
       * Save an optional parameter value to an output archive
       *
       * \param ar  output archive to which to save
-      * \param value reference to value of optional parameter
-      * \param isActive Is this parameter present in the parameter file?
+      * \param value  reference to value of optional parameter
+      * \param isActive  Is this parameter present in the parameter file?
       */
       template <class Type>
       static void
@@ -62,9 +70,9 @@ namespace Util
       * Save an optional C-array of n values to an output archive
       *
       * \param ar  output archive to which to save
-      * \param ptr pointer to first element of optional C-array parameter
-      * \param n   number of elements in array
-      * \param isActive Is this parameter present in the parameter file?
+      * \param ptr  pointer to first element of optional C-array parameter
+      * \param n  number of elements in array
+      * \param isActive  Is this parameter present in the parameter file?
       */
       template <class Type>
       static void
@@ -79,7 +87,7 @@ namespace Util
       * \param m  logical number of rows in array
       * \param n  logical number of columns in array
       * \param np  logical number of columns in array
-      * \param isActive Is this parameter present in the parameter file?
+      * \param isActive  Is this parameter present in the parameter file?
       */
       template <class Type>
       static void
@@ -91,7 +99,7 @@ namespace Util
       /**
       * Constructor.
       *
-      * \param label       label string preceding value in file format
+      * \param label  label string preceding value in file format
       * \param isRequired  Is this a required parameter?
       */
       Parameter(const char *label, bool isRequired = true);
@@ -121,7 +129,7 @@ namespace Util
       * until it is matched, at which point the buffer is cleared to allow
       * processing of the next label.
       *
-      * \param in input stream from which to read
+      * \param in  input stream from which to read
       */
       virtual void readParam(std::istream &in);
 
@@ -129,8 +137,13 @@ namespace Util
       * Load from an archive.
       *
       * An optional Parameter loads the value of an isActive flag, and then
-      * loads a parameter value only if the isActive is true. A required
-      * Parameter simply loads the parameter value.
+      * loads the parameter value only if the isActive is true. A required
+      * Parameter simply loads the parameter value. The variable associated
+      * with an optional Parameter must be set to its default value before
+      * attempting to load the parameter. Optional parameters should be
+      * saved either using the save() method of an associated Parameter
+      * object or using the appropriate overloaded Parameter::saveOptional() 
+      * static member function, which both use the required format.
       *
       * \param ar input archive from which to load
       */

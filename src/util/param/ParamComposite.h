@@ -527,6 +527,10 @@ namespace Util
       /**
       * Add and load a new ScalarParam < Type > object.
       *
+      * An optional parameter is indicated by setting isRequired = false.
+      * Optional parameters must be saved using the Parameter::saveOptional()
+      * static member function.
+      * 
       * \param ar  archive for loading
       * \param label  Label string
       * \param value  reference to the Type variable
