@@ -1509,8 +1509,10 @@ namespace DdMd
    }
 
    /*
-   * Set forces on all local atoms to zero.
-   * If reverseUpdateFlag(), also zero ghost atom forces.
+   * Set forces on all atoms to zero.
+   *
+   * If reverseUpdateFlag() is true, zero local and ghost
+   * atom forces, otherwise only local atoms.
    */
    void Simulation::zeroForces()
    {  atomStorage_.zeroForces(reverseUpdateFlag_); }
