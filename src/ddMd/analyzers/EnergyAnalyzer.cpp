@@ -113,26 +113,33 @@ namespace DdMd
       // Load Average accumulators
       Simulation& sim = simulation();
       if (sim.domain().isMaster()) {
+         totalAveragePtr_ = new Average;
          ar >> *totalAveragePtr_;
+         kineticAveragePtr_ = new Average;
          ar >> *kineticAveragePtr_;
+         pairAveragePtr_ = new Average;
          ar >> *pairAveragePtr_;
          #ifdef INTER_BOND
          if (sim.nBondType()) {
+            bondAveragePtr_ = new Average;
             ar >> *bondAveragePtr_;
          }
          #endif
          #ifdef INTER_ANGLE
          if (sim.nAngleType()) {
+            angleAveragePtr_ = new Average;
             ar >> *angleAveragePtr_;
          }
          #endif
          #ifdef INTER_DIHEDRAL
          if (sim.nDihedralType()) {
+            dihedralAveragePtr_ = new Average;
             ar >> *dihedralAveragePtr_;
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (sim.hasExternal()) {
+            externalAveragePtr_ = new Average;
             ar >> *externalAveragePtr_;
          }
          #endif
@@ -152,10 +159,10 @@ namespace DdMd
       Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
 
       // Save average accumulators
+      Simulation& sim = simulation();
       ar << *totalAveragePtr_;
       ar << *kineticAveragePtr_;
       ar << *pairAveragePtr_;
-      Simulation& sim = simulation();
       #ifdef INTER_BOND
       if (sim.nBondType()) {
          ar << *bondAveragePtr_;

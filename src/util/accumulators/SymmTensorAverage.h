@@ -8,11 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/param/ParamComposite.h>  // base class
 #include <util/accumulators/Average.h>  // member template argument
 #include <util/containers/FArray.h>     // member template
 //#include <util/space/Tensor.h>     
-#include <util/global.h>
 
 namespace Util
 {
@@ -186,7 +186,7 @@ namespace Util
       k = 0;
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j <= i; ++j) {
-            ar << accumulators_[k];
+            ar & accumulators_[k];
             ++k;
          }
       }

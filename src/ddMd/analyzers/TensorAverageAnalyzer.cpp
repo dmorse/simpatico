@@ -49,7 +49,7 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
+      readOptional<int>(in,"nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new TensorAverage;
@@ -65,11 +65,15 @@ namespace DdMd
    void TensorAverageAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_);
+      loadOutputFileName(ar);
+      nSamplePerBlock_ = 0;
+      bool isRequired = false;
+      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
+                         isRequired);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new TensorAverage;
-         accumulatorPtr_->loadParameters(ar);
+         ar >> *accumulatorPtr_;
       }
 
       if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
@@ -86,8 +90,10 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
+      bool isActive = (bool)nSamplePerBlock_;
+      Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
 
-      if (simulation().domain().isMaster()){
+      if (simulation().domain().isMaster()) {
          ar << *accumulatorPtr_;
       }
    }

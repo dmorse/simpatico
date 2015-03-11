@@ -270,7 +270,7 @@ namespace Util
       if (hasChild) {
          if (Archive::is_loading()) {
             long nextStageInterval = stageInterval_*blockFactor_;
-            int  nextStageId       = stageId_ + 1;
+            int  nextStageId = stageId_ + 1;
             childPtr_ = new AverageStage(nextStageInterval, nextStageId,
                                          rootPtr_, blockFactor_);
             rootPtr_->registerDescendant(childPtr_);

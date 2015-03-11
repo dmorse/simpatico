@@ -824,7 +824,13 @@ namespace DdMd
       isInitialized_ = true;
 
       // Load the configuration (boundary + positions + groups)
+      if (domain().isMaster()) {
+         Log::file() << "Loading configuration\n";
+      }
       serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+      if (domain().isMaster()) {
+         Log::file() << "Finished loading configuration\n";
+      }
 
       // There are no ghosts yet, so exchange.
       exchanger_.exchange();
