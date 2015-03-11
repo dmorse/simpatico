@@ -11,9 +11,15 @@
 #include <util/param/ParamComposite.h>           // base class
 #include <util/boundary/Boundary.h>              // typedef
 #include <ddMd/storage/AtomStorage.h>            // member
-#include <ddMd/storage/BondStorage.h>            // member
-#include <ddMd/storage/AngleStorage.h>           // member
-#include <ddMd/storage/DihedralStorage.h>        // member
+#ifdef INTER_BOND
+#include <ddMd/storage/BondStorage.h>            // inline function
+#endif 
+#ifdef INTER_ANGLE
+#include <ddMd/storage/AngleStorage.h>           // inline function
+#endif 
+#ifdef INTER_DIHEDRAL
+#include <ddMd/storage/DihedralStorage.h>        // inline function
+#endif 
 #include <util/containers/DArray.h>              // member
 
 #include <ddMd/chemistry/MaskPolicy.h>
@@ -24,6 +30,9 @@ namespace DdMd
    class Simulation;
    class Domain;
    class Buffer;
+   template <int N> class GroupStorage;
+   template <int N> class GroupDistributor;
+   template <int N> class GroupCollector;
 
    using namespace Util;
 
@@ -284,35 +293,44 @@ namespace DdMd
 
    #ifdef INTER_BOND
    inline BondStorage& ConfigIo::bondStorage()
-   {  return *bondStoragePtr_; }
+   {  
+      assert(bondStoragePtr_);
+      return *bondStoragePtr_; 
+   }
 
    inline GroupDistributor<2>& ConfigIo::bondDistributor()
-   {  return bondStoragePtr_->distributor(); }
+   {  return bondStorage().distributor(); }
 
    inline GroupCollector<2>& ConfigIo::bondCollector()
-   {  return bondStoragePtr_->collector(); }
+   {  return bondStorage().collector(); }
    #endif
 
    #ifdef INTER_ANGLE
    inline AngleStorage& ConfigIo::angleStorage()
-   {  return *angleStoragePtr_; }
+   {
+      assert(angleStoragePtr_);  
+      return *angleStoragePtr_; 
+   }
 
    inline GroupDistributor<3>& ConfigIo::angleDistributor()
-   {  return angleStoragePtr_->distributor(); }
+   {  return angleStorage().distributor(); }
 
    inline GroupCollector<3>& ConfigIo::angleCollector()
-   {  return angleStoragePtr_->collector(); }
+   {  return angleStorage().collector(); }
    #endif
 
    #ifdef INTER_DIHEDRAL
    inline DihedralStorage& ConfigIo::dihedralStorage()
-   {  return *dihedralStoragePtr_; }
+   {
+      assert(dihedralStoragePtr_);  
+      return *dihedralStoragePtr_; 
+   }
 
    inline GroupDistributor<4>& ConfigIo::dihedralDistributor()
-   {  return dihedralStoragePtr_->distributor(); }
+   {  return dihedralStorage().distributor(); }
 
    inline GroupCollector<4>& ConfigIo::dihedralCollector()
-   {  return dihedralStoragePtr_->collector(); }
+   {  return dihedralStorage().collector(); }
    #endif
 
 }

@@ -26,13 +26,17 @@ ddMd_analyzers_=\
      ddMd/analyzers/VanHove.cpp\
      ddMd/analyzers/StressAutoCorr.cpp\
      ddMd/analyzers/StressAutoCorrelation.cpp\
-     ddMd/analyzers/BondTensorAutoCorr.cpp\
      ddMd/analyzers/OrderParamNucleation.cpp\
      ddMd/analyzers/ConfigWriter.cpp\
      ddMd/analyzers/TrajectoryWriter.cpp\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\
      ddMd/analyzers/DdMdGroupTrajectoryWriter.cpp\
      ddMd/analyzers/LammpsDumpWriter.cpp
+
+ifdef INTER_BOND
+ddMd_analyzers_+=\
+     ddMd/analyzers/BondTensorAutoCorr.cpp
+endif
 
 ifdef INTER_EXTERNAL
 ddMd_analyzers_+=\
