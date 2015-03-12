@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "BondPotential.h" // base class
 #include <util/global.h>
+#include "BondPotential.h" // base class
 
 namespace DdMd
 {
@@ -188,6 +188,11 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
+      /*
+      * Initialized false, reset true in (read|load)Parameters.  
+      */
+      bool isInitialized_;
+
    };
 
 }
@@ -218,8 +223,12 @@ namespace DdMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl(Simulation& simulation)
     : BondPotential(simulation),
-      interactionPtr_(0)
-   {  interactionPtr_ = new Interaction(); }
+      interactionPtr_(0),
+      isInitialized_(false)
+   {  
+      interactionPtr_ = new Interaction(); 
+      setNBondType(simulation.nBondType());
+   }
  
    /* 
    * Default constructor.
@@ -227,7 +236,8 @@ namespace DdMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl()
     : BondPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction(); }
  
    /* 
@@ -254,9 +264,11 @@ namespace DdMd
    template <class Interaction>
    void BondPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -266,9 +278,11 @@ namespace DdMd
    void 
    BondPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*

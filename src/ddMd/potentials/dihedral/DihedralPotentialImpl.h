@@ -52,25 +52,37 @@ namespace DdMd
       virtual ~DihedralPotentialImpl();
 
       /**
+      * Set the maximum number of atom types.
+      *
+      * This function must be called iff this object was instantiated
+      * with the default constructor. It is called automatically by
+      * the constructor DihedralPotentialImpl(Simulation& ).
+      */
+      virtual void setNDihedralType(int nAtomType);
+  
+      /**
       * Read potential energy parameters.
       * 
-      * This method reads the dihedral potential Interaction parameter
-      * block. Before calling Interaction::readParameters(), it passes
-      * simulation().nDihedralType() to Interaction::setNAtomType().
+      * This functions reads the dihedral potential Interaction parameter
+      * block. 
+      *
+      * \pre nDihedralType must be set.
+      * \param in  parameter file
       */
       virtual void readParameters(std::istream& in);
 
       /**
       * Load internal state from an archive.
       *
-      * Precondition: setNDihedralType must have been called before this.
-      *
-      * \param ar input/loading archive
+      * \pre nDihedralType must be set.
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
+      *
+      * Call only on master processor.
       *
       * \param ar output/saving archive
       */
@@ -79,11 +91,6 @@ namespace DdMd
       /// \name Interaction interface
       //@{
 
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNDihedralType(int nAtomType);
-  
       /**
       * Modify an dihedral parameter, identified by a string.
       *
@@ -190,6 +197,11 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
+      /**
+      * Initialized to false, set true in (read|load)Parameters.
+      */
+      bool isInitialized_;
+
    };
 
 }
@@ -220,8 +232,12 @@ namespace DdMd
    template <class Interaction>
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(Simulation& simulation)
     : DihedralPotential(simulation),
-      interactionPtr_(0)
-   {  interactionPtr_ = new Interaction(); }
+      interactionPtr_(0),
+      isInitialized_(false)
+   {  
+      interactionPtr_ = new Interaction(); 
+      setNDihedralType(simulation.nDihedralType());
+   }
  
    /* 
    * Default constructor.
@@ -229,7 +245,8 @@ namespace DdMd
    template <class Interaction>
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl()
     : DihedralPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction(); }
  
    /* 
@@ -256,9 +273,11 @@ namespace DdMd
    template <class Interaction>
    void DihedralPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      UTIL_CHECK(!isInitialized_)
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -268,9 +287,11 @@ namespace DdMd
    void 
    DihedralPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_)
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
@@ -341,10 +362,7 @@ namespace DdMd
    template <class Interaction>
    void DihedralPotentialImpl<Interaction>::computeForces()
    {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("GroupStorage must be initialized");
-      //}
+      UTIL_CHECK(isInitialized_);
 
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
@@ -403,10 +421,7 @@ namespace DdMd
    void DihedralPotentialImpl<Interaction>::computeEnergy()
    #endif
    { 
-      // Precondition
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("GroupStorage must be initialized");
-      //}
+      UTIL_CHECK(isInitialized_);
 
       // If energy is already set, do nothing and return.
       if (isEnergySet()) return;

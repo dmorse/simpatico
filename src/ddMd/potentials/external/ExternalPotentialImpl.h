@@ -61,23 +61,39 @@ namespace DdMd
       virtual void associate(Boundary& boundary, AtomStorage& storage);
 
       /**
+      * Set the maximum number of atom types.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param nAtomType maximum number of atomTypes (max index+1)
+      */
+      virtual void setNAtomType(int nAtomType);
+
+      /**
       * Read external potential interaction.
       * 
-      * \param in input parameter stream.
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from archive and initialize, for restart.
+      * 
+      * \param ar input/loading archive
+      */
       virtual void loadParameters(Serializable::IArchive &ar);
 
+      /**
+      * Save internal state to an archive, for restart.
+      *
+      * Call only on master processor.
+      *
+      * \param ar output/saving archive
+      */
       virtual void save(Serializable::OArchive &ar);
 
       /// \name Interaction interface
       //@{
-
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNAtomType(int nAtomType);
 
       /**
       * Returns external potential energy of a single atom.
@@ -143,6 +159,11 @@ namespace DdMd
       Interaction* interactionPtr_;
 
       /**
+      * This is initialized to false, and set true in (read|load)Parameters.
+      */
+      bool isInitialized_;
+
+      /**
       * Calculate external forces and/or energy.
       */
       double computeForces(bool needForce, bool needEnergy);
@@ -172,11 +193,12 @@ namespace DdMd
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(Simulation& simulation)
     : ExternalPotential(simulation),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  
       interactionPtr_ = new Interaction;
-      //interaction().setNAtomType(simulation.nAtomType());
       interactionPtr_->setBoundary(simulation.boundary());
+      setNAtomType(simulation.nAtomType());
    }
  
    /* 
@@ -185,7 +207,8 @@ namespace DdMd
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl()
     : ExternalPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -209,8 +232,15 @@ namespace DdMd
         ::associate(Boundary& boundary, AtomStorage& storage)
    {
       ExternalPotential::associate(boundary, storage);
-      interactionPtr_->setBoundary(boundary);
+      interaction().setBoundary(boundary);
    } 
+
+   /**
+   * Set the maximum number of atom types (for unit testing).
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::setNAtomType(int nAtomType)
+   {  interaction().setNAtomType(nAtomType); }
 
    /* 
    * Read parameters from file.
@@ -218,9 +248,11 @@ namespace DdMd
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false; // Do not indent interaction block. 
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -229,9 +261,11 @@ namespace DdMd
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
@@ -241,13 +275,6 @@ namespace DdMd
    void ExternalPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {  interaction().save(ar); }
  
-   /**
-   * Set the maximum number of atom types.
-   */
-   template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::setNAtomType(int nAtomType)
-   {  interaction().setNAtomType(nAtomType); }
-
    /*
    * Return external energy of an atom.
    */

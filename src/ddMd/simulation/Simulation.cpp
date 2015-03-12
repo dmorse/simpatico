@@ -514,9 +514,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
-      readParamComposite(in, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
+      readParamComposite(in, *pairPotentialPtr_);
       #endif
 
       #ifdef INTER_BOND
@@ -527,7 +526,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -540,7 +538,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -553,7 +550,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -566,7 +562,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -711,7 +706,6 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
@@ -724,7 +718,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -737,7 +730,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -750,7 +742,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -763,7 +754,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -824,13 +814,7 @@ namespace DdMd
       isInitialized_ = true;
 
       // Load the configuration (boundary + positions + groups)
-      if (domain().isMaster()) {
-         Log::file() << "  Begin loading configuration\n";
-      }
       serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
-      if (domain().isMaster()) {
-         Log::file() << "  Finished loading configuration\n";
-      }
 
       // There are no ghosts yet, so exchange.
       exchanger_.exchange();

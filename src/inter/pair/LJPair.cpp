@@ -6,7 +6,9 @@
 */
 
 #include "LJPair.h"
+#ifdef UTIL_MPI
 #include <util/mpi/MpiLoader.h>
+#endif
 
 #include <iostream>
 #include <cstring>
@@ -193,16 +195,8 @@ namespace Inter
    */
    void LJPair::loadParameters(Serializable::IArchive &ar)
    {
-      #ifdef UTIL_MPI
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nAtomType_);
-      loader.load(maxPairCutoff_);
-      #else
-      ar >> nAtomType_;
-      ar >> maxPairCutoff_;
-      #endif
       if (nAtomType_ <= 0) {
-         UTIL_THROW( "nAtomType must be positive");
+         UTIL_THROW( "nAtomType must be set before readParam");
       }
 
       // Read parameters
@@ -213,15 +207,18 @@ namespace Inter
       loadCArray2D<double>(ar, "cutoff", cutoff_[0], 
                            nAtomType_, nAtomType_, MaxAtomType);
       #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       loader.load(cutoffSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       loader.load(ljShift_[0], nAtomType_, nAtomType_, MaxAtomType);
       loader.load(eps48_[0], nAtomType_, nAtomType_, MaxAtomType);
+      loader.load(maxPairCutoff_);
       #else
       ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.unpack(cutoffSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.unpack(ljShift_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.unpack(eps48_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar >> maxPairCutoff_;
       #endif
       isInitialized_ = true;
    }
@@ -231,8 +228,6 @@ namespace Inter
    */
    void LJPair::save(Serializable::OArchive &ar)
    {
-      ar << nAtomType_;
-      ar << maxPairCutoff_;
       ar.pack(epsilon_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(sigma_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(cutoff_[0], nAtomType_, nAtomType_, MaxAtomType);
@@ -240,13 +235,14 @@ namespace Inter
       ar.pack(cutoffSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(ljShift_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(eps48_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar << maxPairCutoff_;
    }
 
    /* 
    * Get maximum of pair cutoff distance, for all atom type pairs.
    */
    double LJPair::maxPairCutoff() const
-   { return maxPairCutoff_; }
+   {  return maxPairCutoff_; }
 
    /* 
    * Get pair interaction strength.
