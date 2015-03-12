@@ -27,7 +27,7 @@ namespace DdMd
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
-      nSamplePerBlock_(1),
+      nSamplePerBlock_(0),
       isInitialized_(false)
    {  setClassName("AverageAnalyzer"); }
 
@@ -74,12 +74,12 @@ namespace DdMd
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new Average;
          ar >> *accumulatorPtr_;
+         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
+      } else {
+         accumulatorPtr_ = 0;
       }
-
-      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -94,7 +94,7 @@ namespace DdMd
       saveInterval(ar);
       saveOutputFileName(ar);
       bool isActive = (bool)nSamplePerBlock_;
-      Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
+      Parameter::saveOptional<int>(ar, nSamplePerBlock_, isActive);
       ar << *accumulatorPtr_;
    }
 

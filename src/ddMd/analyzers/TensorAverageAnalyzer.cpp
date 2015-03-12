@@ -70,16 +70,15 @@ namespace DdMd
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
                          isRequired);
-
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new TensorAverage;
          ar >> *accumulatorPtr_;
+         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
+      } else {
+         accumulatorPtr_ = 0;
       }
-
-      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -92,7 +91,6 @@ namespace DdMd
       saveOutputFileName(ar);
       bool isActive = (bool)nSamplePerBlock_;
       Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
-
       if (simulation().domain().isMaster()) {
          ar << *accumulatorPtr_;
       }

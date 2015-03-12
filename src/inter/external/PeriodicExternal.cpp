@@ -6,6 +6,9 @@
 */
 
 #include "PeriodicExternal.h"
+#ifdef UTIL_MPI
+#include <util/mpi/MpiLoader.h>
+#endif
 
 #include <iostream>
 
@@ -26,7 +29,7 @@ namespace Inter
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
-   { setClassName("PeriodicExternal"); }
+   {  setClassName("PeriodicExternal"); }
    
    /* 
    * Copy constructor.
@@ -137,9 +140,7 @@ namespace Inter
       // Read parameters
       prefactor_.allocate(nAtomType_);
       readDArray<double>(in, "prefactor", prefactor_, nAtomType_);
-
       read<double>(in, "externalParameter", externalParameter_);
-
       read<int>(in, "nWaveVectors", nWaveVectors_);
       read<double>(in, "C", C_);
       waveVectors_.allocate(nWaveVectors_);
@@ -159,13 +160,19 @@ namespace Inter
    */
    void PeriodicExternal::loadParameters(Serializable::IArchive &ar)
    {
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nAtomType_);
+      #else
       ar >> nAtomType_;
+      #endif
       if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be positive");
       }
       prefactor_.allocate(nAtomType_);
       loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_);
       loadParameter<double>(ar, "externalParameter", externalParameter_);
+      loadParameter<int>(ar, "nWavevectors", nWaveVectors_);
       loadParameter<double>(ar, "C", C_);
       waveVectors_.allocate(nWaveVectors_);
       loadDArray<Vector>(ar, "waveVectors", waveVectors_, nWaveVectors_);
@@ -184,6 +191,7 @@ namespace Inter
       ar << nAtomType_;
       ar << prefactor_;
       ar << externalParameter_;
+      ar << nWaveVectors_;
       ar << C_;
       ar << waveVectors_;
       ar << phases_;

@@ -113,9 +113,7 @@ namespace DdMd
    * Load output file name to an archive.
    */
    void Analyzer::loadOutputFileName(Serializable::IArchive &ar)
-   {
-      loadParameter<std::string>(ar, "outputFileName", outputFileName_);
-   }
+   {  loadParameter<std::string>(ar, "outputFileName", outputFileName_); }
 
    /*
    * Save output file name to an archive.

@@ -49,12 +49,9 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-
       pairs_.allocate(2);
       readDArray<int>(in, "pairs", pairs_, 2);
-      
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-     
       if(simulation().domain().isMaster()) {
          accumulator_ = new Average;
          accumulator_->setNSamplePerBlock(nSamplePerBlock_);
@@ -69,18 +66,17 @@ namespace DdMd
    void PairEnergyAverage::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSamplePerBlock_);
-
+      loadOutputFileName(ar);
+      pairs_.allocate(2);
+      loadDArray<int>(ar, "pairs", pairs_, 2);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
       if (simulation().domain().isMaster()) {
          accumulator_ = new Average;
-         accumulator_->loadParameters(ar);
+         ar >> *accumulator_;
+         if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
       }
-
-      if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -91,11 +87,9 @@ namespace DdMd
    {       
       saveInterval(ar);
       saveOutputFileName(ar);
-
-      if (simulation().domain().isMaster()){
-         ar << *accumulator_;
-      }
- 
+      ar << pairs_;
+      ar << nSamplePerBlock_;
+      ar << *accumulator_;
    }
 
    /*
@@ -137,7 +131,6 @@ namespace DdMd
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
-      
          simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
          accumulator_->output(outputFile_);
          outputFile_.close();

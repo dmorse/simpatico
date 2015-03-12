@@ -51,12 +51,10 @@ namespace DdMd
       readOutputFileName(in);
       nSamplePerBlock_ = 0;
       readOptional<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new SymmTensorAverage;
          accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
-
       isInitialized_ = true;
    }
 
@@ -70,16 +68,15 @@ namespace DdMd
       nSamplePerBlock_ = 0;
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, isRequired);
-
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new SymmTensorAverage;
          ar >> *accumulatorPtr_;
+         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
+      } else {
+         accumulatorPtr_ = 0;
       }
-
-      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
