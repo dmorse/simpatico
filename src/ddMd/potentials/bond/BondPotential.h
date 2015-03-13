@@ -53,9 +53,10 @@ namespace DdMd
       ~BondPotential();
 
       /**
-      * Associate with related objects.
+      * Create association with related objects.
       *
-      * Call iff object instantiated with default constructor.
+      * Call iff object instantiated with default constructor, for
+      * unit testing.
       *
       * \param boundary  associated Boundary object.
       * \param storage  associated GroupStorage<2> object.
@@ -64,6 +65,14 @@ namespace DdMd
 
       /**
       * Set the maximum number of atom types.
+      *
+      * The implementation by a subclass should set the nBondType of the
+      * associated Interaction. This should be called by the main constructor
+      * of a concrete subclass, to set nBondType to simulation.nBondType(), 
+      * or by a user if the object is instantiated with default constructor 
+      * for unit testing.
+      *
+      * \param nBondType  maximum number of bond types (max index + 1).
       */
       virtual void setNBondType(int nBondType) = 0;
   
@@ -71,17 +80,32 @@ namespace DdMd
       //@{
 
       /**
-      * Return pair energy for a single pair.
+      * Compute and return pair energy for a single pair.
+      *
+      * \param rsq  square of distance between atoms
+      * \param bondTypeId  bond type index
       */
       virtual double bondEnergy(double rsq, int bondTypeId) const = 0;
 
       /**
-      * Return force / separation for a single pair.
+      * Compute and return force / separation for a single pair.
+      *
+      * \param rsq  square of distance between atoms
+      * \param bondTypeId  bond type index
       */
       virtual double bondForceOverR(double rsq, int bondTypeId) const = 0;
 
       /**
-      * Return force / separation for a single pair.
+      * Return a random bond length, chosen from a Boltzmann distribution.
+      *
+      * This function should return the length of a random bond vector 
+      * from the Boltzmann distribution for the specified bond interaction,
+      * giving a probability distribution r^2 exp( -U(r) / kT), where U(r)
+      * is the bond potential.  
+      *
+      * \param random  pointer to a random number generator
+      * \param beta  inverse thermal energy 1/T, with T in units of energy
+      * \param bondTypeId  bond type index
       */
       virtual double 
       randomBondLength(Random* random, double beta, int bondTypeId) const = 0;
@@ -89,17 +113,17 @@ namespace DdMd
       /**
       * Modify a bond interaction parameter, identified by a string.
       *
-      * \param name       parameter variable name
-      * \param bondTypeId bond type index
-      * \param value      new value of parameter
+      * \param name  parameter variable name
+      * \param bondTypeId  bond type index
+      * \param value  new value of parameter
       */
       virtual void set(std::string name, int bondTypeId, double value) = 0;
 
       /**
       * Get a bond parameter value, identified by a string.
       *
-      * \param name       parameter variable name
-      * \param bondTypeId bond type index
+      * \param name  interaction parameter name
+      * \param bondTypeId  bond type index
       */
       virtual double get(std::string name, int bondTypeId) const = 0;
 

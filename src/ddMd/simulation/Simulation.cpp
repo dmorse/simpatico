@@ -1340,6 +1340,20 @@ namespace DdMd
                inBuffer >> classname;
                setConfigIo(classname);
             } else
+            if (command == "SET_INPUT_PREFIX") {
+               // Set the FileMaster inputPrefix, which is used to
+               // construct paths to input files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setInputPrefix(prefix);
+            } else
+            if (command == "SET_OUTPUT_PREFIX") {
+               // Set the FileMaster outputPrefix, which is used to
+               // construct paths to output files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setOutputPrefix(prefix);
+            } else
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
                std::string paramName;
