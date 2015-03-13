@@ -291,7 +291,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) {
+         logFile_.close();
+      }
       #endif
    }
 

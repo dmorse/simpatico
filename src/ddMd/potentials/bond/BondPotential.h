@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * Calculates bond forces and energies for a parent Simulation.
+   * Abstract base class for computing bond forces and energies.
    *
    * \ingroup DdMd_Bond_Module
    */
@@ -33,37 +33,43 @@ namespace DdMd
 
       /**
       * Constructor.
+      *
+      * This is the constructor that is used during a simulation.
+      *
+      * \param simulation  parent Simulation object
       */
       BondPotential(Simulation& simulation);
 
       /**
-      * Default constructor (for unit testing).
+      * Default constructor.
+      *
+      * This constructor is provided only to simplify unit testing.
       */
       BondPotential();
-
-      /**
-      * Associate with related objects.
-      *
-      * Call iff object instantiated with default constructor.
-      *
-      * \param boundary associated Boundary object.
-      * \param storage  associated GroupStorage<2> object.
-      */
-      void associate(Boundary& boundary, GroupStorage<2>& storage);
 
       /**
       * Destructor.
       */
       ~BondPotential();
 
-      /// \name Interaction interface
-      //@{
+      /**
+      * Associate with related objects.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param boundary  associated Boundary object.
+      * \param storage  associated GroupStorage<2> object.
+      */
+      void associate(Boundary& boundary, GroupStorage<2>& storage);
 
       /**
       * Set the maximum number of atom types.
       */
       virtual void setNBondType(int nBondType) = 0;
   
+      /// \name Interaction interface
+      //@{
+
       /**
       * Return pair energy for a single pair.
       */

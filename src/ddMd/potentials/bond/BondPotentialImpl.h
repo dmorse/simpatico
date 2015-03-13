@@ -32,6 +32,8 @@ namespace DdMd
 
       /** 
       * Constructor.
+      *
+      * \param simulation  parent Simulation
       */
       BondPotentialImpl(Simulation& simulation);
 

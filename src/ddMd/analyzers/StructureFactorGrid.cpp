@@ -256,12 +256,12 @@ namespace DdMd
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nWave_);
       waveIntVectors_.allocate(nWave_);
-      loader.load(waveIntVectors_);
+      loader.load(waveIntVectors_, nWave_);
       loader.load(nStar_);
       starIds_.allocate(nStar_);
-      loader.load(starIds_);
+      loader.load(starIds_, nStar_);
       starSizes_.allocate(nStar_);
-      loader.load(starSizes_);
+      loader.load(starSizes_, nStar_);
       loader.load(nSample_);
 
       if (simulation().domain().isMaster()) {

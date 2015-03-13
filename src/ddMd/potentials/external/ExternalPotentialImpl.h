@@ -197,7 +197,7 @@ namespace DdMd
       isInitialized_(false)
    {  
       interactionPtr_ = new Interaction;
-      interactionPtr_->setBoundary(simulation.boundary());
+      interaction().setBoundary(simulation.boundary());
       setNAtomType(simulation.nAtomType());
    }
  
@@ -249,7 +249,7 @@ namespace DdMd
    void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
       UTIL_CHECK(!isInitialized_);
-      bool nextIndent = false; // Do not indent interaction block. 
+      bool nextIndent = false; // Do not indent interaction block
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
       isInitialized_ = true;
@@ -262,14 +262,14 @@ namespace DdMd
    void ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
       UTIL_CHECK(!isInitialized_);
-      bool nextIndent = false;
+      bool nextIndent = false; // Do not indent interaction block
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
       isInitialized_ = true;
    }
 
    /*
-   * Save internal state to an archive.
+   * Save internal state to an archive (call only on master processor).
    */
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
@@ -305,23 +305,27 @@ namespace DdMd
    */
    template <class Interaction>
    const Interaction& ExternalPotentialImpl<Interaction>::interaction() const
-   {  return *interactionPtr_; }
+   {
+      assert(interactionPtr_);  
+      return *interactionPtr_; 
+   }
 
    /**
    * Return underlying interaction object by reference.
    */
    template <class Interaction>
    Interaction& ExternalPotentialImpl<Interaction>::interaction()
-   {  return *interactionPtr_; }
+   {  
+      assert(interactionPtr_);  
+      return *interactionPtr_; 
+   }
 
    /*
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::computeForces()
-   {  
-      computeForces(true, false); 
-   }
+   {  computeForces(true, false); }
 
    /*
    * Compute total external energy on all processors.
@@ -336,7 +340,6 @@ namespace DdMd
    { 
       double localEnergy = 0; 
       localEnergy = computeForces(false, true); 
-
       #ifdef UTIL_MPI
       reduceEnergy(localEnergy, communicator);
       #else
@@ -351,11 +354,6 @@ namespace DdMd
    double 
    ExternalPotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
       Vector f;
       double energy = 0.0;
       AtomIterator iter;
