@@ -23,7 +23,7 @@ namespace DdMd
    */
    LammpsDumpWriter::LammpsDumpWriter(Simulation& simulation)
     : TrajectoryWriter(simulation)
-   {}
+   {  setClassName("LammpsDumpWriter"); }
 
    /*
    * Destructor.

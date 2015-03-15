@@ -93,13 +93,13 @@ namespace McMd
       std::ofstream outputFile_;
 
       /// Average object - statistical accumulator
-      Average  accumulator_;
+      Average accumulator_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
 
       /// Has readParam been called?
-      bool    isInitialized_;
+      bool isInitialized_;
 
       using SystemAnalyzer<SystemType>::readInterval;
       using SystemAnalyzer<SystemType>::readOutputFileName;

@@ -1,36 +1,13 @@
 -----------------------------------------------------------------------
 Priorities:
 
-1) Script to rerun. Must:
+1) Script to create a standard directory structure, with numbered
+   directories 0/ 1/ .... n/, and with in/ out/ out/dump in each.
+   Should make copies of param and command files. Josh Mysona's 
+   script is a good start for this. 
 
-   - Copy output config to in/config.
-   - Change outputPrefix to new name.
-
-2) Automatically resubmit a parallel job to queue. (status unknown)
-
------------------------------------------------------------------------
-Scripts for manipulating files and directories:
-
-1) Create a standard directory structure, with in/ out/ out/dump.
-   Create a number set of standard series of directories, 0/ 1/ ... n/
-   (Done).
-
-2) Clone a file from one directory in a series to all others in a series.  
-   (copy param, commands, in/config, ...)
-
------------------------------------------------------------------------
-Tools for manipulating param and command files.
-
-1) Python class ParamComposite to read, modify and write a param file.
-   (Done)
-
-2) Python class CommandScript to read, modify and write a command file.
-   (Done)
-
-3) Simulation object for a single simulation.
-
-4) MpiSimulation object for a series of independent simulations,
-   or for a perturbation simulation.
+2) Extract average values from specific files in a set of numbered
+   directories. Mysona's dataGrabber file is also a good start for this.
 
 -----------------------------------------------------------------------
 Scripts for manipulating data output files:
@@ -38,17 +15,9 @@ Scripts for manipulating data output files:
 1) Class DataFile to read *.dat files. Should distinguish integers and 
    floats.  How to associate meaning with columns? Format file?
 
-2) Class AverageFile to read outputs from files that output averages.
+2) Class DataFilePlot to make plots from *.dat files. Subclass of DataFile.
 
-3) Class DataFilePlot to make plots from *.dat files. Subclass of DataFile.
-
------------------------------------------------------------------------
-New output file types for analyzers:
-
-   Parameter file:         <basename>.prm
-   Average output file:    <basename>.ave
-   Data *.dat file format: <basename>.dfm
-   Data file:              <basename>.dat
+3) Class AverageFile to read outputs from files that output averages.
 
 -----------------------------------------------------------------------
 Executable commands (python scripts):
@@ -76,15 +45,15 @@ Parameter:  path to file from within root directory
 Purpose:    clone a file to all others in mpi job.
 
 --------
-Command:   mcmd_edit_command
-Parameter: file command = value |
-           file command[i] = value |
-Purpose:   Edit one parameter in a command file
+Command:    mcmd_edit_command
+Parameter:  file command = value |
+            file command[i] = value |
+Purpose:    Edit one parameter in a command file
 
 --------
-Command:   mcmd_edit_param
-Parameter: file attribute = value |
-           file attribute[i] = value |
-           file attribute[i][j] = value
-Purpose:   Edit one parameter in a parameter file
+Command:    mcmd_edit_param
+Parameter:  file attribute = value |
+            file attribute[i] = value |
+            file attribute[i][j] = value
+Purpose:    Edit one parameter in a parameter file
 

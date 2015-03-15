@@ -98,7 +98,7 @@ namespace Util
    {
       if (!MpiTraits<Vector>::hasType) {
          MpiStructBuilder builder;
-         Vector           vector;
+         Vector vector;
    
          builder.setBase(&vector);
          builder.addMember(&vector[0], MPI::DOUBLE);
@@ -113,8 +113,8 @@ namespace Util
    /*
    * This static method exists to guarantee initialization of the static 
    * constant Vector::Zero that is defined in this file.  Call it once
-   * in the program to guarantee that the contents of this file will 
-   * be linked, rather than optimized away. 
+   * in the program to guarantee that the contents of this file will be
+   * linked, rather than optimized away. 
    */
    void Vector::initStatic()
    {

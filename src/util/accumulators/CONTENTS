@@ -6,6 +6,15 @@ for data analysis.
                                    Data values. Uses a hierarchical 
                                    blocking algorithm to estimate errors.
 
+  TensorAverage<Data>            - Computes averages and errors for components
+                                   of a tensor value variable. Implemented as
+                                   a container for Average<Data> objects, one
+                                   per component.
+
+  SymmTensorAverage<Data>        - Computes averages and errors for components
+                                   of a symmetric tensor variable, using only 
+                                   components T(i, j) with j <= i. 
+         
   AutoCorrelation<Data, Product> - Computes an autocorrelation function for 
                                    a single sequence of Data values. Uses a
                                    hierarchical blocking algorithm to allow

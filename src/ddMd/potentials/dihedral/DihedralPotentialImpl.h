@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DihedralPotential.h" // base class
 #include <util/global.h>
+#include "DihedralPotential.h" // base class
 
 namespace Util
 {
@@ -36,54 +36,71 @@ namespace DdMd
 
    public:
 
-      /** 
+      /**
       * Constructor.
+      *
+      * Primary constructor, for use in a simulation.
+      *
+      * \param simulation  parent Simulation object.
       */
       DihedralPotentialImpl(Simulation& simulation);
 
-      /** 
+      /**
       * Default constructor.
+      *
+      * Provided to simplify unit testing.
       */
       DihedralPotentialImpl();
 
-      /** 
+      /**
       * Destructor.
       */
       virtual ~DihedralPotentialImpl();
 
+      /// \name Initialization and Serialization
+      //@{
+
+      /**
+      * Set the maximum number of atom types.
+      *
+      * This function must be called iff this object was instantiated
+      * with the default constructor. It is called automatically by
+      * the constructor DihedralPotentialImpl(Simulation& ).
+      */
+      virtual void setNDihedralType(int nAtomType);
+
       /**
       * Read potential energy parameters.
-      * 
-      * This method reads the dihedral potential Interaction parameter
-      * block. Before calling Interaction::readParameters(), it passes
-      * simulation().nDihedralType() to Interaction::setNAtomType().
+      *
+      * This functions reads the dihedral potential Interaction parameter
+      * block.
+      *
+      * \pre nDihedralType must be set.
+      * \param in  parameter file
       */
       virtual void readParameters(std::istream& in);
 
       /**
       * Load internal state from an archive.
       *
-      * Precondition: setNDihedralType must have been called before this.
-      *
-      * \param ar input/loading archive
+      * \pre nDihedralType must be set.
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
+      * Call only on master processor.
+      *
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
 
+      //@}
       /// \name Interaction interface
       //@{
 
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNDihedralType(int nAtomType);
-  
       /**
       * Modify an dihedral parameter, identified by a string.
       *
@@ -107,18 +124,18 @@ namespace DdMd
       *     0   2    3
       *     o   o----o
       *      \ /
-      *       o 
-      *       1 
+      *       o
+      *       1
       *
       * \param R1     bond vector from atom 0 to 1
       * \param R2     bond vector from atom 1 to 2
       * \param R3     bond vector from atom 2 to 3
       * \param type   type of dihedral
       */
-      virtual double 
+      virtual double
       dihedralEnergy(const Vector& R1, const Vector& R2, const Vector& R3,
                      int type) const;
- 
+
       /**
       * Returns derivatives of energy with respect to bond vectors forming the
       * dihedral group.
@@ -131,7 +148,7 @@ namespace DdMd
       * \param F3     force along R2 direction (upon return)
       * \param type   type of dihedral
       */
-      virtual void 
+      virtual void
       dihedralForce(const Vector& R1, const Vector& R2, const Vector& R3,
                     Vector& F1, Vector& F2, Vector& F3, int type) const;
 
@@ -151,7 +168,7 @@ namespace DdMd
       const Interaction& interaction() const;
 
       //@}
-      /// \name Total Energy, Force and Stress 
+      /// \name Total Energy, Force and Stress
       //@{
 
       /**
@@ -161,7 +178,7 @@ namespace DdMd
 
       /**
       * Compute the total dihedral energy for all processors
-      * 
+      *
       * Call on all processors (MPI reduce operation).
       */
       #ifdef UTIL_MPI
@@ -172,7 +189,7 @@ namespace DdMd
 
       /**
       * Compute the covalent dihedral stress.
-      * 
+      *
       * Call on all processors.
       */
       #ifdef UTIL_MPI
@@ -182,13 +199,18 @@ namespace DdMd
       #endif
 
       //@}
-      
+
    private:
 
       /**
       * Pointer to Interaction (evaluates the dihedral potential function).
-      */ 
+      */
       Interaction* interactionPtr_;
+
+      /**
+      * Initialized to false, set true in (read|load)Parameters.
+      */
+      bool isInitialized_;
 
    };
 
@@ -214,29 +236,34 @@ namespace DdMd
 
    using namespace Util;
 
-   /* 
+   /*
    * Constructor.
    */
    template <class Interaction>
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(Simulation& simulation)
     : DihedralPotential(simulation),
-      interactionPtr_(0)
-   {  interactionPtr_ = new Interaction(); }
- 
-   /* 
+      interactionPtr_(0),
+      isInitialized_(false)
+   {
+      interactionPtr_ = new Interaction();
+      setNDihedralType(simulation.nDihedralType());
+   }
+
+   /*
    * Default constructor.
    */
    template <class Interaction>
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl()
     : DihedralPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction(); }
- 
-   /* 
-   * Destructor. 
+
+   /*
+   * Destructor.
    */
    template <class Interaction>
-   DihedralPotentialImpl<Interaction>::~DihedralPotentialImpl() 
+   DihedralPotentialImpl<Interaction>::~DihedralPotentialImpl()
    {
       if (interactionPtr_) {
          delete interactionPtr_;
@@ -256,21 +283,25 @@ namespace DdMd
    template <class Interaction>
    void DihedralPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      UTIL_CHECK(!isInitialized_)
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
    * Load internal state from an archive.
    */
    template <class Interaction>
-   void 
+   void
    DihedralPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_)
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
@@ -301,7 +332,7 @@ namespace DdMd
    */
    template <class Interaction>
    inline double DihedralPotentialImpl<Interaction>::
-      dihedralEnergy(const Vector& R1, const Vector& R2, const Vector& R3, 
+      dihedralEnergy(const Vector& R1, const Vector& R2, const Vector& R3,
                      int typeId) const
    {  return interaction().energy(R1, R2, R3, typeId); }
 
@@ -341,10 +372,7 @@ namespace DdMd
    template <class Interaction>
    void DihedralPotentialImpl<Interaction>::computeForces()
    {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("GroupStorage must be initialized");
-      //}
+      UTIL_CHECK(isInitialized_);
 
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
@@ -397,16 +425,13 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void 
+   void
    DihedralPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
    #else
    void DihedralPotentialImpl<Interaction>::computeEnergy()
    #endif
-   { 
-      // Precondition
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("GroupStorage must be initialized");
-      //}
+   {
+      UTIL_CHECK(isInitialized_);
 
       // If energy is already set, do nothing and return.
       if (isEnergySet()) return;
@@ -461,7 +486,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void 
+   void
    DihedralPotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
    #else
    void DihedralPotentialImpl<Interaction>::computeStress()
@@ -518,7 +543,7 @@ namespace DdMd
          incrementPairStress(f3, dr3, localStress);
       }
 
-      // Normalize by volume 
+      // Normalize by volume
       localStress /= boundary().volume();
 
       // Add localStress from all nodes, set sum on master

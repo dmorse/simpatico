@@ -31,9 +31,10 @@ namespace Util
    {  rootPtr_ = this; }
 
    /*
-   * Constructor for dynamically generated objects with stageId > 0.
+   * Constructor for dynamically generated objects with stageId > 0 (private).
    */
-   AverageStage::AverageStage(long stageInterval, int stageId, AverageStage* rootPtr, int blockFactor)
+   AverageStage::AverageStage(long stageInterval, int stageId, 
+                              AverageStage* rootPtr, int blockFactor)
     : sum_(0.0),
       sumSq_(0.0),
       blockSum_(0.0),
@@ -46,9 +47,6 @@ namespace Util
       blockFactor_(blockFactor)
    {}
 
-   void AverageStage::registerDescendant(AverageStage* descendantPtr)
-   {}
-
    /*
    * Destructor.
    */
@@ -58,6 +56,23 @@ namespace Util
          delete childPtr_;
       }
    }
+
+   /*
+   * Reset the block factor.
+   */
+   void AverageStage::setBlockFactor(int blockFactor)
+   {
+      if (nSample_ > 0) {
+         UTIL_THROW("Attempt to reset block factor when nSample > 0");
+      }
+      if (blockFactor < 2) {
+         UTIL_THROW("Invalid value of blockFactor");
+      }
+      blockFactor_ = blockFactor;
+   }
+
+   void AverageStage::registerDescendant(AverageStage* descendantPtr)
+   {}
 
    /*
    * Reset all accumulators and counters to zero.

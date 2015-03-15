@@ -1,0 +1,165 @@
+Idea / Work Plan:
+-----------------
+
+  - Standardize file formats for existing classes
+
+  - Include time step in all streaming output formats
+
+  - Refactor existing classes to separate all non-generic
+    code into a ``compute" function, and standardize names 
+    of sampled variables (e.g., to value_ or an array 
+    values_) to make it easy to replace repeated code with 
+    base classes and template patern
+
+  - Move on-the-fly output outside of the Average class to 
+    allow more flexible output formats.
+
+  - Move test for isAtInterval outside the analyzer class
+
+  - Develop base classes for analogous classes (see below),
+    to help standardize file formats and avoid repetition.
+
+  - Develop python and matlab classes to analyze and plot 
+    the outputs
+
+Analyzer Types (or base classes):
+---------------------------------
+
+T = data type
+N = name type
+
+Average:                    Average of a single global scalar
+                            - Total energy
+                            - Total kinetic energy
+                            - Total pressure
+                            - RadiusGyration
+AverageList<N>              Container of averages, with ids of type N
+                            - Energy components (string ids)
+                            - Pressure components (string ids)
+                            - StructureFactor (names are IntVector indices)
+AverageMatrix:              container of averages, accessible by id pair
+                            PairEnergyAverage
+TensorAverage:              Stress
+TensorAverageList<N>:       Stress components
+
+AutoCorrAnalyzer<T>:        StressAutoCorr
+MsdEnsmeble<T>:             AtomMsd, MoleculeComMsd
+AutoCorrEnsemble<T>:        IntraPairAutoCorr (T = Vector)
+                            IntraBondTensorAutoCorr (T = Tensor)
+AutoCorrList<T,N>:          VanHove functions (N = IntVector, Miller indices)
+
+DistributionAnalyzer:       single distribution (energy?)
+DistributionList<K>:        list of distinct distributions
+                            Box size distribution
+                            Bond length distribution (multiple bond types)
+
+File Types:
+-----------
+
+Each analyzer may produce several files of different types, with the same 
+base name but different extensions:
+
+   Parameter file:         <basename>.prm
+   Data *.dat file format: <basename>.dfm
+   Data file:              <basename>.dat
+   Average output file:    <basename>.ave
+   Error analysis file:    <basename>.era
+
+Discussion:
+
+  - Parameter files: A parameter file, with extension *.prm, reproduces 
+    the parameter file block associated with an analyzer. The first line
+    of this can be used by a parser to determine which analyzer this is.
+
+  - Data files: A data file, with extension *.dat contains a sequence of 
+    values. The first column should always be a time stamp. 
+
+  - Format files: A data format file, with extension *.dfm, gives names 
+    and data types for the columns in the associated *.dat file
+
+  - An average file contains final average values, with error estimates, 
+    for one or more quantities.
+
+  - An error-analysis file, with extension type *.era, contains further 
+    information about hierarchical error analysis of averages
+
+Parser Design:
+--------------
+
+  An automatic parser, written in python, could use the fact that related 
+  files are required to have the same base name to understand the contents 
+  of an output directory. The first line of a *.prm file can be used to 
+  determine the type of analyzer, and any required input parameters. A 
+  parser with a list of known analyzers can then figure out what to do. 
+  The format file can be used to document the content of data files. 
+  Python classes for specific analyzers can have a hierarchy that mimics
+  the heirarchy of analyzer classes. The whole thing would be designed to
+  infer the contents of a directory with minimal input data, and allow
+  interactive plotting.
+
+Data Files:
+-----------
+
+  Data file is a multicolumn text file format for a time sequence of 
+  data. The first column contains a time step identifier. Any number 
+  of subsequent columns may follow, separated by spaces. 
+
+Average Files:
+--------------
+
+  An average file contains average values and error estimates for one 
+  or more quantities. Each quantity is on a line of the form:
+
+  [variable name] = [average] +- [error]
+
+  where variable name is a string, and average and error are real values.  
+  Analyzers that evaluate a list of quantities can contain several lines, 
+  separated by spaces, as in:
+
+  pair       = 3814.111 +- 0.023487
+  bond       = 1289.207 +- 0.014502
+  potential  = .... +- ....
+  kinetic    = .... +- ....
+  total      = .... +- ....
+
+  Averages for tensors should be preceded by a variable name, and 
+  should use a format that lists indices, as in:
+
+  stress [tensor symmetric] = 
+     0 0  .... +- .....
+     1 0  .... +- .....
+
+  The notation in square brackets can indicate a type of multiline 
+  item, e.g., [vector], [tensor], [tensor symmetric], etc.
+
+Format Files:
+-------------
+
+  A format file gives names for the columns in a corresponding data 
+  file.  The first line contains the number of columns.  Each of the 
+  following lines gives the identifier for a column or group of 
+  related columns, followed by a type.
+
+  Example: Energy analyzer
+
+    6
+    0 iStep [int]
+    1 pair  [real]
+    2 bond  [real]
+    3 potential [real]
+    4 kinetic [real] 
+    5 total [real]
+
+  Vectors and tensors can be shown as clusters of columns, as 
+  in the following example:
+
+  Example: Stress Analyzer
+    9
+    0  iStep
+    1-6  stress [tensor symmetric] {(0,0),(1,0),(1,1),(2,0),(2,1),(2,2)}
+    7-9  pressure [vector] {0,1,2}
+
+  This would require that multi-component objects be output in a standard 
+  order, so that they can be read and manipulated as single objects. The 
+  listing of components is simply a human readable reminder to readers 
+  of the order of components for the specified type.

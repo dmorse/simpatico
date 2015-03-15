@@ -1,3 +1,16 @@
+Atom Sorting:
+-------------
+
+- Implement periodic sorting of atoms
+
+Species
+-------
+
+- Introduce simple data structures to keep track of molecular species
+  (of atoms per molecule and molecules per species)
+
+- Modify configIo and trajectory formats to read and write this info
+
 Exchanger:
 ----------
 

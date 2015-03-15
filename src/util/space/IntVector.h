@@ -436,7 +436,6 @@ namespace Util
    */
    std::ostream& operator << (std::ostream& out, const IntVector &vector);
 
-
    #ifdef UTIL_MPI
    /**
    * Explicit specialization MpiTraits<IntVector>.

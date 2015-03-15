@@ -8,6 +8,9 @@
 #include "CosineSqAngle.h"
 #include <util/math/Constants.h>
 #include <util/random/Random.h>
+#ifdef UTIL_MPI
+#include <util/mpi/MpiLoader.h>
+#endif
 
 namespace Inter
 {
@@ -71,16 +74,14 @@ namespace Inter
    */
    void CosineSqAngle::readParameters(std::istream &in) 
    {
-      // Preconditions
-      if (nAngleType_ <= 0) {
-         UTIL_THROW("nAngleType must be set before readParam");
-      }
+      // Precondition
+      UTIL_CHECK(nAngleType_ > 0); 
 
       // Read parameters
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
       readCArray<double>(in, "theta0", theta0_, nAngleType_);
 
-      // Convert from degrees to radians.
+      // Compute cosine.
       for (int i = 0; i < nAngleType_; ++i) {
          cosTheta0_[i] = cos(theta0_[i] / 180.0 * Constants::Pi);
       }
@@ -91,14 +92,15 @@ namespace Inter
    */
    void CosineSqAngle::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAngleType_; 
-      if (nAngleType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
-      // Read parameters
+      UTIL_CHECK(nAngleType_ > 0);
       loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
       loadCArray<double>(ar, "theta0", theta0_, nAngleType_);
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(cosTheta0_, nAngleType_);
+      #else
       ar.unpack(cosTheta0_, nAngleType_);
+      #endif
    }
 
    /*
@@ -106,7 +108,7 @@ namespace Inter
    */
    void CosineSqAngle::save(Serializable::OArchive &ar)
    {
-      ar << nAngleType_;
+      UTIL_CHECK(nAngleType_ > 0);
       ar.pack(kappa_, nAngleType_);
       ar.pack(theta0_, nAngleType_);
       ar.pack(cosTheta0_, nAngleType_);

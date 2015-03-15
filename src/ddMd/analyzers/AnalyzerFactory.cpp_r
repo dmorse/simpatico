@@ -11,28 +11,40 @@
 
 // Analyzers 
 #include "LogEnergy.h"
-#include "ConfigWriter.h"
+#include "EnergyAnalyzer.h"
 #include "OutputEnergy.h"
+#include "KineticEnergyAnalyzer.h"
+#include "OutputTemperature.h"
+#include "PairEnergyAnalyzer.h"
+#include "OutputPairEnergies.h"
+#include "PairEnergyAverage.h"
+#ifdef INTER_EXTERNAL
+#include "ExternalEnergyAnalyzer.h"
+#include "ExternalEnergyAverage.h"
+#endif
+#include "PressureAnalyzer.h"
 #include "OutputPressure.h"
+#include "OutputBoxdim.h"
+#include "StressAnalyzer.h"
+#include "VirialStressAnalyzer.h"
 #include "OutputStressTensor.h"
 #include "VirialStressTensorAverage.h"
-#include "OutputBoxdim.h"
-#include "OutputTemperature.h"
-#include "OutputPairEnergies.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
 #include "OrderParamNucleation.h"
 #include "VanHove.h"
-#include "ExternalEnergyAverage.h"
-#include "PairEnergyAverage.h"
 #include "StressAutoCorr.h"
 #include "StressAutoCorrelation.h"
+#ifdef INTER_BOND
 #include "BondTensorAutoCorr.h"
+#endif
 
-// Trajectory Writer Analyzers
+// Config and Trajectory Writers
+#include "ConfigWriter.h"
 #include "DdMdTrajectoryWriter.h"
 #include "DdMdGroupTrajectoryWriter.h"
 #include "LammpsDumpWriter.h"
+
 
 namespace DdMd
 {
@@ -58,17 +70,52 @@ namespace DdMd
       if (ptr) return ptr;
 
       // Simulation Analyzers
-      if (className == "ConfigWriter") {
-         ptr = new ConfigWriter(simulation());
-      } else 
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());
+      } else 
+      if (className == "EnergyAnalyzer") {
+         ptr = new EnergyAnalyzer(simulation());
       } else 
       if (className == "OutputEnergy") {
          ptr = new OutputEnergy(simulation());
       } else 
+      if (className == "KineticEnergyAnalyzer") {
+         ptr = new KineticEnergyAnalyzer(simulation());
+      } else 
+      if (className == "OutputTemperature") {
+         ptr = new OutputTemperature(simulation());
+      } else
+      if (className == "PairEnergyAnalyzer") {
+         ptr = new PairEnergyAnalyzer(simulation());
+      } else
+      if (className == "PairEnergyAverage") {
+         ptr = new PairEnergyAverage(simulation());
+      } else
+      if (className == "OutputPairEnergies") {
+         ptr = new OutputPairEnergies(simulation());
+      } else
+      #ifdef INTER_EXTERNAL
+      if (className == "ExternalEnergyAnalyzer") {
+         ptr = new ExternalEnergyAnalyzer(simulation());
+      } else
+      if (className == "ExternalEnergyAverage") {
+         ptr = new ExternalEnergyAverage(simulation());
+      } else
+      #endif
+      if (className == "PressureAnalyzer") {
+         ptr = new PressureAnalyzer(simulation());
+      } else
       if (className == "OutputPressure") {
          ptr = new OutputPressure(simulation());
+      } else
+      if (className == "OutputBoxdim") {
+         ptr = new OutputBoxdim(simulation());
+      } else
+      if (className == "StressAnalyzer") {
+         ptr = new StressAnalyzer(simulation());
+      } else
+      if (className == "VirialStressAnalyzer") {
+         ptr = new VirialStressAnalyzer(simulation());
       } else
       if (className == "OutputStressTensor") {
          ptr = new OutputStressTensor(simulation());
@@ -76,15 +123,17 @@ namespace DdMd
       if (className == "VirialStressTensorAverage") {
          ptr = new VirialStressTensorAverage(simulation());
       } else
-      if (className == "OutputBoxdim") {
-         ptr = new OutputBoxdim(simulation());
+      if (className == "StressAutoCorr") {
+         ptr = new StressAutoCorr(simulation());
       } else
-      if (className == "OutputTemperature") {
-         ptr = new OutputTemperature(simulation());
+      if (className == "StressAutoCorrelation") {
+         ptr = new StressAutoCorrelation(simulation());
       } else
-      if (className == "OutputPairEnergies") {
-         ptr = new OutputPairEnergies(simulation());
+      #ifdef INTER_BOND
+      if (className == "BondTensorAutoCorr") {
+         ptr = new BondTensorAutoCorr(simulation());
       } else
+      #endif
       if (className == "StructureFactor") {
          ptr = new StructureFactor(simulation());
       } else
@@ -97,21 +146,9 @@ namespace DdMd
       if (className == "VanHove") {
          ptr = new VanHove(simulation());
       } else
-      if (className == "ExternalEnergyAverage") {
-         ptr = new ExternalEnergyAverage(simulation());
-      } else
-      if (className == "PairEnergyAverage") {
-         ptr = new PairEnergyAverage(simulation());
-      } else
-      if (className == "StressAutoCorr") {
-         ptr = new StressAutoCorr(simulation());
-      } else
-      if (className == "StressAutoCorrelation") {
-         ptr = new StressAutoCorrelation(simulation());
-      } else
-      if (className == "BondTensorAutoCorr") {
-         ptr = new BondTensorAutoCorr(simulation());
-      } else
+      if (className == "ConfigWriter") {
+         ptr = new ConfigWriter(simulation());
+      } else 
       if (className == "DdMdTrajectoryWriter") {
          ptr = new DdMdTrajectoryWriter(simulation());
       } else

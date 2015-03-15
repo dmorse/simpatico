@@ -18,7 +18,6 @@ The choice of which functional form to use for specific type of potential energy
 
 User documentation for each interaction class documents the format of the block of potential energy parameters required for that interaction. This block must apppear in the parameter file within the parameter file block for the associated potential energy class. For example, in a ddSim simulation with bondStyle == "HarmonicBond", the BondPotential{ ... } parameter block must include the the block of potential energy parameters appropriate for a HarmonicBond interaction.
  
-<h2> Contents: </h2>
 <ul style="list-style: none;">
   <li> \subpage inter_pair_page 
      <ul style="list-style: none;">
@@ -27,6 +26,9 @@ User documentation for each interaction class documents the format of the block 
        <li> \ref inter_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
      </ul>
   </li>
+</ul>
+
+<ul style="list-style: none;">
   <li> \subpage inter_bond_page 
      <ul style="list-style: none;">
        <li> \ref inter_bond_HarmonicBond_page - harmonic bond </li>
@@ -34,6 +36,9 @@ User documentation for each interaction class documents the format of the block 
        <li> \ref inter_bond_FeneBond_page - finitely extensible bond </li>
      </ul>
   </li>
+</ul>
+
+<ul style="list-style: none;">
   <li> \subpage inter_angle_page 
      <ul style="list-style: none;">
        <li> \ref inter_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
@@ -41,12 +46,18 @@ User documentation for each interaction class documents the format of the block 
        <li> \ref inter_angle_HarmonicAngle_page - harmonic in bending angle </li>
      </ul>
   </li>
+</ul>
+
+<ul style="list-style: none;">
   <li> \subpage inter_dihedral_page 
      <ul style="list-style: none;">
        <li> \ref inter_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
        <li> \ref inter_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
      </ul>
   </li>
+</ul>
+
+<ul style="list-style: none;">
   <li> \subpage inter_external_page 
      <ul style="list-style: none;">
        <li> \ref inter_external_LamellarOrderExternal_page - designed to induce layers </li>

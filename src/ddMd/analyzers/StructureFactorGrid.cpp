@@ -256,12 +256,12 @@ namespace DdMd
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nWave_);
       waveIntVectors_.allocate(nWave_);
-      loader.load(waveIntVectors_);
+      loader.load(waveIntVectors_, nWave_);
       loader.load(nStar_);
       starIds_.allocate(nStar_);
-      loader.load(starIds_);
+      loader.load(starIds_, nStar_);
       starSizes_.allocate(nStar_);
-      loader.load(starSizes_);
+      loader.load(starSizes_, nStar_);
       loader.load(nSample_);
 
       if (simulation().domain().isMaster()) {
@@ -304,52 +304,54 @@ namespace DdMd
 
    void StructureFactorGrid::sample(long iStep)
    {
-      if (isAtInterval(iStep))  {
+      if (!isAtInterval(iStep))  {
+         UTIL_THROW("Time step index is not a multiple of interval");
+      }
 
-         if (simulation().domain().isMaster()) {
-            // simulation().fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
-            std::ios_base::openmode mode = std::ios_base::out;
-            if (!isFirstStep_) {
-               mode = std::ios_base::out | std::ios_base::app;
-            }
-            std::string name = outputFileName("dat");
-            simulation().fileMaster().openOutputFile(name, logFile_, mode);
+      if (simulation().domain().isMaster()) {
+         // simulation().fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+         std::ios_base::openmode mode = std::ios_base::out;
+         if (!isFirstStep_) {
+            mode = std::ios_base::out | std::ios_base::app;
          }
+         std::string name = outputFileName("dat");
+         simulation().fileMaster().openOutputFile(name, logFile_, mode);
+      }
 
-         StructureFactor::sample(iStep);
-         
-         // Log structure factors
-         if (simulation().domain().isMaster()) {
-            double volume = simulation().boundary().volume();
-            double norm;
-            for (int i = 0; i < nStar_; ++i) {
-               int size = starSizes_[i];
+      StructureFactor::sample(iStep);
+      
+      // Log structure factors
+      if (simulation().domain().isMaster()) {
+         double volume = simulation().boundary().volume();
+         double norm;
+         for (int i = 0; i < nStar_; ++i) {
+            int size = starSizes_[i];
 
-               int k = starIds_[i];
-               for (int n = 0; n < Dimension; ++n) {
-                  logFile_ << Int(waveIntVectors_[k][n], 5);
+            int k = starIds_[i];
+            for (int n = 0; n < Dimension; ++n) {
+               logFile_ << Int(waveIntVectors_[k][n], 5);
+            }
+            logFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
+
+            for (int j = 0; j < nMode_; ++j) {
+               double average = 0.0;
+               double value = 0.0;
+               k = starIds_[i];
+               for (int m = 0; m < size; ++m) {
+                  norm = std::norm(totalFourierModes_(k, j));
+                  value = norm/volume;
+                  average += value;
+                  ++k;
                }
-               logFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
-
-               for (int j = 0; j < nMode_; ++j) {
-                  double average = 0.0;
-                  double value = 0.0;
-                  k = starIds_[i];
-                  for (int m = 0; m < size; ++m) {
-                     norm = std::norm(totalFourierModes_(k, j));
-                     value = norm/volume;
-                     average += value;
-                     ++k;
-                  }
-                  average = average/double(size);
-                  logFile_ << Dbl(average, 20, 8);
-               }
-               logFile_ << std::endl;
+               average = average/double(size);
+               logFile_ << Dbl(average, 20, 8);
             }
             logFile_ << std::endl;
-            logFile_.close();
          }
+         logFile_ << std::endl;
+         logFile_.close();
       }
+
    }
 
    void StructureFactorGrid::output()
