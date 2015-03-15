@@ -1,28 +1,39 @@
-===================================================================
-Design idea #1:
 
-   - Have a new namespace that contains information about species.
+===================================================================
+Proposal:
+
+   - Have a new namespace that contains information about molecular 
+     Species.
+
+   - Possible names for new namespace: Topo, Chem, or Struc. Use Topo as 
+     an example in what follows.
 
    - Classes in this namespace would define only information and data 
      types that can be used in any program (e.g., no pointers to specific
-     atom types)
+     atom types). This is already true of McMd::Species.
 
-   - Subclasses within other namespaces could be specialized for the 
+   - Subclasses of Topo::Species within other namespaces could be 
+     specialized for the namespace, allowing functions that require 
+     access to simulation data structures or Atom or Group data types.
+     Specifically, this would allow the addition of an associated 
+     generator class in McMd and Tools, but not in DdMd.
+
+   - Consider call the main class something other than Species to avoid 
+     name clashes with classes named Species in the McMd, Tools and DdMd
+     namespaces. Possibility: Call it MoleculeType or SpeciesBase.
+
+   - Alternative way to avoid name clashes: Prohibit use of "using namespace
+     Topo" in dependent namespaces. Use explicitly qualified "Topo::Group" in 
+     classes that need it. Problem: Because this is different from the pattern
+     used for Inter and Util, it could be misunderstood and ignored.
+
+   - File formats for exchange would be defined by code in the common 
      namespace.
 
-   - File formats for exchange would be defined by code in the common
-     namespace.
+   - Have a separate associated class named Builder devoted to building 
+     the moleculeType structure within the readParameters method. Create 
+     a hierarchy of Builder classes, but keep MoleculeType generic.
 
-
-namespace Topo{
-
-   class Topo::Group -> replaces current McMd::SpeciesGroup
-   class Topo::Species -> replaces current McMd::Species
-   class Topo::SpeciesBuilder -> code to build a species
-
-}
-
-===================================================================
 namespace Topo{
 
    Possibility 1
