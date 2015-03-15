@@ -65,18 +65,15 @@ namespace DdMd
    void ExternalEnergyAverage::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSamplePerBlock_);
-
+      loadOutputFileName(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
       if (simulation().domain().isMaster()) {
          accumulator_ = new Average;
          accumulator_->loadParameters(ar);
+         if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
       }
-
-      if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -85,12 +82,11 @@ namespace DdMd
    */
    void ExternalEnergyAverage::save(Serializable::OArchive &ar)
    {
+      assert(simulation().domain().isMaster());
       saveInterval(ar);
       saveOutputFileName(ar);
-
-      if (simulation().domain().isMaster()){
-         ar << *accumulator_;
-      }
+      ar << nSamplePerBlock_;
+      ar << *accumulator_;
    }
 
    /*

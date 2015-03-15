@@ -6,7 +6,6 @@
 */
 
 #include "PeriodicExternal.h"
-
 #include <iostream>
 
 namespace Inter
@@ -26,7 +25,7 @@ namespace Inter
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
-   { setClassName("PeriodicExternal"); }
+   {  setClassName("PeriodicExternal"); }
    
    /* 
    * Copy constructor.
@@ -127,24 +126,17 @@ namespace Inter
    */
    void PeriodicExternal::readParameters(std::istream &in) 
    {
-      if (nAtomType_ == 0) {
-         UTIL_THROW("nAtomType must be set before readParam");
-      }
-      if (!boundaryPtr_) {
-         UTIL_THROW("Boundary must be set before readParam");
-      }
+      UTIL_CHECK(nAtomType_ > 0);
+      UTIL_CHECK(boundaryPtr_);
   
       // Read parameters
       prefactor_.allocate(nAtomType_);
       readDArray<double>(in, "prefactor", prefactor_, nAtomType_);
-
       read<double>(in, "externalParameter", externalParameter_);
-
       read<int>(in, "nWaveVectors", nWaveVectors_);
       read<double>(in, "C", C_);
       waveVectors_.allocate(nWaveVectors_);
       readDArray<Vector>(in, "waveVectors", waveVectors_, nWaveVectors_);
-
       phases_.allocate(nWaveVectors_);
       readDArray<double>(in, "phases", phases_, nWaveVectors_);
       read<Vector>(in, "shift", shift_);
@@ -159,16 +151,15 @@ namespace Inter
    */
    void PeriodicExternal::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAtomType_;
-      if (nAtomType_ <= 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
+      UTIL_CHECK(nAtomType_ > 0);
       prefactor_.allocate(nAtomType_);
       loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_);
       loadParameter<double>(ar, "externalParameter", externalParameter_);
+      loadParameter<int>(ar, "nWavevectors", nWaveVectors_);
       loadParameter<double>(ar, "C", C_);
       waveVectors_.allocate(nWaveVectors_);
       loadDArray<Vector>(ar, "waveVectors", waveVectors_, nWaveVectors_);
+      phases_.allocate(nWaveVectors_);
       loadDArray<double>(ar, "phases", phases_, nWaveVectors_);
       loadParameter<Vector>(ar, "shift", shift_);
       loadParameter<double>(ar, "interfaceWidth", interfaceWidth_);
@@ -181,9 +172,9 @@ namespace Inter
    */
    void PeriodicExternal::save(Serializable::OArchive &ar)
    {
-      ar << nAtomType_;
       ar << prefactor_;
       ar << externalParameter_;
+      ar << nWaveVectors_;
       ar << C_;
       ar << waveVectors_;
       ar << phases_;

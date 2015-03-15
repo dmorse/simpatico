@@ -67,13 +67,7 @@ namespace Inter
    */
    void HarmonicBond::readParameters(std::istream &in) 
    {
-
-      // Preconditions
-      if (nBondType_ <= 0) {
-         UTIL_THROW("nBondType must be set before readParam");
-      }
-
-      // Read parameters
+      UTIL_CHECK(nBondType_ > 0);
       readCArray<double>(in, "kappa",  kappa_,  nBondType_);
       readCArray<double>(in, "length", length_, nBondType_);
    }
@@ -83,11 +77,7 @@ namespace Inter
    */
    void HarmonicBond::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nBondType_; 
-      if (nBondType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
-      // Read parameters
+      UTIL_CHECK(nBondType_ > 0);
       loadCArray<double>(ar, "kappa", kappa_, nBondType_);
       loadCArray<double>(ar, "length", length_, nBondType_);
    }
@@ -97,7 +87,7 @@ namespace Inter
    */
    void HarmonicBond::save(Serializable::OArchive &ar)
    {
-      ar << nBondType_;
+      UTIL_CHECK(nBondType_ > 0);
       ar.pack(kappa_, nBondType_);
       ar.pack(length_, nBondType_);
    }

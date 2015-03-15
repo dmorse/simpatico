@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    1    3
+    gridDimensions    2    2    1
   }
   FileMaster{
     inputPrefix       in/
@@ -64,9 +64,14 @@ Simulation{
   AnalyzerManager{
      baseInterval  1000
 
+     LogEnergy{
+        interval         10000
+     }
+
      OutputEnergy{
         interval         10000
         outputFileName  energy
      }
+
   }
 }

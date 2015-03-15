@@ -2,6 +2,7 @@ mcMd_mdIntegrators_=\
     mcMd/mdIntegrators/MdIntegrator.cpp \
     mcMd/mdIntegrators/MdIntegratorFactory.cpp \
     mcMd/mdIntegrators/NveVvIntegrator.cpp \
+    mcMd/mdIntegrators/NvtLangevinIntegrator.cpp \
     mcMd/mdIntegrators/NvtDpdVvIntegrator.cpp \
     mcMd/mdIntegrators/NvtNhIntegrator.cpp \
     mcMd/mdIntegrators/NphIntegrator.cpp

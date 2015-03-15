@@ -54,7 +54,6 @@ namespace DdMd
       totalFourierModes_.allocate(nWave_, nMode_);
 
       if (simulation().domain().isMaster()) {
-
          structureFactors_.allocate(nWave_, nMode_);
          int i, j;
          for (i = 0; i < nWave_; ++i) {
@@ -62,8 +61,8 @@ namespace DdMd
                structureFactors_(i, j) = 0.0;
             }
          }
-
       }
+
       isInitialized_ = true;
    }
 
@@ -113,9 +112,7 @@ namespace DdMd
       ar << modes_;
       ar << nWave_;
       ar << waveIntVectors_;
-
       ar << nSample_;
-
       ar << structureFactors_;
    }
   
@@ -147,104 +144,102 @@ namespace DdMd
    */
    void StructureFactor::sample(long iStep) 
    {
-      if (isAtInterval(iStep))  {
-
-         if (simulation().domain().isMaster()) {
-            std::ios_base::openmode mode = std::ios_base::out;
-            if (!isFirstStep_) {
-               mode = std::ios_base::out | std::ios_base::app;
-            }
-            std::string name = outputFileName("_max.dat");
-            simulation().fileMaster().openOutputFile(name, outputFile_, mode);
+      if (!isAtInterval(iStep))  {
+         UTIL_THROW("Time step index not a multiple of interval");
+      }
+      if (simulation().domain().isMaster()) {
+         std::ios_base::openmode mode = std::ios_base::out;
+         if (!isFirstStep_) {
+            mode = std::ios_base::out | std::ios_base::app;
          }
+         std::string name = outputFileName("_max.dat");
+         simulation().fileMaster().openOutputFile(name, outputFile_, mode);
+      }
 
-         isFirstStep_ = false;
-         Vector position;
-         std::complex<double> expFactor;
-         double  product;
-         AtomIterator  atomIter;
-         int i, j, typeId;
+      isFirstStep_ = false;
+      Vector position;
+      std::complex<double> expFactor;
+      double  product;
+      AtomIterator  atomIter;
+      int i, j, typeId;
 
-         makeWaveVectors();
+      makeWaveVectors();
 
-         // Set all Fourier modes to zero
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
-               fourierModes_(i, j) = std::complex<double>(0.0, 0.0);
-            }
+      // Set all Fourier modes to zero
+      for (i = 0; i < nWave_; ++i) {
+         for (j = 0; j < nMode_; ++j) {
+            fourierModes_(i, j) = std::complex<double>(0.0, 0.0);
          }
+      }
 
-         simulation().atomStorage().begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            position = atomIter->position();
-            typeId   = atomIter->typeId();
+      simulation().atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         position = atomIter->position();
+         typeId   = atomIter->typeId();
  
-            // Loop over wavevectors
-            for (i = 0; i < nWave_; ++i) {
-               
-               product = position.dot(waveVectors_[i]);
-               expFactor = exp( product*Constants::Im );
-               for (j = 0; j < nMode_; ++j) {
-                  fourierModes_(i, j) += modes_(j, typeId)*expFactor;
-               }
-            }
-         }
-
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
-               totalFourierModes_(i, j) = std::complex<double>(0.0, 0.0);
-            }
-         }
- 
-         #ifdef UTIL_MPI
          // Loop over wavevectors
-         for (int i = 0; i < nWave_; ++i) {
-            for (int j = 0; j < nMode_; ++j) {
-            //Sum values from all processors.
-            simulation().domain().communicator().
-                         Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j),
-                                1, MPI::DOUBLE_COMPLEX, MPI::SUM, 0);
-            }
-         }
-         #else
-         for (int i = 0; i < nWave_; ++i) {
-            for (int j = 0; j < nMode_; ++j) {
-               totalFourierModes_(i, j) = fourierModes_(i, j);
-            }
-         }
-         #endif
-
-         if (simulation().domain().isMaster()) {
-            // Increment structure factors
-            double volume = simulation().boundary().volume();
-            double norm, maxValue, maxQ;
-            IntVector maxIntVector;
+         for (i = 0; i < nWave_; ++i) {
+            
+            product = position.dot(waveVectors_[i]);
+            expFactor = exp( product*Constants::Im );
             for (j = 0; j < nMode_; ++j) {
-               maxValue = 0.0;
-               maxQ = 0.0;
-               for (i = 1; i < nWave_; ++i) {
-                  norm = std::norm(totalFourierModes_(i, j));
-                  norm = norm/volume;
-                  if ( norm >= maxValue ) {
-                     maxValue = norm;
-                     maxIntVector = waveIntVectors_[i];
-                     maxQ = waveVectors_[i].abs();
-                  }
-                  structureFactors_(i, j) += norm;
-               }
-               outputFile_ << maxIntVector;
-               outputFile_ << Dbl(maxQ,20,8);
-               outputFile_ << Dbl(maxValue,20,8);
-               outputFile_ << std::endl;
-
+               fourierModes_(i, j) += modes_(j, typeId)*expFactor;
             }
          }
-   
-         ++nSample_;
+      }
 
+      for (i = 0; i < nWave_; ++i) {
+         for (j = 0; j < nMode_; ++j) {
+            totalFourierModes_(i, j) = std::complex<double>(0.0, 0.0);
+         }
+      }
+ 
+      #ifdef UTIL_MPI
+      // Loop over wavevectors
+      for (int i = 0; i < nWave_; ++i) {
+         for (int j = 0; j < nMode_; ++j) {
+         //Sum values from all processors.
+         simulation().domain().communicator().
+                      Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j),
+                             1, MPI::DOUBLE_COMPLEX, MPI::SUM, 0);
+         }
+      }
+      #else
+      for (int i = 0; i < nWave_; ++i) {
+         for (int j = 0; j < nMode_; ++j) {
+            totalFourierModes_(i, j) = fourierModes_(i, j);
+         }
+      }
+      #endif
+
+      if (simulation().domain().isMaster()) {
+         // Increment structure factors
+         double volume = simulation().boundary().volume();
+         double norm, maxValue, maxQ;
+         IntVector maxIntVector;
+         for (j = 0; j < nMode_; ++j) {
+            maxValue = 0.0;
+            maxQ = 0.0;
+            for (i = 1; i < nWave_; ++i) {
+               norm = std::norm(totalFourierModes_(i, j));
+               norm = norm/volume;
+               if ( norm >= maxValue ) {
+                  maxValue = norm;
+                  maxIntVector = waveIntVectors_[i];
+                  maxQ = waveVectors_[i].abs();
+               }
+               structureFactors_(i, j) += norm;
+            }
+            outputFile_ << maxIntVector;
+            outputFile_ << Dbl(maxQ,20,8);
+            outputFile_ << Dbl(maxValue,20,8);
+            outputFile_ << std::endl;
+         }
          outputFile_ << std::endl;
          outputFile_.close();
       }
+
+      ++nSample_;
 
    }
 

@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "BondPotential.h" // base class
 #include <util/global.h>
+#include "BondPotential.h" // base class
 
 namespace DdMd
 {
@@ -32,11 +32,17 @@ namespace DdMd
 
       /** 
       * Constructor.
+      *
+      * This is the primary constructor, which is used in a simulation.
+      *
+      * \param simulation  parent Simulation
       */
       BondPotentialImpl(Simulation& simulation);
 
       /** 
       * Default constructor.
+      *
+      * This constructor is provided to simplify unit testing.
       */
       BondPotentialImpl();
 
@@ -45,8 +51,17 @@ namespace DdMd
       */
       virtual ~BondPotentialImpl();
 
+      /// \name Initialization and Serialization
+      //@{
+      
       /**
       * Set the maximum number of atom types.
+      *
+      * This should be called by the user iff the object is instantiated
+      * with the default constructor. It is called internally by the main 
+      * constructor BondPotentialImpl(Simulation& ).
+      *
+      * \param nAtomType  maximum number of atom types (max index + 1)
       */
       virtual void setNBondType(int nAtomType);
   
@@ -55,7 +70,7 @@ namespace DdMd
       * 
       * This method reads the bond potential Interaction parameter block. 
       *
-      * Precondition: setNBondType must have been called before this.
+      * \pre nBondType must be set
       *
       * \param in input parameter file
       */
@@ -64,7 +79,7 @@ namespace DdMd
       /**
       * Load internal state from an archive.
       *
-      * Precondition: setNBondType must have been called before this.
+      * \pre nBondType must be set
       *
       * \param ar input/loading archive
       */
@@ -77,6 +92,7 @@ namespace DdMd
       */
       virtual void save(Serializable::OArchive &ar);
   
+      //@}
       /// \name Interaction interface
       //@{
 
@@ -104,18 +120,15 @@ namespace DdMd
       * \param bondTypeId type index of first atom
       * \param value      new value of parameter
       */
-      void set(std::string name, int bondTypeId, double value)
-      {  interactionPtr_->set(name, bondTypeId, value); }
+      void set(std::string name, int bondTypeId, double value);
 
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name        parameter variable name
+      * \param name  parameter variable name
       * \param bondTypeId  type index of first atom
       */
-      double get(std::string name, int bondTypeId) const
-      {  return interactionPtr_->get(name, bondTypeId); }
-
+      double get(std::string name, int bondTypeId) const;
 
       /**
       * Return pair interaction class name (e.g., "HarmonicBond").
@@ -188,6 +201,11 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
+      /*
+      * Initialized false, reset true in (read|load)Parameters.  
+      */
+      bool isInitialized_;
+
    };
 
 }
@@ -218,8 +236,12 @@ namespace DdMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl(Simulation& simulation)
     : BondPotential(simulation),
-      interactionPtr_(0)
-   {  interactionPtr_ = new Interaction(); }
+      interactionPtr_(0),
+      isInitialized_(false)
+   {  
+      interactionPtr_ = new Interaction(); 
+      setNBondType(simulation.nBondType());
+   }
  
    /* 
    * Default constructor.
@@ -227,7 +249,8 @@ namespace DdMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl()
     : BondPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction(); }
  
    /* 
@@ -254,9 +277,11 @@ namespace DdMd
    template <class Interaction>
    void BondPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -266,9 +291,11 @@ namespace DdMd
    void 
    BondPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
@@ -309,6 +336,23 @@ namespace DdMd
    template <class Interaction>
    std::string BondPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
+
+   /*
+   * Modify a bond parameter, identified by a string.
+   */
+   template <class Interaction>
+   inline
+   void BondPotentialImpl<Interaction>::set(std::string name, int bondTypeId, 
+                                            double value)
+   {  interactionPtr_->set(name, bondTypeId, value); }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   template <class Interaction>
+   inline
+   double BondPotentialImpl<Interaction>::get(std::string name, int bondTypeId) const
+   {  return interactionPtr_->get(name, bondTypeId); }
 
    /*
    * Get Interaction by reference.

@@ -93,13 +93,13 @@ namespace DdMd
       /**
       * An array of strips of relative ids for columns of neighboring cells.
       *
-      * Every cell has a pointer to an OffsetArray, which uses relative 
+      * Every cell has a pointer to a Cell::OffsetArray, which uses relative 
       * cell indices (offsets relative to the cell id of the primary cell) 
       * to identify neighboring cells. Each std::pair<int, int> element in 
-      * in an OffsetArra contains relative addresses for the the first 
-      * (pair.first) and last (pair.second) cells in a contiguous strip of 
-      * cells that could contain atoms that lie within a cutoff length of 
-      * some point in the primary cell. The contents of the OffsetArray
+      * in an OffsetArra contains relative addresses for the the first cell
+      * (pair.first) and last cell (pair.second) cell in a contiguous strip 
+      * of cells that could contain atoms that lie within a cutoff length 
+      * of some point in the primary cell. The contents of the OffsetArray
       * are calculated in the CellList::makeGrid() function.
       */
       typedef FSArray< std::pair<int,int>, OffSetArrayCapacity> OffsetArray;
@@ -142,6 +142,8 @@ namespace DdMd
 
       /**
       * Set the pointer to an array of integer offsets.
+      *
+      * \param offsets array offsets for strips of neighboring cells
       */
       void setOffsetArray(OffsetArray& offsets);
 
@@ -231,19 +233,19 @@ namespace DdMd
    private:
 
       /// Pointer to first Atom* pointer for this cell.
-      CellAtom*  begin_;         
+      CellAtom* begin_;         
 
       /// Pointer to neighbor offset array.
-      OffsetArray*  offsetsPtr_;
+      OffsetArray* offsetsPtr_;
 
       /// Pointer to next local Cell.
-      Cell*  nextCellPtr_;
+      Cell* nextCellPtr_;
 
       /// Number of atoms in this cell.
-      int  nAtom_;
+      int nAtom_;
 
       /// Maximum number of atoms in cell.
-      int  atomCapacity_;  
+      int atomCapacity_;  
 
       /// Id of cell in grid.
       int id_;

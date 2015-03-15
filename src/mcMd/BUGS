@@ -15,6 +15,3 @@ Begin reading restart, base file name restart
    Message : Cannot allocate ArrayStack with capacity <= 0
 
 --------------------------------------------------------------------------------
-CfbEndBase does not work correctly with angle potentials.
-
---------------------------------------------------------------------------------

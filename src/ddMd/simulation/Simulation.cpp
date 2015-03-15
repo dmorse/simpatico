@@ -291,7 +291,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) {
+         logFile_.close();
+      }
       #endif
    }
 
@@ -449,32 +451,32 @@ namespace DdMd
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
       nBondType_ = 0;
-      read<int>(in, "nBondType", nBondType_, false); // optional
+      readOptional<int>(in, "nBondType", nBondType_); 
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
-      read<bool>(in, "hasExternal", hasExternal_, false); // optional
+      readOptional<bool>(in, "hasExternal", hasExternal_); 
       #endif
 
       hasAtomContext_ = false;
-      read<bool>(in, "hasAtomContext", hasAtomContext_, false); // optional
+      readOptional<bool>(in, "hasAtomContext", hasAtomContext_); 
       Atom::setHasAtomContext(hasAtomContext_);
 
       // Read array of atom type descriptors
@@ -514,9 +516,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       readParamComposite(in, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -527,7 +528,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -540,7 +540,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -553,7 +552,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -566,7 +564,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -592,7 +589,7 @@ namespace DdMd
 
       // Finished reading parameter file. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -711,9 +708,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -724,7 +720,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -737,7 +732,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -750,7 +744,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -763,7 +756,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -788,7 +780,7 @@ namespace DdMd
 
       // Finished loading data from archive. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -908,31 +900,26 @@ namespace DdMd
       // Potential energy styles and potential classes
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
-      assert(pairPotentialPtr_);
-      pairPotentialPtr_->save(ar);
+      pairPotential().save(ar);
       #endif
       #ifdef INTER_BOND
       if (nBondType_) {
-         assert(bondPotentialPtr_);
-         bondPotentialPtr_->save(ar);
+         bondPotential().save(ar);
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         assert(anglePotentialPtr_);
-         anglePotentialPtr_->save(ar);
+         anglePotential().save(ar);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         assert(dihedralPotentialPtr_);
-         dihedralPotentialPtr_->save(ar);
+         dihedralPotential().save(ar);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         assert(externalPotentialPtr_);
-         externalPotentialPtr_->save(ar);
+         externalPotential().save(ar);
       }
       #endif
 
@@ -1225,6 +1212,7 @@ namespace DdMd
                double temperature;
                inBuffer >> temperature;
                setBoltzmannVelocities(temperature);
+               removeDriftVelocity();
             } else
             if (command == "SIMULATE") {
                int nStep;
@@ -1352,6 +1340,20 @@ namespace DdMd
                inBuffer >> classname;
                setConfigIo(classname);
             } else
+            if (command == "SET_INPUT_PREFIX") {
+               // Set the FileMaster inputPrefix, which is used to
+               // construct paths to input files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setInputPrefix(prefix);
+            } else
+            if (command == "SET_OUTPUT_PREFIX") {
+               // Set the FileMaster outputPrefix, which is used to
+               // construct paths to output files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setOutputPrefix(prefix);
+            } else
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
                std::string paramName;
@@ -1432,31 +1434,85 @@ namespace DdMd
    {
       reverseUpdateFlag_ = reverseUpdateFlag;
       if (pairPotentialPtr_) {
-         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
+         pairPotential().setReverseUpdateFlag(reverseUpdateFlag);
       }
    }
 
    /*
    * Choose velocities from a Boltzmann distribution.
    */
-   void Simulation::setBoltzmannVelocities(double temperature)
+    void Simulation::setBoltzmannVelocities(double temperature)
    {
-      double scale = sqrt(temperature);
+      double mass;
+      double scale;
       AtomIterator atomIter;
       int i;
-
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         assert(mass > 0);
+         scale = sqrt(temperature/mass);
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+
+      // Publish notification of change in velocities
       velocitySignal().notify();
    }
 
    /*
-   * Set forces on all local atoms to zero.
-   * If reverseUpdateFlag(), also zero ghost atom forces.
+   * Remove the drift velocity
+   */
+   Vector Simulation::removeDriftVelocity()
+   {
+      Vector momentum(0.0);      // atom momentum
+      Vector momentumLocal(0.0); // sum of momenta on processor
+      Vector momentumTotal(0.0); // total momentum of system
+      double mass;               // atom mass
+      double massLocal = 0.0;    // sum of masses on processor
+      double massTotal = 0.0;    // total momentum of system
+      int j;
+
+      // Calculate total momentum and mass on processor
+      AtomIterator atomIter;
+      atomStorage_.begin(atomIter);
+      for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         massLocal = massLocal + mass;
+         for(j = 0; j<Dimension; ++j) {
+            momentum[j] = atomIter->velocity()[j];
+            momentum[j] *= mass;
+         }
+         momentumLocal += momentum;
+      }
+
+      // Compute total momentum and mass for system, by MPI all reduce
+      domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
+                                       MPI::DOUBLE, MPI::SUM);
+      domain_.communicator().Allreduce(&momentumLocal[0],
+                                       &momentumTotal[0], Dimension,
+                                       MPI::DOUBLE, MPI::SUM);
+
+      // Subtract average drift velocity
+      Vector drift = momentumTotal;
+      drift /= massTotal;
+      atomStorage_.begin(atomIter); 
+      for( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->velocity() -= drift;
+      }
+
+      // Publish notification of change in velocities
+      velocitySignal().notify();
+
+      return drift;
+   }
+
+   /*
+   * Set forces on all atoms to zero.
+   *
+   * If reverseUpdateFlag() is true, zero local and ghost
+   * atom forces, otherwise only local atoms.
    */
    void Simulation::zeroForces()
    {  atomStorage_.zeroForces(reverseUpdateFlag_); }
@@ -1736,25 +1792,25 @@ namespace DdMd
       // Note: Pointers used here because ...Potential() accessors
       // return non-const references, which violate the method const.
       double energy = 0.0;
-      energy += pairPotentialPtr_->energy();
+      energy += pairPotential().energy();
       #ifdef INTER_BOND
       if (nBondType_) {
-         energy += bondPotentialPtr_->energy();
+         energy += bondPotential().energy();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         energy += anglePotentialPtr_->energy();
+         energy += anglePotential().energy();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         energy += dihedralPotentialPtr_->energy();
+         energy += dihedralPotential().energy();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         energy += externalPotentialPtr_->energy();
+         energy += externalPotential().energy();
       }
       #endif
       return energy;
@@ -1847,20 +1903,20 @@ namespace DdMd
       // return non-const references, which violate the method const.
       Tensor stress;
       stress.zero();
-      stress += pairPotentialPtr_->stress();
+      stress += pairPotential().stress();
       #ifdef INTER_BOND
       if (nBondType_) {
-         stress += bondPotentialPtr_->stress();
+         stress += bondPotential().stress();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         stress += anglePotentialPtr_->stress();
+         stress += anglePotential().stress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         stress += dihedralPotentialPtr_->stress();
+         stress += dihedralPotential().stress();
       }
       #endif
       return stress;
@@ -1873,20 +1929,20 @@ namespace DdMd
    {
       double pressure;
       pressure = 0;
-      pressure += pairPotentialPtr_->pressure();
+      pressure += pairPotential().pressure();
       #ifdef INTER_BOND
       if (nBondType_) {
-         pressure += bondPotentialPtr_->pressure();
+         pressure += bondPotential().pressure();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         pressure += anglePotentialPtr_->pressure();
+         pressure += anglePotential().pressure();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         pressure += dihedralPotentialPtr_->pressure();
+         pressure += dihedralPotential().pressure();
       }
       #endif
       return pressure;
@@ -1913,7 +1969,7 @@ namespace DdMd
    {
       DMatrix<double> pairEnergies;
       pairEnergies.allocate(nAtomType_, nAtomType_);
-      pairEnergies = pairPotentialPtr_->pairEnergies();
+      pairEnergies = pairPotential().pairEnergies();
       return pairEnergies;
    }
 

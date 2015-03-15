@@ -32,10 +32,11 @@ namespace McMd
    *  equations of motion.
    *
    *  The integration scheme used to implement the equations of motion is
-   *  explicitly reversible and measure-preserving. It is based
-   *  on the Trotter expansion technique introduced by Tuckerman et al. J. Chem.
+   *  explicitly reversible and measure-preserving. It is based  on the 
+   *  Trotter expansion technique introduced by Tuckerman et al. J. Chem.
    *  Phys.  97, pp. 1990 (1992).
    *
+   * \sa \ref mcMd_integrator_NphIntegrator_page "parameter file format"
    * \ingroup McMd_MdIntegrator_Module
    */
    class NphIntegrator : public MdIntegrator

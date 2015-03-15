@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * Calculates angle forces and energies for a parent Simulation.
+   * Abstract base class for computation of angle force and energies.
    *
    * \ingroup DdMd_Angle_Module
    */
@@ -33,6 +33,11 @@ namespace DdMd
 
       /**
       * Constructor.
+      *
+      * Calls associate() function internally to create
+      * associations with boundary and angleStorage.
+      *
+      * \param simulation  parent Simulation object
       */
       AnglePotential(Simulation& simulation);
 
