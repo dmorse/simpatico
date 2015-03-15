@@ -53,11 +53,7 @@ namespace DdMd
       szxAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
       szyAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
       szzAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
-
-      std::string filename;
-      filename  = outputFileName();
       simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
-
       isInitialized_ = true;
    }
 
@@ -69,8 +65,9 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
       if (simulation().domain().isMaster()) {
+         #if 0
          sxxAccumulator_.loadParameters(ar);
          sxyAccumulator_.loadParameters(ar);
          sxzAccumulator_.loadParameters(ar);
@@ -80,11 +77,18 @@ namespace DdMd
          szxAccumulator_.loadParameters(ar);
          szyAccumulator_.loadParameters(ar);
          szzAccumulator_.loadParameters(ar);
-         std::string filename;
-         filename  = outputFileName();
+         #endif
+         ar >> sxxAccumulator_;
+         ar >> sxyAccumulator_;
+         ar >> sxzAccumulator_;
+         ar >> syxAccumulator_;
+         ar >> syyAccumulator_;
+         ar >> syzAccumulator_;
+         ar >> szxAccumulator_;
+         ar >> szyAccumulator_;
+         ar >> szzAccumulator_;
          simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
       }
-
       isInitialized_ = true;
    }
 
@@ -93,21 +97,19 @@ namespace DdMd
    */
    void VirialStressTensorAverage::save(Serializable::OArchive &ar)
    {
+      assert(simulation().domain().isMaster());
       saveInterval(ar);
       saveOutputFileName(ar);
-
-      if (simulation().domain().isMaster()) {
-         ar << sxxAccumulator_;
-         ar << sxyAccumulator_;
-         ar << sxzAccumulator_;
-         ar << syxAccumulator_;
-         ar << syyAccumulator_;
-         ar << syzAccumulator_;
-         ar << szxAccumulator_;
-         ar << szyAccumulator_;
-         ar << szzAccumulator_;
-      }
-
+      ar << nSamplePerBlock_;
+      ar << sxxAccumulator_;
+      ar << sxyAccumulator_;
+      ar << sxzAccumulator_;
+      ar << syxAccumulator_;
+      ar << syyAccumulator_;
+      ar << syzAccumulator_;
+      ar << szxAccumulator_;
+      ar << szyAccumulator_;
+      ar << szzAccumulator_;
    }
 
   

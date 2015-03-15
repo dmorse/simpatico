@@ -24,7 +24,7 @@ namespace DdMd
    */
    DdMdTrajectoryWriter::DdMdTrajectoryWriter(Simulation& simulation)
     : TrajectoryWriter(simulation, true)
-   {}
+   {  setClassName("DdMdTrajectoryWriter"); }
 
    /*
    * Destructor.

@@ -291,7 +291,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) {
+         logFile_.close();
+      }
       #endif
    }
 
@@ -514,9 +516,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
-      readParamComposite(in, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
+      readParamComposite(in, *pairPotentialPtr_);
       #endif
 
       #ifdef INTER_BOND
@@ -527,7 +528,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -540,7 +540,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -553,7 +552,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -566,7 +564,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -711,7 +708,6 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
@@ -724,7 +720,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -737,7 +732,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -750,7 +744,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -763,7 +756,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -1348,6 +1340,20 @@ namespace DdMd
                inBuffer >> classname;
                setConfigIo(classname);
             } else
+            if (command == "SET_INPUT_PREFIX") {
+               // Set the FileMaster inputPrefix, which is used to
+               // construct paths to input files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setInputPrefix(prefix);
+            } else
+            if (command == "SET_OUTPUT_PREFIX") {
+               // Set the FileMaster outputPrefix, which is used to
+               // construct paths to output files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setOutputPrefix(prefix);
+            } else
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
                std::string paramName;
@@ -1503,8 +1509,10 @@ namespace DdMd
    }
 
    /*
-   * Set forces on all local atoms to zero.
-   * If reverseUpdateFlag(), also zero ghost atom forces.
+   * Set forces on all atoms to zero.
+   *
+   * If reverseUpdateFlag() is true, zero local and ghost
+   * atom forces, otherwise only local atoms.
    */
    void Simulation::zeroForces()
    {  atomStorage_.zeroForces(reverseUpdateFlag_); }

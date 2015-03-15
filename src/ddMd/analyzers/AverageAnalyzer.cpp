@@ -27,7 +27,7 @@ namespace DdMd
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
-      nSamplePerBlock_(1),
+      nSamplePerBlock_(0),
       isInitialized_(false)
    {  setClassName("AverageAnalyzer"); }
 
@@ -48,7 +48,8 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
+      nSamplePerBlock_ = 0;
+      readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new Average;
@@ -64,18 +65,21 @@ namespace DdMd
    void AverageAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSamplePerBlock_);
+      loadOutputFileName(ar);
+      nSamplePerBlock_ = 0;
+      bool isRequired = false;
+      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
+                         isRequired);
 
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new Average;
-         accumulatorPtr_->loadParameters(ar);
+         ar >> *accumulatorPtr_;
+         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
+      } else {
+         accumulatorPtr_ = 0;
       }
-
-      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -84,12 +88,14 @@ namespace DdMd
    */
    void AverageAnalyzer::save(Serializable::OArchive &ar)
    {
+      assert(simulation().domain().isMaster());
+      assert(accumulatorPtr_);
+
       saveInterval(ar);
       saveOutputFileName(ar);
-
-      if (simulation().domain().isMaster()){
-         ar << *accumulatorPtr_;
-      }
+      bool isActive = (bool)nSamplePerBlock_;
+      Parameter::saveOptional<int>(ar, nSamplePerBlock_, isActive);
+      ar << *accumulatorPtr_;
    }
 
    /*

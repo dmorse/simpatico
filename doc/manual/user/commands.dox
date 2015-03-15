@@ -185,6 +185,22 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
   </tr>
+  <tr> 
+    <td> SET_INPUT_PREFIX </td>
+    <td> prefix [string] </td>
+    <td> Change the input prefix that is used to construct paths for input files. Directory names must end with a slash. </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> SET_OUTPUT_PREFIX </td>
+    <td> prefix [string] </td>
+    <td> Change the output prefix that is used to construct paths for output files. Directory names must end with a slash.  </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
   <tr>
     <td> OUTPUT_ANALYZERS </td>
     <td>  </td>

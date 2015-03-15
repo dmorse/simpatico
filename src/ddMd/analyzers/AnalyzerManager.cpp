@@ -55,7 +55,6 @@ namespace DdMd
       ar << Analyzer::baseInterval;
       Manager<Analyzer>::save(ar);
    }
-
   
    /*
    * Call setup method of each analyzer.

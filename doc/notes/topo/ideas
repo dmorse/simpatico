@@ -1,6 +1,3 @@
-Possible names for new namespace: Topo, Chem, or Struc. Use Topo as an 
-example in what follows.
-
 ===================================================================
 Design idea #1:
 
@@ -28,23 +25,47 @@ namespace Topo{
 ===================================================================
 namespace Topo{
 
+   Possibility 1
+   class Topo::MoleculeType -> base class for current McMd::Species
+   class Topo::GroupType -> replaces current McMd::SpeciesGroup
+   class Topo::Builder -> code to build a species
+
+   or 
+
+   Possibility 2
+   class Topo::Species -> base class for current McMd::Species
    class Topo::Group -> replaces current McMd::SpeciesGroup
-   class Topo::Species -> replaces current McMd::Species
-   class Topo::SpeciesBuilder -> code to build a species
+   class Topo::Builder -> code to build a species
+
+   I may need to think harder about class names. The current proposals 
+   are either not appealing or intuitive, or are error prone because 
+   of the potential for name clashes. A synonym for Group would help.
 
 }
 
----------------------------------------------------------------
-SpeciesBuilder (Design):
 
-   1) Use pimpl idiom for SpeciesBuilder within a Species. 
-   2) Have Species::readParameters call SpeciesBuilder::readParameters.
-   3) Make SpeciesBuilder a friend of Species, provide data access
-   4) Make a hierarchy of SpeciesBuilder classes, keep Species generic.
+---------------------------------------------------------------
+Builder (Design):
+
+   1) Use pimpl idiom for Builder within a Species. 
+
+   2) Make a hierarchy of Builder classes, keep Species generic.
+
+   3) Have Species::readParameters call Builder::readParameters.
+
+   4) The Builder base class would provide functions that are 
+   required to modify data structures of a Species, which are now
+   protected classes of McMd::Species. These include: setAtomType, 
+   makeBond, makeDihedral, makeAngle.
+
+   5) Make the Builder base class a friend of Species in order
+   to allow these functions (setAtomType, etc.) access to the
+   data structures. The builder will require the ability to 
+   modify data in these arrays, and possibly to allocate them.
 
    class Species {
 
-      Species(SpeciesBuilder& builder)
+      Species(Builder& builder)
        : builderPtr_(&builder)
       {}
 
@@ -57,14 +78,14 @@ SpeciesBuilder (Design):
 
    private:
 
-      SpeciesBuilder* builderPtr_;
+      Builder* builderPtr_;
 
    //friend:
 
-      friend class SpeciesBuilder; 
+      friend class Builder; 
    };
 
-   class SpeciesBuilder {
+   class Builder {
 
       void readParameters(){
          ....
@@ -88,13 +109,18 @@ SpeciesBuilder (Design):
 ---------------------------------------------------------------
 Generators (Design):
 
-   Introduce a Generator template in McMd and Tools namespaces. 
-   Unimplemented functions should throw errors.
+   Introduce Generator classes in the McMd and Tools namespaces. 
+
+   Each generator class would take a Species class as an argument
+   to its constructor, and would be linked to the Species class.
+
+   The McMd::Species and Tools::Species classes would each have 
+   a function to add a Generator, a bool hasGenerator() const 
+   query and a generate() function that calls the generator, if
+   it exists.  
 
    Introduce explicit specializations for Linear, Atom, etc.
 
-   The factory should create a SpeciesBuilder, a Generator, and
-   then link them to an associated Species object. All specialized
-   functions are called through the associated Builder and Generator
-   objects.
-   
+   The factory should create a Builder, a Generator, and then link 
+   them to an associated Species object. All specialized functions 
+   are called through the associated Builder and Generator objects.

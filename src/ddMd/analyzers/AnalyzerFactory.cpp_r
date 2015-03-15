@@ -15,11 +15,13 @@
 #include "OutputEnergy.h"
 #include "KineticEnergyAnalyzer.h"
 #include "OutputTemperature.h"
-#include "ExternalEnergyAnalyzer.h"
-#include "ExternalEnergyAverage.h"
 #include "PairEnergyAnalyzer.h"
 #include "OutputPairEnergies.h"
 #include "PairEnergyAverage.h"
+#ifdef INTER_EXTERNAL
+#include "ExternalEnergyAnalyzer.h"
+#include "ExternalEnergyAverage.h"
+#endif
 #include "PressureAnalyzer.h"
 #include "OutputPressure.h"
 #include "OutputBoxdim.h"
@@ -33,13 +35,16 @@
 #include "VanHove.h"
 #include "StressAutoCorr.h"
 #include "StressAutoCorrelation.h"
+#ifdef INTER_BOND
 #include "BondTensorAutoCorr.h"
+#endif
 
 // Config and Trajectory Writers
 #include "ConfigWriter.h"
 #include "DdMdTrajectoryWriter.h"
 #include "DdMdGroupTrajectoryWriter.h"
 #include "LammpsDumpWriter.h"
+
 
 namespace DdMd
 {
@@ -89,12 +94,14 @@ namespace DdMd
       if (className == "OutputPairEnergies") {
          ptr = new OutputPairEnergies(simulation());
       } else
+      #ifdef INTER_EXTERNAL
       if (className == "ExternalEnergyAnalyzer") {
          ptr = new ExternalEnergyAnalyzer(simulation());
       } else
       if (className == "ExternalEnergyAverage") {
          ptr = new ExternalEnergyAverage(simulation());
       } else
+      #endif
       if (className == "PressureAnalyzer") {
          ptr = new PressureAnalyzer(simulation());
       } else
@@ -122,9 +129,11 @@ namespace DdMd
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
       } else
+      #ifdef INTER_BOND
       if (className == "BondTensorAutoCorr") {
          ptr = new BondTensorAutoCorr(simulation());
       } else
+      #endif
       if (className == "StructureFactor") {
          ptr = new StructureFactor(simulation());
       } else

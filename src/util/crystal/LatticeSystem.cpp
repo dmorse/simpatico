@@ -5,11 +5,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LatticeSystem.h"    // class header
 #include <util/global.h>      // uses UTIL_THROW
+#include "LatticeSystem.h"    // class header
 
 namespace Util
 {
+
+   #ifdef UTIL_MPI
+   /**
+   * Initialize LatticeSystem:: MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Util::LatticeSystem>::type = MPI::INT;
+   bool MpiTraits<Util::LatticeSystem>::hasType = true;
+   #endif
 
    /* 
    * Extract a LatticeSystem from an istream as a string.
@@ -77,15 +85,5 @@ namespace Util
       } 
       return out; 
    }
-
-   #ifdef UTIL_MPI
-
-   /**
-   * Initialize LatticeSystem:: MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<Util::LatticeSystem>::type = MPI::INT;
-   bool MpiTraits<Util::LatticeSystem>::hasType = true;
-
-   #endif
 
 }

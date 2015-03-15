@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/accumulators/AverageStage.h>  // base class
 #include <util/param/ParamComposite.h>       // base class
-#include <util/global.h>
 
 #include <vector>
 

@@ -5,6 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include "SymmTensorAverageAnalyzer.h"
 #include <ddMd/simulation/Simulation.h>
 #include <util/accumulators/SymmTensorAverage.h>   
@@ -48,13 +49,12 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
+      nSamplePerBlock_ = 0;
+      readOptional<int>(in,"nSamplePerBlock", nSamplePerBlock_);
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new SymmTensorAverage;
          accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
-
       isInitialized_ = true;
    }
 
@@ -64,17 +64,19 @@ namespace DdMd
    void SymmTensorAverageAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_);
-
+      loadOutputFileName(ar);
+      nSamplePerBlock_ = 0;
+      bool isRequired = false;
+      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, isRequired);
       if (simulation().domain().isMaster()) {
          accumulatorPtr_ = new SymmTensorAverage;
-         accumulatorPtr_->loadParameters(ar);
+         ar >> *accumulatorPtr_;
+         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
+            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+         }
+      } else {
+         accumulatorPtr_ = 0;
       }
-
-      if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-         UTIL_THROW("Inconsistent values of nSamplePerBlock");
-      }
-
       isInitialized_ = true;
    }
 
@@ -83,11 +85,14 @@ namespace DdMd
    */
    void SymmTensorAverageAnalyzer::save(Serializable::OArchive &ar)
    {
-      if (simulation().domain().isMaster()){
-         saveInterval(ar);
-         saveOutputFileName(ar);
-         ar << *accumulatorPtr_;
-      }
+      assert(simulation().domain().isMaster());
+      assert(accumulatorPtr_);
+      
+      saveInterval(ar);
+      saveOutputFileName(ar);
+      bool isActive = (bool)nSamplePerBlock_;
+      Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
+      ar << *accumulatorPtr_;
    }
 
    /*
