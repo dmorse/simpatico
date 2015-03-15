@@ -63,6 +63,9 @@ public:
          std::cout << x << std::endl;
          average.sample(x);
       }
+      std::cout << "Average = " << average.average() 
+                <<  " +- " << average.blockingError() 
+                << std::endl;
       average.output(std::cout);
 
       tearDown();

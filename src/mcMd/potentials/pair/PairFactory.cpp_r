@@ -1,11 +1,7 @@
-#ifndef INTER_NOPAIR
-#ifndef MCMD_PAIR_FACTORY_CPP
-#define MCMD_PAIR_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -23,9 +19,12 @@
 #include <inter/pair/LJPair.h>
 #include <inter/pair/WcaPair.h>
 #include <inter/pair/DpdPair.h>
-#include <inter/pair/CompensatedPair.h>
 
+#ifdef INTER_BOND
+#include <inter/pair/CompensatedPair.h>
 #include <inter/bond/FeneBond.h>
+#endif
+
 
 namespace McMd
 {
@@ -65,10 +64,13 @@ namespace McMd
       } else
       if (name == "DpdPair") {
          ptr = new McPairPotentialImpl<DpdPair>(system);
-      } else
+      }
+      #ifdef INTER_BOND 
+      else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          ptr = new McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
       }
+      #endif
       return ptr;
    }
 
@@ -92,10 +94,13 @@ namespace McMd
       } else
       if (name == "DpdPair") {
          ptr = new MdPairPotentialImpl<DpdPair>(system);
-      } else
+      } 
+      #ifdef INTER_BOND 
+      else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
       }
+      #endif
       return ptr;
    }
 
@@ -126,12 +131,15 @@ namespace McMd
          McPairPotentialImpl<DpdPair>* mcPtr 
              = dynamic_cast< McPairPotentialImpl<DpdPair>* >(&potential);
          ptr = new MdPairPotentialImpl<DpdPair>(*mcPtr);
-      } else 
+      } 
+      #ifdef INTER_BOND 
+      else 
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* mcPtr 
              = dynamic_cast< McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* >(&potential);
          ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(*mcPtr);
       }
+      #endif
       return ptr;
    }
 
@@ -177,5 +185,3 @@ namespace McMd
    }
 
 }
-#endif
-#endif

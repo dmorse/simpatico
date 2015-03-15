@@ -1,0 +1,4 @@
+#!/bin/bash
+rm -f */log
+rm -f */restart
+rm -f */out/*

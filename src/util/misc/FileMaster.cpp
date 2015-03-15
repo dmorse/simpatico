@@ -1,15 +1,16 @@
-#ifndef UTIL_FILE_MASTER_CPP
-#define UTIL_FILE_MASTER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "FileMaster.h"
 #include <util/global.h>
+
+#include "FileMaster.h"
+#ifdef UTIL_MPI
+#include <util/mpi/MpiLoader.h>
+#endif
 
 #include <sstream>
 
@@ -20,7 +21,8 @@ namespace Util
    * Default constructor.
    */
    FileMaster::FileMaster()
-    : commandFileName_(),
+    : paramFileName_(),
+      commandFileName_(),
       inputPrefix_(),
       outputPrefix_(),
       directoryIdPrefix_(),
@@ -28,21 +30,23 @@ namespace Util
       paramFilePtr_(0),
       commandFilePtr_(0),
       hasDirectoryId_(false),
-      isSetParamFileStdIn_(false)
+      isCommonControl_(false)
    {  setClassName("FileMaster"); }
 
    /*
    * Copy constructor.
    */
    FileMaster::FileMaster(const FileMaster& other)
-    : inputPrefix_(other.inputPrefix_),
+    : paramFileName_(),
+      commandFileName_(),
+      inputPrefix_(other.inputPrefix_),
       outputPrefix_(other.outputPrefix_),
       directoryIdPrefix_(other.directoryIdPrefix_),
       rootPrefix_(other.rootPrefix_),
       paramFilePtr_(0),
       commandFilePtr_(0),
       hasDirectoryId_(other.hasDirectoryId_),
-      isSetParamFileStdIn_(other.isSetParamFileStdIn_)
+      isCommonControl_(other.isCommonControl_)
    {}
 
    /*
@@ -81,8 +85,8 @@ namespace Util
    /*
    * Set paramFile() to return std::cin even if a directory id has been set.
    */
-   void FileMaster::setParamFileStdIn()
-   {  isSetParamFileStdIn_ = true; }
+   void FileMaster::setCommonControl()
+   {  isCommonControl_ = true; }
 
    /*
    * Set the input prefix.
@@ -97,7 +101,13 @@ namespace Util
    {  outputPrefix_ = outputPrefix; }
 
    /*
-   * Set the output prefix.
+   * Set the parameter file name.
+   */
+   void FileMaster::setParamFileName(const std::string& paramFileName)
+   {  paramFileName_ = paramFileName; }
+
+   /*
+   * Set the command file name.
    */
    void FileMaster::setCommandFileName(const std::string& commandFileName)
    {  commandFileName_ = commandFileName; }
@@ -107,7 +117,9 @@ namespace Util
    */
    void FileMaster::readParameters(std::istream &in)
    {
-      read<std::string>(in, "commandFileName",  commandFileName_);
+      if (commandFileName_.empty()) {
+         read<std::string>(in, "commandFileName",  commandFileName_);
+      }
       read<std::string>(in, "inputPrefix",  inputPrefix_);
       read<std::string>(in, "outputPrefix", outputPrefix_);
    }
@@ -117,13 +129,14 @@ namespace Util
    */
    void FileMaster::loadParameters(Serializable::IArchive &ar)
    {
-      loadParameter<std::string>(ar, "commandFileName",  commandFileName_);
       loadParameter<std::string>(ar, "inputPrefix",  inputPrefix_);
       loadParameter<std::string>(ar, "outputPrefix", outputPrefix_);
-      ar >> directoryIdPrefix_;
-      ar >> rootPrefix_;
-      ar >> hasDirectoryId_;
-      ar >> isSetParamFileStdIn_;
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(isCommonControl_);
+      #else
+      ar >> isCommonControl_;
+      #endif
    }
 
    /*
@@ -131,13 +144,9 @@ namespace Util
    */
    void FileMaster::save(Serializable::OArchive &ar)
    {
-      ar << commandFileName_;
       ar << inputPrefix_;
       ar << outputPrefix_;
-      ar << directoryIdPrefix_;
-      ar << rootPrefix_;
-      ar << hasDirectoryId_;
-      ar << isSetParamFileStdIn_;
+      ar << isCommonControl_;
    }
 
    /*
@@ -145,29 +154,20 @@ namespace Util
    */
    std::istream& FileMaster::paramFile()
    {
-      if ((!hasDirectoryId_) || isSetParamFileStdIn_) {
-         return std::cin;
+      if (paramFilePtr_) {
+         return *paramFilePtr_;
       } else {
-         if (!paramFilePtr_) {
-
-            // Construct parameter filename
-            std::string filename(rootPrefix_);
-            if (hasDirectoryId_) {
-               filename += directoryIdPrefix_;
+         if (paramFileName_.empty()) {
+            if (!hasDirectoryId_ || isCommonControl_) {
+               return std::cin;
+            } else {
+               paramFileName_ = "param";
             }
-            filename += "param";
-
-            // Open parameter input file
-            std::ifstream* filePtr = new std::ifstream();
-            filePtr->open(filename.c_str());
-            if (filePtr->fail()) {
-               std::string message = "Error opening parameter file. Filename: ";
-               message += filename;
-               UTIL_THROW(message.c_str());
-            }
-
-            paramFilePtr_ = filePtr;
-         }
+         } 
+         paramFilePtr_ = new std::ifstream();
+         // Log::file() << "Opening parameter file " 
+         //            << paramFileName_  << std::endl;
+         openControlFile(paramFileName_, *paramFilePtr_);
          return *paramFilePtr_;
       }
    }
@@ -177,38 +177,101 @@ namespace Util
    */
    std::istream& FileMaster::commandFile()
    {
-      if (commandFileName_ == "paramfile") {
-         return paramFile();
+      if (commandFilePtr_) {
+         return *commandFilePtr_;
       } else {
-         if (!commandFilePtr_) {
-
-            // Construct command file name 
-            std::string filename(rootPrefix_);
-            if (hasDirectoryId_ && !isSetParamFileStdIn_) {
-               filename += directoryIdPrefix_;
-            }
-            filename += commandFileName_;
-
-            // Open command file
-            std::ifstream* filePtr = new std::ifstream();
-            filePtr->open(filename.c_str());
-            if (filePtr->fail()) {
-               std::string message;
-               message = "Error opening command file. Filename: ";
-               message += filename;
-               UTIL_THROW(message.c_str());
-            }
-            commandFilePtr_ = filePtr;
-         }
+         if (commandFileName_.empty()) {
+            commandFileName_ = "commands";
+         } 
+         commandFilePtr_ = new std::ifstream();
+         //Log::file() << "Opening command file " 
+         //            << paramFileName_  << std::endl;
+         openControlFile(commandFileName_, *commandFilePtr_);
          return *commandFilePtr_;
       }
    }
 
    /*
-   * Open and return an input file with specified base name
+   * Open an ifstream with fully specified path and mode.
    */
    void
-   FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
+   FileMaster::open(const std::string& name, std::ifstream& in,
+                    std::ios_base::openmode mode) const
+   {
+      in.open(name.c_str(), mode);
+      if (in.fail()) {
+         std::string message = "Error opening input file. Filename: ";
+         message += name;
+         UTIL_THROW(message.c_str());
+      }
+   }
+
+   /*
+   * Open an ofstream with fully specified path and mode.
+   */
+   void
+   FileMaster::open(const std::string& name, std::ofstream& out,
+                    std::ios_base::openmode mode) const
+   {
+      out.open(name.c_str(), mode);
+      if (out.fail()) {
+         std::string message = "Error opening output file. Filename: ";
+         message += name;
+         UTIL_THROW(message.c_str());
+      }
+   }
+
+   /*
+   * Open an input parameter or command control file.
+   */
+   void FileMaster::openControlFile(const std::string& name, 
+                                   std::ifstream& in) const
+   {
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_ && !isCommonControl_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += name;
+      open(filename, in);
+   }
+
+   /*
+   * Open an input restart file for reading.
+   */
+   void 
+   FileMaster::openRestartIFile(const std::string& name, std::ifstream& in,
+                                std::ios_base::openmode mode) const
+   {
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += name;
+      open(filename, in, mode);
+   }
+
+   /*
+   * Open an output restart file for writing.
+   */
+   void 
+   FileMaster::openRestartOFile(const std::string& name, std::ofstream& out,
+                                std::ios_base::openmode mode) const
+   {
+      // Construct filename = outputPrefix_ + name
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename = directoryIdPrefix_;
+      }
+      filename += name;
+      open(filename, out, mode);
+   }
+
+   /*
+   * Open an input dat file with specified mode.
+   */
+   void
+   FileMaster::openInputFile(const std::string& name, std::ifstream& in,
+                             std::ios_base::openmode mode) const
    {
       // Construct filename = inputPrefix_ + name
       std::string filename(rootPrefix_);
@@ -217,26 +280,18 @@ namespace Util
       }
       filename += inputPrefix_;
       filename += name;
-
-      in.open(filename.c_str());
-
-      // Check for error opening file
-      if (in.fail()) {
-         std::string message = "Error opening input file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
-
+      open(filename, in, mode);
    }
 
    /*
-   * Open and return an output file named outputPrefix + name
+   * Open an output data file in specified mode.
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
-   const
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out, 
+                              std::ios_base::openmode mode) const
    {
-      // Construct filename = outputPrefix_ + name
+      // Construct path
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
          filename += directoryIdPrefix_;
@@ -244,114 +299,13 @@ namespace Util
       filename += outputPrefix_;
       filename += name;
 
-      if (append)
-         out.open(filename.c_str(), std::ios::out | std::ios::app);
-      else
-         out.open(filename.c_str(), std::ios::out);
-
-      // Check for error opening file
-      if (out.fail()) {
-         std::string message = "Error opening output file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
-
-   }
-
-   /*
-   * Open an input restart parameter file.
-   */
-   void FileMaster::openParamIFile(const std::string& name, const char* ext,
-                                   std::ifstream& in) const
-   {
-      // Construct filename
-      std::string filename(rootPrefix_);
-      if (hasDirectoryId_ && !isSetParamFileStdIn_) {
-         filename += directoryIdPrefix_;
-      }
-      filename += name;
-      filename += ext;
-
-      in.open(filename.c_str());
-      if (in.fail()) {
-         std::string message = "Error opening input file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
-   }
-
-   /*
-   * Open a restart parameter file for writing.
-   */
-   void FileMaster::openParamOFile(const std::string& name, const char* ext,
-                                   std::ofstream& out) const
-   {
-      // Construct filename 
-      std::string filename(rootPrefix_);
-      if (hasDirectoryId_ && !isSetParamFileStdIn_) {
-         filename += directoryIdPrefix_;
-      }
-      filename += name;
-      filename += ext;
-
-      out.open(filename.c_str());
-      if (out.fail()) {
-         std::string message = "Error opening output file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
-   }
-
-   /*
-   * Open an input restart dump file.
-   */
-   void FileMaster::openRestartIFile(const std::string& name, const char* ext,
-                                     std::ifstream& in) const
-   {
-      std::string filename(rootPrefix_);
-      if (hasDirectoryId_) {
-         filename += directoryIdPrefix_;
-      }
-      filename += name;
-      filename += ext;
-
-      in.open(filename.c_str());
-      if (in.fail()) {
-         std::string message = "Error opening input file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
-   }
-
-   /*
-   * Open a restart dump file for writing.
-   */
-   void FileMaster::openRestartOFile(const std::string& name, const char* ext,
-                                     std::ofstream& out) const
-   {
-      // Construct filename = outputPrefix_ + name
-      std::string filename(rootPrefix_);
-      if (hasDirectoryId_) {
-         filename = directoryIdPrefix_;
-      }
-      filename += name;
-      filename += ext;
-
-      out.open(filename.c_str());
-
-      // Check for error opening file
-      if (out.fail()) {
-         std::string message = "Error opening output file. Filename: ";
-         message += filename;
-         UTIL_THROW(message.c_str());
-      }
+      open(filename, out, mode);
    }
 
    /*
    * Will paramFile() return std::cin ?
    */
-   bool FileMaster::isParamFileStdIn() const
-   {  return ((!hasDirectoryId_) || isSetParamFileStdIn_); }
+   bool FileMaster::isCommonControl() const
+   {  return ((!hasDirectoryId_) || isCommonControl_); }
 
 }
-#endif

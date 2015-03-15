@@ -1,3 +1,0 @@
-subDirectories = autocorr average averageStage meanSqDisp random
-pathFromSrc = util/accumulators/tests/stochastic
-pathToSrc = ../../../..

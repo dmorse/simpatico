@@ -72,7 +72,7 @@ void SystemTest::addMolecules()
    for (i = 0; i < simulation_.nSpecies() ; ++i ) {
       speciesPtr = &simulation_.species(i);
       for (j = 0; j < speciesPtr->capacity(); ++j) {
-         system_.addMolecule(speciesPtr->reservoir().pop());
+         system_.addMolecule(simulation_.getMolecule(i));
       }
    }
 }

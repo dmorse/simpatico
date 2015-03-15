@@ -1,10 +1,7 @@
-#ifndef MC_MOVE_FACTORY
-#define MC_MOVE_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -17,9 +14,12 @@
 #include "common/MdMove.h"
 #include "common/DpdMove.h"
 
+#ifdef INTER_BOND
 #include "linear/EndSwapMove.h"
 #include "linear/CfbEndMove.h"
+#include "linear/CfbLinearEndMove.h"
 #include "linear/CfbReptationMove.h"
+#include "linear/CfbReptateMove.h"
 #include "linear/CfbRebridgeMove.h"
 #include "linear/CfbDoubleRebridgeMove.h"
 
@@ -28,6 +28,7 @@
 #include "ring/RingOctaRebridgeMove.h"
 
 #include "semigrand/HomopolymerSemiGrandMove.h"
+#endif
 
 namespace McMd
 {
@@ -62,15 +63,23 @@ namespace McMd
       } else
       if (className == "RigidDisplaceMove") {
          ptr = new RigidDisplaceMove(*systemPtr_);
-      } else
+      }
+      #ifdef INTER_BOND 
+      else
       if (className == "EndSwapMove") {
          ptr = new EndSwapMove(*systemPtr_);
       } else 
       if (className == "CfbEndMove") {
          ptr = new CfbEndMove(*systemPtr_);
       } else 
+      if (className == "CfbLinearEndMove") {
+         ptr = new CfbLinearEndMove(*systemPtr_);
+      } else 
       if (className == "CfbReptationMove") {
          ptr = new CfbReptationMove(*systemPtr_);
+      } else 
+      if (className == "CfbReptateMove") {
+         ptr = new CfbReptateMove(*systemPtr_);
       } else 
       if (className == "CfbRebridgeMove") {
          ptr = new CfbRebridgeMove(*systemPtr_);
@@ -90,8 +99,9 @@ namespace McMd
       if (className == "HomopolymerSemiGrandMove") {
          ptr = new HomopolymerSemiGrandMove(*systemPtr_);
       } 
+      #endif
+
       return ptr;
    }
 
 }
-#endif

@@ -12,8 +12,8 @@
    <li> \subpage user_commands_page  </li>
    <li> \subpage user_cfgfile_page   </li>
    <li> \subpage user_examples_page  </li>
-   <li> \subpage inter_page          </li>
    <li> \subpage user_analysis_page  </li>
+   <li> \subpage user_features_page  </li>
    <li> \subpage user_restart_page   </li>
    <li> \subpage user_multi_page     </li>
    <li> \subpage user_options_page   </li>

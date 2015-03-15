@@ -1,0 +1,70 @@
+/*! \page user_features_mcSim_page 2.8.4 Features for mcSim 
+
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Click on any of the links below for user information about classes
+that implement data analysis (analyzer) algorithms that can be used 
+with the mcSim Monte Carlo program.
+
+Similar user documentation of the Monte Carlo Move (McMd::McMove) 
+classes is coming soon. For now, the only documentation is the doxygen
+API documentation for individual classes, which is accessible through 
+the \ref McMd_McMove_Module module.
+
+\sa McMd_McMove_Module
+\sa McMd_Analyzer_Module
+
+<h2> Monte-Carlo Moves: </h2>
+<ul style="list-style: none;">
+  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
+  <li> \subpage mcMd_mcMove_EndSwapMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbLinearEndMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbReptateMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbRebridgeMove_page </li>
+</ul>
+Some Monte Carlo moves are not yet listed here - a more complete list 
+is coming soon. For a complete list of links to class documentation for 
+McMove classes, see the \ref McMd_McMove_Module "McMove module".
+
+<h2> Analyzers: </h2>
+<ul style="list-style: none;">
+  <li> \subpage mcMd_analyzer_AtomMSD_page </li>
+  <li> \subpage mcMd_analyzer_BlockRadiusGyration_page </li>
+  <li> \subpage mcMd_analyzer_BondLengthDist_page </li>
+  <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
+  <li> \subpage mcMd_analyzer_ComMSD_page </li>
+  <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
+  <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
+  <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
+  <li> \subpage mcMd_analyzer_RDF_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactor_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorP_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorPGrid_page </li>
+  <li> \subpage mcMd_analyzer_VanHove_page </li>
+  <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
+  <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
+  <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_McNVTChemicalPotential_page </li>
+  <li> \subpage mcMd_analyzer_McMuExchange_page </li>
+</ul>
+ 
+<BR>
+\ref user_features_mdSim_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page       (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+
+*/

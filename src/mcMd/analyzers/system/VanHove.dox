@@ -1,0 +1,74 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_VanHove_page VanHove
+
+\section mcMd_analyzer_VanHove_overview_sec Synopsis
+
+This analyzer calculates the Van Hove function S(q,t), also 
+known as the intermediate structure factor, for a single 
+specified "mode" vectors, which defines weighting factors 
+for different atom types, and a specified set of one or
+more reciprocal lattice wavevectors.
+
+See the McMd::VanHove class documentation for a precise 
+mathematical definition of S(q,t). Also see the example 
+input file below.
+
+\sa McMd::VanHove
+\sa Util::IntVector
+
+\section mcMd_analyzer_VanHove_param_sec Parameters
+The parameter file format is:
+\code
+   VanHove{ 
+      interval           int
+      outputFileName     string
+      atomTypeCoeffs     Array<double>[nAtomType]
+      nBuffer            int
+      nWave              int
+      waveIntVectors     Array<IntVector> [nWave]
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> atomTypeCoeff </td>
+     <td> An array of dimension nAtomType that specifies 
+          weight factors for different atom types in the
+          calculation of Fourier modes. </td>
+  </tr>
+  <tr> 
+     <td> nBuffer </td>
+     <td> Number of past values of Fourier components stored 
+          in the buvfer, and number of values of the correlation
+          function. </td>
+  </tr>
+  <tr> 
+     <td> nWave </td>
+     <td> number of reciprocal lattice wavevectors. </td>
+  </tr>
+  <tr> 
+     <td> waves </td>
+     <td> array of reciprocal lattice vectors, each specified on a 
+          separate line by 3 integer indices (Miller indices) </td>
+  </tr>
+</table>
+See the example input in the McMd::VanHove class documentation.
+
+\section mcMd_analyzer_VanHove_out_sec Output Files
+
+At the end of a simulation, all of the structure factors are output in a file 
+{outputFileName}.dat . (TODO: Further details of format needed).
+
+*/
+
+}

@@ -1,10 +1,7 @@
-#ifndef DDMD_DDMD_CONFIG_IO_CPP
-#define DDMD_DDMD_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -44,15 +41,17 @@ namespace DdMd
    /*
    * Constructor.
    */
-   DdMdOrderedConfigIo::DdMdOrderedConfigIo()
-    : ConfigIo()
+   DdMdOrderedConfigIo::DdMdOrderedConfigIo(bool hasMolecules)
+    : ConfigIo(),
+      hasMolecules_(hasMolecules)
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
    * Constructor.
    */
-   DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation)
-    : ConfigIo(simulation)
+   DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules)
+    : ConfigIo(simulation),
+      hasMolecules_(hasMolecules)
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
@@ -103,6 +102,9 @@ namespace DdMd
       if (domain().isMaster() && !file.is_open()) {  
             UTIL_THROW("Error: File is not open on master"); 
       }
+      if (!Atom::hasAtomContext()) {
+         hasMolecules_ = false;
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -135,17 +137,39 @@ namespace DdMd
          Atom* atomPtr;
          int id;
          int typeId;
+
+         int aId;
+         int mId;
+         int sId;
+
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
-
+            
             file >> id >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
+ 
+            if (hasMolecules_) {
+               file >> sId >> mId >> aId;
+               if (sId < 0) {
+                  UTIL_THROW("species Id < 0");
+               }
+               if (mId < 0) {
+                  UTIL_THROW("molecule Id < 0");
+               }
+               if (aId < 0) {
+                  UTIL_THROW("atom Id < 0");
+               }
+               atomPtr->context().speciesId = sId;
+               atomPtr->context().moleculeId = mId;
+               atomPtr->context().atomId = aId;
+            }
+  
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
@@ -263,6 +287,9 @@ namespace DdMd
       if (domain().isMaster() && !file.is_open()) {  
             UTIL_THROW("Error: File is not open on master"); 
       }
+      if (!Atom::hasAtomContext()) {
+         hasMolecules_ = false;
+      }
 
       // Write Boundary dimensions
       if (domain().isMaster()) {
@@ -303,6 +330,9 @@ namespace DdMd
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
+            if (hasMolecules_) {
+               atoms_[id].context = atomPtr->context();
+            }
             atomPtr = atomCollector().nextPtr();
             ++n;
          } 
@@ -315,10 +345,15 @@ namespace DdMd
             if (id != atoms_[id].id) {
                UTIL_THROW("Something is rotten in Denmark");
             }
-            file << Int(id, 10) << Int(atoms_[id].typeId, 6)
-                 << atoms_[id].position << std::endl
-                 << "                " << atoms_[id].velocity;
-            file << std::endl;
+            file << Int(id, 10) << Int(atoms_[id].typeId, 6);
+            if (hasMolecules_) {
+               file << Int(atoms_[id].context.speciesId, 6)
+                    << Int(atoms_[id].context.moleculeId, 6)
+                    << Int(atoms_[id].context.atomId, 6);
+            }
+            file << "\n" << atoms_[id].position 
+                 << "\n" << atoms_[id].velocity 
+                 << "\n";
          }
 
       } else { 
@@ -345,4 +380,3 @@ namespace DdMd
    }
  
 }
-#endif

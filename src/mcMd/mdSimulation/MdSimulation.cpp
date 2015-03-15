@@ -1,10 +1,7 @@
-#ifndef MCMD_MD_SIMULATION_CPP
-#define MCMD_MD_SIMULATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -12,7 +9,9 @@
 #include <mcMd/mdSimulation/MdAnalyzerManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
@@ -101,28 +100,40 @@ namespace McMd
    */
    void MdSimulation::setOptions(int argc, char **argv)
    {
-      char* rarg   = 0;
-      bool  eflag  = false;
-      bool  rflag  = false;
+      bool  eflag  = false; // echo
+      bool  pFlag = false;  // param file 
+      bool  rFlag  = false; // restart file
+      bool  cFlag = false;  // command file 
       #ifdef MCMD_PERTURB
-      bool  pflag = false;
+      bool  fflag = false;  // free energy perturbation
       #endif
+      char* pArg = 0;
+      char* rarg = 0;
+      char* cArg = 0;
    
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "epr:")) != -1) {
+      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
          switch (c) {
          case 'e':
            eflag = true;
            break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
          case 'r':
-           rflag = true;
+           rFlag = true;
            rarg  = optarg;
            break;
+         case 'c': // command file
+           cFlag = true;
+           cArg  = optarg;
+           break;
          #ifdef MCMD_PERTURB
-         case 'p':
-           pflag = true;
+         case 'f':
+           fflag = true;
            break;
          #endif
          case '?':
@@ -138,9 +149,9 @@ namespace McMd
 
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
-      if (pflag) {
+      if (fflag) {
    
-         if (rflag) {
+         if (rFlag) {
             std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
@@ -157,12 +168,28 @@ namespace McMd
    
       }
       #endif
-      if (rflag) {
-         std::cout << "Reading restart" << std::endl;
-         std::cout << "Base file name " << std::string(rarg) << std::endl;
+
+      // If option -p, set parameter file name
+      if (pFlag) {
+         if (rFlag) {
+            UTIL_THROW("Cannot have both parameter and restart files");
+         }
+         fileMaster().setParamFileName(std::string(pArg));
+      }
+
+      // If option -c, set command file name
+      if (cFlag) {
+         fileMaster().setCommandFileName(std::string(cArg));
+      }
+
+      // If option -r, restart
+      if (rFlag) {
+         //Log::file() << "Reading restart file "
+         //            << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          load(std::string(rarg));
       }
+
    }
 
    /* 
@@ -193,7 +220,9 @@ namespace McMd
    * Read default parameter file.
    */
    void MdSimulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
+   {
+      readParam(fileMaster().paramFile()); 
+   }
 
    /*
    * Read parameter block, including begin and end.
@@ -401,7 +430,9 @@ namespace McMd
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   species(iSpecies).generateMolecules(
                      capacities[iSpecies], ExclusionRadii, system(),
+                     #ifdef INTER_BOND
                      &system().bondPotential(),
+                     #endif
                      system().boundary());   
                }
 
@@ -424,7 +455,8 @@ namespace McMd
                system().pairPotential()
                        .set(paramName, typeId1, typeId2, value);
             } else 
-            #endif // ifndef INTER_NOPAIR
+            #endif 
+            #ifdef INTER_BOND
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -434,6 +466,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().bondPotential().set(paramName, typeId, value);
             } else 
+            #endif
             #ifdef INTER_ANGLE
             if (command == "SET_ANGLE") {
                std::string paramName;
@@ -444,7 +477,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().anglePotential().set(paramName, typeId, value);
             } else 
-            #endif // ifdef INTER_ANGLE
+            #endif 
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;
@@ -455,7 +488,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().dihedralPotential().set(paramName, typeId, value);
             } else 
-            #endif // ifdef INTER_DIHEDRAL
+            #endif 
             #endif // ifndef UTIL_MPI
             {
                Log::file() << "Error: Unknown command  " << std::endl;
@@ -470,7 +503,12 @@ namespace McMd
    * Read and implement commands from the default command file.
    */
    void MdSimulation::readCommands()
-   {  readCommands(fileMaster().commandFile()); }
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
 
    /* 
    * Run a simulation.
@@ -654,11 +692,15 @@ namespace McMd
    void MdSimulation::analyzeTrajectory(int min, int max, std::string classname,
       std::string filename)
    {
-      Timer             timer;
+      // Preconditions
+      if (min < 0) UTIL_THROW("min < 0");
+      if (max < 0) UTIL_THROW("max < 0");
+      if (max < min) UTIL_THROW("max < min!");
+
+      Timer timer;
       std::stringstream indexString;
-      std::fstream*     trajectoryFile;
-      TrajectoryIo*     trajectoryIo;
-      int nFrames; 
+      std::fstream* trajectoryFile;
+      TrajectoryIo* trajectoryIo;
 
       // Obtain trajectoryIo objecct
       if (!(trajectoryIo = system().trajectoryIoFactory().factory(classname))) {
@@ -679,52 +721,47 @@ namespace McMd
         UTIL_THROW(message.c_str());
       }
 
-      // read in information from trajectory file
+      // Read in information from trajectory file
       trajectoryIo->readHeader(*trajectoryFile);
-
-      nFrames = trajectoryIo->nFrames();
 
       // Main loop
       Log::file() << "begin main loop" << std::endl;
       timer.start();
 
-      // Allow for negative values of min, max (counted from the end)
-      if (min < 0) min = nFrames+min;
-      if (max < 0) max = nFrames+max;
-
-      // Sanity checks
-      if (min < 0 || min >= nFrames)  UTIL_THROW("min < 0 or min >= nFrames!");
-      if (max < 0 || max >= nFrames)  UTIL_THROW("max < 0 or max >= nFrames!");
-      if (max < min)  UTIL_THROW("max < min!");
-
-      for (iStep_ = 0; iStep_ <= max; ++iStep_) {
+      bool hasFrame = true;
+      for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
 
          // Read frames, even if they are not sampled
-         trajectoryIo->readFrame(*trajectoryFile);
+         hasFrame = trajectoryIo->readFrame(*trajectoryFile);
 
-         #ifndef INTER_NOPAIR
-         // Build the system CellList
-         system().pairPotential().buildPairList();
-         #endif
+         if (hasFrame) {
 
-         #ifndef NDEBUG
-         isValid();
-         #endif
+            #ifndef INTER_NOPAIR
+            // Build the system CellList
+            system().pairPotential().buildPairList();
+            #endif
+   
+            #ifdef UTIL_DEBUG
+            isValid();
+            #endif
+   
+            // Initialize analyzers (taking in molecular information).
+            if (iStep_ == min) analyzerManager().setup();
+   
+            // Sample property values only for iStep >= min
+            if (iStep_ >= min) analyzerManager().sample(iStep_);
 
-         // Initialize analyzers (taking in molecular information).
-         if (iStep_ == min) analyzerManager().setup();
-
-         // Sample property values only for iStep >= min
-         if (iStep_ >= min) analyzerManager().sample(iStep_);
+         }
 
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
+      int nFrames = iStep_ - min + 1;
 
       // Close trajectory file
       trajectoryFile->close();
 
-      // delete objects
+      // Delete objects
       delete trajectoryIo;
       delete trajectoryFile;
 
@@ -733,7 +770,7 @@ namespace McMd
 
       // Output time 
       Log::file() << std::endl;
-      Log::file() << "nFrames       " << max-min+1 << std::endl;
+      Log::file() << "# of frames   " << nFrames << std::endl;
       Log::file() << "run time      " << timer.time() 
                   << "  sec" << std::endl;
       Log::file() << "time / frame " << timer.time()/double(nFrames) 
@@ -754,13 +791,10 @@ namespace McMd
 
       // Load state from archive
       Serializable::IArchive ar;
-      fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+      fileMaster().openRestartIFile(filename, ar.file(), mode);
       load(ar);
       ar.file().close();
-
-      // Set command (*.cmd) file
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
 
       isInitialized_ = true;
       isRestarting_  = true;
@@ -772,7 +806,8 @@ namespace McMd
    void MdSimulation::save(const std::string& filename)
    {
       Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, ".rst", ar.file());
+      std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+      fileMaster().openRestartOFile(filename, ar.file(), mode);
       save(ar);
       ar.file().close();
    }
@@ -793,4 +828,3 @@ namespace McMd
    }
 
 }    
-#endif

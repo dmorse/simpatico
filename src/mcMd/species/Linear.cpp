@@ -1,10 +1,7 @@
-#ifndef MCMD_LINEAR_CPP
-#define MCMD_LINEAR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -14,6 +11,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/neighbor/CellList.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#include <mcMd/chemistry/Molecule.h>
 
 #include <sstream>
 
@@ -207,9 +205,10 @@ namespace McMd
       if (nMolecule > capacity())
          UTIL_THROW("nMolecule > Species.capacity()!"); 
 
+      Simulation& sim = system.simulation();
       for (iMol = 0; iMol < nMolecule; ++iMol) {
          // Add a new molecule to the system
-         Molecule &newMolecule= reservoir().pop();
+         Molecule &newMolecule= sim.getMolecule(id());
          system.addMolecule(newMolecule);
 
          // Try placing atoms
@@ -286,4 +285,3 @@ namespace McMd
    } 
    
 }
-#endif

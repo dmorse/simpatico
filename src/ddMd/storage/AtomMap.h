@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -32,7 +32,7 @@ namespace DdMd
    /**
    * Associative container for finding atoms identified by integer id.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class AtomMap 
    {
@@ -84,7 +84,7 @@ namespace DdMd
       /**
       * Remove a ghost Atom.
       *
-      * This method throws an exception if no atom with this
+      * This function throws an exception if no atom with this
       * id is present, but not if it does not match this pointer.
       *
       * \param ptr Pointer to Atom to be removed.
@@ -101,6 +101,16 @@ namespace DdMd
       //@}
       /// \name Accessors 
       //@{
+
+      /**
+      * Return pointer to Atom with specified id.
+      *
+      * This function returns a pointer to an Atom with the specified
+      * id if it is present, or returns a null pointer otherwise.
+      *
+      * \param atomId integer index of atom
+      */
+      Atom* find(int atomId) const;  
 
       /**
       * Return the number of local atoms.
@@ -229,7 +239,7 @@ namespace DdMd
 
    };
 
-   // Inline method definitions
+   // Inline function definitions
 
    /*
    * Return pointer to an Atom with specified id.
@@ -255,7 +265,7 @@ namespace DdMd
    inline int AtomMap::nGhost() const
    { return nGhostDistinct_ + ghostMap_.size(); }
 
-   // Template method definition
+   // Function template definitions
 
    /*
    * Set pointers to all atoms in a Group<N> object.

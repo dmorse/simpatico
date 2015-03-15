@@ -1,6 +1,5 @@
 McSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -129,7 +128,7 @@ McSimulation{
   saveFileName            restart
 }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         10000
       outputFileName            dump/config.
     }

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -18,7 +18,7 @@ namespace Util
    * The template class parameter Event is the type of object that is 
    * passed to the update() method as a message about an event.
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    template <typename Event>
    class Observer

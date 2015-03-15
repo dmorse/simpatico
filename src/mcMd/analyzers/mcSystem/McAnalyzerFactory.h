@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -24,7 +24,7 @@ namespace McMd
    * AnalyzerFactory for an McSimulation
    *
    * \ingroup McMd_Factory_Module
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McAnalyzerFactory : public Factory<Analyzer>
    {

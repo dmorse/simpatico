@@ -1,10 +1,7 @@
-#ifndef DDMD_EXTERNAL_FACTORY_CPP
-#define DDMD_EXTERNAL_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +19,10 @@
 #include <inter/external/SlitExternal.h>
 #include <inter/external/LamellarOrderingExternal.h>
 #include <inter/external/LocalLamellarOrderingExternal.h>
+#include <inter/external/SimplePeriodicExternal.h>
 #include <inter/external/PeriodicExternal.h>
+#include <inter/external/GeneralPeriodicExternal.h>
+#include <inter/external/NucleationExternal.h>
 
 namespace DdMd
 {
@@ -64,11 +64,19 @@ namespace DdMd
       if (name == "LocalLamellarOrderingExternal") {
          ptr = new ExternalPotentialImpl<LocalLamellarOrderingExternal>(*simulationPtr_);
       } else
+      if (name == "SimplePeriodicExternal") {
+         ptr = new ExternalPotentialImpl<SimplePeriodicExternal>(*simulationPtr_);
+      } else
       if (name == "PeriodicExternal") {
          ptr = new ExternalPotentialImpl<PeriodicExternal>(*simulationPtr_);
+      } else
+      if (name == "GeneralPeriodicExternal") {
+         ptr = new ExternalPotentialImpl<GeneralPeriodicExternal>(*simulationPtr_);
+      } else
+      if (name == "NucleationExternal") {
+         ptr = new ExternalPotentialImpl<NucleationExternal>(*simulationPtr_);
       }
       return ptr;
    }
 
 }
-#endif

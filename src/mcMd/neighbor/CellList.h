@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -47,7 +47,7 @@ namespace McMd
    * be large enough to accomodate the maximum number of atoms 
    * that will ever be encountered in an individual cell.
    *
-   * CellList is a non-polymorphic class, with no virtual methods, 
+   * CellList is a non-polymorphic class, with no virtual functions, 
    * and a non-virtual destructor. Do not derive subclasses from it.
    *
    * \ingroup McMd_Neighbor_Module
@@ -74,7 +74,7 @@ namespace McMd
       */
       typedef FSArray<Atom*, MaxNeighbor> NeighborArray;
 
-      // public methods
+      // Public member functions
 
       /**
       * Constructor.
@@ -92,17 +92,21 @@ namespace McMd
       * Allocate memory for this CellList.
       *
       * This function:
+      *
       *   - Allocates an array of atomCapacity CellTag objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
-      * The capacity of the array of Cells is chosen such that, if
-      * each dimension of the system increases by the parameter 
-      * "scale", all dimensions of each cell will remain greater than the 
-      * parameter "cutoff". The cutoff should be greater than or equal to 
-      * the maximum range of the nonbonded pair potential. 
+      * The capacity of the array of Cells is chosen such that the dimension
+      * each cell within the specified Boundary is greater than or equal to the 
+      * parameter "cutoff". The cutoff parameter must be greater than or equal 
+      * to the maximum range of the nonbonded pair potential. The Boundary object 
+      * passed to this function should be chosen, for simulations with variable
+      * boundary dimensions, to contain more cells than the maximum you expect 
+      * to encounter during the simulation. In simulations with a rigid boundary,
+      * the actual boundary dimensions can be used.
       *
       * This function does not populate the CellList with atoms. See the
-      * CellList::addAtom() methods.
+      * CellList::addAtom() functions.
       *
       * \param atomCapacity dimension of global array of atoms
       * \param boundary     maximum Boundary for allocation of array of cells
@@ -168,9 +172,9 @@ namespace McMd
       * object and add it to the new one. If the new cell is the same as the
       * old one (icell == atom.CellId), do nothing and return.
       *
-      * This method updates the CellList, but does not update the coordinates
+      * This function updates the CellList, but does not update the coordinates
       * stored in the pos member of the associated Atom object. To update
-      * both, use the System::moveAtom() method.
+      * both, use the System::moveAtom() function.
       *
       * \param atom Atom object to be moved
       * \param pos  new Atom position
@@ -349,7 +353,7 @@ namespace McMd
    }; 
 
 
-   // Public inline method definitions:
+   // Public inline function definitions:
 
    /*
    * Get total number of cells in this CellList.
@@ -432,7 +436,7 @@ namespace McMd
       getCellNeighbors(ic, neighbors, nInCell);
    }
 
-   // Private inline methods:
+   // Private inline member functions
 
    /*
    * Return value of integer cell coordinate x for axis i shifted to the range

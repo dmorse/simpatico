@@ -1,10 +1,7 @@
-#ifndef MCMD_DDMD_CONFIG_IO_CPP
-#define MCMD_DDMD_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -32,8 +29,9 @@ namespace McMd
    /* 
    * Constructor.   
    */
-   DdMdConfigIo::DdMdConfigIo(System &system) 
-   : ConfigIo(system)
+   DdMdConfigIo::DdMdConfigIo(System &system, bool hasMolecules) 
+   : ConfigIo(system),
+     hasMolecules_(hasMolecules)
    {}
  
    /* 
@@ -54,8 +52,10 @@ namespace McMd
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
-         atomCapacity   += speciesCapacity*speciesPtr->nAtom();
-         bondCapacity   += speciesCapacity*speciesPtr->nBond();
+         atomCapacity += speciesCapacity*speciesPtr->nAtom();
+         #ifdef INTER_BOND
+         bondCapacity += speciesCapacity*speciesPtr->nBond();
+         #endif
       }
 
       // Read boundary
@@ -71,27 +71,42 @@ namespace McMd
       if (nAtom != atomCapacity) {
          UTIL_THROW("nAtom != atomCapacity");
       }
-      Molecule*                molPtr;
-      Molecule::AtomIterator   atomIter;
-      int iMol, nMolecule, atomId, atomTypeId;
+      Molecule* molPtr;
+      Molecule::AtomIterator atomIter;
+      int iMol, iAtom, nMolecule, atomId, atomTypeId;
+      int sId, mId, aId;
       for (iSpec=0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = speciesPtr->capacity();
          for (iMol = 0; iMol < nMolecule; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
    
-            // Read positions.
+            // Read positions
+            iAtom = 0;
             for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                in >> atomId >> atomTypeId;
                if (atomId != atomIter->id()) {
                   UTIL_THROW("Atom tags not ordered");
                }
+               if (hasMolecules_) {
+                  in >> sId >> mId >> aId;
+                  if (sId != iSpec) {
+                     UTIL_THROW("Invalid species id");
+                  }
+                  if (mId != iMol) {
+                     UTIL_THROW("Invalid molecule id");
+                  }
+                  if (aId != iAtom) {
+                     UTIL_THROW("Invalid local atom id");
+                  }
+               }
 
                in >> atomIter->position();
                in >> atomIter->velocity();
- 
+
+               ++iAtom;
             }
          }
       }
@@ -104,7 +119,9 @@ namespace McMd
       Species  *speciesPtr;
       int iSpec, nMolecule;
       int nAtom = 0;
+      #ifdef INTER_BOND
       int nBond = 0;
+      #endif
       #ifdef INTER_ANGLE
       int nAngle = 0;
       #endif
@@ -115,7 +132,9 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
+         #ifdef INTER_BOND
          nBond += nMolecule*(speciesPtr->nBond());
+         #endif
          #ifdef INTER_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
@@ -133,24 +152,35 @@ namespace McMd
       out << "ATOMS" << std::endl;
       out << "nAtom  " << nAtom << std::endl;
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
+      Molecule::AtomIterator atomIter;
       int i = 0;
+      int iMol, iAtom;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         iMol = 0;
          system().begin(iSpec, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
+            iAtom = 0;
             molIter->begin(atomIter); 
             for ( ; atomIter.notEnd(); ++atomIter) {
                out << Int(atomIter->id(), 10);
                out << Int(atomIter->typeId(), 5);
-               out << atomIter->position();
-               out << atomIter->velocity();
-               out << std::endl;
+               if (hasMolecules_) {
+                  out << Int(iSpec, 6);
+                  out << Int(iMol, 10);
+                  out << Int(iAtom, 6);
+               }
+               out << "\n" << atomIter->position();
+               out << "\n" << atomIter->velocity();
+               out << "\n";
                ++i;
+               ++iAtom;
             }
+            ++iMol;
          }
       }
       out << std::endl;
 
+      #ifdef INTER_BOND
       // Write Bonds
       out << "BONDS" << std::endl;
       out << "nBond  " << nBond << std::endl;
@@ -172,6 +202,7 @@ namespace McMd
          }
       }
       out << std::endl;
+      #endif
 
       #ifdef INTER_ANGLE
       // Write Angles
@@ -229,4 +260,3 @@ namespace McMd
    }
 
 } 
-#endif

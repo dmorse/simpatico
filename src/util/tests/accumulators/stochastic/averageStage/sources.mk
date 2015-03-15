@@ -1,5 +1,8 @@
-tests_util_accumulators_stochastic_averageStage_SRCS=\
-    $(TESTS_DIR)/util/accumulators/stochastic/averageStage/AverageStageTest.cc 
+util_tests_accumulators_stochastic_averageStage_ = \
+    util/tests/accumulators/stochastic/averageStage/AverageStageTest.cc 
 
-tests_util_accumulators_stochastic_averageStage_OBJS=$(tests_util_accumulators_stochastic_averageStage_SRCS:.cc=.o)
+util_tests_accumulators_stochastic_averageStage_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_accumulators_stochastic_averageStage_))
+util_tests_accumulators_stochastic_averageStage_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_accumulators_stochastic_averageStage_:.cc=.o))
 

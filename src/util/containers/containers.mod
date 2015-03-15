@@ -129,9 +129,11 @@ namespace Util
    * One-dimensional array containers that store pointers, and associated 
    * iterators.
    *
-   * The DPArray and SPArray class templates are dynamically and statically
-   * allocated pointer arrays, respectively. A GPArray is a growable SPArray.
-   * Each DPArray < T >, SPArray <T, N>, or GPArray<T> container has a private
+   * The DPArray and FPArray class templates are dynamically and statically
+   * allocated pointer arrays, respectively. A GPArray is a growable pointer
+   * array. 
+   * 
+   * Each DPArray < T >, FArray <T, N>, or GPArray<T> container has a private
    * C array of T* pointers. These containers all overload the the [] operator 
    * so as to return a T& reference, rather than a T* pointer. The append
    * method takes a T& reference as a parameter. The destructor for a pointer 
@@ -146,8 +148,9 @@ namespace Util
    *
    * An SSet< T > is a container that holds pointers to an unordered
    * set of T objects. It provides fast addition and removal of single
-   * elements, and iteration through all elements. The indexing of elements
-   * is arbitrary and mutable, and may change when an element is deleted.
+   * elements, and fast iteration through all elements. The indexing of 
+   * elements is arbitrary and mutable, and may change when an element 
+   * is deleted.
    *
    * An ArraySet < T > is a container that holds pointers to a subset of
    * the elements of an associated array of T objects. The indexing of
@@ -160,6 +163,19 @@ namespace Util
    * \defgroup Matrix_Module Matrix Containers
    *
    * Two-dimensional array containers that store by objects value.
+   *
+   * Matrix containers overload the () operator to return elements
+   * by refernce. If A is a matrix object A(i, j) returns element
+   * i, j of the matrix.
+   *
+   * The Matrix base class defines a conventional matrix, in which
+   * all rows are the same length. The DMatrix and FMatrix subclasses
+   * use dynamically allocated and fixed-size arrays, respectively.
+   *
+   * The RaggedMatrix base class and DRaggedMatrix subclass define
+   * two-dimensional containers in which different rows can have
+   * different lengths, though the list of row dimensions can be 
+   * specified only once.
    *
    * \ingroup Container_Module
    */

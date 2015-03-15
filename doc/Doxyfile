@@ -672,7 +672,9 @@ INPUT                  = ../src/util \
                          ../src/inter \
                          ../src/mcMd \
                          ../src/ddMd \
+                         ../src/tools \
                          ../src/test \
+                         ../src/programs.mod \
                          manual
 
 # This tag can be used to specify the character encoding of the source files
@@ -709,7 +711,12 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                =
+EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
+                         ../src/tools/hoomd/xmlParser.cpp \
+                         ../src/tools/hoomd/ExtractTopologyMain.cpp \
+                         ../src/inter//coulomb \
+                         ../src/mcMd/potential/coulomb \
+                         ../src/ddMd/potential/coulomb \
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

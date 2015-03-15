@@ -1,13 +1,11 @@
-#ifndef INTER_COSINE_ANGLE_CPP
-#define INTER_COSINE_ANGLE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include "CosineAngle.h"
 #include <util/math/Constants.h>
 #include <util/random/Random.h>
@@ -77,9 +75,7 @@ namespace Inter
    */
    void CosineAngle::readParameters(std::istream &in) 
    {
-      if (nAngleType_ <= 0) {
-         UTIL_THROW("nAngleType must be set before readParam");
-      }
+      UTIL_CHECK(nAngleType_ > 0);
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
    }
 
@@ -88,10 +84,7 @@ namespace Inter
    */
    void CosineAngle::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAngleType_; 
-      if (nAngleType_ <= 0) {
-         UTIL_THROW( "nAngleType must be positive");
-      }
+      UTIL_CHECK(nAngleType_ > 0);
       loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
    }
 
@@ -99,9 +92,9 @@ namespace Inter
    * Save internal state to an archive.
    */
    void CosineAngle::save(Serializable::OArchive &ar)
-   {
-      ar << nAngleType_;
-      ar.pack(kappa_, nAngleType_);
+   {  
+      UTIL_CHECK(nAngleType_ > 0);
+      ar.pack(kappa_, nAngleType_); 
    }
 
    /* 
@@ -187,5 +180,3 @@ namespace Inter
    {  return std::string("CosineAngle"); }
 
 }
- 
-#endif

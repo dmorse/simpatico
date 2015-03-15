@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -45,7 +45,7 @@ namespace McMd
    * averages to file at an interval specified by the input parameter
    * nSamplePerBlock. No block averages are output if nSamplePerBlock = 0.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class RadiusGyration : public SystemAnalyzer<System>
    {

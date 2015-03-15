@@ -1,13 +1,13 @@
-#ifndef UTIL_EXCEPTION_CPP
-#define UTIL_EXCEPTION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#ifdef UTIL_MPI
+#include <mpi.h>
+#endif
 #include "Exception.h"
 #include "Log.h"
 
@@ -83,6 +83,19 @@ namespace Util
    std::string& Exception::message()
    {  return message_; }
 
-
+   #ifdef UTIL_MPI
+   /*
+   * Throws exception for code linked to MPI
+   */
+   void MpiThrow(Exception& e) {
+      if (MPI::Is_initialized()) {
+         std::cerr << e.message() << std::endl; 
+         Log::file().flush(); 
+         Log::close(); 
+         MPI::COMM_WORLD.Abort(65); 
+      } else { 
+         throw e; 
+      } 
+   }
+   #endif
 } 
-#endif

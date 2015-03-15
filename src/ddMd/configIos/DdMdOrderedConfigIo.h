@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -36,15 +36,18 @@ namespace DdMd
 
       /**
       * Default constructor.
+      *
+      * \param hasMolecules Set true to include AtomContext info.
       */
-      DdMdOrderedConfigIo();
+      DdMdOrderedConfigIo(bool hasMolecules);
 
       /**
       * Constructor.
       *
       * \param simulation parent Simulation object.
+      * \param hasMolecules Set true to include AtomContext info.
       */
-      DdMdOrderedConfigIo(Simulation& simulation);
+      DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules);
 
       /**
       * Read configuration file.
@@ -76,12 +79,16 @@ namespace DdMd
    
    private:
 
+      /*
+      * Struct for atom data required in file format.  
+      */
       struct IoAtom {
 
          Vector position;
          Vector velocity;
          int typeId;
          int id;
+         AtomContext context;
 
          IoAtom()
           : position(0.0),
@@ -92,16 +99,24 @@ namespace DdMd
 
       };
 
-      /**
-      * Array of atoms, ordered by global index.
+      /*
+      * Struct containing a Group<N> and a group id.
       */
-      std::vector<IoAtom> atoms_;
-
       template <int N>
       struct IoGroup {
          int    id;
          Group<N> group;
       };
+
+      /**
+      * Array of atoms, ordered by global index.
+      */
+      std::vector<IoAtom> atoms_;
+
+      /**
+      * Flag to determine if molecule info is included in file format
+      */
+      bool hasMolecules_;
 
       /**
       * Read Group<N> objects from file. 

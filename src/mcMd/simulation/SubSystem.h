@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -114,8 +114,10 @@ namespace McMd
       /// \name Potential Energy Queries
       //@{
 
+      #ifdef INTER_BOND
       /// Does a bond potential exist?
       bool hasBonds() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Does an angle potential exist?
@@ -147,10 +149,10 @@ namespace McMd
    private:
 
       /// Pointer to parent Simulation.
-      Simulation*       simulationPtr_;
+      Simulation* simulationPtr_;
 
       /// Pointer to parent System.
-      System*           systemPtr_;
+      System* systemPtr_;
 
       /**
       * Pointer to DArray containing one System::MoleculeSet for each Species.
@@ -163,8 +165,10 @@ namespace McMd
       /// Pointer to Boundary object for actual boundary.
       Boundary*   boundaryPtr_;
 
+      #ifdef INTER_BOND
       // Does a bond potential exist?
       bool hasBonds_;
+      #endif
 
       #ifdef INTER_ANGLE
       // Does an angle potential exist?
@@ -191,7 +195,7 @@ namespace McMd
       bool hasTethers_;
       #endif
 
-   }; 
+   };
 
    // Inline functions
 
@@ -251,11 +255,13 @@ namespace McMd
       (*moleculeSetsPtr_)[speciesId].begin(iterator);
    }
 
+   #ifdef INTER_BOND
    /*
    * Does a bond potential exist?
    */
    inline bool SubSystem::hasBonds() const
    {  return hasBonds_; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -288,7 +294,6 @@ namespace McMd
    inline bool SubSystem::hasTethers() const
    { return hasTethers_; }
    #endif
-
 
 }
 #endif

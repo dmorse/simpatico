@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -27,6 +27,7 @@ namespace DdMd
       storagePtr_(0),
       bufferPtr_(0),
       source_(-1),
+      recvArrayCapacity_(256),
       recvBufferSize_(-1),
       recvArraySize_(-1),
       recvArrayId_(-1),
@@ -53,15 +54,18 @@ namespace DdMd
    }
 
    /*
-   * Allocate cache (call only on master).
+   * Set recvArray capacity (only needed on master).
    */
    template <int N>
-   void GroupCollector<N>::allocate(int cacheCapacity)
-   {
-      if (recvArray_.capacity() > 0) {
-         UTIL_THROW("Attempt to re-allocate receive cache");
+   void GroupCollector<N>::setCapacity(int recvArrayCapacity)
+   {  
+      if (recvArrayCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive recvArrayCapacity");
+      }  
+      if (recvArray_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set recvArrayCapacity after allocation");
       } 
-      recvArray_.allocate(cacheCapacity); 
+      recvArrayCapacity_ = recvArrayCapacity; 
    }
 
    /*
@@ -83,8 +87,13 @@ namespace DdMd
       if (!bufferPtr_->isInitialized()) {
          UTIL_THROW("Buffer not allocated");
       }
-      if (recvArray_.capacity() <= 0) {
-         UTIL_THROW("Cache not allocated");
+
+      // Allocate recvArray if necessary
+      if (recvArray_.capacity() == 0) {
+         if (recvArrayCapacity_ == 0) {
+             UTIL_THROW("recvArrayCapacity_ not set");
+         }
+         recvArray_.allocate(recvArrayCapacity_); 
       }
 
       source_ = 0;          // rank of source node

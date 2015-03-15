@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -34,14 +34,19 @@ namespace McMd
    * velocity, for use in Md simulations. Each atom has a pointer to its
    * parent Molecule, and has an associated Mask object. A Mask contains a
    * list of other atoms for which pair interactions with this Atom are
-   * suppressed.
+   * suppressed. 
+   *
+   * Each atom also has an isActive() flag that can be used by Monte Carlo
+   * moves to mark an atom as temporarily "inactive" during a deletion or 
+   * regrowth of part of a molecule. The isActive flag is initialized to
+   * true by the Atom::allocate function.
    *
    * \section Allocate Allocation and Deallocation
    *
    * Atom objects can only be created by the static Atom::allocate()
-   * method. This method allocates a static member array containing all of 
-   * the Atom objects available in a program. The global index that is 
-   * returned by the id() method is the index of an Atom within this array. 
+   * function. This function allocates a static member array containing all
+   * of the Atom objects available in a program. The global index that is 
+   * returned by the id() function is the index of an Atom within this array. 
    * This array of all Atoms must be allocated and deallocated using the
    * following pattern:
    * \code
@@ -63,15 +68,11 @@ namespace McMd
    *
    * This interface is designed to allow an implementation of the Atom 
    * class in which some logical attributes of an Atom are not actually 
-   * members of the object, but are instead stored in separate private 
-   * arrays.  These additional arrays are private static members of the 
+   * C++ member variables, but are instead stored in separate private 
+   * arrays. These additional arrays are private static members of the 
    * Atom class that can be directly accessed by the accessor and setter 
-   * functions for the associated attributes. This allows a public interface
-   * identical to what one would expect if these quantities were stored
-   * as normal non-static class members. The only unusual feature of the
-   * interface is the absence of a public constructor: In order to make
-   * it impossible to construct individual Atom objects, the default
-   * constructor and the copy constructor are declared private.
+   * functions for the associated attributes, as if they were normal 
+   * non-static class members. 
    *
    * \ingroup McMd_Chemistry_Module
    */
@@ -90,7 +91,7 @@ namespace McMd
       //@{
 
       /**
-      * Set the molecule.
+      * Set the parent molecule.
       *  
       * \param molecule Molecule containing this Atom
       */
@@ -99,12 +100,11 @@ namespace McMd
       /**
       * Set the atomic type index.
       *  
-      * \param Id integer index that identifies atom type
+      * \param typeId integer index that identifies atom type
       */
-      void setTypeId(int Id);
+      void setTypeId(int typeId);
 
       //@}
-
       /// \name Accessors
       //@{
 
@@ -144,19 +144,19 @@ namespace McMd
       /// Get atomic force Vector by const reference.
       const Vector& force() const;
 
-      #ifdef MCMD_SHIFT
+      /// Get the isActive flag.
+      bool isActive() const;
 
+      #ifdef MCMD_SHIFT
       /// Get the shift IntVector by reference.
       IntVector& shift();
 
       /// Get the shift IntVector by const reference.
       const IntVector& shift() const;
-
       #endif
 
       //@}
-
-      ///\name Allocation and de-allocation
+      ///\name Allocation and de-allocation (static members)
       //@{
 
       /**
@@ -195,7 +195,6 @@ namespace McMd
 
       //@}
 
-
    private:
 
       // Static members
@@ -203,55 +202,67 @@ namespace McMd
       /// Null (unknown) value for any non-negative integer index.
       static const int NullIndex = -1;
 
-      // Array containing all atoms_ in this simulation.
-      static  Atom*       atoms_;
+      /// Array containing all Atom objects in this simulation.
+      static Atom* atoms_;
 
-      // Array of Mask objects
-      static  Mask*       masks_;
+      /// Array of Mask objects
+      static Mask* masks_;
 
-      // Array of pointers to Molecules
-      static  Molecule**  moleculePtrs_;
+      /// Array of pointers to Molecules
+      static Molecule** moleculePtrs_;
 
-      // Array of force vectors
-      static  Vector*     forces_;
+      /// Array of atomic force vectors
+      static Vector* forces_;
 
-      // Array of velocity vectors
-      static  Vector*     velocities_;
+      /// Array of atomic velocity vectors
+      static Vector* velocities_;
+
+      /// Array of bool "isActive" flags
+      static bool* isActives_;
 
       #ifdef MCMD_SHIFT
-
-      // Array of boundary condition shifts
-      static  IntVector*  shifts_;
-
+      /// Array of boundary condition shifts
+      static IntVector* shifts_;
       #endif
 
-      // Total number of atoms allocated
-      static  int         capacity_;
+      /// Total number of atoms allocated
+      static int capacity_;
 
-      // Non-static members
+      // Non-static member variables
  
       /// Position of atom.
       Vector position_;                           
 
       /// Integer index of atom type.             
-      int  typeId_;                         
+      int typeId_;                         
 
       /// Integer index for Atom within Simulation.
-      int  id_;                                   
+      int id_;                                   
 
-      // Private methods
+      // Private non-static member functions
 
-      /// Constructor. Private to prevent allocation except by Atom::allocate()
+      /// Constructor. Private to prevent public instantiation.
       Atom();
 
       /// Copy constructor. Private to prevent copying, not implemented.
       Atom(const Atom& other);
 
-   }; // end class Atom
+      /**
+      * Mark this atom as active (true) or inactive (false) (private).
+      *  
+      * \param isActive set true for active, false for inactive.
+      */
+      void setIsActive(bool isActive);
 
-   // Inline methods
+   // friends:
 
-   // Set type Id for Atom.
+      friend class Activate;
+
+   }; 
+
+   // Inline pubic member functions
+
+   // Set type index for Atom.
    inline void Atom:: setTypeId(int typeId) 
    {  typeId_ = typeId; }
 
@@ -299,8 +310,11 @@ namespace McMd
    inline Molecule& Atom::molecule() const
    {  return *moleculePtrs_[id_]; }
 
-   #ifdef MCMD_SHIFT
+   // Get the isActive flag (true == active).
+   inline bool Atom::isActive() const
+   {  return isActives_[id_]; }
 
+   #ifdef MCMD_SHIFT
    // Get the shift IntVector by reference.
    inline IntVector& Atom::shift()
    {  return shifts_[id_]; }
@@ -308,7 +322,13 @@ namespace McMd
    // Get the shift IntVector by const reference.
    inline const IntVector& Atom::shift() const
    {  return shifts_[id_]; }
-
    #endif
+
+   // Inline private member functions
+
+   // Set the atom as active (true) or inactive (false) (private)
+   inline void Atom::setIsActive(bool isActive)
+   {  isActives_[id_] = isActive; }
+
 }
 #endif

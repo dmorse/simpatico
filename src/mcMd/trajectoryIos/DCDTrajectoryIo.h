@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -31,38 +31,51 @@ namespace McMd
    
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor. 
+      */
       DCDTrajectoryIo(System& system);
- 
-      /// Destructor.   
+
+      /** 
+      * Destructor.   
+      */
       virtual ~DCDTrajectoryIo();
  
       /**
       * Read trajectory file header and initialize simulation parameters.
       *
-      * \param file input file stream.
+      * \param file input file stream
       */
       void readHeader(std::fstream &file);
  
       /**
       * Read a single frame. Frames are assumed to be read consecutively.
       *
-      * \param file input file stream.
+      * \param file input file stream
+      * \return true if another frame exists, false if at end
       */
-      void readFrame(std::fstream &file);
+      bool readFrame(std::fstream &file);
 
       private:
-          /// The number of atoms stored in the file
+
+          /// The number of atoms stored in the file.
           int nAtoms_;
 
-          /// buffer for reading data (x values)
+          /// The total number of frames in the trajectory file.
+          int nFrames_;
+
+          /// The current frame index, starting from 0.
+          int frameId_;
+
+          /// buffer for reading data (x values).
           DArray<float> xBuffer_;
 
-          /// buffer for reading data (y values)
+          /// buffer for reading data (y values).
           DArray<float> yBuffer_;
 
-          /// buffer for reading data (z values)
+          /// buffer for reading data (z values).
           DArray<float> zBuffer_;
+
    }; 
 
 } 

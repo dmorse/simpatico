@@ -9,5 +9,5 @@ ddMd_communicate_=\
 ddMd_communicate_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_communicate_))
 ddMd_communicate_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_communicate_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_communicate_:.cpp=.o))
 

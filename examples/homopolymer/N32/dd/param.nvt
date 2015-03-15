@@ -3,7 +3,6 @@ Simulation{
     gridDimensions    2    1    3
   }
   FileMaster{
-    commandFileName commands
     inputPrefix     in/
     outputPrefix    out/
   }
@@ -49,7 +48,8 @@ Simulation{
   NvtIntegrator{
     dt                0.005
     tauT              1.000
-    saveInterval      0
+    saveInterval      5000
+    saveFileName      restart
   }
   Random{
     seed              8012457890
@@ -61,6 +61,14 @@ Simulation{
         interval        1000
      }
 
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.trj
+     }
+
+  }
+}
+
      OutputEnergy{
         interval         1000
         outputFileName   energy
@@ -71,16 +79,8 @@ Simulation{
         outputFileName   pressure
      }
 
-  }
-}
-
-
-
-
-     WriteConfig{
+     ConfigWriter{
         interval         2000
         outputFileName   config
      }
 
-  nAngleType         0
-  hasExternal        0

@@ -1,10 +1,7 @@
-#ifndef UTIL_VECTOR_CPP
-#define UTIL_VECTOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -101,7 +98,7 @@ namespace Util
    {
       if (!MpiTraits<Vector>::hasType) {
          MpiStructBuilder builder;
-         Vector           vector;
+         Vector vector;
    
          builder.setBase(&vector);
          builder.addMember(&vector[0], MPI::DOUBLE);
@@ -116,8 +113,8 @@ namespace Util
    /*
    * This static method exists to guarantee initialization of the static 
    * constant Vector::Zero that is defined in this file.  Call it once
-   * in the program to guarantee that the contents of this file will 
-   * be linked, rather than optimized away. 
+   * in the program to guarantee that the contents of this file will be
+   * linked, rather than optimized away. 
    */
    void Vector::initStatic()
    {
@@ -126,4 +123,3 @@ namespace Util
    }
 
 } 
-#endif

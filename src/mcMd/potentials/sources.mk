@@ -1,10 +1,14 @@
-include $(SRC_DIR)/mcMd/potentials/bond/sources.mk
-mcMd_potentials_=\
-    $(mcMd_potentials_bond_) 
+mcMd_potentials_=
 
 ifndef INTER_NOPAIR
 include $(SRC_DIR)/mcMd/potentials/pair/sources.mk
 mcMd_potentials_+=$(mcMd_potentials_pair_) 
+endif
+
+ifdef INTER_BOND
+include $(SRC_DIR)/mcMd/potentials/bond/sources.mk
+mcMd_potentials_+=\
+    $(mcMd_potentials_bond_) 
 endif
 
 ifdef INTER_ANGLE
@@ -30,5 +34,5 @@ endif
 mcMd_potentials_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_potentials_))
 mcMd_potentials_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_potentials_:.cpp=.o))
 

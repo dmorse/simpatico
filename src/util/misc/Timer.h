@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -25,7 +25,7 @@ namespace Util
    * intervals.  The accumulated time is returned by the time()
    * method, and can be reset to zero by the clear() method.
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    class Timer
    {

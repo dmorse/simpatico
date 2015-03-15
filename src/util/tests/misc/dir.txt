@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = tests/util/util
-pathToSrc = ../../..

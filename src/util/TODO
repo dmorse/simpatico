@@ -1,5 +1,12 @@
-Boundary classes
-----------------
+FileMaster
+----------
+
+- Allow input prefix and output prefix to be set by functions,
+  to allow them to be set from the command line, and expect them
+  from parameter file only if not already set. 
+
+Boundary classes - non-orthogonal
+---------------------------------
 
 - Add applyShift(Vector& r, IntVector &t) to boundary classes.
 
@@ -7,4 +14,13 @@ Boundary classes
 
 - Add bool isOrthogonal() method to Boundary classes. Use to test other 
   classes that call Boundary::lengths().
+
+Boundary classes - deformation
+------------------------------
+
+- Add typedef Vector Deformation;
+
+- Add void deform(Deformation& deformation) method.
+
+- Add DEFORM_BOUNDARY command to ddSim command script.
 

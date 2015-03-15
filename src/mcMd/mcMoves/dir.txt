@@ -1,3 +1,0 @@
-subDirectories = common base linear ring semigrand
-pathFromSrc = mcMd/mcMoves
-pathToSrc = ../..

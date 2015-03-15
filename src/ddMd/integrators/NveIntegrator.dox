@@ -1,0 +1,30 @@
+namespace DdMd
+{
+
+/*! \page ddMd_integrator_NveIntegrator_page NveIntegrator
+
+\section ddMd_integrator_NveIntegrator_overview_sec Synopsis
+
+NveIntegrator implements a velocity-Verlet NVE (constant energy, rigid
+boundary) integrator.
+
+\sa DdMd::NveIntegrator
+
+\section ddMd_integrator_NveIntegrator_param_sec Parameters
+The parameter file format is:
+\code
+   NveIntegrator{ 
+     dt                 double
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+</table>
+
+*/
+
+}

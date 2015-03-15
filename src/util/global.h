@@ -50,10 +50,7 @@
   #else
     #define UTIL_THROW(msg) { \
       Exception e(UTIL_FUNC, msg, __FILE__, __LINE__); \
-      std::cerr   << e.message() << std::endl; \
-      Log::file().flush(); \
-      Log::close(); \
-      MPI::COMM_WORLD.Abort(65); }
+      MpiThrow(e); }
   #endif
 #else
   #ifndef UTIL_MPI
@@ -61,20 +58,24 @@
   #else
     #define UTIL_THROW(msg) { \
       Exception e(msg, __FILE__, __LINE__); \
-      std::cerr   << e.message() << std::endl; \
-      Log::file().flush(); \
-      Log::close(); \
-      MPI::COMM_WORLD.Abort(65); }
+      MpiThrow(e); }
   #endif
 #endif
 
 /**
-* Assertion macro suitable for use in parallel code.
+* Assertion macro suitable for serial or parallel production code.
+*/
+#define UTIL_CHECK(condition) \
+  if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
+
+/**
+* Assertion macro suitable for debugging serial or parallel code.
 */
 #ifdef NDEBUG
 #define UTIL_ASSERT(condition) {}
 #else
-#define UTIL_ASSERT(condition) if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
+#define UTIL_ASSERT(condition) \
+  if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
 #endif
 
 #endif

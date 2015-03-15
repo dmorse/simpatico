@@ -77,12 +77,10 @@ public:
 
       // Initialize buffer
       //int sendsize = 10;      
-      //buffer_.allocate(sendsize , sendsize);
       buffer_.readParam(file());
 
       // Initialize AtomDistributor object
       // int cacheCapacity = 35; 
-      // distributor_.initialize(cacheCapacity);
       distributor_.readParam(file());
 
       // Finish reading parameter file

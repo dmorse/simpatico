@@ -1,0 +1,16 @@
+System:
+
+    melt of 100 chains of 8 atoms.
+
+    Requires a version of mcSim compiled with angles (option -a) 
+    and dihedrals (-d) enabled.
+
+Usage - cd to an example subdirectory, then enter:
+
+MC simulation:
+
+    mcSim_a_d -e -p param.nve -c commands
+
+Restart and extend previous simulation
+
+    mdcim_a_d -e -r restart -c restart.cmd

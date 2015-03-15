@@ -7,7 +7,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids 
 * 
-* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu).
+* Copyright 2010 - 2014, The Regents of the University of Minnesota.
 * Gibbs sampler algorithm implemented by Jens Glaser, March 2012.
 *
 * Distributed under the terms of the GNU General Public License.  

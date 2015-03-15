@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -57,17 +57,17 @@ namespace Util
       void setIoCommunicator(MPI::Intracomm& communicator);
 
       /**
-      * Clear (nullify) the  communicator.
+      * Clear (nullify) the communicator.
       */
       void clearCommunicator();
 
       /**
-      * Does this object have a  communicator?
+      * Does this object have an associated MPI communicator?
       */
       bool hasIoCommunicator() const;
 
       /**
-      * Get the  communicator.
+      * Get the MPI communicator by reference.
       */
       MPI::Intracomm& ioCommunicator() const;
       #endif
@@ -86,16 +86,22 @@ namespace Util
 
    // Inline methods
 
-   // Should this processor do file I/O ?
+   /*
+   * Should this processor do file I/O ?
+   */
    inline bool MpiFileIo::isIoProcessor() const
    {  return isIoProcessor_; }
 
    #ifdef UTIL_MPI
-   // Does this processor have a communicator?
+   /*
+   * Does this processor have a communicator?
+   */
    inline bool MpiFileIo::hasIoCommunicator() const
    {  return (communicatorPtr_ != 0); }
 
-   // Get the communicator.
+   /*
+   * Get the communicator.
+   */
    inline MPI::Intracomm& MpiFileIo::ioCommunicator() const
    {
       assert(communicatorPtr_);  

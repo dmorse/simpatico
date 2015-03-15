@@ -25,18 +25,16 @@ public:
    void setUp() 
    { 
       species.setId(speciesId); 
+      //setVerbose(2);
    } 
 
    void tearDown() 
    {}
-  
+
    void testConstructor();
    void testReadParam();
-   void testPopMolecule();
 
 };
-
-
 
 void HomopolymerTest::testConstructor()
 {
@@ -49,80 +47,107 @@ void HomopolymerTest::testReadParam()
    using std::ifstream;
    using std::cout;
 
-   ifstream in("in/Homopolymer");
+   ifstream in;
+   #ifndef INTER_ANGLE
+   openInputFile("in/Homopolymer", in);
+   #else
+   openInputFile("in/HomopolymerAngle", in);
+   #endif
    species.readParam(in);
    in.close();
 
    if (verbose() > 1) {
+      std::cout << std::endl;
       species.writeParam(std::cout);
    }
 
    TEST_ASSERT(species.isValid());
 
+   TEST_ASSERT(species.nBond() == species.nAtom() - 1);
+   const SpeciesGroup<2>* bondPtr;
+   if (verbose() > 1) { std::cout << std::endl << "Bonds:"; }
+   for (int i = 0; i < species.nBond(); ++i) {
+      bondPtr = &species.speciesBond(i);
+      TEST_ASSERT(bondPtr->atomId(0) == i);
+      TEST_ASSERT(bondPtr->atomId(1) == i+1);
+      TEST_ASSERT(bondPtr->typeId() == 0);
+      if (verbose() > 1) {
+         std::cout << std::endl << i << "  "
+                   << bondPtr->atomId(0) << " "
+                   << bondPtr->atomId(1) << " "
+                   << bondPtr->typeId();
+      }
+   }
+
+   const Species::AtomBondIdArray* bondIdArrayPtr;
+   for (int i = 0; i < species.nAtom(); ++i) {
+      bondIdArrayPtr = &species.atomBondIds(i);
+      if (i == 0) {
+         TEST_ASSERT(bondIdArrayPtr->size() == 1);
+         TEST_ASSERT((*bondIdArrayPtr)[0] == 0);
+      } else
+      if (i == species.nAtom() - 1) {
+         TEST_ASSERT(bondIdArrayPtr->size() == 1);
+         TEST_ASSERT( (*bondIdArrayPtr)[0] == species.nAtom()-2);
+      } else {
+         TEST_ASSERT(bondIdArrayPtr->size() == 2);
+         TEST_ASSERT( (*bondIdArrayPtr)[0] == i-1);
+         TEST_ASSERT( (*bondIdArrayPtr)[1] == i);
+      }
+   }
+
+   #ifdef INTER_ANGLE
+   TEST_ASSERT(species.nAngle() == species.nAtom() - 2);
+   const SpeciesGroup<3>* anglePtr;
+   if (verbose() > 1) { std::cout << std::endl << "Angles:"; }
+   for (int i = 0; i < species.nAngle(); ++i) {
+      anglePtr = &species.speciesAngle(i);
+      TEST_ASSERT(anglePtr->atomId(0) == i);
+      TEST_ASSERT(anglePtr->atomId(1) == i+1);
+      TEST_ASSERT(anglePtr->atomId(2) == i+2);
+      TEST_ASSERT(anglePtr->typeId() == 0);
+      if (verbose() > 1) {
+         std::cout << std::endl << i << "  "
+                   << anglePtr->atomId(0) << " "
+                   << anglePtr->atomId(1) << " "
+                   << anglePtr->atomId(2) << " "
+                   << anglePtr->typeId();
+      }
+   }
+
+   const Species::AtomAngleIdArray* angleIdArrayPtr;
+   for (int i = 0; i < species.nAtom(); ++i) {
+      angleIdArrayPtr = &species.atomAngleIds(i);
+      if (i == 0) {
+         TEST_ASSERT(angleIdArrayPtr->size() == 1);
+         TEST_ASSERT((*angleIdArrayPtr)[0] == i);
+      } else
+      if (i == 1) {
+         TEST_ASSERT(angleIdArrayPtr->size() == 2);
+         TEST_ASSERT((*angleIdArrayPtr)[0] == i-1);
+         TEST_ASSERT((*angleIdArrayPtr)[1] == i);
+      } else
+      if (i == species.nAtom() - 1) {
+         TEST_ASSERT(angleIdArrayPtr->size() == 1);
+         TEST_ASSERT( (*angleIdArrayPtr)[0] == i-2);
+      } else
+      if (i == species.nAtom() - 2) {
+         TEST_ASSERT(angleIdArrayPtr->size() == 2);
+         TEST_ASSERT( (*angleIdArrayPtr)[0] == i-2);
+         TEST_ASSERT( (*angleIdArrayPtr)[1] == i-1);
+      } else {
+         TEST_ASSERT(angleIdArrayPtr->size() == 3);
+         TEST_ASSERT( (*angleIdArrayPtr)[0] == i-2);
+         TEST_ASSERT( (*angleIdArrayPtr)[1] == i-1);
+         TEST_ASSERT( (*angleIdArrayPtr)[2] == i);
+      }
+   }
+   #endif
 }
-
-
-#if 0
-void HomopolymerTest::testPopMolecule()
-{
-   printMethod(TEST_FUNC);
-   using std::ifstream;
-   using std::cout;
-
-   //cout << "Species Id  = " << species.id() << std::endl;
-   TEST_ASSERT(species.id() == speciesId);
-
-   // Read input file  
-   std::ifstream in("species/in/Homopolymer");
-   species.readParam(in);
-   in.close();
-
-   TEST_ASSERT(species.isValid());
-
-   Molecule* molPtr;
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species );
-   TEST_ASSERT(molPtr->id() == 0 );
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 1);
-   TEST_ASSERT(species.isValid() );
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 1);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 2);
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 2);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 3);
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 3);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 4);
-
-   TEST_ASSERT(species.isValid());
-
-}
-#endif
 
 TEST_BEGIN(HomopolymerTest)
 TEST_ADD(HomopolymerTest, testConstructor)
 TEST_ADD(HomopolymerTest, testReadParam)
-   //TEST_ADD(HomopolymerTest, testPopMolecule);
 TEST_END(HomopolymerTest)
 
 #endif

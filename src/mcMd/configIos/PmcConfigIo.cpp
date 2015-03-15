@@ -1,10 +1,7 @@
-#ifndef MCMD_PMC_CONFIG_IO_CPP
-#define MCMD_PMC_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -81,7 +78,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule = nMoleculeSpecies[iSpec];
          for (int iMol=0; iMol < nMolecule; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
             for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                in >> atomIter->position() >> atomType;
@@ -122,4 +119,3 @@ namespace McMd
    }
  
 } 
-#endif

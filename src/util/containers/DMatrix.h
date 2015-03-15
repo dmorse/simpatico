@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -95,15 +95,13 @@ namespace Util
    DMatrix<Data>::DMatrix(const DMatrix<Data>& other) 
      : Matrix<Data>()
    {
-
       // Precondition
       if (other.data_ == 0) {
          UTIL_THROW("Other DMatrix must be allocated");
       }
 
+      // Allocate and copy elements
       allocate(other.capacity1_, other.capacity2_);
-
-      // Copy elements
       for (int i = 0; i < capacity1_*capacity2_; ++i) {
          data_[i] = other.data_[i];
       }
@@ -115,7 +113,6 @@ namespace Util
    template <typename Data>
    DMatrix<Data>& DMatrix<Data>::operator = (const DMatrix<Data>& other) 
    {
-
       // Check for self assignment.
       if (this == &other) return *this;
 
@@ -124,11 +121,11 @@ namespace Util
          UTIL_THROW("RHS DMatrix must be allocated in assignment");
       }
 
-      // If this this DMatrix if not allocated, allocate now.
-      // If this this DMatrix is allocated, check that capacities are equal.
       if (data_ == 0) {
+         // If this DMatrix if not allocated, allocate now.
          allocate(other.capacity1_, other.capacity2_);
       } else {
+         // If this is allocated, check that capacities are equal.
          if (capacity1_ != other.capacity1_ || 
              capacity2_ != other.capacity2_) {
             UTIL_THROW("Unequal capacities in assignment");

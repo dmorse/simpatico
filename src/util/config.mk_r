@@ -67,6 +67,8 @@ endif
 ifdef UTIL_DEBUG
 UTIL_DEFS+= -DUTIL_DEBUG
 UTIL_SUFFIX:=$(UTIL_SUFFIX)_g
+CXXFLAGS:= $(filter-out -O3,$(CXXFLAGS))
+CXXFLAGS+= -g -O0
 else
 CXXFLAGS+= $(WINLINE)
 endif
@@ -86,8 +88,8 @@ endif
 
 #-----------------------------------------------------------------------
 # Path to the util library 
-# Note: OBJ_DIR is defined in config.mk
+# Note: BLD_DIR is defined in config.mk
 
 util_LIBNAME=util$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)
-util_LIB=$(OBJ_DIR)/util/lib$(util_LIBNAME).a
+util_LIB=$(BLD_DIR)/util/lib$(util_LIBNAME).a
 #-----------------------------------------------------------------------

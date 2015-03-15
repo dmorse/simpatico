@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -42,7 +42,7 @@ namespace McMd
       AnglePotentialImpl(System& system);
 
       /** 
-      * Constructor (copied from McAnglePotential)
+      * Copy constructor.
       */
       AnglePotentialImpl(AnglePotentialImpl<Interaction>& other);
 
@@ -217,9 +217,9 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
-#include <mcMd/species/Species.h>
-#include <util/boundary/Boundary.h> 
+#include <mcMd/chemistry/getAtomGroups.h>
 
+#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -347,7 +347,7 @@ namespace McMd
    template <class Interaction>
    double AnglePotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
-      Species::AtomAngleArray angles;
+      AtomAngleArray angles;
       const  Angle* anglePtr;
       int    iAngle;
       Vector dr1; // R[1] - R[0]
@@ -355,7 +355,7 @@ namespace McMd
       double rsq1, rsq2, cosTheta;
       double energy = 0.0;
 
-      atom.molecule().species().getAtomAngles(atom, angles);
+      getAtomAngles(atom, angles);
       for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
          anglePtr = angles[iAngle];
          rsq1 = boundary().distanceSq(anglePtr->atom(1).position(),
@@ -449,7 +449,7 @@ namespace McMd
 
       // Iterate over all angles in System.
       System::ConstMoleculeIterator molIter;
-      Molecule::ConstAngleIterator  angleIter;
+      Molecule::ConstAngleIterator angleIter;
       for (int iSpec = 0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nAngle() > 0) {
             for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {

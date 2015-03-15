@@ -1,19 +1,17 @@
-#ifndef MCMD_GROUP_REBRIDGE_BASE_CPP
-#define MCMD_GROUP_REBRIDGE_BASE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
+
+#include <util/global.h>
 
 #include "GroupRebridgeBase.h"
 #include <mcMd/mcSimulation/mc_potentials.h>
 //#include <mcMd/potentials/pair/McPairPotential.h>
 //#include <mcMd/potentials/bond/McBondPotential.h>
-#include <mcMd/species/Species.h>
-#include <util/global.h>
+#include <mcMd/chemistry/getAtomGroups.h>
 
 namespace McMd
 {
@@ -97,21 +95,19 @@ namespace McMd
 
          // Implementation assumed linear or ring molecular topology
          const Atom *amPtr(NULL), *bpPtr(NULL), *cmPtr(NULL), *dpPtr(NULL);
-         Species *species;
-         Species::AtomBondArray bonds;
-         Species::AtomAngleArray angles;
+         AtomBondArray bonds;
+         AtomAngleArray angles;
          const Bond *bondPtr;
          int   iBond, angleType;
    
          // find the neighboring atom pointers and angle type
-         species = &aPtr->molecule().species();
    
          // angle type
-         species->getAtomAngles(*aPtr, angles); 
+         getAtomAngles(*aPtr, angles); 
          angleType = angles[0]->typeId();
    
          // amPtr
-         species->getAtomBonds(*aPtr, bonds);
+         getAtomBonds(*aPtr, bonds);
          for (iBond = 0; iBond < bonds.size(); ++iBond) {
             bondPtr = bonds[iBond];
             if (&bondPtr->atom(0) != aPtr && &bondPtr->atom(0) != bPtr) {
@@ -122,7 +118,7 @@ namespace McMd
          }
    
          // bpPtr
-         species->getAtomBonds(*bPtr, bonds);
+         getAtomBonds(*bPtr, bonds);
          for (iBond = 0; iBond < bonds.size(); ++iBond) {
             bondPtr = bonds[iBond];
             if (&bondPtr->atom(0) != bPtr && &bondPtr->atom(0) != aPtr) {
@@ -133,7 +129,7 @@ namespace McMd
          }
    
          // cmPtr
-         species->getAtomBonds(*cPtr, bonds);
+         getAtomBonds(*cPtr, bonds);
          for (iBond = 0; iBond < bonds.size(); ++iBond) {
             bondPtr = bonds[iBond];
             if (&bondPtr->atom(0) != cPtr && &bondPtr->atom(0) != dPtr) {
@@ -144,7 +140,7 @@ namespace McMd
          }
    
          // dpPtr
-         species->getAtomBonds(*dPtr, bonds);
+         getAtomBonds(*dPtr, bonds);
          for (iBond = 0; iBond < bonds.size(); ++iBond) {
             bondPtr = bonds[iBond];
             if (&bondPtr->atom(0) != dPtr && &bondPtr->atom(0) != cPtr) {
@@ -248,4 +244,3 @@ namespace McMd
       #endif
    }
 }
-#endif

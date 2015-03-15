@@ -1,6 +1,6 @@
 
 /**
-* Parallel domain decomposition (DD) molecular dynamics MD simulation.
+* Parallel domain decomposition (DD) MD simulation.
 */
 namespace DdMd {}
 

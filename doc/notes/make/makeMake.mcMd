@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+from MakeMaker import *
+
+x = MakeMaker('.','mcMd','..')
+
+globalInclude  = 'include $(BLD_DIR_REL)/compiler.mk\n'
+globalInclude += 'include $(BLD_DIR)/util/defines.mk\n'
+globalInclude += 'include $(BLD_DIR)/mcMd/defines.mk\n'
+globalInclude += 'include $(SRC_DIR)/mcMd/patterns.mk\n'
+globalInclude += 'include $(SRC_DIR)/util/sources.mk\n'
+globalInclude += 'include $(SRC_DIR)/mcMd/sources.mk\n'
+x.setGlobalInclude(globalInclude)
+
+x.setLinkObjs('$(mcMd_LIB) $(util_LIB)')
+x.addLibrary('$(mcMd_LIB)', '$(mcMd_OBJS)')
+x.make()

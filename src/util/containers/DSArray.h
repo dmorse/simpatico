@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,14 +20,14 @@ namespace Util
    * Dynamically allocated array with variable logical size.
    *
    * A DSArray < Data > is a wrapper for a dynamically allocated C array,
-   * with continuous elements and a logical size that may be less than 
-   * or equal to its physical capacity. The logical size is the number 
+   * with continuous elements and a logical size that may be less than
+   * or equal to its physical capacity. The logical size is the number
    * of contiguous elements that have been added using the append() method.
    *
    * \ingroup Array_Module
    */
    template <typename Data>
-   class DSArray 
+   class DSArray
    {
 
    public:
@@ -43,13 +43,13 @@ namespace Util
       *\param other the DSArray to be copied.
       */
       DSArray(const DSArray< Data >& other);
-   
+
       /**
       * Assignment, element by element.
       *
       * Capacity of LHS must be either zero or equal that of RHS DSArray.
       *
-      * \param other the RHS DSArray 
+      * \param other the RHS DSArray
       */
       DSArray<Data>& operator=(const DSArray<Data>& other);
 
@@ -69,6 +69,27 @@ namespace Util
       void allocate(int capacity);
 
       /**
+      * Append data to the end of the array.
+      *
+      * \param data Data to add to end of array.
+      */
+      void append(const Data &data);
+
+      /**
+      * Modify logical size without modifying data.
+      *
+      * The size parameter must be non-negative and may not exceed
+      * the physical allocated capacity.
+      *
+      * This function simply changes the logical size without
+      * modifying any elements of the underlying physical array.
+      * When the size increases, added elements are uninitialized.
+      *
+      * \param size new logical size, 0 <= size < capacity.
+      */
+      void resize(int size);
+
+      /**
       * Set logical size to zero.
       */
       void clear();
@@ -76,7 +97,7 @@ namespace Util
       /**
       * Serialize a DSArray to/from an Archive.
       *
-      * \param ar        archive 
+      * \param ar        archive
       * \param version   archive version id
       */
       template <class Archive>
@@ -85,14 +106,14 @@ namespace Util
       /**
       * Set an ArrayIterator to the beginning of this Array.
       *
-      * \param iterator ArrayIterator, initialized on output. 
+      * \param iterator ArrayIterator, initialized on output.
       */
       void begin(ArrayIterator<Data> &iterator);
 
       /**
       * Set a ConstArrayIterator to the beginning of this Array.
       *
-      * \param iterator ConstArrayIterator, initialized on output. 
+      * \param iterator ConstArrayIterator, initialized on output.
       */
       void begin(ConstArrayIterator<Data> &iterator) const;
 
@@ -111,13 +132,6 @@ namespace Util
       * \return const reference to element i
       */
       const Data& operator[] (int i) const;
-
-      /**
-      * Append data to the end of the array.
-      *
-      * \param data Data to add to end of array.
-      */
-      void append(const Data &data);
 
       /**
       * Return physical capacity of array.
@@ -163,7 +177,7 @@ namespace Util
    * Copy constructor.
    */
    template <class Data>
-   DSArray<Data>::DSArray(const DSArray< Data >& other) 
+   DSArray<Data>::DSArray(const DSArray< Data >& other)
     : data_(0),
       size_(0),
       capacity_(0)
@@ -180,14 +194,14 @@ namespace Util
          data_[i] = other.data_[i];
       }
    }
-   
+
    /*
    * Assignment, element by element.
    *
    * Capacity of LHS DSArray must be zero or == capacity of RHS DSArray.
    */
    template <class Data>
-   DSArray<Data>& DSArray<Data>::operator=(const DSArray<Data>& other) 
+   DSArray<Data>& DSArray<Data>::operator=(const DSArray<Data>& other)
    {
       // Check for self assignment
       if (this == &other) return *this;
@@ -268,7 +282,7 @@ namespace Util
          }
          if (!isAllocated()) {
             allocate(capacity);
-         } 
+         }
          if (size_ > capacity_) {
             UTIL_THROW("Inconsistent DSArray size and capacity on load");
          }
@@ -281,7 +295,7 @@ namespace Util
    /**
    * Set an ArrayIterator to the beginning of this Array.
    *
-   * \param iterator ArrayIterator, initialized on output. 
+   * \param iterator ArrayIterator, initialized on output.
    */
    template <class Data>
    inline
@@ -295,7 +309,7 @@ namespace Util
    * Set a ConstArrayIterator to the beginning of this Array.
    */
    template <class Data>
-   inline 
+   inline
    void DSArray<Data>::begin(ConstArrayIterator<Data> &iterator) const
    {
       iterator.setCurrent(data_);
@@ -328,7 +342,7 @@ namespace Util
    * Append data to the end of the array.
    */
    template <class Data>
-   inline void DSArray<Data>::append(const Data &data) 
+   inline void DSArray<Data>::append(const Data &data)
    {
       if (size_ == capacity_) {
          UTIL_THROW("Attempt to add to full DSArray");
@@ -337,11 +351,27 @@ namespace Util
       ++size_;
    }
 
+   /**
+   * Modify logical size without modifying data.
+   *
+   * The size parameter must be non-negative and may not exceed
+   * the capacity.
+   *
+   * This function simply changes the logical size of without
+   * modifying any elements of the underlying physical array.
+   * If the size increases, added elements are uninitialized.
+   *
+   * \param size new logical size, 0 <= size < capacity.
+   */
+   template <class Data>
+   inline void DSArray<Data>::resize(int size)
+   {  size_ = size; }
+
    /*
    * Set logical size to zero.
    */
    template <class Data>
-   inline void DSArray<Data>::clear() 
+   inline void DSArray<Data>::clear()
    {  size_ = 0; }
 
    /*
@@ -365,5 +395,5 @@ namespace Util
    inline bool DSArray<Data>::isAllocated() const
    {  return (bool)data_; }
 
-} 
+}
 #endif

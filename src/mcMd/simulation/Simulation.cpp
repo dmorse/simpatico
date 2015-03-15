@@ -1,10 +1,7 @@
-#ifndef MCMD_SIMULATION_CPP
-#define MCMD_SIMULATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -15,6 +12,7 @@
 #include <mcMd/species/SpeciesManager.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/chemistry/Activate.h>
 
 // namespace Util
 #include <util/containers/ArraySet.h>
@@ -41,24 +39,28 @@ namespace McMd
       analyzerManagerPtr_(0),
       communicatorPtr_(&communicator),
       nAtomType_(-1),
+      #ifdef INTER_BOND
       nBondType_(-1),
+      #endif
       #ifdef INTER_ANGLE
       nAngleType_(-1),
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
       #endif
       atomCapacity_(0),
+      #ifdef INTER_BOND
       bondCapacity_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleCapacity_(0),
       #endif
@@ -100,24 +102,28 @@ namespace McMd
       communicatorPtr_(0),
       #endif
       nAtomType_(-1),
+      #ifdef INTER_BOND
       nBondType_(-1),
+      #endif
       #ifdef INTER_ANGLE
       nAngleType_(-1),
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
       #endif
       atomCapacity_(0),
+      #ifdef INTER_BOND
       bondCapacity_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleCapacity_(0),
       #endif
@@ -161,7 +167,7 @@ namespace McMd
       if (communicatorPtr_ != &communicator) {
          UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
       }
-      fileMaster_.setParamFileStdIn();
+      fileMaster_.setCommonControl();
       ParamComponent::setIoCommunicator(communicator);
    }
 
@@ -186,36 +192,38 @@ namespace McMd
       if (nAtomType_ <= 0) {
          UTIL_THROW("nAtomType must be > 0");
       }
+      #ifdef INTER_BOND
       read<int>(in, "nBondType", nBondType_);
-      if (nBondType_ <= 0) {
-         UTIL_THROW("nBondType must be > 0");
+      if (nBondType_ < 0) {
+         UTIL_THROW("nBondType must be >= 0");
       }
+      #endif
       #ifdef INTER_ANGLE
-      nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      nAngleType_ = 0; // Default value
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_ < 0) {
          UTIL_THROW("nAngleType must be >= 0");
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      nDihedralType_ = 0; // Default value 
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_ < 0) {
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      read<int>(in, "nLinkType", nLinkType_, false); // optional
-      if (nLinkType_ < 0) {
-         UTIL_THROW("nLinkType must be >= 0");
-      }
-      #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_ = 0;
-      read<int>(in, "hasExternal", hasExternal_, false); // optional
+      hasExternal_ = 0; // Default value 
+      readOptional<int>(in, "hasExternal", hasExternal_); 
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");
+      }
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0; // Default value
+      readOptional<int>(in, "nLinkType", nLinkType_); 
+      if (nLinkType_ < 0) {
+         UTIL_THROW("nLinkType must be >= 0");
       }
       #endif
       #ifdef INTER_TETHER
@@ -225,14 +233,12 @@ namespace McMd
       }
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and read an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
-      #endif
 
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
 
@@ -256,7 +262,9 @@ namespace McMd
       loadParamComposite(ar, fileMaster_);
 
       loadParameter<int>(ar, "nAtomType", nAtomType_);
+      #ifdef INTER_BOND
       loadParameter<int>(ar, "nBondType", nBondType_);
+      #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
       loadParameter<int>(ar, "nAngleType", nAngleType_, false);
@@ -265,27 +273,26 @@ namespace McMd
       nDihedralType_ = 0;
       loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
       loadParameter<int>(ar, "hasExternal", hasExternal_, false);
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0;
+      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
       #endif
       #ifdef INTER_TETHER
       hasTether_ = false;
       loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
-      #endif
+
       loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
       loadParamComposite(ar, *speciesManagerPtr_);
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
@@ -304,38 +311,34 @@ namespace McMd
    {
       fileMaster_.save(ar);
       ar << nAtomType_;
+      #ifdef INTER_BOND
       ar << nBondType_;
+      #endif
       #ifdef INTER_ANGLE
       Parameter::saveOptional(ar, nAngleType_, (bool)nAngleType_);
-      // ar << nAngleType_;
       #endif
       #ifdef INTER_DIHEDRAL
-      // ar << nDihedralType_;
       Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
-      #ifdef MCMD_LINK
-      // ar << nLinkType_;
-      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
-      #endif
       #ifdef INTER_EXTERNAL
-      // ar << hasExternal_;
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
+      #endif
+      #ifdef MCMD_LINK
+      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
       #endif
       #ifdef INTER_TETHER
       ar << hasTether_;
       Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       ar << atomTypes_;
-      #endif
       ar & maskedPairPolicy_;
       (*speciesManagerPtr_).save(ar);
       random_.save(ar);
    }
 
    /*
-   * Allocate and initialize all private data (private method).
+   * Allocate and initialize all private data (private function).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -352,9 +355,11 @@ namespace McMd
       if (nSpecies() <= 0) {
          UTIL_THROW("Error: nSpecies() <= 0 in Simulation::initialize()");
       }
+      #ifdef INTER_BOND
       if (nBondType_ < 0) {
          UTIL_THROW("Error: nBondType < 0 in Simulation::initialize()");
       }
+      #endif
       #ifdef INTER_ANGLE
       if (nAngleType_ < 0) {
          UTIL_THROW("Error: nAngleType < 0 in Simulation::initialize()");
@@ -372,21 +377,27 @@ namespace McMd
       #endif
 
       Species *speciesPtr;
-      int  nAtom, nBond, iSpecies;
+      int nAtom, iSpecies;
       int capacity;
+      #ifdef INTER_BOND
+      int nBond;
+      #endif
       #ifdef INTER_ANGLE
-      int  nAngle;
+      int nAngle;
       #endif
       #ifdef INTER_DIHEDRAL
-      int  nDihedral;
+      int nDihedral;
       #endif
 
-      // Allocate arrays of pointers to first object in a species block.
+      // Allocate arrays dimensioned by nSpecies().
+      reservoirs_.allocate(nSpecies());
       firstMoleculeIds_.allocate(nSpecies());
       firstAtomIds_.allocate(nSpecies());
+      #ifdef INTER_BOND
       if (nBondType_ > 0) {
          firstBondIds_.allocate(nSpecies());
       }
+      #endif
       #ifdef INTER_ANGLE
       if (nAngleType_ > 0) {
          firstAngleIds_.allocate(nSpecies());
@@ -400,13 +411,15 @@ namespace McMd
 
       // Count Molecules, Atoms and Groups.
       moleculeCapacity_ = 0;
-      atomCapacity_     = 0;
-      bondCapacity_     = 0;
+      atomCapacity_ = 0;
+      #ifdef INTER_BOND
+      bondCapacity_ = 0;
+      #endif
       #ifdef INTER_ANGLE
-      angleCapacity_    = 0;
+      angleCapacity_ = 0;
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralCapacity_  = 0;
+      dihedralCapacity_ = 0;
       #endif
       for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
          speciesPtr = &species(iSpecies);
@@ -417,12 +430,17 @@ namespace McMd
          }
          //speciesPtr->setId(iSpecies);
 
+         // Allocate reservoir for this species
+         reservoirs_[iSpecies].allocate(speciesPtr->capacity());
+
          // Set indexes of first objects of the blocks for this species
          firstMoleculeIds_[iSpecies] = moleculeCapacity_;
          firstAtomIds_[iSpecies] = atomCapacity_;
+         #ifdef INTER_BOND
          if (nBondType_ > 0) {
             firstBondIds_[iSpecies] = bondCapacity_;
          }
+         #endif
          #ifdef INTER_ANGLE
          if (nAngleType_ > 0) {
             firstAngleIds_[iSpecies] = angleCapacity_;
@@ -439,10 +457,12 @@ namespace McMd
          nAtom = speciesPtr->nAtom();
          moleculeCapacity_ += capacity;
          atomCapacity_ += capacity*nAtom;
+         #ifdef INTER_BOND
          if (nBondType_ > 0) {
-            nBond    = speciesPtr->nBond();
+            nBond = speciesPtr->nBond();
             bondCapacity_ += capacity*nBond;
          }
+         #endif
          #ifdef INTER_ANGLE
          if (nAngleType_ > 0) {
             nAngle = speciesPtr->nAngle();
@@ -469,6 +489,7 @@ namespace McMd
          initializeSpecies(iSpecies);
       }
 
+      #ifdef INTER_BOND
       // Initialize bonds.
       if (nBondType_ > 0) {
          if (bondCapacity_ > 0) {
@@ -480,6 +501,7 @@ namespace McMd
             initializeSpeciesBonds(iSpecies);
          }
       }
+      #endif
 
       #ifdef INTER_ANGLE
       // Initialize angles.
@@ -522,17 +544,17 @@ namespace McMd
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
-   * This method also pushes all molecules of the species onto the
+   * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
    void Simulation::initializeSpecies(int iSpecies)
    {
 
-      Species*  speciesPtr;
+      Species* speciesPtr;
       Molecule* moleculePtr;
-      Atom*     atomPtr;
-      int       iMol, iAtom;
-      int       capacity, nAtom;
+      Atom* atomPtr;
+      int iMol, iAtom;
+      int capacity, nAtom;
 
       speciesPtr = &species(iSpecies);
       capacity   = speciesPtr->capacity();
@@ -565,12 +587,13 @@ namespace McMd
       // Push on in reverse order, so that they pop off in sequence
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies] + capacity - 1];
       for (iMol = 0; iMol < capacity; ++iMol) {
-         speciesPtr->reservoir().push(*moleculePtr);
+         reservoirs_[iSpecies].push(*moleculePtr);
          --moleculePtr;
       }
 
    }
 
+   #ifdef INTER_BOND
    /*
    * Initialize all Bond objects for Molecules of one Species. (private)
    *
@@ -584,18 +607,18 @@ namespace McMd
          UTIL_THROW("nBondType_ must be positive");
       }
 
-      Species*  speciesPtr = 0;
+      Species* speciesPtr = 0;
       Molecule* moleculePtr = 0;
-      Bond*     bondPtr = 0;
-      Atom*     firstAtomPtr;
-      Atom*     atom0Ptr;
-      Atom*     atom1Ptr;
-      int       iMol, iBond, atom0Id, atom1Id, type;
-      int       capacity, nBond;
+      Bond* bondPtr = 0;
+      Atom* firstAtomPtr;
+      Atom* atom0Ptr;
+      Atom* atom1Ptr;
+      int iMol, iBond, atom0Id, atom1Id, type;
+      int capacity, nBond;
 
       speciesPtr = &species(iSpecies);
-      nBond      = speciesPtr->nBond();
-      capacity   = speciesPtr->capacity();
+      nBond = speciesPtr->nBond();
+      capacity = speciesPtr->capacity();
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
@@ -639,6 +662,7 @@ namespace McMd
       }
 
    }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -655,16 +679,16 @@ namespace McMd
          UTIL_THROW("nAngleType must be positive");
       }
 
-      Species*  speciesPtr = 0;
-      Molecule *moleculePtr = 0;
-      Angle    *anglePtr = 0;
-      Atom     *firstAtomPtr, *atom0Ptr, *atom1Ptr, *atom2Ptr;
-      int       iMol, iAngle, atom0Id, atom1Id, atom2Id, type;
-      int       capacity, nAngle;
+      Species* speciesPtr = 0;
+      Molecule* moleculePtr = 0;
+      Angle* anglePtr = 0;
+      Atom* firstAtomPtr, *atom0Ptr, *atom1Ptr, *atom2Ptr;
+      int iMol, iAngle, atom0Id, atom1Id, atom2Id, type;
+      int capacity, nAngle;
 
       speciesPtr = &species(iSpecies);
-      capacity   = speciesPtr->capacity();
-      nAngle     = speciesPtr->nAngle();
+      capacity = speciesPtr->capacity();
+      nAngle = speciesPtr->nAngle();
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
@@ -720,12 +744,12 @@ namespace McMd
    void Simulation::initializeSpeciesDihedrals(int iSpecies)
    {
 
-      Species*  speciesPtr = 0;
-      Molecule *moleculePtr = 0;
-      Dihedral  *dihedralPtr = 0;
-      Atom     *firstAtomPtr, *atom0Ptr, *atom1Ptr, *atom2Ptr, *atom3Ptr;
-      int       iMol, iDihedral, atom0Id, atom1Id, atom2Id, atom3Id, type;
-      int       capacity, nDihedral;
+      Species* speciesPtr = 0;
+      Molecule* moleculePtr = 0;
+      Dihedral* dihedralPtr = 0;
+      Atom *firstAtomPtr, *atom0Ptr, *atom1Ptr, *atom2Ptr, *atom3Ptr;
+      int iMol, iDihedral, atom0Id, atom1Id, atom2Id, atom3Id, type;
+      int capacity, nDihedral;
 
       speciesPtr = &species(iSpecies);
       capacity   = speciesPtr->capacity();
@@ -783,8 +807,27 @@ namespace McMd
                                         int speciesId) const
    {
       const Molecule* molecules = &molecules_[firstMoleculeIds_[speciesId]];
-      int   capacity = species(speciesId).capacity();
+      int capacity = species(speciesId).capacity();
       set.allocate(molecules, capacity);
+   }
+
+   /*
+   * Get a new molecule from a reservoir of unused Molecule objects.
+   */ 
+   Molecule& Simulation::getMolecule(int speciesId)
+   {
+      Molecule* ptr = &reservoirs_[speciesId].pop();  
+      Activate::activate(*ptr); // activate all atoms in molecule
+      return *ptr;
+   }
+
+   /*
+   * Return a molecule to a reservoir of unused molecules.
+   */ 
+   void Simulation::returnMolecule(Molecule& molecule)
+   {
+      int speciesId = molecule.species().id();
+      reservoirs_[speciesId].push(molecule);  
    }
 
    // Accessors
@@ -826,10 +869,12 @@ namespace McMd
 
       // Declare and initialize pointers to atoms, bonds, etc.
       const Atom* atomPtr = &(atoms_[0]);
+      #ifdef INTER_BOND
       const Bond* bondPtr = 0;
       if (nBondType_ > 0) {
          bondPtr = &(bonds_[0]);
       }
+      #endif
       #ifdef INTER_ANGLE
       const Angle* anglePtr = 0;
       if (nAngleType_ > 0) {
@@ -848,13 +893,15 @@ namespace McMd
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
 
          // Declare / initialize variables for this Species
-         const Species*  speciesPtr = &(species(iSpecies));
+         const Species* speciesPtr = &(species(iSpecies));
          const int capacity = speciesPtr->capacity();
          const int nAtom = speciesPtr->nAtom();
+         #ifdef INTER_BOND
          int nBond = 0;
          if (nBondType_ > 0) {
             nBond = speciesPtr->nBond();
          }
+         #endif
          #ifdef INTER_ANGLE
          int nAngle = 0;
          if (nAngleType_ > 0) {
@@ -885,7 +932,7 @@ namespace McMd
                   UTIL_THROW("Error in molecule::bond()");
                }
 
-               int  type;
+               int type;
                for (int iAtom = 0; iAtom < nAtom; ++iAtom) {
    
                   // Validate pointers linking atom and molecule
@@ -895,7 +942,12 @@ namespace McMd
                   if (atomPtr != &(moleculePtr->atom(iAtom))) {
                      UTIL_THROW("Inconsistent molecule.atom()");
                   }
-   
+  
+                  // Require that atom be active 
+                  if (!atomPtr->isActive()) {
+                     UTIL_THROW("Atom is inactive");
+                  }
+
                   // Validate atom type, if species is not mutable
                   if (!speciesPtr->isMutable()) {
                      type = atomPtr->typeId();
@@ -907,14 +959,19 @@ namespace McMd
                      }
                   }
 
+
                   ++atomPtr;
                }
             }
 
-            if (nBondType_ > 0) {
+            #ifdef INTER_BOND
+            if (nBondType_ > 0 && nBond > 0) {
 
                if (&moleculePtr->bond(0) != bondPtr) {
                   UTIL_THROW("Error in molecule::bond()");
+               }
+               if (moleculePtr->nBond() != nBond) {
+                  UTIL_THROW("Inconsistent values of nBond");
                }
 
                const Atom* atom0Ptr;
@@ -957,6 +1014,11 @@ namespace McMd
                      UTIL_THROW("Inconsistent bond type index");
                   }
 
+                  // Require that bond be active 
+                  if (!bondPtr->isActive()) {
+                     UTIL_THROW("Bond is inactive");
+                  }
+
                   // If MaskBonded, check that bonded atoms are masked
                   if (maskedPairPolicy_ == MaskBonded) {
 
@@ -972,12 +1034,16 @@ namespace McMd
                   ++bondPtr;
                }
             }
+            #endif
 
             #ifdef INTER_ANGLE
-            if (nAngleType_ > 0) {
+            if (nAngleType_ > 0 && nAngle > 0) {
 
                if (&moleculePtr->angle(0) != anglePtr) {
                   UTIL_THROW("Error in molecule::angle()");
+               }
+               if (moleculePtr->nAngle() != nAngle) {
+                  UTIL_THROW("Inconsistent values of nAngle");
                }
 
                const Atom* atom0Ptr = 0;
@@ -1026,19 +1092,27 @@ namespace McMd
                      UTIL_THROW("Inconsistent angle type index");
                   }
 
+                  // Require that angle be active 
+                  if (!anglePtr->isActive()) {
+                     UTIL_THROW("Angle is inactive");
+                  }
+
                   ++anglePtr;
                }
             }
             #endif
 
             #ifdef INTER_DIHEDRAL
-            if (nDihedralType_ > 0) {
+            if (nDihedralType_ > 0 && nDihedral > 0) {
 
                const Atom* tAtomPtr;
-               int  tAtomId, dihedralType;
+               int tAtomId, dihedralType;
 
                if (&moleculePtr->dihedral(0) != dihedralPtr) {
                   UTIL_THROW("Error in molecule::dihedral()");
+               }
+               if (moleculePtr->nDihedral() != nDihedral) {
+                  UTIL_THROW("Inconsistent values of nDihedral");
                }
 
                // Validate dihedrals within a molecule
@@ -1064,6 +1138,12 @@ namespace McMd
                   if (dihedralType != dihedralPtr->typeId()) {
                      UTIL_THROW("Inconsistent dihedral type index");
                   }
+
+                  // Require that dihedral be active 
+                  if (!dihedralPtr->isActive()) {
+                     UTIL_THROW("Dihedral is inactive");
+                  }
+
                   ++dihedralPtr;
                }
 
@@ -1098,4 +1178,3 @@ namespace McMd
    }
 
 }
-#endif

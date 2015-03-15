@@ -1,10 +1,7 @@
-#ifndef DDMD_VIRIAL_STRESSTENSOR_AVERAGE_CPP
-#define DDMD_VIRIAL_STRESSTENSOR_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -36,7 +33,6 @@ namespace DdMd
       szyAccumulator_(),
       szzAccumulator_(),
       nSamplePerBlock_(1),
-      nSample_(0),
       isInitialized_(false)
    {  setClassName("VirialStressTensorAverage"); }
 
@@ -57,11 +53,7 @@ namespace DdMd
       szxAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
       szyAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
       szzAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
-
-      std::string filename;
-      filename  = outputFileName();
       simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
-
       isInitialized_ = true;
    }
 
@@ -73,11 +65,9 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSample_);
-
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
       if (simulation().domain().isMaster()) {
+         #if 0
          sxxAccumulator_.loadParameters(ar);
          sxyAccumulator_.loadParameters(ar);
          sxzAccumulator_.loadParameters(ar);
@@ -87,8 +77,16 @@ namespace DdMd
          szxAccumulator_.loadParameters(ar);
          szyAccumulator_.loadParameters(ar);
          szzAccumulator_.loadParameters(ar);
-         std::string filename;
-         filename  = outputFileName();
+         #endif
+         ar >> sxxAccumulator_;
+         ar >> sxyAccumulator_;
+         ar >> sxzAccumulator_;
+         ar >> syxAccumulator_;
+         ar >> syyAccumulator_;
+         ar >> syzAccumulator_;
+         ar >> szxAccumulator_;
+         ar >> szyAccumulator_;
+         ar >> szzAccumulator_;
          simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
       }
       isInitialized_ = true;
@@ -99,22 +97,19 @@ namespace DdMd
    */
    void VirialStressTensorAverage::save(Serializable::OArchive &ar)
    {
+      assert(simulation().domain().isMaster());
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSample_;
-
-      if (simulation().domain().isMaster()) {
-         ar << sxxAccumulator_;
-         ar << sxyAccumulator_;
-         ar << sxzAccumulator_;
-         ar << syxAccumulator_;
-         ar << syyAccumulator_;
-         ar << syzAccumulator_;
-         ar << szxAccumulator_;
-         ar << szyAccumulator_;
-         ar << szzAccumulator_;
-      }
-
+      ar << nSamplePerBlock_;
+      ar << sxxAccumulator_;
+      ar << sxyAccumulator_;
+      ar << sxzAccumulator_;
+      ar << syxAccumulator_;
+      ar << syyAccumulator_;
+      ar << syzAccumulator_;
+      ar << szxAccumulator_;
+      ar << szyAccumulator_;
+      ar << szzAccumulator_;
    }
 
   
@@ -190,4 +185,3 @@ namespace DdMd
    }
 
 }
-#endif  

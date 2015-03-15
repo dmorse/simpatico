@@ -10,7 +10,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -117,9 +117,10 @@ namespace DdMd
 
       /// Timestamps for loop timing.
       enum TimeId {ANALYZER, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
-                   EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, ZERO_FORCE,
-                   PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
-                   EXTERNAL_FORCE, INTEGRATE2, MODIFIERS, NTime};
+                   EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
+                   ZERO_FORCE, PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, 
+                   DIHEDRAL_FORCE, EXTERNAL_FORCE, INTEGRATE2, 
+                   MODIFIER, DEBUG, SIGNAL, MISC, NTime};
 
       /**
       * Set any internal dynamical to default initial values.

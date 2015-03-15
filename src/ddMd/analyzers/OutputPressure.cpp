@@ -1,10 +1,7 @@
-#ifndef DDMD_OUTPUT_PRESSURE_CPP
-#define DDMD_OUTPUT_PRESSURE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -37,11 +34,11 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -57,10 +54,11 @@ namespace DdMd
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSample_);
 
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -80,6 +78,18 @@ namespace DdMd
    */
    void OutputPressure::clear() 
    {  nSample_ = 0; }
+
+   /*
+   * Open outputfile
+   */ 
+   void OutputPressure::setup()
+   {
+      if (simulation().domain().isMaster()) {
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(filename, outputFile_);
+      }
+   }
 
    /*
    * Dump configuration to file
@@ -105,4 +115,3 @@ namespace DdMd
    }
 
 }
-#endif 

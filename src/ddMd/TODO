@@ -1,28 +1,33 @@
-Exchanger
----------
+Atom Sorting:
+-------------
 
-- Add memory usage statistics, to see which communication step (atom
-  exchange or ghost exchange) uses the most memory.
+- Implement periodic sorting of atoms
+
+Species
+-------
+
+- Introduce simple data structures to keep track of molecular species
+  (of atoms per molecule and molecules per species)
+
+- Modify configIo and trajectory formats to read and write this info
+
+Exchanger:
+----------
 
 - Write separate algorithm for initial ghost exchange, to reduce memory 
   requirements See doc/notes/ddMd/initGhosts
 
-- Consider moving allocation of Buffer to Exchanger.
+- Add memory usage statistics, to measure which communication step (atom
+  exchange or ghost exchange) uses the most memory
 
-Cell List and Pair List:
-------------------------
-
-- Modify Cell::OffsetArray object to use strips of cells, to allow efficient 
-  use of smaller cells.
-
-- Modify OffsetArray to include all cells for which the closest corner is 
-  within the pair list cutoff.
-
-Flexible Unit Cells:
---------------------
+Non-orthogonal boundaries:
+--------------------------
 
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to
-  allow for deforming boundaries (requires further changes to Boundary).
+  allow for non-orthogonal boundaries (requires changes to Boundary)
+
+- Modify calculation of distances between cells in construction of Offset
+  array in DdMd::CellList. Perhaps move calculation to Boundary class
 
 Buffer:
 -------
@@ -30,41 +35,41 @@ Buffer:
 - Allocate in bytes, remove atomCapacity and ghostCapacity 
   (see doc/notes/ddMd/Buffer)
 
+- Make sure memory statistics include all usage, including setup
+
+- Consider moving allocation of Buffer to Exchanger
+
+AtomStorage:
+------------
+
+- Make sure memory statistics include all usage, including setup, so
+  that the user has a better indication of when the ghost capacity 
+  needs to be increased
+
+Perturbation:
+-------------
+
+- Add perturbation class and class hierarchy for use with multi-system
+  parallel simulations
+
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
-- Make each GroupStorage a member of the associated potential.
-
 - see doc/notes/ddMd/GroupStorage
 
-Hybrid MD
----------
-
-- Finish and test transactions in AtomStorage (in transactions branch).
-
-- Add transactions to GroupStorage (in transactions branch).
+- Make each GroupStorage a member of the associated potential
 
 Single Processor Operation
 --------------------------
 
 - Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
   work ifndef UTIL_MPI, continue with other classes, to enable single 
-  processor operation with no MPI.
+  processor operation with no MPI
 
-Atom
-----
+Hybrid MD
+---------
 
-- Add speciesId, moleculeId, localId to each atom.
+- Finish and test transactions in AtomStorage (in transactions branch)
 
-Files
------
-
-- Modify default file format to store speciesId, moleculeId, molAtomId indices.
-
-- Think about separating topology and configuration files. 
-
-Testing
--------
-
-- Test angle and dihedral stress calculations more thoroughly.
+- Add transactions to GroupStorage (in transactions branch)
 

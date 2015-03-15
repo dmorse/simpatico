@@ -1,10 +1,7 @@
-#ifndef MCMD_TRAJECTORY_IO_FACTORY_CPP
-#define MCMD_TRAJECTORY_IO_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -12,6 +9,7 @@
 
 // Subclasses of ConfigIo
 #include "DCDTrajectoryIo.h"
+#include "LammpsDumpIo.h"
 
 namespace McMd
 {
@@ -36,6 +34,9 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
+      if (className == "LammpsDumpIo") {
+         ptr = new LammpsDumpIo(*systemPtr_);
+      } else
       if (className == "DCDTrajectoryIo") {
          ptr = new DCDTrajectoryIo(*systemPtr_);
       }
@@ -43,4 +44,3 @@ namespace McMd
    }
 
 }
-#endif

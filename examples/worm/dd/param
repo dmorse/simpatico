@@ -1,0 +1,77 @@
+Simulation{
+  Domain{
+    gridDimensions    2    2    1
+  }
+  FileMaster{
+    inputPrefix       in/
+    outputPrefix      out/
+  }
+  nAtomType          1
+  nBondType          1
+  nAngleType         1
+  atomTypes          A    1.0
+  AtomStorage{
+    atomCapacity      1000 
+    ghostCapacity     2000 
+    totalAtomCapacity 1000 
+  }
+  BondStorage{
+    capacity          1000
+    totalCapacity     1000
+  }
+  AngleStorage{
+    capacity          1000
+    totalCapacity     1000
+  }
+  Buffer{
+    atomCapacity     10000
+    ghostCapacity    10000
+  }
+  pairStyle          LJPair
+  bondStyle          HarmonicBond
+  angleStyle         CosineAngle
+  maskedPairPolicy   maskBonded
+  reverseUpdateFlag  0
+  PairPotential{
+    epsilon          1.0
+    sigma            1.0
+    cutoff           1.122462048
+    skin             0.4
+    pairCapacity     40000
+    maxBoundary      orthorhombic   30.0   30.0   30.0
+  }
+  BondPotential{
+    kappa            400.0
+    length           1.000
+  }
+  AnglePotential{
+    kappa              4.0
+  }
+  EnergyEnsemble{
+    type             adiabatic
+  }
+  BoundaryEnsemble{
+    type              rigid
+  }
+  NveIntegrator{
+    dt                0.005 
+    saveInterval       1000
+    saveFileName    restart
+  }
+  Random{
+    seed        8012457890
+  }
+  AnalyzerManager{
+     baseInterval  1000
+
+     LogEnergy{
+        interval         10000
+     }
+
+     OutputEnergy{
+        interval         10000
+        outputFileName  energy
+     }
+
+  }
+}

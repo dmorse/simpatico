@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -18,6 +18,8 @@ namespace DdMd
 
    /**
    * Periodically write simulation energies to file.
+   *
+   * \sa \ref ddMd_analyzer_OutputEnergy_page "param file format"
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -66,7 +68,12 @@ namespace DdMd
       virtual void clear();
   
       /**
-      * Dump configuration to file
+      * Setup - open output file.
+      */
+      virtual void setup();
+
+      /**
+      * Write energy to file
       *
       * \param iStep MC step index
       */

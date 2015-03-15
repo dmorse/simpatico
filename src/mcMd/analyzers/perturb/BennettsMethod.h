@@ -6,7 +6,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -34,7 +34,7 @@ namespace McMd
    /**
    * Bennett's method estimates free energy difference between two states.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BennettsMethod : public SystemAnalyzer<System>
    {
@@ -100,11 +100,9 @@ namespace McMd
       /// Value of shift constant for lower replica system.
       double lowerShift_;
 
-      #if UTIL_MPI
-
+      #ifdef UTIL_MPI
       // Values of shift constants for all replicas.
       DArray<double> shifts_;
-
       #endif
      
    private:

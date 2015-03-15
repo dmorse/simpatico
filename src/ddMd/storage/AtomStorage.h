@@ -4,20 +4,22 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>   // base class
-#include <ddMd/chemistry/AtomArray.h>    // member
-#include <ddMd/storage/AtomMap.h>        // member
-#include <ddMd/chemistry/Atom.h>         // member template argument
-#include <ddMd/chemistry/Group.h>        // used in template methods
-#include <util/containers/DArray.h>      // member template
-#include <util/containers/ArraySet.h>    // member template
-#include <util/containers/ArrayStack.h>  // member template
-#include <util/misc/Setable.h>           // member template
-#include <util/boundary/Boundary.h>      // typedef
+#include <util/param/ParamComposite.h>        // base class
+#include <ddMd/chemistry/AtomArray.h>         // member
+#include <ddMd/storage/AtomMap.h>             // member
+#include <ddMd/communicate/AtomDistributor.h> // member
+#include <ddMd/communicate/AtomCollector.h>   // member
+#include <ddMd/chemistry/Atom.h>              // member template argument
+#include <ddMd/chemistry/Group.h>             // in function templates
+#include <util/containers/DArray.h>           // member template
+#include <util/containers/ArraySet.h>         // member template
+#include <util/containers/ArrayStack.h>       // member template
+#include <util/misc/Setable.h>                // member template
+#include <util/boundary/Boundary.h>           // typedef
 #include <util/global.h>
 
 class AtomStorageTest;
@@ -35,7 +37,7 @@ namespace DdMd
    /**
    * A container for all the atoms and ghost atoms on this processor.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class AtomStorage : public ParamComposite
    {
@@ -51,6 +53,15 @@ namespace DdMd
       * Destructor.
       */
       ~AtomStorage();
+
+      /**
+      * Create associations for distributor and collector.
+      *
+      * \param domain Domain object (defines processor grid)
+      * \param boundary Boundary object (defines periodic unit cell)
+      * \param buffer Buffer object (holds memory for communication)
+      */
+      void associate(Domain& domain, Boundary& boundary, Buffer& buffer);
 
       /**
       * Set parameters, allocate memory and initialize.
@@ -79,6 +90,19 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
+      * Set all forces to zero.
+      *
+      * Sets forces on all local atoms to zero. Also zeros forces for 
+      * ghost atoms iff parameter zeroGhosts is true.
+      *
+      * \param zeroGhosts if true, zero forces on ghost atoms.
+      */
+      void zeroForces(bool zeroGhosts);
+  
+      /// \name Serialization (Checkpoint \& Restart)
+      //@{
+
+      /**
       * Load internal state from an archive.
       *
       * \param ar input/loading archive
@@ -93,22 +117,23 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-  
+
+      //@}
       /// \name Local Atom Management
       //@{
 
       /**
       * Returns pointer an address available for a new Atom.
       *
-      * This method returns the address of an Atom object that can 
-      * be used for a new local Atom. The Atom::clear() method is
+      * This function returns the address of an Atom object that can 
+      * be used for a new local Atom. The Atom::clear() function is
       * applied to the new atom before it is returned, so that the
       * id, typeId, isGhost flag, mask, and plan have default values.
-      * After this method is called, the storage retains the address
+      * After this function is called, the storage retains the address
       * of the new atom.  This new atom pointer remains ``active"
       * until a matching call to addNewAtom(), as discussed below.
       *
-      * This method does not add the new Atom to the atom set, and so 
+      * This function does not add the new Atom to the atom set, and so 
       * must be followed by a matching call to addNewAtom() to do so.
       * Usage:
       * \code
@@ -132,7 +157,7 @@ namespace DdMd
       /**
       * Finalize addition of the most recent new atom.
       *
-      * This method adds the atom that was returned by the most 
+      * This function adds the atom that was returned by the most 
       * recent call to newAtomPtr to the atom set. Upon return
       * there is no active new atom pointer. The global atom 
       * id must be set before calling this function, by calling 
@@ -144,7 +169,7 @@ namespace DdMd
       /**
       * Add atom with specified global id.
       * 
-      * This method adds a new atom to the atom set with a specified
+      * This function adds a new atom to the atom set with a specified
       * atom id, and returns a pointer to the address of the new atom. 
       * It is equivalent to the following, in which storage is an 
       * instance of AtomStorage and ptr is an Atom pointer:
@@ -153,7 +178,7 @@ namespace DdMd
       * ptr->setId(id);
       * storage.addNewAtom();
       * \endcode
-      * The pointer returned by this method can then be used to set
+      * The pointer returned by this function can then be used to set
       * other properties of the new atom. 
       *
       * \param id global index for the new Atom.
@@ -171,9 +196,19 @@ namespace DdMd
       void removeAtom(Atom* atomPtr); 
 
       /**
-      * Clear all local and ghost atoms.
+      * Clear all local atoms.
       */
       void clearAtoms(); 
+
+      /**
+      * Return number of local atoms on this procesor (excluding ghosts)
+      */
+      int nAtom() const;
+
+      /**
+      * Return capacity for local atoms on this processor (excluding ghosts).
+      */
+      int atomCapacity() const;
 
       //@}
       /// \name Ghost Atom Management
@@ -182,7 +217,7 @@ namespace DdMd
       /**
       * Returns pointer an address available for a new ghost Atom.
       *
-      * This method returns the address of an Atom object that can 
+      * This function returns the address of an Atom object that can 
       * be used for a new ghost Atom. It must be followed by a call
       * to addNewGhost(). Usage:
       * \code
@@ -204,7 +239,7 @@ namespace DdMd
       /**
       * Register the most recent new ghost atom.
       *
-      * This method adds the atom that was returned by the most recent 
+      * This function adds the atom that was returned by the most recent 
       * call to newGhostPtr to the ghost atom set. The global atom 
       * id must be set before calling this function, by calling 
       * Atom::setId(int), because an data structure uses the global
@@ -215,7 +250,7 @@ namespace DdMd
       /**
       * Add ghost atom with specified global id.
       * 
-      * This method adds a new atom to the ghost atom set and returns
+      * This function adds a new atom to the ghost atom set and returns
       * a pointer to the address of the new atom. It is equivalent to
       * the following, in which storage is an AtomStorage object and 
       * ptr is an Atom pointer:
@@ -244,30 +279,40 @@ namespace DdMd
       */
       void clearGhosts(); 
 
+      /**
+      * Return current number of ghost atoms on this processor.
+      */
+      int nGhost() const;
+
+      /**
+      * Return capacity for ghost atoms on this processor.
+      */
+      int ghostCapacity() const;
+
       //@}
       /// \name Coordinate Systems
       //@{
 
       /**
-      * Transform all atomic positions from Cartesian to generalized coordinates.
+      * Transform positions from Cartesian to generalized coordinates.
       *
-      * Transforms coordinates of local and ghost atoms.
+      * Transforms position coordinates of all local and ghost atoms.
       *
       * \param boundary periodic boundary conditions
       */
       void transformCartToGen(const Boundary& boundary);
  
       /**
-      * Transform all atomic positions from generalized to Cartesian coordinates.
+      * Transform positions from generalized to Cartesian coordinates.
       *
-      * Transforms coordinates of local and ghost atoms.
+      * Transforms position coordinates of all local and ghost atoms.
       *
       * \param boundary periodic boundary conditions
       */
       void transformGenToCart(const Boundary& boundary);
 
       /**
-      * Are atomic coordinates Cartesian (true) or generalized (false)?
+      * Are atom coordinates Cartesian (true) or generalized (false)?
       */
       bool isCartesian() const;
 
@@ -278,7 +323,7 @@ namespace DdMd
       /**
       * Record current positions of all local atoms and lock storage.
       * 
-      * This method stores positions of local atoms and locks the storage, 
+      * This function stores positions of local atoms and locks the storage, 
       * prohibiting addition or removal of atoms or ghosts until clearSnapshot 
       * is called.
       */
@@ -287,13 +332,13 @@ namespace DdMd
       /**
       * Clear previous snapshot.
       *
-      * This method removes the lock imposed by a previous call to
+      * This function removes the lock imposed by a previous call to
       * makeSnapshot(), allowing changes to atom and ghost sets.
       */
       void clearSnapshot();
 
       /**
-      * Return max. squared displacement on this processor since last snapshot.
+      * Return max-squared displacement since the last snapshot.
       *
       * Note: This is a local operation, and returns only the maximum on this
       * processor. 
@@ -303,7 +348,7 @@ namespace DdMd
       double maxSqDisplacement();
 
       //@}
-      /// \name Iterator interface
+      /// \name Iteration
       //@{
 
       /**
@@ -335,69 +380,83 @@ namespace DdMd
       void begin(ConstGhostIterator& iterator) const;
 
       //@}
-      /// \name Accessors 
+      /// \name Global Atom Counting
       //@{
      
       /**
-      * Return AtomMap by const reference.  
-      */
-      const AtomMap& map() const;
-
-      /**
-      * Return current number of atoms (excluding ghosts)
-      */
-      int nAtom() const;
-
-      /**
-      * Return current number of ghost atoms.
-      */
-      int nGhost() const;
-
-      /**
-      * Return capacity for atoms (excluding ghosts).
-      */
-      int atomCapacity() const;
-
-      /**
-      * Return capacity for ghost atoms
-      */
-      int ghostCapacity() const;
-
-      /**
       * Return maximum number of atoms on all processors.
       *
-      * Atom ids are labelled from 0, ..., totalAtomCapacity-1
+      * The return value is one greater than the maximum allowed
+      * atom id value, i.e. atom ids are assigned values in the
+      * range 0 <= id <= totalAtomCapacity-1.
       */
       int totalAtomCapacity() const;
 
       #ifdef UTIL_MPI
       /**
-      * Compute and store the total number of atoms on all processors.
+      * Compute the total number of local atoms on all processors.
       *
-      * This is an MPI reduce operation. The correct result is stored and
-      * returned only on the rank 0 processor. On other processors, the
-      * method stores a null value of -1.
+      * This is an MPI reduce operation, and thus must be called on
+      * all processors. The resulting sum is stored only on the master
+      * processor, with rank 0. It may be retrieved by a subsequent 
+      * call to nAtomTotal() on the master (rank 0) processor. A null
+      * value is stored on all other processors.
       *
-      * \param  communicator MPI communicator for this system.
-      * \return on master node, return total number of atoms.
+      * Upon return, the value is marked as set (i.e., known) on all
+      * processors in the communicator. This can be cleared by calling 
+      * the unSetNAtomTotal() function on all processors. 
+      *
+      * If computeNAtomTotal function is called when the value of 
+      * nAtomTotal is already set (and thus presumably already known), 
+      * the function will return without doing anything.
+      *
+      * \param communicator MPI communicator for this system.
       */
       void computeNAtomTotal(MPI::Intracomm& communicator);
+      #endif
+
+      /**
+      * Get total number of atoms on all processors.
+      *
+      * This function should only be called on the master (rank = 0).
+      * The return value is computed by a previous invocation of 
+      * computeNAtomTotal(), which must be called on all processors.
+      */
+      int nAtomTotal() const;
 
       /**
       * Unset value of NAtomTotal (mark as unknown). 
       *
-      * Must be called simultaneously on all processors.
+      * Thus function must be called simultaneously on all processors.
+      * It should be called immediately after any operation that changes
+      * the number of atoms per processor.
       */
       void unsetNAtomTotal();
+
+      //@}
+      /// \name Accessors for Member Objects
+      //@{
+     
+      /**
+      * Return the AtomMap by const reference.  
+      */
+      const AtomMap& map() const;
+
+      #ifdef UTIL_MPI
+      /**
+      * Get the AtomDistributor by reference.
+      */
+      AtomDistributor& distributor();
+
+      /**
+      * Get the AtomCollector by reference.
+      */
+      AtomCollector& collector();
       #endif
    
-      /**
-      * Get total number of atoms on all processors.
-      *
-      * This method should only be called on the master node (rank = 0).
-      * The return value is computed by a previous call of computeNAtomTotal.
-      */
-      int nAtomTotal() const;
+      //@}
+      /// \name Miscellaneous Accessors 
+      //@{
 
       /**
       * Has this object been initialized?
@@ -415,7 +474,7 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *  
-      * \param communicator domain communicator for all domain processors.
+      * \param communicator communicator for all domain processors.
       */
       bool isValid(MPI::Intracomm& communicator) const;
       #endif
@@ -510,8 +569,8 @@ namespace DdMd
       int  maxNAtomLocal_; 
    
       /// Maximum number of ghosts on this proc since stats cleared.
-      int  maxNGhostLocal_; 
-   
+      int  maxNGhostLocal_;
+
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
       Setable<int>  nAtomTotal_;
@@ -521,6 +580,10 @@ namespace DdMd
 
       /// Maximum of maxNGhostLocal_ on all procs (defined on master).
       Setable<int>  maxNGhost_;     
+
+      // Distributor and collector
+      AtomDistributor distributor_;
+      AtomCollector collector_;
       #endif
 
       // Is addition or removal of atoms forbidden?
@@ -541,13 +604,21 @@ namespace DdMd
     
    };
 
-   // Inline method definitions
+   // Inline member function definitions
 
    inline int AtomStorage::nAtom() const
    { return atomSet_.size(); }
 
    inline int AtomStorage::nGhost() const
    { return ghostSet_.size(); }
+
+   #ifdef UTIL_MPI
+   inline AtomDistributor& AtomStorage::distributor()
+   {  return distributor_; }
+
+   inline AtomCollector& AtomStorage::collector()
+   {  return collector_; }
+   #endif
 
    inline int AtomStorage::atomCapacity() const
    { return atomCapacity_; }

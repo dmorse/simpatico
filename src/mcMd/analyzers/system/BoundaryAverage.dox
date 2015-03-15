@@ -1,0 +1,49 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_BoundaryAverage_page  BoundaryAverage
+
+\section mcMd_analyzer_BoundaryAverage_synopsis_sec Synopsis
+
+This analyzer calculates averages of the dimensions of the periodic
+boundary, for use in constant pressure simulations with a fluctuating
+boundary. It also optionally outputs block average values to file,
+writing averages of nSamplePerBlock values every nSamplePerBlock*interval
+time steps. Setting nSamplePerBlock == 0 disables output of block
+averages.
+
+\section mcMd_analyzer_BoundaryAverage_param_sec Parameters
+The parameter file format is:
+\code
+  BoundaryAverage{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nSamplePerBlock</td>
+     <td> number of samples per block average written to file </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_BoundaryAverage_output_sec Output
+
+If nSamplePerBlock != 0, block averages are output duuring the simulation
+to a file named {outputFileName}.dat.
+
+At the end of the simulation, parameters are echoed to file {outputFileName}.prm, and final results for average values are output to {outputFileName}.ave.
+
+*/
+
+}

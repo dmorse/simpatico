@@ -1,10 +1,7 @@
-#ifndef DDMD_SERIALIZE_CONFIG_IO_CPP
-#define DDMD_SERIALIZE_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -119,7 +116,8 @@ namespace DdMd
 
          // Read atoms
          Vector  r;
-         Atom*  atomPtr;
+         Atom* atomPtr;
+         AtomContext* contextPtr;
          int  id;
          int  typeId;
          for (int i = 0; i < nAtom; ++i) {
@@ -137,6 +135,13 @@ namespace DdMd
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
+            ar >> atomPtr->groups();
+            if (Atom::hasAtomContext()) {
+               contextPtr = &atomPtr->context();
+               ar >> contextPtr->speciesId;
+               ar >> contextPtr->moleculeId;
+               ar >> contextPtr->atomId;
+            }
             ar >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             ar >> atomPtr->velocity();
@@ -235,6 +240,7 @@ namespace DdMd
          int typeId;
          int nAtom = atomStorage().nAtomTotal();
          Vector r;
+         AtomContext* contextPtr;
 
          ar << nAtom;
          atomCollector().setup();
@@ -244,6 +250,13 @@ namespace DdMd
             typeId = atomPtr->typeId();
             ar << id;
             ar << typeId;
+            ar << atomPtr->groups();
+            if (Atom::hasAtomContext()) {
+               contextPtr = &atomPtr->context();
+               ar << contextPtr->speciesId;
+               ar << contextPtr->moleculeId;
+               ar << contextPtr->atomId;
+            }
             if (isCartesian) {
                ar << atomPtr->position();
             } else {
@@ -306,4 +319,3 @@ namespace DdMd
    }
 
 }
-#endif

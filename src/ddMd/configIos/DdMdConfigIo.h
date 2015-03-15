@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -32,15 +32,18 @@ namespace DdMd
 
       /**
       * Default constructor.
+      *
+      * \param hasMolecules desired value of hasMolecules flag
       */
-      DdMdConfigIo();
+      DdMdConfigIo(bool hasMolecules = false);
 
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object.
+      * \param simulation parent Simulation object
+      * \param hasMolecules desired value of hasMolecules flag
       */
-      DdMdConfigIo(Simulation& simulation);
+      DdMdConfigIo(Simulation& simulation, bool hasMolecules = false);
 
       /**
       * Read configuration file.
@@ -51,8 +54,8 @@ namespace DdMd
       * \pre  There are no atoms, ghosts, or groups.
       * \pre  AtomStorage is set for scaled / generalized coordinates
       *
-      * \post atomic coordinates are scaled / generalized
-      * \post there are no ghosts
+      * \post Atomic coordinates are scaled / generalized
+      * \post There are no ghosts
       *
       * \param file input file stream (must be open on master)
       * \param maskPolicy MaskPolicy to be used in setting atom masks
@@ -72,6 +75,11 @@ namespace DdMd
       virtual void writeConfig(std::ofstream& file);
    
    private:
+
+      /**
+      * Include AtomContext info in file format, if available? 
+      */
+      bool hasMolecules_;
 
       /**
       * Read Group<N> objects from file. 

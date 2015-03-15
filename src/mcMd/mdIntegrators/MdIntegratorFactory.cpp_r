@@ -1,10 +1,7 @@
-#ifndef MCMD_MD_INTEGRATOR_FACTORY_CPP
-#define MCMD_MD_INTEGRATOR_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -13,6 +10,7 @@
 // Subclasses of MdIntegrator 
 #include "NveVvIntegrator.h"
 #include "NvtNhIntegrator.h"
+#include "NvtLangevinIntegrator.h"
 #include "NvtDpdVvIntegrator.h"
 #include "NphIntegrator.h"
 
@@ -47,6 +45,9 @@ namespace McMd
       if (className == "NvtNhIntegrator") {
          ptr = new NvtNhIntegrator(*systemPtr_);
       } else
+      if (className == "NvtLangevinIntegrator") {
+         ptr = new NvtLangevinIntegrator(*systemPtr_);
+      } else
       if (className == "NvtDpdVvIntegrator") {
          ptr = new NvtDpdVvIntegrator(*systemPtr_);
       }
@@ -57,4 +58,3 @@ namespace McMd
    }
 
 }
-#endif

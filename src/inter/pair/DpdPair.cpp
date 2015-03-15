@@ -1,15 +1,14 @@
-#ifndef INTER_DPD_PAIR_CPP
-#define INTER_DPD_PAIR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include "DpdPair.h"
+#ifdef UTIL_MPI
 #include <util/mpi/MpiLoader.h>
+#endif
 
 #include <iostream>
 namespace Inter
@@ -73,7 +72,7 @@ namespace Inter
    void DpdPair::readParameters(std::istream &in) 
    {
       // Preconditions
-      if (nAtomType_ == 0) {
+      if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be set before readParam");
       }
    
@@ -105,17 +104,11 @@ namespace Inter
    */
    void DpdPair::loadParameters(Serializable::IArchive &ar)
    {
-      #ifdef UTIL_MPI
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nAtomType_);
-      loader.load(maxPairCutoff_);
-      #else
-      ar >> nAtomType_; 
-      ar >> maxPairCutoff_;
-      #endif
-      if (nAtomType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
+      // Precondition
+      if (nAtomType_ <= 0) {
+         UTIL_THROW( "nAtomType must be set before loadParameters");
       }
+
       // Read parameters
       loadCArray2D<double> (ar, "epsilon", epsilon_[0], 
                             nAtomType_, nAtomType_, MaxAtomType);
@@ -123,13 +116,16 @@ namespace Inter
                             nAtomType_, nAtomType_, MaxAtomType);
       
       #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       loader.load(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
       loader.load(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
+      loader.load(maxPairCutoff_);
       #else
       ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.unpack(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.unpack(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar >> maxPairCutoff_;
       #endif
       isInitialized_ = true;
    }
@@ -139,13 +135,12 @@ namespace Inter
    */
    void DpdPair::save(Serializable::OArchive &ar)
    {
-      ar << nAtomType_;
-      ar << maxPairCutoff_;
       ar.pack(epsilon_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(sigma_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
       ar.pack(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar << maxPairCutoff_;
    }
 
    /* 
@@ -283,4 +278,3 @@ namespace Inter
    }
 
 } 
-#endif

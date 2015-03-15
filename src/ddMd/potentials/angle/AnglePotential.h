@@ -9,7 +9,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * Calculates angle forces and energies for a parent Simulation.
+   * Abstract base class for computation of angle force and energies.
    *
    * \ingroup DdMd_Angle_Module
    */
@@ -33,6 +33,11 @@ namespace DdMd
 
       /**
       * Constructor.
+      *
+      * Calls associate() function internally to create
+      * associations with boundary and angleStorage.
+      *
+      * \param simulation  parent Simulation object
       */
       AnglePotential(Simulation& simulation);
 

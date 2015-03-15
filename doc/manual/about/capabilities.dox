@@ -44,8 +44,7 @@ For single-processor Monte-Carlo simulation, mcSim currently provides the follow
 <ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
-   <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) 
-        in NVT and NPT ensembles. </li>
+   <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) in NVT and NPT ensembles. </li>
    <li> Reptation move for linear chains </li>
    <li> Configuration bias regrowth of all or part of a linear chain. </li>
    <li> Double (two-chain) rebridging for linear chains. </li>
@@ -53,7 +52,7 @@ For single-processor Monte-Carlo simulation, mcSim currently provides the follow
    <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
-The configuration bias and rebridging move algorithms were all designed for use with flexible bead-spring models of polymers, and have been not modified for use with models with strong angle potentials.
+The configuration bias and rebridging move algorithms were all designed for use with flexible bead-spring models of polymers, and have been not modified for use with chemicall realistic models with strong angle potentials.
 
 \section features_hoomd_sec GPU Acceleration: Integration with Hoomd-blue
 
@@ -70,7 +69,7 @@ Simpatico is distributed with a collection of classes for statistical analysis, 
   <li> Molecular radii of gyration </li>
   <li> Mean-squared distances between specific atoms in a molecule.</li>
   <li> Mean-squared displacements for specific atoms or molecular centers-of-mass. </li>
-  <li> Auto-correlation functions for vector separations of atom pairs. </li>
+  <li> Auto-correlation functions for vector separations of atom pairs within a molecule. </li>
   <li> Intermediate scattering (van Hove) function S(k, t) . </li>
 </ul>
 All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file. 

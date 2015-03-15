@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -197,7 +197,7 @@ namespace Inter
    private:
    
       /// Maximum allowed value for nAtomType (# of particle types)
-      static const int MaxAtomType = 2;
+      static const int MaxAtomType = 3;
    
       // Parameters for different types of particle pairs
       double epsilon_[MaxAtomType][MaxAtomType];   ///< energy parameter

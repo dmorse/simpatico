@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -61,23 +61,39 @@ namespace DdMd
       virtual void associate(Boundary& boundary, AtomStorage& storage);
 
       /**
+      * Set the maximum number of atom types.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param nAtomType maximum number of atomTypes (max index+1)
+      */
+      virtual void setNAtomType(int nAtomType);
+
+      /**
       * Read external potential interaction.
       * 
-      * \param in input parameter stream.
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from archive and initialize, for restart.
+      * 
+      * \param ar input/loading archive
+      */
       virtual void loadParameters(Serializable::IArchive &ar);
 
+      /**
+      * Save internal state to an archive, for restart.
+      *
+      * Call only on master processor.
+      *
+      * \param ar output/saving archive
+      */
       virtual void save(Serializable::OArchive &ar);
 
       /// \name Interaction interface
       //@{
-
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNAtomType(int nAtomType);
 
       /**
       * Returns external potential energy of a single atom.
@@ -143,6 +159,11 @@ namespace DdMd
       Interaction* interactionPtr_;
 
       /**
+      * This is initialized to false, and set true in (read|load)Parameters.
+      */
+      bool isInitialized_;
+
+      /**
       * Calculate external forces and/or energy.
       */
       double computeForces(bool needForce, bool needEnergy);
@@ -172,11 +193,12 @@ namespace DdMd
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(Simulation& simulation)
     : ExternalPotential(simulation),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  
       interactionPtr_ = new Interaction;
-      //interaction().setNAtomType(simulation.nAtomType());
-      interactionPtr_->setBoundary(simulation.boundary());
+      interaction().setBoundary(simulation.boundary());
+      setNAtomType(simulation.nAtomType());
    }
  
    /* 
@@ -185,7 +207,8 @@ namespace DdMd
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl()
     : ExternalPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -209,8 +232,15 @@ namespace DdMd
         ::associate(Boundary& boundary, AtomStorage& storage)
    {
       ExternalPotential::associate(boundary, storage);
-      interactionPtr_->setBoundary(boundary);
+      interaction().setBoundary(boundary);
    } 
+
+   /**
+   * Set the maximum number of atom types (for unit testing).
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::setNAtomType(int nAtomType)
+   {  interaction().setNAtomType(nAtomType); }
 
    /* 
    * Read parameters from file.
@@ -218,9 +248,11 @@ namespace DdMd
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      bool nextIndent = false; // Do not indent interaction block. 
+      UTIL_CHECK(!isInitialized_);
+      bool nextIndent = false; // Do not indent interaction block
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -229,25 +261,20 @@ namespace DdMd
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
-      bool nextIndent = false;
+      UTIL_CHECK(!isInitialized_);
+      bool nextIndent = false; // Do not indent interaction block
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
-   * Save internal state to an archive.
+   * Save internal state to an archive (call only on master processor).
    */
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {  interaction().save(ar); }
  
-   /**
-   * Set the maximum number of atom types.
-   */
-   template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::setNAtomType(int nAtomType)
-   {  interaction().setNAtomType(nAtomType); }
-
    /*
    * Return external energy of an atom.
    */
@@ -278,23 +305,27 @@ namespace DdMd
    */
    template <class Interaction>
    const Interaction& ExternalPotentialImpl<Interaction>::interaction() const
-   {  return *interactionPtr_; }
+   {
+      assert(interactionPtr_);  
+      return *interactionPtr_; 
+   }
 
    /**
    * Return underlying interaction object by reference.
    */
    template <class Interaction>
    Interaction& ExternalPotentialImpl<Interaction>::interaction()
-   {  return *interactionPtr_; }
+   {  
+      assert(interactionPtr_);  
+      return *interactionPtr_; 
+   }
 
    /*
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::computeForces()
-   {  
-      computeForces(true, false); 
-   }
+   {  computeForces(true, false); }
 
    /*
    * Compute total external energy on all processors.
@@ -309,7 +340,6 @@ namespace DdMd
    { 
       double localEnergy = 0; 
       localEnergy = computeForces(false, true); 
-
       #ifdef UTIL_MPI
       reduceEnergy(localEnergy, communicator);
       #else
@@ -324,11 +354,6 @@ namespace DdMd
    double 
    ExternalPotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
       Vector f;
       double energy = 0.0;
       AtomIterator iter;

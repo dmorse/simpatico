@@ -1,0 +1,133 @@
+/*! \page algorithms_Langevin_page Langevin Integration
+
+The classes McMd::NvtLangevinIntegrator and DdMd::NvtLangevinIntegrator compute approximate solutions to the Langevin equation. This page describe the time stepping algorithm used by both of these classes.
+
+\sa McMd::NvtLangevinIntegrator
+\sa DdMd::NvtLangevinIntegrator
+
+\section algorithms_Langevin_equation_sec Langevin Equation
+
+The Langevin equation for each particle is given by Newton's equation
+\f[
+   m\frac{d{\bf v}}{dt}  =  {\bf f}
+\f]
+with a force
+\f[
+   {\bf f} = -\frac{\partial U}{\partial {\bf r}}
+  - m\gamma {\bf v} + {\bf f}^{\rm (r)} ,
+\f]
+that includes frictional and random components, in which:
+
+   - \f$m\f$ is the particle mass
+
+   - \f${\bf v}\f$ is the particle velocity
+
+   - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
+
+   - \f${\bf f}^{\rm (r)}\f$ is a random force.
+
+The random force must have a mean and auto-correlation function:
+\f{eqnarray*}
+   \langle {\bf f}^{\rm (r)}\rangle & = & 0  \\
+   \langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle 
+   & = & 2 m kT \gamma \delta (t-t') .
+\f}
+\section algorithms_Langevin_discrete_sec Integration Algorithm
+
+The algorithm uses a conventional two-step velocity-Verlet time stepping
+sequence, identical to that of of the energy conserving NVE integrators, 
+with a modified total force.  This algorithm uses the following two-step 
+update scheme for the velocity \f${\bf v}(n)\f$ and position 
+\f${\bf r}(n)\f$:
+\f{eqnarray*}
+  \overline{\bf v}(n) & = & {\bf v}(n) + {\bf f}(n) \Delta t /(2m) \\
+  {\bf r}(n+1) & = & {\bf r}(n) + \overline{\bf v}(n)\Delta t \\
+  {\bf f}(n+1) & = & {\bf f}(\;{\bf r}(n+1),\; \overline{\bf v}(n)\; ) \\
+  {\bf v}(n+1) & = & \overline{\bf v}(n) + {\bf f}(n+1)\Delta t /(2m) \\
+\f}
+The total force \f${\bf f}\f$ is given by a function
+\f[
+   {\bf f}(n+1) 
+   = {\bf f}^{\rm (pot)}(n+1)
+   + c_{v}\overline{\bf v}(n) + c_{r}{\bf u}(n+1),
+\f]
+in which \f${\bf f}^{\rm (pot)}(n+1)\f$ is the conservative force derived
+from the potential energy, evaluated at updated position \f${\bf r}(n+1)\f$,
+\f$c_{v}\f$ and \f$c_{r}\f$ are numerical coefficients whose values are
+determined below, and \f${\bf u}\f$ is a dimensioness random number whose 
+Cartesian components are each uniformly distributed random numbers in the 
+range \f$[-1/2, 1/2]\f$.  
+
+Because the force \f${\bf f}(n+1)\f$ is calculated between the first step
+of this two-step integrator (i.e., first two lines of the above algorithm)
+and the final velocity update (the last line), it contains a conservative 
+force that is calculated using fully updated positions \f${\bf r}(n+1)\f$ 
+but a frictional drag force calculated using the half-updated velocity 
+\f$\overline{\bf v}(n)\f$. In practice, the drag and random forces for each 
+particle are evaluated and added to the total force for that particle at
+the beginning of the loop over particles for second step of the algorithm, 
+after evaluation of the conservative forces for all particles.
+
+Determination of Coefficients: The coefficients \f$c_{v}\f$ and \f$c_{r}\f$ 
+are chosen so that in the absence of any potential force (i.e., in an ideal 
+gas) the algorithm would yield the exact result for the decay of velocity 
+correlations and for the variance of the velocity obtained at the end of 
+each step. In an ideal gas, the velocity change between midstep force 
+evaluations is given by
+\f[
+   \overline{\bf v} (n+1) =
+   ( 1 + c_{v} \Delta t/m )\overline{\bf v}(n) +
+            (c_{r}\Delta t/m) {\bf u} 
+\f]
+By convention, we choose the constant \f$c_{v}\f$ such that 
+\f$1 + c_{v}\Delta t/m = e^{-\gamma\Delta t}\f$, where \f$\gamma\f$ 
+is a decay rate parameter input by the user. This yields the decay of
+velocity auto-correlations between midstep velocities predicted by 
+the exact solution. This gives a coefficient
+\f[
+    c_{v} = -m (1 - e^{-\gamma\Delta t})/\Delta t ,
+\f]
+for which \f$c_{v} < 0\f$.
+The coefficient \f$c_{r}\f$ for the random force is then chosen so that, 
+in the absence of conservative forces, the mapping would produce a variance
+for the end of step velocities that satisfies the equipartition theorem
+\f[ 
+    \langle v_{i} v_{j} \rangle 
+    = \delta_{ij} k_{B}T/m ,
+\f] 
+Because there are systematic differences between the mid-step and end-of-step
+velocities, this turns out to imply that the mid-step velocities obey a
+modified equation
+\f[ 
+    \langle \overline{v}_{i} \overline{v}_{j} \rangle 
+    = \delta_{ij} d k_{B}T/m . 
+\f] 
+in which \f$d\f$ is a coefficient that approaches unity only in the 
+continuum limit \f$\gamma\Delta t \rightarrow 0\f$.  Applying the 
+above criteria for the variance of the midstep velocities, while 
+treating \f$d\f$ for now as unknown, and using the identity 
+\f$\langle u_{i} u_{j} \rangle = \delta_{ij}/12\f$ 
+for the Cartesian components of \f${\bf u}\f$, we obtain:
+\f[
+    c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t
+\f]
+To determine \f$d\f$, we then use the mapping
+\f[
+  {\bf v}(n+1) = [1 + c_{v}\Delta t/(2m)] \overline{\bf v}(n) 
+                 + [c_{r} \Delta t/(2m)] {\bf u}(n+1) 
+\f]
+for an ideal gas to calculate the relationship between variances for 
+midstep and final velocities, and require that the end-of-step
+velocities satisfy equipartition. This yields:
+\f[
+   d = 2/(1 + e^{-\gamma\Delta t}) .
+\f]
+Substituting this into the equation for \f$c_{r}\f$ completes the
+specification of constants in the algorithm.
+
+Because the values of the coefficients \f$c_{v}\f$ and \f$c_{r}\f$
+depend on the particle mass, values must be calculated for each 
+atom type. These values are stored in private arrays named cv_ and 
+cr_ that are indexed by atom type id.
+
+*/

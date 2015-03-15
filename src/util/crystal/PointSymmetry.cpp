@@ -1,5 +1,4 @@
-#ifndef UTIL_POINT_SYMMETRY_CPP
-#define UTIL_POINT_SYMMETRY_CPP
+
 
 #include "PointSymmetry.h"
 
@@ -173,4 +172,3 @@ namespace Util
    }
 
 }
-#endif

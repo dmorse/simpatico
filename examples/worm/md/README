@@ -1,0 +1,17 @@
+System:
+
+    melt of 100 wormlike chains of 8 atoms.
+
+Usage:
+
+NVE md simulation:
+
+    mdSim -e -p param.nve -c commands
+
+NVT md simulation
+
+    mdSim -e -p param.nvt -c commands
+
+Restarting and extending previous simulation
+
+    mdSim -e -r restart -c restart.cmd

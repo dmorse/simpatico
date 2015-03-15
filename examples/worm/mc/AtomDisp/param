@@ -1,0 +1,148 @@
+McSimulation{
+  FileMaster{
+    inputPrefix                     ../in/
+    outputPrefix                      out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  nAngleType                             1
+  atomTypes                    A       1.0
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                 100
+      nAtom                              8
+      atomType                           0
+      bondType                           0
+      hasAngles                          1
+      angleType                          0
+    }
+
+  }
+  Random{
+    seed                          13451892
+  }
+  McSystem{
+    pairStyle       LJPair
+    bondStyle       HarmonicBond
+    angleStyle      CosineAngle
+    McPairPotential{
+      epsilon           1.000000000000e+00
+      sigma             1.000000000000e+00
+      cutoff            1.122460000000e+00
+      maxBoundary         cubic         10.5
+    }
+    BondPotential{
+      kappa             4.000000000000e+02
+      length            1.000000000000e+00
+    }
+    AnglePotential{
+      kappa             4.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                      isothermal
+      temperature       1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                           rigid
+    }
+  }
+  McMoveManager{
+     
+    AtomDisplaceMove{
+      probability      1.0000000000e+00
+      speciesId                       0
+      delta                        0.10
+    }
+
+  }
+  AnalyzerManager{
+    baseInterval                    100000
+
+    LogProgress{
+      interval                      200000
+    }
+
+    McEnergyAverage{
+      interval                      200000
+      outputFileName                energy
+      nSamplePerBlock                   10
+    }
+    
+    McPairEnergyAverage{
+      interval                      200000
+      outputFileName               pairEnergy
+      nSamplePerBlock                   10
+      selector                    inter -1 -1
+    }
+    
+    RadiusGyration{
+      interval                      200000
+      outputFileName              RgSq
+      nSamplePerBlock               10
+      speciesId                     0
+    }
+
+    IntraPairAutoCorr{
+      interval                  4000000
+      outputFileName        IntraPairAutoCorr
+      speciesId                      0
+      atom1Id                        0
+      atom2Id                        7
+      capacity                     500
+    }
+  }
+  saveInterval                  400000
+  saveFileName                 restart
+}
+
+    HybridMdMove{
+      nStep                            400
+      MdSystem{
+        PairList{
+          atomCapacity                 800
+          pairCapacity               10000
+          skin             3.000000000e-01
+        }
+        NveVvIntegrator{
+          dt               7.000000000e-03
+        }
+      }
+    }
+    probability         1.000000000000e+00
+
+    McPressureAverage{
+      interval                       10000
+      outputFileName           pressureAve
+      nSamplePerBlock                    1
+    }
+
+    RadiusGyration{
+      interval                       10000
+      outputFileName        RadiusGyration
+      nSamplePerBlock                   10
+      speciesId                          0
+    }
+
+    RDF{
+      interval                     20000000
+      outputFileName              RDF
+      RadialDistribution{
+         max                      5.0
+         nBin                     500
+      }
+      selector                  inter   -1   -1
+    }
+    
+    BondLengthDist{
+      interval                    2000000
+      outputFileName          BondLengthDist
+      speciesId                     0
+      Distribution{
+         min                      0.0
+         max                      2.0
+         nBin                      400
+      }
+    }
+    

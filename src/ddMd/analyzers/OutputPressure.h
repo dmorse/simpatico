@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,6 +19,8 @@ namespace DdMd
 
    /**
    * Periodically write (scalar) pressure to file.
+   *
+   * \sa \ref ddMd_analyzer_OutputPressure_page "param file format"
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -66,6 +68,11 @@ namespace DdMd
       */
       virtual void clear();
   
+      /**
+      * Setup - open output file.
+      */
+      virtual void setup();
+
       /**
       * Dump configuration to file
       *

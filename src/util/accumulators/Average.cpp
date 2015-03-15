@@ -1,10 +1,7 @@
-#ifndef UTIL_AVERAGE_CPP
-#define UTIL_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -53,13 +50,23 @@ namespace Util
    * Read nSamplePerBlock from file.
    */
    void Average::readParameters(std::istream& in)
-   {  read<int>(in, "nSamplePerBlock", nSamplePerBlock_); }
+   {  
+      read<int>(in, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Invalid input: nSamplePerBlock < 0");
+      }
+   }
 
    /*
    * Set nSamplePerBlock parameter.
    */
    void Average::setNSamplePerBlock(int nSamplePerBlock)
-   {  nSamplePerBlock_ = nSamplePerBlock; }
+   {  
+      if (nSamplePerBlock < 0) {
+         UTIL_THROW("Attempt to set nSamplePerBlock < 0");
+      }
+      nSamplePerBlock_ = nSamplePerBlock; 
+   }
 
    /*
    * Load internal state from archive.
@@ -70,6 +77,9 @@ namespace Util
       ar & blockSum_;
       ar & iBlock_;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
+      if (nSamplePerBlock_ < 0) {
+         UTIL_THROW("Loading value nSamplePerBlock < 0");
+      }
    }
 
    /*
@@ -83,36 +93,44 @@ namespace Util
    */
    void Average::sample(double value)
    {
-      std::ostream* outFilePtr = 0;
-      sample(value, outFilePtr);
+      AverageStage::sample(value);
+
+      // Increment block average
+      if (nSamplePerBlock_) {
+         if (iBlock_ == nSamplePerBlock_) {
+            blockSum_ = 0.0;
+            iBlock_  = 0;
+         }
+         blockSum_ += value;
+         ++iBlock_;
+      }
    }
 
    /*
-   * Add a sampled value to the ensemble (private method)
-   *
-   * If outFilePtr != 0, output block averages to outFilePtr
+   * Add a sampled value and output block average if complete.
    */
-   void Average::sample(double value, std::ostream* outFilePtr)
+   void Average::sample(double value, std::ostream& out)
    {
       AverageStage::sample(value);
 
-      // Process block average for output
-      if (nSamplePerBlock_ && outFilePtr) {
-         blockSum_  += value;
-         ++iBlock_;
+      // Increment block average for output
+      if (nSamplePerBlock_) {
          if (iBlock_ == nSamplePerBlock_) {
-            *outFilePtr << Dbl(blockSum_/double(nSamplePerBlock_))
-                        << std::endl;
             blockSum_ = 0.0;
             iBlock_  = 0;
+         }
+         blockSum_ += value;
+         ++iBlock_;
+         if (iBlock_ == nSamplePerBlock_) {
+            out << Dbl(blockSum_/double(iBlock_)) << "\n";
          }
       }
    }
 
    /*
-   * Output statistical properties to file
+   * Return estimate of error on average from blocking analysis.
    */
-   void Average::output(std::ostream& out)
+   double Average::blockingError() const
    {
       // Find first stage (descending) with nSample >= 16
       AverageStage* ptr = 0;
@@ -151,15 +169,28 @@ namespace Util
             next = false;
          }
       }
+      return aveErr;
+   }
+
+   /*
+   * Output statistical properties to file
+   */
+   void Average::output(std::ostream& out) const
+   {
+      double aveErr = blockingError();
 
       out <<  "Average   " << Dbl(average())         
-          <<  "  +- "      << Dbl(aveErr, 9, 2) << std::endl;
-      out <<  "Variance  " << Dbl(variance())        << std::endl;
-      out <<  "Std Dev   " << Dbl(stdDeviation())    << std::endl;
-      out <<  std::endl;
+          <<  "  +- "      << Dbl(aveErr, 9, 2) << "\n";
+      out <<  "Variance  " << Dbl(variance())        << "\n";
+      out <<  "Std Dev   " << Dbl(stdDeviation())    << "\n";
+      out <<  "\n";
 
-      out << "Hierarchichal Error Analysis:" << std::endl;
+      out << "Hierarchichal Error Analysis:" << "\n";
+      AverageStage* ptr = 0;
+      double error;
       int interval;
+      int nSample;
+      int n = descendants_.size();
       for (int i = 0; i < n; ++i) {
          ptr = descendants_[i];
          error    = ptr->error();
@@ -170,10 +201,10 @@ namespace Util
                 << Int(interval) 
                 << Dbl(error) 
                 << Dbl(error/sqrt(double(nSample)))
-                << Int(nSample) << std::endl;
+                << Int(nSample) << "\n";
          }
       }
-      out << std::endl;
+      out << "\n";
    }
 
    /*
@@ -183,4 +214,3 @@ namespace Util
    {  descendants_.push_back(descendantPtr); }
 
 }
-#endif

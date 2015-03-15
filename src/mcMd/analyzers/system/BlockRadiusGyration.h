@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -27,10 +27,11 @@ namespace McMd
    /**
    * Radius of gyration of different blocks in a molecule.
    *
-   * The radius of gyration R_{g,i} of a block of atom type i is the root 
-   * mean-squared separation of atoms in a block from the center of mass of block.
-   * For a species of molecule with N_i atoms of type i, with positions 
-   * \f$ R_0, R_1, ...., R_{N_{i}-1} \f$,we define
+   * The radius of gyration R_{g,i} of a block of atom type i is the 
+   * root mean-squared separation of atoms in a block from the center 
+   * of mass of block.  For a species of molecule with N_i atoms of 
+   * type i, with positions \f$ R_0, R_1, ...., R_{N_{i}-1} \f$, we 
+   * define
    * \f[
    *  
    *   R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i
@@ -45,7 +46,9 @@ namespace McMd
    * averages to file at an interval specified by the input parameter
    * nSamplePerBlock. No block averages are output if nSamplePerBlock = 0.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \sa \ref mcMd_analyzer_BlockRadiusGyration_page "parameter file format"
+   *
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BlockRadiusGyration : public SystemAnalyzer<System>
    {

@@ -4,10 +4,11 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/space/Dimension.h>
 
 #ifdef UTIL_MPI
@@ -32,11 +33,11 @@ namespace Util
    * The operators += and -= represent increment or decrement by a vector,
    * while *= and /= represent multiplication or division by a scalar.
    *
-   * All other unary and binary mathematical operations are implemented as 
-   * methods. Operations that yield a scalar result, such as a dot product, 
-   * are implemented as methods that return the resulting value. Operations 
-   * that yield a Vector, such as vector addition, are implemented by methods 
-   * that assign the result to the invoking vector, and return a reference 
+   * All other unary and binary mathematical operations are implemented as
+   * methods. Operations that yield a scalar result, such as a dot product,
+   * are implemented as methods that return the resulting value. Operations
+   * that yield a Vector, such as vector addition, are implemented by methods
+   * that assign the result to the invoking vector, and return a reference
    * to the invoking vector. For example,
    * \code
    *    Vector a, b, c;
@@ -49,9 +50,9 @@ namespace Util
    *    b[0] =  0.5
    *    b[1] = -0.5
    *    b[2] = -1.5
-   *  
+   *
    *    // Set s = a.b
-   *    s = dot(a, b) 
+   *    s = a.dot(b)
    *
    *    // Set c = a + b
    *    c.add(a, b)
@@ -64,7 +65,7 @@ namespace Util
    *
    * \endcode
    * This syntax for Vector valued operations avoids dynamic allocation of
-   * temporary Vector objects, by requiring that the invoking function 
+   * temporary Vector objects, by requiring that the invoking function
    * provide an object to hold the result.
    *
    * For efficiency, all methods in this class are declared inline.
@@ -77,8 +78,8 @@ namespace Util
    public:
 
       /// \name Constructors
-      //@{ 
-      
+      //@{
+
       /**
       * Default constructor
       */
@@ -86,6 +87,8 @@ namespace Util
 
       /**
       * Copy constructor
+      *
+      * \param v Vector to be copied
       */
       Vector(const Vector& v);
 
@@ -106,14 +109,14 @@ namespace Util
       /**
       * Construct Vector from its coordinates.
       *
-      * \param x x-axis coordinate
-      * \param y y-axis coordinate
-      * \param z z-axis coordinate
+      * \param x x-axis coordinate, v[0]
+      * \param y y-axis coordinate, v[1]
+      * \param z z-axis coordinate, v[2]
       */
       Vector(double x, double y, double z=0.0);
 
       //@}
-      
+
       /**
       * Set all elements of a 3D vector to zero.
       */
@@ -130,7 +133,7 @@ namespace Util
 
       /// \name Assignment
       //@{
-      
+
       /**
       * Copy assignment.
       *
@@ -139,22 +142,22 @@ namespace Util
       Vector& operator = (const Vector& v);
 
       /**
-      * Assignment from C double[] array.
+      * Assignment from C double[3] array.
       *
-      * \param v array of coordinates
+      * \param v  C-array of components
       */
       Vector& operator = (const double* v);
 
       //@}
       /// \name Arithmetic Assignment
       //@{
-      
+
       /**
       * Add vector dv to this vector.
       *
       * Upon return, *this = this + dv.
       *
-      * \param  dv   vector increment (input)
+      * \param dv  vector increment (input)
       */
       void operator += (const Vector& dv);
 
@@ -163,52 +166,52 @@ namespace Util
       *
       * Upon return, *this = this + dv.
       *
-      * \param  dv   vector increment (input)
+      * \param dv  vector increment (input)
       */
       void operator -= (const Vector& dv);
 
       /**
       * Multiply this vector by scalar s.
       *
-      * Upon return, *this = this*s.
+      * Upon return, *this = (*this)*s.
       *
-      * \param  s  scalar multiplier
+      * \param s  scalar multiplier
       */
       void operator *= (double s);
 
       /**
       * Divide this vector by scalar s.
       *
-      * Upon return, *this = this/s.
+      * Upon return, *this = (*this)/s.
       *
-      * \param  s  scalar divisor (input)
+      * \param s  scalar divisor (input)
       */
       void operator /= (double s);
 
       //@}
-      /// \name Array Subscript 
+      /// \name Array Subscript
       //@{
-      
+
       /**
       * Return one Cartesian element by value.
       *
-      * \param   i element index
-      * \return  element i of the vector
+      * \param i  element index
+      * \return element i of the vector
       */
       const double& operator [] (int i) const;
 
       /**
-      * Return a reference to one element of the vector.
+      * Return one element of the vector by references.
       *
-      * \param   i element index
-      * \return  element i of the vector
+      * \param i  element index
+      * \return element i of this vector
       */
       double& operator [] (int i);
 
       //@}
-      /// \name Scalar valued functions
+      /// \name Scalar-valued functions
       //@{
-      
+
       /**
       * Return square magnitude of this vector.
       *
@@ -219,7 +222,7 @@ namespace Util
       /**
       * Return absolute magnitude of this vector.
       *
-      * \return absolute magnitude of this vector.
+      * \return absolute magnitude (norm) of this vector.
       */
       double abs() const;
 
@@ -242,14 +245,15 @@ namespace Util
       //@}
       /// \name Vector valued functions (result assigned to invoking object)
       //@{
-      
+
       /**
       * Add vectors v1 and v2.
       *
       * Upon return, *this = v1 + v2.
       *
-      * \param  v1   vector
-      * \param  v2   vector
+      * \param v1  vector (input)
+      * \param v2  vector (input)
+      * \return modified invoking vector
       */
       Vector& add(const Vector& v1, const Vector& v2);
 
@@ -258,8 +262,8 @@ namespace Util
       *
       * Upon return, *this = v1 - v2.
       *
-      * \param  v1    vector (input)
-      * \param  v2    vector (input)
+      * \param v1  vector (input)
+      * \param v2  vector (input)
       * \return modified invoking vector
       */
       Vector& subtract(const Vector& v1, const Vector& v2);
@@ -269,8 +273,8 @@ namespace Util
       *
       * Upon return, *this = v*s.
       *
-      * \param  v   vector input
-      * \param  s   scalar input
+      * \param v  vector input
+      * \param s  scalar input
       * \return modified invoking vector
       */
       Vector& multiply(const Vector& v, double s);
@@ -280,8 +284,8 @@ namespace Util
       *
       * Upon return, *this = v/s;
       *
-      * \param  v  vector input
-      * \param  s  scalar input
+      * \param v  vector input
+      * \param s  scalar input
       * \return modified invoking vector
       */
       Vector& divide(const Vector& v, double s);
@@ -291,8 +295,8 @@ namespace Util
       *
       * Upon return, *this = v1 x v2.
       *
-      * \param  v1 input  vector
-      * \param  v2 input  vector
+      * \param v1  input vector
+      * \param v2  input vector
       * \return modified invoking vector
       */
       Vector& cross(const Vector& v1, const Vector& v2);
@@ -335,7 +339,7 @@ namespace Util
       Vector& transverse(const Vector& v, const Vector& p);
 
       /**
-      * calculates the index corresponding to minimum element in a vector.
+      * Computes the index corresponding to minimum element in a vector.
       *
       * \param v  input vector
       * \return index of the minimum element.
@@ -343,7 +347,7 @@ namespace Util
       int minId(const Vector& v);
 
       /**
-      * calculates the index corresponding to maximum element in a vector.
+      * Computes the index corresponding to maximum element in a vector.
       *
       * \param v  input vector
       * \return index of the maximum element.
@@ -352,14 +356,16 @@ namespace Util
 
       //@}
       /// \name Static Members
-      //@{ 
-     
+      //@{
+
       /**
       * Initialize Zero Vector.
       */
       static void initStatic();
 
-      /// Zero Vector = {0.0, 0.0, 0.0}
+      /**
+      * Zero Vector = {0.0, 0.0, 0.0}
+      */
       static const Vector Zero;
 
       #ifdef UTIL_MPI
@@ -388,9 +394,11 @@ namespace Util
 
       friend bool operator == (const Vector& v1, const double* v2);
 
-      friend std::istream& operator >> (std::istream& in, Vector &vector);
+      friend 
+      std::istream& operator >> (std::istream& in, Vector &vector);
 
-      friend std::ostream& operator << (std::ostream& out, const Vector &vector);
+      friend 
+      std::ostream& operator << (std::ostream& out, const Vector &vector);
 
    };
 
@@ -434,18 +442,16 @@ namespace Util
    std::ostream& operator << (std::ostream& out, const Vector &vector);
 
    #ifdef UTIL_MPI
-
    /**
    * Explicit specialization MpiTraits<Vector>.
    */
    template <>
    class MpiTraits<Vector>
-   {  
-   public:  
+   {
+   public:
       static MPI::Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
-
    #endif
 
    // Inline methods
@@ -586,14 +592,22 @@ namespace Util
    */
    inline
    const double& Vector::operator [] (int i) const
-   { return elem_[i]; }
+   { 
+      assert(i >=0); 
+      assert(i < Dimension); 
+      return elem_[i]; 
+   }
 
    /*
    * Return a reference to one element of the vector.
    */
    inline
    double& Vector::operator [] (int i)
-   { return elem_[i]; }
+   {
+      assert(i >=0); 
+      assert(i < Dimension); 
+      return elem_[i]; 
+   }
 
    /*
    * Return square magnitude of this vector.
@@ -601,7 +615,7 @@ namespace Util
    inline
    double Vector::square() const
    {
-      return elem_[0]*elem_[0] + elem_[1]*elem_[1] + elem_[2]*elem_[2] ;
+      return (elem_[0]*elem_[0] + elem_[1]*elem_[1] + elem_[2]*elem_[2]);
    }
 
    /*
@@ -609,7 +623,7 @@ namespace Util
    */
    inline
    double Vector::abs() const
-   { return sqrt(square()) ;}
+   {  return sqrt(square()); }
 
    /*
    * Return dot product of this vector and vector v.
@@ -705,16 +719,14 @@ namespace Util
       return *this;
    }
 
-   /**
-   * Calculate unit vector parallel to input vector v.
-   *
-   * Upon return *this = unit vector.
+   /*
+   * Calculate unit vector parallel to v: this = v/|v|
    */
    inline
    Vector& Vector::versor(const Vector& v)
    {
       double vabs = v.abs();
-      if ( vabs > 1.0E-8 ) {
+      if (vabs > 1.0E-8) {
          vabs = 1.0/vabs;
          elem_[0] = v.elem_[0]*vabs;
          elem_[1] = v.elem_[1]*vabs;
@@ -749,7 +761,7 @@ namespace Util
       return *this;
    }
 
-   /**
+   /*
    * Calculate component of vector v transverse to vector p.
    *
    * Upon return, the invoking vector is equal to the vector
@@ -771,11 +783,8 @@ namespace Util
       return *this;
    }
 
-   /**
-   * calculates the index corresponding to minimum element in a vector.
-   *
-   * \param v  input vector
-   * \return index of the minimum element.
+   /*
+   * Compute the index corresponding to minimum element in a vector.
    */
    inline
    int minId(const Vector& v)
@@ -786,13 +795,10 @@ namespace Util
             id = i;
       }
       return id;
-   }   
+   }
 
-   /**
-   * calculates the index corresponding to maximum element in a vector.
-   *
-   * \param v  input vector
-   * \return index of the maximum element.
+   /*
+   * Compute the index corresponding to maximum element in a vector.
    */
    inline
    int maxId(const Vector& v)
@@ -802,19 +808,19 @@ namespace Util
          if (v[i] > v[id])
             id = i;
       }
-      return id; 
-   } 
+      return id;
+   }
 
    /*
    * Serialize to/from an archive.
    */
    template <class Archive>
    inline void Vector::serialize(Archive& ar, const unsigned int version)
-   { 
+   {
       ar & elem_[0];
       ar & elem_[1];
       ar & elem_[2];
    }
 
-} 
+}
 #endif

@@ -1,14 +1,12 @@
-#ifndef UTIL_MEMORY_O_ARCHIVE_CPP
-#define UTIL_MEMORY_O_ARCHIVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include "MemoryOArchive.h"
+#include <util/misc/Memory.h>
 
 #include <sstream>
 
@@ -33,7 +31,12 @@ namespace Util
    * Destructor.
    */
    MemoryOArchive::~MemoryOArchive()
-   {  if (buffer_ && ownsData_) delete buffer_; }
+   {  
+      if (buffer_ && ownsData_) {
+         //delete buffer_; 
+         Memory::deallocate<Byte>(buffer_, capacity_ + sizeof(size_t));
+      }
+   }
 
    /*
    * Allocate a block of memory.
@@ -43,7 +46,8 @@ namespace Util
       if (begin_) {
          UTIL_THROW("Re-allocation is prohibited");
       }
-      buffer_ = new Byte[capacity + sizeof(size_t)];
+      // buffer_ = new Byte[capacity + sizeof(size_t)];
+      Memory::allocate<Byte>(buffer_, capacity + sizeof(size_t));
       begin_  = buffer_ + sizeof(size_t);
       cursor_ = begin();
       endAllocated_ = begin_ + capacity; 
@@ -112,4 +116,3 @@ namespace Util
    #endif
 
 }
-#endif

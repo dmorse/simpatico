@@ -1,3 +1,0 @@
-subDirectories = pair bond angle dihedral tether external
-pathFromSrc = inter
-pathToSrc = ..

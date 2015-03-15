@@ -98,15 +98,15 @@ Proposal:
    - Add the following member functions to GroupExchanger.
 
      // Replacement for newPtr():
-     void getNewGroup(GroupReference& genericGroup);
+     void getNewGroup(GroupReference& group);
 
      // Replacement for iterator, access by index.
-     void getGroup(GroupReference& genericGroup, int i);
+     void getGroup(GroupReference& group, int i);
 
-     // Get size of each group (number of atoms)
+     // Get size of each group (number of atoms per group)
      virtual int GroupExchanger::groupSize() const;
 
-   - Add the following declarations to GroupExchanger
+   - Add the following other declarations to GroupExchanger:
 
      virtual void GroupExchanger::add() = 0;
      virtual void GroupExchanger::returnPtr() = 0;
@@ -116,6 +116,7 @@ Proposal:
      virtual int  GroupExchanger::nTotal() = 0;
      virtual bool GroupExchanger::isValid() = 0;
 
-     Consider wrapping all of the validity checking into a separate function 
-     that can be implemented by GroupExchanger.
+     Consider wrapping all of the code to check validity into a separate 
+     function that can be implemented by GroupExchanger. Ideally, this 
+     should consolidate the last 4 functions above.
 

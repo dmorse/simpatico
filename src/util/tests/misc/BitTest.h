@@ -20,11 +20,20 @@ public:
    void tearDown()
    {};
 
-   void testConstructor() 
+   void testConstructor1() 
    {
       printMethod(TEST_FUNC);
 
       Bit bit(3);
+      TEST_ASSERT(bit.mask() == 8);
+   }
+
+   void testConstructor2() 
+   {
+      printMethod(TEST_FUNC);
+
+      Bit bit;
+      bit.setMask(3);
       TEST_ASSERT(bit.mask() == 8);
    }
 
@@ -84,7 +93,8 @@ public:
 };
 
 TEST_BEGIN(BitTest)
-TEST_ADD(BitTest, testConstructor)
+TEST_ADD(BitTest, testConstructor1)
+TEST_ADD(BitTest, testConstructor2)
 TEST_ADD(BitTest, testIsSet)
 TEST_ADD(BitTest, testSet)
 TEST_ADD(BitTest, testClear)

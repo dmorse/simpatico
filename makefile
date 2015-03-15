@@ -1,82 +1,109 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-mpi \
+.PHONY: all mcMd mcMd-mpi ddMd tools \
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html
 
 # ==============================================================================
-# Main targets
+# Main build targets
 
 all:
-	cd obj/serial; make mcMd
-	cd obj/parallel; make ddMd
-	cd obj/parallel; make mcMd-mpi
+	cd bld/serial; $(MAKE) tools
+	cd bld/serial; $(MAKE) mcMd
+	cd bld/parallel; $(MAKE) mcMd-mpi
+	cd bld/parallel; $(MAKE) ddMd
 
+# Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
-	cd obj/serial; make mcMd
+	cd bld/serial; $(MAKE) mcMd
 
+# Build embarassingly parallel mcSim and mdSim programs in bld/parallel
 mcMd-mpi: 
-	cd obj/parallel; make mcMd-mpi
+	cd bld/parallel; $(MAKE) mcMd-mpi
 
+# Build parallel mdSim MD program in bld/parallel
 ddMd:
-	cd obj/parallel; make ddMd
+	cd bld/parallel; $(MAKE) ddMd
+
+# Build single-processor analysis program in bld/serial
+tools:
+	cd bld/serial; $(MAKE) tools
 
 # ==============================================================================
 # Test targets
 
 test-serial:
-	@cd obj/serial/util/tests; make all; make run
-	@cd obj/serial/inter/tests; make all; make run
-	@cd obj/serial/mcMd/tests; make all; make run
-	@cat obj/serial/util/tests/count > count
-	@cat obj/serial/inter/tests/count >> count
-	@cat obj/serial/mcMd/tests/count >> count
+	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/tools/tests; $(MAKE) all; $(MAKE) run
+	@cat bld/serial/util/tests/count > count
+	@cat bld/serial/inter/tests/count >> count
+	@cat bld/serial/mcMd/tests/count >> count
+	@cat bld/serial/tools/tests/count >> count
+	@echo " "
+	@echo "Summary"
 	@cat count
 	@rm -f count
 
 test-parallel:
-	cd obj/parallel/ddMd/tests; make all; make run
-	@cat obj/parallel/ddMd/tests/count >> count
+	cd bld/parallel/ddMd/tests; $(MAKE) all; $(MAKE) run
+	@cat bld/parallel/ddMd/tests/count >> count
+	@echo " "
 	@cat count
 	@rm -f count
-
 
 # =========================================================================
 # Clean targets
 
 clean-serial:
-	cd obj/serial; make clean
+	cd bld/serial; $(MAKE) clean
 
 clean-parallel:
-	cd obj/parallel; make clean
+	cd bld/parallel; $(MAKE) clean
+
+clean-tests:
+	cd src/; $(MAKE) clean-tests
+	cd bld/serial; $(MAKE) clean-tests
+	cd bld/parallel; $(MAKE) clean-tests
 
 clean:
-	cd src; make clean
-	cd obj/serial; make clean
-	cd obj/parallel; make clean
+	cd src; $(MAKE) clean
+	cd bld/serial; $(MAKE) clean
+	cd bld/parallel; $(MAKE) clean
 
 clean-bin:
 	-rm -f $(BIN_DIR)/mcSim*
 	-rm -f $(BIN_DIR)/mdSim*
 	-rm -f $(BIN_DIR)/ddSim*
+	-rm -f $(BIN_DIR)/mdPp*
+	-rm -f $(BIN_DIR)/*Maker*
  
 veryclean:
-	cd obj/serial; make veryclean; rm -f makefile configure
-	cd obj/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile
-	cd obj/parallel; make veryclean; rm -f makefile configure
-	cd obj/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile
-	cd doc; make clean
-	make clean-bin
-	cd src; make veryclean
+	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/serial; rm -f util/makefile inter/makefile 
+	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/serial; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/serial; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
+	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/parallel; rm -f util/makefile inter/makefile 
+	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/parallel; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
+	$(MAKE) clean-bin
+	-rm -f $(BIN_DIR)/makeDep
+	-rm -f scripts/python/*.pyc
+	cd doc; $(MAKE) clean
+	cd src; $(MAKE) veryclean
 
 # =========================================================================
 # HTML Documentation
  
 html:
-	cd doc; make html
+	cd doc; $(MAKE) html
 
 clean-html:
-	cd doc; make clean
+	cd doc; $(MAKE) clean
 
 # ==============================================================================

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,6 +21,8 @@ namespace DdMd
    *
    * Integration algorithm based on Martyna,Tobias and Klein (J. Chem. Phys.
    * 101, 4177-4189, 1994).
+   *
+   * \sa \ref ddMd_integrator_NphIntegrator_page "param file format"
    *
    * \ingroup DdMd_Integrator_Module
    */

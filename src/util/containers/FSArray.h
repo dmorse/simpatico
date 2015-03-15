@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -16,17 +16,18 @@ namespace Util
 {
 
    /**
-   * A fixed capacity array with a variable logical size.
+   * A fixed capacity (static) contiguous array with a variable logical size.
    *
    * An FSArray < Data, Capacity > is a wrapper for a statically allocated 
    * C array containing Capacity objects of type Data. An FSArray has both
-   * a capacity, which is the physical size of the underlying C array, and 
-   * a logical size, which is the number of contiguous elements (from 0 to 
-   * one less than its size) that contain valid data. The size is initialized
-   * to zero, and can only be increased only by the append() method, which 
-   * adds a new element to the end of the array.  
+   * a Capacity that is set at compile time, which is the physical size of 
+   * the underlying C array, and a logical size, which is the number of 
+   * contiguous elements (from 0 to one less than its size) that contain 
+   * valid data. The size is initialized to zero, and can only be increased 
+   * only by the append() method, which adds a new element to the end of the 
+   * array.  
    *
-   * When bounds checking is on (i.e., when NDEBUG is defined) the 
+   * When compiled in debug mode (i.e., when NDEBUG is defined) the subcript
    * operator [] checks that the index is less than the logical size, and 
    * not merely less than the capacity.
    *

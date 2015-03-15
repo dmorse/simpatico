@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,7 +20,7 @@ namespace McMd
 
    class Simulation;
    class System;
-   
+
    /**
    * Trajectory file reader and writer. A subclass of TrajectoryIo needs to implement a
    * the pair readHeader() and readFrame() or the pair writeHedaer() and writeFrame() or both.
@@ -31,29 +31,34 @@ namespace McMd
    */
    class TrajectoryIo
    {
-   
+
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor.
+      */
       TrajectoryIo(System& system);
- 
-      /// Destructor.   
+
+      /**
+      * Destructor.
+      */
       virtual ~TrajectoryIo();
- 
+
       /**
       * Read trajectory file header. This is called once to initialize the file reader.
       *
       * \param file input file stream.
       */
       virtual void readHeader(std::fstream &file);
- 
+
       /**
       * Read a single frame. Frames are assumed to be read consecutively. Before a call to
       * readFrame(), the readHeader() method must be called.
       *
       * \param file input file stream
+      * \return true if a frame is avaiable, false if at end of file
       */
-      virtual void readFrame(std::fstream& file);
+      virtual bool readFrame(std::fstream& file);
 
       /**
       * Write trajectory file header.
@@ -61,7 +66,7 @@ namespace McMd
       * \param file output file stream.
       */
       virtual void writeHeader(std::fstream &file);
- 
+
       /**
       * Write a single frame. Frames are assumed to be written consecutively.
       *
@@ -69,76 +74,62 @@ namespace McMd
       */
       virtual void writeFrame(std::fstream& file);
 
-      /**
-      * Return number of frames in trajectory file.
-      */
-      int nFrames() const;
- 
    protected:
 
-      /// The number of frames in the trajectory file
-      int nFrames_;
+      /// Number of atoms for which space is allocated (all species)
+      int atomCapacity_;
 
-      /// Get a reference to the parent System. 
+      /// Get a reference to the parent System.
       System &system() const;
 
-      /// Get a reference to the parent Simulation. 
+      /// Get a reference to the parent Simulation.
       Simulation &simulation() const;
 
       /// Get the Boundary.
       Boundary &boundary() const;
 
    private:
-   
+
       /// Boundary object.
-      Boundary   *boundaryPtr_;
-   
+      Boundary *boundaryPtr_;
+
       /// Pointer to parent System;
-      System     *systemPtr_;
-   
+      System *systemPtr_;
+
       /// Pointer to parent Simulation.
       Simulation *simulationPtr_;
-   
+
    }; // end class TrajectoryIo
 
 
-   // Inline functions 
+   // Inline functions
 
-   /* 
-   * Get the number of frames
-   */
-   inline int TrajectoryIo::nFrames() const
-   {
-      return nFrames_;
-   }
-
-   /* 
-   * Get the parent System. 
+   /*
+   * Get the parent System.
    */
    inline System& TrajectoryIo::system() const
    {
-      assert(systemPtr_); 
-      return *systemPtr_; 
+      assert(systemPtr_);
+      return *systemPtr_;
    }
- 
-   /* 
+
+   /*
    * Get the parent Simulation.
    */
    inline Simulation& TrajectoryIo::simulation() const
-   { 
+   {
       assert(simulationPtr_);
-      return *simulationPtr_; 
+      return *simulationPtr_;
    }
 
-   /* 
+   /*
    * Get the Boundary.
    */
    inline Boundary& TrajectoryIo::boundary() const
    {
-      assert(boundaryPtr_); 
-      return *boundaryPtr_; 
+      assert(boundaryPtr_);
+      return *boundaryPtr_;
    }
 
-
-} 
+}
 #endif

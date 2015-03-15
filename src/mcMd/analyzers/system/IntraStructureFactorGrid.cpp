@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -242,7 +242,14 @@ namespace McMd
    {
       IntraStructureFactor::sample(iStep);
 
-      fileMaster().openOutputFile(outputFileName(".log"), logFile_, !isFirstStep_);
+      // Select open mode for output files
+      std::ios_base::openmode mode = std::ios_base::out;
+      if (!isFirstStep_) {
+        mode = std::ios_base::out | std::ios_base::app; 
+      }
+      fileMaster().openOutputFile(outputFileName(".log"), logFile_, mode);
+      //fileMaster().openOutputFile(outputFileName(".log"), 
+      //                           logFile_, !isFirstStep_);
       isFirstStep_ = false;
 
       // Log structure factors

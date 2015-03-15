@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -37,25 +37,27 @@ namespace DdMd
    *   - a Mask (list of other atoms with masked pair interactions)
    *   - a communication Plan
    *
-   * An Atom may only be constructed as an element of an AtomArray. The
-   * Atom constructor is private, but is accessible by the AtomArray class
-   * via a friend declaration.
+   * An Atom may only be constructed as an element of an AtomArray. 
+   * The Atom constructor is private, to prevent instantiation of an 
+   * indivual Atom, but is accessible by the AtomArray class via a
+   * a friend declaration.
    *
    * The interface of the Atom class provides access to each Atom data
    * field through an accessor function, as if all were true C++ class 
-   * member. In fact, some of the above are "pseudo-members" that are 
-   * stored in separate arrays.  All arrays that store atom data are
+   * data members. In fact, some of the above are "pseudo-members" that 
+   * are stored in separate arrays.  All arrays that store atom data are
    * private members of the associated AtomArray, all of which use the 
-   * same indexing scheme to identify atoms. Each actual Atom object has 
-   * a pointer to its parent AtomArray and its array index in private 
-   * members.  The public accessor method for each psuedo-member simply 
-   * retrieves the rquired array element for this atom. In the current
-   * implementation the position, force, atom type id, and isGhost 
-   * flag are stored in true member variables of an Atom object, while
-   * the velocity, mask, plan, and id (the global atom index) are all 
-   * psuedo-members stored in separate arrays. See documentation of 
-   * the private member localId_ and other comments in the Atom.h file 
-   * for further implementation details.
+   * same indexing scheme to identify atoms. Each Atom object has a
+   * pointer to its parent AtomArray and its array index, in private 
+   * members.  The public accessor method for each pseudo-member simply 
+   * retrieves the required array element for this atom. 
+   *
+   * In the current implementation, the position, force, atom type id, 
+   * and isGhost flag are stored in true member variables of an Atom 
+   * object, while the velocity, mask, plan, id (the global atom index),
+   * and AtomContext (if any) are all pseudo-members stored in separate 
+   * arrays. See documentation of the private member localId_ and other 
+   * comments in the Atom.h file for further implementation details.
    *
    * \ingroup DdMd_Chemistry_Module
    */
@@ -64,9 +66,23 @@ namespace DdMd
 
    public:
 
+      // Static member functions
+ 
+      /**
+      * Enable (true) or disable (false) use of AtomContext data.
+      *
+      * \param hasAtomContext new value for hasAtomContext static bool flag.
+      */
+      static void setHasAtomContext(bool hasAtomContext);
+
+      /**
+      * Is AtomContext data enabled?
+      */
+      static bool hasAtomContext();
+ 
       #ifdef UTIL_MPI
       /**
-      * Return size of an atom packed into buffer for exchange, in bytes.
+      * Return max size of an atom packed for exchange, in bytes.
       */
       static int packedAtomSize();
 
@@ -76,6 +92,8 @@ namespace DdMd
       static int packedGhostSize();
       #endif
 
+      // Non-static member functions
+ 
       /// \name Mutators
       //@{
 
@@ -142,42 +160,104 @@ namespace DdMd
       */
       Plan& plan();
 
+      /**
+      * Get the AtomContext struct by non-const reference.
+      *
+      * Throws and Exception if atom context data is disabled.
+      *
+      * A DdMd::AtomContext struct contains public members speciesId,
+      * moleculeId and atomId that identify the species of molecule
+      * to which this atom belongs, the index of the molecule within
+      * it species, and the index of the atom with the molecule. 
+      */
+      AtomContext& context();
+
+      /**
+      * Get groups bit field by non-const reference.
+      *
+      * The unsigned int groups is used as a bit field in which bit 
+      * number i (with i=0 the least signficant bit), is set true/1 
+      * if this atom belongs to group i, and is false/0 if this atom 
+      * of not belong to group i. By default, all bits are clear.
+      *
+      * Individual bits may be set, unset and queried using an 
+      * instance of class Util::Bit.
+      */
+      unsigned int& groups();
+
+      #if 0
+      /**
+      * Get the shift IntVector by non-const reference.
+      */
+      IntVector& shift();
+      #endif
       //@}
-      /// \name Accessors (return values and const references).
+      /// \name Accessors (return by value or const references).
       //@{
 
-      /// Get unique global atom index.
-      int  id() const;
+      /**
+      * Get unique global index for this atom.
+      */
+      int id() const;
 
-      /// Get atom type index.
-      int  typeId() const;
+      /**
+      * Get atom type index.
+      */
+      int typeId() const;
 
-      /// Is this atom a ghost?
+      /**
+      * Is this atom a ghost?
+      */
       bool isGhost() const;
 
-      /// Get the position Vector (const reference).
+      /**
+      * Get the position Vector (const reference).
+      */
       const Vector& position() const;
 
-      /// Get the velocity Vector (const reference).
+      /**
+      * Get the velocity Vector (const reference).
+      */
       const Vector& velocity() const;
 
-      /// Get the force Vector (const reference).
+      /**
+      * Get the force Vector (const reference).
+      */
       const Vector& force() const;
 
-      /// Get communication plan (const reference).
-      const Plan& plan() const;
-
-      /// Get the associated Mask by const reference.
+      /**
+      * Get the associated Mask by const reference.
+      */
       const Mask& mask() const;
 
-      //@}
-      #if 0
-      /// Get the shift IntVector by reference.
-      IntVector& shift();
+      /**
+      * Get communication plan by const reference.
+      */
+      const Plan& plan() const;
 
-      /// Get the shift IntVector by const reference.
+      /**
+      * Get the AtomContext struct by const reference.
+      *
+      * Throws an Exception if atom context data is disabled.
+      *
+      * \sa AtomContext& context() non-const accessor for
+      */
+      const AtomContext& context() const;
+
+      /**
+      * Get bit field of groups to which this atom belongs.
+      *
+      * \sa Atom::groups() non-const accessor.
+      */
+      unsigned int groups() const;
+
+      #if 0
+      /**
+      * Get the shift IntVector by const reference.
+      */
       const IntVector& shift() const;
       #endif
+      //@}
 
       #ifdef UTIL_MPI
       /// \name Pack and Unpack Methods (Interprocessor Communication)
@@ -268,6 +348,11 @@ namespace DdMd
       #endif
 
    private:
+
+      /**
+      * Static member determines if AtomContext is used.
+      */ 
+      static bool hasAtomContext_;
 
       /**
       * Position of atom.
@@ -412,7 +497,7 @@ namespace DdMd
    * (e.g., AtomArray::velocities_, AtomArray::masks_, etc.) that is 
    * accessible because AtomArray is a friend class of Atom. 
    */
-  
+
    /* 
    * Get reference to velocity.
    */
@@ -461,5 +546,45 @@ namespace DdMd
    inline void Atom::setId(int id)
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
+   /* 
+   * Get AtomContext by non-const reference.
+   */
+   inline AtomContext& Atom::context()
+   {  
+      if (!hasAtomContext_) {
+         UTIL_THROW("Atom does not have AtomContext");
+      }
+      return arrayPtr_->contexts_[localId_ >> 1]; 
+   }
+
+   /*
+   * Get AtomContext by const reference.
+   */
+   inline const AtomContext& Atom::context() const
+   {
+      if (!hasAtomContext_) {
+         UTIL_THROW("Atom does not have AtomContext");
+      }
+      return arrayPtr_->contexts_[localId_ >> 1]; 
+   }
+
+   /* 
+   * Get group bit map by non-const reference.
+   */
+   inline unsigned int& Atom::groups()
+   {  return arrayPtr_->groups_[localId_ >> 1]; }
+
+   /*
+   * Get groups bit map by value.
+   */
+   inline unsigned int Atom::groups() const
+   {  return arrayPtr_->groups_[localId_ >> 1]; }
+
+   /*
+   * Is AtomContext data enabled?
+   */
+   inline bool Atom::hasAtomContext()
+   {  return hasAtomContext_; }
+ 
 }
 #endif

@@ -1,10 +1,7 @@
-#ifndef MCMD_CFB_END_BASE_CPP
-#define MCMD_CFB_END_BASE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -13,7 +10,7 @@
 #include <mcMd/mcSimulation/mc_potentials.h>
 
 #include <util/boundary/Boundary.h>
-#include <mcMd/species/Species.h>
+#include <mcMd/chemistry/getAtomGroups.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -80,7 +77,7 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      Species::AtomAngleArray angles;
+      AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
       Vector dr1, dr2;
@@ -90,7 +87,7 @@ namespace McMd
       if (system().hasAnglePotential()) {
 
          // Get the angle type and pointers of atoms forming the angle.
-         endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+         getAtomAngles(*endPtr, angles);
          for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
             anglePtr = angles[iAngle];
             if (&anglePtr->atom(1) == pvtPtr) {
@@ -146,7 +143,7 @@ namespace McMd
          if (system().hasAnglePotential()) {
 
             // Get the angle type and atom pointer at the angle.
-            endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+            getAtomAngles(*endPtr, angles);
             for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
                anglePtr = angles[iAngle];
                if (&anglePtr->atom(1) == pvtPtr) {
@@ -199,7 +196,7 @@ namespace McMd
       int    iTrial;
 
       #ifdef INTER_ANGLE
-      Species::AtomAngleArray angles;
+      AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
       Vector dr1, dr2;
@@ -230,7 +227,7 @@ namespace McMd
          #ifdef INTER_ANGLE
          if (system().hasAnglePotential()) {
 
-            endPtr->molecule().species().getAtomAngles(*endPtr, angles);
+            getAtomAngles(*endPtr, angles);
             for (iAngle = 0; iAngle < angles.size(); ++iAngle) {
                anglePtr = angles[iAngle];
                if (&anglePtr->atom(1) == pvtPtr) {
@@ -281,4 +278,3 @@ namespace McMd
    }
 
 }
-#endif

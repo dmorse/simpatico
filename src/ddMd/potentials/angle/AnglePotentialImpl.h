@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -180,6 +180,11 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
+      /**
+      * Initialized to true, set false in (read|load)Parameters.  
+      */
+      bool isInitialized_;
+
    };
 
 }
@@ -208,8 +213,12 @@ namespace DdMd
    template <class Interaction>
    AnglePotentialImpl<Interaction>::AnglePotentialImpl(Simulation& simulation)
     : AnglePotential(simulation),
-      interactionPtr_(0)
-   {  interactionPtr_ = new Interaction(); }
+      interactionPtr_(0),
+      isInitialized_(false)
+   {  
+      interactionPtr_ = new Interaction(); 
+      setNAngleType(simulation.nAngleType());
+   }
  
    /* 
    * Default constructor.
@@ -217,7 +226,8 @@ namespace DdMd
    template <class Interaction>
    AnglePotentialImpl<Interaction>::AnglePotentialImpl()
     : AnglePotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction(); }
  
    /* 
@@ -244,9 +254,11 @@ namespace DdMd
    template <class Interaction>
    void AnglePotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -256,9 +268,11 @@ namespace DdMd
    void 
    AnglePotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_);
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*

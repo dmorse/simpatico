@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,10 +21,10 @@ namespace Util
 {
 
    /**
-   * A fixed size array.
+   * A fixed size (static) contiguous array template.
    *
    * An FArray is a simple wraper for a fixed size C Array, with a
-   * Capacity that is fixed at compile time. As in a C Array, or a
+   * capacity that is fixed at compile time. As in a C Array, or a
    * DArray container, all of the elements are accessible. Unlike
    * an FSArray, an FArray does not have logical size that is 
    * distinct from its physical capacity.
@@ -33,11 +33,12 @@ namespace Util
    * the operator [] checks that the index is non-negative and less
    * than the Capacity.
    *
-   * Use an FArray if you know exactly how many elements will be needed
-   * at compile time. Use an FSArray when you need a small statically 
-   * allocated array for which the maximum capacity is known at compile
-   * time, but the logical size may be less than the capacity. Use a
-   * DArray if you need a large, dynamically allocated array.
+   * Advice: Use an FArray if you know exactly how many elements will 
+   * be needed at compile time. Use an FSArray when you need a small 
+   * statically allocated array for which the maximum capacity needed
+   * is known at compile time, but the logical size may be less than 
+   * the capacity. Use a DArray if you need a large, dynamically 
+   * allocated array that must be allocated after instantiation.
    *
    * \ingroup Array_Module
    */

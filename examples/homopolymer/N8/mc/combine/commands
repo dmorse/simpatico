@@ -1,6 +1,5 @@
 WRITE_PARAM      param
-SET_CONFIG_IO    MdConfigIo
-READ_CONFIG      config.md
+READ_CONFIG      config
 SIMULATE         200000
 SET_CONFIG_IO    McConfigIo
 WRITE_CONFIG     config

@@ -4,13 +4,13 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <mcMd/potentials/dihedral/DihedralPotential.h>  // base class
 #include <mcMd/simulation/SubSystem.h>                   // base class
-#include <util/global.h>
 
 namespace Util
 {
@@ -209,9 +209,9 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
-#include <mcMd/species/Species.h>
-#include <util/boundary/Boundary.h> 
+#include <mcMd/chemistry/getAtomGroups.h>
 
+#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -320,15 +320,15 @@ namespace McMd
    double DihedralPotentialImpl<Interaction>::atomEnergy(const Atom &atom) 
    const
    {
-      Species::AtomDihedralArray dihedrals;
-      const  Dihedral* dihedralPtr;
-      int    iDihedral;
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
       Vector dr3; // R[3] - R[2]
       double energy = 0.0;
+      AtomDihedralArray dihedrals;
+      const Dihedral* dihedralPtr;
+      int iDihedral;
 
-      atom.molecule().species().getAtomDihedrals(atom, dihedrals);
+      getAtomDihedrals(atom, dihedrals);
       for (iDihedral = 0; iDihedral < dihedrals.size(); ++iDihedral) {
          dihedralPtr = dihedrals[iDihedral];
          boundary().distanceSq(dihedralPtr->atom(1).position(),

@@ -1,10 +1,7 @@
-#ifndef HARMONIC_ANGLE_CPP
-#define HARMONIC_ANGLE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -72,10 +69,8 @@ namespace Inter
    */
    void HarmonicAngle::readParameters(std::istream &in) 
    {
-      // Preconditions
-      if (nAngleType_ <= 0) {
-         UTIL_THROW("nAngleType must be set before readParam");
-      }
+      // Precondition
+      UTIL_CHECK(nAngleType_ > 0);
 
       // Read parameters
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
@@ -92,11 +87,7 @@ namespace Inter
    */
    void HarmonicAngle::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAngleType_; 
-      if (nAngleType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
-      // Read parameters
+      UTIL_CHECK(nAngleType_ > 0);
       loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
       loadCArray<double>(ar, "theta0", theta0_, nAngleType_);
    }
@@ -106,7 +97,7 @@ namespace Inter
    */
    void HarmonicAngle::save(Serializable::OArchive &ar)
    {
-      ar << nAngleType_;
+      UTIL_CHECK(nAngleType_ > 0);
       ar.pack(kappa_, nAngleType_);
       ar.pack(theta0_, nAngleType_);
    }
@@ -203,4 +194,3 @@ namespace Inter
 
 
 } 
-#endif

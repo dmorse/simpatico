@@ -1,6 +1,5 @@
 McSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -81,11 +80,6 @@ McSimulation{
       interval                          2000
     }
 
-    McWriteRestart{
-      interval                         10000
-      outputFileName                 restart
-    }
-
     McEnergyOutput{
       interval                           200
       outputFileName                  energy
@@ -157,7 +151,8 @@ McSimulation{
                                   5    0   0
     }
   }
-
+  saveInterval         5000
+  saveFileName      restart
 }
 
 ------------------------------------------------------------

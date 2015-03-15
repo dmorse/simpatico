@@ -1,0 +1,45 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_OutputPairEnergies_page  OutputPairEnergies
+
+\section ddMd_analyzer_OutputPairEnergies_synopsis_sec Synopsis
+
+This analyzer outputs instantaneous values of the pair energy contributions
+for different atom type pairs.
+
+\sa DdMd::OutputPairEnergies
+
+\section ddMd_analyzer_OutputPairEnergies_param_sec Parameters
+
+The parameter file format is:
+\code
+  OutputPairEnergies{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_OutputPairEnergies_output_sec Output
+
+Values are output to {outputFileName}.dat every interval steps. The output format shows
+all nAtomType x nAtomType pair energies, in the formst:
+
+  iStep  pair(0,0) pair(0,1) .... pair(0,nAtomType), pair(1,0), .... , pair(nAtomType, nAtomType)
+
+where iStep is the MD step index. By construction pair(i,j) = pair(j,i).
+
+*/
+
+}

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -136,6 +136,16 @@ namespace Util
       * Get the number of bins
       */
       int nBin() const;
+
+      #ifdef UTIL_MPI
+      /**
+      * Reduce (add) distributions from multiple MPI processors.
+      *
+      * \param communicator MPI communicator
+      * \param root rank of MPI root processor for reduction
+      */
+      void reduce(MPI::Intracomm& communicator, int root);
+      #endif
         
    protected:
    

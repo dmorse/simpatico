@@ -3,7 +3,6 @@ Simulation{
     gridDimensions    2    2    1
   }
   FileMaster{
-    commandFileName commands
     inputPrefix     in/
     outputPrefix    out/
   }
@@ -26,6 +25,7 @@ Simulation{
   pairStyle          LJPair
   bondStyle          HarmonicBond
   maskedPairPolicy   maskBonded
+  reverseUpdateFlag  0
   PairPotential{
     epsilon          1.0
     sigma            1.0
@@ -48,12 +48,18 @@ Simulation{
   NvtIntegrator{
     dt               0.005
     tauT             1.000
+    saveInterval      5000
+    saveFileName   restart
   }
   Random{
     seed        8012457890
   }
   AnalyzerManager{
      baseInterval  1000
+
+     LogEnergy{
+        interval  20000
+     }
 
      OutputEnergy{
         interval          1000

@@ -1,10 +1,7 @@
-#ifndef MCMD_MC_SYSTEM_CPP
-#define MCMD_MC_SYSTEM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,7 +16,9 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
@@ -65,9 +64,11 @@ namespace McMd
     :
       System(),
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_(0),
+      pairPotentialPtr_(0)
       #endif
-      bondPotentialPtr_(0)
+      #ifdef INTER_BOND
+      , bondPotentialPtr_(0)
+      #endif
       #ifdef INTER_ANGLE
       , anglePotentialPtr_(0)
       #endif
@@ -93,7 +94,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       if (pairPotentialPtr_) delete pairPotentialPtr_;
       #endif
+      #ifdef INTER_BOND
       if (bondPotentialPtr_) delete bondPotentialPtr_;
+      #endif
       #ifdef INTER_ANGLE
       if (anglePotentialPtr_) delete anglePotentialPtr_;
       #endif
@@ -131,6 +134,7 @@ namespace McMd
       readParamComposite(in, *pairPotentialPtr_);
       #endif
 
+      #ifdef INTER_BOND
       assert(bondPotentialPtr_ == 0);
       if (simulation().nBondType() > 0) {
          bondPotentialPtr_ = bondFactory().factory(bondStyle());
@@ -139,6 +143,7 @@ namespace McMd
          }
          readParamComposite(in, *bondPotentialPtr_);
       }
+      #endif
 
       #ifdef INTER_ANGLE
       assert(anglePotentialPtr_ == 0);
@@ -225,6 +230,7 @@ namespace McMd
       loadParamComposite(ar, *pairPotentialPtr_);
       #endif
 
+      #ifdef INTER_BOND
       assert(bondPotentialPtr_ == 0);
       if (simulation().nBondType() > 0) {
          bondPotentialPtr_ = bondFactory().factory(bondStyle());
@@ -233,6 +239,7 @@ namespace McMd
          }
          loadParamComposite(ar, *bondPotentialPtr_);
       }
+      #endif
 
       #ifdef INTER_ANGLE
       assert(anglePotentialPtr_ == 0);
@@ -313,10 +320,12 @@ namespace McMd
       assert(pairPotentialPtr_);
       pairPotentialPtr_->save(ar); 
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          assert(bondPotentialPtr_);
          bondPotentialPtr_->save(ar); 
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          assert(anglePotentialPtr_);
@@ -398,9 +407,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       energy += pairPotential().atomEnergy(atom);
       #endif
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          energy += bondPotential().atomEnergy(atom);
       }
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          energy += anglePotential().atomEnergy(atom);
@@ -440,9 +451,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       energy += pairPotential().energy();
       #endif
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          energy += bondPotential().energy();
       }
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          energy += anglePotential().energy();
@@ -484,11 +497,13 @@ namespace McMd
       pairPotential().computeStress(pairStress);
       stress += pairStress;
       #endif
+      #ifdef INTER_BOND
       if (hasBondPotential()) {
          T bondStress;
          bondPotential().computeStress(bondStress);
          stress += bondStress;
       }
+      #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          T angleStress;
@@ -603,4 +618,3 @@ namespace McMd
    }
 
 }
-#endif

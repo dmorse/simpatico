@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -30,7 +30,7 @@ namespace DdMd
    /**
    * Interface for a GroupStorage<N> for use in Exchanger.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    class GroupExchanger
    {
@@ -81,7 +81,7 @@ namespace DdMd
       /**
       * Unpack groups from buffer and find available associated atoms.
       *
-      * This method should unpack groups, add new ones to a GroupStorage,
+      * This function should unpack groups, add new ones to a GroupStorage,
       * set pointers to all Group atoms that are in the AtomStorage, and
       * nullify pointers to atoms that are not present.
       *
@@ -138,6 +138,11 @@ namespace DdMd
       *
       * This function may be called after completion of atom and group exchange,
       * but before ghost exchange.
+      *
+      * Calls overloaded isValid() function, then checks consistency of atom 
+      * pointers with those in an asociated AtomStorage. If hasGhosts is
+      * false, the function requires that no group contain a pointer to a ghost 
+      * atom. If hasGhosts is true, requires that every Group be complete.
       *
       * \param atomStorage  associated AtomStorage object
       * \param communicator domain communicator 

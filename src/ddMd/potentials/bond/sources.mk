@@ -5,5 +5,5 @@ ddMd_potentials_bond_=\
 ddMd_potentials_bond_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_potentials_bond_))
 ddMd_potentials_bond_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_potentials_bond_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_potentials_bond_:.cpp=.o))
 

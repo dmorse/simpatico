@@ -1,0 +1,13 @@
+System:
+
+    10 dimers (small system)
+
+Usage:
+
+MC simulation:
+
+    mcSim -e -p param -c commands
+
+Restarting and extending above simulations
+
+    mcSim -e -r restart -c restart.cmd

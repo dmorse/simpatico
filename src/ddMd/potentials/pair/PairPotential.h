@@ -15,7 +15,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -31,10 +31,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Calculates nonbonded pair forces and energies for a parent Simulation.
+   * Abstract base class for computing nonbonded pair forces and energies.
    *
-   * A PairPotential has a private CellList and PairList which it
-   * uses to calculate nonbonded pair forces. 
+   * A PairPotential has a private CellList and PairList which it can use 
+   * to calculate nonbonded pair forces. Concrete subclasses of PairPotential
+   * are constructed as instances of the PairPotentialImpl class template.
    *
    * \ingroup DdMd_Pair_Module
    */
@@ -44,19 +45,36 @@ namespace DdMd
    public:
 
       /**
-      * Default constructor (for unit testing).
-      */
-      PairPotential();
-
-      /**
       * Constructor.
+      *
+      * This is the constructor used during a simulation, and 
+      * is passed the parent Simulation object as a parameter.
+      *
+      * \param simulation parent Simulation object.
       */
       PairPotential(Simulation& simulation);
 
       /**
+      * Default constructor.
+      *
+      * This constructor is provided to simplify unit testing.
+      */
+      PairPotential();
+
+      /**
+      * Destructor.
+      */
+      virtual ~PairPotential();
+
+      /// \name Initialization and Serialization
+      //@{
+
+      /**
       * Associate with related objects.
       *
-      * Call iff object instantiated with default constructor.
+      * Required iff object instantiated with default constructor. If
+      * required, it must be called before initialize, readParameters,
+      * or loadParameters.
       *
       * \param domain   associated Domain object.
       * \param boundary associated Boundary object.
@@ -65,30 +83,32 @@ namespace DdMd
       void associate(Domain& domain, Boundary& boundary, AtomStorage& storage);
 
       /**
-      * Destructor.
+      * Set the maximum number of atom types.
+      *
+      * Required iff object instantiated with default constructor. If
+      * required, it must be called before initialize, readParameters,
+      * or loadParameters.
+      *
+      * \param nAtomType  maximum number of atom types (max typeId + 1)
       */
-      virtual ~PairPotential();
-
+      virtual void setNAtomType(int nAtomType) = 0;
+ 
       /**
       * Set parameters and allocate memory.
       *
-      * This method sets values for the same members as readParameters.
-      * Either method must be called after associate. This method sets the
-      * skin and cutoff length parameters, and allocates memory for the 
-      * internal CellList and a PairList. It uses the maximum boundary and
-      * the cutoff to calculate the how many cells to allocate.
+      * This method initializes the object by assigning parameter values
+      * and allocating memory. It provides a programmatic alternative to 
+      * readParameters.
       *
       * \param maxBoundary  largest expected Boundary (used for allocation)
-      * \param skin         pair list skin length
-      * \param pairCapacity maximum number of pairs per processor
+      * \param skin  pair list skin length
+      * \param pairCapacity  maximum number of pairs per processor
       */
       void 
       initialize(const Boundary& maxBoundary, double skin, int pairCapacity);
 
       /**
-      * Read parameters and allocate memory for PairList.
-      *
-      * Use iff this was instantiated with PairPotential(Simulation&).
+      * Initialize, by reading parameters and allocating memory for PairList.
       *
       * \param in input parameter stream.
       */
@@ -97,14 +117,14 @@ namespace DdMd
       /**
       * Load parameters for PairList from archive, and allocate memory.
       *
-      * Use iff this was instantiated with PairPotential(Simulation&).
-      *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save parameters for PairList to output archive.
+      * Save internal state to an output archive.
+      *
+      * Call only on master processor.
       *
       * \param ar output/saving archive
       */
@@ -113,18 +133,17 @@ namespace DdMd
       /**
       * Set id to specify algorithm for energy, force calculations.
       *
+      * The default algorithm, methodId=0, uses a pair list that is 
+      * constructed using a cell list. 
+      *
       * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
       */
       void setMethodId(int methodId);
 
+      //@}
       /// \name Interaction interface
       //@{
 
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNAtomType(int nAtomType) = 0;
- 
       /**
       * Return energy for a single pair.
       * 
@@ -203,9 +222,9 @@ namespace DdMd
       /**
       * Compute pair energies on all processors.
       *
-      * This method must be called on all processors. The result is
-      * stored on the master processor, and may be retrieved by 
-      * calling pairEnergies() on this processor.
+      * This method must be called on all processors. The resulting total 
+      * is stored on the master processor, and may be retrieved by calling
+      * the pairEnergies() function on the master processor.
       */
       #ifdef UTIL_MPI
       virtual void computePairEnergies(MPI::Intracomm& communicator) = 0;
@@ -231,7 +250,7 @@ namespace DdMd
       *  
       * This method must be called on all processors.
       *
-      * The method for distributing pairs among processors is the same
+      * The method for distributing pairs among processors is the same 
       * as is used to distribute the energy, and depends on the value
       * of reverseUpdateFlag().
       */
@@ -244,8 +263,8 @@ namespace DdMd
       /**
       * Return twice the number of pairs within the specified force cutoff.
       * 
-      * This method should only be called on the rank 0 processor. The
-      * return value is computed by a previous call to computeNPair.
+      * This method should only be called on the master (rank 0) processor.
+      * The return value is computed by a previous call to computeNPair.
       */
       int nPair() const;
 
@@ -278,25 +297,25 @@ namespace DdMd
 
    protected:
 
-      // CellList to construct PairList or calculate nonbonded pair forces.
+      /// CellList to construct PairList or calculate nonbonded pair forces.
       CellList cellList_;
 
-      // Verlet pair list, to calculate nonbonded pair forces.
+      /// Verlet pair list, to calculate nonbonded pair forces.
       PairList pairList_;
 
-      // Boundary used to allocate space for the cell list.
+      /// Boundary used to allocate space for the cell list.
       Boundary maxBoundary_;
 
-      // Difference between pairlist cutoff and pair potential cutoff. 
+      /// Difference between pairlist cutoff and pair potential cutoff. 
       double skin_;
 
-      // Minimum cell size = pair potential cutoff + skin.
+      /// Minimum cell size = pair potential cutoff + skin.
       double cutoff_;
 
-      // Approximate number of cells per cutoff distance in each direction.
+      /// Approximate number of cells per cutoff distance in each direction.
       int nCellCut_;
 
-      // Maximum number of nonbonded pairs in pair list. 
+      /// Maximum number of nonbonded pairs in pair list. 
       int pairCapacity_;
 
       /**
@@ -321,13 +340,13 @@ namespace DdMd
 
    private:
 
-      // Pointer to associated Domain object.
+      /// Pointer to associated Domain object.
       Domain* domainPtr_;
 
-      // Pointer to associated Boundary object.
+      /// Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
 
-      // Pointer to associated AtomStorage object.
+      /// Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
 
       /// Index for method used to calculate forces / energies.
@@ -339,12 +358,12 @@ namespace DdMd
       /// Pair energies.
       Setable< DMatrix<double> > pairEnergies_;
 
-      // Private methods used to compute number of pairs
+      /// Private methods used to compute number of pairs
       int nPairList(double cutoffSq);
       int nPairCell(double cutoffSq);
       int nPairNSq(double cutoffSq);
 
-      /*
+      /**
       * Allocate memory for the cell list and pair list.
       */
       void allocate();

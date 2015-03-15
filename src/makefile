@@ -1,39 +1,68 @@
 # ==============================================================================
-.PHONY: mcMd mcMd-mpi ddMd clean veryclean
+.PHONY: mcMd mcMd-mpi ddMd tools clean veryclean
 
+# Serial versions of mdSim and mcSim MD and MC programs (MPI disabled)
 mcMd: 
 	./configure -m0
-	cd util;  make all
-	cd inter; make all
-	cd mcMd;  make all
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd mcMd; $(MAKE) all
 
+# Embarassingly parallel mdSim and mcSim MD and MC programs (MPI enabled)
 mcMd-mpi: 
 	./configure -m1
-	cd util;  make all
-	cd inter; make all
-	cd mcMd;  make all
-
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd mcMd; $(MAKE) all
+ 
+# Domain-decomposition ddSim molecular dynamics program (MPI enabled)
 ddMd:
 	./configure -m1
-	cd util;  make all
-	cd inter; make all
-	cd ddMd;  make all
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd ddMd; $(MAKE) all
 
+# Single-processor analysis program (MPI disabled)
+tools:
+	./configure -m0
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd tools; $(MAKE) all
+
+# Remove object (*.o), dependency (*.d) and library (*.a) files
 clean:
-	cd util;  make clean
-	cd inter; make clean
-	cd mcMd;  make clean
-	cd ddMd;  make clean
+	cd util; $(MAKE) clean
+	cd inter; $(MAKE) clean
+	cd mcMd; $(MAKE) clean
+	cd tools; $(MAKE) clean
+	cd ddMd; $(MAKE) clean
 
+# Clean unit tests
+clean-tests:
+	cd util/tests; $(MAKE) clean
+	cd inter/tests; $(MAKE) clean
+	cd mcMd/tests; $(MAKE) clean
+	cd tools/tests; $(MAKE) clean
+	cd ddMd/tests; $(MAKE) clean
+
+# Remove all automatically generated files, return to as-distributed state
 veryclean:
-	cd util;  make veryclean
-	cd inter; make veryclean
-	cd mcMd;  make veryclean
-	cd ddMd;  make veryclean
+	cd util; $(MAKE) veryclean
+	cd inter; $(MAKE) veryclean
+	cd mcMd; $(MAKE) veryclean
+	cd ddMd; $(MAKE) veryclean
+	cd tools; $(MAKE) veryclean
+ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f inter/user/sources.mk
+	rm -f mcMd/user/sources.mk
+	rm -f ddMd/user/sources.mk
+	rm -f tools/user/sources.mk
+endif
 	rm -f util/config.mk
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk
 	rm -f ddMd/config.mk
+	rm -f tools/config.mk
 	rm -f config.mk
 
 # ==============================================================================

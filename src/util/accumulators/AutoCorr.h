@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -29,7 +29,7 @@ namespace Util
 
    /**
    * Auto-correlation function for one sequence of Data values.
-   *   
+   *
    * This class calculates an autocorrelation function for a sequence
    * x(i) of values of a variable or object of type Data. The resulting
    * autocorrelation function is and array of values of type Product,
@@ -48,31 +48,31 @@ namespace Util
    template <typename Data, typename Product>
    class AutoCorr : public ParamComposite
    {
-   
+
    public:
-  
+
       /**
       * Constructor
       */
       AutoCorr();
-   
+
       /**
       * Destructor
       */
       ~AutoCorr();
-   
+
       /**
       * Reset to empty state.
       */
       void clear();
-   
+
       /**
       * Read buffer capacity, allocate memory and initialize.
       *
       * \param in input parameter stream.
       */
       void readParameters(std::istream& in);
-   
+
       /**
       * Set buffer capacity, allocate memory and initialize.
       *
@@ -93,10 +93,10 @@ namespace Util
       * \param ar binary saving (output) archive.
       */
       virtual void save(Serializable::OArchive& ar);
-  
+
       /**
-      * Serialize to/from an archive. 
-      * 
+      * Serialize to/from an archive.
+      *
       * \param ar      archive
       * \param version archive version id
       */
@@ -109,61 +109,61 @@ namespace Util
       * \param value current value
       */
       void sample(Data value);
-   
+
       /**
       * Output the autocorrelation function
       *
       * \param out output stream.
       */
       void output(std::ostream& out);
-  
-      /** 
+
+      /**
       * Return capacity of history buffer.
       */
       int bufferCapacity() const;
- 
-      /** 
+
+      /**
       * Return number of values sampled thus far.
       */
       int nSample() const;
- 
+
       /**
       * Return average of all sampled values.
       */
-      Data average() const; 
-      
+      Data average() const;
+
       /**
-      * Numerical integration of autocorrelation function 
+      * Numerical integration of autocorrelation function
       */
-      double corrTime() const; 
+      double corrTime() const;
 
       /**
       * Return autocorrelation at a given lag time
-      * 
+      *
       * \param t the lag time
       */
       Product autoCorrelation(int t) const;
 
    private:
-   
+
       // Ring buffer containing a sequence of stored Data values.
-      RingBuffer<Data>  buffer_; 
-   
+      RingBuffer<Data>  buffer_;
+
       // Array in which corr[j] = sum of values of <x(i-j), x(i)>
       DArray<Product>  corr_;
-   
+
       // Array in which nCorr[i] = number of values added to corr[i]
       DArray<int>      nCorr_;
-   
+
       // Sum of all previous values of x(t)
       Data        sum_;
-   
+
       // Physical capacity (# of elements) of buffer, corr, and nCorr
       int         bufferCapacity_;
-      
+
       // Total number of previous values of x(t)
       int         nSample_;
-   
+
       /**
       * Allocate memory and initialize to empty state.
       */
@@ -180,7 +180,7 @@ namespace Util
    * Default constructor.
    */
    template <typename Data, typename Product>
-   AutoCorr<Data, Product>::AutoCorr() 
+   AutoCorr<Data, Product>::AutoCorr()
     : buffer_(),
       corr_(),
       nCorr_(),
@@ -190,14 +190,14 @@ namespace Util
       setClassName("AutoCorr");
       setToZero(sum_);
    }
-   
+
    /*
    * Destructor
    */
    template <typename Data, typename Product>
-   AutoCorr<Data, Product>::~AutoCorr() 
+   AutoCorr<Data, Product>::~AutoCorr()
    {}
-   
+
    /*
    * Read buffer capacity and allocate all required memory.
    */
@@ -207,7 +207,7 @@ namespace Util
       read<int>(in, "capacity", bufferCapacity_);
       allocate();
    }
-   
+
    /*
    * Set buffer capacity and initialize.
    */
@@ -217,13 +217,13 @@ namespace Util
       bufferCapacity_ = bufferCapacity;
       allocate();
    }
-   
+
    /*
    * Load state from an archive.
    */
    template <typename Data, typename Product>
    void AutoCorr<Data, Product>::loadParameters(Serializable::IArchive& ar)
-   {  
+   {
       loadParameter<int>(ar, "capacity", bufferCapacity_);
       ar & buffer_;
       ar & corr_;
@@ -245,7 +245,7 @@ namespace Util
    */
    template <typename Data, typename Product>
    void AutoCorr<Data, Product>::clear()
-   {   
+   {
       setToZero(sum_);
       nSample_ = 0;
 
@@ -257,13 +257,13 @@ namespace Util
          buffer_.clear();
       }
    }
-   
+
    /*
    * Allocate arrays and CyclicBuffer, and initialize.
    */
    template <typename Data, typename Product>
    void AutoCorr<Data, Product>::allocate()
-   {  
+   {
       if (bufferCapacity_ > 0) {
          corr_.allocate(bufferCapacity_);
          nCorr_.allocate(bufferCapacity_);
@@ -271,13 +271,13 @@ namespace Util
       }
       clear();
    }
-   
+
    /*
    * Are capacities consistent?
    */
    template <typename Data, typename Product>
    bool AutoCorr<Data, Product>::isValid()
-   {  
+   {
       bool valid = true;
       if (bufferCapacity_ != corr_.capacity()) valid = false;
       if (bufferCapacity_ != nCorr_.capacity()) valid = false;
@@ -287,7 +287,7 @@ namespace Util
       }
       return valid;
    }
-   
+
    /*
    * Sample a single value from a time sequence.
    */
@@ -302,7 +302,7 @@ namespace Util
          ++nCorr_[i];
       };
    }
-   
+
    /*
    * Return capacity of history buffer.
    */
@@ -332,17 +332,17 @@ namespace Util
    * Final output
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::output(std::ostream& outFile) 
+   void AutoCorr<Data, Product>::output(std::ostream& outFile)
    {
       Data    ave;
       Product autocorr;
       Product aveSq;
-   
+
       // Calculate and output average of sampled values
       ave  = sum_;
       ave /= double(nSample_);
       aveSq = product(ave, ave);
-  
+
       // Calculate and output autocorrelation
       for (int i = 0; i < buffer_.size(); ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
@@ -351,11 +351,11 @@ namespace Util
          write<Product>(outFile, autocorr);
          outFile << std::endl;
       }
-      
+
    }
-   
+
    /*
-   *  Return correlation time in unit of sampling interval  
+   *  Return correlation time in unit of sampling interval
    */
    template <typename Data, typename Product>
    double AutoCorr<Data, Product>::corrTime() const
@@ -363,9 +363,9 @@ namespace Util
       Data    ave;
       Product aveSq, variance, autocorr, sum;
       int     size;
-      
+
       size = buffer_.size();
-   
+
       // Calculate average sampled values
       ave   = sum_/double(nSample_);
       ave  /= double(nSample_);
@@ -379,16 +379,16 @@ namespace Util
       for (int i = 1; i < size/2; ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
          autocorr = autocorr - aveSq;
-         sum     += autocorr;  
+         sum     += autocorr;
       }
       sum = sum/variance;
-      
-      return sum; 
+
+      return sum;
    }
-  
+
    /*
    * Return autocorrelation at a given lag time index
-   * 
+   *
    * \param t the lag time index
    */
    template <typename Data, typename Product>
@@ -397,12 +397,12 @@ namespace Util
       Data    ave;
       Product autocorr;
       Product aveSq;
-   
+
       // Calculate average of sampled values
       ave  = sum_;
       ave /= double(nSample_);
       aveSq = product(ave, ave);
-  
+
       // Calculate and return autocorrelation
       assert(t < buffer_.size());
       autocorr = corr_[t]/double(nCorr_[t]);
@@ -416,7 +416,7 @@ namespace Util
    */
    template <typename Data, typename Product>
    template <class Archive>
-   void AutoCorr<Data, Product>::serialize(Archive& ar, 
+   void AutoCorr<Data, Product>::serialize(Archive& ar,
                                            const unsigned int version)
    {
       ar & bufferCapacity_;

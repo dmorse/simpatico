@@ -1,10 +1,7 @@
-#ifndef DDMD_ANALYZER_CPP
-#define DDMD_ANALYZER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -116,9 +113,7 @@ namespace DdMd
    * Load output file name to an archive.
    */
    void Analyzer::loadOutputFileName(Serializable::IArchive &ar)
-   {
-      loadParameter<std::string>(ar, "outputFileName", outputFileName_);
-   }
+   {  loadParameter<std::string>(ar, "outputFileName", outputFileName_); }
 
    /*
    * Save output file name to an archive.
@@ -137,4 +132,3 @@ namespace DdMd
    }
 
 }
-#endif

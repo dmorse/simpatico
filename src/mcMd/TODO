@@ -1,8 +1,22 @@
+Species
+-------
+
+- Replace Species generator method by non-member function template with 
+  explicit specializations for Linear and Atom.
+
+- Move Species, SpeciesGroup etc. to a new Chem namespace, so it can be 
+  used in Tool namespace.
+
+ConfigIos
+---------
+
+- Modify LammpsConfigIo to allow writing of angles and dihedrals, as needed.
+
 Serialization
 -------------
 
 - Test save / load with perturbation
-- Test save /load with replica move
+- Test save / load with replica move
 - Test MD serialization after forcing pair list rebuild upon restart output
 - Move restart interval and file name, and isInitialized_  to Simulation base 
   classs.
@@ -32,7 +46,7 @@ Deformable Boundaries
 ---------------------
 
 - Generalize snapshot and obsolete pair list methods to use 
-   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+  miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
 Perturbation
 ------------
@@ -54,11 +68,11 @@ SystemAccess base classes
 -------------------------
 
 - Rename SubSystem SystemAccess
-- Define McSystemAccess and MdSystemAccess classes with potential energy accessors.
-- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess.
+- Define (Mc|Md)SystemAccess classes with potential energy accessors
+- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess
 - Remove replace system().typePotential() by typePotential() in analyzers
-- Derive SystemMcMove from a protected McSystemAccess.
-- Remove replace system().typePotential() by typePotential() in mcMoves.
-- Derive MdIntegrator from a protected MdSystemAccess.
+- Derive SystemMcMove from a protected McSystemAccess
+- Remove replace system().typePotential() by typePotential() in mcMoves
+- Derive MdIntegrator from a protected MdSystemAccess
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 

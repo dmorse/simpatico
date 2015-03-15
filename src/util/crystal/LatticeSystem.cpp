@@ -1,18 +1,23 @@
-#ifndef UTIL_LATTICE_SYSTEM_CPP
-#define UTIL_LATTICE_SYSTEM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LatticeSystem.h"    // class header
 #include <util/global.h>      // uses UTIL_THROW
+#include "LatticeSystem.h"    // class header
 
 namespace Util
 {
+
+   #ifdef UTIL_MPI
+   /**
+   * Initialize LatticeSystem:: MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Util::LatticeSystem>::type = MPI::INT;
+   bool MpiTraits<Util::LatticeSystem>::hasType = true;
+   #endif
 
    /* 
    * Extract a LatticeSystem from an istream as a string.
@@ -81,15 +86,4 @@ namespace Util
       return out; 
    }
 
-   #ifdef UTIL_MPI
-
-   /**
-   * Initialize LatticeSystem:: MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<Util::LatticeSystem>::type = MPI::INT;
-   bool MpiTraits<Util::LatticeSystem>::hasType = true;
-
-   #endif
-
 }
-#endif

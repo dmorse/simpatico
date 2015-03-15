@@ -1,10 +1,7 @@
-#ifndef MCMD_SUB_SYSTEM_CPP
-#define MCMD_SUB_SYSTEM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -27,8 +24,10 @@ namespace McMd
     : simulationPtr_(parent.simulationPtr_),
       systemPtr_(&parent),
       moleculeSetsPtr_(parent.moleculeSetsPtr_),
-      boundaryPtr_(parent.boundaryPtr_),
-      hasBonds_(parent.simulation().nBondType() > 0)
+      boundaryPtr_(parent.boundaryPtr_)
+      #ifdef INTER_BOND
+      , hasBonds_(parent.simulation().nBondType() > 0)
+      #endif
       #ifdef INTER_ANGLE
       , hasAngles_(parent.simulation().nAngleType() > 0)
       #endif
@@ -76,4 +75,3 @@ namespace McMd
    }
 
 }
-#endif

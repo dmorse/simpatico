@@ -1,10 +1,7 @@
-#ifndef DDMD_ATOM_COLLECTOR_CPP
-#define DDMD_ATOM_COLLECTOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -28,6 +25,7 @@ namespace DdMd
       bufferPtr_(0),
       source_(-1),
       recvBufferSize_(-1),
+      recvArrayCapacity_(256),
       recvArraySize_(-1),
       recvArrayId_(-1),
       isComplete_(false)
@@ -41,6 +39,8 @@ namespace DdMd
 
    /*
    * Retain pointers to associated objects.
+   *
+   * Call on all domain notes.
    */
    void AtomCollector::associate(Domain& domain, AtomStorage& storage, 
                                  Buffer& buffer)
@@ -51,16 +51,22 @@ namespace DdMd
    }
 
    /*
-   * Allocate atom cache (call only on master).
+   * Set recvArray cache capacity.
    */
-   void AtomCollector::allocate(int cacheCapacity)
+   void AtomCollector::setCapacity(int recvArrayCapacity)
    {
-      if (recvArray_.capacity() > 0) {
-         UTIL_THROW("Attempt to re-allocate receive cache");
+      if (recvArrayCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive recvArrayCapacity");
+      }  
+      if (recvArray_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set recvArrayCapacity after allocation");
       } 
-      recvArray_.allocate(cacheCapacity); 
+      recvArrayCapacity_ = recvArrayCapacity; 
    }
 
+   /*
+   * Setup before receiving loop - call only on master.
+   */
    void AtomCollector::setup()
    {
       // Preconditions
@@ -76,8 +82,13 @@ namespace DdMd
       if (!bufferPtr_->isInitialized()) {
          UTIL_THROW("Buffer not allocated");
       }
-      if (recvArray_.capacity() <= 0) {
-         UTIL_THROW("Atom cache not allocated");
+
+      // Allocate recvArray if not done previously
+      if (recvArray_.capacity() == 0) {
+         if (recvArrayCapacity_ == 0) {
+            UTIL_THROW("recvArrayCapacity_ not set");
+         }
+         recvArray_.allocate(recvArrayCapacity_);
       }
 
       source_ = 0;          // rank of source node
@@ -92,9 +103,9 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Returns address for a new Atom.
+   * Return address for a new Atom, or null when all are received.
    *
-   * Called only on master.
+   * Call this function only on the master processor.
    */ 
    Atom* AtomCollector::nextPtr()
    {
@@ -123,7 +134,7 @@ namespace DdMd
             isComplete_ = true;
          }
       }
-     
+
       // While at end of recvArray_, or while array is empty.
       while (recvArrayId_ == recvArraySize_) {
 
@@ -190,21 +201,21 @@ namespace DdMd
    /*
    * Send all atoms from this process.
    *
-   * Call on every processor except the master.
+   * Call on every domain processor except the master.
    */
    void 
    AtomCollector::send()
    {
 
       // Preconditions
-      if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not allocated");
-      }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
       }
       if (domainPtr_->isMaster()) {
          UTIL_THROW("AtomCollector::send() called from master node.");
+      }
+      if (!bufferPtr_->isInitialized()) {
+         UTIL_THROW("Buffer is not initialized");
       }
 
       // Initialize atom iterator
@@ -240,4 +251,3 @@ namespace DdMd
    #endif
 
 }
-#endif

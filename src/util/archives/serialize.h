@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,6 +19,8 @@ namespace Util
    * Default implementation calls serialize method of data object.
    * Can be overridden by any explicit specialization.
    *
+   * \ingroup Serialize_Module
+   *
    * \param ar      archive object
    * \param data    object to be serialized
    * \param version archive version id
@@ -29,6 +31,8 @@ namespace Util
 
    /**
    * Serialize an enumeration value.
+   *
+   * \ingroup Serialize_Module
    *
    * \param ar      archive object
    * \param data    object to be serialized
@@ -49,6 +53,8 @@ namespace Util
 
    /**
    * Save a value, or save and check correctness on loading.
+   *
+   * \ingroup Serialize_Module
    *
    * \param ar      archive object
    * \param data    object to be serialized

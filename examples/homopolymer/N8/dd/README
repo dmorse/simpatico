@@ -1,0 +1,17 @@
+System:
+
+    melt of 100 chains of 8 atoms.
+
+Usage:
+
+Parallel NVE md simulation on 4 processors:
+
+    mpirun -np 4 ddSim -e -p param.nve -c commands
+
+Parallel NVT md simulation on 4 processors:
+
+    mpirun -np 4 ddSim -e -p param.nvt -c commands
+
+Restarting and extending:
+
+    mpirun -np 6 ddSim -e -r restart -c restart.cmd

@@ -1,6 +1,6 @@
 all:
-	cd stochastic; make all
-	cd unit; make all
+	cd stochastic; $(MAKE) all
+	cd unit; $(MAKE) all
 clean:
-	cd stochastic; make clean
-	cd unit; make clean
+	cd stochastic; $(MAKE) clean
+	cd unit; $(MAKE) clean

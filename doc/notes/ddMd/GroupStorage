@@ -14,36 +14,33 @@ Ideas:
 
 1) Make each GroupStorage a member of the associated potential.
 
-2) Abstract distribution and collection of groups in a manner that can 
-   be generalized to other potentials. 
+2) Create a more abstract interface for GroupStorage, to allow use in
+   other potentials and generic interface for config file Io.
 
 ------------------------------------------------------------------------
 Plan (order of changes):
 
-1) Make changes to Buffer first, to first move (pack|unpack)Group
-   methods to Group<N> template, where they belong (Done).
-
-2) Change all methods of Exchanger that involve GroupStorage 
-   to methods of GroupStorage<N> (Done).
-
-3) Create a GroupReference class as a generic group type for use by
+1) Create a GroupReference class as a generic group type for use by
    GroupExchanger, GroupDistributor and GroupCollector (not begun).
 
-   This requires:
+2) Modify GroupExchanger and GroupStorage classes to provide
+   functions that provide GroupReference objects.
 
-   - Modification of GroupExchanger and GroupStorage classes to provide
-     functions that provide GroupReference objects.
+   - See GroupReference files for details
 
-   - Modifications of GroupDistributor and GroupCollector to use the
-     new abstraction in implementation and interface.
+3) Modify GroupDistributor and GroupCollector to use the new class
+   in implementation and interface. Change from templates to concrete 
+   classes.
+
+3) Modify ConfigIos to use the new interfaces of GroupDistributor and
+   GroupCollector.
+
+  - See GroupReference ConfigIos file for required interfaces of 
+    GroupCollector and GroupDistributor, as used in a ConfigIo.
 
 4) Move GroupStorage to be a member of the corresponding Potential.
 
 ------------------------------------------------------------------------
 Next Step:
 
-  - See GroupReference for new generic group class.
-
-  - See ConfigIos for discussion of changes in interface of 
-    GroupCollector and GroupDistributor used in a ConfigIo.
 

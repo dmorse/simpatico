@@ -1,10 +1,7 @@
-#ifndef DDMD_BOND_FACTORY_CPP
-#define DDMD_BOND_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -18,6 +15,7 @@
 // Bond interaction classes
 #include <inter/bond/HarmonicBond.h>
 #include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
 
 namespace DdMd
 {
@@ -49,15 +47,11 @@ namespace DdMd
       } else
       if (name == "HarmonicL0Bond") {
          ptr = new BondPotentialImpl<HarmonicL0Bond>(*simulationPtr_);
-      } //else
-      //if (name == "FeneBond") {
-      //   ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
-      //} else
-      //if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
-      //   ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*simulationPtr_);
-      //}
+      } else
+      if (name == "FeneBond") {
+         ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
+      } // else
       return ptr;
    }
 
 }
-#endif

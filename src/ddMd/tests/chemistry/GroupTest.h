@@ -1,6 +1,7 @@
 #ifndef DDMD_GROUP_TEST_H
 #define DDMD_GROUP_TEST_H
 
+#include <util/global.h>
 #include <ddMd/chemistry/Group.h>
 #include <ddMd/chemistry/AtomArray.h>
 #include <ddMd/chemistry/Atom.h>
@@ -20,7 +21,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class GroupTest : public UnitTest 
+class GroupTest : public UnitTest
 {
 public:
 
@@ -38,7 +39,7 @@ void GroupTest::testConstructor()
 {
    printMethod(TEST_FUNC);
    Group<2> group;
-} 
+}
 
 void GroupTest::testSetGet()
 {
@@ -76,19 +77,19 @@ void GroupTest::testSetGet()
    TEST_ASSERT(group.atomPtr(0) == 0);
    TEST_ASSERT(group.atomPtr(1) == &atoms[4]);
    TEST_ASSERT(group.nPtr() == 1);
-} 
+}
 
 void GroupTest::testFileIo()
 {
    printMethod(TEST_FUNC);
-   Group<2> group;
-
-   std::ifstream file;
-   file.open("in/Group");
-
-   file >> group;
-
    if (isIoProcessor()) {
+      Group<2> group;
+
+      std::ifstream file;
+      file.open("in/Group");
+
+      file >> group;
+
       std::cout << std::endl;
       std::cout << group;
       std::cout << std::endl;
@@ -96,43 +97,43 @@ void GroupTest::testFileIo()
 
 }
 
-void GroupTest::testSerialize() 
+void GroupTest::testSerialize()
 {
    printMethod(TEST_FUNC);
-   Group<2> v;
-   int i1 = 35;
-   int i2 = 43;
-
-   // Read from input file
-   std::ifstream in;
-   openInputFile("in/Group", in);
-   in >> v;
-
-   // Write to binary file archive
-   BinaryFileOArchive oa;
-   openOutputFile("binary", oa.file());
-   oa << i1;
-   oa << v;
-   oa << i2;
-   oa.file().close();
-
-   // Write to binary file archive
-   Group<2> u;
-   int j1, j2;
-   BinaryFileIArchive ia;
-   openInputFile("binary", ia.file());
-   ia >> j1;
-   ia >> u;
-   ia >> j2;
-   
-   TEST_ASSERT(j1 == i1);
-   TEST_ASSERT(u.typeId() == v.typeId());
-   for (int i = 0; i < 2; ++i) {
-      TEST_ASSERT(u.atomId(i) == v.atomId(i));
-   }
-   TEST_ASSERT(j2 == i2);
-
    if (isIoProcessor()) {
+      Group<2> v;
+      int i1 = 35;
+      int i2 = 43;
+
+      // Read from input file
+      std::ifstream in;
+      openInputFile("in/Group", in);
+      in >> v;
+
+      // Write to binary file archive
+      BinaryFileOArchive oa;
+      openOutputFile("binary", oa.file());
+      oa << i1;
+      oa << v;
+      oa << i2;
+      oa.file().close();
+
+      // Write to binary file archive
+      Group<2> u;
+      int j1, j2;
+      BinaryFileIArchive ia;
+      openInputFile("binary", ia.file());
+      ia >> j1;
+      ia >> u;
+      ia >> j2;
+
+      TEST_ASSERT(j1 == i1);
+      TEST_ASSERT(u.typeId() == v.typeId());
+      for (int i = 0; i < 2; ++i) {
+         TEST_ASSERT(u.atomId(i) == v.atomId(i));
+      }
+      TEST_ASSERT(j2 == i2);
+
       std::cout << std::endl;
       std::cout << u;
       std::cout << std::endl;

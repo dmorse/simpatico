@@ -1,0 +1,19 @@
+System:
+
+    melt of 100 wormlike chains of 8 atoms.
+
+Usage - cd to an example subdirectory, then enter:
+
+MC simulation:
+
+    mcSim_a -e -p param -c commands
+
+Restart and extend previous simulation
+
+    mdcim_a -e -r restart -c restart.cmd
+
+------------------------------------------------------
+
+BUG: The example in the Reptation subdirectory is 
+broken, because of a bug in the implementation of the 
+CfbReptation MC move for systems with angle potentials. 

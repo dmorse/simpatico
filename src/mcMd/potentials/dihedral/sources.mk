@@ -5,5 +5,5 @@ mcMd_potentials_dihedral_=\
 mcMd_potentials_dihedral_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_potentials_dihedral_))
 mcMd_potentials_dihedral_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_dihedral_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_potentials_dihedral_:.cpp=.o))
 

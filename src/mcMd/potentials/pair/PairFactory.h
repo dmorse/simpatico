@@ -1,14 +1,14 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_PAIR_FACTORY_H
 #define MCMD_PAIR_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <iostream>
 #include <vector>
 
@@ -60,7 +60,7 @@ namespace McMd
       * Return a pointer to a new McPairPotential, if possible.
       *
       * \param subclass name of desired subclass of McPairPotential
-      * \param system   associated System
+      * \param system associated System
       */
       virtual McPairPotential* mcFactory(const std::string& subclass, System& system) const;
 
@@ -115,5 +115,4 @@ namespace McMd
    };
  
 }
-#endif
 #endif

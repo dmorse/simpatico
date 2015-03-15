@@ -5,7 +5,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -30,7 +30,7 @@ namespace McMd
    * Analyzer to output the total pair energy and the
    * sum of squares of the monomeric and molecular pair energy
    * 
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdPairEnergyCoefficients : public SystemAnalyzer<MdSystem>
    {

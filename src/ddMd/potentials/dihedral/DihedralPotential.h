@@ -9,7 +9,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * Calculates dihedral forces and energies for a parent Simulation.
+   * Abstract base class for computing dihedral forces and energies.
    *
    * \ingroup DdMd_Dihedral_Module
    */
@@ -33,6 +33,11 @@ namespace DdMd
 
       /**
       * Constructor.
+      *
+      * Primary constructor for use in a simulation. Creates
+      * associations with boundary and dihedral storage objects.
+      *
+      * \param simulation Parent simulation.
       */
       DihedralPotential(Simulation& simulation);
 
@@ -47,7 +52,7 @@ namespace DdMd
       ~DihedralPotential();
 
       /**
-      * Associate with related objects.
+      * Create associations with related objects.
       *
       * Call iff object instantiated with default constructor.
       *
@@ -73,10 +78,10 @@ namespace DdMd
       *       o 
       *       1 
       *
-      * \param R1     bond vector from atom 0 to 1
-      * \param R2     bond vector from atom 1 to 2
-      * \param R3     bond vector from atom 2 to 3
-      * \param type   type of dihedral
+      * \param R1  bond vector from atom 0 to 1
+      * \param R2  bond vector from atom 1 to 2
+      * \param R3  bond vector from atom 2 to 3
+      * \param type  dihedral type index
       */
       virtual double 
       dihedralEnergy(const Vector& R1, const Vector& R2, const Vector& R3,
@@ -86,13 +91,13 @@ namespace DdMd
       * Returns derivatives of energy with respect to bond vectors forming the
       * dihedral group.
       *
-      * \param R1     bond vector from atom 0 to 1
-      * \param R2     bond vector from atom 1 to 2
-      * \param R3     bond vector from atom 2 to 3
-      * \param F1     force along R1 direction (upon return)
-      * \param F2     force along R2 direction (upon return)
-      * \param F3     force along R2 direction (upon return)
-      * \param type   type of dihedral
+      * \param R1  bond vector from atom 0 to 1
+      * \param R2  bond vector from atom 1 to 2
+      * \param R3  bond vector from atom 2 to 3
+      * \param F1  force along R1 direction (upon return)
+      * \param F2  force along R2 direction (upon return)
+      * \param F3  force along R2 direction (upon return)
+      * \param type  dihedral type index
       */
       virtual void 
       dihedralForce(const Vector& R1, const Vector& R2, const Vector& R3,
@@ -151,7 +156,6 @@ namespace DdMd
    // Get bond storage by reference.
    inline GroupStorage<4>& DihedralPotential::storage() const
    { return *storagePtr_; }
-
 
 }
 #endif

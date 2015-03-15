@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -18,6 +18,7 @@ namespace McMd
    class System;
    class CellList;
    class BondPotential;
+   class Molecule;
 
    /**
    * A Species of linear polymers (abstract).
@@ -134,6 +135,7 @@ namespace McMd
       void buildLinear();
 
    private:
+
       /**
       * Try to place an atom. If successful, recursively call tryPlace
       * again to place next atom

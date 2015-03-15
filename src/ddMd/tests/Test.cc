@@ -1,6 +1,3 @@
-#ifndef DDMD_TEST_CPP
-#define DDMD_TEST_CPP
-
 /*
 * This program runs all unit tests in the DdMd directory.
 */ 
@@ -16,10 +13,10 @@
 #include "configIos/ConfigIoTest.h"
 #include "communicate/CommunicateTestComposite.h"
 #include "neighbor/NeighborTestComposite.h"
+#include "simulation/SimulationTest.h"
 #ifdef DDMD_MODIFIERS
 #include "modifiers/ModifierTestComposite.h"
 #endif
-#include "simulation/SimulationTest.h"
 
 #include <test/CompositeTestRunner.h>
 
@@ -53,7 +50,7 @@ int main(int argc, char* argv[])
    DdMdNsTestComposite runner;
    if (argc == 2) {
       runner.addFilePrefix(argv[1]);
-    }
+   }
    runner.run();
 
    #ifdef TEST_MPI 
@@ -61,4 +58,3 @@ int main(int argc, char* argv[])
    #endif
 
 }
-#endif

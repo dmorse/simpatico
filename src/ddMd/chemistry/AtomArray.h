@@ -4,11 +4,12 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include <util/containers/Array.h>   // base class template
+#include "AtomContext.h"             // context structure.
 
 namespace Util {
    class Vector;
@@ -61,6 +62,11 @@ namespace DdMd
       void allocate(int capacity); 
 
       /**
+      * Set force vector to zero for all atoms in this array.
+      */
+      void zeroForces(); 
+
+      /**
       * Return true if this is already allocated, false otherwise.
       */
       bool isAllocated() const;
@@ -79,22 +85,32 @@ namespace DdMd
       /**
       * C-array of Atom velocities.
       */
-      Vector*  velocities_;
+      Vector* velocities_;
 
       /**
       * C-array of Atom Mask objects.
       */
-      Mask*  masks_;
+      Mask* masks_;
 
       /**
       * C-array of communication Plan data.
       */
-      Plan*  plans_; 
+      Plan* plans_; 
 
       /**
-      * C-array Atom global ids (tags).
+      * C-array of Atom global ids (tags).
       */
-      int*  ids_;
+      int* ids_;
+
+      /**
+      * C-array of bit fields for groups that each Atom belongs to.
+      */
+      unsigned int* groups_;
+
+      /**
+      * C-array of AtomContext structs, one per atom.
+      */
+      AtomContext* contexts_;
 
       /**
       * Copy ctor (prohibited - private and not implemented).

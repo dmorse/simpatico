@@ -1,7 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName                 commands
-    inputPrefix                          in/
+    inputPrefix                       ../in/
     outputPrefix                        out/ 
   }
   nAtomType                              1
@@ -118,7 +117,7 @@ McSimulation{
     }
 
   }
-  saveInterval                20000
+  saveInterval               200000
   saveFileName              restart
 }
 

@@ -1,10 +1,7 @@
-#ifndef MCMD_STRUCTURE_FACTOR_GRID_CPP
-#define MCMD_STRUCTURE_FACTOR_GRID_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -294,10 +291,16 @@ namespace McMd
 
    void StructureFactorGrid::sample(long iStep)
    {
-      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+
+      std::ios_base::openmode mode = std::ios_base::out;
+      if (!isFirstStep_) {
+        mode = std::ios_base::out | std::ios_base::app; 
+      }
+      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, mode);
+
+      // fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
 
       StructureFactor::sample(iStep);
-
 
       // Log structure factors
       double volume = system().boundary().volume();
@@ -391,4 +394,3 @@ namespace McMd
    }
 
 }
-#endif

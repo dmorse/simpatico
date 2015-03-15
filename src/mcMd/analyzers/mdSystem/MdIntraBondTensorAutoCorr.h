@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -18,9 +18,13 @@ namespace McMd
 
 
    /**
-   * Autocorrelation for bond stress of a molecule.
+   * Autocorrelation for bond orientation of of a molecule. 
    *
-   * \ingroup McMd_Analyzer_Module
+   * See class template IntraBondTensorAutoCorr for further information.
+   *
+   * \sa McMd::IntraBondTensorAutoCorr
+   *
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdIntraBondTensorAutoCorr : public IntraBondTensorAutoCorr<MdSystem>
    {

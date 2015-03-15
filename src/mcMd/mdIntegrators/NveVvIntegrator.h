@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,6 +19,8 @@ namespace McMd
 
    /**
    * An NVE Verlet molecular dynamics integrator.
+   *
+   * \sa \ref mcMd_integrator_NveVvIntegrator_page "param file format"
    *
    * \ingroup McMd_MdIntegrator_Module
    */

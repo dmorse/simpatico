@@ -3,7 +3,6 @@ Simulation{
     gridDimensions    2    1    3
   }
   FileMaster{
-    commandFileName   commands
     inputPrefix       in/
     outputPrefix      out/
   }
@@ -85,3 +84,4 @@ Simulation{
 
   nAngleType         0
   hasExternal        0
+  hasAtomContext     1

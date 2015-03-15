@@ -1,10 +1,7 @@
-#ifndef DDMD_SIMULATION_CPP
-#define DDMD_SIMULATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -57,6 +54,7 @@
 #include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
+#include <util/misc/Bit.h>
 #include <util/misc/initStatic.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -167,6 +165,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       hasExternal_(false),
       #endif
+      hasAtomContext_(false),
       maskedPairPolicy_(MaskBonded),
       reverseUpdateFlag_(false),
       #ifdef UTIL_MPI
@@ -195,6 +194,16 @@ namespace DdMd
       // Set connections between member objects
       domain_.setBoundary(boundary_);
       exchanger_.associate(domain_, boundary_, atomStorage_, buffer_);
+      atomStorage_.associate(domain_, boundary_, buffer_);
+      #ifdef INTER_BOND
+      bondStorage_.associate(domain_, atomStorage_, buffer_);
+      #endif
+      #ifdef INTER_ANGLE
+      angleStorage_.associate(domain_, atomStorage_, buffer_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.associate(domain_, atomStorage_, buffer_);
+      #endif
 
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_ = new EnergyEnsemble;
@@ -282,7 +291,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) {
+         logFile_.close();
+      }
       #endif
    }
 
@@ -291,29 +302,41 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char * const * argv)
    {
-      bool  eFlag = false;
-      bool  rFlag = false;
-      bool  sFlag = false;
+      bool  sFlag = false; // split communicator
+      bool  eFlag = false; // echo
+      bool  pFlag = false; // param file name
+      bool  rFlag = false; // restart file name
+      bool  cFlag = false; // command file name
       char* sArg = 0;
       char* rArg = 0;
+      char* pArg = 0;
+      char* cArg = 0;
       int  nSystem = 1;
 
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "er:s:")) != -1) {
+      while ((c = getopt(argc, argv, "es:p:r:c:")) != -1) {
          switch (c) {
-         case 'e':
+         case 'e': // echo parameters
            eFlag = true;
            break;
-         case 'r':
-           rFlag = true;
-           rArg  = optarg;
-           break;
-         case 's':
+         case 's': // split communicator
            sFlag = true;
            sArg  = optarg;
            nSystem = atoi(sArg);
+           break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
+         case 'r': // restart file
+           rFlag = true;
+           rArg  = optarg;
+           break;
+         case 'c': // command file
+           cFlag = true;
+           cArg  = optarg;
            break;
          case '?':
            Log::file() << "Unknown option -" << optopt << std::endl;
@@ -352,6 +375,19 @@ namespace DdMd
          ParamComponent::setEcho(true);
       }
 
+      // If option -p, set parameter file name
+      if (pFlag) {
+         if (rFlag) {
+            UTIL_THROW("Cannot have both parameter and restart files");
+         }
+         fileMaster().setParamFileName(std::string(pArg));
+      }
+
+      // If option -c, set command file name
+      if (cFlag) {
+         fileMaster().setCommandFileName(std::string(cArg));
+      }
+
       // If option -r, load state from a restart file.
       if (rFlag) {
          if (isIoProcessor()) {
@@ -360,17 +396,12 @@ namespace DdMd
          }
          load(std::string(rArg));
          if (isIoProcessor()) {
+            Log::file() << "Done reading restart file" << std::endl;
             Log::file() << std::endl;
          }
       }
 
    }
-
-   /*
-   *  Read parameters from default parameter file.
-   */
-   void Simulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
 
    /*
    * Read parameter block, including begin and end.
@@ -384,12 +415,23 @@ namespace DdMd
       }
 
       /*
-      * Note that if isRestarting, this function returns immediately. 
+      * Note that if isRestarting_, this function returns immediately.
       * All information in the parameter file is also contained in
-      * a restart file. During a restart, the restart file is read 
-      * and isRestarting_ is set true within setOptions(), which the 
+      * a restart file. During a restart, the restart file is read
+      * and isRestarting_ is set true within setOptions(), which the
       * main program ddSim.cpp calls before readParam().
       */
+   }
+
+   /*
+   *  Read parameters from default parameter file.
+   */
+   void Simulation::readParam()
+   {
+      if (!isRestarting_) {  
+         readParam(fileMaster().paramFile()); 
+      }
+      /// See comment about restarting in readParam(std::istream&)
    }
 
    /*
@@ -409,29 +451,33 @@ namespace DdMd
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
       nBondType_ = 0;
-      read<int>(in, "nBondType", nBondType_, false); // optional
+      readOptional<int>(in, "nBondType", nBondType_); 
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
-      read<bool>(in, "hasExternal", hasExternal_, false); // optional
+      readOptional<bool>(in, "hasExternal", hasExternal_); 
       #endif
+
+      hasAtomContext_ = false;
+      readOptional<bool>(in, "hasAtomContext", hasAtomContext_); 
+      Atom::setHasAtomContext(hasAtomContext_);
 
       // Read array of atom type descriptors
       atomTypes_.allocate(nAtomType_);
@@ -470,9 +516,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       readParamComposite(in, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -483,7 +528,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -496,7 +540,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -509,7 +552,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -522,7 +564,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -548,7 +589,7 @@ namespace DdMd
 
       // Finished reading parameter file. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -628,6 +669,10 @@ namespace DdMd
       loadParameter<bool>(ar, "hasExternal", hasExternal_, false); // opt
       #endif
 
+      hasAtomContext_ = false;
+      loadParameter<bool>(ar, "hasAtomContext", hasAtomContext_, false); // opt
+      Atom::setHasAtomContext(hasAtomContext_);
+
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -663,9 +708,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotentialPtr_->setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
-      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
+      pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       #ifdef INTER_BOND
@@ -676,7 +720,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotentialPtr_->setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -689,7 +732,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotentialPtr_->setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -702,7 +744,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -715,7 +756,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotentialPtr_->setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -740,7 +780,7 @@ namespace DdMd
 
       // Finished loading data from archive. Now finish initialization:
 
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotential().cutoff());
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
@@ -799,18 +839,15 @@ namespace DdMd
 
       Serializable::IArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartIFile(filename, ".rst", ar.file());
+         std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+         fileMaster().openRestartIFile(filename, ar.file(), mode);
       }
       // ParamComposite::load() calls Simulation::loadParameters()
-      load(ar); 
+      load(ar);
       if (isIoProcessor()) {
          ar.file().close();
       }
 
-      // Set default command (*.cmd) file name = filename + ".cmd".
-      // This will be used by Simulation::readCommands().
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
    }
 
    /*
@@ -837,6 +874,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
+      Parameter::saveOptional(ar, hasAtomContext_, hasAtomContext_);
       ar << atomTypes_;
 
       // Read storage capacities
@@ -862,31 +900,26 @@ namespace DdMd
       // Potential energy styles and potential classes
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
-      assert(pairPotentialPtr_);
-      pairPotentialPtr_->save(ar);
+      pairPotential().save(ar);
       #endif
       #ifdef INTER_BOND
       if (nBondType_) {
-         assert(bondPotentialPtr_);
-         bondPotentialPtr_->save(ar);
+         bondPotential().save(ar);
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         assert(anglePotentialPtr_);
-         anglePotentialPtr_->save(ar);
+         anglePotential().save(ar);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         assert(dihedralPotentialPtr_);
-         dihedralPotentialPtr_->save(ar);
+         dihedralPotential().save(ar);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         assert(externalPotentialPtr_);
-         externalPotentialPtr_->save(ar);
+         externalPotential().save(ar);
       }
       #endif
 
@@ -932,7 +965,8 @@ namespace DdMd
       // Save parameters (only on ioProcessor)
       Serializable::OArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartOFile(filename, ".rst", ar.file());
+         std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+         fileMaster().openRestartOFile(filename, ar.file(), mode);
          save(ar);
       }
 
@@ -950,10 +984,10 @@ namespace DdMd
    * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
-   {  
-      assert(fileMasterPtr_);  
-      readParamComposite(in, *fileMasterPtr_); 
-      assert(fileMasterPtr_->hasIoCommunicator());  
+   {
+      assert(fileMasterPtr_);
+      readParamComposite(in, *fileMasterPtr_);
+      assert(fileMasterPtr_->hasIoCommunicator());
    }
 
    /*
@@ -961,9 +995,9 @@ namespace DdMd
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
    {
-      assert(fileMasterPtr_);  
-      loadParamComposite(ar, *fileMasterPtr_); 
-      assert(fileMasterPtr_->hasIoCommunicator());  
+      assert(fileMasterPtr_);
+      loadParamComposite(ar, *fileMasterPtr_);
+      assert(fileMasterPtr_->hasIoCommunicator());
    }
 
    /*
@@ -1139,10 +1173,10 @@ namespace DdMd
          if (hasIoCommunicator()) {
             bcast<std::string>(domain_.communicator(), line, 0);
          }
-         #else // not UTIL_MPI
+         #else // ifndef UTIL_MPI
          getNextLine(in, line);
          Log::file() << line << std::endl;
-         #endif // not UTIL_MPI
+         #endif 
          inBuffer.clear();
          for (unsigned i=0; i < line.size(); ++i) {
             inBuffer.put(line[i]);
@@ -1178,6 +1212,7 @@ namespace DdMd
                double temperature;
                inBuffer >> temperature;
                setBoltzmannVelocities(temperature);
+               removeDriftVelocity();
             } else
             if (command == "SIMULATE") {
                int nStep;
@@ -1292,9 +1327,11 @@ namespace DdMd
             if (command == "WRITE_PARAM") {
                // Write params file, using current variable values.
                inBuffer >> filename;
-               fileMaster().openOutputFile(filename, outputFile);
-               writeParam(outputFile);
-               outputFile.close();
+               if (isIoProcessor()) {
+                  fileMaster().openOutputFile(filename, outputFile);
+                  writeParam(outputFile);
+                  outputFile.close();
+               }
             } else
             if (command == "SET_CONFIG_IO") {
                // Create a ConfigIo object of specified subclass.
@@ -1302,6 +1339,20 @@ namespace DdMd
                std::string classname;
                inBuffer >> classname;
                setConfigIo(classname);
+            } else
+            if (command == "SET_INPUT_PREFIX") {
+               // Set the FileMaster inputPrefix, which is used to
+               // construct paths to input files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setInputPrefix(prefix);
+            } else
+            if (command == "SET_OUTPUT_PREFIX") {
+               // Set the FileMaster outputPrefix, which is used to
+               // construct paths to output files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setOutputPrefix(prefix);
             } else
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
@@ -1350,6 +1401,9 @@ namespace DdMd
                dihedralPotential().set(paramName, typeId, value);
             } else
             #endif
+            if (command == "SET_GROUP") {
+               setGroup(inBuffer);
+            } else
             if (command == "FINISH") {
                // Terminate loop over commands.
                readNext = false;
@@ -1366,7 +1420,12 @@ namespace DdMd
    * Read and implement commands from the default command file.
    */
    void Simulation::readCommands()
-   {  readCommands(fileMaster().commandFile()); }
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
 
    /*
    * Set flag to specify if reverse communication is enabled.
@@ -1375,50 +1434,88 @@ namespace DdMd
    {
       reverseUpdateFlag_ = reverseUpdateFlag;
       if (pairPotentialPtr_) {
-         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
+         pairPotential().setReverseUpdateFlag(reverseUpdateFlag);
       }
    }
 
    /*
    * Choose velocities from a Boltzmann distribution.
    */
-   void Simulation::setBoltzmannVelocities(double temperature)
+    void Simulation::setBoltzmannVelocities(double temperature)
    {
-      double scale = sqrt(temperature);
+      double mass;
+      double scale;
       AtomIterator atomIter;
       int i;
-
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
+         mass = atomType(atomIter->typeId()).mass();
+         assert(mass > 0);
+         scale = sqrt(temperature/mass);
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+
+      // Publish notification of change in velocities
       velocitySignal().notify();
    }
 
    /*
-   * Set forces on all local atoms to zero.
-   * If reverseUpdateFlag(), also zero ghost atom forces.
+   * Remove the drift velocity
    */
-   void Simulation::zeroForces()
+   Vector Simulation::removeDriftVelocity()
    {
-      // Zero local atoms
+      Vector momentum(0.0);      // atom momentum
+      Vector momentumLocal(0.0); // sum of momenta on processor
+      Vector momentumTotal(0.0); // total momentum of system
+      double mass;               // atom mass
+      double massLocal = 0.0;    // sum of masses on processor
+      double massTotal = 0.0;    // total momentum of system
+      int j;
+
+      // Calculate total momentum and mass on processor
       AtomIterator atomIter;
       atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
-         atomIter->force().zero();
+         mass = atomType(atomIter->typeId()).mass();
+         massLocal = massLocal + mass;
+         for(j = 0; j<Dimension; ++j) {
+            momentum[j] = atomIter->velocity()[j];
+            momentum[j] *= mass;
+         }
+         momentumLocal += momentum;
       }
 
-      // If using reverse communication, zero ghost atoms
-      if (reverseUpdateFlag_) {
-         GhostIterator ghostIter;
-         atomStorage_.begin(ghostIter);
-         for( ; ghostIter.notEnd(); ++ghostIter){
-            ghostIter->force().zero();
-         }
+      // Compute total momentum and mass for system, by MPI all reduce
+      domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
+                                       MPI::DOUBLE, MPI::SUM);
+      domain_.communicator().Allreduce(&momentumLocal[0],
+                                       &momentumTotal[0], Dimension,
+                                       MPI::DOUBLE, MPI::SUM);
+
+      // Subtract average drift velocity
+      Vector drift = momentumTotal;
+      drift /= massTotal;
+      atomStorage_.begin(atomIter); 
+      for( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->velocity() -= drift;
       }
+
+      // Publish notification of change in velocities
+      velocitySignal().notify();
+
+      return drift;
    }
+
+   /*
+   * Set forces on all atoms to zero.
+   *
+   * If reverseUpdateFlag() is true, zero local and ghost
+   * atom forces, otherwise only local atoms.
+   */
+   void Simulation::zeroForces()
+   {  atomStorage_.zeroForces(reverseUpdateFlag_); }
 
    /*
    * Compute forces for all atoms.
@@ -1695,25 +1792,25 @@ namespace DdMd
       // Note: Pointers used here because ...Potential() accessors
       // return non-const references, which violate the method const.
       double energy = 0.0;
-      energy += pairPotentialPtr_->energy();
+      energy += pairPotential().energy();
       #ifdef INTER_BOND
       if (nBondType_) {
-         energy += bondPotentialPtr_->energy();
+         energy += bondPotential().energy();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         energy += anglePotentialPtr_->energy();
+         energy += anglePotential().energy();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         energy += dihedralPotentialPtr_->energy();
+         energy += dihedralPotential().energy();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         energy += externalPotentialPtr_->energy();
+         energy += externalPotential().energy();
       }
       #endif
       return energy;
@@ -1806,20 +1903,20 @@ namespace DdMd
       // return non-const references, which violate the method const.
       Tensor stress;
       stress.zero();
-      stress += pairPotentialPtr_->stress();
+      stress += pairPotential().stress();
       #ifdef INTER_BOND
       if (nBondType_) {
-         stress += bondPotentialPtr_->stress();
+         stress += bondPotential().stress();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         stress += anglePotentialPtr_->stress();
+         stress += anglePotential().stress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         stress += dihedralPotentialPtr_->stress();
+         stress += dihedralPotential().stress();
       }
       #endif
       return stress;
@@ -1832,20 +1929,20 @@ namespace DdMd
    {
       double pressure;
       pressure = 0;
-      pressure += pairPotentialPtr_->pressure();
+      pressure += pairPotential().pressure();
       #ifdef INTER_BOND
       if (nBondType_) {
-         pressure += bondPotentialPtr_->pressure();
+         pressure += bondPotential().pressure();
       }
       #endif
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         pressure += anglePotentialPtr_->pressure();
+         pressure += anglePotential().pressure();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         pressure += dihedralPotentialPtr_->pressure();
+         pressure += dihedralPotential().pressure();
       }
       #endif
       return pressure;
@@ -1872,7 +1969,7 @@ namespace DdMd
    {
       DMatrix<double> pairEnergies;
       pairEnergies.allocate(nAtomType_, nAtomType_);
-      pairEnergies = pairPotentialPtr_->pairEnergies();
+      pairEnergies = pairPotential().pairEnergies();
       return pairEnergies;
    }
 
@@ -1900,27 +1997,31 @@ namespace DdMd
    }
 
    // --- ConfigIo Accessors -------------------------------------------
-   
-   /**
+
+   /*
    * Return the ConfigIo (create default if necessary).
    */
-   ConfigIo& Simulation::configIo() 
+   ConfigIo& Simulation::configIo()
    {
       if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
-         configIoPtr_->initialize();
+         if (Atom::hasAtomContext()) {
+            // DdMdConfigIo format with hasMolecules = true
+            configIoPtr_ = new DdMdConfigIo(*this, true);
+         } else {
+            // DdMdConfigIo format with hasMolecules = false
+            configIoPtr_ = new DdMdConfigIo(*this, false);
+         }
       }
       return *configIoPtr_;
    }
 
-   /**
+   /*
    * Return a SerialConfigIo (create if necessary).
    */
-   SerializeConfigIo& Simulation::serializeConfigIo() 
+   SerializeConfigIo& Simulation::serializeConfigIo()
    {
       if (serializeConfigIoPtr_ == 0) {
          serializeConfigIoPtr_ = new SerializeConfigIo(*this);
-         serializeConfigIoPtr_->initialize();
       }
       return *serializeConfigIoPtr_;
    }
@@ -2099,7 +2200,61 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
-      configIoPtr_->initialize();
+   }
+
+   // --- Group Management ---------------------------------------------
+   
+   /*
+   * Return true if this Simulation is valid, or throw an Exception.
+   */
+   void Simulation::setGroup(std::stringstream& inBuffer)
+   {
+
+      // Read groupId and create a corresponding bit mask
+      unsigned int groupId;
+      inBuffer >> groupId;
+      Bit bit(groupId);
+
+      // Read the group style
+      std::string groupStyle;
+      inBuffer >> groupStyle;
+
+      AtomIterator iter;
+      if (groupStyle == "delete") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.clear(iter->groups());
+         }
+      } else 
+      if (groupStyle == "all") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.set(iter->groups());
+         }
+      } else 
+      if (groupStyle == "atomType") {
+         int typeId;
+         inBuffer >> typeId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->typeId() == typeId) {
+               bit.set(iter->groups());
+            }
+         }
+      } else
+      if (groupStyle == "species") {
+         if (!Atom::hasAtomContext()) {
+            UTIL_THROW("AtomContext is not enabled");
+         }
+         int speciesId;
+         inBuffer >> speciesId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->context().speciesId == speciesId) {
+               bit.set(iter->groups());
+            }
+         }
+      } else {
+         std::string msg = "SET_GROUP command with unknown group style ";
+         msg += groupStyle;
+         UTIL_THROW(msg.c_str());
+      }
    }
 
    // --- Validation ---------------------------------------------------
@@ -2192,4 +2347,3 @@ namespace DdMd
    }
 
 }
-#endif

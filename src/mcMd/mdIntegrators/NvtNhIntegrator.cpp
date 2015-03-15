@@ -1,10 +1,7 @@
-#ifndef MCMD_NVT_NH_INTEGRATOR_CPP
-#define MCMD_NVT_NH_INTEGRATOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -202,10 +199,9 @@ namespace McMd
 
       // Update xiDot and complete update of xi_
       T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
-      xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
-      xi_       += xiDot_*dtHalf;
+      xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+      xi_ += xiDot_*dtHalf;
 
    }
 
 }
-#endif

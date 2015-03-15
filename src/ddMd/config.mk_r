@@ -26,7 +26,7 @@
 # Define DDMD_MODIFIERS, enable addition of ModifierManager to Simulation
 # Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
-
+ 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
 # Most uers should not need to modify anything below this point.
@@ -44,7 +44,7 @@ DDMD_SUFFIX:=
 # Note that DDMD_DEFS is a recursive (normal) makefile variable, and so
 # may be extended using the += operator, but that DDMD_SUFFIX is a 
 # non-recursive makefile variable, which may be extended using the := 
-# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
+# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_u. 
 
 # Enable modifiers
 ifdef DDMD_MODIFIERS
@@ -54,16 +54,20 @@ endif
 
 #-----------------------------------------------------------------------
 # Path to ddMd library
-# Note: OBJ_DIR is defined in src/config.mk.
+# Note: BLD_DIR is defined in src/config.mk.
 
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
-ddMd_LIB=$(OBJ_DIR)/ddMd/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
-# Path to executable 
+# Path to executables
 # BIN_DIR is defined in src/config.mk.
 
+# Path to parallel domain-decomposition Md (ddSim) program
 DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
+
+# Path to serial MD postprocessor (mdPp) program
+MDPP_EXE=$(BIN_DIR)/mdPp
 #-----------------------------------------------------------------------

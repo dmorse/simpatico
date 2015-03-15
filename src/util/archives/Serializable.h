@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -28,6 +28,8 @@ namespace Util
    * included in the file Serializable_includes.h. The file
    * Serializable_includes.h should be included in source files
    * that implement that load and save methods for subclasses.
+   *
+   * \ingroup Serialize_Module
    */
    class Serializable
    {

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +22,7 @@ namespace McMd
    /**
    * A Nose-Hoover NVT molecular dynamics integrator.
    *
-   * The step() method implements a reversible velocity-verlet MD NVT 
+   * The step() function implements a reversible velocity-verlet MD NVT 
    * integrator step for the Nose-Hoover equations, as described by
    * Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
    *
@@ -30,6 +30,7 @@ namespace McMd
    * D. Frenkel and B. Smit, "Understanding Molecular Simulation,"  
    * Academic Press, 1996. Chapter 6 (Eqs. 6.1.24 - 6.1.27).
    *
+   * \sa \ref mcMd_integrator_NvtNhIntegrator_page "parameter file format"
    * \ingroup McMd_MdIntegrator_Module
    */
    class NvtNhIntegrator : public MdIntegrator
@@ -37,10 +38,16 @@ namespace McMd
    
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor. 
+      *
+      * \param system parent MdSystem object
+      */
       NvtNhIntegrator(MdSystem& system);
- 
-      /// Destructor.   
+
+      /** 
+      * Destructor.   
+      */
       virtual ~NvtNhIntegrator();
 
       /**

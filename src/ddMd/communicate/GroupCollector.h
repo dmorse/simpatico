@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -80,13 +80,16 @@ namespace DdMd
       void associate(Domain& domain, GroupStorage<N>& storage, Buffer& buffer);
 
       /**
-      * Allocate cache on master processor.
+      * Set size of cache for receiving groups on the master.
       *
-      * Call only on the master processor, only once.
+      * The cache is actually allocated only on  master processor, within
+      * the first call to the setup function. This function must be called 
+      * once on the master. Calling it on other processors sets an unused
+      * variable, with no other effect, and thus does no harm. 
       *
-      * \param cacheSize number of groups cached on master.
+      * \param recvArrayCapacity capacity of recvArray cache on master.
       */
-      void allocate(int cacheSize);
+      void setCapacity(int recvArrayCapacity);
 
       /**
       * Setup master processor for receiving.
@@ -138,6 +141,9 @@ namespace DdMd
 
       /// Rank of processor from which groups are being received (on master).
       int source_;
+
+      /// Capacity of recvArray cache (allocated on master).
+      int recvArrayCapacity_;
 
       /// Number of unread groups in MPI receive buffer (on master).
       int recvBufferSize_;

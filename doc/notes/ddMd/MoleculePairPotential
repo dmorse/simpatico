@@ -1,0 +1,94 @@
+Goal: Create an object that can calculate pair interaction energies
+for pairs of molecules.  Contributions from particular molecule pairs 
+will be calculated on each processor and then assembled into a sparse 
+matrix on the master node.
+
+Classes:
+
+   BlockPair - identifier for an interacting pair of blocks
+               (block = set of atoms in molecule of same type)
+
+   Need to implement < operator for BlockPair to allow construction 
+   of maps or sets using BlockPair objects as identifiers.
+
+   MoleculePairPotential - class to compute energies for all 
+   interacting pairs of blocks.
+
+   MoleculePairAnalyzer - Analyzer that has a MoleculePairPotential
+   member that can analyze pair energies
+
+---------------------------------------------------------------------
+
+class MoleculePairPotential 
+{
+
+public:
+
+   typedef std::map<BlockPair, double> PairMap;
+
+   MoleculePairPotential(Simulation& simulation);
+
+   /**
+   * Compute sparse matrix of pair energies.
+   *
+   * Algorithm:
+   *   1) Loop over pairs on each processor to assemble local map.
+   *   2) Send local maps to master processor and assemble global map.
+   */
+   void compute();
+
+private:
+
+   /**
+   * Map of block pair interactions.
+   */
+   PairMap pairMap_;
+
+   // Considering adding data structure on master that allows 
+   // direct access to a particular molecule. Could be an array
+   // of pointers to elements of the pairMap.
+
+}
+
+class BlockPair 
+{
+
+public:
+
+   void set(int molId1, int molId2, int typeId1, int typeId2)
+   {
+      if (molId1 < molId2) {
+         molId1_ = molId1;
+         molId2_ = molId2;
+         typeId1_ = typeId1;
+         typeId2_ = typeId2;
+      } else 
+      if (molId1 > molId2) {
+         molId1_ = molId2;
+         molId2_ = molId1;
+         typeId1_ = typeId2;
+         typeId2_ = typeId1;
+      } else {
+         molId1_ = molId1;
+         molId2_ = molId2;
+         if (typeId <= typeId2) {
+            typeId1_ = typeId1;
+            typeId2_ = typeId2;
+         } else {
+            typeId1_ = typeId2;
+            typeId2_ = typeId1;
+         }
+      }
+   }
+
+private:
+
+   molId1_;
+   molId2_;
+   typeId1_;
+   typeId2_;
+
+};
+
+Needed: Overloaded void operator < (const BlockPair&, const BlockPair&);
+

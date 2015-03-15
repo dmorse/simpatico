@@ -227,7 +227,7 @@ public:
       // Collect groups
       bondCollector.associate(domain, bondStorage, buffer);
       if (domain.isMaster()) {  
-         bondCollector.allocate(20);
+         bondCollector.setCapacity(20);
          bondCollector.setup();
          Group<2>* groupPtr = bondCollector.nextPtr();
          int i = 0;

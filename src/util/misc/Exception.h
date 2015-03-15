@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,7 +19,7 @@ namespace Util
    *
    * Exceptions are usually thrown using the UTIL_THROW() macro. 
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    class Exception 
    {
@@ -80,6 +80,19 @@ namespace Util
       std::string message_; 
    
    };
+
+   #ifdef UTIL_MPI
+   /**
+   * Function to throw exception in MPI code.
+   *
+   * If MPI is not initialized, this function writes the message and 
+   * calls MPI Abort. If MPI is not initialized, it simply throws the
+   * Exception.
+   *
+   * \param e Exception to be thrown.
+   */
+   void MpiThrow(Exception& e);
+   #endif
 
 }
 #endif

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -26,7 +26,7 @@ namespace McMd
    * The SystemType may be McSystem and MdSystem. The use of a template
    * is possible because both types of system use a similar interface.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
    class PressureAverage : public SystemAnalyzer<SystemType>
@@ -93,13 +93,13 @@ namespace McMd
       std::ofstream outputFile_;
 
       /// Average object - statistical accumulator
-      Average  accumulator_;
+      Average accumulator_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
 
       /// Has readParam been called?
-      bool    isInitialized_;
+      bool isInitialized_;
 
       using SystemAnalyzer<SystemType>::readInterval;
       using SystemAnalyzer<SystemType>::readOutputFileName;

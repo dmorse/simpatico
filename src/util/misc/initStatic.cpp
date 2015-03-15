@@ -1,14 +1,13 @@
-#ifndef UTIL_INIT_STATIC_H
-#define UTIL_INIT_STATIC_H
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include "initStatic.h"
+#include <util/global.h>
+
 #include <util/misc/Log.h>
 #include <util/misc/Memory.h>
 #include <util/format/Format.h>
@@ -17,7 +16,6 @@
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/space/Tensor.h>
-#include <util/global.h>
 
 namespace Util
 {
@@ -44,4 +42,3 @@ namespace Util
    }
 
 }
-#endif

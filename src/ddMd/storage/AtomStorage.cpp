@@ -1,10 +1,7 @@
-#ifndef DDMD_ATOM_STORAGE_CPP
-#define DDMD_ATOM_STORAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -56,6 +53,16 @@ namespace DdMd
    */
    AtomStorage::~AtomStorage()
    {}
+
+   /*
+   * Create associations for distributor and collector.
+   */
+   void AtomStorage::associate(Domain& domain, Boundary& boundary, 
+                               Buffer& buffer)
+   {
+      distributor_.associate(domain, boundary, *this, buffer);
+      collector_.associate(domain, *this, buffer);
+   }
 
    /*
    * Set parameters and allocate memory.
@@ -135,6 +142,41 @@ namespace DdMd
       snapshot_.allocate(atomCapacity_);
 
       isInitialized_ = true;
+   }
+
+   /*
+   * Zero forces on all local atoms and optionally on ghosts.
+   */
+   void AtomStorage::zeroForces(bool zeroGhosts)
+   {
+      int factor = 2;
+
+      // Zero forces for all local atoms
+      if (nAtom() > atomCapacity_/factor) {
+         atoms_.zeroForces();
+         // Optimization to allow sequential access
+      } else {
+         AtomIterator atomIter;
+         begin(atomIter);
+         for( ; atomIter.notEnd(); ++atomIter){
+            atomIter->force().zero();
+         }
+      }
+   
+      // If using reverse communication, zero ghost atoms
+      if (zeroGhosts && nGhost()) {
+         if (nGhost() > ghostCapacity_/factor) {
+            ghosts_.zeroForces();
+            // Optimization to allow sequential access
+         } else {
+            GhostIterator ghostIter;
+            begin(ghostIter);
+            for( ; ghostIter.notEnd(); ++ghostIter){
+               ghostIter->force().zero();
+            }
+         }
+      }
+
    }
 
    // Local atom mutators
@@ -627,4 +669,3 @@ namespace DdMd
    #endif
 
 }
-#endif

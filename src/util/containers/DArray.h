@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -12,32 +12,35 @@
 #include <util/misc/Memory.h>
 #include <util/global.h>
 
-
 namespace Util
 {
 
    /**
-   * Dynamically allocatable Array class template.
+   * Dynamically allocatable contiguous array template.
    *
-   * A DArray wraps a dynamically allocated C Array. Unlike an STL 
+   * A DArray wraps a dynamically allocated C Array. Unlike an STL
    * std::vector, a DArray cannot be resized after it is allocated.
+   * Addresses of elements thus remain constant until de-allocation.
+   *
+   * The Array<Data> base class provides bounds checking when compiled
+   * in debug mode. 
    *
    * \ingroup Array_Module
    */
    template <typename Data>
    class DArray : public Array<Data>
-   { 
+   {
 
       using Array<Data>::data_;
       using Array<Data>::capacity_;
-   
-   public: 
-   
+
+   public:
+
       /**
       * Default constructor.
       */
       DArray();
-   
+
       /**
       * Copy constructor.
       *
@@ -46,7 +49,14 @@ namespace Util
       *\param other the DArray to be copied.
       */
       DArray(const DArray<Data>& other);
-   
+
+      /**
+      * Destructor.
+      *
+      * Deletes underlying C array, if allocated previously.
+      */
+      virtual ~DArray();
+
       /**
       * Assignment operator.
       *
@@ -57,30 +67,23 @@ namespace Util
       *
       * \param other the RHS DArray
       */
-      DArray<Data>& operator = (const DArray<Data>& other); 
-
-      /**
-      * Destructor.
-      *
-      * Deletes underlying C array, if allocated previously.
-      */
-      virtual ~DArray();
+      DArray<Data>& operator = (const DArray<Data>& other);
 
       /**
       * Allocate the underlying C array.
       *
-      * Throw an Exception if the DArray is already allocated.
+      * \throw Exception if the DArray is already allocated.
       *
       * \param capacity number of elements to allocate.
       */
-      void allocate(int capacity); 
+      void allocate(int capacity);
 
       /**
       * Dellocate the underlying C array.
       *
-      * Throw an Exception if the DArray is not allocated.
+      * \throw Exception if the DArray is not allocated.
       */
-      void deallocate(); 
+      void deallocate();
 
       /**
       * Return true if the DArray has been allocated, false otherwise.
@@ -90,20 +93,20 @@ namespace Util
       /**
       * Serialize a DArray to/from an Archive.
       *
-      * \param ar       archive 
+      * \param ar       archive
       * \param version  archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-   }; 
+   };
 
 
    /*
    * Constructor.
    */
    template <class Data>
-   DArray<Data>::DArray() 
+   DArray<Data>::DArray()
     : Array<Data>()
    {}
 
@@ -115,7 +118,7 @@ namespace Util
    *\param other the DArray to be copied.
    */
    template <class Data>
-   DArray<Data>::DArray(const DArray<Data>& other) 
+   DArray<Data>::DArray(const DArray<Data>& other)
     : Array<Data>()
    {
       if (!other.isAllocated()) {
@@ -148,10 +151,10 @@ namespace Util
    * \throw Exception if other DArray is not allocated.
    * \throw Exception if both DArrays are allocated with unequal capacities.
    *
-   * \param other the rhs DArray 
+   * \param other the rhs DArray
    */
    template <class Data>
-   DArray<Data>& DArray<Data>::operator = (const DArray<Data>& other) 
+   DArray<Data>& DArray<Data>::operator = (const DArray<Data>& other)
    {
       // Check for self assignment
       if (this == &other) return *this;
@@ -183,7 +186,7 @@ namespace Util
    * \param capacity number of elements to allocate.
    */
    template <class Data>
-   void DArray<Data>::allocate(int capacity) 
+   void DArray<Data>::allocate(int capacity)
    {
       if (isAllocated()) {
          UTIL_THROW("Attempt to re-allocate a DArray");
@@ -201,7 +204,7 @@ namespace Util
    * Throw an Exception if this DArray is not allocated.
    */
    template <class Data>
-   void DArray<Data>::deallocate() 
+   void DArray<Data>::deallocate()
    {
       if (!isAllocated()) {
          UTIL_THROW("Array is not allocated");
@@ -214,7 +217,7 @@ namespace Util
    * Return true if the DArray has been allocated, false otherwise.
    */
    template <class Data>
-   inline bool DArray<Data>::isAllocated() const 
+   inline bool DArray<Data>::isAllocated() const
    {  return (bool)data_; }
 
    /*
@@ -247,5 +250,5 @@ namespace Util
       }
    }
 
-} 
+}
 #endif

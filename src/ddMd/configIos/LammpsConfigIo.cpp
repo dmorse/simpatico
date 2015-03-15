@@ -1,10 +1,7 @@
-#ifndef DDMD_LAMMPS_CONFIG_IO_CPP
-#define DDMD_LAMMPS_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -257,8 +254,8 @@ namespace DdMd
          }
       }
 
-      #ifdef INTER_BOND
       bool hasGhosts = false;
+      #ifdef INTER_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -266,6 +263,20 @@ namespace DdMd
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
          }
+      }
+      #endif
+       
+      #ifdef INTER_ANGLE
+      if (angleStorage().capacity()) {
+         readGroups<3>(file, "Angles", nAngle, angleDistributor());
+         angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      }
+      #endif
+       
+      #ifdef INTER_DIHEDRAL
+      if (dihedralStorage().capacity()) {
+         readGroups<4>(file, "Dihedrals", nDihedral, dihedralDistributor());
+         dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
       }
       #endif
        
@@ -523,4 +534,3 @@ namespace DdMd
    }
  
 }
-#endif

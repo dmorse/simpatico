@@ -10,5 +10,5 @@ mcMd_configIos_=mcMd/configIos/ConfigIo.cpp \
 mcMd_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_configIos_))
 mcMd_configIos_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_configIos_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_configIos_:.cpp=.o))
 

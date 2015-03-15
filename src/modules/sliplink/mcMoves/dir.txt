@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = modules/sliplink/mcMoves
-pathToSrc = ../../..

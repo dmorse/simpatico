@@ -1,0 +1,49 @@
+namespace McMd 
+{
+
+/*! \page mcMd_integrator_NvtLangevinIntegrator_page NvtLangevinIntegrator
+
+\section mcMd_integrator_NvtLangevinIntegrator_overview_sec Synopsis
+
+NvtLangevinIntegrator implements an NVT velocity-Verlet integrator using a stochastic Langevin thermostat.
+
+This integrator requires that the Util::EnergyEnsemble object of the associated System must be set to "isothermal". The target temperature is the temperature returned by the function Util::EnergyEnsemble::temperature().
+
+The integrator approximates the Langevin equations of motion, given for each particle by:
+\f[
+   m\frac{d{\bf v}}{dt}  =  -\frac{\partial U}{\partial {\bf r}}
+                         - m\gamma {\bf v}
+                         +  {\bf f}^{\rm (r)} ,
+\f]
+in which:
+
+   - \f$\gamma\f$ is a velocity relaxation rate (inverse time) parameter
+
+   - \f${\bf f}^{\rm (r)}\f$ is a random force 
+
+\sa McMd::NvtLangevinIntegrator
+\sa Util::EnergyEnsemble
+\sa \ref algorithms_Langevin_page "algorithm"
+
+\section mcMd_integrator_NvtLangevinIntegrator_param_sec Parameters
+The parameter file format is:
+\code
+   NvtLangevinIntegrator{ 
+     dt                 double
+     gamma              double 
+   }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+  <tr> 
+     <td> gamma</td>
+     <td> velocity relaxation rate \f$\gamma\f$ (inverse autocorrelation time) </td>
+  </tr>
+</table>
+
+*/
+}

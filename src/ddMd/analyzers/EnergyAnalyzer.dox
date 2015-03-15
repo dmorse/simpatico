@@ -1,0 +1,58 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_EnergyAnalyzer_page  EnergyAnalyzer
+
+\section ddMd_analyzer_EnergyAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes the average of total energy and its components, and optionally outputs sampled values or block averages during the simulation. 
+
+\sa DdMd::EnergyAnalyzer
+
+\section ddMd_analyzer_EnergyAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+   EnergyAnalyzer{
+     interval           int
+     outputFileName     string
+     [nSamplePerBlock]  int
+   }
+\endcode
+in which 
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>[nSamplePerBlock]</td>
+     <td>number of samples per block average (optional, default = 0)</td>
+  </tr>
+</table>
+If nSamplePerBlock > 0, this analyzer outputs block average values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.
+
+The nSamplePerBlock parameter is optional, as indicated by the square brackets in the file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
+
+\section ddMd_analyzer_EnergyAnalyzer_output_sec Output
+
+If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat, with extension ".dat", during the simulation. Each line of this file contains the value of the time step associated with the first value in the block average and the value of the block average of nSamplePerBlock values. If nSamplePerBlock = 0, no such file is created. If this file is created, its columns contain the current time step and the components of the energy in the following order:
+
+\code
+    iStep   kinetic pair [bond] [angle] [dihedral] [external] total
+\endcode
+The covalent bond, angle, and dihedral energies and the external energy are each included only if relevant: Each of these components is included in the output format only if it was activated in the parameter file for this simulation, e.g., by setting nBondType, nAngleType, or nDihedralType to a positive value or by setting hasExternal to true. 
+
+At the end of the simulation, when the OUTPUT_ANALYZERS command is invoked:
+
+   - A copy of the parameter file block associated with this analyzer is echoed to file {outputFileName}.prm.
+
+   - Final average value and estimated errors on the average of the energy and its components are output to file {outputFileName}.ave.
+
+   - Details of the hierarchical block-averaging analysis of error on the average of the total energy and energy components, along with corresponding variance values, are output to a file {outputFileName}.aer.
+
+*/
+}

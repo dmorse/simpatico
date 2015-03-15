@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -23,7 +23,9 @@ namespace McMd
    /**
    * BondLengthDist evaluates the distribution function of the lengths of the bonds.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \sa \ref mcMd_analyzer_BondLengthDist_page "parameter file format"
+   *
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BondLengthDist : public SystemAnalyzer<System>
    {

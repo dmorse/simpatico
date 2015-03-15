@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -120,8 +120,8 @@ namespace Inter
       *
       * This function returns a bond angle chosen from the Boltzmann
       * distribution of angle for bonds of random orientation. The
-      * distribution P(\theta) of values of the angle \theta is proportional 
-      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * distribution P(theta) of values of the angle theta is proportional 
+      * to sin(theta)*exp[-beta*phi(theta) ], where phi(theta) 
       * is the bond energy. 
       *
       * \param random pointer to random number generator object.
@@ -136,8 +136,8 @@ namespace Inter
       *
       * This function returns a bond angle chosen from the Boltzmann
       * distribution of angle for bonds of random orientation. The
-      * distribution P(\theta) of values of the angle \theta is proportional 
-      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * distribution P(theta) of values of the angle theta is proportional 
+      * to sin(theta)*exp[-beta*phi(theta) ], where phi(theta) 
       * is the bond energy. 
       *
       * \param random pointer to random number generator object.

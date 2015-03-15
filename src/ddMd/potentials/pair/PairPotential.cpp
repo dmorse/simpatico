@@ -1,10 +1,7 @@
-#ifndef DDMD_PAIR_POTENTIAL_CPP
-#define DDMD_PAIR_POTENTIAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -92,8 +89,8 @@ namespace DdMd
    void PairPotential::readParameters(std::istream& in)
    {
       read<double>(in, "skin", skin_);
-      nCellCut_ = 1; // Default value
-      read<int>(in, "nCellCut", nCellCut_, false);  // optional parameter
+      nCellCut_ = 1; // Default value for optional parameter
+      readOptional<int>(in, "nCellCut", nCellCut_); 
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
@@ -107,6 +104,7 @@ namespace DdMd
    {
   
       loadParameter<double>(ar, "skin", skin_);
+      loadParameter<int>(ar, "nCellCut", nCellCut_, false);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
 
@@ -122,6 +120,7 @@ namespace DdMd
    void PairPotential::save(Serializable::OArchive& ar)
    {
       ar << skin_;
+      Parameter::saveOptional(ar, nCellCut_, true);
       ar << pairCapacity_;
       ar << maxBoundary_;
       ar << cutoff_;
@@ -328,11 +327,11 @@ namespace DdMd
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atomPtr0 = neighbors[i];
+            atomPtr0 = neighbors[i]->ptr();
 
             // Loop over atoms in this cell
             for (j = 0; j < na; ++j) {
-               atomPtr1 = neighbors[j];
+               atomPtr1 = neighbors[j]->ptr();
                if (atomPtr1 > atomPtr0) {
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
@@ -345,7 +344,7 @@ namespace DdMd
             // Loop over atoms in neighboring cells.
             if (reverseUpdateFlag()) {
                for (j = na; j < nn; ++j) {
-                  atomPtr1 = neighbors[j];
+                  atomPtr1 = neighbors[j]->ptr();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
                   if (rsq < cutoffSq) {
@@ -354,7 +353,7 @@ namespace DdMd
                }
             } else {
                for (j = na; j < nn; ++j) {
-                  atomPtr1 = neighbors[j];
+                  atomPtr1 = neighbors[j]->ptr();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
                   if (rsq < cutoffSq) {
@@ -438,4 +437,3 @@ namespace DdMd
    }
 
 }
-#endif

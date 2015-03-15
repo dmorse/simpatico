@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,7 +20,7 @@ namespace Util
    * provides access to its elements via the A(i,j) Matrix syntax.
    *
    * Template parameters M and N are the number of rows and columns
-   * respectively.
+   * respectively, so that capacity1 = M and capacity2 = N.
    *
    * \ingroup Matrix_Module
    */

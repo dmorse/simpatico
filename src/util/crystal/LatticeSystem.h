@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -26,7 +26,7 @@ namespace Util
    *
    * \ingroup Crystal_Module
    */
-   enum LatticeSystem {Cubic, Tetragonal, Orthorhombic, 
+   enum LatticeSystem {Cubic, Tetragonal, Orthorhombic,
                        Monoclinic, Triclinic, Rhombohedral, Hexagonal};
 
 
@@ -60,18 +60,17 @@ namespace Util
    {  serializeEnum(ar, lattice, version); }
 
    #ifdef UTIL_MPI
-
    /**
    * Explicit specialization MpiTraits<LatticeSystem>.
    */
    template <>
    class MpiTraits<Util::LatticeSystem>
-   {  
-   public:  
-      static MPI::Datatype type;      ///< MPI Datatype
-      static bool hasType;            ///< Is the MPI type initialized?
+   {
+   public:
+      static MPI::Datatype type;  ///< MPI Datatype
+      static bool hasType;        ///< Is the MPI type initialized?
    };
-
    #endif
+
 }
 #endif
