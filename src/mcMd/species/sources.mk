@@ -5,8 +5,7 @@ mcMd_species_= \
     mcMd/species/SpeciesFactory.cpp \
     mcMd/species/SpeciesManager.cpp \
     mcMd/species/Point.cpp \
-    mcMd/species/species_queries.cpp \
-    mcMd/species/Generator.cpp 
+    mcMd/species/species_queries.cpp 
 
 ifdef INTER_BOND
 mcMd_species_+= \
