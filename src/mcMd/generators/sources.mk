@@ -3,7 +3,8 @@ mcMd_generators_= \
     mcMd/generators/Generator.cpp 
 
 ifdef INTER_BOND
-mcMd_generators_+= 
+mcMd_generators_+= \
+    mcMd/generators/PointGenerator.cpp 
     #mcMd/generators/LinearGenerator.cpp 
 endif
 
