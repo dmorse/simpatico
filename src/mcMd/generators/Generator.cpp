@@ -5,6 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include "Generator.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
@@ -33,9 +34,10 @@ namespace McMd
    * Attempt to place an atom.
    */
    bool Generator::attemptPlaceAtom(Atom& atom,
-                             const DArray<double> diameters, 
+                             const DArray<double>& diameters, 
                              CellList& cellList)
    {
+      boundary().shift(atom.position());
       Vector pos = atom.position();
       double rSq, di, dj, dSq;
       CellList::NeighborArray neighbors;
@@ -63,12 +65,11 @@ namespace McMd
    * Generate random molecules
    */
    bool Generator::generate(int nMolecule, 
-                            const DArray<double> diameters, 
+                            const DArray<double>& diameters, 
                             CellList& cellList)
    {
-      if (nMolecule > species().capacity()) {
-         UTIL_THROW("nMolecule > species().capacity()!"); 
-      }
+      UTIL_CHECK(nMolecule <= species().capacity());
+      UTIL_CHECK(cellList.isAllocated());
 
       // If cell list is not allocated, then allocate.
       if (!cellList.isAllocated()) {
@@ -101,6 +102,27 @@ namespace McMd
          }
       }
       return true;
+   }
+
+   /*
+   * If cell list is not allocated, allocate it.
+   */
+   void Generator::allocateCellList(System& system,
+                                    const DArray<double>& diameters, 
+                                    CellList& cellList)
+   {
+      Simulation& simulation = system.simulation();
+      UTIL_CHECK(diameters.capacity() == simulation.nAtomType());
+      if (!cellList.isAllocated()) {
+         double maxDiameter = 0.0;
+         for (int iType = 0; iType < diameters.capacity(); iType++) {
+            if (diameters[iType] > maxDiameter) {
+               maxDiameter = diameters[iType];
+            }
+         }
+         cellList.allocate(simulation.atomCapacity(), 
+                           system.boundary(), maxDiameter);
+      }
    }
 
 }

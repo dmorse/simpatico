@@ -13,8 +13,10 @@
 namespace McMd
 {
 
-   class System;
    class Species;
+   class System;
+   class Molecule;
+   class CellList;
    using namespace Util;
 
    class PointGenerator : public Generator
@@ -27,7 +29,7 @@ namespace McMd
    protected:
 
       bool attemptPlaceMolecule(Molecule& molecule, 
-                                DArray<double> diamaeters,
+                                const DArray<double>& diameters,
                                 CellList& cellList);
 
    };
