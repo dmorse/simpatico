@@ -18,9 +18,11 @@
 #include "PairEnergyAnalyzer.h"
 #include "OutputPairEnergies.h"
 #include "PairEnergyAverage.h"
+#include "PairLRFAverage.h"
 #ifdef INTER_EXTERNAL
 #include "ExternalEnergyAnalyzer.h"
 #include "ExternalEnergyAverage.h"
+#include "ExternalLRFAverage.h"
 #endif
 #include "PressureAnalyzer.h"
 #include "OutputPressure.h"

@@ -14,6 +14,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/OutputPressure.cpp\
      ddMd/analyzers/OutputBoxdim.cpp \
      ddMd/analyzers/PairEnergyAverage.cpp\
+     ddMd/analyzers/PairLRFAverage.cpp\
      ddMd/analyzers/PairEnergyAnalyzer.cpp\
      ddMd/analyzers/OutputPairEnergies.cpp\
      ddMd/analyzers/StressAnalyzer.cpp\
@@ -41,6 +42,7 @@ endif
 ifdef INTER_EXTERNAL
 ddMd_analyzers_+=\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/ExternalLRFAverage.cpp\
      ddMd/analyzers/ExternalEnergyAnalyzer.cpp
 endif
 
