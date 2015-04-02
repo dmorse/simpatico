@@ -115,6 +115,27 @@ namespace DdMd
                                     Vector& force) const; 
 
       /**
+      * Modify a pair interaction parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      * \param value  new value of parameter
+      */
+      void set(std::string name, double value)
+      {  interactionPtr_->set(name, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      */
+      double get(std::string name) const
+      {  return interactionPtr_->get(); }
+
+      /**
       * Return external interaction class name (e.g., "LamellarOrderingExternal").
       */
       virtual std::string interactionClassName() const;
