@@ -26,8 +26,11 @@ namespace McMd
    class BondPotential;
    #endif
 
-   class Generator {
-
+   /**
+   * Generates initial configurations for all molecules in a species.
+   */
+   class Generator 
+   {
    public:
 
       /**

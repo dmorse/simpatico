@@ -37,16 +37,18 @@ namespace McMd
                              const DArray<double>& diameters, 
                              CellList& cellList)
    {
+      // Shift atom position to primary image within boundary
       boundary().shift(atom.position());
-      Vector pos = atom.position();
-      double rSq, di, dj, dSq;
-      CellList::NeighborArray neighbors;
-      Atom* neighborPtr;
-      int n;
+      Vector& pos = atom.position();
 
+      // Loop over neighbors, check distance to each.
+      // Return false immediately if any neighbor is too close.
+      CellList::NeighborArray neighbors;
       cellList.getNeighbors(pos, neighbors);
-      di = diameters[atom.typeId()];
-      n = neighbors.size();
+      double di = diameters[atom.typeId()];
+      double rSq, dj, dSq;
+      Atom* neighborPtr;
+      int n = neighbors.size();
       for (int j = 0; j < n; ++j) {
          neighborPtr = neighbors[j];
          rSq = boundary().distanceSq(neighborPtr->position(), pos);
@@ -56,7 +58,9 @@ namespace McMd
          if (rSq < dSq) {
             return false;
          }
-      } 
+      }
+
+      // If all neighbors are allowed, add atom to cellList
       cellList.addAtom(atom);
       return true;
    }
@@ -69,17 +73,12 @@ namespace McMd
                             CellList& cellList)
    {
       UTIL_CHECK(nMolecule <= species().capacity());
-      UTIL_CHECK(cellList.isAllocated());
+      UTIL_CHECK(diameters.capacity() == simulation().nAtomType());
 
       // If cell list is not allocated, then allocate.
+      // UTIL_CHECK(cellList.isAllocated());
       if (!cellList.isAllocated()) {
-         double maxDiameter = 0.0;
-         for (int iType = 0; iType < simulation().nAtomType(); iType++) {
-            if (diameters[iType] > maxDiameter)
-               maxDiameter = diameters[iType];
-         }
-         cellList.allocate(simulation().atomCapacity(), 
-                           boundary(), maxDiameter);
+         allocateCellList(system(), diameters, cellList);
       }
 
       // Attempt to place all molecules in Species
