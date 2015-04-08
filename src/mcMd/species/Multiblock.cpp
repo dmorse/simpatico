@@ -196,7 +196,6 @@ namespace McMd
              type_ = atomTypes_[i];
           }
       }
-      std::cout<<type_<<"\n";
       return type_;
    }
    
