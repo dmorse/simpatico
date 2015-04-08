@@ -118,8 +118,6 @@ namespace DdMd
       * Modify a pair interaction parameter, identified by a string.
       *
       * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
       * \param value  new value of parameter
       */
       void set(std::string name, double value)
@@ -129,11 +127,9 @@ namespace DdMd
       * Get a parameter value, identified by a string.
       *
       * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
       */
       double get(std::string name) const
-      {  return interactionPtr_->get(); }
+      {  return interactionPtr_->get(name); }
 
       /**
       * Return external interaction class name (e.g., "LamellarOrderingExternal").
