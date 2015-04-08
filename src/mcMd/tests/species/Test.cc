@@ -1,5 +1,6 @@
 #include "SpeciesTest.h"
 #include "HomopolymerTest.h"
+#include "MultiblockTest.h"
 #include "HomoRingTest.h"
 
 int main()

@@ -167,9 +167,9 @@ namespace McMd
    void Multiblock::save(Serializable::OArchive &ar)
    {
       ar << moleculeCapacity_;
-      ar.pack(blockLengths_, nBlock_);
-      ar.pack(atomTypes_, nBlock_);
-      ar.pack(blockBegin_, nBlock_);
+      ar & blockLengths_;
+      ar & atomTypes_;
+      ar & blockBegin_;
       ar << bondType_;
       #ifdef INTER_ANGLE
       Parameter::saveOptional(ar, hasAngles_, true);
@@ -190,12 +190,13 @@ namespace McMd
    */
    int Multiblock::calculateAtomTypeId(int index) const
    {
-      int type_;
+      int type_ = 0;
       for (int i = 0; i < nBlock_; i++) {
-          if (index > blockBegin_[i]) {
-             type_ = atomType[i];
+          if (index >= blockBegin_[i]) {
+             type_ = atomTypes_[i];
           }
       }
+      std::cout<<type_<<"\n";
       return type_;
    }
    
