@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/TrajectoryWriter.h>   // base class
+#include <ddMd/analyzers/trajectory/TrajectoryWriter.h>   // base class
 
 namespace DdMd
 {

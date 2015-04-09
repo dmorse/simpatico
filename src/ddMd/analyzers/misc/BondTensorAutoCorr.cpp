@@ -6,7 +6,7 @@
 */
 
 #include "BondTensorAutoCorr.h"
-#include "AutoCorrAnalyzer.tpp"
+#include <ddMd/analyzers/AutoCorrAnalyzer.tpp>
 #include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/GroupIterator.h>
 #include <util/boundary/Boundary.h>
