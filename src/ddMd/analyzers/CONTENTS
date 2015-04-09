@@ -1,70 +1,70 @@
-
 Classes in src/ddMd/analyzer
 -----------------------------------------------------
 Global Scalar Variables, Average and Output
 
-AverageAnalyzer.h              (base class)
+AverageAnalyzer              (base class)
 
-KineticEnergyAnalyzer.h
-OutputTemperature.h         <- deprecated
+EnergyAnalyzer
+OutputEnergy                <- deprecated
 
-ExternalEnergyAnalyzer.h
-ExternalEnergyAverage.h     <- deprecated
+KineticEnergyAnalyzer
+OutputTemperature           <- deprecated
 
-PairEnergyAnalyzer.h
-PairEnergyAverage.h         <- deprecated
-OutputPairEnergies.h        <- deprecated
+ExternalEnergyAnalyzer
+ExternalEnergyAverage       <- deprecated
 
-PressureAnalyzer.h
-OutputPressure.h            <- deprecated
+PairEnergyAnalyzer
+PairEnergyAverage           <- deprecated
+OutputPairEnergies          <- deprecated
 
-OutputBoxdim.h
+PressureAnalyzer
+OutputPressure              <- deprecated
 
-OutputEnergy.h
+OutputBoxdim
 
 -----------------------------------------------------
 Tensor-Valued Variables, Average and Output:
 
-TensorAverage.h             (base class, full tensors)
-SymmTensorAverage.h         (base class, symm tensors)
+TensorAverage             (base class, full tensors)
+SymmTensorAverage         (base class, symm tensors)
 
-StressAnalyzer.h
-VirialStressAnalyzer.h
+StressAnalyzer
+VirialStressAnalyzer
 
-OutputStressTensor.h          <- deprecated
-VirialStressTensor.h          <- deprecated
-VirialStressTensorAverage.h   <- deprecated
+OutputStressTensor          <- deprecated
+VirialStressTensor          <- deprecated
+VirialStressTensorAverage   <- deprecated
 
 -----------------------------------------------------
 Autocorrelation of global quantities:
 
-AutoCorrAnalyzer.h (base class)
+AutoCorrAnalyzer (base class)
 
-BondTensorAutoCorr.h
-StressAutoCorrelation.h : public AutoCorrAnalyzer
-StressAutoCorr.h          <- deprecate ?
+StressAutoCorrelation : public AutoCorrAnalyzer
+StressAutoCorr              <- deprecated
+BondTensorAutoCorr
 
 -----------------------------------------------------
 Static and Dynamic Structure Factor Analyzers:
 
-AsymmSF.h                 <- deprecate ?
-AsymmSFGrid.h             <- deprecate ?
-StructureFactor.h
-StructureFactorGrid.h
-VanHove.h
+StructureFactor
+StructureFactorGrid
+VanHove
+AsymmSF                     <- deprecated
+AsymmSFGrid                 <- deprecated
 
 -----------------------------------------------------
 Configuration and Trajector Writers:
 
-ConfigWriter.h
+ConfigWriter
 
-TrajectoryWriter.h
-DdMdGroupTrajectoryWriter.h
-DdMdTrajectoryWriter.h
-LammpsDumpWriter.h
+TrajectoryWriter
+DdMdGroupTrajectoryWriter
+DdMdTrajectoryWriter
+LammpsDumpWriter
 
 -----------------------------------------------------
 Miscellaneous:
 
-LogEnergy.h
-OrderParamNucleation.h   <- deprecate
+LogEnergy
+OrderParamNucleation        <- deprecated

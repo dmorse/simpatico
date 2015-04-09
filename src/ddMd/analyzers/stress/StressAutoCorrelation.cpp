@@ -5,8 +5,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "StressAutoCorrelation.h"
-#include "AutoCorrAnalyzer.tpp"
+#include <ddMd/analyzers/stress/StressAutoCorrelation.h>
+#include <ddMd/analyzers/AutoCorrAnalyzer.tpp>
 
 #include <sstream>
 
