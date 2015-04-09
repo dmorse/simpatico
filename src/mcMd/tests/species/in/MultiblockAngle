@@ -1,0 +1,15 @@
+Multiblock{
+  nBlock                       3
+  blockLengths                 4
+                               4
+                               4
+  atomTypes                    0
+                               1
+                               2 
+  atomType                     0
+                               1
+                               2
+  bondType                     0
+  hasAngle                     1
+  angleType                    0
+}
