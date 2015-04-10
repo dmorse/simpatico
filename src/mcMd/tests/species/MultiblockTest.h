@@ -25,7 +25,7 @@ public:
    void setUp() 
    { 
       species.setId(speciesId); 
-      //setVerbose(2);
+      // setVerbose(2);
    } 
 
    void tearDown() 
@@ -63,6 +63,29 @@ void MultiblockTest::testReadParam()
 
    TEST_ASSERT(species.isValid());
 
+   // Atom types
+   TEST_ASSERT(species.nAtom() == 12);
+   TEST_ASSERT(species.atomTypeId(0) == 0);
+   TEST_ASSERT(species.atomTypeId(1) == 0);
+   TEST_ASSERT(species.atomTypeId(2) == 0);
+   TEST_ASSERT(species.atomTypeId(3) == 0);
+   TEST_ASSERT(species.atomTypeId(4) == 1);
+   TEST_ASSERT(species.atomTypeId(5) == 1);
+   TEST_ASSERT(species.atomTypeId(6) == 1);
+   TEST_ASSERT(species.atomTypeId(7) == 1);
+   TEST_ASSERT(species.atomTypeId(8) == 2);
+   TEST_ASSERT(species.atomTypeId(9) == 2);
+   TEST_ASSERT(species.atomTypeId(10) == 2);
+   TEST_ASSERT(species.atomTypeId(11) == 2);
+   if (verbose() > 1) { 
+      std::cout << std::endl << "Atom Types:"; 
+      for (int i = 0; i < species.nAtom(); ++i) {
+         std::cout << std::endl << i << "  "
+                   << species.atomTypeId(i);
+      }
+   }
+  
+   // Bonds
    TEST_ASSERT(species.nBond() == species.nAtom() - 1);
    const SpeciesGroup<2>* bondPtr;
    if (verbose() > 1) { std::cout << std::endl << "Bonds:"; }
@@ -72,7 +95,7 @@ void MultiblockTest::testReadParam()
       TEST_ASSERT(bondPtr->atomId(1) == i+1);
       TEST_ASSERT(bondPtr->typeId() == 0);
       if (verbose() > 1) {
-         std::cout << std::endl << i << "  "
+         std::cout << std::endl << i << " "
                    << bondPtr->atomId(0) << " "
                    << bondPtr->atomId(1) << " "
                    << bondPtr->typeId();
@@ -108,9 +131,9 @@ void MultiblockTest::testReadParam()
       TEST_ASSERT(anglePtr->typeId() == 0);
       if (verbose() > 1) {
          std::cout << std::endl << i << "  "
-                   << anglePtr->atomId(0) << " "
-                   << anglePtr->atomId(1) << " "
-                   << anglePtr->atomId(2) << " "
+                   << anglePtr->atomId(0) << "  "
+                   << anglePtr->atomId(1) << "  "
+                   << anglePtr->atomId(2) << "  "
                    << anglePtr->typeId();
       }
    }

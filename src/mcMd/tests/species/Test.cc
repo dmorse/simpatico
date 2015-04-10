@@ -1,10 +1,15 @@
-#include "SpeciesTest.h"
-#include "HomopolymerTest.h"
-#include "MultiblockTest.h"
-#include "HomoRingTest.h"
+#include "SpeciesTestComposite.h"
+//#include "SpeciesTest.h"
+//#include "HomopolymerTest.h"
+//#include "MultiblockTest.h"
+//#include "HomoRingTest.h"
 
 int main()
 {
+   SpeciesTestComposite test;
+   test.run();
+
+   #if 0
    TEST_RUNNER(SpeciesTest) test1;
    test1.run();
 
@@ -13,4 +18,8 @@ int main()
 
    TEST_RUNNER(HomoRingTest) test3;
    test3.run();
+
+   TEST_RUNNER(MultiblockTest) test4;
+   test4.run();
+   #endif
 }

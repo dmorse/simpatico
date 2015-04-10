@@ -51,10 +51,11 @@ namespace McMd
       }
       blockBegin_.allocate(nBlock_);
       for (int i=0; i < nBlock_; ++i) {
-         if (i == 0)
+         if (i == 0) {
             blockBegin_[i] = 0;
-         else
+         } else {
             blockBegin_[i] = blockBegin_[i-1] + blockLengths_[i-1];
+         }
       }
       nAtom_ = 0; 
       for (int i=0; i < nBlock_; ++i) {
@@ -102,25 +103,26 @@ namespace McMd
    {
       loadParameter<int>(ar,"nBlock", nBlock_);
       blockLengths_.allocate(nBlock_);
-      loadDArray<int>(ar,"blockLengths", blockLengths_, nBlock_);
+      loadDArray<int>(ar, "blockLengths", blockLengths_, nBlock_);
       for (int i=0; i < nBlock_; ++i) {
          if (blockLengths_[i] < 1) {
             UTIL_THROW("Invalid blockLength for Multiblock.");
          }
       }
       atomTypes_.allocate(nBlock_);
-      loadDArray<int>(ar,"atomTypes", atomTypes_, nBlock_);
+      loadDArray<int>(ar, "atomTypes", atomTypes_, nBlock_);
       for (int i=0; i < nBlock_; ++i) {
          if (atomTypes_[i] < 0) {
             UTIL_THROW("Invalid atomType for Multiblock.");
          }
       }
       blockBegin_.allocate(nBlock_);
-      for (int i=0; i < nBlock_; ++i) {
-         if (i == 0)
+      for (int i = 0; i < nBlock_; ++i) {
+         if (i == 0) {
             blockBegin_[i] = 0;
-         else
+         } else {
             blockBegin_[i] = blockBegin_[i-1] + blockLengths_[i-1];
+         }
       }
       nAtom_ = 0; 
       for (int i=0; i < nBlock_; ++i) {
@@ -138,7 +140,7 @@ namespace McMd
             UTIL_THROW("Error: Cannot have angles with nAtom < 3");
          }
          nAngle_ = nAtom_ - 2;
-         load<int>(in, "angleType", angleType_);
+         loadParameter<int>(ar, "angleType", angleType_);
       } else {
          nAngle_ = 0;
       }
@@ -152,7 +154,7 @@ namespace McMd
             UTIL_THROW("Error: Cannot have dihedrals with nAtom < 4");
          }
          nDihedral_ = nAtom_ - 3;
-         load<int>(in, "dihedralType", dihedralType_);
+         loadParameter<int>(ar, "dihedralType", dihedralType_);
       } else {
          nDihedral_ = 0;
       }
@@ -190,15 +192,18 @@ namespace McMd
    */
    int Multiblock::calculateAtomTypeId(int index) const
    {
-      int type_ = 0;
-      for (int i = 0; i < nBlock_; i++) {
-          if (index >= blockBegin_[i]) {
-             type_ = atomTypes_[i];
-          }
+      int type = -1;
+      for (int i = 0; i < nBlock_; ++i) {
+         if (index >= blockBegin_[i]) {
+            type = atomTypes_[i];
+         } else {
+            break;
+         }
       }
-      return type_;
+      assert(type >= 0);
+      return type;
    }
-   
+
    /* 
    * Return bondType_ for every bond.
    */
