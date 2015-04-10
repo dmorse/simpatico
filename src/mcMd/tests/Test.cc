@@ -14,7 +14,7 @@
 // Define a class McMdNsTestComposite
 TEST_COMPOSITE_BEGIN(McMdNsTestComposite)
 addChild(new ChemistryTestComposite, "chemistry/");
-//addChild(new SpeciesTestComposite, "species/");
+addChild(new SpeciesTestComposite, "species/");
 addChild(new NeighborTestComposite, "neighbor/");
 addChild(new SimulationTestComposite, "simulation/");
 addChild(new TEST_RUNNER(McSimulationTest), "mcSimulation/");
