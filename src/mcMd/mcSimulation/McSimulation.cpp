@@ -14,6 +14,7 @@
 #include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -542,6 +543,16 @@ namespace McMd
                            << "  " <<  filename << std::endl;
                analyze(min, max, filename);
             } else
+            if (command == "ANALYZE_TRAJECTORY") {
+               std::string classname;
+               std::string filename;
+               int min, max;
+               inBuffer >> min >> max >> classname >> filename;
+               Log::file() << " " << Str(classname,15) 
+                           << " " << Str(filename, 15)
+                           << std::endl;
+               analyzeTrajectory(min, max, classname, filename);
+            } else 
             if (command == "WRITE_CONFIG") {
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
@@ -916,6 +927,72 @@ namespace McMd
       Log::file() << std::endl;
 
       iStep_ = 0;
+   }
+
+   /*
+   * Open, read and analyze a trajectory file
+   */
+   void McSimulation::analyzeTrajectory(int min, int max, 
+                                        std::string classname, 
+                                        std::string filename)
+   {
+      // Preconditions
+      if (min < 0) UTIL_THROW("min < 0");
+      if (max < 0) UTIL_THROW("max < 0");
+      if (max < min) UTIL_THROW("max < min!");
+
+      // Construct TrajectoryReader
+      TrajectoryReader* trajectoryReaderPtr;
+      trajectoryReaderPtr = system().trajectoryReaderFactory().factory(classname);
+      if (!trajectoryReaderPtr) {
+         std::string message;
+         message = "Invalid TrajectoryReader class name " + classname;
+         UTIL_THROW(message.c_str());
+      }
+
+      // Open trajectory file
+      Log::file() << "Reading " << filename << std::endl;
+      trajectoryReaderPtr->open(filename);
+
+      // Main loop over trajectory frames
+      Timer timer;
+      Log::file() << "Begin main loop" << std::endl;
+      bool hasFrame = true;
+      timer.start();
+      for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
+         hasFrame = trajectoryReaderPtr->readFrame();
+         if (hasFrame) {
+            #ifndef INTER_NOPAIR
+            // Build the system PairList
+            system().pairPotential().buildCellList();
+            #endif
+            #ifdef UTIL_DEBUG
+            isValid();
+            #endif
+            // Initialize analyzers (taking in molecular information).
+            if (iStep_ == min) analyzerManager().setup();
+            // Sample property values only for iStep >= min
+            if (iStep_ >= min) analyzerManager().sample(iStep_);
+         }
+      }
+      timer.stop();
+      Log::file() << "end main loop" << std::endl;
+      int nFrames = iStep_ - min + 1;
+
+      trajectoryReaderPtr->close();
+      delete trajectoryReaderPtr;
+
+      // Output results of all analyzers to output files
+      analyzerManager().output();
+
+      // Output time 
+      Log::file() << std::endl;
+      Log::file() << "# of frames   " << nFrames << std::endl;
+      Log::file() << "run time      " << timer.time() 
+                  << "  sec" << std::endl;
+      Log::file() << "time / frame " << timer.time()/double(nFrames) 
+                  << "  sec" << std::endl;
+      Log::file() << std::endl;
    }
 
    /*

@@ -699,9 +699,9 @@ namespace McMd
       if (max < min) UTIL_THROW("max < min!");
 
       // Construct TrajectoryReader
-      TrajectoryReader* trajectoryReader;
-      trajectoryReader = system().trajectoryReaderFactory().factory(classname);
-      if (!trajectoryReader) {
+      TrajectoryReader* trajectoryReaderPtr;
+      trajectoryReaderPtr = system().trajectoryReaderFactory().factory(classname);
+      if (!trajectoryReaderPtr) {
          std::string message;
          message = "Invalid TrajectoryReader class name " + classname;
          UTIL_THROW(message.c_str());
@@ -709,7 +709,7 @@ namespace McMd
 
       // Open trajectory file
       Log::file() << "Reading " << filename << std::endl;
-      trajectoryReader->open(filename);
+      trajectoryReaderPtr->open(filename);
 
       // Main loop over trajectory frames
       Timer timer;
@@ -717,10 +717,10 @@ namespace McMd
       bool hasFrame = true;
       timer.start();
       for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
-         hasFrame = trajectoryReader->readFrame();
+         hasFrame = trajectoryReaderPtr->readFrame();
          if (hasFrame) {
             #ifndef INTER_NOPAIR
-            // Build the system CellList
+            // Build the system PairList
             system().pairPotential().buildPairList();
             #endif
             #ifdef UTIL_DEBUG
@@ -736,8 +736,8 @@ namespace McMd
       Log::file() << "end main loop" << std::endl;
       int nFrames = iStep_ - min + 1;
 
-      trajectoryReader->close();
-      delete trajectoryReader;
+      trajectoryReaderPtr->close();
+      delete trajectoryReaderPtr;
 
       // Output results of all analyzers to output files
       analyzerManager().output();

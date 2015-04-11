@@ -164,11 +164,22 @@ namespace McMd
       * processor are in this directory, but no inputPrefix is added after
       * the string "m/".
       *
-      * \param min        integer suffix of first configuration file name
-      * \param max        integer suffix of last configuration file name
-      * \param dumpPrefix root name for dump files (without integer suffix)
+      * \param min  integer suffix of first configuration file name
+      * \param max  integer suffix of last configuration file name
+      * \param dumpPrefix  root name for dump files (without integer suffix)
       */  
       void analyze(int min, int max, std::string dumpPrefix);
+
+      /**
+      * Read and analyze a trajectory file.
+      * 
+      * \param min  start at this frame number
+      * \param max  end at this frame number
+      * \param classname  name of the TrajectoryReader class to use
+      * \param filename  name of the trajectory file
+      */
+      void analyzeTrajectory(int min, int max, 
+                             std::string classname, std::string filename);
 
       /**
       * Write restart files.
