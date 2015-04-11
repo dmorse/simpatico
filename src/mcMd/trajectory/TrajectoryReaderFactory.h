@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>  
-#include <mcMd/trajectoryIos/TrajectoryReader.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 
 #include <string>
 

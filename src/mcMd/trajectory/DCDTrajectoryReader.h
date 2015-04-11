@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/trajectoryIos/TrajectoryReader.h> // base class
-#include <util/boundary/Boundary.h>              // typedef
-#include <util/containers/DArray.h>              // member
+#include <mcMd/trajectory/TrajectoryReader.h> // base class
+#include <util/boundary/Boundary.h>           // typedef
+#include <util/containers/DArray.h>           // member
 
 #include <fstream>
 

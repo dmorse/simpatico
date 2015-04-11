@@ -15,8 +15,8 @@
 #include <mcMd/configIos/ConfigIo.h>
 #include <mcMd/configIos/McConfigIo.h>
 #include <mcMd/configIos/ConfigIoFactory.h>
-#include <mcMd/trajectoryIos/TrajectoryReader.h>
-#include <mcMd/trajectoryIos/TrajectoryReaderFactory.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
+#include <mcMd/trajectory/TrajectoryReaderFactory.h>
 
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>

@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/trajectoryIos/TrajectoryReader.h> // base class
-#include <util/containers/DArray.h>              // member template
-#include <util/space/Vector.h>                   // template argument
+#include <mcMd/trajectory/TrajectoryReader.h> // base class
+#include <util/containers/DArray.h>           // member template
+#include <util/space/Vector.h>                // template argument
 
 namespace McMd
 {

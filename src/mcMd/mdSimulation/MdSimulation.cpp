@@ -19,7 +19,7 @@
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/trajectoryIos/TrajectoryReader.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
