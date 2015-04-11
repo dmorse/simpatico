@@ -1,0 +1,51 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "TrajectoryReaderFactory.h"
+
+// Subclasses of ConfigIo
+#include "LammpsDumpReader.h"
+#include "DdMdTrajectoryReader.h"
+#include "DCDTrajectoryReader.h"
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   TrajectoryReaderFactory::TrajectoryReaderFactory(System& system)
+    : systemPtr_(&system)
+   {}
+
+   /*
+   * Return a pointer to a instance of Trajectory subclass className.
+   */
+   TrajectoryReader* 
+   TrajectoryReaderFactory::factory(const std::string &className) const
+   {
+      TrajectoryReader *ptr = 0;
+
+      // Try subfactories first
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "LammpsDumpReader") {
+        ptr = new LammpsDumpReader(*systemPtr_);
+      } else
+      if (className == "DdMdTrajectoryReader") {
+        ptr = new DdMdTrajectoryReader(*systemPtr_);
+      } else
+      if (className == "DCDTrajectoryReader") {
+         ptr = new DCDTrajectoryReader(*systemPtr_);
+      } 
+      return ptr;
+   }
+
+}

@@ -7,13 +7,13 @@ include $(SRC_DIR_REL)/mcMd/config.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include sources.mk
 
-all: $(mcMd_trajectoryIos_OBJS)
+all: $(mcMd_trajectory_OBJS)
 
 clean:
-	rm -f $(mcMd_trajectoryIos_OBJS) $(mcMd_trajectoryIos_OBJS:.o=.d)
+	rm -f $(mcMd_trajectory_OBJS) $(mcMd_trajectory_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(mcMd_trajectoryIos_OBJS:.o=.d)
+	rm -f $(mcMd_trajectory_OBJS:.o=.d)
 
--include $(mcMd_trajectoryIos_OBJS:.o=.d)
+-include $(mcMd_trajectory_OBJS:.o=.d)
 

@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DCDTrajectoryIo.h"
+#include "DCDTrajectoryReader.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
@@ -32,8 +32,8 @@ namespace McMd
    /*
    * Constructor.
    */
-   DCDTrajectoryIo::DCDTrajectoryIo(System &system)
-   : TrajectoryIo(system),
+   DCDTrajectoryReader::DCDTrajectoryReader(System &system)
+   : TrajectoryReader(system),
      nAtoms_(0),
      nFrames_(0),
      frameId_(0)
@@ -42,7 +42,7 @@ namespace McMd
    /*
    * Destructor.
    */
-   DCDTrajectoryIo::~DCDTrajectoryIo()
+   DCDTrajectoryReader::~DCDTrajectoryReader()
    {}
 
    static unsigned int read_int(std::fstream &file)
@@ -52,91 +52,78 @@ namespace McMd
       return val;
    }
 
-   void DCDTrajectoryIo::readHeader(std::fstream &file)
+   void DCDTrajectoryReader::open(std::string filename)
    {
-      #if 0
-      // Calculate atomCapacity for entire simulation
-      int atomCapacity = 0;
-      int bondCapacity = 0;
-      int nSpecies = simulation().nSpecies();
-      int speciesCapacity = 0;
-      int iSpec,iMol;
-      Species* speciesPtr;
-      Molecule* molPtr;
-
-      for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
-         speciesPtr = &simulation().species(iSpec);
-         speciesCapacity = speciesPtr->capacity();
-
-         // Add molecules to system
-         for (iMol = 0; iMol < speciesCapacity; ++iMol) {
-            molPtr = &(simulation().getMolecule(iSpec));
-            system().addMolecule(*molPtr);
-         }
-         atomCapacity += speciesCapacity*speciesPtr->nAtom();
-         bondCapacity += speciesCapacity*speciesPtr->nBond();
+      // Open trajectory file
+      file_.open(filename.c_str(), std::ios::in | std::ios::binary);
+      if (file_.fail()) {
+         std::string message;
+         message= "Error opening trajectory file. Filename: " + filename;
+         UTIL_THROW(message.c_str());
       }
-      #endif
-      TrajectoryIo::readHeader(file);
 
       // Read number of frames
-      file.seekp(NFILE_POS);
-      nFrames_ = read_int(file);
+      file_.seekp(NFILE_POS);
+      nFrames_ = read_int(file_);
       frameId_ = 0;
 
       // Read number of atoms
-      file.seekp(NATOMS_POS);
-      nAtoms_ = read_int(file);
-      if (nAtoms_ != atomCapacity_) {
+      file_.seekp(NATOMS_POS);
+      nAtoms_ = read_int(file_);
+
+      // Add all molecules and check consistency
+      addMolecules();
+
+      if (nAtoms_ != nAtomTotal_) {
          std::ostringstream oss;
          oss << "Number of atoms in DCD file (" << nAtoms_ << ") does not "
-              << "match allocated number of atoms (" << atomCapacity_  << ")!";
+              << "match allocated number of atoms (" << nAtomTotal_  << ")!";
          UTIL_THROW(oss.str().c_str());
       }
 
-      file.seekp(FRAMEDATA_POS);
+      file_.seekp(FRAMEDATA_POS);
 
       xBuffer_.allocate(nAtoms_);
       yBuffer_.allocate(nAtoms_);
       zBuffer_.allocate(nAtoms_);
    }
 
-   bool DCDTrajectoryIo::readFrame(std::fstream &file)
+   bool DCDTrajectoryReader::readFrame()
    {
       // Check if the last frame was already read
       if (frameId_ >= nFrames_) {
          return false;
       }
 
-      double lx,ly,lz;
-      double angle0,angle1,angle2;
+      double lx, ly, lz;
+      double angle0, angle1, angle2;
 
       Vector lengths;
 
       // Read frame header
       int headerSize;
-      headerSize=read_int(file);
+      headerSize=read_int(file_);
       if (headerSize != 6*sizeof(double)) {
          std::ostringstream oss;
          oss << "Unknown file format!";
          UTIL_THROW(oss.str().c_str());
       }
 
-      file.read((char *)&lx, sizeof(double));
-      file.read((char *)&angle0, sizeof(double));
-      file.read((char *)&ly, sizeof(double));
-      file.read((char *)&angle1, sizeof(double));
-      file.read((char *)&angle2, sizeof(double));
-      file.read((char *)&lz, sizeof(double));
+      file_.read((char *)&lx, sizeof(double));
+      file_.read((char *)&angle0, sizeof(double));
+      file_.read((char *)&ly, sizeof(double));
+      file_.read((char *)&angle1, sizeof(double));
+      file_.read((char *)&angle2, sizeof(double));
+      file_.read((char *)&lz, sizeof(double));
 
-      headerSize=read_int(file);
+      headerSize=read_int(file_);
       if (headerSize != 6*sizeof(double)) {
          std::ostringstream oss;
          oss << "Unkown file format!";
          UTIL_THROW(oss.str().c_str());
       }
 
-      if (!file.good()) {
+      if (!file_.good()) {
          std::ostringstream oss;
          oss << "Error reading trajectory file!";
          UTIL_THROW(oss.str().c_str());
@@ -151,33 +138,36 @@ namespace McMd
       int blockSize;
 
       // read coords
-      blockSize = read_int(file);
-      file.read((char *) xBuffer_.cArray(), sizeof(float) * nAtoms_);
-      read_int(file); // blockSize
+      blockSize = read_int(file_);
+      file_.read((char *) xBuffer_.cArray(), sizeof(float) * nAtoms_);
+      read_int(file_); // blockSize
 
       if (blockSize != (int)sizeof(float)*nAtoms_) {
          std::ostringstream oss;
-         oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
+         oss << "Invalid frame size (got " << blockSize 
+             << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
 
-      blockSize = read_int(file);
-      file.read((char *) yBuffer_.cArray(), sizeof(float) * nAtoms_);
-      read_int(file); // blockSize
+      blockSize = read_int(file_);
+      file_.read((char *) yBuffer_.cArray(), sizeof(float) * nAtoms_);
+      read_int(file_); // blockSize
 
       if (blockSize != (int)sizeof(float)*nAtoms_) {
          std::ostringstream oss;
-         oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
+         oss << "Invalid frame size (got " << blockSize 
+             << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
 
-      blockSize = read_int(file);
-      file.read((char *) zBuffer_.cArray(), sizeof(float) * nAtoms_);
-      read_int(file); // blockSize
+      blockSize = read_int(file_);
+      file_.read((char *) zBuffer_.cArray(), sizeof(float) * nAtoms_);
+      read_int(file_); // blockSize
 
       if (blockSize != (int)sizeof(float)* nAtoms_) {
          std::ostringstream oss;
-         oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
+         oss << "Invalid frame size (got " << blockSize 
+             << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
 
@@ -211,5 +201,8 @@ namespace McMd
       // Indicate successful completion
       return true;
    }
+
+   void DCDTrajectoryReader::close()
+   { file_.close(); }
 
 }

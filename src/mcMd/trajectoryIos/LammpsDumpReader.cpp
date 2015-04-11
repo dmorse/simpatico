@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LammpsDumpIo.h"
+#include "LammpsDumpReader.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
@@ -25,29 +25,38 @@ namespace McMd
    /*
    * Constructor.
    */
-   LammpsDumpIo::LammpsDumpIo(System &system)
-   : TrajectoryIo(system)
+   LammpsDumpReader::LammpsDumpReader(System &system)
+   : TrajectoryReader(system)
    {}
 
    /*
    * Destructor.
    */
-   LammpsDumpIo::~LammpsDumpIo()
+   LammpsDumpReader::~LammpsDumpReader()
    {}
 
    /*
-   * Setup to read trajectory.
+   * Open file and setup memory.
    */
-   void LammpsDumpIo::readHeader(std::fstream &file)
+   void LammpsDumpReader::open(std::string filename)
    {
-      // Set atomCapacity_ and add all molecules to system
-      TrajectoryIo::readHeader(file);
+      // Open trajectory file
+      file_.open(filename.c_str());
+
+      if (file_.fail()) {
+         std::string message;
+         message= "Error opening trajectory file. Filename: " + filename;
+         UTIL_THROW(message.c_str());
+      }
+
+      // Set nAtomTotal_ and add all molecules to system
+      addMolecules();
 
       // Allocate private array of atomic positions_
       if (!positions_.isAllocated()) {
-         positions_.allocate(atomCapacity_);
+         positions_.allocate(nAtomTotal_);
       } else {
-         if (atomCapacity_ != positions_.capacity()) {
+         if (nAtomTotal_ != positions_.capacity()) {
             UTIL_THROW("Inconsistent values of atom capacity");
          }
       }
@@ -56,7 +65,7 @@ namespace McMd
    /*
    * Read frame, return false if end-of-file
    */
-   bool LammpsDumpIo::readFrame(std::fstream &file)
+   bool LammpsDumpReader::readFrame()
    {
       // Preconditions
       if (!positions_.isAllocated()) {
@@ -67,7 +76,7 @@ namespace McMd
       std::stringstream line;
 
       // Attempt to read first line
-      notEnd = getNextLine(file, line);
+      notEnd = getNextLine(file_, line);
       if (!notEnd) {
          return false;
       }
@@ -76,10 +85,10 @@ namespace McMd
       checkString(line, "ITEM:");
       checkString(line, "TIMESTEP");
       int step;
-      file >> step;
+      file_ >> step;
  
       // Read ITEM: NUMBER OF ATOMS
-      notEnd = getNextLine(file, line);
+      notEnd = getNextLine(file_, line);
       if (!notEnd) {
          UTIL_THROW("EOF reading ITEM: NUMBER OF ATOMS");
       }
@@ -88,13 +97,13 @@ namespace McMd
       checkString(line, "OF");
       checkString(line, "ATOMS");
       int nAtom;
-      file >> nAtom;
-      if (nAtom != atomCapacity_) {
-         UTIL_THROW("Inconsistent values: nAtom != atomCapacity_");
+      file_ >> nAtom;
+      if (nAtom != nAtomTotal_) {
+         UTIL_THROW("Inconsistent values: nAtom != nAtomTotal_");
       }
 
       // Read ITEM: BOX
-      notEnd = getNextLine(file, line);
+      notEnd = getNextLine(file_, line);
       if (!notEnd) {
          UTIL_THROW("EOF reading ITEM: BOX");
       }
@@ -103,13 +112,13 @@ namespace McMd
       // Ignore rest of ITEM: BOX line
       Vector min, max, lengths;
       for (int i = 0; i < Dimension; ++i) {
-         file >> min[i] >> max[i];
+         file_ >> min[i] >> max[i];
          lengths[i] = max[i] - min[i];
       }
       boundary().setOrthorhombic(lengths);
 
       // Read ITEM: ATOMS 
-      notEnd = getNextLine(file, line);
+      notEnd = getNextLine(file_, line);
       checkString(line, "ITEM:");
       checkString(line, "ATOMS");
       // Ignore the rest of ITEM: ATOMS  line, for now
@@ -119,16 +128,16 @@ namespace McMd
       int id, typeId, molId, i, j;
       for (i = 0; i < nAtom; ++i) {
 
-         file >> id;
+         file_ >> id;
          id = id - 1; // Convert convention, Lammps -> Simpatico
-         file >> typeId;
-         file >> molId;
+         file_ >> typeId;
+         file_ >> molId;
  
          // Read position
          for (j = 0; j < Util::Dimension; ++j) {
-            file >> positions_[id][j];
+            file_ >> positions_[id][j];
          }
-         file >> shift;
+         file_ >> shift;
 
          // shift into simulation cell
          boundary().shift(positions_[id]);
@@ -154,4 +163,11 @@ namespace McMd
 
       return true;
    }
+
+   /*
+   * Close trajectory file.
+   */
+   void LammpsDumpReader::close()
+   {  file_.close();}
+
 }

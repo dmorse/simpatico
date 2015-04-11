@@ -21,7 +21,7 @@ mcMd_=\
     $(mcMd_mcSimulation_) \
     $(mcMd_mdSimulation_) \
     $(mcMd_configIos_) \
-    $(mcMd_trajectoryIos_) \
+    $(mcMd_trajectory_) \
     $(mcMd_mdIntegrators_) \
     $(mcMd_mcMoves_) \
     $(mcMd_analyzers_) \

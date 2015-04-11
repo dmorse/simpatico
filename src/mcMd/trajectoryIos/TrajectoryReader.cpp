@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "TrajectoryIo.h"
+#include "TrajectoryReader.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
@@ -19,8 +19,8 @@ namespace McMd
    /*
    * Constructor. 
    */
-   TrajectoryIo::TrajectoryIo(System& system)
-    : atomCapacity_(0),
+   TrajectoryReader::TrajectoryReader(System& system)
+    : nAtomTotal_(0),
       boundaryPtr_(&system.boundary()),
       systemPtr_(&system),
       simulationPtr_(&system.simulation())
@@ -29,13 +29,13 @@ namespace McMd
    /* 
    * Destructor.   
    */
-   TrajectoryIo::~TrajectoryIo() 
+   TrajectoryReader::~TrajectoryReader() 
    {}
 
    /*
-   * Read the trajectory file header.
+   * Add all molecules and set nAtomTotal_.
    */
-   void TrajectoryIo::readHeader(std::fstream &file)
+   void TrajectoryReader::addMolecules()
    {
       int nSpecies = simulation().nSpecies();
       int speciesCapacity = 0;
@@ -44,7 +44,7 @@ namespace McMd
       Molecule* molPtr;
 
       // Add molecules to system
-      atomCapacity_ = 0;
+      nAtomTotal_ = 0;
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
@@ -53,34 +53,9 @@ namespace McMd
             molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
          }
-         atomCapacity_ += speciesCapacity*speciesPtr->nAtom();
+         nAtomTotal_ += speciesCapacity*speciesPtr->nAtom();
       }
 
-   }
-
-   /*
-   * Read a single frame.
-   */
-   bool TrajectoryIo::readFrame(std::fstream& file)
-   {
-       UTIL_THROW("This TrajectoryIo class does not implement a readFrame() method.");
-       return false;
-   }
-
-   /*
-   * Write the trajectory file header.
-   */
-   void TrajectoryIo::writeHeader(std::fstream &file)
-   {
-      UTIL_THROW("This TrajectoryIo class does not implement a writeHeader() method.");
-   }
-
-   /*
-   * Write a single frame.
-   */
-   void TrajectoryIo::writeFrame(std::fstream& file)
-   {
-       UTIL_THROW("This TrajectoryIo class does not implement a writeFrame() method.");
    }
 
 } 
