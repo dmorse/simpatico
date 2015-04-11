@@ -173,6 +173,44 @@ namespace Inter
       ar << periodicity_;
    }
 
+   /*
+   * Set a potential energy parameter, identified by a string.
+   */
+   void LocalLamellarOrderingExternal::set(std::string name, double value)
+   {
+      if (name == "fraction") {
+         fraction_ = value;
+      } else
+      if (name == "externalParameter") {
+         externalParameter_ = value;
+      } else
+      if (name == "interfaceWidth") {
+         width_ = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double LocalLamellarOrderingExternal::get(std::string name) const
+   {
+      double value = 0.0;
+      if (name == "fraction") {
+         value = fraction_;
+      } else
+      if (name == "externalParameter") {
+         value = externalParameter_;
+      } else
+      if (name == "interfaceWidth") {
+         value = width_;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
    double LocalLamellarOrderingExternal::externalParameter() const
    {  return externalParameter_; }
 
