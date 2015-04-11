@@ -94,16 +94,17 @@ namespace McMd
       nAtom_ = blockLengths_[0] + blockLengths_[1];
       loadCArray<int>(ar, "atomTypes", atomTypes_, 2);
 
-      nBond_  = nAtom_ - 1;
+      nBond_ = nAtom_ - 1;
       loadParameter<int>(ar,"bondType", bondType_);
       #ifdef INTER_ANGLE
       hasAngles_ = 0;
       loadParameter<int>(ar,"hasAngles", hasAngles_, false); // optional
       if (hasAngles_) {
-         nAngle_ = nBond_ - 1;
-         if (nAngle_ > 0) {
-            loadParameter<int>(ar,"angleType", angleType_);
+         if (nAtom_ < 3) {
+            UTIL_THROW("Error: Cannot have angles with nAtom < 3");
          }
+         nAngle_ = nAtom_ - 2;
+         loadParameter<int>(ar,"angleType", angleType_);
       } else {
          nAngle_ = 0;
       }
@@ -112,16 +113,11 @@ namespace McMd
       hasDihedrals_ = 0;
       loadParameter<int>(ar,"hasDihedrals", hasDihedrals_, false); // optional
       if (hasDihedrals_) {
-         if (nAtom_ > 3) {
-            nDihedral_ = nAtom_ - 3;
-         } else {
-            nDihedral_ = 0;
+         if (nAtom_ < 4) {
+            UTIL_THROW("Error: Cannot have dihedrals with nAtom < 4");
          }
-         if (nDihedral_ > 0) {
-            loadParameter<int>(ar, "dihedralType", dihedralType_);
-         } else {
-            nDihedral_ = 0;
-         }
+         nDihedral_ = nAtom_ - 3;
+         loadParameter<int>(ar, "dihedralType", dihedralType_);
       } else {
          nDihedral_ = 0;
       }

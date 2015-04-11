@@ -183,6 +183,49 @@ namespace Inter
       ar << periodicity_;
    }
 
+   /*
+   * Set a potential energy parameter, identified by a string.
+   */
+   void PeriodicExternal::set(std::string name, double value)
+   {
+      if (name == "externalParameter") {
+         externalParameter_ = value;
+      } else
+      if (name == "C") {
+         C_ = value;
+      } else
+      if (name == "interfaceWidth") {
+         interfaceWidth_ = value;
+      } else
+      if (name == "periodicity") {
+         periodicity_ = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double PeriodicExternal::get(std::string name) const
+   {
+      double value = 0.0;
+      if (name == "externalParameter") {
+         value = externalParameter_;
+      } else
+      if (name == "C") {
+         value = C_;
+      } else
+      if (name == "interfaceWidth") {
+         value = interfaceWidth_;
+      } else
+      if (name == "periodicity") {
+         value = periodicity_;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
 
    double PeriodicExternal::externalParameter() const
    { 

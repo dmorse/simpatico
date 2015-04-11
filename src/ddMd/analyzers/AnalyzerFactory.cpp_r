@@ -9,42 +9,47 @@
 
 //#include <ddMd/simulation/Simulation.h>
 
-// Analyzers 
-#include "LogEnergy.h"
-#include "EnergyAnalyzer.h"
-#include "OutputEnergy.h"
-#include "KineticEnergyAnalyzer.h"
-#include "OutputTemperature.h"
-#include "PairEnergyAnalyzer.h"
-#include "OutputPairEnergies.h"
-#include "PairEnergyAverage.h"
-#ifdef INTER_EXTERNAL
-#include "ExternalEnergyAnalyzer.h"
-#include "ExternalEnergyAverage.h"
-#endif
-#include "PressureAnalyzer.h"
-#include "OutputPressure.h"
-#include "OutputBoxdim.h"
-#include "StressAnalyzer.h"
-#include "VirialStressAnalyzer.h"
-#include "OutputStressTensor.h"
-#include "VirialStressTensorAverage.h"
-#include "StructureFactor.h"
-#include "StructureFactorGrid.h"
-#include "OrderParamNucleation.h"
-#include "VanHove.h"
-#include "StressAutoCorr.h"
-#include "StressAutoCorrelation.h"
-#ifdef INTER_BOND
-#include "BondTensorAutoCorr.h"
-#endif
-
 // Config and Trajectory Writers
-#include "ConfigWriter.h"
-#include "DdMdTrajectoryWriter.h"
-#include "DdMdGroupTrajectoryWriter.h"
-#include "LammpsDumpWriter.h"
+#include "trajectory/ConfigWriter.h"
+#include "trajectory/DdMdTrajectoryWriter.h"
+#include "trajectory/DdMdGroupTrajectoryWriter.h"
+#include "trajectory/LammpsDumpWriter.h"
 
+// Energy analyzers 
+#include "energy/LogEnergy.h"
+#include "energy/EnergyAnalyzer.h"
+#include "energy/OutputEnergy.h"
+#include "energy/KineticEnergyAnalyzer.h"
+#include "energy/OutputTemperature.h"
+#include "energy/PairEnergyAnalyzer.h"
+#include "energy/OutputPairEnergies.h"
+#include "energy/PairEnergyAverage.h"
+#ifdef INTER_EXTERNAL
+#include "energy/ExternalEnergyAnalyzer.h"
+#include "energy/ExternalEnergyAverage.h"
+#endif
+
+// Stress and box dimension analyzers
+#include "stress/PressureAnalyzer.h"
+#include "stress/OutputPressure.h"
+#include "stress/OutputBoxdim.h"
+#include "stress/StressAnalyzer.h"
+#include "stress/VirialStressAnalyzer.h"
+#include "stress/OutputStressTensor.h"
+#include "stress/VirialStressTensorAverage.h"
+#include "stress/StressAutoCorr.h"
+#include "stress/StressAutoCorrelation.h"
+
+// Scattering analyzers
+#include "scattering/StructureFactor.h"
+#include "scattering/StructureFactorGrid.h"
+#include "scattering/VanHove.h"
+
+// Miscellaneous analyzers
+#include "misc/OrderParamNucleation.h"
+#ifdef INTER_BOND
+#include "misc/BondTensorAutoCorr.h"
+#endif
 
 namespace DdMd
 {
@@ -69,7 +74,7 @@ namespace DdMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      // Simulation Analyzers
+      // Energy Analyzers
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());
       } else 
@@ -102,14 +107,15 @@ namespace DdMd
          ptr = new ExternalEnergyAverage(simulation());
       } else
       #endif
+      // Pressure, Stress and Box Dimensions
+      if (className == "OutputBoxdim") {
+         ptr = new OutputBoxdim(simulation());
+      } else
       if (className == "PressureAnalyzer") {
          ptr = new PressureAnalyzer(simulation());
       } else
       if (className == "OutputPressure") {
          ptr = new OutputPressure(simulation());
-      } else
-      if (className == "OutputBoxdim") {
-         ptr = new OutputBoxdim(simulation());
       } else
       if (className == "StressAnalyzer") {
          ptr = new StressAnalyzer(simulation());
@@ -129,23 +135,17 @@ namespace DdMd
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
       } else
-      #ifdef INTER_BOND
-      if (className == "BondTensorAutoCorr") {
-         ptr = new BondTensorAutoCorr(simulation());
-      } else
-      #endif
+      // Scattering
       if (className == "StructureFactor") {
          ptr = new StructureFactor(simulation());
       } else
       if (className == "StructureFactorGrid") {
          ptr = new StructureFactorGrid(simulation());
       } else
-      if (className == "OrderParamNucleation") {
-         ptr = new OrderParamNucleation(simulation());
-      } else
       if (className == "VanHove") {
          ptr = new VanHove(simulation());
       } else
+      // Trajectory writers
       if (className == "ConfigWriter") {
          ptr = new ConfigWriter(simulation());
       } else 
@@ -157,6 +157,15 @@ namespace DdMd
       } else
       if (className == "LammpsDumpWriter") {
          ptr = new LammpsDumpWriter(simulation());
+      } else
+      // Miscellaneous
+      #ifdef INTER_BOND
+      if (className == "BondTensorAutoCorr") {
+         ptr = new BondTensorAutoCorr(simulation());
+      } else
+      #endif
+      if (className == "OrderParamNucleation") {
+         ptr = new OrderParamNucleation(simulation());
       }
       return ptr;
    }

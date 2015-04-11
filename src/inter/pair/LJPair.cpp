@@ -303,7 +303,7 @@ namespace Inter
    */
    double LJPair::get(std::string name, int i, int j) const
    {
-      double value;
+      double value = 0.0;
       if (name == "epsilon") {
          value = epsilon_[i][j];
       } else

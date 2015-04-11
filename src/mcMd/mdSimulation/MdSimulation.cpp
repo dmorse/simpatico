@@ -19,7 +19,7 @@
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/trajectoryIos/TrajectoryIo.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -401,7 +401,7 @@ namespace McMd
                Log::file() << " " << Str(classname,15) 
                            << " " << Str(filename, 15)
                            << std::endl;
-               analyzeTrajectory(min, max, classname,filename);
+               analyzeTrajectory(min, max, classname, filename);
             } else 
             if (command == "GENERATE_MOLECULES") {
                DArray<double> ExclusionRadii;
@@ -691,83 +691,57 @@ namespace McMd
    }
 
    /*
-   * Read and analyze a trajectory file
+   * Open, read and analyze a trajectory file
    */
-   void MdSimulation::analyzeTrajectory(int min, int max, std::string classname,
-      std::string filename)
+   void MdSimulation::analyzeTrajectory(int min, int max, 
+                                        std::string classname, 
+                                        std::string filename)
    {
       // Preconditions
       if (min < 0) UTIL_THROW("min < 0");
       if (max < 0) UTIL_THROW("max < 0");
       if (max < min) UTIL_THROW("max < min!");
 
-      Timer timer;
-      std::stringstream indexString;
-      std::fstream* trajectoryFile;
-      TrajectoryIo* trajectoryIo;
-
-      // Obtain trajectoryIo objecct
-      if (!(trajectoryIo = system().trajectoryIoFactory().factory(classname))) {
-        std::string message;
-        message="Invalid TrajectoryIo class name " + classname;
-        UTIL_THROW(message.c_str());
+      // Construct TrajectoryReader
+      TrajectoryReader* trajectoryReader;
+      trajectoryReader = system().trajectoryReaderFactory().factory(classname);
+      if (!trajectoryReader) {
+         std::string message;
+         message = "Invalid TrajectoryReader class name " + classname;
+         UTIL_THROW(message.c_str());
       }
-
-      Log::file() << "reading " << filename << std::endl;
 
       // Open trajectory file
-      trajectoryFile = new std::fstream();
-      trajectoryFile->open(filename.c_str(), std::ios::in | std::ios::binary);
+      Log::file() << "Reading " << filename << std::endl;
+      trajectoryReader->open(filename);
 
-      if (trajectoryFile->fail()) {
-        std::string message;
-        message= "Error opening trajectory file. Filename: " + filename;
-        UTIL_THROW(message.c_str());
-      }
-
-      // Read in information from trajectory file
-      trajectoryIo->readHeader(*trajectoryFile);
-
-      // Main loop
-      Log::file() << "begin main loop" << std::endl;
-      timer.start();
-
+      // Main loop over trajectory frames
+      Timer timer;
+      Log::file() << "Begin main loop" << std::endl;
       bool hasFrame = true;
+      timer.start();
       for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
-
-         // Read frames, even if they are not sampled
-         hasFrame = trajectoryIo->readFrame(*trajectoryFile);
-
+         hasFrame = trajectoryReader->readFrame();
          if (hasFrame) {
-
             #ifndef INTER_NOPAIR
             // Build the system CellList
             system().pairPotential().buildPairList();
             #endif
-   
             #ifdef UTIL_DEBUG
             isValid();
             #endif
-   
             // Initialize analyzers (taking in molecular information).
             if (iStep_ == min) analyzerManager().setup();
-   
             // Sample property values only for iStep >= min
             if (iStep_ >= min) analyzerManager().sample(iStep_);
-
          }
-
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
       int nFrames = iStep_ - min + 1;
 
-      // Close trajectory file
-      trajectoryFile->close();
-
-      // Delete objects
-      delete trajectoryIo;
-      delete trajectoryFile;
+      trajectoryReader->close();
+      delete trajectoryReader;
 
       // Output results of all analyzers to output files
       analyzerManager().output();
@@ -780,7 +754,6 @@ namespace McMd
       Log::file() << "time / frame " << timer.time()/double(nFrames) 
                   << "  sec" << std::endl;
       Log::file() << std::endl;
-
    }
 
    /**
