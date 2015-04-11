@@ -94,7 +94,7 @@ cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 # Copy repository version of Factory implementation files to user versions.
 
 cp src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
-cp src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
+cp src/mcMd/trajectory/TrajectoryReaderFactory.cpp_r src/mcMd/trajectory/TrajectoryReaderFactory.cpp
 cp src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
 cp src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
 cp src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
