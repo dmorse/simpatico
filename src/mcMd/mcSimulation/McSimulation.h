@@ -160,15 +160,15 @@ namespace McMd
       * of the simulation FileMaster is not prepended to the dump Prefix.  
       *
       * In parallel mode, for processor with MPI rank m, the path "m/" is 
-      * prepended to the dumpPrefix, so that all files associated with this
+      * prepended to the basename, so that all files associated with this
       * processor are in this directory, but no inputPrefix is added after
       * the string "m/".
       *
       * \param min  integer suffix of first configuration file name
       * \param max  integer suffix of last configuration file name
-      * \param dumpPrefix  root name for dump files (without integer suffix)
+      * \param basename  root name for dump files (without integer suffix)
       */  
-      void analyze(int min, int max, std::string dumpPrefix);
+      void analyzeConfigs(int min, int max, std::string basename);
 
       /**
       * Read and analyze a trajectory file.

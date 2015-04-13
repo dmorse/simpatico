@@ -536,12 +536,12 @@ namespace McMd
                bool isContinuation = true;
                simulate(endStep, isContinuation);
             } else
-            if (command == "ANALYZE_DUMPS") {
+            if (command == "ANALYZE_CONFIGS") {
                int min, max;
                inBuffer >> min >> max >> filename;
                Log::file() << "  " <<  min << "  " <<  max
                            << "  " <<  filename << std::endl;
-               analyze(min, max, filename);
+               analyzeConfigs(min, max, filename);
             } else
             if (command == "ANALYZE_TRAJECTORY") {
                std::string classname;
@@ -863,7 +863,8 @@ namespace McMd
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void McSimulation::analyze(int min, int max, std::string dumpPrefix)
+   void 
+   McSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
@@ -882,7 +883,7 @@ namespace McMd
       for (iStep_ = min; iStep_ <= max; ++iStep_) {
 
          indexString << iStep_;
-         filename = dumpPrefix;
+         filename = basename;
          filename += indexString.str();
          fileMaster().openInputFile(filename, configFile);
 

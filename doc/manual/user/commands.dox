@@ -126,9 +126,9 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>-</b> </td>
   </tr>
   <tr> 
-    <td> ANALYZE_DUMPS </td>
+    <td> ANALYZE_CONFIGS </td>
     <td> min [int], max [int], filename [string] </td>
-    <td> Postprocess a series of configuration dump files with integer suffix 
+    <td> Postprocess a series of configuration files with integer suffix 
          labels min <= i <= max and a specified base filename </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
@@ -138,8 +138,8 @@ The following table shows a list of available commands for all three programs.  
     <td> ANALYZE_TRAJECTORY </td>
     <td> min[int], max[int], classname [string], filename [string] </td>
     <td> Postprocess frames from a trajectory file filename using an instance 
-         of a TrajectoryReader subclass by classname. Reads frames 0 to max,
-         and analyzes frame numbers min <= i <= max in the file.
+         of TrajectoryReader subclass classname. Reads frame numbers 0 to max
+         from the file, and analyzes frame numbers min <= i <= max.
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
     <td> <b>-</b> </td>
