@@ -977,7 +977,7 @@ namespace McMd
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
-      int nFrames = iStep_ - min + 1;
+      int nFrames = iStep_ - min;
 
       trajectoryReaderPtr->close();
       delete trajectoryReaderPtr;

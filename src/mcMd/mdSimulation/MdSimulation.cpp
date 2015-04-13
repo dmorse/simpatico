@@ -700,7 +700,8 @@ namespace McMd
 
       // Construct TrajectoryReader
       TrajectoryReader* trajectoryReaderPtr;
-      trajectoryReaderPtr = system().trajectoryReaderFactory().factory(classname);
+      trajectoryReaderPtr 
+             = system().trajectoryReaderFactory().factory(classname);
       if (!trajectoryReaderPtr) {
          std::string message;
          message = "Invalid TrajectoryReader class name " + classname;
@@ -734,7 +735,7 @@ namespace McMd
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
-      int nFrames = iStep_ - min + 1;
+      int nFrames = iStep_ - min;
 
       trajectoryReaderPtr->close();
       delete trajectoryReaderPtr;
