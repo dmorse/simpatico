@@ -32,7 +32,7 @@ The command "SET_CONFIG_IO MdConfigIo" resets the configuration file format to t
   
 "WRITE_CONFIG config" writes the final configuration in the MdConfigIo format, which includes velocities. The configuration is written to a file whose name is given by the string argument "config" prefixed by the output path prefix which is specified in the param file FileMaster block.
 
-The ANALYZE_DUMPS or ANALYZE_TRAJECTORY commands can be used to read and analyze (i.e., post-process) a sequence of configuration files that were dumped by a previous simulation or a whole trajectory that was dumped by a different simulation program (such as Hoomd).  For ANALYZE_DUMPS, the name each of these files must be a concatenation of the input prefix, followed by the filename argument of the ANALYZE command, followed by an integer suffix. For ANALYZE_TRAJECTORY, the file name is simply the single trajectory file.
+The ANALYZE_CONFIGS and ANALYZE_TRAJECTORY commands can be used to read and analyze (i.e., post-process) configurations that were dumped by a previous simulation.  The ANALYZE_CONFIGS command reads a sequence of configuration files, in which the name each of files is concatenation of a base name followed by an integer suffix. The ANALYZE_TRAJECTORY command reads a single trajectory file containing multiple "frames", each of which is an instantaneous configuration.
 
 A system can be initialized either by reading a configuration from file or by using the GENERATE_MOLECULES command to generate a partiall random initial configuration. The GENERATE_MOLECULES command generates a initial configuration in which atoms of molecules are distributed at random, using conformations chosen from the equilibrium distribution for a molecule in vaccum, supplemented by a constraint that rejects all conformations that violate a hard-core constraint on the distance between any pair of atoms. The command guarantees that no two atoms will be closer than the sum of their exclusion radii.
 
@@ -106,7 +106,7 @@ The following table shows a list of available commands for all three programs.  
     <td> THERMALIZE </td>
     <td> temperature [float] </td>
     <td> 
-       Generate random velocities for specified temperature (in energy units). 
+    Generate random velocities for specified temperature (in energy units). 
     </td>
     <td> <b>-</b> </td>
     <td> <b>X</b> </td>
