@@ -57,8 +57,6 @@ namespace McMd
 
       /**
       * Close trajectory file.
-      *
-      * \param file input file stream.
       */
       virtual void close() = 0;
 
