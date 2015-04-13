@@ -138,9 +138,9 @@ The following table shows a list of available commands for all three programs.  
     <td> ANALYZE_TRAJECTORY </td>
     <td> min[int], max[int], classname [string], filename [string] </td>
     <td> Postprocess frames from a trajectory file filename using an instance 
-         of TrajectoryIo classname. Reads frame numbers min <= i <= max.  
-         Negative values for min, max are counted from the end of the file.
-    <td> <b>-</b> </td>
+         of a TrajectoryReader subclass by classname. Reads frames 0 to max,
+         and analyzes frame numbers min <= i <= max in the file.
+    <td> <b>X</b> </td>
     <td> <b>X</b> </td>
     <td> <b>-</b> </td>
     </td>
