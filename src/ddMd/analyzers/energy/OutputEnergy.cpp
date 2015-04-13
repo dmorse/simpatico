@@ -140,7 +140,7 @@ namespace DdMd
             if (sim.hasExternal()) {
                double external = sim.externalPotential().energy();
                potential += external;
-               Log::file() << Dbl(external, 15);
+               outputFile_ << Dbl(external, 15);
             }
             #endif
             outputFile_ << Dbl(kinetic + potential, 20)
