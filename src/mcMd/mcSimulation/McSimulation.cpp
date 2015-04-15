@@ -122,140 +122,54 @@ namespace McMd
       delete mcAnalyzerManagerPtr_;
    }
 
-   #if 0
    /*
    * Process command line options.
    */
    void McSimulation::setOptions(int argc, char **argv)
    {
-      bool eflag = false;
-      bool rflag = false;
-      bool iFlag = false; // input prefix
-      bool oFlag = false; // output prefix
-      #ifdef MCMD_PERTURB
-      bool pflag = false;
-      #endif
-      char* rarg = 0;
-      char* iArg = 0;
-      char* oArg = 0;
-   
-   
-      // Read program arguments
-      int c;
-      opterr = 0;
-      while ((c = getopt(argc, argv, "epr:")) != -1) {
-         switch (c) {
-         case 'e':
-           eflag = true;
-           break;
-         case 'r': // restart file
-           rflag = true;
-           rarg  = optarg;
-           break;
-         case 'i': // input prefix
-           iFlag = true;
-           iArg  = optarg;
-           break;
-         case 'o': // output prefix
-           oFlag = true;
-           oArg  = optarg;
-           break;
-         #ifdef MCMD_PERTURB
-         case 'p':
-           pflag = true;
-           break;
-         #endif
-         case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
-           UTIL_THROW("Invalid command line option");
-         }
-      }
-   
-      // Set flag to echo parameters as they are read.
-      if (eflag) {
-         Util::ParamComponent::setEcho(true);
-      }
-
-      #ifdef MCMD_PERTURB
-      // Set to use a perturbation.
-      if (pflag) {
-
-         if (rflag) {
-            std::string msg("Error: Options -r and -f are incompatible.");
-            msg += "Existence of a perturbation is specified in restart file.";
-            UTIL_THROW(msg.c_str());
-         }
-   
-         // Set to expect perturbation in the param file.
-         system().setExpectPerturbation();
-   
-         #ifdef UTIL_MPI
-         Util::Log::file() << "Set to use single parameter and command files" 
-                           << std::endl;
-         setIoCommunicator();
-         #endif
-   
-      }
-      #endif
-
-      // If option -i, set path prefix for input files
-      if (iFlag) {
-         fileMaster().setInputPrefix(std::string(iArg));
-      }
-
-      // If option -o, set path prefix for output files
-      if (oFlag) {
-         fileMaster().setOutputPrefix(std::string(oArg));
-      }
-
-      // Read a restart file.
-      if (rflag) {
-         Log::file() << "Begin reading restart, base file name " 
-                     << std::string(rarg) << std::endl;
-         isRestarting_ = true; 
-         load(std::string(rarg));
-         Util::Log::file() << std::endl;
-      }
-
-   }
-   #endif
-
-   /*
-   * Process command line options.
-   */
-   void McSimulation::setOptions(int argc, char **argv)
-   {
-      bool  eflag = false;  // echo
-      bool  pFlag = false;  // param file 
-      bool  rFlag  = false; // restart file
-      bool  cFlag = false;  // command file 
+      bool eflag = false;  // echo
+      bool rFlag = false;  // restart file
+      bool pFlag = false;  // param file 
+      bool cFlag = false;  // command file 
+      bool iFlag = false;  // input prefix
+      bool oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
       bool  fflag = false;  // free energy perturbation
       #endif
-      char* pArg = 0;
       char* rarg = 0;
+      char* pArg = 0;
       char* cArg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
    
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
+      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'e':
-           eflag = true;
-           break;
-         case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
+            eflag = true;
+            break;
          case 'r':
-           rFlag = true;
-           rarg  = optarg;
-           break;
+            rFlag = true;
+            rarg  = optarg;
+            break;
+         case 'p': // parameter file
+            pFlag = true;
+            pArg  = optarg;
+            break;
          case 'c': // command file
-           cFlag = true;
-           cArg  = optarg;
-           break;
+            cFlag = true;
+            cArg  = optarg;
+            break;
+         case 'i': // input prefix
+            iFlag = true;
+            iArg  = optarg;
+            break;
+         case 'o': // output prefix
+            oFlag = true;
+            oArg  = optarg;
+            break;
          #ifdef MCMD_PERTURB
          case 'f':
            fflag = true;
@@ -307,6 +221,16 @@ namespace McMd
          fileMaster().setCommandFileName(std::string(cArg));
       }
 
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
+
       // If option -r, restart
       if (rFlag) {
          //Log::file() << "Reading restart file " 
@@ -316,7 +240,6 @@ namespace McMd
       }
 
    }
-
 
    /*
    * Read parameters from file.
