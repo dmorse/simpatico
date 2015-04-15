@@ -100,17 +100,17 @@ namespace McMd
    */
    void MdSimulation::setOptions(int argc, char **argv)
    {
-      bool  eflag  = false; // echo
+      bool  eflag = false;  // echo
+      bool  rFlag = false;  // restart file
       bool  pFlag = false;  // param file 
-      bool  rFlag  = false; // restart file
       bool  cFlag = false;  // command file 
-      bool  iFlag  = false; // input prefix
+      bool  iFlag = false;  // input prefix
       bool  oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
       bool  fflag = false;  // free energy perturbation
       #endif
-      char* pArg = 0;
       char* rarg = 0;
+      char* pArg = 0;
       char* cArg = 0;
       char* iArg = 0;
       char* oArg = 0;
@@ -118,18 +118,18 @@ namespace McMd
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
+      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'e':
            eflag = true;
            break;
-         case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
          case 'r':
            rFlag = true;
            rarg  = optarg;
+           break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
            break;
          case 'c': // command file
            cFlag = true;

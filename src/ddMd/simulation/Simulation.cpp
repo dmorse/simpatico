@@ -320,7 +320,7 @@ namespace DdMd
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "es:p:r:c:")) != -1) {
+      while ((c = getopt(argc, argv, "es:p:r:c:i:o:")) != -1) {
          switch (c) {
          case 'e': // echo parameters
             eFlag = true;
