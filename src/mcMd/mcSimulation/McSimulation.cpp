@@ -128,12 +128,17 @@ namespace McMd
    */
    void McSimulation::setOptions(int argc, char **argv)
    {
-      char* rarg   = 0;
-      bool  eflag  = false;
-      bool  rflag  = false;
+      bool eflag = false;
+      bool rflag = false;
+      bool iFlag = false; // input prefix
+      bool oFlag = false; // output prefix
       #ifdef MCMD_PERTURB
-      bool  pflag = false;
+      bool pflag = false;
       #endif
+      char* rarg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
+   
    
       // Read program arguments
       int c;
@@ -143,9 +148,17 @@ namespace McMd
          case 'e':
            eflag = true;
            break;
-         case 'r':
+         case 'r': // restart file
            rflag = true;
            rarg  = optarg;
+           break;
+         case 'i': // input prefix
+           iFlag = true;
+           iArg  = optarg;
+           break;
+         case 'o': // output prefix
+           oFlag = true;
+           oArg  = optarg;
            break;
          #ifdef MCMD_PERTURB
          case 'p':
@@ -168,7 +181,7 @@ namespace McMd
       if (pflag) {
 
          if (rflag) {
-            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
+            std::string msg("Error: Options -r and -f are incompatible.");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
          }
@@ -184,6 +197,16 @@ namespace McMd
    
       }
       #endif
+
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
 
       // Read a restart file.
       if (rflag) {
