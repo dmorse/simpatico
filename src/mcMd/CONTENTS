@@ -27,11 +27,14 @@ mcSimulation   Monte Carlo (MC) Simulation and System subclasses
 mcMoves        classes for specific MC moves (derived from McMove)
 mdSimulation   molecular dynamics (MD) Simulation and System subclasses
 mdIntegrators  specific MD integrators (derived from MdIntegrator)
-analyzers      data analysis (classes derived from Analyzer)
 configIos      configuration file IO 
-trajectoryIos  MD trajectory (multi-configuration) file IO.
+analyzers      data analysis (classes derived from Analyzer)
+trajectory     MD trajectory (multi-configuration) file IO.
 perturb        free energy perturbation theory
 misc           miscellaneous utilities
+user           space for user-defined classes
+tests          unit tests
+attic          obsolete or deprecated classes (not compiled)
 
 Makefile targets 
 ----------------
