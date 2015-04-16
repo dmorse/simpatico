@@ -5,9 +5,9 @@ namespace DdMd
 
 \section ddMd_analyzer_LammpsDumpWriter_synopsis_sec Synopsis
 
-This analyzer periodically writes the system configuration to file, with 
-one configuration per file. 
+Write a trajectory to file using the Lammps "dump" file format.
 
+The analyzer periodically writes a snapshot of the system configuration as a "frame" within a single trajectory file.
 
 \sa DdMd::LammpsDumpWriter
 

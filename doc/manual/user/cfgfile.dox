@@ -8,7 +8,7 @@ The instantaneous state of a system is recorded in a configuration file.  Each o
 
 The default configuration file formats for mcSim, mdSim and ddSim are slightly different. In all cases, the default configuration file format contains the dimensions of the periodic boundary, and the positions of all atoms. Configuration file formats for mdSim and ddSim, that are designed for use with MD simulations, also contain atomic velocities. 
 
-The mcSim and ddSim configuration file formats do not contain any information about chemical structure, whereas the ddSim default file format does. In mcSim and ddSim, the parameter file must contain a set of species, and a complete description of the chemical structure of each species, including the number of atoms per molecule. The configuration file formats for these programs thus just contain the box dimensions, atomic positions and (for mdSim) atomic velocities. In ddSim, their is really no notion of a molecular "species", and the configuration file format contains a complete description of the covalent connections among molecules, as discussed in more detail below. 
+The default ddSim file format contains information about molecular topology (i.e., covalent bonding), while the default mcSim and mdSim configuration file formats do not. This difference is a result in the information available from the parameter file: The parameter files for mcSim and mcSim (but not ddSim) contain a description of every molecular species, including the number of atoms per molecule and a complete specification of its chemical structure. The configuration file formats for mcSim and mdSim thus contain only the box dimensions, atomic positions and (for mdSim) atomic velocities. In ddSim, their is no required notion of a molecular "species", and the configuration file format contains a complete description of the covalent connections among molecules, as discussed in more detail below. 
 
 \section mcMd_config_sec Default format for mcSim and mcSim 
 
@@ -176,14 +176,39 @@ The BONDS sections contains a list of records for different covalent bonds. In t
 In a simulation that contains angle and/or dihedral potentials this would be followed by sections
 entitled ANGLES and DIHEDRALS, each of which has a format analogous to that used for BONDS.
 
-\section change_config_sec Choosing other file formats
+\section change_config_sec Using non-default config file formats
 
-The default configuration file formats described above are used if no other choice is given specified. Other formats may be selected for any simpatico program by adding a SET_CONFIG_IO command in the command file.  The SET_CONFIG_IO command takes one string argument that specifies the name of a class that implements a configuration file format. Such classes are subclasses of McMd::ConfigIo for mcSim or mdSim, or of DdMd::ConfigIo object for ddSim. The default file formats described above are implemented by the classes McMd::McConfigIo (the default for mcSim), McMd::MdConfigIo (the default for mdSim), and DdMd::DdMdConfigIo (the default for mdSim).  The SET_CONFIG_IO command creates an instance of the specified class that will be used for all subsequent operations that read or write configuration files, until another SET_CONFIG_IO command is encountered.
+The configuration file formats described above are used by default for both reading and writing configuration files. Other formats may be selected for any simpatico program by adding a SET_CONFIG_IO command in the command file.  The SET_CONFIG_IO command takes one string argument that specifies a configuration file format. For example, adding the line
+\code
+   SET_CONFIG_IO LammpsConfigIo
+\endcode
+to a command file for any simpatico simulation program (mcSim, mdSim or ddSim) will set the program to read and write configuration files using the Lammps data file format. The argument of the SET_CONFIG_IO command is actually the name of a class that implements a configuration file format, which must be a subclass of McMd::ConfigIo for mcSim or mdSim or of DdMd::ConfigIo object for ddSim.   
 
-For example, to cause an mdSim MD simulation to read an output file created by an earlier mcSim MC simulation, add a command "SET_CONFIG_IO McConfigIo" before the READ_CONFIG command.  Because the default MC file format does not contain any information about velocities, this pair of commands would normally be followed in the file for an MdSimulation by a THERMALIZE command, to generate random velocities chosen from a Maxwell-Boltzmann distribution. By inserting a SET_CONFIG_IO command just before a subsequent WRITE_CONFIG, you may choose a new file format for the final output configuration file. 
+The SET_CONFIG_IO command creates an instance of the specified class that will be used for all subsequent operations that read or write configuration files, until another SET_CONFIG_IO command is encountered. By inserting a SET_CONFIG_IO command just before a subsequent WRITE_CONFIG, you may specify a new file format for the final output configuration file. A command file that contains only SET_CONFIG_IO, READ_CONFIG and WRITE_CONFIG commands can be used to convert between file formats.
+ 
+ConfigIo file classes available for use in mcSim and mdSim programs, are:
 
-A command file that contains only SET_CONFIG_IO, READ_CONFIG and WRITE_CONFIG commands can be used to convert between file formats.
+   - McMd::MdConfigIo (default for mdSim)
+   - McMd::McConfigIo (default for mcSim)
+   - McMd::LammpsConfigIo (lammps data format)
+   - McMd::DdMdConfigIo (default for ddSim)
 
+
+Configuration file classes available for use in ddSim simulations are:
+
+   - DdMd::DdMdConfigIo (default for ddSim)
+   - DdMd::DdMdConfigIo (default format, sequentially ordered atom ids)
+   - DdMd::LammpsConfigIo (lammps data format, sequentially ordered atom ids)
+
+
+The string that is passed to a SET_CONFIG_IO command should not include a namespace qualifier, i.e., it should be LammpsConfigIo rather than McMd::LammpsConfigIo or DdMd::LammpsConfigIo.
+
+The McMd::DdMdConfigIo and McMd::LammpsConfigIo classes can be used in mcSim or mdSim simulations to produce configuration files that can be read by ddSim, to initialize a parallel MD simulation. The serial mcSim and mdSim programs can thus be used to create partially equilibrated initial configurations for longer parallel MD simulations. 
+
+Because the data structures used in the ddSim parallel MD program are signficantly different from those used in mcSim and mdSim, mcSim and mdSim can currently read ddSim and lammps configuration files only if the configuration files obey a restrictive convention regarding the ordering of atom ids. This convention is discussed in the class documentation for McMd::LammpsConfigIo and McMd::DdMdConfigIo. The DdMd::DdMdOrderedConfigIo and DdMd::LammpsConfigIo are designed to produce configuration files with sequentially ordered atom ids that can be read by mdSim and mcSim. The default DdMd::DdMdConfigIo format does not write files with sequentially ordered atom ids, and so avoids the cost in time and memory of assembling an ordered list of atoms from data that is initially distirbuted over many processors.
+
+An mdSim MD simulation can be instructed to read an output file created by an earlier mcSim MC simulation by adding a command "SET_CONFIG_IO McConfigIo" before the READ_CONFIG command.  Because the default MC file format does not contain any information about velocities, however, this pair of commands would normally be followed in the file for an MdSimulation by a THERMALIZE command, to generate random velocities chosen from a Maxwell-Boltzmann distribution.
+ 
  <BR>
  \ref user_commands_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page     (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 

@@ -1,3 +1,31 @@
+
+Constant Pressure MD 
+--------------------
+
+- Port and test NptIntegrator subclass from DdMd.
+
+Non-Orthorhombic (Rigid) Boundaries
+-----------------------------------
+
+- Use new applyShift method in MSD analyzer classes.
+
+- Find other uses of Boundary::lengths in McMd namespace.
+  Add tests to cause crash before misuse, as needed.
+
+- Add Boundary::isOrthorhombic test other classes that require 
+  orthorhombic boundaries.
+
+- Add tests for CellList specifically for Monoclinic Boundary.
+
+- Make an example in a Monoclinic cell and try running it with 
+  mdSim and mcSim.
+
+Deformable Boundaries
+---------------------
+
+- Generalize snapshot and obsolete pair list methods to use 
+  miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+
 AtomType
 --------
 
@@ -43,33 +71,6 @@ Serialization
 - Test MD serialization after forcing pair list rebuild upon restart output
 - Move restart interval and file name, and isInitialized_  to Simulation base 
   classs.
-
-Constant Pressure MD 
---------------------
-
-- Port and test NptIntegrator subclass from DdMd.
-
-Non-Orthorhombic (Rigid) Boundaries
------------------------------------
-
-- Use new applyShift method in MSD analyzer classes.
-
-- Find other uses of Boundary::lengths in McMd namespace.
-  Add tests to cause crash before misuse, as needed.
-
-- Add Boundary::isOrthorhombic test other classes that require 
-  orthorhombic boundaries.
-
-- Add tests for CellList specifically for Monoclinic Boundary.
-
-- Make an example in a Monoclinic cell and try running it with 
-  mdSim and mcSim.
-
-Deformable Boundaries
----------------------
-
-- Generalize snapshot and obsolete pair list methods to use 
-  miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
 Perturbation
 ------------

@@ -44,7 +44,7 @@ namespace McMd
       /**
       * Open trajectory file and read header, if any.
       *
-      * \param file input file stream.
+      * \param filename input file name.
       */
       virtual void open(std::string filename) = 0;
 
@@ -57,8 +57,6 @@ namespace McMd
 
       /**
       * Close trajectory file.
-      *
-      * \param file input file stream.
       */
       virtual void close() = 0;
 
