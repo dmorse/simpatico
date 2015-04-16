@@ -314,7 +314,7 @@ namespace DdMd
          if (!isFirstStep_) {
             mode = std::ios_base::out | std::ios_base::app;
          }
-         std::string name = outputFileName("dat");
+         std::string name = outputFileName(".dat");
          simulation().fileMaster().openOutputFile(name, logFile_, mode);
       }
 

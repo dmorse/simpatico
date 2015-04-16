@@ -47,7 +47,7 @@ namespace McMd
       *
       * \param filename input file name.
       */
-      void open(std::string file);
+      void open(std::string filename);
 
       /**
       * Read a single frame. Frames are assumed to be read consecutively.

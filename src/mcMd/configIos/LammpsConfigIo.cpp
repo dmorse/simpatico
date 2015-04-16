@@ -162,11 +162,10 @@ namespace McMd
 
    void LammpsConfigIo::write(std::ostream &out)
    {
-      using std::endl;
 
       // Write first line (skipped) and a blank line.
-      out << "LAMMPS data file" << endl;
-      out << endl;
+      out << "LAMMPS data file" << "\n";
+      out << "\n";
 
       // Count total numbers of atoms and bonds in all species.
       Species* speciesPtr;
@@ -185,23 +184,23 @@ namespace McMd
          #ifdef INTER_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef INTER_DIHEDRAL
          nDihedral += nMolecule*(speciesPtr->nDihedral());
          #endif
       }
 
       // Write numbers of atoms, bonds, etc.
       Format::setDefaultWidth(8);
-      out << Int(nAtom)  << " atoms    " << endl;
-      out << Int(nBond)  << " bonds    " << endl;
-      out << Int(nAngle) << " angles   " << endl;
-      out << Int(nDihedral) << " dihedrals" << endl;
-      out << Int(0) << " impropers" << endl;
-      out << endl;
+      out << Int(nAtom)  << " atoms    " << "\n";
+      out << Int(nBond)  << " bonds    " << "\n";
+      out << Int(nAngle) << " angles   " << "\n";
+      out << Int(nDihedral) << " dihedrals" << "\n";
+      out << Int(0) << " impropers" << "\n";
+      out << "\n";
 
       // Write numbers of atom types, bond types, etc.
       Format::setDefaultWidth(5);
-      out << Int(simulation().nAtomType()) << " atom types" << endl;
+      out << Int(simulation().nAtomType()) << " atom types" << "\n";
       int nBondType = 0;
       int nAngleType = 0;
       int nDihedralType = 0;
@@ -214,35 +213,35 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedralType = simulation().nDihedralType();
       #endif
-      out << Int(nBondType) << " bond types" << endl;
-      out << Int(nAngleType) << " angle types" << endl;
-      out << Int(nDihedralType) << " dihedral types" << endl;
-      out << Int(0) << " improper types" << endl;
-      out << endl;
+      out << Int(nBondType) << " bond types" << "\n";
+      out << Int(nAngleType) << " angle types" << "\n";
+      out << Int(nDihedralType) << " dihedral types" << "\n";
+      out << Int(0) << " improper types" << "\n";
+      out << "\n";
 
       // Write Boundary dimensions
       Vector lengths = boundary().lengths();
       Format::setDefaultWidth(15);
       Format::setDefaultPrecision(7);
-      out << Dbl(0.0) << Dbl(lengths[0]) << "  xlo xhi" << endl;
-      out << Dbl(0.0) << Dbl(lengths[1]) << "  ylo yhi" << endl;
-      out << Dbl(0.0) << Dbl(lengths[2]) << "  zlo zhi" << endl;
-      out << endl;
+      out << Dbl(0.0) << Dbl(lengths[0]) << "  xlo xhi" << "\n";
+      out << Dbl(0.0) << Dbl(lengths[1]) << "  ylo yhi" << "\n";
+      out << Dbl(0.0) << Dbl(lengths[2]) << "  zlo zhi" << "\n";
+      out << "\n";
 
       // Write masses (all set to 1.0 for now)
       // lammps atom type = Simpatico atom type + 1
-      out << "Masses" << endl;
-      out << endl;
+      out << "Masses" << "\n";
+      out << "\n";
       for (int iType = 0; iType < simulation().nAtomType(); ++iType) {
-          out << Int(iType+1, 5) << Dbl(1.0) << endl;
+          out << Int(iType+1, 5) << Dbl(1.0) << "\n";
       }
-      out << endl;
+      out << "\n";
 
       // Write atomic positions
       // lammps atom tag = Simpatico atom id + 1
       // lammps molecule id = Simpatico molecule id + 1
-      out << "Atoms" << endl;
-      out << endl;
+      out << "Atoms" << "\n";
+      out << "\n";
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       int i;
@@ -256,16 +255,16 @@ namespace McMd
                for (i = 0; i < Dimension; ++i) {
                   out << Int(shift, 4);
                }
-               out << endl;
+               out << "\n";
             }
          }
       }
-      out << endl;
+      out << "\n";
 
       #ifdef INTER_BOND
       if (nBond > 0) {
-         out << "Bonds" << endl;
-         out << endl;
+         out << "Bonds" << "\n";
+         out << "\n";
          Molecule::BondIterator bondIter;
          int iBond = 1;
          for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
@@ -274,19 +273,19 @@ namespace McMd
                   out << Int(iBond, 8 ) << Int(bondIter->typeId() + 1, 5);
                   out << Int(bondIter->atom(0).id() + 1, 8);
                   out << Int(bondIter->atom(1).id() + 1, 8);
-                  out << endl;
+                  out << "\n";
                   ++iBond;
                }
             }
          }
-         out << endl;
+         out << "\n";
       }
       #endif
 
       #ifdef INTER_ANGLE
       if (nAngle > 0) {
-         out << "Angles" << endl;
-         out << endl;
+         out << "Angles" << "\n";
+         out << "\n";
          Molecule::AngleIterator angleIter;
          int iAngle = 1;
          for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
@@ -296,19 +295,19 @@ namespace McMd
                   out << Int(angleIter->atom(0).id() + 1, 8);
                   out << Int(angleIter->atom(1).id() + 1, 8);
                   out << Int(angleIter->atom(2).id() + 1, 8);
-                  out << endl;
+                  out << "\n";
                   ++iAngle;
                }
             }
          }
-         out << endl;
+         out << "\n";
       }
       #endif
 
       #ifdef INTER_DIHEDRAL
       if (nDihedral > 0) {
-         out << "Dihedrals" << endl;
-         out << endl;
+         out << "Dihedrals" << "\n";
+         out << "\n";
          Molecule::DihedralIterator dihedralIter;
          int iDihedral = 1;
          for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
@@ -321,12 +320,12 @@ namespace McMd
                   out << Int(dihedralIter->atom(1).id() + 1, 8);
                   out << Int(dihedralIter->atom(2).id() + 1, 8);
                   out << Int(dihedralIter->atom(3).id() + 1, 8);
-                  out << endl;
+                  out << "\n";
                   ++iDihedral;
                }
             }
          }
-         out << endl;
+         out << "\n";
       }
       #endif
 

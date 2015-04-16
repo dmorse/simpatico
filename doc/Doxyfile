@@ -715,8 +715,10 @@ EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
                          ../src/tools/hoomd/xmlParser.cpp \
                          ../src/tools/hoomd/ExtractTopologyMain.cpp \
                          ../src/inter//coulomb \
-                         ../src/mcMd/potential/coulomb \
-                         ../src/ddMd/potential/coulomb \
+                         ../src/mcMd/potentials/coulomb \
+                         ../src/mcMd/attic \
+                         ../src/ddMd/potentials/coulomb \
+                         ../src/ddMd/attic 
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

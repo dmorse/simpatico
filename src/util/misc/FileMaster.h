@@ -27,7 +27,7 @@ namespace Util
    * types of file, which are located in different places within a 
    * standard directory structure. These file types are:
    *
-   *   - Control files, i.e., parameter and command input files
+   *   - Control input files, i.e., parameter and command files 
    *
    *   - Restart files, which can be opened for input or output
    *
@@ -35,10 +35,27 @@ namespace Util
    *
    *   - Output data files (e.g., trajectories and analysis output files)
    *
-   * Slightly different directory structures are used for file paths
+   * Several member functions are provided to open different types of 
+   * file:
+   *
+   *   - openControlFile opens a control file for reading
+   *   
+   *   - openRestartIFile opens a restart file for reading
+   * 
+   *   - openRestartOFile opens a restart file for writing
+   *
+   *   - openInputFile opens an input data file
+   * 
+   *   - openOutputFile opens an output data file
+   *
+   * Each of these functions takes a base file name and a file stream
+   * as an argument, constructs a complete path by prepending an 
+   * appropriate prefix to the base name, and opens the file. 
+   *
+   * Slightly different directory structures are used for file paths 
    * in simulations of a single system and for parallel simulations 
    * of multiple systems, as discussed below. 
-   * 
+   *
    * <H4> Single-system simulations </H4>
    *
    * In simulations of a single system, paths to the different types
@@ -48,7 +65,7 @@ namespace Util
    *  - Root directory prefix: This is the path from the current
    *    working directory to the root level directory for all files
    *    associated with a simulation run. It defaults to an empty
-   *    string. It may be set by calling the setRootPrefix() function.
+   *    string and may be reset by calling the setRootPrefix() function.
    *
    *  - Input prefix: This string is prepended to the base name of
    *    all input data files. 
@@ -56,70 +73,68 @@ namespace Util
    *  - Output prefix: This string is prepended to the base name of
    *    all output data files. 
    * 
-   * The root directory prefix must be a path to a directory and
-   * thus must either be an empty string or must end with the 
-   * directory separator "/". The input and output prefix are 
-   * often also chosen to be directory paths, in order to place 
-   * input and output files in different subdirectories (e.g., 
-   * "in/" and "out/"), but can also be strings that are 
-   * prepended to the base name for all input and output files.
+   * Prefix strings that represent directories must end with the 
+   * directory separator character "/" in order to give a valid path 
+   * when prepended to a file name. The root directory prefix must be 
+   * either the empty string or such a directory path.  The input and 
+   * output prefix strings are often also chosen to be directory 
+   * paths, in order to place input and output files in different 
+   * subdirectories (e.g., "in/" and "out/").
    *
-   * In simulations of a single systems, paths to both control
-   * and restart files are constructed by the openControFile(),
-   * openRestartIFile() and openRestartOFile() by concatenating
-   * the root prefix (if any) to a base file name that is passed 
-   * to the appropriate function. Paths to input and output files
-   * are constructed by the openInputFile() and openOutputFile()
-   * functions by concatenating the root prefix, if any, to the 
-   * input or output prefix, as appropriate, and a base file 
-   * name that is passed as as argument. 
+   * In simulations of a single systems, paths to control and restart
+   * files are constructed by concatenating the root prefix (if any) 
+   * to the base file name.
+   *
+   * Paths to input and output files are constructed are constructed
+   * by concatenating the root prefix (if any), the input or output 
+   * prefix, and the base file.
    *
    * <H4> Multi-system simulations </H4>
    *
    * A parallel simulation of multiple systems use a directory
    * structure in which the root directory (specified by the root
    * directory prefix) contains a set of numbered subdirectories
-   * named "0/", "1/", "2/", etc.. Each such numbered directory
+   * named "0/", "1/", "2/", etc. Each such numbered directory
    * contains input, output and restart files that are specific 
-   * to a particular system, and will be referred to in what 
-   * follows as the system directory for that system. The integer
-   * index for the system associated with a specific MPI processor
-   * must be set by the setDirectoryId() method.
+   * to a particular system. Each such numbered directory will be 
+   * referred to in what follows as the system directory for the 
+   * associated system. The integer index for the system, which is
+   * also the directory name, must be set by the setDirectoryId() 
+   * method before any files are opened.
    *
-   * In all simulations of multiple systems, paths to input and
-   * input and output data files are constructed by the functions
-   * openInputFile() and openOutputFile() by concatenating the
-   * system directory path, an input or output prefix, and a base
-   * file name. Paths to restart files for each system are 
-   * constructed by concatentaing the system directory path and
-   * a base file name, thus placing these files in the system
-   * directory. 
+   * In such simulations, a path to a restart files for a system
+   * is constructed by concatentaing the system directory path and
+   * the restart file base name, thus placing these files in the
+   * system directory. Paths to input and output data files are 
+   * constructed by concatenating the system directory path, an 
+   * input or output prefix string, and the file base name.
    *
    * Two different modes of operation are possible for simulations
    * of multiple systems, which differ in the treatment of control
    * files. In "independent" mode, simulations of multiple systems 
    * are assumed to be completely independent and to require separate
    * parameter and command control files for each system. In this
-   * case, the openControlFile() system opens files in the numbered
-   * system directory. In "replicated" model, all simulations are
-   * controlled by a single parameter file and a single control
-   * file, which are opened in the root directory. "Independent"
-   * mode is enabled by default, and "replicated" mode may be chosen
-   * by calling the function "setCommonControl()" before opening any
-   * any control files. 
+   * case, the openControlFile() function for each system opens a
+   * file in the system directory for that system. In "replicated" 
+   * mode, all simulations are controlled by a single parameter 
+   * file and a single command file, both of which are assumed to
+   * be in the shared root directory.  "Independent" mode is 
+   * enabled by default. "Replicated" mode may be chosen by calling 
+   * the function "setCommonControl()" before opening any any control 
+   * files. 
    *   
    * <H4> Control Files </H4>
    *
-   * FileMaster provides several special functions for parameter and
-   * command files. Names of the parameter and command files can be set 
-   * by calling the setParamFileName() or setCommandFileName() functions,
-   * respectively. If the setCommandFileName() function is not called
-   * before readParameters(), the readParameters() function will
-   * expect to find a "commandFileName" a the first parameter in the 
-   * FileMaster parameter file block. After parameter and command file 
-   * names have been set, the paramFile() and commandFile() functions
-   * return references to the resulting parameter and command files.
-   * The first time these functions are called, they each call
+   * The functions setParameterFileName() and setCommandFileName()
+   * can be used to programmatically set the parameter and command file
+   * base names before reading a parameter file. If setCommandFileName() 
+   * is not called before readParameters(), the readParameters() function 
+   * expects to find a "commandFileName" as the first parameter in the 
+   * FileMaster parameter file block. 
+   *
+   * After parameter and command file names have been set, the 
+   * paramFile() and commandFile() functions return references to the 
+   * files.  The first time each of these functions is called, it calls
    * openControlFile() internally to open the appropriate file.
    *
    * \ingroup Misc_Module
@@ -171,8 +186,10 @@ namespace Util
       void setDirectoryId(int directoryId);
 
       /**
-      * Set to use single param and command files for multi-system 
-      * simulations.
+      * Enable "replicated" mode in multi-system simulations.
+      *
+      * Call this function to enable the use of single parameter and
+      * command files to control simulations of multiple systems.
       */ 
       void setCommonControl();
 
