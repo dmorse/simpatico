@@ -12,9 +12,9 @@
 *
 * Single-processor molecular dynamics simulation program.
 *
-* Usage (single processor version, without MPI):
+* Usage:
 *
-*    mdSim [-e] [-p] [-r restartFile] < paramFile
+*    mdSim [-e] [-r file] [-p file] [-c file] [-i prefix] [-o prefix] [-f]
 *
 * Options:
 *
@@ -23,39 +23,59 @@
 *    Enable echoing of parameter file to log file as it is read. This
 *    option is often useful for debugging the parameter file.
 *
-*   -p  
+*  -r file
 *
-*    Enable use of a free energy perturbation. 
+*   Set the program to reads a binary restart file to continue a
+*   previous run.  The restart file name is given by the argument.
 *
-*  -r restartFile
+*  -p file
 *
-*   This option reads a restart file and restarts a previous run. The 
-*   command line argument restarFile argument is the shared base name of
-*   the restart file and a corresponding command script file. The name
-*   of the restart file is obtained by appending the file extension .rst 
-*   to the base name, giving a name of the form restartFile.rst. The
-*   corresponding command file must have the same base name and a file
-*   name extension .cmd, giving a name of the form restartFile.cmd.
+*   Set the parameter file name, given by the argument "file". 
+*   The -p and -r options are incompatible. 
 *
-* Files:
+*  -c file
 *
-* If compiled in serial mode (ifndef UTIL_MPI), the default parameter 
-* stream read by readParam() is std::cin and the default log file 
-* Log::file() is std::cout.
+*   Set the command file name, given by the argument "file". The
+*   command file may also be specified in the parameter file.
 *
-* If compiled with MPI enabled (ifdef UTIL_MPI) and invoked with the 
-* "-p" option, a single parameter file is read from std::cin, as in a 
-* serial job.  
+*  -i prefix
 *
-* If compiled with MPI enabled (ifdef UTIL_MPI) invoked without the -p 
-* option, each processor reads from a different parameter file, which 
-* is named "n/param" for processor n.
+*   Set the input file path prefix, given by the argument "prefix".
 *
-* If compiled in parallel mode (ifdef UTIL_MPI), paths for all output
-* files produced by the processor with rank n are prefixed by "n/". All
-* output files produced by processor 6, for example, are thus put in a 
-* directory named "6/".  The default log file for processor n is "n/log". 
+*  -o prefix
 *
+*   Set the output file path prefix, given by the argument "prefix".
+*
+*  -f
+*
+*   Set replicated mode for parallel simulations.
+*
+* Input and output files:
+*
+* Serial: If compiled in serial mode, with MPI disabled (ifndef UTIL_MPI), 
+* the default file Log::file() is written to standard output (std::cout).
+* If the param file is not specified using a -p option, the param file 
+* stream defaults to standard input. 
+*
+* Parallel: If compiled with MPI enabled (ifdef UTIL_MPI), paths for all 
+* input output files associated with the processor with rank n are prefixed 
+* by "n/". All output files produced by processor 6, for example, are thus
+* put in a directory named "6/".  The default log file for processor n is
+* is "n/log". 
+*
+* Parallel independent mode: If compiled with MPI enabled (ifdef UTIL_MPI) 
+* and invoked without the -f option, each processor reads from a different 
+* parameter file and command file which are in the numbered system directory 
+* associated with that processor (or system).  If no param file name is 
+* specified by a -p option, the param file name for processor n defaults 
+* to "n/param". 
+*
+* Parallel replicated mode: If compiled with MPI enabled (ifdef UTIL_MPI) 
+* and invoked with the "-f" option, a single parameter file and control 
+* file is read from std::cin, as in a serial job, using a "perturbation"
+* to set a series of slightly different parameters on different processors.
+* If no param file name is specified by a -p option, the param file stream 
+* defaults to standard input. 
 */
 
 int main(int argc, char **argv)
