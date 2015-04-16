@@ -83,7 +83,7 @@ namespace Util
    }
 
    /*
-   * Set paramFile() to return std::cin even if a directory id has been set.
+   * Set to use a common parameter file even if a directory id is set.
    */
    void FileMaster::setCommonControl()
    {  isCommonControl_ = true; }
