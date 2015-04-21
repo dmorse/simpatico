@@ -206,15 +206,15 @@ public:
       printMethod(TEST_FUNC);
 
       Serializable::OArchive oar;
-      openOutputFile("out/serial", oar.file());
+      openOutputFile("out/LJPair.rst", oar.file());
       interaction_.save(oar);
       oar.file().close();
 
       Serializable::IArchive iar;
-      openInputFile("out/serial", iar.file());
+      openInputFile("out/LJPair.rst", iar.file());
 
       LJPair clone;
-      setNAtomType(2);
+      clone.setNAtomType(2);
       clone.loadParameters(iar);
 
       TEST_ASSERT(eq(interaction_.epsilon(0, 0), clone.epsilon(0,0)));
