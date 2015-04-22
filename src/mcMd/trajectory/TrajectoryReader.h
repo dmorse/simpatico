@@ -44,7 +44,12 @@ namespace McMd
       /**
       * Open trajectory file and read header, if any.
       *
-      * \param filename input file name.
+      * Note: By convention, this function does not add any prefixes
+      * to the trajectory file path. The filename argument should thus 
+      * be given as a relative path defined relative to the directory 
+      * from which the program is executed.
+      *
+      * \param filename input file name, relative to working directory.
       */
       virtual void open(std::string filename) = 0;
 
