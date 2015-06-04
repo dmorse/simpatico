@@ -13,13 +13,14 @@ namespace Util
 {
 
    /*
-   * Strip trailing whitespace from a string.
+   * Strip trailing whitespace and comments from a string.
    */
    int rStrip(std::string& str)
    {
-      size_t found;
-      std::string whitespaces(" \t\n\r");
-      found = str.find_last_not_of(whitespaces);
+      size_t found, cindx;
+      std::string whitespaces(" \t\n\r#");
+      cindx = str.find_first_of("#");
+      found = str.find_last_not_of(whitespaces, cindx);
       if (found != std::string::npos) {
         str.erase(found + 1);
         return int(found + 1);
