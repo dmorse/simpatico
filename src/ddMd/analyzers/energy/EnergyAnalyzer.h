@@ -87,7 +87,7 @@ namespace DdMd
       /**
       * Write energy to file
       *
-      * \param  iStep MD time step index
+      * \param iStep MD time step index
       */
       virtual void sample(long iStep);
 
