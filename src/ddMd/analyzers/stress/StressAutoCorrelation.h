@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Calculate stress autocorrelation function.
+   * Compute stress autocorrelation function.
    *
    * \ingroup DdMd_Analyzer_Module
    */

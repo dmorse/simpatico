@@ -32,7 +32,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Based class for classes that write trajectories to a single file.
+   * Base class to write a trajectory to a single file.
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -118,8 +118,6 @@ namespace DdMd
       /**
       * Write data that should appear in every frame.
       * 
-      * Called by sample on every step.
-      *
       * \param out output file stream
       * \param iStep MD time step index
       */

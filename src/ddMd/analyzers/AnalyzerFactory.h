@@ -32,14 +32,14 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation     parent Simulation
+      * \param simulation  parent Simulation
       */
       AnalyzerFactory(Simulation& simulation);
 
       /** 
       * Return pointer to a new Analyzer object.
       *
-      * \param  className name of a subclass of Analyzer.
+      * \param className  name of a subclass of Analyzer.
       * \return base class pointer to a new instance of className.
       */
       virtual Analyzer* factory(const std::string& className) const;

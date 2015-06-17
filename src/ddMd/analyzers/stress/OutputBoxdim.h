@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write simulation energies to file.
+   * Periodically write Boundary dimensions to file.
    *
    * \sa \ref ddMd_analyzer_OutputBoxdim_page "param file format"
    *

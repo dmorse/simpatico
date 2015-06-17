@@ -19,6 +19,9 @@ namespace DdMd
    /**
    * Periodically write simulation energies to Log output.
    *
+   * Intended for tracking progress on console or log file during a
+   * simulation, rather than for data analysis.
+   *
    * \sa \ref ddMd_analyzer_LogEnergy_page "param file format"
    *
    * \ingroup DdMd_Analyzer_Module
@@ -31,7 +34,7 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param simulation  parent Simulation object. 
       */
       LogEnergy(Simulation& simulation);
    
@@ -44,21 +47,21 @@ namespace DdMd
       /**
       * Read dumpPrefix and interval.
       *
-      * \param in input parameter file
+      * \param in  input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
       * Load internal state from an archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
   
@@ -70,17 +73,17 @@ namespace DdMd
       /**
       * Dump configuration to file
       *
-      * \param iStep MC step index
+      * \param iStep  MD time step index
       */
       virtual void sample(long iStep);
 
    private:
  
       /// Number of configurations dumped thus far (first dump is zero).
-      long    nSample_;
+      long nSample_;
    
       /// Has readParam been called?
-      long    isInitialized_;
+      long isInitialized_;
    
    };
 

@@ -16,7 +16,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Sample and evaluate average of pressure.
+   * Sample and evaluate average of total pressure.
    *
    * \sa \ref ddMd_analyzer_PressureAnalyzer_page "param file format"
    *
@@ -30,7 +30,7 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object.
+      * \param simulation  parent Simulation object.
       */
       PressureAnalyzer(Simulation& simulation);
 
@@ -42,7 +42,7 @@ namespace DdMd
    protected:
 
       /**
-      * Compute value of pressure.
+      * Compute current value of pressure.
       *
       * Call on all processors.
       */
