@@ -17,7 +17,18 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Compute stress autocorrelation function.
+   * Compute the shear stress autocorrelation function.
+   *
+   * This class uses a hierarchichal block averaging algorithm 
+   * to calculate the shear stress autocorrelation function. 
+   * The final *.dat file  function contains values of the 
+   * quantity \f$ k_{B}T G(t) \f$, where \f$G(t)\f$ is the linear
+   * shear stress modulus, i.e., the response of shear stress to 
+   * a hypothetical infinitesimal step shear strain, per unit 
+   * applied step strain. This quantity is calculated from the
+   * autocorrelation of the traceless symmetric part of the total
+   * stress, using symmetry relations appropriate for an isotropic
+   * fluid.
    *
    * \ingroup DdMd_Analyzer_Module
    */

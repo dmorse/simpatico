@@ -35,10 +35,10 @@ namespace DdMd
    * \f[
    *     \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i )
    * \f]
-   * in which the sum is taken over all particles, $a$ is the atom type 
-   * of particle $i$, and $v(m, a)$ is a coefficient for atom type $a$
-   * for mode $m$. The matrix $v(m, a)$ of mode coefficients is input
-   * by the user. 
+   * in which the sum is taken over all particles, \f$a\f$ is the atom type 
+   * of particle \f$\f$, and \f$v(m, a)\f$ is a coefficient for atom type 
+   * \f$a\f$ for mode $m$. The matrix \f$v(m, a)\f$ of mode coefficients 
+   * is input the user. 
    *
    * This class can evaluate one or modes for multiple wavevectors.
    * The input format thus requires the user to specify one or more 
