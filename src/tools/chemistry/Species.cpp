@@ -24,6 +24,12 @@ namespace Tools
       capacity_(0)
    {}
 
+   /*
+   * Destructor.
+   */
+   Species::~Species()
+   {}
+
    void Species::setId(int id)
    { id_ = id; }
 
