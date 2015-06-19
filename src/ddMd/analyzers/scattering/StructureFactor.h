@@ -33,11 +33,11 @@ namespace DdMd
    * \f]
    * where, V is system volume, and \f$\rho(k)\f$ is a Fourier component
    * \f[
-   *     \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i )
+   *     \rho(k) = \sum_{i} v(m, a)\exp( i k \cdot r_i )
    * \f]
    * in which the sum is taken over all particles, \f$a\f$ is the atom type 
-   * of particle \f$\f$, and \f$v(m, a)\f$ is a coefficient for atom type 
-   * \f$a\f$ for mode $m$. The matrix \f$v(m, a)\f$ of mode coefficients 
+   * of particle \f$i\f$, and \f$v(m, a)\f$ is a coefficient for atom type 
+   * \f$a\f$ for mode \f$m\f$. The matrix \f$v(m, a)\f$ of mode coefficients 
    * is input the user. 
    *
    * This class can evaluate one or modes for multiple wavevectors.

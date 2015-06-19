@@ -50,7 +50,7 @@ in which i is an integer time separation index, measured in terms of the number 
 \f[
     F(t) = k_{B}TG(t)
 \f]
-where \f$G(t)\f$ is the shear stress relaxtion modulus evaluated at a time separation \f$\t_{i}\f$. The time separation \f$t_{i\f$ corresponding to the integer time index i is
+where \f$G(t)\f$ is the shear stress relaxtion modulus evaluated at a time separation \f$t_{i}\f$. The time separation \f$t_{i}\f$ corresponding to the integer time index i is
 \f[
    t_i \equiv i*interval*\Delta t
 \f]
