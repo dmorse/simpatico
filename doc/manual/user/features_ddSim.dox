@@ -36,6 +36,7 @@ Click on any of the links below for user information about classes that implemen
   <li> \subpage ddMd_analyzer_StressAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_VirialStressAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+  <li> \subpage ddMd_analyzer_StressAutoCorrelation_page </li>
   <li> \subpage ddMd_analyzer_StructureFactor_page </li>
   <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage ddMd_analyzer_VanHove_page </li>

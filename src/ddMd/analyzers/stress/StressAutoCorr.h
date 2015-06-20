@@ -20,7 +20,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write (tensor) StressTensor to file.
+   * Compute stress autocorrelation function for a liquid.
    *
    * \ingroup DdMd_Analyzer_Module
    */

@@ -20,7 +20,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write (tensor) StressTensor to file.
+   * Periodically write virial stress tensor components to file.
    *
    * \ingroup DdMd_Analyzer_Module
    */

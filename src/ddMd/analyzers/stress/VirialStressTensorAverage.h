@@ -20,7 +20,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write (tensor) StressTensor to file.
+   * Compute average and output block averages of virial stress tensor.
    *
    * \sa \ref ddMd_analyzer_VirialStressTensorAverage_page "param file format"
    *

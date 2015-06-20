@@ -1,0 +1,61 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_StressAutoCorrelation_page  StressAutoCorrelation
+
+\section ddMd_analyzer_StressAutoCorrelation_synopsis_sec Synopsis
+
+This analyzer a hierarchical block-averaging algorithm to calculate the shear-stress autocorrelation function for a fluid, and reports the corresponding shear relaxation modulus.
+
+\sa DdMd::StressAutoCorrelation
+
+\section ddMd_analyzer_StressAutoCorrelation_param_sec Parameters
+The parameter file format is:
+\code
+   StressAutoCorrelation{
+     interval             int
+     outputFileName       string
+     bufferCapacity       int
+   }
+\endcode
+in which 
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>bufferCapacity</td>
+     <td>Number of samples in the data history array</td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_StressAutoCorrelation_output_sec Output
+
+After the end of the simulation, if the OUTPUT_ANALYZERS command is invoked:
+
+   - A copy of the parameter file block associated with this analyzer is echoed to file {outputFileName}.prm.
+
+   - The final stress relaxation function is output to a file {outputFileName}.dat. 
+
+Each line of the *.dat file containing the stress relaxation function has the format:
+\code
+   i    F(t_{i})
+\endcode
+in which i is an integer time separation index, measured in terms of the number of samples, and 
+\f[
+    F(t) = k_{B}TG(t)
+\f]
+where \f$G(t)\f$ is the shear stress relaxtion modulus evaluated at a time separation \f$t_{i}\f$. The time separation \f$t_{i}\f$ corresponding to the integer time index i is
+\f[
+   t_i \equiv i*interval*\Delta t
+\f]
+where interval is the number of time steps between stress measurements, as given in the parameter file, and \f$\Delta t\f$ is the molecular dynamics time step.
+
+*/
+
+}

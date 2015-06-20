@@ -157,7 +157,7 @@ namespace Inter
    */
    double HarmonicBond::get(std::string name, int type) const
    {
-      double value;
+      double value = 0.0;
       if (name == "kappa") {
          value = kappa_[type];
       } else
