@@ -8,7 +8,7 @@
 #include <tools/processor/Processor.h>
 
 /**
-* \page mdPp_page mdPp - postprocessing analysis program.
+* \page mdPp_page mdPp - postprocessing analysis program
 *
 * Single-processor analysis program for postprocessing MD trajectories.
 * 

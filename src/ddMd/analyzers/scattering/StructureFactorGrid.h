@@ -20,9 +20,9 @@ namespace DdMd
    * StructureFactorGrid evaluates structure factors in Fourier space.
    *
    * This class evaluates the structures factors for all wavevectors
-   * for all wavevectors within a grid, within a region in which all
-   * of the h, k, l integer wavevector components (i.e., Miller indices) 
-   * has an absolute magnitude less than or equal to a parameter hMax.
+   * within a grid, within a region in which each of the h, k, l integer 
+   * wavevector components (i.e., Miller indices) has an absolute 
+   * magnitude less than or equal to a parameter hMax.
    * 
    * The class also requires a user to specify a variable lattice of
    * enum type LatticeSystem whose value (e.g., Cubic, Orthorhombic, 
@@ -44,7 +44,7 @@ namespace DdMd
    *                              0      0
    *                              0      1
    *    hMax                             5
-        lattice                      Cubic
+   *    lattice                      Cubic
    * }
    * \endcode
    * At the end of a simulation, all of the structure factors are
@@ -101,14 +101,14 @@ namespace DdMd
       virtual void save(Serializable::OArchive &ar);
   
       /**
-      * Set up before a simulation.
+      * Clear all accumulators and counters.
       */
       virtual void clear();
 
       /**
       * Add particles to StructureFactor accumulators.
       *
-      * \param iStep step counter
+      * \param iStep  step counter
       */
       virtual void sample(long iStep);
 
@@ -139,6 +139,7 @@ namespace DdMd
      
       /// Log file
       std::ofstream logFile_;
+
    };
 
 }

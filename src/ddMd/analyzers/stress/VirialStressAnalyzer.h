@@ -16,7 +16,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Output and evaluate average of stress tensor.
+   * Output and evaluate average of virial stress tensor.
    *
    * \sa \ref ddMd_analyzer_VirialStressAnalyzer_page "param file format"
    *

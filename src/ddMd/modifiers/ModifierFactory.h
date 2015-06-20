@@ -44,7 +44,7 @@ namespace DdMd
       /** 
       * Return pointer to a new Modifier object.
       *
-      * \param  className name of a subclass of Modifier.
+      * \param className name of a subclass of Modifier.
       * \return base class pointer to a new instance of className.
       */
       virtual Modifier* factory(const std::string& className) const;

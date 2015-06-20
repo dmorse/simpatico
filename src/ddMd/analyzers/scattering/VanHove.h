@@ -40,7 +40,7 @@ namespace DdMd
    *
    * The Van Hove class can calculate S(k,t) for a list of wavevectors.
    * Each wavevector is specified as an IntVector containing integer 
-   * Miller indices. These are the coefficients in an expansion of a 
+   * indices. These indices are the coefficients in an expansion of a 
    * reciprocal lattice wavevector in terms of recprocal lattice basis 
    * vectors.
    *

@@ -28,7 +28,7 @@ namespace DdMd
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
-      nSamplePerBlock_(1),
+      nSamplePerBlock_(0),
       isInitialized_(false)
    {  setClassName("SymmTensorAverageAnalyzer"); }
 

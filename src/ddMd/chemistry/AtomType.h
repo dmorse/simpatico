@@ -144,8 +144,8 @@ namespace DdMd
    *
    *    name  mass
    *
-   * \param  out      output stream
-   * \param  atomType AtomType to be written to stream
+   * \param out      output stream
+   * \param atomType AtomType to be written to stream
    * \return modified output stream
    */
    std::ostream& operator<<(std::ostream& out, const AtomType &atomType);

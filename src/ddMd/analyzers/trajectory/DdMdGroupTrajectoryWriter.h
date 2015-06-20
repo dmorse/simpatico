@@ -43,28 +43,28 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
-      * Load internal state from an archive.
+      * Load internal state from an input archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save internal state to an archive.
+      * Save internal state to an output archive.
       *
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Read trajectory file header and initialize simulation parameters.
+      * Write trajectory file header.
       *
       * \param file output file stream
       */
       void writeHeader(std::ofstream &file);
 
       /**
-      * Read a single frame. Frames are assumed to be read consecutively.
+      * Write a single frame. 
       *
       * \param file output file stream
       * \param iStep MD time step index

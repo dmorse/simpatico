@@ -73,10 +73,13 @@ namespace DdMd
       /**
       * Call sample method of each Analyzer, if scheduled.
       *
-      * Calls sample methods of each analyzer only if:
-      * - Analyzer::baseInterval is positive
-      * - iStep is a multiple of Analyzer::baseInterval
-      * - iStep is a multiple of the analyzer interval
+      * This function should be called every time step during
+      * a simulation. It executes a loop over analyzers if the
+      * static member Analyzer::baseInterval is positive on 
+      * time steps for which iStep is an interval multiple of 
+      * Analyzer::baseInterval. It call the sample() function
+      * of each Analyzer object only when iStep is an integer
+      * multiple of the interval variable for that Analyzer.
       *
       * \param iStep time step counter
       */

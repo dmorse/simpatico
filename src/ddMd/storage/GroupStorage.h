@@ -261,7 +261,7 @@ namespace DdMd
       * processor that owns its first atom (index 0), and then values from
       * different processors are summed and stored on the master.
       *
-      * \param  communicator MPI communicator for this system.
+      * \param communicator MPI communicator for this system.
       * \return on master node, return total number of groups.
       */
       #ifdef UTIL_MPI

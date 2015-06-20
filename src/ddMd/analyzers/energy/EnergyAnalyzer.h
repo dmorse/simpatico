@@ -22,7 +22,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write simulation energies to file.
+   * Compute averages and output block averages of energy components.
+   *
+   * This class computes separate averages for each component of the
+   * total simulation energy (kinetic, pair, bond, etc.) as well as
+   * for the total, and periodically outputs block averages of each
+   * to a file.
    *
    * \sa \ref ddMd_analyzer_EnergyAnalyzer_page "param file format"
    *
@@ -30,13 +35,13 @@ namespace DdMd
    */
    class EnergyAnalyzer : public Analyzer
    {
-   
+
    public:
    
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param simulation  parent Simulation object. 
       */
       EnergyAnalyzer(Simulation& simulation);
    
@@ -49,38 +54,40 @@ namespace DdMd
       /**
       * Read interval and output file name.
       *
-      * \param in input parameter file
+      * \param in  input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
-      * Load internal state from an archive.
+      * Load internal state from an input archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save internal state to an archive.
+      * Save internal state to an output archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
   
       /**
-      * Clear nSample counter.
+      * Clear nSample counter and all accumulators.
       */
       virtual void clear();
   
       /**
-      * Setup - open output file.
+      * Setup before main loop.
+      *
+      * Open all files required for output during simulation.
       */
       virtual void setup();
 
       /**
       * Write energy to file
       *
-      * \param iStep MC step index
+      * \param iStep MD time step index
       */
       virtual void sample(long iStep);
 

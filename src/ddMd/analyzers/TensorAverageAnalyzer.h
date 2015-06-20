@@ -23,10 +23,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Base class for analyzers that evaluate averages of global tensor values.
+   * Analyzer that computes averages and block averages of a single Tensor.
    *
-   * This class evaluates the average of a sampled float point values and
-   * optionally writes block averages to a data file during the run.
+   * This class evaluates the average of a sequence of Tensor values, and
+   * optionally writes block averages to a data file during the run. It is
+   * intended for use as a base class for classes that evaluate averages 
+   * for specific tensor-valued physical variables.
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -48,23 +50,27 @@ namespace DdMd
       virtual ~TensorAverageAnalyzer(); 
    
       /**
-      * Read dumpPrefix and interval.
+      * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
-      * \param in input parameter file
+      * The optional variable nSamplePerBlock defaults to 0, which disables
+      * computation and output of block averages. Setting nSamplePerBlock = 1
+      * outputs every sampled value. 
+      *
+      * \param in  input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
       * Load internal state from an archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
   
@@ -79,14 +85,17 @@ namespace DdMd
       virtual void setup();
 
       /**
-      * Compute a sampled value and add it to a sequence.
+      * Compute a sampled value and add update accumulator.
       *
-      * \param iStep MD step index
+      * If block averaging is enabled (nSamplePerBlock > 0), then
+      * this function also periodically outputs block averages.
+      *
+      * \param iStep  MD time step index
       */
       virtual void sample(long iStep);
 
       /**
-      * Dump configuration to file
+      * Write final average and error analysis to file.
       */
       virtual void output();
 

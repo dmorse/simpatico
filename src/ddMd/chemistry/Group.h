@@ -215,8 +215,8 @@ namespace DdMd
    *
    * Format on one line with no line break:
    *
-   * \param  out   output stream
-   * \param  group Group to be written to stream
+   * \param out   output stream
+   * \param group Group to be written to stream
    * \return modified output stream
    */
    template <int N>

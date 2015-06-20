@@ -33,12 +33,12 @@ namespace DdMd
    * \f]
    * where, V is system volume, and \f$\rho(k)\f$ is a Fourier component
    * \f[
-   *     \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i )
+   *     \rho(k) = \sum_{i} v(m, a)\exp( i k \cdot r_i )
    * \f]
-   * in which the sum is taken over all particles, $a$ is the atom type 
-   * of particle $i$, and $v(m, a)$ is a coefficient for atom type $a$
-   * for mode $m$. The matrix $v(m, a)$ of mode coefficients is input
-   * by the user. 
+   * in which the sum is taken over all particles, \f$a\f$ is the atom type 
+   * of particle \f$i\f$, and \f$v(m, a)\f$ is a coefficient for atom type 
+   * \f$a\f$ for mode \f$m\f$. The matrix \f$v(m, a)\f$ of mode coefficients 
+   * is input the user. 
    *
    * This class can evaluate one or modes for multiple wavevectors.
    * The input format thus requires the user to specify one or more 
@@ -89,7 +89,7 @@ namespace DdMd
       /**	
       * Constructor.
       *
-      * \param simulation reference to parent Simulation object
+      * \param simulation  reference to parent Simulation object
       */
       StructureFactor(Simulation& simulation);
 
@@ -101,21 +101,21 @@ namespace DdMd
       /**
       * Read parameters from file.
       *
-      * \param in input parameter stream
+      * \param in  input parameter stream
       */
       virtual void readParameters(std::istream& in);
 
       /**
       * Load internal state from an archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
   
@@ -127,7 +127,7 @@ namespace DdMd
       /**
       * Add particles to StructureFactor accumulators.
       *
-      * \param iStep step counter
+      * \param iStep  MD time step counter
       */
       void sample(long iStep);
 
@@ -138,7 +138,9 @@ namespace DdMd
 
    protected:
 
-      /// Output file stream.
+      /**
+      * Output file stream.
+      */
       std::ofstream outputFile_;
 
       /**
@@ -191,16 +193,16 @@ namespace DdMd
       /// Number of atom types, copied from Simulation::nAtomType().
       int  nAtomType_;
 
-      /**
-      * Update wavevectors.
-      */
-      void makeWaveVectors();
-
       /// Has readParam been called?
       bool isInitialized_;
 
       /// Is this the first step?
       bool isFirstStep_;
+
+      /**
+      * Update wavevectors.
+      */
+      void makeWaveVectors();
 
    };
 
