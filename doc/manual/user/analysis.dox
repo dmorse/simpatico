@@ -35,19 +35,23 @@ The WriteConfig classes in the McMd and DdMd can each output configuration files
 
 \section analysis_trajectory_section Writing a trajectory file
 
-The McMd::WriteTrajectory and DdMd::WriteTrajectory analyzer classes instead write a sequence of configurations as frames within a single MD "trajectory" file.
+The ddSim program provides analyzer classes that can write a sequence of configurations as frames within a single "trajectory" file. See the list of run-time features for ddSim for a list of classes that can write different file formats.
  
 \section analysis_mcMd_postprocess_section Using mcSim and mdSim as postprocessors
 
-The mcSim and mdSim programs can both be used to postprocess configurations that have been written to file. These programs can postprocess outputs produced either by mcSim or mdSim or (with some restrictions on the form of the output) by ddSim.  To so, each program simply implements a main loop, analogous to the main simulation loop, in which a sequence of configurations are read from file, but in which the resulting set of configurations is treated exactly as if they were generated during a simulation. The same set of analyzer classes are available for use in this mode as those available for use on-the-fly. To use either of these programs in this mode, one must provide a parameter file very similar to that used for a simulation, with a AnalyzerManager that specifies a set of analyzers that should be applied, and a command file in which the "SIMULATE" command is replaced by either a "ANALYZE_DUMPS" or "ANALYZE_TRAJECTORY" command. 
+The mcSim and mdSim programs can both be used to postprocess configurations that have been written to file. These programs can postprocess outputs produced either by mcSim or mdSim or (with some restrictions on the form of the output) by ddSim.  To so, each program simply implements a main loop, analogous to the main simulation loop, in which a sequence of configurations are read from file, but in which the resulting set of configurations is treated exactly as if they were generated during a simulation. The same set of analyzer classes are available for use in this mode as those available for use on-the-fly. To use either of these programs in this mode, one must provide a parameter file very similar to that used for a simulation, with a AnalyzerManager that specifies a set of analyzers that should be applied, and a command file in which the "SIMULATE" command is replaced by either a "ANALYZE_CONFIGS" or "ANALYZE_TRAJECTORY" command. 
 
-The ANALYZE_DUMPS command in the command file for mcSim or mdSim causes the program to read in and analyze a sequence of numbered configuration files. The names of the input configuration files are constructed by concatenating the inputPrefix parameter of the FileMaster, a base name that is specified as an argument to the ANALYZE_DUMPS command and an integer in a range that is specified in the ANALYZE command. For example, if the inputPrefix of the FileMaster was set to out/ (because this was the output prefix used by a previous simulation), and the outputPrefix was set to analyze/, the command
+The ANALYZE_CONFIGS command in the command file for mcSim or mdSim causes the program to read in and analyze a sequence of numbered configuration files. The names of the input configuration files are constructed by concatenating the inputPrefix parameter of the FileMaster, a base name that is specified as an argument to the ANALYZE_CONFIGS command and an integer in a range that is specified in the ANALYZE command. For example, if the inputPrefix of the FileMaster was set to out/ (because this was the output prefix used by a previous simulation), and the outputPrefix was set to analyze/, the command
 \code
-   ANALYZE_DUMPS  0   19   dump/config
+   ANALYZE_CONFIGS  0   19   dump/config
 \endcode
 would cause the main McSimulation or MdSimulation object to read in and apply all of the specified analyzers to configurations files with names out/dump/config.0 out/dump/config.1 ... in/dump/config.19, and write the results of the analysis to files in the analyze/ directory. 
 
-The ANALYZE_TRAJECTORY command in a command file for mdSim causes the program to read and analyze a trajectory file that contains a sequence of system configurations ("frames"). The syntax of the command is identical to that of the ANALYZE_DUMPS command. This command is not available for use by mcSim.
+The ANALYZE_TRAJECTORY command in a command file for mcSim or mdSim causes the program to read and analyze a trajectory file that contains a sequence of system configurations ("frames"), in any of several file formats that can be written by ddSim. The syntax of the command is similar to that of the ANALYZE_CONFIGS command, except for the addition of a specified subclass of TrajectoryReader, which specifies the format of the trajectory file. For example,
+\code
+   ANALYZE_TRAJECTORY  0   19  DdMdTrajectoryReader trajectory.trj
+\endcode
+would cause the main object to create an instance of McMd::DdMdTrajectoryReader, use this to open and read a trajectory file named trajectory.trj, and analyze frames 0 to 19 in that file. This could be used to analyze a trajectory file that was created during a ddSim simulation by the DdMd::DdMdTrajectoryWriter analyzer.
 
 During postprocessing, the "interval" of each analyzer is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each analyzers should thus generally be set to 1 in the parameter file for a postprocessing run.
 

@@ -1,5 +1,6 @@
 
-util_crystal_=util/crystal/LatticeSystem.cpp \
+util_crystal_=\
+    util/crystal/LatticeSystem.cpp \
     util/crystal/PointGroup.cpp \
     util/crystal/PointSymmetry.cpp 
 

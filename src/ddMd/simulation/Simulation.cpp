@@ -291,7 +291,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) {
+         logFile_.close();
+      }
       #endif
    }
 
@@ -300,44 +302,56 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char * const * argv)
    {
-      bool  sFlag = false; // split communicator
-      bool  eFlag = false; // echo
-      bool  pFlag = false; // param file name
-      bool  rFlag = false; // restart file name
-      bool  cFlag = false; // command file name
+      bool sFlag = false; // split communicator
+      bool eFlag = false; // echo
+      bool pFlag = false; // param file name
+      bool rFlag = false; // restart file name
+      bool cFlag = false; // command file name
+      bool iFlag = false; // input prefix
+      bool oFlag = false; // output prefix
       char* sArg = 0;
       char* rArg = 0;
       char* pArg = 0;
       char* cArg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
       int  nSystem = 1;
 
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "es:p:r:c:")) != -1) {
+      while ((c = getopt(argc, argv, "es:p:r:c:i:o:")) != -1) {
          switch (c) {
          case 'e': // echo parameters
-           eFlag = true;
-           break;
+            eFlag = true;
+            break;
          case 's': // split communicator
-           sFlag = true;
-           sArg  = optarg;
-           nSystem = atoi(sArg);
-           break;
+            sFlag = true;
+            sArg  = optarg;
+            nSystem = atoi(sArg);
+            break;
          case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
+            pFlag = true;
+            pArg  = optarg;
+            break;
          case 'r': // restart file
-           rFlag = true;
-           rArg  = optarg;
-           break;
+            rFlag = true;
+            rArg  = optarg;
+            break;
          case 'c': // command file
-           cFlag = true;
-           cArg  = optarg;
-           break;
+            cFlag = true;
+            cArg  = optarg;
+            break;
+         case 'i': // input prefix
+            iFlag = true;
+            iArg  = optarg;
+            break;
+         case 'o': // output prefix
+            oFlag = true;
+            oArg  = optarg;
+            break;
          case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
+            Log::file() << "Unknown option -" << optopt << std::endl;
          }
       }
 
@@ -385,6 +399,17 @@ namespace DdMd
       if (cFlag) {
          fileMaster().setCommandFileName(std::string(cArg));
       }
+
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
+
 
       // If option -r, load state from a restart file.
       if (rFlag) {
@@ -449,32 +474,32 @@ namespace DdMd
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
       nBondType_ = 0;
-      read<int>(in, "nBondType", nBondType_, false); // optional
+      readOptional<int>(in, "nBondType", nBondType_); 
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
-      read<int>(in, "nAngleType", nAngleType_, false); // optional
+      readOptional<int>(in, "nAngleType", nAngleType_); 
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_ = 0;
-      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
+      readOptional<int>(in, "nDihedralType", nDihedralType_); 
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
-      read<bool>(in, "hasExternal", hasExternal_, false); // optional
+      readOptional<bool>(in, "hasExternal", hasExternal_); 
       #endif
 
       hasAtomContext_ = false;
-      read<bool>(in, "hasAtomContext", hasAtomContext_, false); // optional
+      readOptional<bool>(in, "hasAtomContext", hasAtomContext_); 
       Atom::setHasAtomContext(hasAtomContext_);
 
       // Read array of atom type descriptors
@@ -514,9 +539,8 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
-      readParamComposite(in, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
+      readParamComposite(in, *pairPotentialPtr_);
       #endif
 
       #ifdef INTER_BOND
@@ -527,7 +551,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          readParamComposite(in, *bondPotentialPtr_);
       }
       #endif
@@ -540,7 +563,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          readParamComposite(in, *anglePotentialPtr_);
       }
       #endif
@@ -553,7 +575,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
@@ -566,7 +587,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }
       #endif
@@ -711,7 +731,6 @@ namespace DdMd
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
       }
-      pairPotential().setNAtomType(nAtomType_);
       loadParamComposite(ar, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
@@ -724,7 +743,6 @@ namespace DdMd
          if (!bondPotentialPtr_) {
             UTIL_THROW("Unknown bondStyle");
          }
-         bondPotential().setNBondType(nBondType_);
          loadParamComposite(ar, *bondPotentialPtr_);
       }
       #endif
@@ -737,7 +755,6 @@ namespace DdMd
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
          }
-         anglePotential().setNAngleType(nAngleType_);
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
@@ -750,7 +767,6 @@ namespace DdMd
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
          }
-         dihedralPotential().setNDihedralType(nDihedralType_);
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
@@ -763,7 +779,6 @@ namespace DdMd
          if (!externalPotentialPtr_) {
             UTIL_THROW("Unknown externalStyle");
          }
-         externalPotential().setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
       #endif
@@ -1348,6 +1363,20 @@ namespace DdMd
                inBuffer >> classname;
                setConfigIo(classname);
             } else
+            if (command == "SET_INPUT_PREFIX") {
+               // Set the FileMaster inputPrefix, which is used to
+               // construct paths to input files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setInputPrefix(prefix);
+            } else
+            if (command == "SET_OUTPUT_PREFIX") {
+               // Set the FileMaster outputPrefix, which is used to
+               // construct paths to output files.
+               std::string prefix;
+               inBuffer >> prefix;
+               fileMaster().setOutputPrefix(prefix);
+            } else
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
                std::string paramName;
@@ -1503,8 +1532,10 @@ namespace DdMd
    }
 
    /*
-   * Set forces on all local atoms to zero.
-   * If reverseUpdateFlag(), also zero ghost atom forces.
+   * Set forces on all atoms to zero.
+   *
+   * If reverseUpdateFlag() is true, zero local and ghost
+   * atom forces, otherwise only local atoms.
    */
    void Simulation::zeroForces()
    {  atomStorage_.zeroForces(reverseUpdateFlag_); }

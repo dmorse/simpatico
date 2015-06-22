@@ -46,17 +46,16 @@ void SpeciesTest::testConstructor()
 void SpeciesTest::testReadParam()
 {
    printMethod(TEST_FUNC);
-   using std::ifstream;
-   using std::cout;
 
+   std::ifstream in;
    #ifdef INTER_ANGLE
    #ifdef INTER_DIHEDRAL
-   ifstream in("in/SpeciesAngleDihedral");
+   openInputFile("in/SpeciesAngleDihedral", in);
    #else
-   ifstream in("in/SpeciesAngle");
+   openInputFile("in/SpeciesAngle", in);
    #endif
    #else
-   ifstream in("in/Species");
+   openInputFile("in/Species", in);
    #endif
    species.readParam(in);
    in.close();

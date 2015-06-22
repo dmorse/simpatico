@@ -69,10 +69,8 @@ namespace Inter
    */
    void HarmonicAngle::readParameters(std::istream &in) 
    {
-      // Preconditions
-      if (nAngleType_ <= 0) {
-         UTIL_THROW("nAngleType must be set before readParam");
-      }
+      // Precondition
+      UTIL_CHECK(nAngleType_ > 0);
 
       // Read parameters
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
@@ -89,11 +87,7 @@ namespace Inter
    */
    void HarmonicAngle::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAngleType_; 
-      if (nAngleType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
-      // Read parameters
+      UTIL_CHECK(nAngleType_ > 0);
       loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
       loadCArray<double>(ar, "theta0", theta0_, nAngleType_);
    }
@@ -103,7 +97,7 @@ namespace Inter
    */
    void HarmonicAngle::save(Serializable::OArchive &ar)
    {
-      ar << nAngleType_;
+      UTIL_CHECK(nAngleType_ > 0);
       ar.pack(kappa_, nAngleType_);
       ar.pack(theta0_, nAngleType_);
    }

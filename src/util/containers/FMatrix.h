@@ -20,7 +20,7 @@ namespace Util
    * provides access to its elements via the A(i,j) Matrix syntax.
    *
    * Template parameters M and N are the number of rows and columns
-   * respectively.
+   * respectively, so that capacity1 = M and capacity2 = N.
    *
    * \ingroup Matrix_Module
    */

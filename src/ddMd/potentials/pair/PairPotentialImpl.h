@@ -14,7 +14,7 @@
 
 #include <algorithm>
 
-#define  PAIR_BLOCK_SIZE 16
+#define PAIR_BLOCK_SIZE 16
 
 namespace DdMd
 {
@@ -26,6 +26,15 @@ namespace DdMd
    /**
    * Implementation template for a PairPotential.
    *
+   * This template provides a concrete implementation of the
+   * PairPotential base class for a specific nonbonded pair
+   * interaction class, representing a specific functional form
+   * for the pair potential (e.g., cutoff Lennard-Jones). The
+   * template argument Interaction represents the specified pair
+   * interaction class (e.g., LJPair for cutoff Lennard-Jones),
+   * which is normally a class in the Inter namespace from the
+   * src/inter/pair directory.
+   *
    * \ingroup DdMd_Pair_Module
    */
    template <class Interaction>
@@ -36,6 +45,10 @@ namespace DdMd
 
       /** 
       * Constructor.
+      *
+      * Sets nNAtomType to simulation.nAtomType().
+      *
+      * \param simulation  parent Simulation object.
       */
       PairPotentialImpl(Simulation& simulation);
 
@@ -50,12 +63,26 @@ namespace DdMd
       virtual ~PairPotentialImpl();
 
       /**
+      * Set the maximum number of atom types.
+      *  
+      * This function is required iff the object is instantiated
+      * using the default constructor, which is intended for use
+      * only for unit testing. It is called internally by the 
+      * constructor PairPotentialImpl(Simulation& ) that is used
+      * during a simulation. 
+      */
+      virtual void setNAtomType(int nAtomType);
+  
+      /**
       * Read pair potential interaction and pair list blocks.
       * 
-      * This method reads the maxBoundary, PairList and pair potential 
-      * Interaction parameter blocks, in  that order, and initializes an
-      * internal PairList. Before calling the Interaction::readParam method,
-      * it passes simulation().nAtomType() to Interaction::setNAtomType().
+      * This method initializes the pair potential. It reads the 
+      * the maxBoundary, PairList and pair potential Interaction 
+      * parameter blocks, in that order, and initializes an 
+      * internal PairList. 
+      *
+      * \pre nAtomType must be set to a positive value
+      * \pre This object may not already be initialized
       *
       * \param in input parameter stream.
       */
@@ -64,12 +91,20 @@ namespace DdMd
       /**
       * Load internal state from an archive.
       *
+      * This function initializes the pair potential during
+      * a restart.
+      *
+      * \pre nAtomType must be set to a positive value
+      * \pre This object may not already be initialized
+      *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
+      *
+      * Call only on master processor.
       *
       * \param ar output/saving archive
       */
@@ -78,11 +113,6 @@ namespace DdMd
       /// \name Interaction interface
       //@{
 
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNAtomType(int nAtomType);
-  
       /**
       * Return energy for a single pair.
       * 
@@ -153,7 +183,7 @@ namespace DdMd
       //@{
 
       /**
-      * Calculate non-bonded pair forces for all atoms in this Simulation.
+      * Compute non-bonded pair forces for all atoms in this Simulation.
       *
       * Adds non-bonded pair forces to the current values of the
       * forces for all atoms in this simulation. Before calculating 
@@ -223,45 +253,54 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
-      // Number of atom types.
+      /**
+      * Number of atom types.
+      *
+      * Invariant: Must agree with value set in Interaction.
+      */
       int nAtomType_;
 
+      #ifdef PAIR_BLOCK_SIZE
+      PairForce pairs_[PAIR_BLOCK_SIZE];
+      PairForce* inPairs_[PAIR_BLOCK_SIZE];
+      #endif
+
       /**
-      * Calculate atomic pair energy, using PairList.
+      * Initialized to false, set true in readParameters or loadParameters.
+      */ 
+      bool isInitialized_;
+
+      /**
+      * Compute atomic pair energy, using PairList.
       */
       double energyList();
 
       /**
-      * Calculate atomic pair forces, using PairList.
+      * Compute atomic pair forces, using PairList.
       */
       void computeForcesList();
 
       /**
-      * Calculate atomic pair forces and/or pair potential energy.
+      * Compute atomic pair forces and/or pair potential energy.
       */
       double energyCell();
 
       /**
-      * Calculate atomic pair forces and/or pair potential energy.
+      * Compute atomic pair forces and/or pair potential energy.
       */
       void computeForcesCell();
 
       /**
-      * Calculate atomic pair energy, using N^2 loop.
+      * Compute atomic pair energy, using N^2 loop.
       * 
       * Use an O(N^2) double loop over all atoms.
       */
       double energyNSq();
 
       /**
-      * Calculate atomic pair forces, using N^2 loop.
+      * Compute atomic pair forces, using N^2 loop.
       */
       void computeForcesNSq();
-
-      #ifdef PAIR_BLOCK_SIZE
-      PairForce  pairs_[PAIR_BLOCK_SIZE];
-      PairForce* inPairs_[PAIR_BLOCK_SIZE];
-      #endif
 
    };
 
@@ -292,10 +331,11 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
     : PairPotential(simulation),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  
       interactionPtr_ = new Interaction;
-      nAtomType_ =  simulation.nAtomType();
+      setNAtomType(simulation.nAtomType());
    }
  
    /* 
@@ -304,7 +344,8 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl()
     : PairPotential(),
-      interactionPtr_(0)
+      interactionPtr_(0),
+      isInitialized_(false)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -323,7 +364,11 @@ namespace DdMd
    */
    template <class Interaction>
    void PairPotentialImpl<Interaction>::setNAtomType(int nAtomType)
-   {  interaction().setNAtomType(nAtomType); }
+   {
+      UTIL_CHECK(!isInitialized_);
+      nAtomType_ = nAtomType;
+      interaction().setNAtomType(nAtomType); 
+   }
 
    /*
    * Read parameters from file
@@ -331,10 +376,17 @@ namespace DdMd
    template <class Interaction>
    void PairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
+      // Preconditions 
+      UTIL_CHECK(!isInitialized_);
+      UTIL_CHECK(nAtomType_ > 0);
+
+      // Read Interaction parameter block without indent or brackets
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
+
       PairPotential::readParameters(in);
+      isInitialized_ = true;
    }
 
    /*
@@ -344,10 +396,14 @@ namespace DdMd
    void 
    PairPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
+      UTIL_CHECK(!isInitialized_);
+      UTIL_CHECK(nAtomType_ > 0);
+
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
       PairPotential::loadParameters(ar);
+      isInitialized_ = true;
    }
 
    /*
@@ -523,7 +579,7 @@ namespace DdMd
             // Determine n = number of pairs in this block
             n = std::min(PAIR_BLOCK_SIZE, j);
 
-            // Calculate separation for each pair in block
+            // Compute separation for each pair in block
             for (i = 0; i < n; ++i) {
                pairPtr = &pairs_[i];
                iter.getPair(atom0Ptr, atom1Ptr);
@@ -550,7 +606,7 @@ namespace DdMd
                }
             }
               
-            // Calculate and increment forces for pairs with rsq < cutoff 
+            // Compute and increment forces for pairs with rsq < cutoff 
             for (i = 0; i < m; ++i) {
                pairPtr =  inPairs_[i];
                atom0Ptr = pairPtr->ptr0;

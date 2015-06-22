@@ -12,6 +12,7 @@ mcMd_species_+= \
     mcMd/species/Linear.cpp \
     mcMd/species/Homopolymer.cpp \
     mcMd/species/Diblock.cpp \
+    mcMd/species/Multiblock.cpp \
     mcMd/species/HomopolymerSG.cpp \
     mcMd/species/Ring.cpp \
     mcMd/species/HomoRing.cpp 

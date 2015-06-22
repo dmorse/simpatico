@@ -37,95 +37,95 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/
 cp scripts/python/makeDep bin/
 
 # Namespace config.mk in src/ directory (for in-source builds)
-cp  src/util/config.mk_r src/util/config.mk
-cp  src/inter/config.mk_r src/inter/config.mk
-cp  src/mcMd/config.mk_r src/mcMd/config.mk
-cp  src/ddMd/config.mk_r src/ddMd/config.mk
-cp  src/tools/config.mk_r src/tools/config.mk
+cp src/util/config.mk_r src/util/config.mk
+cp src/inter/config.mk_r src/inter/config.mk
+cp src/mcMd/config.mk_r src/mcMd/config.mk
+cp src/ddMd/config.mk_r src/ddMd/config.mk
+cp src/tools/config.mk_r src/tools/config.mk
 
 # Namespace config.mk in bld/serial (for out-of-source builds with no MPI)
-cp  src/util/config.mk_r bld/serial/util/config.mk
-cp  src/inter/config.mk_r bld/serial/inter/config.mk
-cp  src/mcMd/config.mk_r bld/serial/mcMd/config.mk
-cp  src/ddMd/config.mk_r bld/serial/ddMd/config.mk
-cp  src/tools/config.mk_r bld/serial/tools/config.mk
+cp src/util/config.mk_r bld/serial/util/config.mk
+cp src/inter/config.mk_r bld/serial/inter/config.mk
+cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
+cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
+cp src/tools/config.mk_r bld/serial/tools/config.mk
 
 # Namespace config.mk in bld/parallel (for out-of-source builds with MPI)
-cp  src/util/config.mk_r bld/parallel/util/config.mk
-cp  src/inter/config.mk_r bld/parallel/inter/config.mk
-cp  src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
-cp  src/tools/config.mk_r bld/parallel/tools/config.mk
-cp  src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+cp src/util/config.mk_r bld/parallel/util/config.mk
+cp src/inter/config.mk_r bld/parallel/inter/config.mk
+cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
+cp src/tools/config.mk_r bld/parallel/tools/config.mk
+cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
 
 # Copy makefiles from src/ to bld/serial
-cp  src/makefile bld/serial/makefile
-cp  src/util/makefile bld/serial/util/makefile
-cp  src/inter/makefile bld/serial/inter/makefile
-cp  src/mcMd/makefile bld/serial/mcMd/makefile
-cp  src/tools/makefile bld/serial/tools/makefile
-cp  src/ddMd/makefile bld/serial/ddMd/makefile
-cp  src/util/tests/makefile bld/serial/util/tests/makefile
-cp  src/inter/tests/makefile bld/serial/inter/tests/makefile
-cp  src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
-cp  src/tools/tests/makefile bld/serial/tools/tests/makefile
-cp  src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
+cp src/makefile bld/serial/makefile
+cp src/util/makefile bld/serial/util/makefile
+cp src/inter/makefile bld/serial/inter/makefile
+cp src/mcMd/makefile bld/serial/mcMd/makefile
+cp src/tools/makefile bld/serial/tools/makefile
+cp src/ddMd/makefile bld/serial/ddMd/makefile
+cp src/util/tests/makefile bld/serial/util/tests/makefile
+cp src/inter/tests/makefile bld/serial/inter/tests/makefile
+cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
+cp src/tools/tests/makefile bld/serial/tools/tests/makefile
+cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
 
 # Copy makefiles from src/ to bld/parallel
-cp  src/makefile bld/parallel/makefile
-cp  src/util/makefile bld/parallel/util/makefile
-cp  src/inter/makefile bld/parallel/inter/makefile
-cp  src/mcMd/makefile bld/parallel/mcMd/makefile
-cp  src/ddMd/makefile bld/parallel/ddMd/makefile
-cp  src/tools/makefile bld/parallel/tools/makefile
-cp  src/util/tests/makefile bld/parallel/util/tests/makefile
-cp  src/inter/tests/makefile bld/parallel/inter/tests/makefile
-cp  src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
-cp  src/tools/tests/makefile bld/parallel/tools/tests/makefile
-cp  src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
+cp src/makefile bld/parallel/makefile
+cp src/util/makefile bld/parallel/util/makefile
+cp src/inter/makefile bld/parallel/inter/makefile
+cp src/mcMd/makefile bld/parallel/mcMd/makefile
+cp src/ddMd/makefile bld/parallel/ddMd/makefile
+cp src/tools/makefile bld/parallel/tools/makefile
+cp src/util/tests/makefile bld/parallel/util/tests/makefile
+cp src/inter/tests/makefile bld/parallel/inter/tests/makefile
+cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
+cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
+cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
-cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
-cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
-cp  src/tools/user/sources.mk_r src/tools/user/sources.mk
-cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
+cp src/inter/user/sources.mk_r src/inter/user/sources.mk
+cp src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
+cp src/tools/user/sources.mk_r src/tools/user/sources.mk
+cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 
 # ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
 
-cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
-cp  src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
-cp  src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
-cp  src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
-cp  src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
-cp  src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
-cp  src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
-cp  src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
-cp  src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
-cp  src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
-cp  src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
-cp  src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
-cp  src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
-cp  src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
-cp  src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
+cp src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
+cp src/mcMd/trajectory/TrajectoryReaderFactory.cpp_r src/mcMd/trajectory/TrajectoryReaderFactory.cpp
+cp src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
+cp src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
+cp src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
+cp src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
+cp src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
+cp src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
+cp src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
+cp src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
+cp src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
+cp src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
+cp src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
+cp src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
+cp src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
 
-cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
-cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
-cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
-cp  src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
-cp  src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
-cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
-cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
-cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
-cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
+cp src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
+cp src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
+cp src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
+cp src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
+cp src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
+cp src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
+cp src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
+cp src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
+cp src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
 
-cp  src/tools/config/ConfigReaderFactory.cpp_r src/tools/config/ConfigReaderFactory.cpp
-cp  src/tools/config/ConfigWriterFactory.cpp_r src/tools/config/ConfigWriterFactory.cpp
-cp  src/tools/trajectory/TrajectoryReaderFactory.cpp_r src/tools/trajectory/TrajectoryReaderFactory.cpp
-cp  src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/ProcessorAnalyzerFactory.cpp
+cp src/tools/config/ConfigReaderFactory.cpp_r src/tools/config/ConfigReaderFactory.cpp
+cp src/tools/config/ConfigWriterFactory.cpp_r src/tools/config/ConfigWriterFactory.cpp
+cp src/tools/trajectory/TrajectoryReaderFactory.cpp_r src/tools/trajectory/TrajectoryReaderFactory.cpp
+cp src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/ProcessorAnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
-cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
+cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 
 # ---------------------------------------------------------------------
 # Create copies of the configure script.

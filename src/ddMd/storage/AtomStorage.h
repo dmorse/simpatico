@@ -584,7 +584,6 @@ namespace DdMd
       // Distributor and collector
       AtomDistributor distributor_;
       AtomCollector collector_;
-
       #endif
 
       // Is addition or removal of atoms forbidden?

@@ -13,6 +13,8 @@ clean:
 	rm -f $(inter_tests_bond_OBJS)
 	rm -f $(inter_tests_bond_OBJS:.o=.d)
 	rm -f $(inter_tests_bond_OBJS:.o=)
+	rm -f *.rst
+	rm -f out/*
 
 -include $(inter_tests_bond_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

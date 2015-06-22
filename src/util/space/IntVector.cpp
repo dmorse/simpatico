@@ -93,7 +93,7 @@ namespace Util
    {
       if (!MpiTraits<IntVector>::hasType) {
          MpiStructBuilder builder;
-         IntVector        vector;
+         IntVector vector;
          builder.setBase(&vector);
          builder.addMember(&vector[0], MPI::INT);
          builder.addMember(&vector[1], MPI::INT);

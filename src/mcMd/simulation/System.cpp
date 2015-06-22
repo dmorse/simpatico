@@ -15,8 +15,8 @@
 #include <mcMd/configIos/ConfigIo.h>
 #include <mcMd/configIos/McConfigIo.h>
 #include <mcMd/configIos/ConfigIoFactory.h>
-#include <mcMd/trajectoryIos/TrajectoryIo.h>
-#include <mcMd/trajectoryIos/TrajectoryIoFactory.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
+#include <mcMd/trajectory/TrajectoryReaderFactory.h>
 
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -101,7 +101,7 @@ namespace McMd
       #endif
       configIoPtr_(0),
       configIoFactoryPtr_(0),
-      trajectoryIoFactoryPtr_(0),
+      trajectoryReaderFactoryPtr_(0),
       fileMasterPtr_(0),
       #ifdef MCMD_PERTURB
       perturbationPtr_(0),
@@ -188,7 +188,7 @@ namespace McMd
       #endif
       configIoPtr_(other.configIoPtr_),
       configIoFactoryPtr_(other.configIoFactoryPtr_),
-      trajectoryIoFactoryPtr_(other.trajectoryIoFactoryPtr_),
+      trajectoryReaderFactoryPtr_(other.trajectoryReaderFactoryPtr_),
       fileMasterPtr_(other.fileMasterPtr_),
       #ifdef MCMD_PERTURB
       perturbationPtr_(other.perturbationPtr_),
@@ -308,8 +308,8 @@ namespace McMd
          if (configIoFactoryPtr_) {
             delete configIoFactoryPtr_;
          }
-         if (trajectoryIoFactoryPtr_) {
-            delete trajectoryIoFactoryPtr_;
+         if (trajectoryReaderFactoryPtr_) {
+            delete trajectoryReaderFactoryPtr_;
          }
          if (fileMasterPtr_ && createdFileMaster_) {
             delete fileMasterPtr_;
@@ -796,24 +796,24 @@ namespace McMd
       configIoPtr_ = ptr;
    }
 
-   // TrajectoryIo Management
+   // TrajectoryReader Management
 
    /*
-   * Get the TrajectoryIo factory by reference.
+   * Get the TrajectoryReader factory by reference.
    */
-   Factory<TrajectoryIo>& System::trajectoryIoFactory()
+   Factory<TrajectoryReader>& System::trajectoryReaderFactory()
    {
-      if (!trajectoryIoFactoryPtr_) {
-         trajectoryIoFactoryPtr_ = newDefaultTrajectoryIoFactory();
+      if (!trajectoryReaderFactoryPtr_) {
+         trajectoryReaderFactoryPtr_ = newDefaultTrajectoryReaderFactory();
       }
-      return *trajectoryIoFactoryPtr_;
+      return *trajectoryReaderFactoryPtr_;
    }
 
    /*
-   * Return pointer to a new instance of default TrajectoryIo factory.
+   * Return pointer to a new instance of default TrajectoryReader factory.
    */
-   Factory<TrajectoryIo>* System::newDefaultTrajectoryIoFactory()
-   {  return new TrajectoryIoFactory(*this); }
+   Factory<TrajectoryReader>* System::newDefaultTrajectoryReaderFactory()
+   {  return new TrajectoryReaderFactory(*this); }
 
    #ifdef MCMD_PERTURB
    /*

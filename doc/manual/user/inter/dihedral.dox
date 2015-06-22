@@ -1,4 +1,4 @@
-/*! \page inter_dihedral_page 2.8.1.4 Dihedral Interactions
+/*! \page inter_dihedral_page Dihedral Interactions
 
 Each of the dihedral interaction classes defines a potential that depends upon the dihedral angle involving two bonds that connect four atoms. Each such group of atoms is assigned an dihedral type index, and different values of the parameters in the dihedral potential function are used for different dihedral types.
 

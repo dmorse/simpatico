@@ -48,9 +48,8 @@ namespace McMd
       readProbability(in);
       CfbLinear::readParameters(in); // read speciesId_ and nTrial_
 
-      hasAutoCorr_ = false;
-      bool isRequired = false;
-      read<bool>(in, "hasAutoCorr", hasAutoCorr_, isRequired);
+      hasAutoCorr_ = false; // default value
+      readOptional<bool>(in, "hasAutoCorr", hasAutoCorr_);
       if (hasAutoCorr_) {
          read<int>(in, "autoCorrCapacity", autoCorrCapacity_);
          read<std::string>(in, "outputFileName", outputFileName_);

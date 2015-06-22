@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "Homopolymer.h"
 #include "Diblock.h"
+#include "Multiblock.h"
 #include "HomoRing.h"
 #include "HomopolymerSG.h"
 
@@ -44,6 +45,9 @@ namespace McMd
       } else
       if (className == "Diblock") {
          ptr = new Diblock();
+      } else
+      if (className == "Multiblock") {
+         ptr = new Multiblock();
       } else
       if (className == "HomoRing") {
          ptr = new HomoRing();

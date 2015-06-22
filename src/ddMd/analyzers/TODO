@@ -1,0 +1,20 @@
+TODO:
+-----
+
+1) Write BoundaryAnalyzer, along with modifications of Boundary 
+   required to make the analyzer generic.
+
+2) Modify PairEnergyAnalyzer to allow averages for more than one
+   pair component.
+
+3) Modify StressAnalyzer so as to keep track of virial and kinetic
+   separately.
+
+4) Modify PressureAnalyzer so as to keep track of virial and kinetic
+   separately.
+
+5) Check atom shift flags, and design mean-squared displacement
+   analyzers for individual atoms that makes use of them. (Center
+   of mass of a molecule is harder, and still requires some
+   post processing).
+

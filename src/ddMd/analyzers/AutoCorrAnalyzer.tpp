@@ -32,7 +32,7 @@ namespace DdMd
    {  setClassName("AutoCorrAnalyzer"); }
 
    /*
-   * Read interval and outputFileName. 
+   * Read interval, outputFileName and bufferCapacity_.
    */
    template <typename Data, typename Product>
    void AutoCorrAnalyzer<Data, Product>::readParameters(std::istream& in) 
@@ -118,15 +118,16 @@ namespace DdMd
    template <typename Data, typename Product>
    void AutoCorrAnalyzer<Data, Product>::sample(long iStep) 
    {  
-      if (isAtInterval(iStep))  {
-         computeData();
-         if (simulation().domain().isMaster()) {
-            if (!accumulatorPtr_) {
-               UTIL_THROW("Null accumulatorPtr_ on master");
-            }
-            Data value = data();
-            accumulatorPtr_->sample(value);
+      if (!isAtInterval(iStep))  {
+         UTIL_THROW("Time step index is not a multiple of interval");
+      }
+      computeData();
+      if (simulation().domain().isMaster()) {
+         if (!accumulatorPtr_) {
+            UTIL_THROW("Null accumulatorPtr_ on master");
          }
+         Data value = data();
+         accumulatorPtr_->sample(value);
       }
    }
 

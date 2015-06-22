@@ -7,6 +7,7 @@
 
 #include "FeneBond.h"
 #include <util/random/Random.h>
+#include <util/mpi/MpiLoader.h>
 
 namespace Inter
 {
@@ -29,7 +30,6 @@ namespace Inter
          rlSq_[i]    =  0.0;
          rl_[i]      =  0.0;
          energyCutoff_[i] =  0.0;
-         //a_[i]       =  0.0;
       }
    }
 
@@ -46,9 +46,8 @@ namespace Inter
          r0SqInv_[i] =  other.r0SqInv_[i];
          ce_[i]      =  other.ce_[i];
          rlSq_[i]    =  other.rlSq_[i];
-         //a_[i]     =  other.a_[i];
-         energyCutoff_[i] = other.energyCutoff_[i];
          rl_[i]      =  other.rl_[i];
+         energyCutoff_[i] = other.energyCutoff_[i];
       }
    }
 
@@ -68,7 +67,6 @@ namespace Inter
          rlSq_[i]    =  other.rlSq_[i];    
          rl_[i]      =  other.rl_[i];
          energyCutoff_[i] = other.energyCutoff_[i];
-         //a_[i]       =  other.a_[i];
       }
       return *this;
    }
@@ -78,9 +76,7 @@ namespace Inter
    */
    void FeneBond::setNBondType(int nBondType)
    {
-      if (nBondType > MaxNBondType) {
-         UTIL_THROW("nBondType > FeneBond::MaxNBondType");
-      }
+      UTIL_CHECK(nBondType <= MaxNBondType);
       nBondType_ = nBondType;
    }
 
@@ -89,16 +85,12 @@ namespace Inter
    */
    void FeneBond::readParameters(std::istream &in)
    {
-
-      // Preconditions
-      if (nBondType_ <= 0) {
-         UTIL_THROW("nBondType must be set before readParam");
-      }
+      // Precondition
+      UTIL_CHECK(nBondType_ > 0);
 
       // Read parameters
       readCArray<double>(in, "kappa",  kappa_,  nBondType_);
       readCArray<double>(in, "r0", r0_, nBondType_);
-      //read<double>(in, "energyCutoff", energyCutoff_);
       read<double>(in, "forceCutoff", forceCutoff_);
 
       double y, g;
@@ -106,16 +98,11 @@ namespace Inter
          r0Sq_[i] = r0_[i]*r0_[i];
          r0SqInv_[i] = 1.0/r0Sq_[i];
          ce_[i] = -0.5*r0Sq_[i]*kappa_[i];
-         //a_[i] = exp(-2.0*energyCutoff_/(r0Sq_[i]*kappa_[i]));
-         //rl_[i] = r0_[i]*sqrt(1-a_[i]);
          y = 0.5*kappa_[i]*r0_[i]/forceCutoff_;
          rl_[i] = r0_[i]*(sqrt(1.0 + y*y) - y);
          rlSq_[i] = rl_[i]*rl_[i];
          g = 1.0 - rlSq_[i]*r0SqInv_[i];
          energyCutoff_[i] = ce_[i]*log(g);
-         //std::cout << "Force cutoff    = " << kappa_[i]*rl_[i]/g << std::endl;
-         //std::cout << "Distance cutoff = " << rl_[i] << std::endl;
-         //std::cout << "Energy cutoff   = " << energyCutoff_[i] << std::endl;
       }
    }
 
@@ -124,20 +111,26 @@ namespace Inter
    */
    void FeneBond::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nBondType_; 
-      if (nBondType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
-      }
-      // Read parameters
+      UTIL_CHECK(nBondType_ > 0);
       loadCArray<double> (ar, "kappa", kappa_, nBondType_);
       loadCArray<double>(ar, "r0", r0_, nBondType_);
-      ar >> forceCutoff_;
+      loadParameter<double>(ar, "forceCutoff", forceCutoff_);
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(r0Sq_, nBondType_);
+      loader.load(r0SqInv_, nBondType_);
+      loader.load(ce_, nBondType_);
+      loader.load(rl_, nBondType_);
+      loader.load(rlSq_, nBondType_);
+      loader.load(energyCutoff_, nBondType_); 
+      #else
       ar.unpack(r0Sq_, nBondType_);
       ar.unpack(r0SqInv_, nBondType_);
       ar.unpack(ce_, nBondType_);
       ar.unpack(rl_, nBondType_);
       ar.unpack(rlSq_, nBondType_);
-      ar.unpack(energyCutoff_, nBondType_);
+      ar.unpack(energyCutoff_, nBondType_); 
+      #endif
    }
 
    /*
@@ -145,7 +138,7 @@ namespace Inter
    */
    void FeneBond::save(Serializable::OArchive &ar)
    {
-      ar << nBondType_;
+      UTIL_CHECK(nBondType_ > 0);
       ar.pack(kappa_, nBondType_);
       ar.pack(r0_, nBondType_);
       ar << forceCutoff_;
@@ -209,16 +202,11 @@ namespace Inter
       r0Sq_[type] = r0_[type]*r0_[type];
       r0SqInv_[type] = 1.0/r0Sq_[type];
       ce_[type] = -0.5*r0Sq_[type]*kappa_[type];
-      //a_[type] = exp(-2.0*energyCutoff_/(r0Sq_[type]*kappa_[type]));
-      //rl_[type] = r0_[type]*sqrt(1-a_[type]);
       double y = 0.5*kappa_[type]*r0_[type]/forceCutoff_;
       rl_[type] = r0_[type]*(sqrt(1.0 + y*y) - y);
       rlSq_[type] = rl_[type]*rl_[type];
       double g = 1.0 - rlSq_[type]*r0SqInv_[type];
       energyCutoff_[type] = ce_[type]*log(g);
-      //std::cout << "Force cutoff    = " << kappa_[type]*rl_[type]/g << std::endl;
-      //std::cout << "Distance cutoff = " << rl_[type] << std::endl;
-      //std::cout << "Energy cutoff   = " << energyCutoff_[type] << std::endl;
    }
 
    /*
@@ -226,7 +214,7 @@ namespace Inter
    */
    double FeneBond::get(std::string name, int type) const
    {
-      double value;
+      double value = 0.0;
       if (name == "kappa") {
          value = kappa_[type];
       } else

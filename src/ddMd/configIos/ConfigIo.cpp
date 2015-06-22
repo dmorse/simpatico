@@ -9,10 +9,13 @@
 
 #include <ddMd/simulation/Simulation.h>                 
 #include <ddMd/communicate/Domain.h>   
+#include <ddMd/communicate/GroupDistributor.tpp>   
+#include <ddMd/communicate/GroupCollector.tpp>   
 
 #include <ddMd/storage/AtomStorage.h>               
 #ifdef INTER_BOND
 #include <ddMd/storage/BondStorage.h>               
+//#include <ddMd/chemistry/Bond.h>
 #endif
 #ifdef INTER_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
@@ -25,7 +28,6 @@
 #include <ddMd/communicate/GroupCollector.tpp> 
 #include <ddMd/communicate/GroupDistributor.tpp> 
 #include <ddMd/chemistry/Atom.h>
-#include <ddMd/chemistry/Bond.h>
 #include <ddMd/chemistry/MaskPolicy.h>
 #include <util/space/Vector.h>
 #include <util/mpi/MpiSendRecv.h>
@@ -116,7 +118,6 @@ namespace DdMd
       boundaryPtr_ = &boundary;
 
       atomStoragePtr_ = &atomStorage;
-
       #ifdef INTER_BOND
       bondStoragePtr_ = &bondStorage;
       #endif

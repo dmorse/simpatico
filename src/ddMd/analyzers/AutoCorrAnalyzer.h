@@ -8,19 +8,21 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/Analyzer.h>
-#include <ddMd/simulation/Simulation.h>
-#include <util/accumulators/AutoCorrelation.h>     // member template
+#include <ddMd/analyzers/Analyzer.h>             // base class
+#include <util/accumulators/AutoCorrelation.h>   // member template
+
+#include <ddMd/simulation/Simulation.h>          // used in implementation
 
 namespace DdMd
 {
 
-   //template <typename Data, typename Product> class AutoCorrelation;
-
    using namespace Util;
 
    /**
-   * Periodically write (tensor) StressTensor to file.
+   * Compute an autocorrelation function for a sequence of Data values.
+   *
+   * This template works for Data types float or double, std::complex<real>
+   * with float or double real type, Util::Vector and Util::Tensor.
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -44,21 +46,21 @@ namespace DdMd
       {} 
    
       /**
-      * Read dumpPrefix and interval.
+      * Read interval, outputFileName and bufferCapacity from parameter file.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
-      * Load internal state from an archive.
+      * Load internal state from an input archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save internal state to an archive.
+      * Save internal state to an output archive.
       *
       * \param ar output/saving archive
       */
@@ -70,12 +72,12 @@ namespace DdMd
       virtual void clear();
 
       /**
-      * Setup accumulator!
+      * Setup accumulator.
       */
       virtual void setup();
   
       /**
-      * Sample virial stress to accumulators
+      * Compute new Data value and update accumulator.
       *
       * \param iStep MD step index
       */
@@ -97,7 +99,7 @@ namespace DdMd
       {}
 
       /**
-      * Get Data value, call only on master
+      * Get current Data value, call only on master
       */
       virtual Data data() = 0;
 

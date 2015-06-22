@@ -68,6 +68,13 @@ namespace DdMd
    * A DdMd::Simulation contains and coordinates all the components of a
    * parallel MD simulation.
    *
+   * Most member functions of this class should be called simultaneously
+   * on all processors. This should be assumed to be the case unless the 
+   * documentation says otherwise.  Member functions that should only be 
+   * called on the master processor of the communicator associated with 
+   * a spatial grid decomposition (i.e.,the communicator associated with 
+   * the Domain member) are identified explicitly as such.
+   *
    * \ingroup DdMd_Simulation_Module
    */
    class Simulation : public ParamComposite
@@ -99,7 +106,7 @@ namespace DdMd
       */
       ~Simulation();
 
-      /// \name Initialize
+      /// \name Initialization
       //@{
 
       /**
@@ -116,14 +123,28 @@ namespace DdMd
       *       is the number of systems. The rank of the communicator passed
       *       to the constructor must be an integer multiple of nSystem.
       *
+      *   -p  filename [string]
+      *       Specifies the name of a parameter file. If not specified here, 
+      *       the parameter file for a single-system simulation may be read
+      *       from standard input by default.
+      *
       *   -r  filename [string]
       *       Restarts a simulation from a checkpoint file. The name of
-      *       the checkpoint file is filename + ".rst", i..e., it is
+      *       the checkpoint file is restartFilename + ".rst", i..e., it is
       *       obtained by adding a suffix ".rst" to the filename argument.
       *       Also sets the default command file name to filename + ".cmd".
       *
-      * The parameters are the same as those passed to any C/C++ main
-      * program, which contain the command line arguments:
+      *   -c  filename [string]
+      *       Specifies the name of a command file. If not specified here,
+      *       the command file name may be specified in the FileMaster block
+      *       of the parameter file. 
+      *
+      * The -p (parameter file) and -r (restart) options are incompatible:
+      * A simulation may either be initialized from a parameter file or a 
+      * restart file, but not both. A command file is required in both cases.
+      *
+      * This function is passed two arguments that should contain the command 
+      * line arguments that were passed to the main program:
       *
       * \param argc number of command line arguments
       * \param argv C-array of C-string argument strings
@@ -144,12 +165,24 @@ namespace DdMd
       virtual void readParam(std::istream& in);
 
       /**
-      * Read parameters, allocate memory and initialize.
+      * Read body of the parameter block, allocate memory and initialize.
+      * 
+      * This function is called by the readParam() methods, which simply
+      * add code to read opening and closing brackets.
       */
       virtual void readParameters(std::istream& in);
 
       /**
       * Set flag to identify if reverse communication is enabled.
+      *
+      * Reverse communication is off by default. It is used in communication
+      * patterns in which forces involving several atoms (nonbonded pairs or 
+      * covalent groups) are calculated on one processor and the forces on 
+      * particles that are not owned by that processor are then communicated 
+      * to the processor that owns each particle. The default mode is for such 
+      * forces to be calculated independently on each processor that owns one 
+      * or more atoms in a group, to avoid the extra "reverse" communication
+      * step. 
       *
       * \param reverseUpdateFlag true if reverse communication is enabled.
       */
@@ -210,17 +243,16 @@ namespace DdMd
       * Read and execute commands from the default command file.
       *
       * This function calls readCommands(std::istream&) internally. The
-      * default command file is defined by the FileMaster. The file name
-      * is normally input in the parameter file.
-      *
-      * \pre Same as readCommands(std::istream&)
+      * current default command file is defined by the FileMaster. The 
+      * file name for the default file may be specified as a command 
+      * line option (option -c) or in the parameter file.
       */
       void readCommands();
 
       /**
       * Read and execute commands from a specific command file.
       *
-      * \pre Simulation must be initialized, by call to (read|load)Parameters.
+      * \pre Simulation is initialized, by call to (read|load)Parameters.
       * \pre AtomStorage coordinates are scaled / generalized (not Cartesian)
       *
       * \param in command file
@@ -228,14 +260,14 @@ namespace DdMd
       void readCommands(std::istream &in);
 
       /**
-      * Set random velocities chosen from Boltzmann distribution.
+      * Set random velocities chosen from a Boltzmann distribution.
       *
       * \param temperature absolute temperature kT, in energy units.
       */
       void setBoltzmannVelocities(double temperature);
 
       /**
-      * Subract system center of mass velocity from atom velocities.
+      * Subtract system center of mass velocity from atom velocities.
       *
       * Call on all processors. Does all-reduce internally. 
       *
@@ -244,7 +276,7 @@ namespace DdMd
       Vector removeDriftVelocity();
 
       /**
-      * Set forces for all local atoms to zero.
+      * Set forces for all atoms to zero.
       */
       void zeroForces();
 
@@ -255,14 +287,14 @@ namespace DdMd
       /**
       * Read configuration file on master and distribute atoms.
       *
-      * Upon return, all processors should have all atoms and
-      * groups, and a full set of ghost atoms, but values for
-      * the atomic forces are undefined.
+      * Upon return, all processors should have all atoms and groups,
+      * and a full set of ghost atoms, but values for the atomic
+      * forces are undefined.
       *
-      * \pre  AtomStorage is set for scaled / generalized coordinates.
-      * \post AtomStorage is set for scaled / generalized coordinates.
+      * \pre AtomStorage is set for scaled / generalized coordinates
+      * \post AtomStorage is set for scaled / generalized coordinates
       *
-      * \param filename name of input configuration file.
+      * \param filename  name of input configuration file
       */
       void readConfig(const std::string& filename);
 
@@ -271,7 +303,7 @@ namespace DdMd
       *
       * \pre AtomStorage coordinates are generalized / scaled
       *
-      * \param filename name of output configuration file.
+      * \param filename  name of output configuration file
       */
       void writeConfig(const std::string& filename);
 
@@ -286,7 +318,7 @@ namespace DdMd
       * This method creates a new instance of the specified subclass
       * of ConfigIo, and retains a pointer to the new object.
       *
-      * \param classname name of ConfigIo subclass.
+      * \param classname  name of desired ConfigIo subclass
       */
       void setConfigIo(std::string& classname);
 
@@ -298,7 +330,7 @@ namespace DdMd
       * Compute forces for all local atoms.
       *
       * Upon return, forces are correct for all local atoms. Values
-      * of the forces on ghost atoms are undefined.
+      * of the forces on ghost atoms are generally undefined.
       *
       * This method zeros all forces, adds forces from all potential
       * energies, and carries out reverse communication if required
@@ -313,7 +345,7 @@ namespace DdMd
       * stress values are set for all Potential objects. Values of the
       * forces on ghost atoms are undefined.
       *
-      * This method zeros all forces, adds forces from all potential
+      * This functions zeros all forces, adds forces from all potential
       * energies, and carries out reverse communication if required
       * (i.e., if reverseUpdateFlag is true). It also calculates and
       * sets each virial stress contribution.
@@ -323,8 +355,8 @@ namespace DdMd
       /**
       * Compute total kinetic energy.
       *
-      * Reduce operation: Must be called on all processors.
-      * Value is returned by calling kineticEnergy on master.
+      * This function is called on on all processors. The value is 
+      * accessed by subsequently calling kineticEnergy() on the master.
       */
       void computeKineticEnergy();
 
@@ -350,7 +382,7 @@ namespace DdMd
       void computePotentialEnergies();
 
       /**
-      * Return precomputed total potential energy.
+      * Return sum of precomputed total potential energies.
       *
       * Call only on master processor, after computePotentialEnergies.
       * Calls the energy() methods of each of the potential classes.
@@ -1156,33 +1188,32 @@ namespace DdMd
    }
    #endif
 
+   /// Get the MD integrator by reference.
    inline Integrator& Simulation::integrator()
    {
       assert(integratorPtr_);
       return *integratorPtr_;
    }
 
+   /// Get the Random RNG by reference.
    inline Random& Simulation::random()
    { return random_; }
 
+   /// Get the EnergyEnsemble by reference.
    inline EnergyEnsemble& Simulation::energyEnsemble()
    {
       assert(energyEnsemblePtr_);
       return *energyEnsemblePtr_;
    }
 
-   /*
-   * Get the BoundaryEnsemble by reference.
-   */
+   /// Get the BoundaryEnsemble by reference.
    inline BoundaryEnsemble& Simulation::boundaryEnsemble()
    {
       assert(boundaryEnsemblePtr_);
       return *boundaryEnsemblePtr_;
    }
 
-   /*
-   * Get the FileMaster by reference.
-   */
+   /// Get the FileMaster by reference.
    inline FileMaster& Simulation::fileMaster()
    {
       assert(fileMasterPtr_);
@@ -1190,9 +1221,7 @@ namespace DdMd
    }
 
    #ifdef DDMD_MODIFIERS
-   /*
-   * Get the ModifierManager by reference.
-   */
+   /// Get the ModifierManager by reference.
    inline ModifierManager& Simulation::modifierManager()
    {
       assert(modifierManagerPtr_);
@@ -1200,64 +1229,54 @@ namespace DdMd
    }
    #endif
 
-   /*
-   * Get the AnalyzerManager by reference.
-   */
+   /// Get the AnalyzerManager by reference.
    inline AnalyzerManager& Simulation::analyzerManager()
    {
       assert(analyzerManagerPtr_);
       return *analyzerManagerPtr_;
    }
 
-   /*
-   * Get maximum number of atom types.
-   */
+   /// Get maximum number of atom types.
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
    #ifdef INTER_BOND
-   /*
-   * Get maximum number of bond types.
-   */
+   /// Get maximum number of bond types.
    inline int Simulation::nBondType()
    {  return nBondType_; }
    #endif
 
    #ifdef INTER_ANGLE
-   /*
-   * Get maximum number of angle types.
-   */
+   /// Get maximum number of angle types.
    inline int Simulation::nAngleType()
    {  return nAngleType_; }
    #endif
 
    #ifdef INTER_DIHEDRAL
-   /*
-   * Get maximum number of dihedral types.
-   */
+   /// Get the maximum number of dihedral types.
    inline int Simulation::nDihedralType()
    {  return nDihedralType_; }
    #endif
 
    #ifdef INTER_EXTERNAL
-   /*
-   * Does this simulation have an external potential?
-   */
+   /// Does this simulation have an external potential?
    inline bool Simulation::hasExternal()
    {  return hasExternal_; }
    #endif
 
-   /*
-   * Get an AtomType descriptor by reference.
-   */
+   /// Get an AtomType descriptor for a specific type by reference.
    inline AtomType& Simulation::atomType(int i)
    {  return atomTypes_[i]; }
 
+   /// Get the masked pair policy.
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
 
+   /// Get the reverse update flag.
    inline bool Simulation::reverseUpdateFlag() const
    {  return reverseUpdateFlag_; }
+
+   // Signals
 
    /// Signal to force unsetting of all computed quantities.
    inline Signal<>& Simulation::modifySignal()

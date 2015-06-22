@@ -34,8 +34,8 @@
 
       virtual void readParameters(std::istream& in) 
       {
-         read<double>(in, "x", x_, false); // optional
-         read<int>(in, "opt", opt_, false); // optional
+         readOptional<double>(in, "x", x_); // optional
+         readOptional<int>(in, "opt", opt_); // optional
          read<int>(in, "m", m_);
       }
 
@@ -231,7 +231,7 @@
       virtual void readParameters(std::istream& in)
       {
          read<int>(in, "value0", value0_);
-         read<int>(in, "optInt", optInt_, false);
+         readOptional<int>(in, "optInt", optInt_); // optional
          read<long>(in, "value1", value1_);
          read<double>(in, "value2", value2_);
          read<std::string>(in, "str", str_);
@@ -239,7 +239,7 @@
          readCArray<double>(in, "value4", value4_, 3);
          readCArray2D<double>(in, "value5", value5_[0], 2, 2, 2);
          //readDArray<double>(in, "value6", value6_, 4);
-         readDArray<double>(in, "value6", value6_, 4, false); // optional
+         readOptionalDArray<double>(in, "value6", value6_, 4); // optional
          readBlank(in);
          read<Vector>(in, "value7", value7_);
          read<IntVector>(in, "value8", value8_);
@@ -319,7 +319,7 @@
       virtual void readParameters(std::istream& in)
       {
          read<int>(in, "value0", value0_);
-         read<int>(in, "optInt", optInt_, false);
+         readOptional<int>(in, "optInt", optInt_); // optional
          read<long>(in, "value1", value1_);
          read<double>(in, "value2", value2_);
          read<std::string>(in, "str", str_);

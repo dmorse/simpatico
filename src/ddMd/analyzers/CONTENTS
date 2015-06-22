@@ -1,0 +1,70 @@
+Classes in src/ddMd/analyzer
+-----------------------------------------------------
+Global Scalar Variables, Average and Output
+
+AverageAnalyzer              (base class)
+
+EnergyAnalyzer
+OutputEnergy                <- deprecated
+
+KineticEnergyAnalyzer
+OutputTemperature           <- deprecated
+
+ExternalEnergyAnalyzer
+ExternalEnergyAverage       <- deprecated
+
+PairEnergyAnalyzer
+PairEnergyAverage           <- deprecated
+OutputPairEnergies          <- deprecated
+
+PressureAnalyzer
+OutputPressure              <- deprecated
+
+OutputBoxdim
+
+-----------------------------------------------------
+Tensor-Valued Variables, Average and Output:
+
+TensorAverage             (base class, full tensors)
+SymmTensorAverage         (base class, symm tensors)
+
+StressAnalyzer
+VirialStressAnalyzer
+
+OutputStressTensor          <- deprecated
+VirialStressTensor          <- deprecated
+VirialStressTensorAverage   <- deprecated
+
+-----------------------------------------------------
+Autocorrelation of global quantities:
+
+AutoCorrAnalyzer (base class)
+
+StressAutoCorrelation : public AutoCorrAnalyzer
+StressAutoCorr              <- deprecated
+BondTensorAutoCorr
+
+-----------------------------------------------------
+Static and Dynamic Structure Factor Analyzers:
+
+StructureFactor
+StructureFactorGrid
+VanHove
+AsymmSF                     <- deprecated
+AsymmSFGrid                 <- deprecated
+
+-----------------------------------------------------
+Configuration and Trajector Writers:
+
+ConfigWriter
+
+TrajectoryWriter
+DdMdGroupTrajectoryWriter
+DdMdTrajectoryWriter
+LammpsDumpWriter
+
+-----------------------------------------------------
+Miscellaneous:
+
+LogEnergy
+OrderParamNucleation        <- deprecated

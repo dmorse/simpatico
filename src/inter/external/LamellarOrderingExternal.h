@@ -101,6 +101,16 @@ namespace Inter
       */
       virtual void save(Serializable::OArchive &ar);
 
+      /*
+      * Set a potential energy parameter, identified by a string.
+      */
+      void set(std::string name, double value);
+
+      /*
+      * Get a parameter value, identified by a string.
+      */
+      double get(std::string name) const;
+
       /**
       * Returns external parameter
       *
@@ -158,7 +168,7 @@ namespace Inter
       int perpDirection_;
 
       /// Interfcial width in lamellar phase.
-      double width_;
+      double interfaceWidth_;
 
       /// Prefactor array ofsize nAtomType.
       DArray<double> prefactor_;   
@@ -191,7 +201,7 @@ namespace Inter
       perpLength = lengths[perpDirection_];
 
       q = (2.0*M_PI*periodicity_)/perpLength;
-      clipParameter   = 1.0/(q*width_*perpLength);
+      clipParameter   = 1.0/(q*interfaceWidth_*perpLength);
       arg = q*d;
       clipcos = clipParameter*cos(arg);
       
@@ -223,7 +233,7 @@ namespace Inter
       perpLength = lengths[perpDirection_];
 
       q = (2.0*M_PI*periodicity_)/perpLength;
-      clipParameter   = 1.0/(q*width_*perpLength);
+      clipParameter = 1.0/(q*interfaceWidth_*perpLength);
       arg = q*d;
       clipcos = clipParameter*cos(arg);
       tanH = tanh(clipcos);

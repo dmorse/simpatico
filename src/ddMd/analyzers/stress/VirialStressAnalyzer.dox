@@ -1,0 +1,62 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_VirialStressAnalyzer_page  VirialStressAnalyzer
+
+\section ddMd_analyzer_VirialStressAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes average of the components of the symmetrized virial stress tensor (without the kinetic contribution), and optionally outputs sampled values or block averages of components of this tensor during the simulation. 
+
+The analyzer is almost identical to StressAnalyzer, except that it analyzes only the virial stress, rather than the total. The total stress is the sum of the virial stress, which is calculated from the forces among particles, and the kinetic stress, which depends only particle velocities and masses. In a system in equilibrium at temperature T, the kinetic stress should be a diagonal tensor with equal diagonal components, each equal kT times the total number of atoms divided by system volume (i.e., the ideal gas pressure of a set of disconnected atoms). The diagonal elements of the virial stress should thus be less than those of the total stress by this amount. 
+
+\sa DdMd::VirialStressAnalyzer
+
+\section ddMd_analyzer_VirialStressAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+   VirialStressAnalyzer{
+     interval             int
+     outputFileName       string
+     [nSamplePerBlock]    int
+   }
+\endcode
+in which 
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average (optional, default = 0)</td>
+  </tr>
+</table>
+If nSamplePerBlock > 0, this analyzer outputs block average of values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.
+
+The nSamplePerBlock parameter is optional, as indicated by the use of square brackets in the above file format. It is set to nSamplePerBlock = 0 by default, thus disabling output of block averages by default. 
+
+This analyzer evaluates the symmetric part of the virial stress tensor, calculated by taking the average of the tensor and its transpose, and evaluates averages and (optionally) block averages of the 6 independent components of the symmetric tensor. 
+
+\section ddMd_analyzer_VirialStressAnalyzer_output_sec Output
+
+If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat, with extension ".dat", during the simulation. Each line of this file contains the value of the time step associated with the first value in the block average and the value of the block average of nSamplePerBlock values. If nSamplePerBlock = 0, no such file is created. If this file is created, it columns are output in the format:
+\code
+    iStep  T(0,0)  T(1,0)  T(1,1)  T(2,0)  T(2,1)  T(2,2)
+\endcode
+where iStep is the time step at which the first sample is evaluated and T(i,j) is the i, j component of the virial stress tensor T.
+
+After the end of the simulation, if the OUTPUT_ANALYZERS command is invoked:
+
+   - A copy of the parameter file block associated with this analyzer is echoed to file {outputFileName}.prm.
+
+   - The final average value and estimated error on the average of each component is output to file {outputFileName}.ave.
+
+   - Details of the hierarchical block-averaging analysis of the error on the average of each component, along with corresponding value of the variance, are output to a file {outputFileName}.aer.
+
+*/
+
+}
