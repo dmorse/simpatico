@@ -23,10 +23,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Base class for analyzers that evaluate averages of global tensor values.
+   * Analyzer that computes average of a sequence of symmetric Tensor values.
    *
-   * This class evaluates the average of a sampled float point values and
-   * optionally writes block averages to a data file during the run.
+   * This class evaluates the average of a sequences of symmetric Tensor values,
+   * and optionally writes block averages to a data file during the run. It is
+   * intended for use as a base class for classes that compute and average
+   * specific symmetric-tensor-valued physical variables.
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -48,21 +50,25 @@ namespace DdMd
       virtual ~SymmTensorAverageAnalyzer(); 
    
       /**
-      * Read dumpPrefix and interval.
+      * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
+      * The optional variable nSamplePerBlock defaults to 0, which disables
+      * computation and output of block averages. Setting nSamplePerBlock = 1
+      * outputs every sampled value. 
+
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
-      * Load internal state from an archive.
+      * Load internal state from an input archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save internal state to an archive.
+      * Save internal state to an output archive.
       *
       * \param ar output/saving archive
       */
@@ -74,19 +80,21 @@ namespace DdMd
       virtual void clear();
   
       /**
-      * Setup before loop - open output file.
+      * Setup before loop. 
+      * 
+      * Opens output file, if any required.
       */
       virtual void setup();
 
       /**
-      * Compute a sampled value and add it to a sequence.
+      * Compute a sampled value and add it to the accumulator.
       *
       * \param iStep MD step index
       */
       virtual void sample(long iStep);
 
       /**
-      * Dump configuration to file
+      * Write final results to a file.
       */
       virtual void output();
 

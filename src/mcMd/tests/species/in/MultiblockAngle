@@ -1,0 +1,13 @@
+Multiblock{
+  moleculeCapacity           100
+  nBlock                       3
+  blockLengths                 4
+                               4
+                               4
+  atomTypes                    0
+                               1
+                               2 
+  bondType                     0
+  hasAngles                    1
+  angleType                    0
+}

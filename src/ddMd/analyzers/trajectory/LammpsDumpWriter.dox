@@ -1,0 +1,41 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_LammpsDumpWriter_page LammpsDumpWriter
+
+\section ddMd_analyzer_LammpsDumpWriter_synopsis_sec Synopsis
+
+Write a trajectory to file using the Lammps "dump" file format.
+
+The analyzer periodically writes a snapshot of the system configuration as a "frame" within a single trajectory file.
+
+\sa DdMd::LammpsDumpWriter
+
+\section ddMd_analyzer_LammpsDumpWriter_param_sec Parameters
+
+The parameter file format is:
+\code
+  LammpsDumpWriter{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between snapshots </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_LammpsDumpWriter_output_sec Output
+
+Configurations are periodically output to file, with multiple configurations in a single large file. The trajectory file is written in the simple text format used by the LAMMPS molecular dynamics program.
+
+*/
+
+}

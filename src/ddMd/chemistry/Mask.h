@@ -58,7 +58,7 @@ namespace DdMd
       /**
       * True if the atom is in the masked set for the parent Atom.
       *
-      * \param  id integer id of atom to be tested
+      * \param id integer id of atom to be tested
       * \return true if atom is masked, false otherwise
       */
       bool isMasked(int id) const;

@@ -19,7 +19,7 @@
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/trajectoryIos/TrajectoryIo.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -100,36 +100,48 @@ namespace McMd
    */
    void MdSimulation::setOptions(int argc, char **argv)
    {
-      bool  eflag  = false; // echo
+      bool  eflag = false;  // echo
+      bool  rFlag = false;  // restart file
       bool  pFlag = false;  // param file 
-      bool  rFlag  = false; // restart file
       bool  cFlag = false;  // command file 
+      bool  iFlag = false;  // input prefix
+      bool  oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
       bool  fflag = false;  // free energy perturbation
       #endif
-      char* pArg = 0;
       char* rarg = 0;
+      char* pArg = 0;
       char* cArg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
    
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
+      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'e':
            eflag = true;
-           break;
-         case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
            break;
          case 'r':
            rFlag = true;
            rarg  = optarg;
            break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
          case 'c': // command file
            cFlag = true;
            cArg  = optarg;
+           break;
+         case 'i': // input prefix
+           iFlag = true;
+           iArg  = optarg;
+           break;
+         case 'o': // output prefix
+           oFlag = true;
+           oArg  = optarg;
            break;
          #ifdef MCMD_PERTURB
          case 'f':
@@ -152,7 +164,7 @@ namespace McMd
       if (fflag) {
    
          if (rFlag) {
-            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
+            std::string msg("Error: Options -r and -f are incompatible.");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
          }
@@ -182,10 +194,20 @@ namespace McMd
          fileMaster().setCommandFileName(std::string(cArg));
       }
 
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
+
       // If option -r, restart
       if (rFlag) {
-         //Log::file() << "Reading restart file "
-         //            << std::string(rarg) << std::endl;
+         // Log::file() << "Reading restart file "
+         //             << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          load(std::string(rarg));
       }
@@ -367,12 +389,12 @@ namespace McMd
                bool isContinuation = true;
                simulate(endStep, isContinuation);
             } else
-            if (command == "ANALYZE_DUMPS") {
+            if (command == "ANALYZE_CONFIGS") {
                int min, max;
                inBuffer >> min >> max >> filename;
                Log::file() <<  Int(min, 15) << Int(max, 15)
                            <<  Str(filename, 20) << std::endl;
-               analyzeDumps(min, max, filename);
+               analyzeConfigs(min, max, filename);
             } else
             if (command == "WRITE_CONFIG") {
                inBuffer >> filename;
@@ -402,7 +424,7 @@ namespace McMd
                Log::file() << " " << Str(classname,15) 
                            << " " << Str(filename, 15)
                            << std::endl;
-               analyzeTrajectory(min, max, classname,filename);
+               analyzeTrajectory(min, max, classname, filename);
             } else 
             if (command == "GENERATE_MOLECULES") {
                DArray<double> ExclusionRadii;
@@ -621,7 +643,8 @@ namespace McMd
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void MdSimulation::analyzeDumps(int min, int max, std::string dumpPrefix)
+   void 
+   MdSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
@@ -640,7 +663,7 @@ namespace McMd
       for (iStep_ = min; iStep_ <= max; ++iStep_) {
 
          indexString << iStep_;
-         filename = dumpPrefix;
+         filename = basename;
          filename += indexString.str();
          fileMaster().openInputFile(filename, configFile);
 
@@ -687,83 +710,58 @@ namespace McMd
    }
 
    /*
-   * Read and analyze a trajectory file
+   * Open, read and analyze a trajectory file
    */
-   void MdSimulation::analyzeTrajectory(int min, int max, std::string classname,
-      std::string filename)
+   void MdSimulation::analyzeTrajectory(int min, int max, 
+                                        std::string classname, 
+                                        std::string filename)
    {
       // Preconditions
       if (min < 0) UTIL_THROW("min < 0");
       if (max < 0) UTIL_THROW("max < 0");
       if (max < min) UTIL_THROW("max < min!");
 
-      Timer timer;
-      std::stringstream indexString;
-      std::fstream* trajectoryFile;
-      TrajectoryIo* trajectoryIo;
-
-      // Obtain trajectoryIo objecct
-      if (!(trajectoryIo = system().trajectoryIoFactory().factory(classname))) {
-        std::string message;
-        message="Invalid TrajectoryIo class name " + classname;
-        UTIL_THROW(message.c_str());
+      // Construct TrajectoryReader
+      TrajectoryReader* trajectoryReaderPtr;
+      trajectoryReaderPtr 
+             = system().trajectoryReaderFactory().factory(classname);
+      if (!trajectoryReaderPtr) {
+         std::string message;
+         message = "Invalid TrajectoryReader class name " + classname;
+         UTIL_THROW(message.c_str());
       }
-
-      Log::file() << "reading " << filename << std::endl;
 
       // Open trajectory file
-      trajectoryFile = new std::fstream();
-      trajectoryFile->open(filename.c_str(), std::ios::in | std::ios::binary);
+      Log::file() << "Reading " << filename << std::endl;
+      trajectoryReaderPtr->open(filename);
 
-      if (trajectoryFile->fail()) {
-        std::string message;
-        message= "Error opening trajectory file. Filename: " + filename;
-        UTIL_THROW(message.c_str());
-      }
-
-      // Read in information from trajectory file
-      trajectoryIo->readHeader(*trajectoryFile);
-
-      // Main loop
-      Log::file() << "begin main loop" << std::endl;
-      timer.start();
-
+      // Main loop over trajectory frames
+      Timer timer;
+      Log::file() << "Begin main loop" << std::endl;
       bool hasFrame = true;
+      timer.start();
       for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
-
-         // Read frames, even if they are not sampled
-         hasFrame = trajectoryIo->readFrame(*trajectoryFile);
-
+         hasFrame = trajectoryReaderPtr->readFrame();
          if (hasFrame) {
-
             #ifndef INTER_NOPAIR
-            // Build the system CellList
+            // Build the system PairList
             system().pairPotential().buildPairList();
             #endif
-   
             #ifdef UTIL_DEBUG
             isValid();
             #endif
-   
             // Initialize analyzers (taking in molecular information).
             if (iStep_ == min) analyzerManager().setup();
-   
             // Sample property values only for iStep >= min
             if (iStep_ >= min) analyzerManager().sample(iStep_);
-
          }
-
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
-      int nFrames = iStep_ - min + 1;
+      int nFrames = iStep_ - min;
 
-      // Close trajectory file
-      trajectoryFile->close();
-
-      // Delete objects
-      delete trajectoryIo;
-      delete trajectoryFile;
+      trajectoryReaderPtr->close();
+      delete trajectoryReaderPtr;
 
       // Output results of all analyzers to output files
       analyzerManager().output();
@@ -776,7 +774,6 @@ namespace McMd
       Log::file() << "time / frame " << timer.time()/double(nFrames) 
                   << "  sec" << std::endl;
       Log::file() << std::endl;
-
    }
 
    /**

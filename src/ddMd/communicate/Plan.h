@@ -159,8 +159,8 @@ namespace DdMd
    *
    * Format, one one line with no line break:
    *
-   * \param  out  output stream
-   * \param  plan Plan to be written to stream
+   * \param out  output stream
+   * \param plan Plan to be written to stream
    * \return modified output stream
    */
    std::ostream& operator<<(std::ostream& out, const Plan &plan);

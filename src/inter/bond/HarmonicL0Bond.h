@@ -127,17 +127,17 @@ namespace Inter
       void set(std::string name, int type, double value);
 
       /**
-      * Returns bond stiffness
-      */
-      double stiffness(int bondType) const;
-
-      /**
       * Get a parameter value, identified by a string.
       *
       * \param name  parameter name
       * \param type  bond type index
       */
       double get(std::string name, int type) const;
+
+      /**
+      * Returns bond spring constant
+      */
+      double kappa(int type) const;
 
    private:
    
@@ -152,12 +152,13 @@ namespace Inter
    // Inline method definitions
 
    /*
-    * Return bond stiffness
+    * Return bond spring constant
     */
-   inline double HarmonicL0Bond::stiffness(int bondType) const
+   inline double HarmonicL0Bond::kappa(int type) const
    {
-      assert(bondType < nBondType_);
-      return kappa_[bondType];
+      assert(type >= 0);
+      assert(type < nBondType_);
+      return kappa_[type];
    }
    
    /* 

@@ -35,6 +35,11 @@ namespace Tools
       Species();
   
       /**
+      * Destructor.
+      */
+      ~Species();
+  
+      /**
       * Set the index for this species.
       *
       * \param id species index

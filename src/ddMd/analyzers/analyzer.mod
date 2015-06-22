@@ -6,7 +6,8 @@ namespace DdMd
    * \ingroup  DdMd_Module
    *  
    * An Analyzer object represents a data analysis or data output operation
-   * that is carried out periodically during a simulation. 
+   * that is carried out periodically during a simulation. An AnalyzerManager
+   * is a container for Analyzers associated with a simulation.
    */
 
 }

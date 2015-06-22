@@ -32,7 +32,7 @@ namespace DdMd
    {  setClassName("AutoCorrAnalyzer"); }
 
    /*
-   * Read interval and outputFileName. 
+   * Read interval, outputFileName and bufferCapacity_.
    */
    template <typename Data, typename Product>
    void AutoCorrAnalyzer<Data, Product>::readParameters(std::istream& in) 

@@ -188,8 +188,8 @@ namespace McMd
          double norm;
          for (j = 0; j < nMode_; ++j) {
             double maxValue = 0.0;
+            double maxQ = 0.0;
             IntVector maxIntVector;
-            double maxQ;
             for (i = 0; i < nWave_; ++i) {
                norm = std::norm(fourierModes_(i, j));
                if (double(norm/volume) >= maxValue) {
@@ -202,8 +202,8 @@ namespace McMd
 
             // Output current maximum S(q)
             outputFile_ << maxIntVector;
-            outputFile_ << Dbl(maxQ,20,8);
-            outputFile_ << Dbl(maxValue,20,8);
+            outputFile_ << Dbl(maxQ, 20, 8);
+            outputFile_ << Dbl(maxValue, 20, 8);
             outputFile_ << std::endl;
          }
 

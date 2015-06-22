@@ -22,10 +22,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Base class for analyzers that evaluate averages of global scalars.
+   * Analyze average and block averages of a single floating point variable.
    *
-   * This class evaluates the average of a sampled float point values,
-   * and optionally writes block averages to a data file during the run.
+   * This class evaluates the average of a sampled float point variable, and
+   * optionally writes block averages to a data file during a simulation. It
+   * is intended for use as a base class for Analyzers that evaluate averages
+   * and (optionally) block averages for specific physical variables.
    *
    * \ingroup DdMd_Analyzer_Module
    */
@@ -37,7 +39,7 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param simulation  parent Simulation object. 
       */
       AverageAnalyzer(Simulation& simulation);
    
@@ -47,23 +49,27 @@ namespace DdMd
       virtual ~AverageAnalyzer(); 
    
       /**
-      * Read dumpPrefix and interval.
+      * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
-      * \param in input parameter file
+      * The optional variable nSamplePerBlock defaults to 0, which disables
+      * computation and output of block averages. Setting nSamplePerBlock = 1
+      * outputs every sampled value. 
+      *
+      * \param in  input parameter file
       */
       virtual void readParameters(std::istream& in);
    
       /**
-      * Load internal state from an archive.
+      * Load internal state from an input archive.
       *
-      * \param ar input/loading archive
+      * \param ar  input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Save internal state to an archive.
+      * Save internal state to an output archive.
       *
-      * \param ar output/saving archive
+      * \param ar  output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
   
@@ -73,19 +79,19 @@ namespace DdMd
       virtual void clear();
   
       /**
-      * Setup before loop - open output file.
+      * Setup before loop. Opens an output file, if any.
       */
       virtual void setup();
 
       /**
-      * Compute a sampled value and add it to a sequence.
+      * Compute a sampled value and update the accumulator.
       *
-      * \param iStep MD step index
+      * \param iStep  MD time step index
       */
       virtual void sample(long iStep);
 
       /**
-      * Dump configuration to file
+      * Write final results to file after a simulation.
       */
       virtual void output();
 

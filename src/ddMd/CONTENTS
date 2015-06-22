@@ -27,4 +27,5 @@ analyzers/    - classes for on-the-fly parallel data analysis and output
 misc/         - miscellaneous utility classes
 tests/        - unit tests
 user/         - directory for user-developed classes 
+attic/        - obsolete or deprecated classes (uncompiled)
 

@@ -54,7 +54,7 @@ namespace McMd
 
    class Simulation;
    class ConfigIo;
-   class TrajectoryIo;
+   class TrajectoryReader;
    class PairFactory;
    #ifdef INTER_BOND
    class BondPotential;
@@ -259,7 +259,7 @@ namespace McMd
       /**
       * Get the trajectory reader/writer factory by reference.
       */
-      Factory<TrajectoryIo>& trajectoryIoFactory();
+      Factory<TrajectoryReader>& trajectoryReaderFactory();
 
       //@}
       /// \name Molecule Set Mutators
@@ -595,9 +595,9 @@ namespace McMd
       virtual Factory<ConfigIo>* newDefaultConfigIoFactory();
 
       /**
-      * Return a pointer to a new default TrajectoryIoFactory.
+      * Return a pointer to a new default TrajectoryReaderFactory.
       */
-      virtual Factory<TrajectoryIo>* newDefaultTrajectoryIoFactory();
+      virtual Factory<TrajectoryReader>* newDefaultTrajectoryReaderFactory();
 
       #ifdef MCMD_PERTURB
       /**
@@ -854,7 +854,7 @@ namespace McMd
       Factory<ConfigIo>* configIoFactoryPtr_;
    
       /// Pointer to a trajectory reader/writer factory.
-      Factory<TrajectoryIo>* trajectoryIoFactoryPtr_;
+      Factory<TrajectoryReader>* trajectoryReaderFactoryPtr_;
 
       /// Pointer to a FileMaster.
       FileMaster* fileMasterPtr_;

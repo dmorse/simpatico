@@ -31,8 +31,8 @@ namespace DdMd
    /**
    * istream extractor for a MaskPolicy.
    *
-   * \param  in       input stream
-   * \param  policy   MaskPolicy to be read
+   * \param in       input stream
+   * \param policy   MaskPolicy to be read
    * \return modified input stream
    */
    std::istream& operator >> (std::istream& in, MaskPolicy& policy);
@@ -40,8 +40,8 @@ namespace DdMd
    /**
    * ostream inserter for an MaskPolicy.
    *
-   * \param  out      output stream
-   * \param  policy   MaskPolicy to be written
+   * \param out      output stream
+   * \param policy   MaskPolicy to be written
    * \return modified output stream
    */
    std::ostream& operator << (std::ostream& out, MaskPolicy policy);

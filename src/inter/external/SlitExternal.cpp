@@ -143,6 +143,44 @@ namespace Inter
       ar << coeff_;
    }
 
+   /*
+   * Set a potential energy parameter, identified by a string.
+   */
+   void SlitExternal::set(std::string name, double value)
+   {
+      if (name == "epsilon") {
+         epsilon_ = value;
+      } else
+      if (name == "sigma") {
+         sigma_ = value;
+      } else
+      if (name == "cutoff") {
+         cutoff_ = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double SlitExternal::get(std::string name) const
+   {
+      double value = 0.0;
+      if (name == "epsilon") {
+         value = epsilon_;
+      } else
+      if (name == "sigma") {
+         value = sigma_;
+      } else
+      if (name == "cutoff") {
+         value = cutoff_;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
    /**
    * Return epsilon for externalParameter.
    */
