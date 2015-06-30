@@ -112,20 +112,61 @@
 \form#111:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
 \form#112:$ c_{a} $
 \form#113:$ \psi = \rho_0 - \rho_1 $
-\form#114:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
-\form#115:${\bf v}_{i}$
-\form#116:$T_{K} = 2K/3N$
-\form#117:$K$
-\form#118:$N$
-\form#119:$T_{0}$
-\form#120:$\tau_{T}$
-\form#121:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
-\form#122:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
-\form#123:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
-\form#124:$\theta = 0$
-\form#125:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
-\form#126:${\bf b}_{1}$
-\form#127:${\bf b}_{2}$
-\form#128:${\bf b}_{3}$
-\form#129:$\phi = 0$
-\form#130:$\phi = \pi $
+\form#114:\[ m\frac{d{\bf v}}{dt} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
+\form#115:$\gamma$
+\form#116:${\bf f}^{\rm (r)}$
+\form#117:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
+\form#118:${\bf v}_{i}$
+\form#119:$T_{K} = 2K/3N$
+\form#120:$K$
+\form#121:$N$
+\form#122:$T_{0}$
+\form#123:$\tau_{T}$
+\form#124:\[ \rho(k) = \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
+\form#125:$a$
+\form#126:$v(m, a)$
+\form#127:$m$
+\form#128:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
+\form#129:\[ F(t) = k_{B}TG(t) \]
+\form#130:$t_{i}$
+\form#131:\[ t_i \equiv i*interval*\Delta t \]
+\form#132:$\Delta t$
+\form#133:$ k_{B}T G(t) $
+\form#134:${\bf v}$
+\form#135:\[ m\frac{d{\bf v}}{dt} = {\bf f} \]
+\form#136:\[ {\bf f} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
+\form#137:\begin{eqnarray*} \langle {\bf f}^{\rm (r)}\rangle & = & 0 \\ \langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle & = & 2 m kT \gamma \delta (t-t') . \end{eqnarray*}
+\form#138:${\bf v}(n)$
+\form#139:${\bf r}(n)$
+\form#140:\begin{eqnarray*} \overline{\bf v}(n) & = & {\bf v}(n) + {\bf f}(n) \Delta t /(2m) \\ {\bf r}(n+1) & = & {\bf r}(n) + \overline{\bf v}(n)\Delta t \\ {\bf f}(n+1) & = & {\bf f}(\;{\bf r}(n+1),\; \overline{\bf v}(n)\; ) \\ {\bf v}(n+1) & = & \overline{\bf v}(n) + {\bf f}(n+1)\Delta t /(2m) \\ \end{eqnarray*}
+\form#141:${\bf f}$
+\form#142:\[ {\bf f}(n+1) = {\bf f}^{\rm (pot)}(n+1) + c_{v}\overline{\bf v}(n) + c_{r}{\bf u}(n+1), \]
+\form#143:${\bf f}^{\rm (pot)}(n+1)$
+\form#144:${\bf r}(n+1)$
+\form#145:$c_{v}$
+\form#146:$c_{r}$
+\form#147:${\bf u}$
+\form#148:$[-1/2, 1/2]$
+\form#149:${\bf f}(n+1)$
+\form#150:$\overline{\bf v}(n)$
+\form#151:\[ \overline{\bf v} (n+1) = ( 1 + c_{v} \Delta t/m )\overline{\bf v}(n) + (c_{r}\Delta t/m) {\bf u} \]
+\form#152:$1 + c_{v}\Delta t/m = e^{-\gamma\Delta t}$
+\form#153:\[ c_{v} = -m (1 - e^{-\gamma\Delta t})/\Delta t , \]
+\form#154:$c_{v} < 0$
+\form#155:\[ \langle v_{i} v_{j} \rangle = \delta_{ij} k_{B}T/m , \]
+\form#156:\[ \langle \overline{v}_{i} \overline{v}_{j} \rangle = \delta_{ij} d k_{B}T/m . \]
+\form#157:$d$
+\form#158:$\gamma\Delta t \rightarrow 0$
+\form#159:$\langle u_{i} u_{j} \rangle = \delta_{ij}/12$
+\form#160:\[ c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t \]
+\form#161:\[ {\bf v}(n+1) = [1 + c_{v}\Delta t/(2m)] \overline{\bf v}(n) + [c_{r} \Delta t/(2m)] {\bf u}(n+1) \]
+\form#162:\[ d = 2/(1 + e^{-\gamma\Delta t}) . \]
+\form#163:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
+\form#164:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
+\form#165:$\theta = 0$
+\form#166:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
+\form#167:${\bf b}_{1}$
+\form#168:${\bf b}_{2}$
+\form#169:${\bf b}_{3}$
+\form#170:$\phi = 0$
+\form#171:$\phi = \pi $
