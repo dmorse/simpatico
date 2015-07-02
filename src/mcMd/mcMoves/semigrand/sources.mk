@@ -2,7 +2,8 @@ mcMd_mcMoves_semigrand_=
 
 ifdef INTER_BOND
 mcMd_mcMoves_semigrand_+= \
-    mcMd/mcMoves/semigrand/HomopolymerSemiGrandMove.cpp 
+    mcMd/mcMoves/semigrand/HomopolymerSemiGrandMove.cpp \
+    mcMd/mcMoves/semigrand/GeneralpolymerSemiGrandMove.cpp
 endif
 
 mcMd_mcMoves_semigrand_SRCS=\
