@@ -15,6 +15,7 @@
 #include "HomoRing.h"
 #include "HomopolymerSG.h"
 #include "GeneralpolymerSG.h"
+#include "LinearSG.h"
 
 namespace McMd
 {
@@ -58,6 +59,9 @@ namespace McMd
       } else
       if (className == "GeneralpolymerSG") {
          ptr = new GeneralpolymerSG();
+      } else
+      if (className == "LinearSG") {
+         ptr = new LinearSG();
       }
       #endif
 
