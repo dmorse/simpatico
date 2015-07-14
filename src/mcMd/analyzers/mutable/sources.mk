@@ -1,6 +1,7 @@
 mcMd_analyzers_mutable_=\
     mcMd/analyzers/mutable/SemiGrandDistribution.cpp \
-    mcMd/analyzers/mutable/TypeDistribution.cpp 
+    mcMd/analyzers/mutable/TypeDistribution.cpp \
+    mcMd/analyzers/mutable/WangLandauOutput.cpp
 
 mcMd_analyzers_mutable_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_mutable_))

@@ -1,5 +1,5 @@
-#ifndef MCMD_GENERALPOLYMER_SEMI_GRAND_MOVE_H
-#define MCMD_GENERALPOLYMER_SEMI_GRAND_MOVE_H
+#ifndef MCMD_WANG_LANDAU_MOVE_H
+#define MCMD_WANG_LANDAU_MOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,12 +9,15 @@
 */
 
 #include <mcMd/mcMoves/SystemMove.h>   // base class
+#include <util/containers/DArray.h>
+#include <util/containers/Pair.h>
+
 
 namespace McMd
 {
 
    using namespace Util;
-
+   class SpeciesMutator;
    class GeneralpolymerSG;
    class McSystem;
 
@@ -23,7 +26,7 @@ namespace McMd
    *
    * \ingroup McMd_McMove_Module
    */
-   class GeneralpolymerSemiGrandMove : public SystemMove
+   class WangLandauMove : public SystemMove
    {
    
    public:
@@ -31,7 +34,7 @@ namespace McMd
       /**
       * Constructor. 
       */
-      GeneralpolymerSemiGrandMove(McSystem& system);
+      WangLandauMove(McSystem& system);
    
       /**
       * Read species to which displacement is applied.
@@ -60,12 +63,13 @@ namespace McMd
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
-
+    
       /**
       * Generate and accept or reject configuration bias move
       */
       virtual bool move();
-   
+      
+      virtual DArray<double> getWeights();
    protected:
    
       /// Integer index for molecular species.
@@ -79,6 +83,7 @@ namespace McMd
 
       /// Pointer to instance of HomopolymerSG.
       GeneralpolymerSG* speciesPtr_;
+      SpeciesMutator* mutatorPtr_;
 
    };
 

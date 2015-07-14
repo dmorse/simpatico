@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "GeneralpolymerSemiGrandMove.h"
+#include "WangLandauMove.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #ifndef INTER_NOPAIR
@@ -22,15 +22,16 @@ namespace McMd
    /* 
    * Constructor
    */
-   GeneralpolymerSemiGrandMove::GeneralpolymerSemiGrandMove(McSystem& system) : 
+   WangLandauMove::WangLandauMove(McSystem& system) : 
       SystemMove(system),
-      speciesId_(-1)
-   {  setClassName("GeneralpolymerSemiGrandMove"); } 
+      speciesId_(-1),
+      mutatorPtr_(0)
+   {  setClassName("WangLandauMove"); } 
    
    /* 
    * Read parameter speciesId.
    */
-   void GeneralpolymerSemiGrandMove::readParameters(std::istream& in) 
+   void WangLandauMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);
@@ -43,15 +44,19 @@ namespace McMd
       read<Pair <int> >(in, "Range", Range_);
       if (Range_[1]-Range_[0] < 0) {
          UTIL_THROW("Error: Total range is negative");
-      }
+      } 
+      mutatorPtr_ = &speciesPtr_->mutator();
       weights_.allocate(Range_[1]-Range_[0]+1);      
-      read<int>(in, "weightStep", weightSize_); 
+      read<double>(in, "weightStep", weightSize_);
+      for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
+          weights_[x] = 1;
+      }
    }
  
    /*
    * Load state from an archive.
    */
-   void GeneralpolymerSemiGrandMove::loadParameters(Serializable::IArchive& ar)
+   void WangLandauMove::loadParameters(Serializable::IArchive& ar)
    {  
       McMove::loadParameters(ar);
       loadParameter<int>(ar, "speciesId", speciesId_);
@@ -61,12 +66,19 @@ namespace McMd
       if (!speciesPtr_) {
          UTIL_THROW("Species is not a GeneralpolymerSG");
       }
+      loadParameter<Pair <int> >(ar, "Range", Range_);
+      if (Range_[1]-Range_[0] < 0) {
+         UTIL_THROW("Error: Total range is negative");
+      }
+      weights_.allocate(Range_[1]-Range_[0]+1);      
+      loadParameter<double>(ar, "weightStep", weightSize_); 
    }
+   
 
    /*
    * Save state to an archive.
    */
-   void GeneralpolymerSemiGrandMove::save(Serializable::OArchive& ar)
+   void WangLandauMove::save(Serializable::OArchive& ar)
    {
       McMove::save(ar);
       ar & speciesId_;  
@@ -75,7 +87,7 @@ namespace McMd
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
-   bool GeneralpolymerSemiGrandMove::move() 
+   bool WangLandauMove::move() 
    {
       incrementNAttempt();
       Molecule& molecule = system().randomMolecule(speciesId_);
@@ -89,7 +101,7 @@ namespace McMd
       int oldStateId = speciesPtr_->mutator().moleculeStateId(molecule);
       int newStateId = (oldStateId == 0) ? 1 : 0;
       speciesPtr_->mutator().setMoleculeState(molecule, newStateId);
-      int stateChange = -1
+      int stateChange = -1;
       if  (newStateId == 0) {
           stateChange = 1;
       }
@@ -106,24 +118,28 @@ namespace McMd
       // Decide whether to accept or reject
       int    oldState = mutatorPtr_->stateOccupancy(0);
       int    newState = oldState + stateChange;
+      weights_[oldState-Range_[0]] = weights_[oldState-Range_[0]] + weightSize_;
       double oldWeight = weights_[oldState-Range_[0]];
       double newWeight = weights_[newState-Range_[0]];
-      double ratio  = boltzmann(newEnergy - oldEnergy)*newWeight/oldWeight;
+      double ratio  = boltzmann(newEnergy - oldEnergy)*oldWeight/newWeight;
       bool   accept = random().metropolis(ratio);
       #endif
 
       if (accept) {
 
          incrementNAccept();
-         weights_[newState-Range_[0]]; = weights_[newState-Range_[0]] + weightSize_
       } else {
 
          // Revert chosen molecule to original state
          speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
-         weights_[oldState-Range_[0]]; = weights_[oldState-Range_[0]] + weightSize_
       }
 
       return accept;
+   }
+ 
+   DArray<double> WangLandauMove::getWeights()
+   {
+   // put stuff here
    }
 
 }
