@@ -16,6 +16,7 @@
 #include "GPArrayTest.h"
 #include "ArraySetTest.h"
 #include "ArrayStackTest.h"
+#include "GStackTest.h"
 #include "RingBufferTest.h"
 #include "SSetTest.h"
 
@@ -41,6 +42,7 @@ TEST_COMPOSITE_ADD_UNIT(DPArrayTest)
 TEST_COMPOSITE_ADD_UNIT(GPArrayTest)
 TEST_COMPOSITE_ADD_UNIT(ArraySetTest)
 TEST_COMPOSITE_ADD_UNIT(ArrayStackTest)
+TEST_COMPOSITE_ADD_UNIT(GStackTest)
 TEST_COMPOSITE_ADD_UNIT(RingBufferTest)
 TEST_COMPOSITE_ADD_UNIT(SSetTest)
 
