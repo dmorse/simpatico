@@ -68,7 +68,13 @@ namespace McMd
       * Find all clusters.
       */
       void identifyClusters();
-  
+ 
+      int nMolecule() const
+      {  return molecules_.size(); }
+
+      int nCluster() const
+      {  return clusters_.size(); }
+
       ClusterMolecule& molecule(int i)
       {  return molecules_[i]; }
 
