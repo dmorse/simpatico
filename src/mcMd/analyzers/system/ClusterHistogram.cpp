@@ -36,8 +36,7 @@ namespace McMd
       speciesId_(),
       atomTypeId_(),
       cutoff_(),
-      speciesPtr_(0),
-      histMin_(0),
+      histMin_(),
       histMax_(),
       nSample_(0),
       isInitialized_(false)
@@ -55,7 +54,6 @@ namespace McMd
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
-      speciesPtr_ = &system().simulation().species(speciesId_);
 
       read<int>(in, "atomTypeId", atomTypeId_);
       if (atomTypeId_ < 0) {
@@ -66,6 +64,7 @@ namespace McMd
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
+      identifier_.setup(speciesId_, atomTypeId_, cutoff_);
 
       read<int>(in,"histMin", histMin_);
       read<int>(in,"histMax", histMax_);
@@ -90,7 +89,6 @@ namespace McMd
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
-      speciesPtr_ = &system().simulation().species(speciesId_);
 
       loadParameter<int>(ar, "atomTypeId", atomTypeId_);
       if (atomTypeId_ < 0) {
@@ -101,6 +99,7 @@ namespace McMd
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
+      identifier_.setup(speciesId_, atomTypeId_, cutoff_);
 
       loadParameter<int>(ar,"histMin", histMin_);
       loadParameter<int>(ar,"histMax", histMax_);
@@ -114,7 +113,15 @@ namespace McMd
    * Save state to archive.
    */
    void ClusterHistogram::save(Serializable::OArchive& ar)
-   { ar & *this; }
+   {
+      Analyzer::save(ar);
+      ar & speciesId_;
+      ar & atomTypeId_;
+      ar & cutoff_;
+      ar & histMin_;
+      ar & histMax_;
+      ar & hist_;
+   }
 
    /*
    * Clear accumulators.
@@ -122,7 +129,7 @@ namespace McMd
    void ClusterHistogram::setup() 
    {  
       if (!isInitialized_) UTIL_THROW("Object is not initialized");
-      identifier_.setup(speciesId_, atomTypeId_, cutoff_);
+      hist_.clear();
       nSample_ = 0;
    }
 

@@ -105,9 +105,6 @@ namespace McMd
       /// Distance cutoff
       double cutoff_;
 
-      /// Clusters species type
-      Species*  speciesPtr_;
-
       /// Histogram Min bin.
       int  histMin_;
 
