@@ -8,12 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>       // base class template
-#include <mcMd/simulation/System.h>              // class template parameter
-#include <mcMd/neighbor/CellList.h>              // member
-#include <util/containers/DSArray.h>             // member template
-#include <util/containers/GArray.h>              // member template
-#include <util/containers/GStack.h>              // member template
+#include <mcMd/simulation/System.h>                  // base  class template parameter
+#include <mcMd/analyzers/system/Cluster.h>           // member
+#include <mcMd/analyzers/system/ClusterMolecule.h>   // member
+#include <mcMd/neighbor/CellList.h>                  // member
+#include <util/containers/DArray.h>                  // member template
+#include <util/containers/GArray.h>                  // member template
+#include <util/containers/GStack.h>                  // member template
 
 #include <cstdio>
 #include <cstring> 
@@ -22,6 +23,7 @@ namespace McMd
 {
    using namespace Util;
 
+   class System;
    class Species;
 
    /**
@@ -31,26 +33,6 @@ namespace McMd
    {
    
    public:
-
-      /**
-      * Molecule in a cluster.
-      */
-      struct ClusterMolecule
-      {
-         Molecule* self;
-         ClusterMolecule* next;
-         int clusterId;
-      };
-
-      /**
-      * Cluster.
-      */
-      struct Cluster
-      {
-         int id;
-         int size;
-         ClusterMolecule* head;
-      };
 
       /**
       * Constructor.
@@ -69,9 +51,6 @@ namespace McMd
       */
       void identifyClusters();
  
-      int nMolecule() const
-      {  return molecules_.size(); }
-
       int nCluster() const
       {  return clusters_.size(); }
 
@@ -84,7 +63,7 @@ namespace McMd
 private:
 
       /// Array of cluster molecule objects.
-      DSArray<ClusterMolecule>  molecules_;
+      DArray<ClusterMolecule>  molecules_;
 
       /// Array of length of different Clusters
       GArray<Cluster> clusters_;
@@ -116,7 +95,7 @@ private:
       /*
       * Process top molecule in the workStack.
       */
-      void processNextMolecule(int clusterId);
+      void processNextMolecule(Cluster& cluster);
 
    };
 }

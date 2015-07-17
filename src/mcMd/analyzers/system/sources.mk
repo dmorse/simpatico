@@ -26,7 +26,8 @@ mcMd_analyzers_system_+=\
     mcMd/analyzers/system/ClustersDynamics.cpp \
     mcMd/analyzers/system/ClustersFinder.cpp \
     mcMd/analyzers/system/ClusterIdentifier.cpp \
-    mcMd/analyzers/system/ClusterHistogram.cpp 
+    mcMd/analyzers/system/ClusterHistogram.cpp \
+    mcMd/analyzers/system/Cluster.cpp 
 endif
 
 mcMd_analyzers_system_SRCS=\

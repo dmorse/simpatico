@@ -45,36 +45,35 @@ namespace McMd
       cutoff_ = cutoff;
       speciesPtr_ = &system().simulation().species(speciesId);
       int nMolecule = speciesPtr_->capacity();
-      int nAtom = nMolecule * speciesPtr_->nAtom();
-      cellList_.allocate(nAtom, system().boundary(), cutoff_);
       molecules_.allocate(nMolecule);
       clusters_.reserve(64);
+      int nAtom = nMolecule * speciesPtr_->nAtom();
+      cellList_.allocate(nAtom, system().boundary(), cutoff_);
    }
 
    /*
    * Process one molecule.
    */
-   void ClusterIdentifier::processNextMolecule(int clusterId)
+   void ClusterIdentifier::processNextMolecule(Cluster& cluster)
    {
       ClusterMolecule* thisMolPtr = &workStack_.pop();
       Molecule::AtomIterator atomIter;
       CellList::NeighborArray atomPtrArray;
       ClusterMolecule* otherMolPtr;
-      int thisMolId = thisMolPtr->self->id();
+      int thisMolId = thisMolPtr->self().id();
       int otherMolId;
-      for (thisMolPtr->self->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      for (thisMolPtr->self().begin(atomIter); atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeId_) {
             cellList_.getNeighbors(atomIter->position(), atomPtrArray);
             for (int i = 0; i < atomPtrArray.size(); i++) {
                otherMolId = atomPtrArray[i]->molecule().id();
                if (otherMolId != thisMolId) {
                   otherMolPtr = &molecules_[otherMolId];
-                  if (otherMolPtr->clusterId == -1) {
-                      otherMolPtr->clusterId = clusterId;
-                      otherMolPtr->next = thisMolPtr;
-                      workStack_.push(*otherMolPtr);
+                  if (otherMolPtr->clusterId() == -1) {
+                     cluster.addMolecule(*otherMolPtr);
+                     workStack_.push(*otherMolPtr);
                   } else
-                  if (otherMolPtr->clusterId != clusterId) {
+                  if (otherMolPtr->clusterId() != cluster.id()) {
                      UTIL_THROW("Cluster Clash!");
                   }
                }
@@ -89,12 +88,8 @@ namespace McMd
    void ClusterIdentifier::identifyClusters()
    {
       // Clear molecules and clusters array
-      int nMolecule = system().nMolecule(speciesId_);
-      molecules_.resize(nMolecule);
-      for (int i = 0; i < nMolecule; ++i) {
-          molecules_[i].self = 0;
-          molecules_[i].next = 0;
-          molecules_[i].clusterId = -1;
+      for (int i = 0; i < molecules_.capacity(); ++i) {
+          molecules_[i].clear();
       }
       clusters_.clear();
 
@@ -104,7 +99,6 @@ namespace McMd
       cellList_.clear();
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
-         molecules_[molIter->id()].self = molIter.get();
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             if (atomIter->typeId() == atomTypeId_) {
                system().boundary().shift(atomIter->position());
@@ -114,20 +108,23 @@ namespace McMd
       }
 
       // Identify clusters
+      Cluster* clusterPtr;
       ClusterMolecule* molPtr;
       int clusterId = 0;
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
          molPtr = &(molecules_[molIter->id()]);
-         if (molPtr->clusterId == -1) {
-            molPtr->clusterId = clusterId;
-            workStack_.push(*molPtr);
+         // molPtr->clear();
+         molPtr->self_ = molIter.get();
+         if (molPtr->clusterId() == -1) {
             clusters_.resize(clusterId+1);
-            clusters_[clusterId].id = clusterId;
-            clusters_[clusterId].size = 1;
-            clusters_[clusterId].head = molPtr;
+            clusterPtr = &clusters_[clusterId];
+            clusterPtr->clear();
+            clusterPtr->setId(clusterId);
+            clusterPtr->addMolecule(*molPtr);
+            workStack_.push(*molPtr);
             while (workStack_.size() > 0) {
-               processNextMolecule(clusterId);
+               processNextMolecule(*clusterPtr);
             }
             clusterId++;
          }

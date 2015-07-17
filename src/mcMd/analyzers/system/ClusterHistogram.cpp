@@ -141,7 +141,7 @@ namespace McMd
       if (isAtInterval(iStep)) {
          identifier_.identifyClusters();
          for (int i = 0; i < identifier_.nCluster(); i++) {
-             hist_.sample(identifier_.cluster(i).size);
+             hist_.sample(identifier_.cluster(i).size());
          }
          ++nSample_;
       }
