@@ -54,7 +54,7 @@ namespace McMd
       virtual void setup();
    
       /**
-      * Evaluate squared radii of gyration for all molecules, add to ensemble.
+      * Identify clusters in configuration.
       *
       * \param iStep step counter
       */
@@ -131,6 +131,8 @@ namespace McMd
       ar & cutoff_;
       ar & histMin_;
       ar & histMax_;
+      ar & nSample_;
+      ar & hist_;
    }
 
 }

@@ -6,6 +6,9 @@
 */
 
 #include "Cluster.h"
+#include <util/global.h>
+
+using namespace Util;
 
 namespace McMd
 {
@@ -35,6 +38,9 @@ namespace McMd
 
    void  Cluster::setId(int id)
    { 
+      if (id < 0) {
+         UTIL_THROW("Cluster id cannot be negative");
+      }
       id_ = id; 
       ClusterLink* ptr = head_;
       while (ptr) {
@@ -51,7 +57,7 @@ namespace McMd
       ++size_;
    }
 
-   bool Cluster::isValid()
+   bool Cluster::isValid() const
    {
       int n = 0;
       ClusterLink* ptr = head_;

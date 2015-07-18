@@ -68,7 +68,10 @@ namespace McMd
       ClusterLink* head() const
       {  return head_; }
 
-      bool isValid();
+      /**
+      * Return true if valid, false otherwise.
+      */
+      bool isValid() const;
 
    private:
 

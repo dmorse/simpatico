@@ -131,7 +131,7 @@ namespace McMd
 
          // Find link with same index as this molecule
          linkPtr = &(links_[molIter->id()]);
-         assert (&(linkPtr->molecule()) = molIter.get());
+         assert (&(linkPtr->molecule()) == molIter.get());
 
          // If this link is not in a cluster, begin a new cluster
          if (linkPtr->clusterId() == -1) {
@@ -154,7 +154,42 @@ namespace McMd
 
       }
 
+      // Validity check - throws exception on failure.
+      isValid();
    }
 
+   bool ClusterIdentifier::isValid() const
+   {
+      // Check clusters
+      int nCluster = clusters_.size();
+      int nMolecule = 0;
+      for (int i = 0; i < nCluster; ++i) {
+         if (!clusters_[i].isValid()) {
+            UTIL_THROW("Invalid cluster");
+         }
+         nMolecule += clusters_[i].size();
+      }
+      if (nMolecule != systemPtr_->nMolecule(speciesId_)) {
+         UTIL_THROW("Error in number of molecules");
+      }
+   
+      // Check molecules and links
+      ClusterLink const * linkPtr;
+      System::ConstMoleculeIterator molIter;
+      systemPtr_->begin(speciesId_, molIter);
+      for ( ; molIter.notEnd(); ++molIter) {
+
+         linkPtr = &(links_[molIter->id()]);
+         if (&(linkPtr->molecule()) != molIter.get()) {
+            UTIL_THROW("Link without correct molecule association");
+         }
+         if (linkPtr->clusterId() == -1) {
+            UTIL_THROW("Unmarked molecule");
+         }
+      }
+
+      // Normal return (no errors)
+      return true;
+   }
 }
 #endif

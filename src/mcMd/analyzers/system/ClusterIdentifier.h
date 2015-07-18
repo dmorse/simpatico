@@ -8,16 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/simulation/System.h>                  // base  class template parameter
-#include <mcMd/analyzers/system/Cluster.h>           // member
-#include <mcMd/analyzers/system/ClusterLink.h>       // member
-#include <mcMd/neighbor/CellList.h>                  // member
-#include <util/containers/DArray.h>                  // member template
-#include <util/containers/GArray.h>                  // member template
-#include <util/containers/GStack.h>                  // member template
-
-#include <cstdio>
-#include <cstring> 
+#include <mcMd/analyzers/system/Cluster.h>       // member template argument
+#include <mcMd/analyzers/system/ClusterLink.h>   // member template argument
+#include <mcMd/neighbor/CellList.h>              // member
+#include <util/containers/DArray.h>              // member template
+#include <util/containers/GArray.h>              // member template
+#include <util/containers/GStack.h>              // member template
 
 namespace McMd
 {
@@ -27,7 +23,7 @@ namespace McMd
    class Species;
 
    /**
-   * This class is intended to identify Clusters in polymeric systems.
+   * Identifies clusters of molecules, such as micelles.
    */
    class ClusterIdentifier 
    {
@@ -48,8 +44,11 @@ namespace McMd
    
       /** 
       * Clear accumulator.
+      *
+      * \param speciesId index of species in clusters
+      * \param atomTypeId typeId of atoms in micelle core
       */
-      virtual void setup(int speciesId, int coreId, double cutoff);
+      virtual void setup(int speciesId, int atomTypeId, double cutoff);
    
       /**
       * Find all clusters.
@@ -63,21 +62,34 @@ namespace McMd
       {  return clusters_.size(); }
 
       /**
-      * Get a specific ClusterLink, by molecule id.
+      * Get a specific ClusterLink, by id of the associated molecule.
+      *
+      * \param moleculeId molecule index.
       */ 
-      ClusterLink& link(int i)
-      {  return links_[i]; }
+      ClusterLink& link(int moleculeId)
+      {  return links_[moleculeId]; }
 
       /**
-      * Get a specific cluster.
+      * Get a specific cluster, indexed in the order identified.
+      *
+      * The id argument of this function is a consecutive array
+      * index, with 0 <= id < nCluster, which need not be equal 
+      * to the cluster identifier returned by Cluster::id().
+      *
+      * \param id cluster array index, 0 <- id < nCluster.
       */ 
-      Cluster& cluster(int i)
-      {  return clusters_[i]; }
+      Cluster& cluster(int id)
+      {  return clusters_[id]; }
+
+      /**
+      * Return true if valid, or throw Exception otherwise.
+      */
+      bool isValid() const;
 
 private:
 
-      /// Array of cluster link objects, indexed by molecule id.
-      DArray<ClusterLink>  links_;
+      /// Array of ClusterLink objects, indexed by molecule id.
+      DArray<ClusterLink> links_;
 
       /// Growable array of clusters.
       GArray<Cluster> clusters_;
@@ -100,11 +112,14 @@ private:
       /// Cutoff distance for touching cores
       double cutoff_;
 
+      /**
+      * Return parent system by reference.
+      */
       System& system()
       {  return *systemPtr_; }
 
-      /*
-      * Process top ClusterLink in the workStack.
+      /**
+      * Pop and process top ClusterLink in the workStack.
       */
       void processNextMolecule(Cluster& cluster);
 

@@ -103,8 +103,9 @@ namespace McMd
 
       loadParameter<int>(ar,"histMin", histMin_);
       loadParameter<int>(ar,"histMax", histMax_);
-      hist_.setParam(histMin_, histMax_);
-      hist_.clear();
+
+      ar >> nSample_;
+      ar >> hist_;
 
       isInitialized_ = true;
    }
@@ -120,6 +121,7 @@ namespace McMd
       ar & cutoff_;
       ar & histMin_;
       ar & histMax_;
+      ar & nSample_;
       ar & hist_;
    }
 
