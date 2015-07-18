@@ -52,6 +52,12 @@ public:
       TEST_ASSERT(links_[8].next() == &links_[3]);
       TEST_ASSERT(cluster_.size() == 3);
       TEST_ASSERT(cluster_.isValid());
+      cluster_.setId(48);
+      TEST_ASSERT(links_[6].clusterId() == 48);
+      TEST_ASSERT(links_[3].clusterId() == 48);
+      TEST_ASSERT(links_[8].clusterId() == 48);
+      TEST_ASSERT(cluster_.size() == 3);
+      TEST_ASSERT(cluster_.isValid());
       cluster_.clear();
       TEST_ASSERT(cluster_.id() == -1);
       TEST_ASSERT(cluster_.head() == 0);
