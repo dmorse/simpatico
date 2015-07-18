@@ -10,7 +10,7 @@
 
 #include <mcMd/simulation/System.h>                  // base  class template parameter
 #include <mcMd/analyzers/system/Cluster.h>           // member
-#include <mcMd/analyzers/system/ClusterLink.h>   // member
+#include <mcMd/analyzers/system/ClusterLink.h>       // member
 #include <mcMd/neighbor/CellList.h>                  // member
 #include <util/containers/DArray.h>                  // member template
 #include <util/containers/GArray.h>                  // member template
@@ -55,13 +55,22 @@ namespace McMd
       * Find all clusters.
       */
       void identifyClusters();
- 
+
+      /**
+      * Get number of clusters.
+      */ 
       int nCluster() const
       {  return clusters_.size(); }
 
+      /**
+      * Get a specific ClusterLink, by molecule id.
+      */ 
       ClusterLink& link(int i)
       {  return links_[i]; }
 
+      /**
+      * Get a specific cluster.
+      */ 
       Cluster& cluster(int i)
       {  return clusters_[i]; }
 
@@ -79,11 +88,8 @@ private:
       /// CellList of atoms of the specified species and atom type.
       CellList cellList_;
 
-      /// Pointer to relevant species
+      /// Pointer to parent System.
       System* systemPtr_;
-
-      /// Pointer to relevant species
-      Species* speciesPtr_;
 
       /// Molecule species type id
       int speciesId_;

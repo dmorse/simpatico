@@ -30,7 +30,6 @@ namespace McMd
       workStack_(),
       cellList_(),
       systemPtr_(&system),
-      speciesPtr_(),
       speciesId_(),
       atomTypeId_(),
       cutoff_()
@@ -51,11 +50,11 @@ namespace McMd
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;
       cutoff_ = cutoff;
-      speciesPtr_ = &system().simulation().species(speciesId);
-      int nMolecule = speciesPtr_->capacity();
+      Species* speciesPtr = &system().simulation().species(speciesId);
+      int nMolecule = speciesPtr->capacity();
       links_.allocate(nMolecule);
       clusters_.reserve(64);
-      int nAtom = nMolecule * speciesPtr_->nAtom();
+      int nAtom = nMolecule * speciesPtr->nAtom();
       cellList_.allocate(nAtom, system().boundary(), cutoff_);
    }
 
