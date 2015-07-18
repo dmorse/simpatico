@@ -169,7 +169,9 @@ namespace Util
    */
    template <typename Data>
    GStack<Data>::GStack(const GStack<Data>& other) 
-    : GStack<Data>()
+    : ptrs_(0),
+      capacity_(0),
+      size_(0)
    {
       assert(other.capacity_ >= other.size_);
       if (other.ptrs_ == 0) {
