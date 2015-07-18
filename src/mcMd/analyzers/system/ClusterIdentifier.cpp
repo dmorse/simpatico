@@ -21,9 +21,11 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    ClusterIdentifier::ClusterIdentifier(System& system)
-    : molecules_(),
+    : links_(),
       clusters_(),
       workStack_(),
       cellList_(),
@@ -32,6 +34,12 @@ namespace McMd
       speciesId_(),
       atomTypeId_(),
       cutoff_()
+   {}
+
+   /*
+   * Destructor.
+   */
+   ClusterIdentifier::~ClusterIdentifier()
    {}
 
    /*
@@ -45,35 +53,36 @@ namespace McMd
       cutoff_ = cutoff;
       speciesPtr_ = &system().simulation().species(speciesId);
       int nMolecule = speciesPtr_->capacity();
-      molecules_.allocate(nMolecule);
+      links_.allocate(nMolecule);
       clusters_.reserve(64);
       int nAtom = nMolecule * speciesPtr_->nAtom();
       cellList_.allocate(nAtom, system().boundary(), cutoff_);
    }
 
    /*
-   * Process one molecule.
+   * Process the next molecule on the workStack.
    */
    void ClusterIdentifier::processNextMolecule(Cluster& cluster)
    {
-      ClusterMolecule* thisMolPtr = &workStack_.pop();
       Molecule::AtomIterator atomIter;
-      CellList::NeighborArray atomPtrArray;
-      ClusterMolecule* otherMolPtr;
-      int thisMolId = thisMolPtr->self().id();
+      CellList::NeighborArray neighborArray;
+      ClusterLink* thisLinkPtr = &workStack_.pop();
+      ClusterLink* otherLinkPtr;
+      int thisMolId = thisLinkPtr->molecule().id();
       int otherMolId;
-      for (thisMolPtr->self().begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      thisLinkPtr->molecule().begin(atomIter); 
+      for ( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeId_) {
-            cellList_.getNeighbors(atomIter->position(), atomPtrArray);
-            for (int i = 0; i < atomPtrArray.size(); i++) {
-               otherMolId = atomPtrArray[i]->molecule().id();
+            cellList_.getNeighbors(atomIter->position(), neighborArray);
+            for (int i = 0; i < neighborArray.size(); i++) {
+               otherMolId = neighborArray[i]->molecule().id();
                if (otherMolId != thisMolId) {
-                  otherMolPtr = &molecules_[otherMolId];
-                  if (otherMolPtr->clusterId() == -1) {
-                     cluster.addMolecule(*otherMolPtr);
-                     workStack_.push(*otherMolPtr);
+                  otherLinkPtr = &links_[otherMolId];
+                  if (otherLinkPtr->clusterId() == -1) {
+                     cluster.addLink(*otherLinkPtr);
+                     workStack_.push(*otherLinkPtr);
                   } else
-                  if (otherMolPtr->clusterId() != cluster.id()) {
+                  if (otherLinkPtr->clusterId() != cluster.id()) {
                      UTIL_THROW("Cluster Clash!");
                   }
                }
@@ -87,47 +96,63 @@ namespace McMd
    */
    void ClusterIdentifier::identifyClusters()
    {
-      // Clear molecules and clusters array
-      for (int i = 0; i < molecules_.capacity(); ++i) {
-          molecules_[i].clear();
-      }
-      clusters_.clear();
 
-      // Build a cellList of relevant atoms
+      // Clear clusters array and all links
+      clusters_.clear();
+      for (int i = 0; i < links_.capacity(); ++i) {
+          links_[i].clear();
+      }
+
+      // Build a cellList of atoms, and set molecules for links.
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       cellList_.clear();
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
+
+         // Set associated link to point to this molecule
+         links_[molIter->id()].setMolecule(*molIter.get());
+
+         // Add atoms of appropriate type to the CellList
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             if (atomIter->typeId() == atomTypeId_) {
                system().boundary().shift(atomIter->position());
                cellList_.addAtom(*atomIter);
             }
+
          }
       }
 
       // Identify clusters
       Cluster* clusterPtr;
-      ClusterMolecule* molPtr;
+      ClusterLink* linkPtr;
       int clusterId = 0;
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
-         molPtr = &(molecules_[molIter->id()]);
-         // molPtr->clear();
-         molPtr->self_ = molIter.get();
-         if (molPtr->clusterId() == -1) {
+
+         // Find link with same index as this molecule
+         linkPtr = &(links_[molIter->id()]);
+         assert (&(linkPtr->molecule()) = molIter.get());
+
+         // If this link is not in a cluster, begin a new cluster
+         if (linkPtr->clusterId() == -1) {
+
+            // Add a new empty cluster to clusters_ array
             clusters_.resize(clusterId+1);
             clusterPtr = &clusters_[clusterId];
             clusterPtr->clear();
             clusterPtr->setId(clusterId);
-            clusterPtr->addMolecule(*molPtr);
-            workStack_.push(*molPtr);
+
+            // Identify molecules in this cluster
+            clusterPtr->addLink(*linkPtr);
+            workStack_.push(*linkPtr);
             while (workStack_.size() > 0) {
                processNextMolecule(*clusterPtr);
             }
+
             clusterId++;
          }
+
       }
 
    }

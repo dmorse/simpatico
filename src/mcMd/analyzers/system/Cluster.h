@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ClusterMolecule.h"
+#include "ClusterLink.h"
 
 namespace McMd
 {
@@ -21,28 +21,65 @@ namespace McMd
    
    public:
 
+      /**
+      * Constructor.
+      */
       Cluster();
 
+      /**
+      * Destructor.
+      */
+      ~Cluster();
+
+      /**
+      * Set cluster to empty.
+      */
       void clear();
 
+      /**
+      * Set cluster identifier.
+      */
       void setId(int id);
 
-      void addMolecule(ClusterMolecule& clusterMolecule);
+      /**
+      * Add a link to the list.
+      *
+      * \param link ClusterLink associated with a Molecule.
+      */
+      void addLink(ClusterLink& link);
 
+      /**
+      * Get the cluster id.
+      */
       int id() const
       {  return id_; }
 
+      /**
+      * Get the number of molecules/links in the cluster.
+      */
       int size() const
       {  return size_; }
 
-      const ClusterMolecule& head() const
-      {  return *head_; }
+      /**
+      * Get a pointer to the first link in the linked list.
+      *
+      * Returns 0 pointer if cluster is empty.
+      */
+      ClusterLink* head() const
+      {  return head_; }
+
+      bool isValid();
 
    private:
 
+      // Integer identifier for this cluster.
       int id_;
+
+      // Number of molecules (or links) in this cluster.
       int size_;
-      ClusterMolecule* head_;
+
+      // Pointer to first link in singly-linked list.
+      ClusterLink* head_;
 
    };
 

@@ -10,7 +10,7 @@
 
 #include <mcMd/simulation/System.h>                  // base  class template parameter
 #include <mcMd/analyzers/system/Cluster.h>           // member
-#include <mcMd/analyzers/system/ClusterMolecule.h>   // member
+#include <mcMd/analyzers/system/ClusterLink.h>   // member
 #include <mcMd/neighbor/CellList.h>                  // member
 #include <util/containers/DArray.h>                  // member template
 #include <util/containers/GArray.h>                  // member template
@@ -41,6 +41,11 @@ namespace McMd
       */
       ClusterIdentifier(System &system);
    
+      /**
+      * Destructor.
+      */
+      ~ClusterIdentifier();
+   
       /** 
       * Clear accumulator.
       */
@@ -54,24 +59,24 @@ namespace McMd
       int nCluster() const
       {  return clusters_.size(); }
 
-      ClusterMolecule& molecule(int i)
-      {  return molecules_[i]; }
+      ClusterLink& link(int i)
+      {  return links_[i]; }
 
       Cluster& cluster(int i)
       {  return clusters_[i]; }
 
 private:
 
-      /// Array of cluster molecule objects.
-      DArray<ClusterMolecule>  molecules_;
+      /// Array of cluster link objects, indexed by molecule id.
+      DArray<ClusterLink>  links_;
 
-      /// Array of length of different Clusters
+      /// Growable array of clusters.
       GArray<Cluster> clusters_;
 
-      /// Work stack.
-      GStack<ClusterMolecule>  workStack_;
+      /// Work stack of unprocessed cluster links.
+      GStack<ClusterLink>  workStack_;
 
-      /// CellList of specified atoms of the species of interest
+      /// CellList of atoms of the specified species and atom type.
       CellList cellList_;
 
       /// Pointer to relevant species
@@ -93,7 +98,7 @@ private:
       {  return *systemPtr_; }
 
       /*
-      * Process top molecule in the workStack.
+      * Process top ClusterLink in the workStack.
       */
       void processNextMolecule(Cluster& cluster);
 
