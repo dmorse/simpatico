@@ -59,6 +59,9 @@ namespace McMd
       if (atomTypeId_ < 0) {
          UTIL_THROW("Negative atomTypeId");
       }
+      if (atomTypeId_ >= system().simulation().nAtomType()) {
+         UTIL_THROW("nTypeId >= nAtomType");
+      }
       
       read<double>(in, "cutoff", cutoff_);
       if (cutoff_ < 0) {

@@ -124,7 +124,7 @@ namespace McMd
       // Clear clusters array and all links
       clusters_.clear();
       for (int i = 0; i < links_.capacity(); ++i) {
-          links_[i].clear();
+         links_[i].clear();
       }
 
       // Build the cellList, associate Molecule with ClusterLink.
