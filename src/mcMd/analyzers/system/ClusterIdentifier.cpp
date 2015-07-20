@@ -59,35 +59,60 @@ namespace McMd
    }
 
    /*
-   * Process the next molecule on the workStack.
+   * Pop and process the next molecule on the workStack (private).
    */
    void ClusterIdentifier::processNextMolecule(Cluster& cluster)
    {
-      Molecule::AtomIterator atomIter;
       CellList::NeighborArray neighborArray;
-      ClusterLink* thisLinkPtr = &workStack_.pop();
+      Molecule::AtomIterator atomIter;
+      ClusterLink* thisLinkPtr;
       ClusterLink* otherLinkPtr;
-      int thisMolId = thisLinkPtr->molecule().id();
-      int otherMolId;
+      Atom* otherAtomPtr;
+      Boundary& boundary = system().boundary();
+      double cutoffSq = cutoff_*cutoff_;
+      double rsq;
+      int thisMolId, otherMolId, otherClusterId;
+
+      // Pop this molecule off the stack
+      thisLinkPtr = &workStack_.pop();
+      thisMolId = thisLinkPtr->molecule().id();
+      if (thisLinkPtr->clusterId() != cluster.id()) {
+         UTIL_THROW("Top ClusterLink not marked with this cluster id");
+      }
+
+      /*
+      * Loop over atoms of this molecule.
+      * For each atom of type atomTypeId_, find neighboring molecules.
+      * Add each new neighbor to the cluster, and to the workStack.
+      */
       thisLinkPtr->molecule().begin(atomIter); 
       for ( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeId_) {
             cellList_.getNeighbors(atomIter->position(), neighborArray);
             for (int i = 0; i < neighborArray.size(); i++) {
-               otherMolId = neighborArray[i]->molecule().id();
+               otherAtomPtr = neighborArray[i];
+               otherMolId = otherAtomPtr->molecule().id();
                if (otherMolId != thisMolId) {
-                  otherLinkPtr = &links_[otherMolId];
-                  if (otherLinkPtr->clusterId() == -1) {
-                     cluster.addLink(*otherLinkPtr);
-                     workStack_.push(*otherLinkPtr);
-                  } else
-                  if (otherLinkPtr->clusterId() != cluster.id()) {
-                     UTIL_THROW("Cluster Clash!");
+                  rsq = boundary.distanceSq(atomIter->position(),
+                                            otherAtomPtr->position());
+                  if (rsq < cutoffSq) {
+                     otherLinkPtr = &(links_[otherMolId]);
+                     assert(&otherLinkPtr->molecule() ==
+                            &otherAtomPtr->molecule());
+                     otherClusterId = otherLinkPtr->clusterId();
+                     if (otherClusterId == -1) {
+                        cluster.addLink(*otherLinkPtr);
+                        workStack_.push(*otherLinkPtr);
+                     } else
+                     if (otherClusterId != cluster.id()) {
+                        UTIL_THROW("Cluster Clash!");
+                     }
                   }
                }
-            }
+            } // neighbor atoms
          }
-      }
+      } // atoms
+
    }
 
    /*
@@ -102,17 +127,17 @@ namespace McMd
           links_[i].clear();
       }
 
-      // Build a cellList of atoms, and set molecules for links.
+      // Build the cellList, associate Molecule with ClusterLink.
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       cellList_.clear();
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
 
-         // Set associated link to point to this molecule
+         // Associate this Molecule with a ClusterLink
          links_[molIter->id()].setMolecule(*molIter.get());
 
-         // Add atoms of appropriate type to the CellList
+         // Add atoms of type = atomTypeId_ to the CellList
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             if (atomIter->typeId() == atomTypeId_) {
                system().boundary().shift(atomIter->position());
@@ -122,14 +147,14 @@ namespace McMd
          }
       }
 
-      // Identify clusters
+      // Identify all clusters
       Cluster* clusterPtr;
       ClusterLink* linkPtr;
       int clusterId = 0;
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
 
-         // Find link with same index as this molecule
+         // Find the link with same index as this molecule
          linkPtr = &(links_[molIter->id()]);
          assert (&(linkPtr->molecule()) == molIter.get());
 

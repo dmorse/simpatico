@@ -79,7 +79,7 @@ namespace McMd
    */
    void ClusterHistogram::loadParameters(Serializable::IArchive& ar)
    {
-      // Load (everything but accumulators_)
+      // Load interval and outputFileName
       Analyzer::loadParameters(ar);
 
       loadParameter<int>(ar,"speciesId", speciesId_);

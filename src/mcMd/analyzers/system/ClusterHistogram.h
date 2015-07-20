@@ -19,7 +19,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * This class is intended to identify Clusters in polymeric systems.
+   * Identify micelle clusters in polymeric systems.
    */
    class ClusterHistogram : public SystemAnalyzer<System>
    {
