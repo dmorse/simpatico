@@ -25,7 +25,8 @@ namespace McMd
    WangLandauMove::WangLandauMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1),
-      mutatorPtr_(0)
+      mutatorPtr_(0),
+      outputFileName_()
    {  setClassName("WangLandauMove"); } 
    
    /* 
@@ -49,10 +50,10 @@ namespace McMd
       weights_.allocate(Range_[1]-Range_[0]+1);      
       read<double>(in, "weightStep", weightSize_);
       for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
-          weights_[x] = 1;
+          weights_[x] = 0;
       }
+      read<std::string>(in, "outputFileName",outputFileName_);
    }
- 
    /*
    * Load state from an archive.
    */
@@ -116,12 +117,12 @@ namespace McMd
       double newEnergy = system().pairPotential().moleculeEnergy(molecule);
 
       // Decide whether to accept or reject
-      int    oldState = mutatorPtr_->stateOccupancy(0);
-      int    newState = oldState + stateChange;
-      weights_[oldState-Range_[0]] = weights_[oldState-Range_[0]] + weightSize_;
+      int    newState = mutatorPtr_->stateOccupancy(0);
+      int    oldState = newState - stateChange;
       double oldWeight = weights_[oldState-Range_[0]];
       double newWeight = weights_[newState-Range_[0]];
-      double ratio  = boltzmann(newEnergy - oldEnergy)*oldWeight/newWeight;
+      double ratio  = boltzmann(newEnergy - oldEnergy)*exp(oldWeight-newWeight);
+      //double ratio = exp(oldWeight-newWeight);
       bool   accept = random().metropolis(ratio);
       #endif
 
@@ -133,13 +134,23 @@ namespace McMd
          // Revert chosen molecule to original state
          speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
       }
-
+      int state = mutatorPtr_->stateOccupancy(0);
+      weights_[state-Range_[0]]=weights_[state-Range_[0]]+log(weightSize_);
       return accept;
    }
  
-   DArray<double> WangLandauMove::getWeights()
+   void WangLandauMove::output()
    {
-   // put stuff here
+        std::ofstream outputFile;
+        std::string fileName = outputFileName_;
+        fileName += ".dat";
+        system().fileMaster().openOutputFile(fileName, outputFile);
+        for (int i = 0; i < Range_[1]-Range_[0]+1; i++) {
+
+           outputFile << i+Range_[0] << "   " <<  weights_[i]<<std::endl;
+        }
+        outputFile.close();
    }
+   
 
 }

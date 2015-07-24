@@ -26,9 +26,10 @@ namespace McMd
    *
    * \ingroup McMd_McMove_Module
    */
-   class WangLandauMove : public SystemMove
+   class WangLandauMove : public SystemMove 
    {
    
+   friend class WangLandauOutput;       
    public:
    
       /**
@@ -69,9 +70,9 @@ namespace McMd
       */
       virtual bool move();
       
-      virtual DArray<double> getWeights();
-   protected:
-   
+      virtual void output();      
+ 
+  protected:
       /// Integer index for molecular species.
       int speciesId_;
 
@@ -79,12 +80,14 @@ namespace McMd
  
       Pair<int>   Range_;
  
-      DArray<int> weights_;
+      DArray<double> weights_;
+
 
       /// Pointer to instance of HomopolymerSG.
       GeneralpolymerSG* speciesPtr_;
       SpeciesMutator* mutatorPtr_;
 
+      std::string outputFileName_;
    };
 
 }      
