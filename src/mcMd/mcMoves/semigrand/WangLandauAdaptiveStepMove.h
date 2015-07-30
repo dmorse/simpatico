@@ -95,6 +95,7 @@ namespace McMd
       DArray<int> steps_;
       DArray<double> weightTrack_;
       int stepCount_;
+      std::ofstream outputFile_;
    };
 
 }      

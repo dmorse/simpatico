@@ -63,10 +63,14 @@ namespace McMd
          {
            weights_[n]= m;
          }
-      }   
-      for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
-          stateCount_[x] = 0;
       }
+      std::string fileName = outputFileName_;
+      for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
+        stateCount_[x] = 0; 
+      }
+        fileName = outputFileName_+".weights";      
+        system().fileMaster().openOutputFile(fileName, outputFile_);
+        outputFile_ << stepCount_ << "	" << weightSize_ << std::endl;
    }
    /*
    * Load state from an archive.
@@ -100,7 +104,7 @@ namespace McMd
    }
    // Determine if it is time to adapt the step size and if so do such
    void WangLandauAdaptiveStepMove::stepAdapt()
-   {
+   { 
      // Determine if the histogram is sufficiently flat
      bool flat = true;
      int movesMade = 0;
@@ -110,7 +114,7 @@ namespace McMd
      double binAve = movesMade/(Range_[1]-Range_[0]+1);
      
      for (int z = 0; z < Range_[1] - Range_[0]+1; ++z) {
-       if (std::abs(stateCount_[z]-binAve)/binAve > 0.07) {
+       if (std::abs(stateCount_[z]-binAve)/binAve > .1) {
        flat = false;
        }
      }
@@ -118,8 +122,8 @@ namespace McMd
      // If so Adapt and clear the histogram
      if (flat) {
         weightSize_ = pow(weightSize_, .5);
-        weightTrack_[i]=weightSize_;
-        steps_[i]=stepCount_    
+        std::cout << weightSize_ << "		";
+        outputFile_ << stepCount_ << "	    " << weightSize_ << std::endl;
        for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
            stateCount_[x] = 0;
        }
@@ -131,7 +135,7 @@ namespace McMd
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
    bool WangLandauAdaptiveStepMove::move() 
-   {  stepCount_=stepCount_+1
+   {  stepCount_=stepCount_+1;
       incrementNAttempt();
       Molecule& molecule = system().randomMolecule(speciesId_);
 
@@ -184,22 +188,15 @@ namespace McMd
    }
  
    void WangLandauAdaptiveStepMove::output()
-   {
+   {    outputFile_.close();
+       
+        std::string fileName = outputFileName_; 
         std::ofstream outputFile;
-        std::string fileName = outputFileName_;
         fileName += ".dat";
         system().fileMaster().openOutputFile(fileName, outputFile);
         for (int i = 0; i < Range_[1]-Range_[0]+1; i++) {
 
            outputFile << i+Range_[0] << "   " <<  weights_[i]<<std::endl;
-        }
-        outputFile.close();
-        // File of the time steps and weights
-        fileName += ".steps";
-        system().fileMaster().openOutputFile(fileName, outputFile);
-        for (int i = 0; i < weightTrack_.size(); i++) {
-
-           outputFile << steps_[i] << "		" <<  weightTrack_[i]<<std::endl;
         }
         outputFile.close();
    }
