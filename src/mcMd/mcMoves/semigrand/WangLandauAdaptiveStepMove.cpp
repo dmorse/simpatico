@@ -26,7 +26,9 @@ namespace McMd
       SystemMove(system),
       speciesId_(-1),
       mutatorPtr_(0),
-      outputFileName_()
+      outputFileName_(),
+      initialWeightFileName_("0"),
+      stepCount_(0)
    {  setClassName("WangLandauAdaptiveStepMove"); } 
    
    /* 
@@ -50,11 +52,21 @@ namespace McMd
       weights_.allocate(Range_[1]-Range_[0]+1);
       stateCount_.allocate(Range_[1]-Range_[0]+1);      
       read<double>(in, "weightStep", weightSize_);
+      read<std::string>(in, "outputFileName",outputFileName_);
+      readOptional<std::string>(in, "initialWeights",initialWeightFileName_);
+      std::ifstream weightFile;
+      if (initialWeightFileName_!="0") {
+         system().fileMaster().open(initialWeightFileName_, weightFile);
+         int n;
+         double m;
+         while (weightFile >> n >>m)
+         {
+           weights_[n]= m;
+         }
+      }   
       for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
-          weights_[x] = 0;
           stateCount_[x] = 0;
       }
-      read<std::string>(in, "outputFileName",outputFileName_);
    }
    /*
    * Load state from an archive.
@@ -105,7 +117,9 @@ namespace McMd
 
      // If so Adapt and clear the histogram
      if (flat) {
-        weightSize_ = pow(weightSize_, .5);    
+        weightSize_ = pow(weightSize_, .5);
+        weightTrack_[i]=weightSize_;
+        steps_[i]=stepCount_    
        for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
            stateCount_[x] = 0;
        }
@@ -117,7 +131,7 @@ namespace McMd
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
    bool WangLandauAdaptiveStepMove::move() 
-   {
+   {  stepCount_=stepCount_+1
       incrementNAttempt();
       Molecule& molecule = system().randomMolecule(speciesId_);
 
@@ -178,6 +192,14 @@ namespace McMd
         for (int i = 0; i < Range_[1]-Range_[0]+1; i++) {
 
            outputFile << i+Range_[0] << "   " <<  weights_[i]<<std::endl;
+        }
+        outputFile.close();
+        // File of the time steps and weights
+        fileName += ".steps";
+        system().fileMaster().openOutputFile(fileName, outputFile);
+        for (int i = 0; i < weightTrack_.size(); i++) {
+
+           outputFile << steps_[i] << "		" <<  weightTrack_[i]<<std::endl;
         }
         outputFile.close();
    }

@@ -90,6 +90,11 @@ namespace McMd
       SpeciesMutator* mutatorPtr_;
 
       std::string outputFileName_;
+      std::string initialWeightFileName_;
+  
+      DArray<int> steps_;
+      DArray<double> weightTrack_;
+      int stepCount_;
    };
 
 }      
