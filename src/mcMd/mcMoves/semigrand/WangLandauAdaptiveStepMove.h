@@ -96,6 +96,8 @@ namespace McMd
       DArray<double> weightTrack_;
       int stepCount_;
       std::ofstream outputFile_;
+      //Total number of semigrand molecules possible
+      int capacity_;
    };
 
 }      

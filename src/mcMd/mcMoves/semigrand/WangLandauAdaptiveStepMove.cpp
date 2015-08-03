@@ -47,10 +47,13 @@ namespace McMd
       read<Pair <int> >(in, "Range", Range_);
       if (Range_[1]-Range_[0] < 0) {
          UTIL_THROW("Error: Total range is negative");
-      } 
+      }
+      Species* speciesPtr = &system().simulation().species(speciesId_);
+      capacity_ = speciesPtr->capacity()+1;
+       
       mutatorPtr_ = &speciesPtr_->mutator();
-      weights_.allocate(Range_[1]-Range_[0]+1);
-      stateCount_.allocate(Range_[1]-Range_[0]+1);      
+      weights_.allocate(capacity_);
+      stateCount_.allocate(capacity_);      
       read<double>(in, "weightStep", weightSize_);
       read<std::string>(in, "outputFileName",outputFileName_);
       readOptional<std::string>(in, "initialWeights",initialWeightFileName_);
@@ -63,9 +66,13 @@ namespace McMd
          {
            weights_[n]= m;
          }
-      }
+      } else {
+         for (int x = 0; x < capacity_; ++x) {
+             weights_[x]=0;
+         }
+        }
       std::string fileName = outputFileName_;
-      for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
+      for (int x = 0; x < capacity_; ++x) {
         stateCount_[x] = 0; 
       }
         fileName = outputFileName_+".weights";      
@@ -89,7 +96,7 @@ namespace McMd
       if (Range_[1]-Range_[0] < 0) {
          UTIL_THROW("Error: Total range is negative");
       }
-      weights_.allocate(Range_[1]-Range_[0]+1);      
+      weights_.allocate(capacity_);      
       loadParameter<double>(ar, "weightStep", weightSize_); 
    }
    
@@ -108,13 +115,13 @@ namespace McMd
      // Determine if the histogram is sufficiently flat
      bool flat = true;
      int movesMade = 0;
-     for (int y = 0; y < Range_[1]-Range_[0]+1; ++y) {
+     for (int y = Range_[0]; y <= Range_[1]; ++y) {
        movesMade = movesMade + stateCount_[y];
      }
      double binAve = movesMade/(Range_[1]-Range_[0]+1);
      
-     for (int z = 0; z < Range_[1] - Range_[0]+1; ++z) {
-       if (std::abs(stateCount_[z]-binAve)/binAve > .1) {
+     for (int z = Range_[0]; z <= Range_[1]; ++z) {
+       if (std::abs(stateCount_[z]-binAve)/binAve > .15) {
        flat = false;
        }
      }
@@ -122,9 +129,8 @@ namespace McMd
      // If so Adapt and clear the histogram
      if (flat) {
         weightSize_ = pow(weightSize_, .5);
-        std::cout << weightSize_ << "		";
         outputFile_ << stepCount_ << "	    " << weightSize_ << std::endl;
-       for (int x = 0; x < Range_[1]-Range_[0]+1; ++x) {
+       for (int x = 0; x < capacity_; ++x) {
            stateCount_[x] = 0;
        }
      }
@@ -156,7 +162,8 @@ namespace McMd
       #ifdef INTER_NOPAIR 
 
       bool   accept = true;
-
+      bool   inAllowedRange = true;
+      
       #else // ifndef INTER_NOPAIR
 
       // Recalculate pair energy for the molecule
@@ -165,8 +172,11 @@ namespace McMd
       // Decide whether to accept or reject
       int    newState = mutatorPtr_->stateOccupancy(0);
       int    oldState = newState - stateChange;
-      double oldWeight = weights_[oldState-Range_[0]];
-      double newWeight = weights_[newState-Range_[0]];
+      // Different move if the move is with in the desired range or not
+      if (newState <= Range_[1] && newState >= Range_[0] && (oldState <= Range_[1] && oldState >= Range_[0])) {
+      int    oldState = newState - stateChange;
+      double oldWeight = weights_[oldState];
+      double newWeight = weights_[newState];
       double ratio  = boltzmann(newEnergy - oldEnergy)*exp(oldWeight-newWeight);
       //double ratio = exp(oldWeight-newWeight);
       bool   accept = random().metropolis(ratio);
@@ -181,10 +191,37 @@ namespace McMd
          speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
       }
       int state = mutatorPtr_->stateOccupancy(0);
-      weights_[state-Range_[0]]=weights_[state-Range_[0]]+log(weightSize_);
-      stateCount_[state-Range_[0]]=stateCount_[state-Range_[0]]+1;
+      weights_[state]=weights_[state]+log(weightSize_);
+      stateCount_[state]=stateCount_[state]+1;
       stepAdapt();
       return accept;
+      }  else {
+         if ((newState < Range_[1] || newState > Range_[0]) && (oldState == Range_[1] || oldState == Range_[0])) {
+         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
+      } else {
+      // If the move is out of range, then accept any move that moves closer to the desired range.
+      if (oldState < Range_[0]) {
+         bool accept = true;
+         if (newStateId == 0) {
+            incrementNAccept();
+         } else {
+         accept = false;
+         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
+         }
+         return accept;
+      }    
+      if (oldState > Range_[1]) {
+         bool accept = true;
+         if (newStateId == 1) {
+            incrementNAccept();
+         } else { 
+         accept = false;
+         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
+         }
+         return accept;
+      }
+      }
+     } 
    }
  
    void WangLandauAdaptiveStepMove::output()
@@ -194,9 +231,9 @@ namespace McMd
         std::ofstream outputFile;
         fileName += ".dat";
         system().fileMaster().openOutputFile(fileName, outputFile);
-        for (int i = 0; i < Range_[1]-Range_[0]+1; i++) {
-
-           outputFile << i+Range_[0] << "   " <<  weights_[i]<<std::endl;
+        for (int i = 0; i < capacity_; i++) {
+           std::cout << weights_[i] << std::endl;
+           outputFile << i << "   " <<  weights_[i]<<std::endl;
         }
         outputFile.close();
    }
