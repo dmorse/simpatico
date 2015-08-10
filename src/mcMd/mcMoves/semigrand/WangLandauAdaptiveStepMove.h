@@ -11,7 +11,7 @@
 #include <mcMd/mcMoves/SystemMove.h>   // base class
 #include <util/containers/DArray.h>
 #include <util/containers/Pair.h>
-
+#include <mcMd/chemistry/Molecule.h> //testing
 
 namespace McMd
 {
@@ -72,7 +72,7 @@ namespace McMd
       virtual void output();
       // Determine whether or not to adapt the step size 
       virtual void stepAdapt();      
- 
+
   protected:
       /// Integer index for molecular species.
       int speciesId_;

@@ -143,13 +143,23 @@ namespace McMd
    bool WangLandauAdaptiveStepMove::move() 
    {  stepCount_=stepCount_+1;
       incrementNAttempt();
-      Molecule& molecule = system().randomMolecule(speciesId_);
 
+      Molecule& molecule = system().molecule(speciesId_, 4);
+      int oldState = mutatorPtr_->stateOccupancy(0);
+      if (oldState==Range_[0]) {
+         Molecule& molecule = system().randomSGMolecule(speciesId_, 1, oldState);
+         }
+      else {
+         if (oldState==Range_[1]) { 
+            Molecule& molecule = system().randomSGMolecule(speciesId_, 0, oldState);
+         } else {
+         Molecule& molecule = system().randomMolecule(speciesId_);
+         }
+      }
       #ifndef INTER_NOPAIR
       // Calculate pair energy for the chosen molecule
       double oldEnergy = system().pairPotential().moleculeEnergy(molecule);
       #endif
-
       // Toggle state of the molecule
       int oldStateId = speciesPtr_->mutator().moleculeStateId(molecule);
       int newStateId = (oldStateId == 0) ? 1 : 0;
@@ -171,7 +181,6 @@ namespace McMd
 
       // Decide whether to accept or reject
       int    newState = mutatorPtr_->stateOccupancy(0);
-      int    oldState = newState - stateChange;
       // Different move if the move is with in the desired range or not
       if (newState <= Range_[1] && newState >= Range_[0] && (oldState <= Range_[1] && oldState >= Range_[0])) {
       int    oldState = newState - stateChange;
@@ -214,7 +223,7 @@ namespace McMd
          bool accept = true;
          if (newStateId == 1) {
             incrementNAccept();
-         } else { 
+        } else { 
          accept = false;
          speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
          }
@@ -232,7 +241,6 @@ namespace McMd
         fileName += ".dat";
         system().fileMaster().openOutputFile(fileName, outputFile);
         for (int i = 0; i < capacity_; i++) {
-           std::cout << weights_[i] << std::endl;
            outputFile << i << "   " <<  weights_[i]<<std::endl;
         }
         outputFile.close();
