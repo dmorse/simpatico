@@ -12,6 +12,8 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/GeneralpolymerSG.h>
+
+#include <mcMd/chemistry/Molecule.h> //testing
 #include <util/global.h>
 
 namespace McMd
@@ -137,25 +139,50 @@ namespace McMd
 
    }
 
+   Molecule& WangLandauAdaptiveStepMove::randomSGMolecule(int speciesId, int nType0)
+   {
+      int moleculeId,nType,nMol,index,type,flipType;
+      int count = 0;
+      nMol = system().nMolecule(speciesId);
+      if (nMol <= 0) {
+         Log::file() << "Number of molecules in species " << speciesId
+                     << " = " << nMol << std::endl;
+         UTIL_THROW("Number of molecules in species <= 0");
+      }
+      if (nType0==Range_[0]) {
+         flipType = 1;
+         nType=nMol-nType0;
+      } else {
+      if (nType0==Range_[1]) {
+         flipType = 0;
+         nType=nType0;
+      } else {
+         return system().randomMolecule(speciesId);
+      }
+      } 
+      index = simulation().random().uniformInt(0, nType);
+      for (int i=0; i<nMol; ++i) {
+        type = speciesPtr_->mutator().moleculeStateId(system().molecule(speciesId, i));
+         if (type==flipType) {
+            count=count+1;
+            if (count==index) {
+               moleculeId = i;
+               break;
+            }
+         }
+      }
+      return system().molecule(speciesId, moleculeId);
+   }
+
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
    bool WangLandauAdaptiveStepMove::move() 
    {  stepCount_=stepCount_+1;
       incrementNAttempt();
-
-      Molecule& molecule = system().molecule(speciesId_, 4);
+      // Special semigrand selector
       int oldState = mutatorPtr_->stateOccupancy(0);
-      if (oldState==Range_[0]) {
-         Molecule& molecule = system().randomSGMolecule(speciesId_, 1, oldState);
-         }
-      else {
-         if (oldState==Range_[1]) { 
-            Molecule& molecule = system().randomSGMolecule(speciesId_, 0, oldState);
-         } else {
-         Molecule& molecule = system().randomMolecule(speciesId_);
-         }
-      }
+      Molecule& molecule = randomSGMolecule(speciesId_, oldState);
       #ifndef INTER_NOPAIR
       // Calculate pair energy for the chosen molecule
       double oldEnergy = system().pairPotential().moleculeEnergy(molecule);
