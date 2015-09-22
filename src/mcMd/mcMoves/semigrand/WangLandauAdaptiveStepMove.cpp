@@ -160,7 +160,7 @@ namespace McMd
          return system().randomMolecule(speciesId);
       }
       } 
-      index = simulation().random().uniformInt(0, nType);
+      index = simulation().random().uniformInt(0, nType+1);
       for (int i=0; i<nMol; ++i) {
         type = speciesPtr_->mutator().moleculeStateId(system().molecule(speciesId, i));
          if (type==flipType) {

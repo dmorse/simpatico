@@ -5,7 +5,8 @@ mcMd_mcMoves_semigrand_+= \
     mcMd/mcMoves/semigrand/HomopolymerSemiGrandMove.cpp \
     mcMd/mcMoves/semigrand/GeneralpolymerSemiGrandMove.cpp \
     mcMd/mcMoves/semigrand/WangLandauMove.cpp \
-    mcMd/mcMoves/semigrand/WangLandauAdaptiveStepMove.cpp
+    mcMd/mcMoves/semigrand/WangLandauAdaptiveStepMove.cpp \
+    mcMd/mcMoves/semigrand/WangLandauAdaptiveStepMoveBiased.cpp
 endif
 
 mcMd_mcMoves_semigrand_SRCS=\
