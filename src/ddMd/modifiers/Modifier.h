@@ -25,7 +25,7 @@ namespace DdMd
    * Modifier is an abstract base class for classes that can modify the
    * system during an MD simulation, and thus modify the time evolution
    * defined by the integrator. The class declares a variety of virtual
-   * methods that, when re-implemented and activated by subclasses, will
+   * functions that, when re-implemented and activated by subclasses, will
    * be invoked at specific points during the main integration loop, thus
    * allowing the designer of a subclass to add almost arbitrary actions
    * to the underlying integration algorithm. 
@@ -34,7 +34,7 @@ namespace DdMd
    * that that the integrator can be instructed to invoke at specific
    * points within the body of the main integration loop. We refer to 
    * theses as integrator action functions. The name of each such function 
-   * describes when it will be invoked. For example, the postForce() method 
+   * describes when it will be invoked. For example, the postForce() function
    * is invoked (if at all) immediately after evaluation of all forces 
    * within the main integration loop.  Modifier also declares several 
    * virtual functions with names that contain the words "pack" and "unpack",
@@ -43,22 +43,22 @@ namespace DdMd
    * are communicated between processors during exchange and update steps.
    *
    * Each subclass of Modifier will normally implement only a few of 
-   * these possible action and communication methods. To record which
+   * these possible action and communication functions. To record which
    * virtual functions it defines, each subclass must also "activate" 
-   * each such function by invoking the set() method within its 
+   * each such function by invoking the set() function within its 
    * constructor passing this function a named constant that activates
-   * a particular virtual method.  Thus, for example, a subclass that 
+   * a particular virtual function. Thus, for example, a subclass that 
    * implements the virtual postForce() function must also call the
    * function set(Flags::PostForce) in its constructor. The constant 
    * Flags::PostForce and other named constants are defined as static 
    * constant members of the Modifier::Flags nested class. The name
    * of each such constant is given by a capitalized version of the
-   * name of the corresponding virtual method. When the set() function
+   * name of the corresponding virtual function. When the set() function
    * is invoked to activate an integrator or communication function,
    * it adds that function to list of functions that will be invoked 
    * at the appropriate point in the integration algorithm. The 
    * constants associated with communcation functions each activate 
-   * a pair of associated "pack" and "unpack" methods that must work
+   * a pair of associated "pack" and "unpack" function that must work
    * together pack additional information into an MPI message on one
    * processor and unpack it at the receiving processor. 
    *
@@ -67,11 +67,11 @@ namespace DdMd
    * actions should be taken. An activated integrator action function 
    * will be executed only during time steps that are multiples of 
    * this interval. Each Modifier object has a single interval value,
-   * which applies to all action methods that it implements and
+   * which applies to all action function that it implements and
    * activates. The value of the interval is initialized to 1 (i.e.,
    * every time step) in the base Modifier class constructor, but may 
-   * be reset in the subclass readParameters method by invoking the 
-   * readInterval() method to read a value from file. 
+   * be reset in the subclass readParameters function by invoking the 
+   * readInterval() function to read a value from file. 
    *
    * The design of the Modifier class was inspired by the Lammps "Fix" 
    * base class, which provides a very flexible framework for designing
@@ -99,14 +99,14 @@ namespace DdMd
       */
       virtual ~Modifier();
 
+      /// \name Integration action functions
+      //@{ 
+ 
       /**
       * Setup before entering the main loop.
       */ 
       virtual void setup(){};
 
-      /// \name Integration action functions
-      //@{ 
- 
       /** 
       * Call just before the first step of velocity-Verlet algorithm. 
       *
@@ -136,7 +136,7 @@ namespace DdMd
       virtual void preExchange(long iStep) {};
 
       /** 
-      * Call on exchange steps right after atom exchange, but before reneighboring
+      * Call on exchange steps after atom exchange, before reneighboring
       *
       * Atom positions are scaled [0,1] on entry and return.
       */
@@ -229,7 +229,7 @@ namespace DdMd
       /**
       * Bit flag constants associated with particular actions.
       *
-      * The flag for each reimplemented method should be set 
+      * The flag for each reimplemented function should be set 
       * in the subclass constructor by passing the appropriate
       * Bit constant to the protected void Modifier::set(Bit) 
       * function. 
@@ -303,7 +303,7 @@ namespace DdMd
       unsigned int flags() const;
 
       //@} 
-      /// \name Interval methods
+      /// \name Interval functions
       //@{
 
       /**
@@ -328,17 +328,6 @@ namespace DdMd
    protected:
 
       /**
-      * Read parameter interval from file.
-      *
-      * This function throws an exception if the value of interval
-      * is not a multiple of Modifier::baseInterval, or if
-      * baseInterval has not been set to a nonzero positive value.
-      *
-      * \param in input parameter file stream.
-      */
-      void readInterval(std::istream &in);
-
-      /**
       * Get the parent Simulation by reference.
       */
       Simulation& simulation();
@@ -347,6 +336,27 @@ namespace DdMd
       * Set the flag associated with a particular action.
       */
       void set(Bit flag);
+
+      /**
+      * Read parameter interval from file.
+      *
+      * \param in input parameter file stream.
+      */
+      void readInterval(std::istream &in);
+
+      /**
+      * Load parameter interval from input archive.
+      *
+      * \param ar input archive
+      */
+      void loadInterval(Serializable::IArchive &ar);
+
+      /**
+      * Save interval parameter to an archive.
+      *
+      * \param ar output archive
+      */
+      void saveInterval(Serializable::OArchive &ar);
 
    private:
 
@@ -361,7 +371,7 @@ namespace DdMd
 
    };
 
-   // Inline methods
+   // Inline member functions
 
    /*
    * Return interval value.
