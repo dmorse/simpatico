@@ -69,18 +69,6 @@ namespace DdMd
    Modifier::~Modifier()
    {}
 
-   /**
-   * Read parameter interval from file.
-   *
-   * This function throws an exception if the value of interval
-   * is not a multiple of Modifier::baseInterval, or if
-   * baseInterval has not been set to a nonzero positive value.
-   *
-   * \param in input parameter file stream.
-   */
-   void Modifier::readInterval(std::istream &in)
-   {  read<long>(in, "interval", interval_); }
-
    /*
    * Return true if a flag is set, false otherwise.
    */
@@ -93,10 +81,53 @@ namespace DdMd
    unsigned int Modifier::flags() const
    {  return flags_; }
 
+   // Protected methods
+
    /*
    * Return true if a flag is set, false otherwise.
    */
    void Modifier::set(Bit flag)
    {  flag.set(flags_); }
+
+   /*
+   * Read the interval from parameter file, with error checking.
+   */
+   void Modifier::readInterval(std::istream &in)
+   {
+
+      // Read interval value (inherited from Interval)
+      read<long>(in, "interval", interval_);
+
+      // Check that interval has a nonzero, positive value
+      if (interval_ == 0) {
+         UTIL_THROW("interval_ == 0");
+      }
+      if (interval_ < 0) {
+         UTIL_THROW("interval_ < 0");
+      }
+
+   }
+
+   /*
+   * Load parameter interval from input archive.
+   */
+   void Modifier::loadInterval(Serializable::IArchive &ar)
+   {
+      loadParameter<long>(ar, "interval", interval_);
+
+      // Check that interval has a nonzero, positive value
+      if (interval_ == 0) {
+         UTIL_THROW("interval_ == 0");
+      }
+      if (interval_ < 0) {
+         UTIL_THROW("interval_ < 0");
+      }
+   }
+
+   /*
+   * Save interval parameter to an archive.
+   */
+   void Modifier::saveInterval(Serializable::OArchive &ar)
+   {  ar << interval_; }
 
 }
