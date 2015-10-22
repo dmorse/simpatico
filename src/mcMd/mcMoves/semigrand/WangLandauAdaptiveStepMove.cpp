@@ -80,6 +80,7 @@ namespace McMd
         fileName = outputFileName_+".weights";      
         system().fileMaster().openOutputFile(fileName, outputFile_);
         outputFile_ << stepCount_ << "	" << weightSize_ << std::endl;
+        crit_=.1;
    }
    /*
    * Load state from an archive.
@@ -123,13 +124,14 @@ namespace McMd
      double binAve = movesMade/(Range_[1]-Range_[0]+1);
      
      for (int z = Range_[0]; z <= Range_[1]; ++z) {
-       if (std::abs(stateCount_[z]-binAve)/binAve > .15) {
+       if (std::abs(stateCount_[z]-binAve)/binAve > crit_) {
        flat = false;
        }
      }
 
      // If so Adapt and clear the histogram
      if (flat) {
+        crit_=crit_/2;
         weightSize_ = pow(weightSize_, .5);
         outputFile_ << stepCount_ << "	    " << weightSize_ << std::endl;
        for (int x = 0; x < capacity_; ++x) {
@@ -139,9 +141,9 @@ namespace McMd
 
    }
 
-   Molecule& WangLandauAdaptiveStepMove::randomSGMolecule(int speciesId, int nType0)
+   Molecule& WangLandauAdaptiveStepMove::randomSGMolecule(int speciesId, int nType0, int flipType)
    {
-      int moleculeId,nType,nMol,index,type,flipType;
+      int moleculeId,nType,nMol,index,type;
       int count = 0;
       nMol = system().nMolecule(speciesId);
       if (nMol <= 0) {
@@ -149,7 +151,7 @@ namespace McMd
                      << " = " << nMol << std::endl;
          UTIL_THROW("Number of molecules in species <= 0");
       }
-      if (nType0==Range_[0]) {
+   /*   if (nType0==Range_[0]) {
          flipType = 1;
          nType=nMol-nType0;
       } else {
@@ -160,18 +162,29 @@ namespace McMd
          return system().randomMolecule(speciesId);
       }
       } 
-      index = simulation().random().uniformInt(0, nType+1);
+     */ 
+      if (flipType == 0) {
+         nType = nType0;
+      } else 
+      if (flipType == 1) {
+         nType = nMol-nType0;
+      } else 
+      if (flipType ==2) {
+      
+      return system().randomMolecule(speciesId);
+      }
+      index = simulation().random().uniformInt(0, nType);
       for (int i=0; i<nMol; ++i) {
         type = speciesPtr_->mutator().moleculeStateId(system().molecule(speciesId, i));
          if (type==flipType) {
-            count=count+1;
             if (count==index) {
                moleculeId = i;
-               break;
+               return system().molecule(speciesId, moleculeId);
             }
+            count = count + 1;
          }
       }
-      return system().molecule(speciesId, moleculeId);
+      UTIL_THROW("No molecule selected");
    }
 
    /* 
@@ -182,7 +195,55 @@ namespace McMd
       incrementNAttempt();
       // Special semigrand selector
       int oldState = mutatorPtr_->stateOccupancy(0);
-      Molecule& molecule = randomSGMolecule(speciesId_, oldState);
+      int nMolecule = system().nMolecule(speciesId_);
+      if (oldState == Range_[1] || oldState == Range_[0]) {
+         if (oldState == Range_[1]) {
+            if (simulation().random().uniformInt(1,nMolecule+1) > oldState)
+            {
+            bool accept = false;
+            int state = mutatorPtr_->stateOccupancy(0);
+            weights_[state]=weights_[state]+log(weightSize_);
+            stateCount_[state]=stateCount_[state]+1;
+            stepAdapt();
+            return accept;
+       
+            }
+            else {
+              flipType_=0;}
+         }
+         if (oldState == Range_[0]) {
+            if (simulation().random().uniformInt(1,nMolecule+1) <= oldState) {
+            bool accept =false;
+            int state = mutatorPtr_->stateOccupancy(0);
+            weights_[state]=weights_[state]+log(weightSize_);
+            stateCount_[state]=stateCount_[state]+1;
+            incrementNAccept();
+            return accept;
+               
+    } else {
+              flipType_=1;}  
+        }
+      } else
+      if (oldState > Range_[1]) {
+         flipType_=0;
+         Molecule& molecule = randomSGMolecule(speciesId_, oldState,flipType_);
+         speciesPtr_->mutator().setMoleculeState(molecule,1);
+         bool accept = true;
+         incrementNAccept();
+         return accept;
+      } else
+      if (oldState < Range_[0]) {
+         flipType_=1;
+         Molecule& molecule = randomSGMolecule(speciesId_, oldState,flipType_);
+         speciesPtr_->mutator().setMoleculeState(molecule,0);
+         bool accept = true;
+         incrementNAccept();
+         return accept;
+      } else {
+        flipType_=2;
+      }
+
+      Molecule& molecule = randomSGMolecule(speciesId_, oldState, flipType_);
       #ifndef INTER_NOPAIR
       // Calculate pair energy for the chosen molecule
       double oldEnergy = system().pairPotential().moleculeEnergy(molecule);
@@ -209,8 +270,7 @@ namespace McMd
       // Decide whether to accept or reject
       int    newState = mutatorPtr_->stateOccupancy(0);
       // Different move if the move is with in the desired range or not
-      if (newState <= Range_[1] && newState >= Range_[0] && (oldState <= Range_[1] && oldState >= Range_[0])) {
-      int    oldState = newState - stateChange;
+      //int    oldState = newState - stateChange;
       double oldWeight = weights_[oldState];
       double newWeight = weights_[newState];
       double ratio  = boltzmann(newEnergy - oldEnergy)*exp(oldWeight-newWeight);
@@ -231,33 +291,6 @@ namespace McMd
       stateCount_[state]=stateCount_[state]+1;
       stepAdapt();
       return accept;
-      }  else {
-         if ((newState < Range_[1] || newState > Range_[0]) && (oldState == Range_[1] || oldState == Range_[0])) {
-         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
-      } else {
-      // If the move is out of range, then accept any move that moves closer to the desired range.
-      if (oldState < Range_[0]) {
-         bool accept = true;
-         if (newStateId == 0) {
-            incrementNAccept();
-         } else {
-         accept = false;
-         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
-         }
-         return accept;
-      }    
-      if (oldState > Range_[1]) {
-         bool accept = true;
-         if (newStateId == 1) {
-            incrementNAccept();
-        } else { 
-         accept = false;
-         speciesPtr_->mutator().setMoleculeState(molecule, oldStateId);
-         }
-         return accept;
-      }
-      }
-     } 
    }
  
    void WangLandauAdaptiveStepMove::output()

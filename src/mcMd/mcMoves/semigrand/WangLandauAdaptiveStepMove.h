@@ -64,7 +64,7 @@ namespace McMd
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
     
-      Molecule& randomSGMolecule(int speciesId, int typeId);
+      Molecule& randomSGMolecule(int speciesId, int typeId, int flipType);
       /**
       * Generate and accept or reject configuration bias move
       */
@@ -92,10 +92,11 @@ namespace McMd
 
       std::string outputFileName_;
       std::string initialWeightFileName_;
-  
+      double crit_;  
       DArray<int> steps_;
       DArray<double> weightTrack_;
       int stepCount_;
+      int flipType_;
       std::ofstream outputFile_;
       //Total number of semigrand molecules possible
       int capacity_;
