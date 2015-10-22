@@ -30,6 +30,8 @@
 #include "IntraPairAutoCorr.h"
 #include "RingRouseAutoCorr.h"
 #include "LinearRouseAutoCorr.h"
+#include "ClustersStatistics.h"
+#include "ClustersDynamics.h"
 #endif
 
 #ifdef MCMD_PERTURB
@@ -122,7 +124,13 @@ namespace McMd
       } else
       if (className == "RingRouseAutoCorr") {
          ptr = new RingRouseAutoCorr(system());
-      } 
+      } else
+      if (className == "ClustersStatistics") {
+         ptr = new ClustersStatistics(system());
+      } else
+      if (className == "ClustersDynamics") {
+         ptr = new ClustersDynamics(system());
+      }
       #endif
 
       #ifdef UTIL_MPI
