@@ -85,6 +85,21 @@ namespace DdMd
                                     Vector& force) const = 0;
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param value  new value of parameter
+      */
+      virtual void set(std::string name, double value) = 0;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      */
+      virtual double get(std::string name) const = 0;
+
+      /**
       * Return name of interaction class (e.g., "LamellarOrderingExternal").
       */
       virtual std::string interactionClassName() const = 0;

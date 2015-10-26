@@ -132,16 +132,6 @@ namespace Inter
       void set(std::string name, int type, double value);
 
       /**
-      * Returns bond stiffness
-      */
-      double stiffness(int bondType) const;
-
-      /**
-      * Returns bond length
-      */
-      double length(int bondType) const;
-
-      /**
       * Get a parameter value, identified by a string.
       *
       * \param name parameter name
@@ -149,35 +139,50 @@ namespace Inter
       */
       double get(std::string name, int type) const;
 
+      /**
+      * Returns bond spring constant kappa.
+      *
+      * \param type integer bond type index
+      */
+      double kappa(int type) const;
+
+      /**
+      * Returns equilibrium bond length.
+      *
+      * \param type integer bond type index
+      */
+      double length(int type) const;
+
    private:
-   
+ 
       /// Maximum possible number of bond types
-      static const int MaxNBondType = 2;
+      static const int MaxNBondType = 8;
    
       double kappa_[MaxNBondType];  ///< spring constant
       double length_[MaxNBondType]; ///< equilibrium length
-      int    nBondType_;            ///< number of bond types
+      int nBondType_;               ///< number of bond types
 
    };
-   
+
    // Inline method definitions
 
    /*
-    * Return bond stiffness
-    */
-   inline double HarmonicBond::stiffness(int bondType) const
+   * Return bond spring constant.
+   */
+   inline double HarmonicBond::kappa(int type) const
    {
-      assert(bondType < nBondType_);
-      return kappa_[bondType];
+      assert(type >= 0);
+      assert(type < nBondType_);
+      return kappa_[type];
    }
 
    /*
-    * Return bond length
-    */
-   inline double HarmonicBond::length(int bondType) const
+   * Return equilibrium bond length.
+   */
+   inline double HarmonicBond::length(int type) const
    {
-      assert(bondType < nBondType_);
-      return length_[bondType];
+      assert(type < nBondType_);
+      return length_[type];
    }
 
    /* 

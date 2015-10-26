@@ -14,6 +14,7 @@
 #include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -121,117 +122,54 @@ namespace McMd
       delete mcAnalyzerManagerPtr_;
    }
 
-   #if 0
    /*
    * Process command line options.
    */
    void McSimulation::setOptions(int argc, char **argv)
    {
-      char* rarg   = 0;
-      bool  eflag  = false;
-      bool  rflag  = false;
-      #ifdef MCMD_PERTURB
-      bool  pflag = false;
-      #endif
-   
-      // Read program arguments
-      int c;
-      opterr = 0;
-      while ((c = getopt(argc, argv, "epr:")) != -1) {
-         switch (c) {
-         case 'e':
-           eflag = true;
-           break;
-         case 'r':
-           rflag = true;
-           rarg  = optarg;
-           break;
-         #ifdef MCMD_PERTURB
-         case 'p':
-           pflag = true;
-           break;
-         #endif
-         case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
-           UTIL_THROW("Invalid command line option");
-         }
-      }
-   
-      // Set flag to echo parameters as they are read.
-      if (eflag) {
-         Util::ParamComponent::setEcho(true);
-      }
-
-      #ifdef MCMD_PERTURB
-      // Set to use a perturbation.
-      if (pflag) {
-
-         if (rflag) {
-            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
-            msg += "Existence of a perturbation is specified in restart file.";
-            UTIL_THROW(msg.c_str());
-         }
-   
-         // Set to expect perturbation in the param file.
-         system().setExpectPerturbation();
-   
-         #ifdef UTIL_MPI
-         Util::Log::file() << "Set to use single parameter and command files" 
-                           << std::endl;
-         setIoCommunicator();
-         #endif
-   
-      }
-      #endif
-
-      // Read a restart file.
-      if (rflag) {
-         Log::file() << "Begin reading restart, base file name " 
-                     << std::string(rarg) << std::endl;
-         isRestarting_ = true; 
-         load(std::string(rarg));
-         Util::Log::file() << std::endl;
-      }
-
-   }
-   #endif
-
-   /*
-   * Process command line options.
-   */
-   void McSimulation::setOptions(int argc, char **argv)
-   {
-      bool  eflag = false;  // echo
-      bool  pFlag = false;  // param file 
-      bool  rFlag  = false; // restart file
-      bool  cFlag = false;  // command file 
+      bool eflag = false;  // echo
+      bool rFlag = false;  // restart file
+      bool pFlag = false;  // param file 
+      bool cFlag = false;  // command file 
+      bool iFlag = false;  // input prefix
+      bool oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
       bool  fflag = false;  // free energy perturbation
       #endif
-      char* pArg = 0;
       char* rarg = 0;
+      char* pArg = 0;
       char* cArg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
    
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
+      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'e':
-           eflag = true;
-           break;
-         case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
+            eflag = true;
+            break;
          case 'r':
-           rFlag = true;
-           rarg  = optarg;
-           break;
+            rFlag = true;
+            rarg  = optarg;
+            break;
+         case 'p': // parameter file
+            pFlag = true;
+            pArg  = optarg;
+            break;
          case 'c': // command file
-           cFlag = true;
-           cArg  = optarg;
-           break;
+            cFlag = true;
+            cArg  = optarg;
+            break;
+         case 'i': // input prefix
+            iFlag = true;
+            iArg  = optarg;
+            break;
+         case 'o': // output prefix
+            oFlag = true;
+            oArg  = optarg;
+            break;
          #ifdef MCMD_PERTURB
          case 'f':
            fflag = true;
@@ -283,6 +221,16 @@ namespace McMd
          fileMaster().setCommandFileName(std::string(cArg));
       }
 
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
+
       // If option -r, restart
       if (rFlag) {
          //Log::file() << "Reading restart file " 
@@ -292,7 +240,6 @@ namespace McMd
       }
 
    }
-
 
    /*
    * Read parameters from file.
@@ -535,13 +482,23 @@ namespace McMd
                bool isContinuation = true;
                simulate(endStep, isContinuation);
             } else
-            if (command == "ANALYZE_DUMPS") {
+            if (command == "ANALYZE_CONFIGS") {
                int min, max;
                inBuffer >> min >> max >> filename;
                Log::file() << "  " <<  min << "  " <<  max
                            << "  " <<  filename << std::endl;
-               analyze(min, max, filename);
+               analyzeConfigs(min, max, filename);
             } else
+            if (command == "ANALYZE_TRAJECTORY") {
+               std::string classname;
+               std::string filename;
+               int min, max;
+               inBuffer >> min >> max >> classname >> filename;
+               Log::file() << " " << Str(classname,15) 
+                           << " " << Str(filename, 15)
+                           << std::endl;
+               analyzeTrajectory(min, max, classname, filename);
+            } else 
             if (command == "WRITE_CONFIG") {
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
@@ -852,7 +809,8 @@ namespace McMd
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void McSimulation::analyze(int min, int max, std::string dumpPrefix)
+   void 
+   McSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
@@ -871,7 +829,7 @@ namespace McMd
       for (iStep_ = min; iStep_ <= max; ++iStep_) {
 
          indexString << iStep_;
-         filename = dumpPrefix;
+         filename = basename;
          filename += indexString.str();
          fileMaster().openInputFile(filename, configFile);
 
@@ -916,6 +874,72 @@ namespace McMd
       Log::file() << std::endl;
 
       iStep_ = 0;
+   }
+
+   /*
+   * Open, read and analyze a trajectory file
+   */
+   void McSimulation::analyzeTrajectory(int min, int max, 
+                                        std::string classname, 
+                                        std::string filename)
+   {
+      // Preconditions
+      if (min < 0) UTIL_THROW("min < 0");
+      if (max < 0) UTIL_THROW("max < 0");
+      if (max < min) UTIL_THROW("max < min!");
+
+      // Construct TrajectoryReader
+      TrajectoryReader* trajectoryReaderPtr;
+      trajectoryReaderPtr = system().trajectoryReaderFactory().factory(classname);
+      if (!trajectoryReaderPtr) {
+         std::string message;
+         message = "Invalid TrajectoryReader class name " + classname;
+         UTIL_THROW(message.c_str());
+      }
+
+      // Open trajectory file
+      Log::file() << "Reading " << filename << std::endl;
+      trajectoryReaderPtr->open(filename);
+
+      // Main loop over trajectory frames
+      Timer timer;
+      Log::file() << "Begin main loop" << std::endl;
+      bool hasFrame = true;
+      timer.start();
+      for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
+         hasFrame = trajectoryReaderPtr->readFrame();
+         if (hasFrame) {
+            #ifndef INTER_NOPAIR
+            // Build the system PairList
+            system().pairPotential().buildCellList();
+            #endif
+            #ifdef UTIL_DEBUG
+            isValid();
+            #endif
+            // Initialize analyzers (taking in molecular information).
+            if (iStep_ == min) analyzerManager().setup();
+            // Sample property values only for iStep >= min
+            if (iStep_ >= min) analyzerManager().sample(iStep_);
+         }
+      }
+      timer.stop();
+      Log::file() << "end main loop" << std::endl;
+      int nFrames = iStep_ - min;
+
+      trajectoryReaderPtr->close();
+      delete trajectoryReaderPtr;
+
+      // Output results of all analyzers to output files
+      analyzerManager().output();
+
+      // Output time 
+      Log::file() << std::endl;
+      Log::file() << "# of frames   " << nFrames << std::endl;
+      Log::file() << "run time      " << timer.time() 
+                  << "  sec" << std::endl;
+      Log::file() << "time / frame " << timer.time()/double(nFrames) 
+                  << "  sec" << std::endl;
+      Log::file() << std::endl;
    }
 
    /*

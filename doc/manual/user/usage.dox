@@ -132,18 +132,31 @@ The list of analyzers in a parameter file may contain one that specifies that th
 
 \section section_options Command line options
 
-All simpatico simulations of single systems can be invoked with either or both of the following two command line options:
+All simpatico simulations of single systems can be invoked with any of the following command line options:
 <ul>
   <li> -e: Activates echoing of the parameter file to standard output.</li>
   <li> -p filename: Specifies the name of a parameter file </li>
   <li> -r filename: Restarts and continues a previous simulation. </li>
+  <li> -p filename: Specifies the name of a parameter file </li>
   <li> -c filename: Specifies the name of a command file </li>
+  <li> -i filename: Specifies a prefix string for input data files </li>
+  <li> -o filename: Specifies a prefix string for output data files </li>
   </li>
 </ul>
 
 The -e (echo) option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This option takes no arguments.
 
 The -r (restart) option takes a required parameter "filename". This is the name of a restart file produced during a previous simulation. A simulation can be restarted from the most recent restart (i.e,. checkpoint) file to complete a simulation that crashed due to hardware failure or expiration of a wall clock limit, or to extend a simulation that completed normally. Restarting is discussed in more detail \ref user_restart_page "here".
+
+The -p (parameter) option takes a required string parameter, which is the name of a parameter file.  The -p and -r options are incompatible: The simulation must be initialized with either a parameter or a restart file, but not both.
+
+The -c (command) option takes a required string parameter, which is the name of a command file. If this file name is not specified as a command line option, it can be specified as the first argument of the FileMaster parameter block in the parameter file. 
+
+The -i (input prefix) option takes a required string parameter, which is a prefix that will be prepended to the names of all input data files. 
+
+The -o (output prefix) option takes a required string parameter, which is a prefix that will be prepended to the names of all output data files. 
+
+If the name of the command file is not specified as a command line option (option -c), it must be specified as the first parameter in the FileMaster block of the parameter file. The input and output prefix strings may also be specified as optional parameters of the FileMaster parameter file block. Values that are specified in the parameter file block will override any values specified as command line arguments. 
 
 Other command line options that are relevant only to multi-system simulations are discussed separately \ref user_multi_page "here". 
 

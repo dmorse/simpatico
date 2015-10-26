@@ -1,6 +1,6 @@
 
 /**
-* Serial Monte Carlo (MC) and molecular dynamics (MC) simulation.
+* Single-processor Monte Carlo (MC) and molecular dynamics (MD).
 */
 namespace McMd {}
 

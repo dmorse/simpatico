@@ -26,13 +26,19 @@ namespace DdMd
    *
    * The periodic action associated with an Analyzer is implemented 
    * by the pure virtual sample() method. This action often involves 
-   * computation of a physical property which may be either added
-   * added it to statistical accumulator or output to a file, or both. 
+   * computation of a physical property, which may be either added
+   * it to statistical accumulator or output to a file, or both. 
+   * The sample() method is called periodically during a simulation,
+   * with a period determined by the interval member variable. The
+   * interval for each analyzer must be a multiple of the static
+   * member variable Analyzer::baseInterval.
    *
-   * The sample() method should take the desired action only when the
-   * simulation step index is an integer multiple of the associated 
-   * interval member variable. The interval must be a positive integer 
-   * that is a multiple of the static member Analyzer::baseInterval.
+   * An AnalyzerManager object acts as a container for Analyzers that
+   * are associated with a simulation. The AnalyzerManager::sample()
+   * function is called every time step, and calls the sample() 
+   * function of each Analyzer only on time steps when the simulation 
+   * step index is an integer multiple of the interval for that
+   * Analyzer. 
    *
    * An Analyzer has access to its parent Simulation via the protected
    * Analyzer::simulation() method, which returns the parent Simulation 

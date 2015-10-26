@@ -43,7 +43,7 @@ namespace DdMd
       * using the new ConfigIo to read or write configuration
       * files.
       *
-      * \param  subclassName  name of a subclass of ConfigIo 
+      * \param subclassName  name of a subclass of ConfigIo 
       * \return ConfigIo*     pointer to new instance of subclassName
       */
       ConfigIo* factory(const std::string &subclassName) const;

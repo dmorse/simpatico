@@ -1,26 +1,3 @@
-Species
--------
-
-- Replace Species generator method by non-member function template with 
-  explicit specializations for Linear and Atom.
-
-- Move Species, SpeciesGroup etc. to a new Chem namespace, so it can be 
-  used in Tool namespace.
-
-ConfigIos
----------
-
-- Modify LammpsConfigIo to allow writing of angles and dihedrals, as needed.
-
-Serialization
--------------
-
-- Test save / load with perturbation
-- Test save / load with replica move
-- Test MD serialization after forcing pair list rebuild upon restart output
-- Move restart interval and file name, and isInitialized_  to Simulation base 
-  classs.
-
 Constant Pressure MD 
 --------------------
 
@@ -47,6 +24,24 @@ Deformable Boundaries
 
 - Generalize snapshot and obsolete pair list methods to use 
   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+
+Species
+-------
+
+- Replace Species generator method by non-member function template with 
+  explicit specializations for Linear and Atom.
+
+- Move Species, SpeciesGroup etc. to a new Chem namespace, so it can be 
+  used in Tool namespace.
+
+Serialization
+-------------
+
+- Test save / load with perturbation
+- Test save / load with replica move
+- Test MD serialization after forcing pair list rebuild upon restart output
+- Move restart interval and file name, and isInitialized_  to Simulation base 
+  classs.
 
 Perturbation
 ------------

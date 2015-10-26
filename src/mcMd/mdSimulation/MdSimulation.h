@@ -160,22 +160,22 @@ namespace McMd
       * format used by DumpConfig, if the inputPrefix of the FileMaster for
       * this McAnalyzer is set to the output prefix for the dump files. 
       * 
-      * \param min         integer index of first configuration file
-      * \param max         integer index of last configuration file
-      * \param filePrefix  prefix string for configuration files.
+      * \param min  integer index of first configuration file
+      * \param max  integer index of last configuration file
+      * \param basename  prefix string for configuration files.
       */  
-      void analyzeDumps(int min, int max, std::string filePrefix);
+      void analyzeConfigs(int min, int max, std::string basename);
 
       /**
       * Read and analyze a trajectory dump.
       * 
       * \param min start at this frame number
       * \param max end at this frame number
-      * \param classname the TrajectoryIo class to use
+      * \param classname name of the TrajectoryReader class to use
       * \param filename  name of the trajectory file
       */
       void analyzeTrajectory(int min, int max, 
-         std::string classname, std::string filename);
+                             std::string classname, std::string filename);
 
       /**
       * Read a restart file.

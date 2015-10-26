@@ -6,7 +6,7 @@ include $(SRC_DIR)/mcMd/simulation/sources.mk
 include $(SRC_DIR)/mcMd/mcSimulation/sources.mk
 include $(SRC_DIR)/mcMd/mdSimulation/sources.mk
 include $(SRC_DIR)/mcMd/configIos/sources.mk
-include $(SRC_DIR)/mcMd/trajectoryIos/sources.mk
+include $(SRC_DIR)/mcMd/trajectory/sources.mk
 include $(SRC_DIR)/mcMd/mdIntegrators/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/sources.mk
@@ -21,7 +21,7 @@ mcMd_=\
     $(mcMd_mcSimulation_) \
     $(mcMd_mdSimulation_) \
     $(mcMd_configIos_) \
-    $(mcMd_trajectoryIos_) \
+    $(mcMd_trajectory_) \
     $(mcMd_mdIntegrators_) \
     $(mcMd_mcMoves_) \
     $(mcMd_analyzers_) \

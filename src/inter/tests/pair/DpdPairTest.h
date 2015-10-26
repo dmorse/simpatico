@@ -208,7 +208,7 @@ public:
       openInputFile("out/serial", iar.file());
 
       DpdPair clone;
-      setNAtomType(2);
+      clone.setNAtomType(2);
       clone.loadParameters(iar);
 
       TEST_ASSERT(eq(interaction_.epsilon(0, 0), clone.epsilon(0,0)));
@@ -236,7 +236,7 @@ TEST_ADD(DpdPairTest, testEnergy)
 TEST_ADD(DpdPairTest, testForceOverR)
 TEST_ADD(DpdPairTest, testGetSet)
 TEST_ADD(DpdPairTest, testModify)
-//TEST_ADD(DpdPairTest, testSaveLoad)
+TEST_ADD(DpdPairTest, testSaveLoad)
 TEST_END(DpdPairTest)
 
 #endif

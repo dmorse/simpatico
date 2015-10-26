@@ -241,7 +241,7 @@ OPTIMIZE_OUTPUT_VHDL   = NO
 # that for custom extensions you also need to set FILE_PATTERNS otherwise the
 # files are not read by doxygen.
 
-EXTENSION_MAPPING      =
+EXTENSION_MAPPING      = mod=c++ tpp=c++ dox=c++
 
 # If MARKDOWN_SUPPORT is enabled (the default) then doxygen pre-processes all
 # comments according to the Markdown format, which allows for more readable
@@ -715,8 +715,10 @@ EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
                          ../src/tools/hoomd/xmlParser.cpp \
                          ../src/tools/hoomd/ExtractTopologyMain.cpp \
                          ../src/inter//coulomb \
-                         ../src/mcMd/potential/coulomb \
-                         ../src/ddMd/potential/coulomb \
+                         ../src/mcMd/potentials/coulomb \
+                         ../src/mcMd/attic \
+                         ../src/ddMd/potentials/coulomb \
+                         ../src/ddMd/attic 
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

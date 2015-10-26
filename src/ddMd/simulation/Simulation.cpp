@@ -302,44 +302,56 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char * const * argv)
    {
-      bool  sFlag = false; // split communicator
-      bool  eFlag = false; // echo
-      bool  pFlag = false; // param file name
-      bool  rFlag = false; // restart file name
-      bool  cFlag = false; // command file name
+      bool sFlag = false; // split communicator
+      bool eFlag = false; // echo
+      bool pFlag = false; // param file name
+      bool rFlag = false; // restart file name
+      bool cFlag = false; // command file name
+      bool iFlag = false; // input prefix
+      bool oFlag = false; // output prefix
       char* sArg = 0;
       char* rArg = 0;
       char* pArg = 0;
       char* cArg = 0;
+      char* iArg = 0;
+      char* oArg = 0;
       int  nSystem = 1;
 
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "es:p:r:c:")) != -1) {
+      while ((c = getopt(argc, argv, "es:p:r:c:i:o:")) != -1) {
          switch (c) {
          case 'e': // echo parameters
-           eFlag = true;
-           break;
+            eFlag = true;
+            break;
          case 's': // split communicator
-           sFlag = true;
-           sArg  = optarg;
-           nSystem = atoi(sArg);
-           break;
+            sFlag = true;
+            sArg  = optarg;
+            nSystem = atoi(sArg);
+            break;
          case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
+            pFlag = true;
+            pArg  = optarg;
+            break;
          case 'r': // restart file
-           rFlag = true;
-           rArg  = optarg;
-           break;
+            rFlag = true;
+            rArg  = optarg;
+            break;
          case 'c': // command file
-           cFlag = true;
-           cArg  = optarg;
-           break;
+            cFlag = true;
+            cArg  = optarg;
+            break;
+         case 'i': // input prefix
+            iFlag = true;
+            iArg  = optarg;
+            break;
+         case 'o': // output prefix
+            oFlag = true;
+            oArg  = optarg;
+            break;
          case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
+            Log::file() << "Unknown option -" << optopt << std::endl;
          }
       }
 
@@ -387,6 +399,17 @@ namespace DdMd
       if (cFlag) {
          fileMaster().setCommandFileName(std::string(cArg));
       }
+
+      // If option -i, set path prefix for input files
+      if (iFlag) {
+         fileMaster().setInputPrefix(std::string(iArg));
+      }
+
+      // If option -o, set path prefix for output files
+      if (oFlag) {
+         fileMaster().setOutputPrefix(std::string(oArg));
+      }
+
 
       // If option -r, load state from a restart file.
       if (rFlag) {

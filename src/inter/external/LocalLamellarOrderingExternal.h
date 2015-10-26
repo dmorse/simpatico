@@ -110,6 +110,16 @@ namespace Inter
       */
       virtual void save(Serializable::OArchive &ar);
 
+      /*
+      * Set a potential energy parameter, identified by a string.
+      */
+      void set(std::string name, double value);
+
+      /*
+      * Get a parameter value, identified by a string.
+      */
+      double get(std::string name) const;
+
       /**
       * Returns external parameter
       *
