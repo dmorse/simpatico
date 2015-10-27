@@ -11,6 +11,7 @@
 #include <mcMd/analyzers/system/Cluster.h>       // member template argument
 #include <mcMd/analyzers/system/ClusterLink.h>   // member template argument
 #include <mcMd/neighbor/CellList.h>              // member
+#include <util/boundary/Boundary.h>              // argument (typedef)
 #include <util/containers/DArray.h>              // member template
 #include <util/containers/GArray.h>              // member template
 #include <util/containers/GStack.h>              // member template
@@ -47,8 +48,12 @@ namespace McMd
       *
       * \param speciesId index of species in clusters
       * \param atomTypeId typeId of atoms in micelle core
+      * \param maxBoundary boundary used for allocation
+      * \param cutoff pair distance cutoff
       */
-      virtual void setup(int speciesId, int atomTypeId, double cutoff);
+      virtual 
+      void init(int speciesId, int atomTypeId, 
+                const Boundary& maxBoundary, double cutoff);
    
       /**
       * Find all clusters.

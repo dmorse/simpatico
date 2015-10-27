@@ -45,17 +45,18 @@ namespace McMd
    * Initial setup.
    */
    void
-   ClusterIdentifier::setup(int speciesId, int atomTypeId, double cutoff)
+   ClusterIdentifier::init(int speciesId, int atomTypeId, 
+                           const Boundary& maxBoundary, double cutoff)
    {
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;
       cutoff_ = cutoff;
       Species* speciesPtr = &system().simulation().species(speciesId);
-      int nMolecule = speciesPtr->capacity();
-      links_.allocate(nMolecule);
+      int moleculeCapacity = speciesPtr->capacity();
+      links_.allocate(moleculeCapacity);
       clusters_.reserve(64);
-      int nAtom = nMolecule * speciesPtr->nAtom();
-      cellList_.allocate(nAtom, system().boundary(), cutoff_);
+      int atomCapacity = moleculeCapacity*speciesPtr->nAtom();
+      cellList_.allocate(atomCapacity, maxBoundary, cutoff_);
    }
 
    /*
@@ -121,16 +122,17 @@ namespace McMd
    void ClusterIdentifier::identifyClusters()
    {
 
-      // Clear clusters array and all links
+      // Clear cell list, clusters array and all links
+      cellList_.clear();
       clusters_.clear();
       for (int i = 0; i < links_.capacity(); ++i) {
          links_[i].clear();
       }
 
       // Build the cellList, associate Molecule with ClusterLink.
+      // Iterate over molecules of species speciesId_
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      cellList_.clear();
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
 

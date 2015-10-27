@@ -14,7 +14,6 @@
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/boundary/Boundary.h>
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
@@ -32,6 +31,7 @@ namespace McMd
     : SystemAnalyzer<System>(system),
       identifier_(system),
       hist_(),
+      maxBoundary_(),
       outputFile_(),
       speciesId_(),
       atomTypeId_(),
@@ -62,12 +62,13 @@ namespace McMd
       if (atomTypeId_ >= system().simulation().nAtomType()) {
          UTIL_THROW("nTypeId >= nAtomType");
       }
-      
+
+      read<Boundary>(in, "maxBoundary", maxBoundary_);
       read<double>(in, "cutoff", cutoff_);
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
-      identifier_.setup(speciesId_, atomTypeId_, cutoff_);
+      identifier_.init(speciesId_, atomTypeId_, maxBoundary_, cutoff_);
 
       read<int>(in,"histMin", histMin_);
       read<int>(in,"histMax", histMax_);
@@ -98,11 +99,12 @@ namespace McMd
          UTIL_THROW("Negative atomTypeId");
       }
 
+      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
       loadParameter<double>(ar, "cutoff", cutoff_);
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
-      identifier_.setup(speciesId_, atomTypeId_, cutoff_);
+      identifier_.init(speciesId_, atomTypeId_, maxBoundary_, cutoff_);
 
       loadParameter<int>(ar,"histMin", histMin_);
       loadParameter<int>(ar,"histMax", histMax_);
@@ -121,6 +123,7 @@ namespace McMd
       Analyzer::save(ar);
       ar & speciesId_;
       ar & atomTypeId_;
+      ar & maxBoundary_;
       ar & cutoff_;
       ar & histMin_;
       ar & histMax_;

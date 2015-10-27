@@ -8,10 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>              // base class template
-#include <mcMd/simulation/System.h>                     // base class template parameter
-#include <mcMd/analyzers/system/ClusterIdentifier.h>    // member
-#include <util/accumulators/IntDistribution.h>          // member
+#include <mcMd/analyzers/SystemAnalyzer.h>            // base class template
+#include <mcMd/simulation/System.h>                   // base class templ param
+#include <mcMd/analyzers/system/ClusterIdentifier.h>  // member
+#include <util/boundary/Boundary.h>                   // member (typedef)
+#include <util/accumulators/IntDistribution.h>        // member
 
 namespace McMd
 {
@@ -92,6 +93,9 @@ namespace McMd
 
       /// Distribution of the Clusters.
       IntDistribution  hist_;
+   
+      /// Maximum boundary dimensions (for allocation)
+      Boundary maxBoundary_;
    
       /// Output file stream
       std::ofstream outputFile_;
