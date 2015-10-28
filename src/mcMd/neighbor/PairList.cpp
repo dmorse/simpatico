@@ -99,11 +99,8 @@ namespace McMd
    /*
    * Allocate CellList and PairList arrays, initialize to empty state.
    */
-   void PairList::allocate(int atomIdEnd, const Boundary& boundary, 
-                                          double potentialCutoff)
+   void PairList::allocate(int atomIdEnd, double potentialCutoff)
    {
-      int i;
-
       // Preconditions
       if (skin_ < 0.0000001) {
          UTIL_THROW("skin must be set before PairList::allocate");
@@ -118,8 +115,8 @@ namespace McMd
       // PairList cutoff = cutoff for potential + a "skin"
       cutoff_ = potentialCutoff + skin_;
 
-      // Initialize the private CellList
-      cellList_.allocate(atomIdEnd, boundary, cutoff_);
+      // Set atom capacity for cell list.
+      cellList_.setAtomCapacity(atomIdEnd);
    
       // Allocate neighbor list data structures
       atom1Ptrs_.allocate(atomCapacity_);
@@ -128,30 +125,37 @@ namespace McMd
       oldPositions_.allocate(atomCapacity_);
    
       // Initialize array elements to null values
-      for (i=0; i < atomCapacity_; ++i) {
+      for (int i=0; i < atomCapacity_; ++i) {
          atom1Ptrs_[i] = 0;
          first_[i] = PairList::NullIndex;
          oldPositions_[i].zero();
       }
       first_[atomCapacity_] = PairList::NullIndex;
-      for (i=0; i < pairCapacity_; ++i) {
+      for (int i=0; i < pairCapacity_; ++i) {
          atom2Ptrs_[i] = 0;
       }
    }
 
    /*
-   * Make the grid of cells for the internal CellList.
+   * Setup an empty pair list ready for addition of atoms.
    */
-   void PairList::makeGrid(const Boundary& boundary)
-   {  cellList_.makeGrid(boundary, cutoff_); }
+   void PairList::setup(const Boundary& boundary)
+   {
+      cellList_.setup(boundary, cutoff_); 
+      nAtom1_   = 0;
+      nAtom2_   = 0; 
+      nAtom_    = 0;
+      tList1_   = atomCapacity_ - 1;
+      first_[0] = 0;
+   }
  
    /*
    * Clear the CellList and PairList.
    */
    void PairList::clear()
    { 
-      cellList_.clear(); 
-      nAtom1_   = 0; 
+      cellList_.clear();
+      nAtom1_   = 0;
       nAtom2_   = 0; 
       nAtom_    = 0;
       tList1_   = atomCapacity_ - 1;

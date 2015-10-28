@@ -251,10 +251,9 @@ namespace McMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       readParamComposite(in, pairList_);
 
-      // Allocate the PairList 
+      // Allocate the PairList and set the pair list cutoff.
       double cutoff = interaction().maxPairCutoff();
-      pairList_.allocate(simulation().atomCapacity(), 
-                         maxBoundary_, cutoff);
+      pairList_.allocate(simulation().atomCapacity(), cutoff);
    }
 
    /*
@@ -295,7 +294,7 @@ namespace McMd
    template <class Interaction> double 
    MdPairPotentialImpl<Interaction>::energy(double rsq, 
                                         int iAtomType, int jAtomType) const
-   { return interaction().energy(rsq, iAtomType, jAtomType); }
+   {  return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.

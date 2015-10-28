@@ -104,8 +104,7 @@ namespace McMd
       /**
       * Allocate memory and initialize.
       *
-      * Allocate all memory required by the PairList and the CellList,
-      * and initialize the grid of Cell objects. 
+      * Initial allocation of memory required by the PairList.
       *
       * Precondition: readParameters() must be invoked before allocate(),
       * so that values of atomCapacity, pairCapacity, skin are known.
@@ -115,15 +114,12 @@ namespace McMd
       * \param boundary        Boundary object with maximum dimensions
       * \param potentialCutoff Range of pair potential
       */
-      void 
-      allocate(int atomIdEnd, const Boundary &boundary, double potentialCutoff);
+      void allocate(int atomIdEnd, double potentialCutoff);
   
       /**
-      * Make the grid of cells for the internal Cell List.
-      *
-      * Precondition: This PairList must be allocated.
+      * Setup an empty grid of cells for the internal cell list.
       */ 
-      void makeGrid(const Boundary &boundary);
+      void setup(const Boundary &boundary);
 
       /**
       * Clear the PairList and CellList.

@@ -232,9 +232,8 @@ namespace McMd
       // Read maxBoundary (needed to allocate memory for cell list).
       read<Boundary>(in, "maxBoundary", maxBoundary_);
 
-      // Allocate memory for the CellList.
-      cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
-                         maxPairCutoff());
+      // Set atom capacity and allocate memory in the CellList.
+      cellList_.setAtomCapacity(simulation().atomCapacity());
    }
 
    /*
@@ -255,8 +254,7 @@ namespace McMd
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
 
       // Allocate memory for the CellList.
-      cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
-                         maxPairCutoff());
+      cellList_.setAtomCapacity(simulation().atomCapacity());
    }
 
    /*

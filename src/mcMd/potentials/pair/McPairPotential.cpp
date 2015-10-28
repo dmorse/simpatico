@@ -40,12 +40,8 @@ namespace McMd
    */ 
    void McPairPotential::buildCellList() 
    {
-
-      // Adjust number of cells in each direction to current boundary
-      cellList_.makeGrid(boundary(), maxPairCutoff());
-
-      // Clear the cellList
-      cellList_.clear();
+      // Set up a grid of empty cells.
+      cellList_.setup(boundary(), maxPairCutoff());
 
       // Add all atoms to cellList_ 
       System::MoleculeIterator molIter;
