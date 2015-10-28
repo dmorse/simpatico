@@ -251,9 +251,9 @@ namespace McMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       readParamComposite(in, pairList_);
 
-      // Allocate the PairList and set the pair list cutoff.
+      // Initialize the PairList 
       double cutoff = interaction().maxPairCutoff();
-      pairList_.allocate(simulation().atomCapacity(), cutoff);
+      pairList_.initialize(simulation().atomCapacity(), cutoff);
    }
 
    /*

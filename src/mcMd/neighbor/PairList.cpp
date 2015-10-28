@@ -99,7 +99,7 @@ namespace McMd
    /*
    * Allocate CellList and PairList arrays, initialize to empty state.
    */
-   void PairList::allocate(int atomIdEnd, double potentialCutoff)
+   void PairList::initialize(int atomIdEnd, double potentialCutoff)
    {
       // Preconditions
       if (skin_ < 0.0000001) {

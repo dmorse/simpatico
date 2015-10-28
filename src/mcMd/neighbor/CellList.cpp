@@ -87,7 +87,7 @@ namespace McMd
    }
 
    /*
-   * Allocate cells_ and cellTags_ arrays.
+   * Set atomCapacity and, if necessary, allocate cellTags_.
    */
    void 
    CellList::setAtomCapacity(int atomCapacity)
@@ -98,7 +98,7 @@ namespace McMd
       }
       atomCapacity_ = atomCapacity;
 
-      // If necessary, allocate/reallocate an array of CellTag objects
+      // If necessary, allocate/reallocate cellTags_ array.
       if (cellTags_.capacity() == 0) {
          cellTags_.allocate(atomCapacity_);
       } else 
@@ -106,13 +106,6 @@ namespace McMd
          cellTags_.deallocate();
          cellTags_.allocate(atomCapacity_);
       }
- 
-      #if 0 
-      // Allocate an Array of Cell objects
-      makeGrid(boundary, cutoff);
-      clear();
-      cells_.allocate(totCells_);
-      #endif
    }
 
    /*

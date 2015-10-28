@@ -30,9 +30,9 @@ namespace McMd
    * A PairList (or Verlet list) is a list of neighboring pairs of Atoms that 
    * are separated by a distance less than a specified cutoff. The cutoff for
    * the Verlet list is the sum of a potential cutoff, which is passed as a 
-   * parameter to allocate(), and a "skin", which is read by readParameters().
+   * parameter to initialize(), and a "skin", which is read by readParameters().
    *
-   * After a PairList is constructed, the allocate() method must be called to
+   * After a PairList is constructed, the initialize() method must be called to
    * allocate memory for both the data structures required to store the PairList
    * and for a private CellList object that is used to construct the PairList.
    *
@@ -106,15 +106,14 @@ namespace McMd
       *
       * Initial allocation of memory required by the PairList.
       *
-      * Precondition: readParameters() must be invoked before allocate(),
+      * Precondition: readParameters() must be invoked before initialize(),
       * so that values of atomCapacity, pairCapacity, skin are known.
-      * The allocate() method can only be called once.
+      * The initialize() method can only be called once.
       *
-      * \param atomIdEnd       maximum allowed atom Id, plus 1
-      * \param boundary        Boundary object with maximum dimensions
-      * \param potentialCutoff Range of pair potential
+      * \param atomIdEnd  maximum allowed atom Id, plus 1
+      * \param potentialCutoff  range of pair potential, without skin
       */
-      void allocate(int atomIdEnd, double potentialCutoff);
+      void initialize(int atomIdEnd, double potentialCutoff);
   
       /**
       * Setup an empty grid of cells for the internal cell list.
