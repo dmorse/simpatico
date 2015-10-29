@@ -199,8 +199,8 @@ namespace McMd
       // the minimum cell size is twice the maxExclusionRadius,
       // but to save memory, we take 2 times that value 
       CellList cellList;
-      cellList.allocate(system.simulation().atomCapacity(),
-         boundary, 2.0*2.0*maxExclusionRadius);
+      cellList.setAtomCapacity(system.simulation().atomCapacity());
+      cellList.setup(boundary, 2.0*2.0*maxExclusionRadius);
 
       if (nMolecule > capacity())
          UTIL_THROW("nMolecule > Species.capacity()!"); 
