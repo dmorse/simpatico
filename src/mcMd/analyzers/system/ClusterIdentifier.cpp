@@ -45,7 +45,7 @@ namespace McMd
    * Initial setup.
    */
    void
-   ClusterIdentifier::init(int speciesId, int atomTypeId, double cutoff)
+   ClusterIdentifier::initialize(int speciesId, int atomTypeId, double cutoff)
    {
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;

@@ -67,8 +67,9 @@ namespace McMd
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
-      identifier_.init(speciesId_, atomTypeId_, cutoff_);
 
+      // Initialize ClusterIdentifier
+      identifier_.initialize(speciesId_, atomTypeId_, cutoff_);
       read<int>(in,"histMin", histMin_);
       read<int>(in,"histMax", histMax_);
       hist_.setParam(histMin_, histMax_);
@@ -102,13 +103,13 @@ namespace McMd
       if (cutoff_ < 0) {
          UTIL_THROW("Negative cutoff");
       }
-      identifier_.init(speciesId_, atomTypeId_, cutoff_);
 
-      loadParameter<int>(ar,"histMin", histMin_);
-      loadParameter<int>(ar,"histMax", histMax_);
+      identifier_.initialize(speciesId_, atomTypeId_, cutoff_);
+      loadParameter<int>(ar, "histMin", histMin_);
+      loadParameter<int>(ar, "histMax", histMax_);
+      ar >> hist_;
 
       ar >> nSample_;
-      ar >> hist_;
 
       isInitialized_ = true;
    }
@@ -124,8 +125,8 @@ namespace McMd
       ar & cutoff_;
       ar & histMin_;
       ar & histMax_;
-      ar & nSample_;
       ar & hist_;
+      ar & nSample_;
    }
 
    /*

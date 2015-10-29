@@ -51,7 +51,7 @@ namespace McMd
       * \param cutoff pair distance cutoff
       */
       virtual 
-      void init(int speciesId, int atomTypeId, double cutoff);
+      void initialize(int speciesId, int atomTypeId, double cutoff);
    
       /**
       * Find all clusters.
