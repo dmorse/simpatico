@@ -94,9 +94,6 @@ namespace McMd
       /// Distribution of the Clusters.
       IntDistribution  hist_;
    
-      /// Maximum boundary dimensions (for allocation)
-      Boundary maxBoundary_;
-   
       /// Output file stream
       std::ofstream outputFile_;
 

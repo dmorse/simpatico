@@ -48,12 +48,10 @@ namespace McMd
       *
       * \param speciesId index of species in clusters
       * \param atomTypeId typeId of atoms in micelle core
-      * \param maxBoundary boundary used for allocation
       * \param cutoff pair distance cutoff
       */
       virtual 
-      void init(int speciesId, int atomTypeId, 
-                const Boundary& maxBoundary, double cutoff);
+      void init(int speciesId, int atomTypeId, double cutoff);
    
       /**
       * Find all clusters.

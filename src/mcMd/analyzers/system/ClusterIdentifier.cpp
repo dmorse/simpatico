@@ -45,8 +45,7 @@ namespace McMd
    * Initial setup.
    */
    void
-   ClusterIdentifier::init(int speciesId, int atomTypeId, 
-                           const Boundary& maxBoundary, double cutoff)
+   ClusterIdentifier::init(int speciesId, int atomTypeId, double cutoff)
    {
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;
@@ -56,7 +55,7 @@ namespace McMd
       links_.allocate(moleculeCapacity);
       clusters_.reserve(64);
       int atomCapacity = moleculeCapacity*speciesPtr->nAtom();
-      cellList_.allocate(atomCapacity, maxBoundary, cutoff_);
+      cellList_.setAtomCapacity(atomCapacity);
    }
 
    /*
