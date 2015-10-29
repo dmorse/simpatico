@@ -17,6 +17,7 @@
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
+#include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/misc/ioUtil.h>
 #include <sstream>
@@ -167,7 +168,13 @@ namespace McMd
 
       // Write histogram output
       fileMaster().openOutputFile(outputFileName(".hist"), outputFile_);
-      hist_.output(outputFile_);
+      // hist_.output(outputFile_);
+      int min = hist_.min();
+      int nBin = hist_.nBin();
+      for (int i = 0; i < nBin; ++i) {
+         outputFile_ << Int(i + min) << "  " 
+                     <<  Dbl(double(hist_.data()[i])/double(nSample_)) << "\n";
+      }
       outputFile_.close();
    }
 

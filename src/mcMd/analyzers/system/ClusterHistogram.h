@@ -109,13 +109,13 @@ namespace McMd
       /// Distance cutoff
       double cutoff_;
 
-      /// Histogram Min bin.
+      /// Histogram minimum value
       int  histMin_;
 
-      /// Histogram Min bin.
+      /// Histogram maximum value.
       int  histMax_;
 
-      /// Number of configurations dumped thus far(first dump is zero).
+      /// Number of configurations dumped thus far (first dump is zero).
       long  nSample_;
 
       /// Has readParam been called?
