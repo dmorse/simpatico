@@ -136,9 +136,6 @@ namespace McMd
       /// Alias for global atoms_ DArray of parent simulation.
       // RArray<Atom> atoms_;
 
-      /// Maximum boundary (used to allocated memory for CellList).
-      Boundary maxBoundary_;
-
    };
 
    // Inline functions

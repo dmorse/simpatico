@@ -27,7 +27,6 @@ McSimulation{
       epsilon               1.000000000000e+00  
       sigma                 1.000000000000e+00  
       cutoff                1.122460000000e+00  
-      maxBoundary           cubic  10.5 
     }
     BondPotential{
       kappa                 2.000000000000e+03
@@ -68,7 +67,6 @@ McSimulation{
       nStep                                 40
       MdSystem{
         MdPairPotential{
-          maxBoundary             cubic  10.5 
           PairList{
             atomCapacity                        1000
             pairCapacity                       10000
