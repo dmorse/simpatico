@@ -34,7 +34,6 @@ MdSimulation{
     BoundaryEnsemble{
       type               rigid
     }
-    maxBoundary    orthorhombic  11.00        11.00       11.00
     LJPair{
       epsilon             1.00         2.00  
                           2.00         1.00

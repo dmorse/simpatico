@@ -27,7 +27,6 @@ MdSimulation{
       epsilon               1.000000000000e+00 
       sigma                 1.000000000000e+00 
       cutoff                1.122460000000e+00
-      maxBoundary             orthorhombic 30.0  30.0  30.0
       PairList{
         atomCapacity                       20000
         pairCapacity                      100000
@@ -55,6 +54,11 @@ MdSimulation{
       interval                           200
     }
 
+    MdEnergyOutput{
+      interval                           100
+      outputFileName                  energy
+    }
+
   }
   saveInterval                500
   saveFileName            restart
@@ -63,11 +67,6 @@ MdSimulation{
     DumpConfig{
       interval                          1000
       outputFileName            dump/config.
-    }
-
-    MdEnergyOutput{
-      interval                           100
-      outputFileName                  energy
     }
 
     RadiusGyration{

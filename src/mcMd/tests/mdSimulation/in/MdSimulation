@@ -37,7 +37,6 @@ MdSimulation{
                           2.00         1.00
       sigma               1.00         1.00
                           1.00         1.00
-      maxBoundary   orthorhombic   4.0   4.0   4.0
       PairList{
         atomCapacity                30
         pairCapacity              1000

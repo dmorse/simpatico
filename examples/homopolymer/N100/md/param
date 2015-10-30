@@ -1,6 +1,5 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -28,7 +27,6 @@ MdSimulation{
       epsilon               1.000000000000e+00 
       sigma                 1.000000000000e+00 
       cutoff                1.122460000000e+00
-      maxBoundary             orthorhombic 34.0  34.0  34.0
       PairList{
         atomCapacity                      340000
         pairCapacity                     1500000
