@@ -38,6 +38,10 @@ namespace McMd
    */ 
    void MdPairPotential::buildPairList() 
    {
+      // Precondition
+      if (!pairList_.isInitialized()) {
+         UTIL_THROW("PairList not initialized in MdPairPotential::buildPairList");
+      }
 
       // Setup an empty pair list and internal cell list.
       pairList_.setup(boundary());

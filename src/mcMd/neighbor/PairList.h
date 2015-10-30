@@ -172,9 +172,9 @@ namespace McMd
       int nPair() const;
 
       /**
-      * Has memory been allocated for this PairList?
+      * Has the initialize function been called?
       */
-      bool isAllocated() const;
+      bool isInitialized() const;
    
       /**
       * Returns true if PairList is current, false otherwise.
@@ -223,7 +223,7 @@ namespace McMd
    private:
   
       /// Private CellList, used to create PairList.
-      CellList cellList_;
+      CellList  cellList_;
 
       /// Array of pointers to 1st (or primary) atom in each pair.
       DArray<Atom*>  atom1Ptrs_;  
@@ -232,45 +232,53 @@ namespace McMd
       DArray<Atom*>  atom2Ptrs_;  
 
       /// Array of indices in atom2Ptrs_ of first neighbor of an Atom.
-      DArray<int>    first_; 
+      DArray<int>  first_; 
 
       /// Array of old atom positions.
-      DArray<Vector> oldPositions_;
+      DArray<Vector>  oldPositions_;
 
       /// Extra distance to add to pair potential cutoff.
-      double skin_;
+      double  skin_;
    
       /// Pair list cutoff radius (pair potential cutoff + skin_).
       double cutoff_;
    
       /// Maximum number of atoms (dimension of atom1Ptrs_).
-      int    atomCapacity_;     
+      int  atomCapacity_;     
    
       /// Maximum number of distinct pairs (dimension of atom2Ptrs_).
-      int    pairCapacity_;     
+      int  pairCapacity_;     
    
       /// Number of primary atoms in atom1Ptrs_.
-      int    nAtom1_;      
+      int  nAtom1_;      
 
       /// Number of secondary atoms in atom2Ptrs_, or number of pairs.
-      int    nAtom2_; 
+      int  nAtom2_; 
    
       /// Total number of atoms in the PairList.
-      int    nAtom_;     
+      int  nAtom_;     
    
       /// Index one less than the first element of atom1Ptrs_ for atoms 
       /// with no neighbors.
-      int    tList1_;     
+      int  tList1_;     
 
       /// Maximum value of nAtom_ since instantiation.
-      int    maxNAtom_;     
+      int  maxNAtom_;     
    
       /// Maximum value of nAtom2_ (# of pairs) encountered since instantiation.
-      int    maxNAtom2_;     
+      int  maxNAtom2_;     
    
       /// The number of times this PairList has been built since instantiation.
-      int    buildCounter_;
+      int  buildCounter_;
+
+      /// Has the initialize function been called?
+      bool isInitialized_;
   
+      /**
+      * Allocate memory for PairList.
+      */
+      void allocate();
+
       /* 
       * Implementation Notes:
       *
@@ -344,43 +352,43 @@ namespace McMd
    * Add an Atom to the CellList.
    */ 
    inline void PairList::addAtom(Atom &atom)
-   { cellList_.addAtom(atom); }
+   {  cellList_.addAtom(atom); }
 
    /*
    * Get the current number of atoms in the pairlist.
    */ 
    inline int PairList::nAtom() const
-   { return nAtom_; }
+   {  return nAtom_; }
 
    /*
    * Get the current number of pairs.
    */ 
    inline int PairList::nPair() const
-   { return nAtom2_; }
+   {  return nAtom2_; }
 
    /*
    * Get the maximum value of aAtom() since instantiation.
    */ 
    inline int PairList::maxNAtom() const
-   { return maxNAtom_; }
+   {  return maxNAtom_; }
 
    /*
    * Get the maximum value of nPair() since instantiation.
    */ 
    inline int PairList::maxNPair() const
-   { return maxNAtom2_; }
+   {  return maxNAtom2_; }
 
    /*
    * Get the number of times this PairList has been built.
    */ 
    inline int PairList::buildCounter() const
-   { return buildCounter_; }
+   {  return buildCounter_; }
 
    /*
-   * Has memory been allocated for this PairList?
+   * Has the initialize function been called?
    */ 
-   inline bool PairList::isAllocated() const
-   { return cellList_.isAllocated(); }
+   inline bool PairList::isInitialized() const
+   {  return isInitialized_; }
 
 } 
 #endif
