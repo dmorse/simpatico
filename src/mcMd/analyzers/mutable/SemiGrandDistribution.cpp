@@ -54,6 +54,7 @@ namespace McMd
       // Allocate IntDistribution accumulator
       distribution_.setParam(0, moleculeCapacity_);
       distribution_.clear();
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
    }
 
    /*
@@ -97,6 +98,7 @@ namespace McMd
    {
       if (isAtInterval(iStep)) {
          distribution_.sample(mutatorPtr_->stateOccupancy(0));
+         outputFile_ << iStep << "     " << mutatorPtr_->stateOccupancy(0) << std::endl;
       }
    }
  
@@ -105,7 +107,10 @@ namespace McMd
    */
    void SemiGrandDistribution::output() 
    {
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      //Close *.dat file
+      outputFile_.close();
+      //Open and write .hist file
+      fileMaster().openOutputFile(outputFileName(".hist"), outputFile_);
       distribution_.output(outputFile_);
       outputFile_.close();
    }
