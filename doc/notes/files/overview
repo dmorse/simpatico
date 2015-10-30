@@ -12,7 +12,8 @@ Requirements / proposals:
    - Self-documenting configuration and trajectory formats (allows 
      adaptation and validation) with several format variants. A single 
      class should be able to read any usable variant of this format, 
-     with appropriate error checking.
+     with appropriate error checking, and throw exceptions for 
+     variants that they cannot handle.
 
    - Configuration and trajectory files that are intended for use
      by McMd programs must have atom ids in "canonical" molecule order.
@@ -34,6 +35,12 @@ Requirements / proposals:
      without having canonical atom indices or can contain canonical
      atom indices without being ordered. Files that are ordered 
      should document this fact in the file format descriptor. 
+
+   - DdMd will need to be able to read, store, and write back out
+     basic information about species (number of molecules of each
+     type, and number of atoms per molecule) in order to allow it
+     to validate (on input) and document (on output) that a 
+     configuration is in canonical molecular order.
 
    - McMd programs should read configuration and trajectory format
      variants produced by DdMd (ordered or disordered). The reader
@@ -69,117 +76,14 @@ Requirements / proposals:
      by (md|mc)Sim and read by MdPp for molecule based analysis. 
      It will not be required by ddSim during a simulation.
 
-Configuration file:
-
-   BOUNDARY (same as current)
-   [SPECIES] - presence indicates canonical atom id order
-   ATOMS - format variable, indicated within block
-   [BONDS]
-   [LINKS]
-   [ANGLES]
-   [DIHEDRALS]
-
-Trajectory file (binary):
-
-   Header:
-      nAtom int
-      frameFormat - bitfield with flags that include: molecular?, 
-                     fixed? ordered?, velocity? shift? (other?)
-      headerFormat - bitfield indicating which optional info follows
-      [MOLECULES] - molecule & species sizes, required iff molecular 
-      [ATOMTYPES] - Format, followed by per atom: typeId, [charge]
-      [BONDS][ANGLES][DIHEDRALS]
-   Frame:
-      iStep
-      boundary
-      ATOMS (id, position, optionally shift, velocity)
-
----------------------------------------------------------------------
-Blocks in configuration file:
-
-BOUNDARY:
-
-   [Boundary]
-
-SPECIES:
-
-   [hasBonds]
-   [hasAngles]
-   [hasDihedrals]
-   nSpecies  [int]
-
-   for each species { 
-      speciesId  nMolecule nAtom [nBond] [nAngle] [nDihedral]
-   }
-
-   Comments /
-
-   1) The presence of this block indicates that atom and group ids
-   are in molecular order.
-
-   2) The flags hasBonds, hasAngles, and hasDihedrals are optional,
-   and are all set false by default.
-
-   3) For each species, the variables nBond, nAngle, and nDihedral 
-   are each required if and only if the associated flag hasBonds, 
-   hasAngles, or hasDihedrals is set.
-
-   4) The ddSim program will write this block if the input configuration
-   was read from a file which contained it. It will thus preserve and
-   output molecular ordering, if it can.
-
-ATOMS: 
-
-   [ORDERED]
-   FORMAT [o][i][m][t]p[v][s][c]
-   NATOM integer
-
-   Format flags:
-   i = global id (tag)                   only required for DdMd
-   m = context (species, molecule, atom) only required for DdMd
-   t = type id                           only required for DdMd
-   s = shift                             optional for MD simulations
-   p = position                          always required
-   v = velocity                          required by MD simulations
-   c = charge                            (possibility, for future)
-
-   Comments:
-
-   1) The ORDERED flag is optional, and is set false by default.
-
-   2) The default output formats for different simulation programs:
-
-       mdSim writes all of the above, including shift when known
-       mcSim writes all of the above except velocity and shift
-       ddSim writes all that it can (context and shift optional)
-
-       Note: ddSim must know if atoms are in canonical molecular order
-
-BONDS, ANGLES, or DIHEDRALS:
-   
-   [ORDERED]
-   NGROUP   int
-   For each {
-      atomId0 ... atomId(N-1) typeId
-   }
-
-   The format is essentially the same for each type of covalent bond,
-   except for the block label BONDS, ANGLES, or DIHEDRALS.
-
----------------------------------------------------------------------
-Trajectory frame format:
-
-   FRAME:
-     For each atom {
-        id position(as 3xuint) [shift 3 x int] [velocity]
-     }
-
 ---------------------------------------------------------------------
 Plan:
 
-   1) McMd ConfigIo for configuration format   (SmcConfigIo)
-   2) McMd TrajectoryIo for trajectory format  (SmtTrajectoryIo)
-   3) Add simple species to DdMd::Simulation
-   4) DdMd ConfigIo for configuration format   (SmcConfigIo)
-   5) DdMd writer for trajectory format        (SmtTrajectoryReader)
-   6) Tools reader                             (SmtTrajectoryReader)
+   1) McMd ConfigIo for configuration format      (SpcConfigIo)
+   2) Add simple species to DdMd::Simulation
+   3) DdMd ConfigIo for configuration format      (SpcConfigIo)
+   4) McMd TrajectoryIo for trajectory format     (SptTrajectoryIo)
+   j) DdMd Writer for trajectory format           (SptTrajectoryWriter)
+   6) Tools reader                                (SptTrajectoryReader)
+   7) Allow optional arguments in command lines
+   8) Divide readers and writers for McMd
