@@ -39,20 +39,16 @@ namespace McMd
    void MdPairPotential::buildPairList() 
    {
 
-      // Allocate the pair list, if not already allocated
-      if (!pairList_.isAllocated()) {
-         double cutoff = maxPairCutoff();
-         int atomCapacity = simulation().atomCapacity();
-         pairList_.allocate(atomCapacity, maxBoundary_, cutoff);
-      }
+      // FIX THIS: Lost code here during merge to initialize on first 
+      // call in merge, which was implemented in coulomb branch on 
+      // before merge from devel. This needs to be fixed.
+      // Plan: Implement this policy in the devel branch and then merge
+      // back into coulomb.
 
-      // Recalculate the grid for the internal CellList
-      pairList_.makeGrid(boundary());
+      // Set up an empty PairList with an empty internal CellList.
+      pairList_.setup(boundary());
 
-      // Clear all atoms from the internal CellList
-      pairList_.clear();
-
-      // Add every atom in this System to the CellList
+      // Add every Atom in this System to the CellList
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {

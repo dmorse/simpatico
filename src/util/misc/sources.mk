@@ -3,6 +3,7 @@ util_misc_=\
     util/misc/Bit.cpp \
     util/misc/Exception.cpp \
     util/misc/FileMaster.cpp \
+    util/misc/FlagSet.cpp \
     util/misc/initStatic.cpp \
     util/misc/Log.cpp \
     util/misc/Memory.cpp \

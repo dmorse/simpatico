@@ -54,10 +54,10 @@ namespace McMd
       /**
       * Read pair potential interaction and pair list blocks.
       * 
-      * This method reads the maxBoundary, PairList and pair potential 
-      * Interaction parameter blocks, in  that order, and initializes an
-      * internal PairList. Before calling the Interaction::readParameters 
-      * method, it passes nAtomType to Interaction::setNAtomType().
+      * This method reads the pair potential Interaction parameter and
+      * PairList blocks, and initializes an internal PairList. Before 
+      * calling the Interaction::readParameters method, it passes 
+      * nAtomType to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
@@ -248,11 +248,19 @@ namespace McMd
          interaction().readParameters(in);
       }
 
-      read<Boundary>(in, "maxBoundary", maxBoundary_);
+      // Initialize the PairList 
       readParamComposite(in, pairList_);
 
-      // Note: pairlist_ is allocated in MdPairPotential::buildPairList, the
-      // first time this function is called. 
+      // FIX THIS: In coulomb, pairlist_ was allocated in 
+      // MdPairPotential::buildPairList the first time this function is 
+      // called.  This feature was lost in the merge of devel into Coulomb,
+      // and should be restored.
+
+      // This is code from devel, which should be changed to policy described
+      // above.
+
+      double cutoff = interaction().maxPairCutoff();
+      pairList_.initialize(simulation().atomCapacity(), cutoff);
    }
 
    /*
@@ -269,7 +277,6 @@ namespace McMd
          addParamComposite(interaction(), nextIndent);
          interaction().loadParameters(ar);
       }
-      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
       loadParamComposite(ar, pairList_);
    }
 
@@ -283,7 +290,6 @@ namespace McMd
       if (!isCopy_) {
          interaction().save(ar);
       }
-      ar << maxBoundary_;
       pairList_.save(ar);
    }
 
@@ -293,7 +299,7 @@ namespace McMd
    template <class Interaction> double 
    MdPairPotentialImpl<Interaction>::energy(double rsq, 
                                         int iAtomType, int jAtomType) const
-   { return interaction().energy(rsq, iAtomType, jAtomType); }
+   {  return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.

@@ -11,7 +11,7 @@ int main()
    MPI::Init();
    #endif
 
-   #ifndef UTIL_MPI
+   #if 0
    TEST_RUNNER(ExceptionTest) test1;
    test1.run();
    #endif

@@ -183,32 +183,5 @@ namespace Util
          out << Int(i + min_) << Int(histogram_[i]) << std::endl;
       }
    }
-  
-   #if 0 
-   /* 
-   *
-   */
-   void IntDistribution::backup(FILE *file) 
-   {
-      fprintf(file, "nSample       %i \n", nSample_);
-      fprintf(file, "nReject       %i \n", nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fprintf(file, "%li ", histogram_[i]);
-      }
-      fprintf(file, "\n");
-   }
-   
-   /* 
-   *
-   */
-   void IntDistribution::restore(FILE *file) {
-      fscanf(file, "nSample       %i \n", &nSample_);
-      fscanf(file, "nReject       %i \n", &nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fscanf(file, "%li ", &histogram_[i]);
-      }
-      fscanf(file, "\n");
-   }
-   #endif
 
 }
