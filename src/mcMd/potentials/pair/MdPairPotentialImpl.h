@@ -250,15 +250,6 @@ namespace McMd
 
       // Initialize the PairList 
       readParamComposite(in, pairList_);
-
-      // FIX THIS: In coulomb, pairlist_ was allocated in 
-      // MdPairPotential::buildPairList the first time this function is 
-      // called.  This feature was lost in the merge of devel into Coulomb,
-      // and should be restored.
-
-      // This is code from devel, which should be changed to policy described
-      // above.
-
       double cutoff = interaction().maxPairCutoff();
       pairList_.initialize(simulation().atomCapacity(), cutoff);
    }

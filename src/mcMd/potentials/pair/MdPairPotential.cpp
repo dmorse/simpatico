@@ -38,12 +38,10 @@ namespace McMd
    */ 
    void MdPairPotential::buildPairList() 
    {
-
-      // FIX THIS: Lost code here during merge to initialize on first 
-      // call in merge, which was implemented in coulomb branch on 
-      // before merge from devel. This needs to be fixed.
-      // Plan: Implement this policy in the devel branch and then merge
-      // back into coulomb.
+      // Precondition
+      if (!pairList_.isInitialized()) {
+         UTIL_THROW("PairList not initialized in MdPairPotential::buildPairList");
+      }
 
       // Set up an empty PairList with an empty internal CellList.
       pairList_.setup(boundary());
