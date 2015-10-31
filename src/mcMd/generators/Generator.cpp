@@ -119,8 +119,8 @@ namespace McMd
                maxDiameter = diameters[iType];
             }
          }
-         cellList.allocate(simulation.atomCapacity(), 
-                           system.boundary(), maxDiameter);
+         cellList.setAtomCapacity(simulation.atomCapacity());
+         cellList.setup(system.boundary(), maxDiameter);
       }
    }
 

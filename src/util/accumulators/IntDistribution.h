@@ -130,6 +130,16 @@ namespace Util
       */
       int nBin() const;
         
+      /** 
+      * Get histogram array.
+      *
+      * Each element of the histogram array simply contains the number 
+      * of times that a particular value has been passed to the sample
+      * function since the histogram was last cleared. 
+      */
+      const DArray<long>& data() const
+      {  return histogram_; }
+        
    protected:
    
       DArray<long> histogram_;  ///< Histogram array.

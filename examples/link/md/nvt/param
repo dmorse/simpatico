@@ -28,7 +28,6 @@ MdSimulation{
     MdPairPotential{
       epsilon              10.000000000000e+00  
       sigma                 1.000000000000e+00  
-      maxBoundary             cubic   9.0
       PairList{
         atomCapacity                         800
         pairCapacity                        5000

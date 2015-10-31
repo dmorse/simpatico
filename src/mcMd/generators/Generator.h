@@ -141,14 +141,19 @@ namespace McMd
 
    private:
 
+      /// Pointer to associated Species
       const Species* speciesPtr_;
 
+      /// Pointer to associated Simulation
       Simulation* simulationPtr_;
 
+      /// Pointer to associated System
       System* systemPtr_;
 
+      /// Pointer to associated Boundary
       Boundary* boundaryPtr_;
 
+      /// Pointer to associated BondPotential
       #ifdef INTER_BOND
       const BondPotential* bondPotentialPtr_;
       #endif
