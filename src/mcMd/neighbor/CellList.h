@@ -225,9 +225,9 @@ namespace McMd
       int nAtom() const;
 
       /**
-      * Has memory been allocated for this CellList?
+      * Get the maximum allowed atom index + 1.
       */
-      bool isAllocated() const;
+      int atomCapacity() const;
 
       /**
       * Return true if valid, or throw Exception.
@@ -283,13 +283,13 @@ namespace McMd
       IntVector maxCells_; 
 
       /// Number of cells yz plane = numCells_[1]*numCells_[2]
-      int    YZCells_;        
+      int  YZCells_;        
  
       /// Total number of cells in grid.
-      int    totCells_;        
+      int  totCells_;        
 
-      /// Maximum atom id.
-      int    atomCapacity_;        
+      /// Maximum atom id + 1.
+      int  atomCapacity_;        
 
       /// Pointer to associated Boundary (set in makeGrid)
       const Boundary* boundaryPtr_; 
@@ -464,9 +464,6 @@ namespace McMd
 
    inline int CellList::gridDimension(int i) const
    {  return numCells_[i]; }
-
-   inline bool CellList::isAllocated() const
-   {  return (cells_.capacity() > 0); }
 
    /*
    * Serialize to/from an Archive.
