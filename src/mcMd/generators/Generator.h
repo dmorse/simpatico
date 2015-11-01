@@ -27,7 +27,9 @@ namespace McMd
    #endif
 
    /**
-   * Generates initial configurations for all molecules in a species.
+   * Generates initial configurations for molecules of one species.
+   *
+   * \ingroup McMd_Generators_Module
    */
    class Generator 
    {
@@ -53,8 +55,7 @@ namespace McMd
       /**
       * Generate nMolecule molecules of the associated Species.
       *
-      * \pre CellList must be allocated.
-      * \pre Size of diameters array must equal the number of atom types
+      * \pre Size of diameters array == number of atom types
       * 
       * \param nMolecule desired number of molecules
       * \param diameters array of excluded volume diameters for atomTypes
@@ -63,20 +64,6 @@ namespace McMd
       virtual bool generate(int nMolecule,
                             const DArray<double>& diameters,
                             CellList& cellList);
-
-      // Static member function
-   
-      /**
-      * Check if cell list is allocated, allocate if necessary.
-      * 
-      * \param system parent System object
-      * \param diameters array of excluded volume diameters
-      * \param cellList CellList to be allocated
-      */
-      static void 
-      allocateCellList(System& system, 
-                       const DArray<double>& diameters, 
-                       CellList& cellList);
 
    protected:
 
@@ -111,6 +98,15 @@ namespace McMd
       bool attemptPlaceMolecule(Molecule& molecule, 
                                 const DArray<double>& diameters,
                                 CellList& cellList) = 0;
+
+      /**
+      * Check if cell list is allocated, allocate if necessary.
+      * 
+      * \param diameters array of excluded volume diameters
+      * \param cellList CellList to be allocated
+      */
+      void setupCellList(const DArray<double>& diameters, 
+                         CellList& cellList);
 
       /**
       * Get the associated Species by reference.

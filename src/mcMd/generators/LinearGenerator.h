@@ -13,25 +13,30 @@
 namespace McMd
 {
 
+   class Species;
    class System;
+   class Molecule;
+   class CellList;
    using namespace Util;
 
+   /**
+   * Generates random configurations for linear molecules.
+   *
+   * \ingroup McMd_Generators_Module
+   *
+   */
    class LinearGenerator : public Generator
    {
 
    public:
 
-      LinearGenerator(System& system);
+      LinearGenerator(Species& species, System& system);
 
-      virtual void generate(int speciesId, int nMolecule,
-                            DArray<double> exclusionRadius);
+   protected:
 
-   private:
-
-      bool placeAtom(Molecule& molecule, int atomId,
-                             DArray<double> exclusionRadius);
-      
-      bool placeMolecule(Molecule& molecule, DArray<double> exclusionRadius);
+      bool attemptPlaceMolecule(Molecule& molecule, 
+                                const DArray<double>& diameters,
+                                CellList& cellList);
 
    };
 

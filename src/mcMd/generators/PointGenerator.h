@@ -19,6 +19,12 @@ namespace McMd
    class CellList;
    using namespace Util;
 
+   /**
+   * Generator for monoatomic molecules (atoms).
+   *
+   * \ingroup McMd_Generators_Module
+   *
+   */
    class PointGenerator : public Generator
    {
 

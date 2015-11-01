@@ -4,8 +4,8 @@ mcMd_generators_= \
 
 ifdef INTER_BOND
 mcMd_generators_+= \
-    mcMd/generators/PointGenerator.cpp 
-    #mcMd/generators/LinearGenerator.cpp 
+    mcMd/generators/PointGenerator.cpp \
+    mcMd/generators/LinearGenerator.cpp 
 endif
 
 mcMd_generators_SRCS=\

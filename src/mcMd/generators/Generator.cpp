@@ -73,21 +73,16 @@ namespace McMd
                             CellList& cellList)
    {
       UTIL_CHECK(nMolecule <= species().capacity());
-      UTIL_CHECK(diameters.capacity() == simulation().nAtomType());
 
-      // If cell list is not allocated, then allocate.
-      // UTIL_CHECK(cellList.isAllocated());
-      if (!cellList.isAllocated()) {
-         allocateCellList(system(), diameters, cellList);
-      }
+      setupCellList(diameters, cellList);
 
       // Attempt to place all molecules in Species
+      int speciesId = species().id();
+      int maxAttempt = 100;
+      int iAttempt;
       bool success;
-      int iMol, iAttempt, maxAttempt;
-      maxAttempt = 100;
-      Simulation& sim = simulation();
-      for (iMol = 0; iMol < nMolecule; ++iMol) {
-         Molecule &newMolecule= sim.getMolecule(species().id());
+      for (int iMol = 0; iMol < nMolecule; ++iMol) {
+         Molecule &newMolecule= simulation().getMolecule(speciesId);
          system().addMolecule(newMolecule);
          success = false;
          iAttempt = 0;
@@ -104,24 +99,28 @@ namespace McMd
    }
 
    /*
-   * If cell list is not allocated, allocate it.
+   * Setup cell list for use.
    */
-   void Generator::allocateCellList(System& system,
-                                    const DArray<double>& diameters, 
-                                    CellList& cellList)
+   void Generator::setupCellList(const DArray<double>& diameters, 
+                                 CellList& cellList)
    {
-      Simulation& simulation = system.simulation();
-      UTIL_CHECK(diameters.capacity() == simulation.nAtomType());
-      if (!cellList.isAllocated()) {
-         double maxDiameter = 0.0;
-         for (int iType = 0; iType < diameters.capacity(); iType++) {
-            if (diameters[iType] > maxDiameter) {
-               maxDiameter = diameters[iType];
-            }
-         }
-         cellList.setAtomCapacity(simulation.atomCapacity());
-         cellList.setup(system.boundary(), maxDiameter);
+      // If necessary, set/reset CellList atomCapacity
+      int atomCapacity = simulation().atomCapacity();
+      if (atomCapacity > cellList.atomCapacity()) {
+         cellList.setAtomCapacity(atomCapacity);
       }
+
+      // Compute maximum exclusion diameter
+      UTIL_CHECK(diameters.capacity() == simulation().nAtomType());
+      double maxDiameter = 0.0;
+      for (int iType = 0; iType < diameters.capacity(); iType++) {
+         if (diameters[iType] > maxDiameter) {
+            maxDiameter = diameters[iType];
+         }
+      }
+
+      // Setup grid of empty cells
+      cellList.setup(boundary(), maxDiameter);
    }
 
 }
