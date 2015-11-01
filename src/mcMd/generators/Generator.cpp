@@ -78,7 +78,7 @@ namespace McMd
 
       // Attempt to place all molecules in Species
       int speciesId = species().id();
-      int maxAttempt = 100;
+      int maxAttempt = 500;
       int iAttempt;
       bool success;
       for (int iMol = 0; iMol < nMolecule; ++iMol) {

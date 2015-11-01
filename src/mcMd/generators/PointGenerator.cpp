@@ -32,7 +32,7 @@ namespace McMd
       Atom& atom = molecule.atom(0);
       bool success = false;
       int iAttempt = 0;
-      int maxAttempt = 1000;
+      int maxAttempt = 1;
       while (!success && iAttempt < maxAttempt) {
          boundary().randomPosition(simulation().random(), atom.position());
          success = attemptPlaceAtom(atom, diameters, cellList);

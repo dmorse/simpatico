@@ -38,6 +38,7 @@ void LinearGeneratorTest::testReadParamBond()
 
    Species& species = simulation_.species(1);
    LinearGenerator generator(species, system_);
+   generator.setBondPotential(system_.bondPotential());
 
    system_.boundary().setCubic(10.0);
    DArray<double> diameters;
@@ -48,7 +49,8 @@ void LinearGeneratorTest::testReadParamBond()
 
    CellList cellList;
    
-   generator.generate(5, diameters, cellList);
+   bool success = generator.generate(125, diameters, cellList);
+   TEST_ASSERT(success);
 
    std::ofstream outFile("out/config");
    system_.writeConfig(outFile);

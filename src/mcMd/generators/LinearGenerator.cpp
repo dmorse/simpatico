@@ -10,7 +10,7 @@
 #include <mcMd/simulation/System.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-//#include <mcMd/neighbor/CellList.h>
+#include <mcMd/neighbor/CellList.h>
 #include <util/boundary/Boundary.h>
 
 namespace McMd
@@ -35,7 +35,7 @@ namespace McMd
 
       // Attempt to place first atom at random
       Atom* atomPtr = &molecule.atom(0);
-      int maxAttempt = 100;
+      int maxAttempt = 500;
       int iAttempt = 0;
       bool success = false;
       while (!success && iAttempt < maxAttempt) {
@@ -43,6 +43,7 @@ namespace McMd
          success = attemptPlaceAtom(*atomPtr, diameters, cellList);
       }
       if (!success) {
+         cellList.deleteAtom(*atomPtr);
          return false; // Failure to insert first atom
       }
 
@@ -52,6 +53,7 @@ namespace McMd
       double beta = 1.0;
       Atom* prevPtr = 0;
       int bondType = 0;
+      maxAttempt = 100;
       int nAtom = species().nAtom();
       for (int iAtom = 1; iAtom < nAtom; ++iAtom) {
          atomPtr = &molecule.atom(iAtom);
@@ -67,6 +69,9 @@ namespace McMd
             success = attemptPlaceAtom(*atomPtr, diameters, cellList);
          }
          if (!success) {
+            for (int j = 0; j < iAtom; ++j) {
+               cellList.deleteAtom(molecule.atom(j));
+            }
             return false; // Failure to insert an atom
          }
       }

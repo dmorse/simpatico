@@ -28,19 +28,17 @@ McSimulation{
     seed                 874615293
   }
   McSystem{
-    pairStyle             LJPair
+    pairStyle            DpdPair
     bondStyle       HarmonicBond
     McPairPotential{
-      epsilon             1.00         2.00  
-                          2.00         1.00
+      epsilon            20.00        20.00  
+                         20.00        20.00
       sigma               1.00         1.00
                           1.00         1.00
-      cutoff              1.12246      1.12246
-                          1.12246      1.12246
     }
     BondPotential{
-      kappa               100.00      
-      length                1.00    
+      kappa               100.00 
+      length                1.00   
     }
     EnergyEnsemble{
       type            isothermal
