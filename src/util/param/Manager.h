@@ -168,6 +168,9 @@ namespace Util
 
    protected:
 
+      /// Pointer to an associated Factory<Data> object
+      Factory<Data>* factoryPtr_;
+
       /**
       * Read (or attempt to read) opening line: "ManagerName{"
       */
@@ -181,14 +184,14 @@ namespace Util
       /**
       * Create factory if necessary.
       */
-      void initFactory();
+      virtual void initFactory();
 
       /**
       * Create an instance of the default Factory<Data> class.
       *
       * \return a pointer to a new Factory<Data> object.
       */
-      virtual Factory<Data>* newDefaultFactory() const = 0;
+      virtual Factory<Data>* newDefaultFactory() const;
 
    private:
 
@@ -197,9 +200,6 @@ namespace Util
 
       /// Array of subclass names for Data objects.
       std::vector<std::string> names_;
-
-      /// Pointer to an associated Factory<Data> object
-      Factory<Data>* factoryPtr_;
 
       /// Allocated size of ptrs_ array.
       int  capacity_;
@@ -220,9 +220,9 @@ namespace Util
    */
    template <typename Data>
    Manager<Data>::Manager()
-    : ptrs_(),
+    : factoryPtr_(0),
+      ptrs_(),
       names_(),
-      factoryPtr_(0),
       capacity_(0),
       size_(0),
       hasName_(false),
@@ -504,6 +504,13 @@ namespace Util
       }
       assert(factoryPtr_);
    }
+
+   /**
+   * Create an instance of the default Factory<Data> class.
+   */
+   template <typename Data>
+   Factory<Data>* Manager<Data>::newDefaultFactory() const
+   {  UTIL_THROW("Call of un-implemented Manager<Data>::newDefaultFactory"); }
 
 }
 #endif
