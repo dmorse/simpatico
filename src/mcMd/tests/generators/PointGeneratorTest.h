@@ -47,8 +47,11 @@ void PointGeneratorTest::testReadParamBond()
    diameters[1] = 1.0;
 
    CellList cellList;
+   Generator::setupCellList(simulation_.atomCapacity(),
+                            system_.boundary(),
+                            diameters, cellList);
    
-   TEST_ASSERT(generator.generate(600, diameters, cellList));
+   TEST_ASSERT(generator.generate(500, diameters, cellList));
 
    std::ofstream outFile("out/config");
    system_.writeConfig(outFile);

@@ -23,7 +23,6 @@ namespace McMd
    * Generator for monoatomic molecules (atoms).
    *
    * \ingroup McMd_Generators_Module
-   *
    */
    class PointGenerator : public Generator
    {

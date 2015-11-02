@@ -48,8 +48,12 @@ void LinearGeneratorTest::testReadParamBond()
    diameters[1] = 1.0;
 
    CellList cellList;
+   Generator::setupCellList(simulation_.atomCapacity(),
+                            system_.boundary(),
+                            diameters, cellList);
    
-   bool success = generator.generate(125, diameters, cellList);
+   
+   bool success = generator.generate(100, diameters, cellList);
    TEST_ASSERT(success);
 
    std::ofstream outFile("out/config");

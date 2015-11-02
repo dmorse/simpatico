@@ -539,6 +539,9 @@ namespace McMd
                Log::file() << std::endl;
 
                CellList cellList;
+               Generator::setupCellList(atomCapacity(), system().boundary(),
+                                        diameters, cellList);
+
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   Generator* ptr;
                   ptr = generatorFactory(species(iSpecies), system());

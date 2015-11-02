@@ -72,9 +72,9 @@ namespace McMd
                             const DArray<double>& diameters, 
                             CellList& cellList)
    {
+      // Preconditions
       UTIL_CHECK(nMolecule <= species().capacity());
-
-      setupCellList(diameters, cellList);
+      UTIL_CHECK(cellList.atomCapacity() == simulation().atomCapacity());
 
       // Attempt to place all molecules in Species
       int speciesId = species().id();
@@ -87,7 +87,7 @@ namespace McMd
          success = false;
          iAttempt = 0;
          while (!success && iAttempt < maxAttempt) {
-            success = attemptPlaceMolecule(newMolecule, 
+            success = attemptPlaceMolecule(newMolecule,
                                            diameters, cellList);
             ++iAttempt;
          }
@@ -101,17 +101,15 @@ namespace McMd
    /*
    * Setup cell list for use.
    */
-   void Generator::setupCellList(const DArray<double>& diameters, 
-                                 CellList& cellList)
+   void 
+   Generator::setupCellList(int atomCapacity, 
+                            Boundary& boundary,
+                            const DArray<double>& diameters,
+                            CellList& cellList)
    {
-      // If necessary, set/reset CellList atomCapacity
-      int atomCapacity = simulation().atomCapacity();
-      if (atomCapacity > cellList.atomCapacity()) {
-         cellList.setAtomCapacity(atomCapacity);
-      }
+      cellList.setAtomCapacity(atomCapacity);
 
       // Compute maximum exclusion diameter
-      UTIL_CHECK(diameters.capacity() == simulation().nAtomType());
       double maxDiameter = 0.0;
       for (int iType = 0; iType < diameters.capacity(); iType++) {
          if (diameters[iType] > maxDiameter) {
@@ -120,7 +118,7 @@ namespace McMd
       }
 
       // Setup grid of empty cells
-      cellList.setup(boundary(), maxDiameter);
+      cellList.setup(boundary, maxDiameter);
    }
 
 }

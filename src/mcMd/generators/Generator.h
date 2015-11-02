@@ -35,6 +35,8 @@ namespace McMd
    {
    public:
 
+      // Non-static member functions
+
       /**
       * Constructor.
       *
@@ -47,7 +49,7 @@ namespace McMd
       /**
       * Create an association with a BondPotential.
       *
-      * \param bondPotential BondPotential
+      * \param bondPotential  BondPotential
       */
       void setBondPotential(BondPotential& bondPotential);
       #endif
@@ -57,29 +59,47 @@ namespace McMd
       *
       * \pre Size of diameters array == number of atom types
       * 
-      * \param nMolecule desired number of molecules
-      * \param diameters array of excluded volume diameters for atomTypes
-      * \param cellList CellList
+      * \param nMolecule  desired number of molecules
+      * \param diameters  array of excluded volume diameters for atomTypes
+      * \param cellList  CellList
       */
       virtual bool generate(int nMolecule,
                             const DArray<double>& diameters,
                             CellList& cellList);
+
+      // Static member function
+
+      /**
+      * Allocate any required memory for the cell list.
+      * 
+      * \param atomCapacity  maximum allowed atom id + 1
+      * \param boundary  Boundary object, periodic unit cell
+      * \param diameters  array of excluded volume diameters
+      * \param cellList  CellList to be allocated
+      */
+      static
+      void setupCellList(int atomCapacity, 
+                         Boundary& boundary,
+                         const DArray<double>& diameters, 
+                         CellList& cellList);
 
    protected:
 
       /**
       * Attempt to place an atom.
       *
-      * Checks if the atom position is within the appropriate cutoff
-      * distance of any atoms that are already in the cell list. The
-      * cutoff distance for atoms of types i and j is the average of
-      * the excluded volume diameters for types i and j. If the atom 
-      * position satisfies this geometrical constraint, add the atom
-      * to the cell list and return true. If it does not, return false.
+      * The proposed position for the atom should be set upon entry.
+      * This function checks if the atom position is within the 
+      * hard-core cutoff distance of any atoms that are already in 
+      * the cell list. The cutoff distance for atoms of types i and 
+      * j is the average of the excluded volume diameters for types 
+      * i and j. If the atom position satisfies this geometrical 
+      * constraint, the atom is added to the cell list and returns 
+      * true. If it does not, the function returns false.
       * 
       * \param atom  new Atom, with proposed position already set
-      * \param diameters  array of excluded volume diameters for types
-      * \param cellist  CellList object storing existing atoms
+      * \param diameters  array of excluded diameters for atom types
+      * \param cellist  CellList object containing existing atoms
       * \return true on success, false on failure.
       */
       bool attemptPlaceAtom(Atom& atom, 
@@ -87,9 +107,9 @@ namespace McMd
                             CellList& cellList);
 
       /**
-      * Attempt to place a molecule (pure virtual).
+      * Attempt to insert an entire molecule (pure virtual).
       *
-      * \param molecule new molecule, with unknown atomic positions
+      * \param molecule  new molecule, with unknown atomic positions
       * \param diameters  array of excluded volume diameters for types
       * \param cellist  CellList object storing existing atoms
       * \return true on success, false on failure.
@@ -98,15 +118,6 @@ namespace McMd
       bool attemptPlaceMolecule(Molecule& molecule, 
                                 const DArray<double>& diameters,
                                 CellList& cellList) = 0;
-
-      /**
-      * Check if cell list is allocated, allocate if necessary.
-      * 
-      * \param diameters array of excluded volume diameters
-      * \param cellList CellList to be allocated
-      */
-      void setupCellList(const DArray<double>& diameters, 
-                         CellList& cellList);
 
       /**
       * Get the associated Species by reference.
