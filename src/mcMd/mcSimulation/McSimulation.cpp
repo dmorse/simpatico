@@ -15,6 +15,8 @@
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
+#include <mcMd/generators/Generator.h>
+#include <mcMd/generators/generatorFactory.h>
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -514,9 +516,9 @@ namespace McMd
                outputFile.close();
             } else 
             if (command == "GENERATE_MOLECULES") {
-               DArray<double> ExclusionRadii;
-               DArray<int>    capacities;
-               ExclusionRadii.allocate(nAtomType());
+               DArray<double> diameters;
+               DArray<int> capacities;
+               diameters.allocate(nAtomType());
                capacities.allocate(nSpecies());
 
                // Parse command
@@ -528,25 +530,32 @@ namespace McMd
                   inBuffer >> capacities[iSpecies];
                   Log::file() << "  " << capacities[iSpecies];
                }
-               Label radiusLabel("Radii:");
-               inBuffer >> radiusLabel;
+               Label diameterLabel("Diameters:");
+               inBuffer >> diameterLabel;
                for (int iType=0; iType < nAtomType(); iType++) {
-                  inBuffer >> ExclusionRadii[iType];
-                  Log::file() << "  " << ExclusionRadii[iType];
+                  inBuffer >> diameters[iType];
+                  Log::file() << "  " << diameters[iType];
                }
                Log::file() << std::endl;
 
+               CellList cellList;
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
+                  Generator* ptr;
+                  ptr = generatorFactory(species(iSpecies), system());
+                  ptr->generate(capacities[iSpecies], diameters, cellList);
+
+                  #if 0
                   species(iSpecies).generateMolecules(
-                     capacities[iSpecies], ExclusionRadii, system(),
+                     capacities[iSpecies], diameters, system(),
                      #ifdef INTER_BOND
                      &system().bondPotential(),
                      #endif
                      system().boundary());   
+                  #endif
                }
 
                #ifndef INTER_NOPAIR 
-               // Generate cell list
+               // Generate system cell list
                system().pairPotential().buildCellList();
                #endif
 

@@ -30,10 +30,27 @@ namespace McMd
 
    public:
 
+      /**
+      * Constructor.
+      *
+      * \param species molecular Species to be generated
+      * \param system  parent System object
+      */
       LinearGenerator(Species& species, System& system);
 
    protected:
 
+      /**
+      * Attempt to place an entire linear chain.
+      *
+      * If successful, all atoms are added to the CellList.
+      * If unsuccesful, CellList is unchanged.
+      *
+      * \param molecule reference to Molecule object
+      * \param diameters  array of hard-core exclusion diameters
+      * \param cellist  CellList object, modified if successful.
+      * \return true for success, false for failure
+      */
       bool attemptPlaceMolecule(Molecule& molecule, 
                                 const DArray<double>& diameters,
                                 CellList& cellList);

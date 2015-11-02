@@ -13,9 +13,34 @@ namespace McMd
 
    class Generator;
    class Species;
-   class System;
+   class McSystem;
+   class MdSystem;
 
-   Generator* generatorFactory(Species& species, System& system);
+   /**
+   * Instantiates generator for on species in an McSystem.
+   *
+   * Returns a pointer to the new generator, or null if no appropriate
+   * generator is found.
+   *
+   * \ingroup McMd_Generators_Module
+   * 
+   * \param species Species object
+   * \param system parent McSystem
+   */
+   Generator* generatorFactory(Species& species, McSystem& system);
+
+   /**
+   * Instantiates generator for on species in an MdSystem.
+   *
+   * Returns a pointer to the new generator, or null if no appropriate
+   * generator is found.
+   * 
+   * \ingroup McMd_Generators_Module
+   * 
+   * \param species Species object
+   * \param system parent McSystem
+   */
+   Generator* generatorFactory(Species& species, MdSystem& system);
 
 }
 #endif

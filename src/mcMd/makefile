@@ -55,6 +55,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f potentials/pair/PairFactory.cpp
 	rm -f species/SpeciesFactory.cpp
 	rm -f trajectoryIos/TrajectoryIoFactory.cpp
+	rm -f generators/generatorFactory.cpp
 endif
 
 # Executable targets
