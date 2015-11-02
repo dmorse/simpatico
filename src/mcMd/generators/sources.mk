@@ -1,10 +1,11 @@
 
 mcMd_generators_= \
-    mcMd/generators/Generator.cpp 
+    mcMd/generators/Generator.cpp \
+    mcMd/generators/PointGenerator.cpp \
+    mcMd/generators/generatorFactory.cpp 
 
 ifdef INTER_BOND
 mcMd_generators_+= \
-    mcMd/generators/PointGenerator.cpp \
     mcMd/generators/LinearGenerator.cpp 
 endif
 
