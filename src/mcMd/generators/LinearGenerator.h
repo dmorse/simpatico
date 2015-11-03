@@ -48,7 +48,7 @@ namespace McMd
       *
       * \param molecule reference to Molecule object
       * \param diameters  array of hard-core exclusion diameters
-      * \param cellist  CellList object, modified if successful.
+      * \param cellList  CellList object, modified if successful.
       * \return true for success, false for failure
       */
       bool attemptPlaceMolecule(Molecule& molecule, 

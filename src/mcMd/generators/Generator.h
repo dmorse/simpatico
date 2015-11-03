@@ -61,7 +61,7 @@ namespace McMd
       * 
       * \param nMolecule  desired number of molecules
       * \param diameters  array of excluded volume diameters for atomTypes
-      * \param cellList  CellList
+      * \param cellList  CellList object
       */
       virtual bool generate(int nMolecule,
                             const DArray<double>& diameters,
@@ -99,7 +99,7 @@ namespace McMd
       * 
       * \param atom  new Atom, with proposed position already set
       * \param diameters  array of excluded diameters for atom types
-      * \param cellist  CellList object containing existing atoms
+      * \param cellList  CellList object containing existing atoms
       * \return true on success, false on failure.
       */
       bool attemptPlaceAtom(Atom& atom, 
@@ -111,7 +111,7 @@ namespace McMd
       *
       * \param molecule  new molecule, with unknown atomic positions
       * \param diameters  array of excluded volume diameters for types
-      * \param cellist  CellList object storing existing atoms
+      * \param cellList  CellList object storing existing atoms
       * \return true on success, false on failure.
       */
       virtual
