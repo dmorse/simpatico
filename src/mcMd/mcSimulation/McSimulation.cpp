@@ -538,23 +538,22 @@ namespace McMd
                }
                Log::file() << std::endl;
 
+               // Setup local cell list
                CellList cellList;
                Generator::setupCellList(atomCapacity(), system().boundary(),
                                         diameters, cellList);
 
+               // Generate molecules for each species
+               Generator* ptr;
+               bool success;
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-                  Generator* ptr;
-                  ptr = generatorFactory(species(iSpecies), system());
-                  ptr->generate(capacities[iSpecies], diameters, cellList);
-
-                  #if 0
-                  species(iSpecies).generateMolecules(
-                     capacities[iSpecies], diameters, system(),
-                     #ifdef INTER_BOND
-                     &system().bondPotential(),
-                     #endif
-                     system().boundary());   
-                  #endif
+                  if (capacities[iSpecies] > 0) {
+                     ptr = generatorFactory(species(iSpecies), system());
+                     UTIL_CHECK(ptr);
+                     ptr->generate(capacities[iSpecies], diameters, cellList);
+                     delete ptr;
+                     UTIL_CHECK(success);
+                  }
                }
 
                #ifndef INTER_NOPAIR 
