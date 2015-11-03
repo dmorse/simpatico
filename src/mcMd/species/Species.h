@@ -8,10 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>     // base class
-#include <util/containers/DArray.h>        // member template
-#include <util/containers/FSArray.h>       // member template
-#include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
+#include <util/param/ParamComposite.h>   // base class
+#include <util/containers/DArray.h>      // member template
+#include <util/containers/FSArray.h>     // member template
+#include <mcMd/species/SpeciesGroup.h>   // member template parameter
 
 namespace McMd
 {

@@ -24,7 +24,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f ar.txt binary
+	rm -f ar.txt
 
 -include $(mcMd_tests_chemistry_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

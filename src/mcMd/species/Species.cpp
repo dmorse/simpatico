@@ -8,7 +8,7 @@
 #include "Species.h"
 
 #include <util/global.h>                    
-#include <mcMd/chemistry/SpeciesGroup.tpp>  
+#include <mcMd/species/SpeciesGroup.tpp>  
 
 #ifdef UTIL_MPI
 #include <mcMd/simulation/McMd_mpi.h>       // to read DArray<SpeciesBond>
