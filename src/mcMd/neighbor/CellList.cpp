@@ -43,9 +43,8 @@ namespace McMd
    */
    void CellList::clear()
    {
-      int i;
-
       // Clear all Cell objects
+      int i;
       if (cells_.capacity() > 0) {
          for (i=0; i < cells_.capacity(); ++i) {
             cells_[i].clear();
@@ -58,7 +57,6 @@ namespace McMd
             cellTags_[i].clear();
          }
       }
-
    }
 
    /*
@@ -89,52 +87,55 @@ namespace McMd
    }
 
    /*
-   * Allocate cells_ and cellTags_ arrays.
+   * Set atomCapacity and, if necessary, allocate cellTags_.
    */
    void 
-   CellList::allocate(int atomCapacity, const Boundary &boundary, double cutoff)
+   CellList::setAtomCapacity(int atomCapacity)
    {
-
-      // Precondition on parameters
-      if (atomCapacity <= 0) UTIL_THROW("atomCapacity must be > 0");
-      if (cutoff       <= 0) UTIL_THROW("cutoff must be > 0");
-
-      // Allocate an array of CellTag objects, indexed by atom Ids.
+      // Precondition 
+      if (atomCapacity <= 0) {
+         UTIL_THROW("atomCapacity must be > 0");
+      }
       atomCapacity_ = atomCapacity;
-      cellTags_.allocate(atomCapacity_);
-      
-      // Allocate an Array of Cell objects
-      makeGrid(boundary, cutoff);
-      cells_.allocate(totCells_);
-      clear();
-      
+
+      // If necessary, allocate/reallocate cellTags_ array.
+      if (cellTags_.capacity() == 0) {
+         cellTags_.allocate(atomCapacity_);
+      } else 
+      if (atomCapacity_ > cellTags_.capacity()) {
+         cellTags_.deallocate();
+         cellTags_.allocate(atomCapacity_);
+      }
    }
 
    /*
-   * Create a grid of cells.
+   * Setup an empty cell list.
    */
-   void CellList::makeGrid(const Boundary &boundary, double cutoff)
+   void CellList::setup(const Boundary &boundary, double cutoff)
    {
+      if (cutoff <= 0) {
+         UTIL_THROW("cutoff must be > 0");
+      }
+
       lengths_ = boundary.lengths();
       setCellsAxis(0, cutoff);
       setCellsAxis(1, cutoff);
       setCellsAxis(2, cutoff);
       YZCells_   = numCells_[1]*numCells_[2];
       totCells_  = YZCells_*numCells_[0];
-
-      // Postconditions
       if (totCells_ < 1) {
          UTIL_THROW("totCells_ must be > 1");
-      }
-      if (cells_.capacity() > 0 && totCells_ > cells_.capacity()) {
-         UTIL_THROW("Insufficient cell capacity for this grid");
-      }
+      } 
 
-      /*
-      * Note: No Exception is thrown if cells_.capacity() == 0 in order 
-      * to allow makeGrid to be used to determine the number of cells 
-      * to be allocated for a maximum boundary during initialization.
-      */
+      // If necessary, allocate or reallocate cells_ array
+      if (cells_.capacity() == 0) {
+         cells_.allocate(totCells_);
+      } else
+      if (totCells_ > cells_.capacity()) {
+         cells_.deallocate();
+         cells_.allocate(totCells_);
+      }
+      clear();
 
       boundaryPtr_ = &boundary;
    }
@@ -208,6 +209,12 @@ namespace McMd
       } // end for dcx
 
    } 
+
+   /*
+   * Get the maximum allowed atom index + 1.
+   */
+   int CellList::atomCapacity() const
+   {  return atomCapacity_; }
 
    /*
    * Get total number of atoms in this CellList.

@@ -8,12 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>     // base class
-#include <util/containers/DArray.h>        // member template
-#include <util/containers/FSArray.h>       // member template
-#include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
-
-#include <util/boundary/Boundary.h>        // typedef
+#include <util/param/ParamComposite.h>   // base class
+#include <util/containers/DArray.h>      // member template
+#include <util/containers/FSArray.h>     // member template
+#include <mcMd/species/SpeciesGroup.h>   // member template parameter
 
 namespace McMd
 {
@@ -21,10 +19,6 @@ namespace McMd
    using namespace Util;
 
    class SpeciesMutator;
-   class System;
-   #ifdef INTER_BOND
-   class BondPotential;
-   #endif
 
    /**
    * A Species represents a set of chemically similar molecules.
@@ -267,23 +261,6 @@ namespace McMd
 
       //@}
 
-      /**
-      * Generate random molecules
-      *
-      * \param nMolecule number of molecules to genearte
-      * \param exclusionRadius array of exclusion radii for every atom type
-      * \param system the System
-      * \param bondPotentialPtr the bond potential
-      * \param boundary the boundary to generate atoms in
-      */
-      virtual void generateMolecules(int nMolecule,
-                                     DArray<double> exclusionRadius, 
-                                     System &system,
-                                     #ifdef INTER_BOND
-                                     BondPotential *bondPotentialPtr, 
-                                     #endif
-                                     const Boundary &boundary);
-      
    protected:
 
       // Static constant

@@ -27,7 +27,6 @@ MdSimulation{
       epsilon               1.000000000000e+00 
       sigma                 1.000000000000e+00 
       cutoff                1.122460000000e+00 
-      maxBoundary              cubic   10.5000
       PairList{
         atomCapacity                        1000
         pairCapacity                        4000
@@ -39,14 +38,13 @@ MdSimulation{
       length                1.000000000000e+00
     }
     EnergyEnsemble{
-      type                          isothermal
-      temperature              1.0000000000000 
+      type                           adiabatic
     }
     BoundaryEnsemble{
       type                               rigid
     }
     NveVvIntegrator{
-       dt                   4.000000000000e-03
+       dt                   1.000000000000e-03
     }
   }
   AnalyzerManager{

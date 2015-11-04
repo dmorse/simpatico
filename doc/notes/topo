@@ -1,0 +1,10 @@
+
+New namespace Topo that contains Species and its subclasses, without generators.
+
+McMd can have a hierarchy of Generator classes (e.g., Point and Linear) that take 
+a Topo:Species as a constructor argument. Subclasses of Generator can do explicit
+type checking, e.g., make sure that the class really is linear.
+
+McMd::Species Manager can hold an array of pointers to Generators, indexed the 
+same way as the species. A a false bool hasGenerator() is used to indicate that
+no Generator exists for a specific class.

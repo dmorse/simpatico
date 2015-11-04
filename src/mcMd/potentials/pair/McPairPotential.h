@@ -131,13 +131,10 @@ namespace McMd
       mutable CellList::NeighborArray neighbors_;
 
       /// Cell list for atom positions.
-      CellList  cellList_;
+      CellList cellList_;
 
       /// Alias for global atoms_ DArray of parent simulation.
       // RArray<Atom> atoms_;
-
-      /// Maximum boundary (used to allocated memory for CellList).
-      Boundary maxBoundary_;
 
    };
 

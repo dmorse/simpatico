@@ -11,7 +11,7 @@
 #include <mcMd/analyzers/AnalyzerManager.h>
 #include <mcMd/species/SpeciesManager.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/species/SpeciesGroup.tpp>
 #include <mcMd/chemistry/Activate.h>
 
 // namespace Util

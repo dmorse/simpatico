@@ -1,3 +1,4 @@
+
 Constant Pressure MD 
 --------------------
 
@@ -24,6 +25,34 @@ Deformable Boundaries
 
 - Generalize snapshot and obsolete pair list methods to use 
   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+
+AtomType
+--------
+
+  - Add static bool atomHaveDiameters_ and non-static double diameter_ members
+
+  - Make Simulation a friend of AtomType
+
+  - Add optional atomHaveDiameters_ parameter in Simulation::readParameters
+
+  - Optionally read and write diameter_ members. Initialize to 1.0 by default.
+
+Generator
+---------
+
+  - Write unit test for PointGenerator
+
+  - Write LinearGenerator and a corresponding unit test
+
+  - Add optional diameter and epsilon parameters to atom type. 
+
+  - Add a command to generate molecules, with scale and an nMolecule for each
+    species. The command should create a temporary cell list and first fill
+    it with all molecules and atoms already in the system. The command will
+    allow for either multiple species in one command or multiple commands with
+    different species.
+
+  - Add method to associate a generator with a Species.
 
 Species
 -------

@@ -1,0 +1,148 @@
+===================================================================
+Proposal:
+
+   - Have a new namespace Chem that contains information about molecular 
+     types (aka, species)
+
+   - Classes in this namespace would define only information and data 
+     types that can be used in any program (e.g., no pointers to specific
+     atom types). This is already true of McMd::Species.
+
+   - A class Chem::StructureBase would contain only the number of atoms,
+     bonds, angles, and dihedrals per molecule.
+
+   - A class Chem::StructureGroup would replace McMd::SpeciesGroup.
+
+   - A class Chem::Structure derived from StructureBase would contain 
+     arrays of StructureGroup objects to define the molecular topology. 
+
+   - A class Chem::OrderedSpecies derived from StructureBase, would
+     contain the number of molecules of the specified type (the size), 
+     and provide functions to convert between local and global ids for 
+     atoms and groups.
+
+   - Subclasses of Chem::Structure or Chem::OrdereSpecies within other 
+     namespaces could be named Species. These would be specialized to 
+     allow functions that require access to simulation data structures 
+     or Atom or Group data types.  Specifically, this would allow the 
+     addition of an associated generator class in McMd and Tools, but 
+     not in DdMd.
+
+   - Note that we choose different names for classes in the new Struc
+     namespace from those of analogous classes in McMd, Tools, and DdMd, 
+     to avoid name classes.
+
+   - File formats for exchange would be defined by code in the new 
+     Chem namespace.
+
+   - Have a separate associated class named StructureBuilder devoted to 
+     building the molecule structure (groups) within the readParameters 
+     method.  Create a hierarchy of Builder classes, but keep Structure 
+     generic.
+
+namespace Chem
+{
+
+   class StructureBase    -> minimal base class (only contains atom, group counts)
+   class StructureGroup   -> replaces current McMd::SpeciesGroup
+   class Structure        -> derived from StructureBase, base for McMd::Species
+   class StructureBuilder -> base class for code to build a species
+   class OrderedSpecies   -> derived from StructureBase, base for DdMd::Species
+
+}
+
+---------------------------------------------------------------
+McMd::Species
+
+   An McMd::Species would be derived from Chem::Structure, but would also have:
+
+    - A capacity
+    - An (optional) associated Chem::StructureBuilder
+    - An (optional) associated McMd::Generator
+
+   The resulting capabilities would be identical to those of 
+   the current McMd::Species. 
+
+---------------------------------------------------------------
+DdMd::Species
+
+   - Observation: The minimal data for each species that would be required to allow an analysis program to validate that the atoms and groups are in molecule order would be the number of molecules of each type, and the number of atoms, bonds, angles, and dihedrals per molecule.
+  
+   - Proposal: Create a class DdMd::Species derived from Struc::OrderedSpecies This would have the number of molecules of specified size in addition to the data contained in StructureBase.
+
+   - We need a file format that can be used to exchange this structural information between programs.
+
+   - It would sometimes be useful to have more detailed information about topology, but this is not strictly necessary in ddMd. I propose to not make it an essential part of DdMd::Simulation.
+
+   - Data structures: Define class DdMd:::Species. DdMd::Simulation could have a DArray<DdMd::Species> species array, and a bool hasSpecies flag.
+
+---------------------------------------------------------------
+StructureBuilder (Design):
+
+   1) Each Structure contains a pointer to an optional StructureBuilder.
+   The pointer can be null. The StructureBuilder must have a pointer to
+   the parent Structure.
+
+   2) Make a hierarchy of StructureBuilder classes, keep Structure generic.
+
+   3) The Structure class would provide public functions to modify data 
+   structures. These include: setAtomType, makeBond, makeDihedral, makeAngle.
+
+   4) The StructureBuilder base class could be a friend of Structure, if this 
+   appears to be necessary. To be determined ...
+
+   5) The Structure would have two constructors, one of which takes a builder as an argument, and another which does not. 
+
+   6) If a Structure has a StructureBuilder, the function Structure::readParameters would call StructureBuilder::readParameters.  Otherwise, Structure::readParameters would read the structure from an external in a generic structure format.
+
+   class StructureBuilder 
+   {
+      void setStructure(Species& species);
+   private:
+      Species& speciesPtr_;
+   };
+
+   class Structure 
+   {
+      Structure(StructureBuilder& builder)
+       : builderPtr_(&builder)
+      { builderPtr_->setStructure(*this); }
+
+      void readParameters(std::istream& in) 
+      {
+         if (builderPtr_) {
+            bool nextIndent = false;
+            addComposite(*builderPtr_, nextIndent);
+            builderPtr_->readParameters(in);
+         } else {
+            // Read from file
+         }
+      }
+
+   private:
+
+      StructureBuilder* builderPtr_;
+
+   //friend: Is this necessary?
+
+      friend class StructureBuilder; 
+
+   };
+
+---------------------------------------------------------------
+Generators (Design):
+
+   Introduce Generator classes in the McMd and Tools namespaces. 
+
+   Each generator class would take a Species class as an argument
+   to its constructor, and would be linked to the Species class.
+
+   The McMd::Species and Tools::Species classes would each have 
+   a function to add a Generator, a bool hasGenerator() const query 
+   and a generate() function that calls the generator, if it exists.  
+
+   Introduce explicit specializations for Linear, Point, etc.
+
+   The factory should create a Builder, a Generator, and then link 
+   them to an associated Species object. All specialized functions 
+   are called through the associated Builder and Generator objects.

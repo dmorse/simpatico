@@ -1,0 +1,96 @@
+McSimulation{
+  FileMaster{
+    commandFileName   in/commands
+    inputPrefix               in/
+    outputPrefix             out/
+  }
+  nAtomType                    2
+  nBondType                    1
+  atomTypes                    A     1.0
+                               B     1.0
+  maskedPairPolicy      MaskBonded
+  SpeciesManager{
+
+    Point{
+      moleculeCapacity          2000
+      type                         0
+    }  
+  
+    Homopolymer{
+      moleculeCapacity          1000
+      nAtom                        4
+      atomType                     0
+      bondType                     0
+    }
+    
+  }
+  Random{
+    seed                 874615293
+  }
+  McSystem{
+    pairStyle            DpdPair
+    bondStyle       HarmonicBond
+    McPairPotential{
+      epsilon            20.00        20.00  
+                         20.00        20.00
+      sigma               1.00         1.00
+                          1.00         1.00
+    }
+    BondPotential{
+      kappa               100.00 
+      length                1.00   
+    }
+    EnergyEnsemble{
+      type            isothermal
+      temperature     1.00000000
+    }
+    BoundaryEnsemble{
+      type                 rigid
+    }
+  }
+  McMoveManager{
+
+    AtomDisplaceMove{
+      probability                1.00
+      speciesId                     0
+      delta                      0.05
+    }
+    
+  }
+  AnalyzerManager{
+    baseInterval           10
+
+  }
+  saveInterval 0
+}
+
+    Diblock{
+      moleculeCapacity             4
+      blockLengths                 3       2
+      atomTypes                    1       0
+      bondType                     0
+    }
+  
+    McWriteRestart{
+      interval               10
+      outputFileName    restart
+    }
+
+
+    HybridMdMove{
+      probability                 1.0
+      nStep                       20
+      MdSystem{
+        PairList{
+          atomCapacity                30
+          pairCapacity              1000
+          skin                       0.2
+        }
+        NVEIntegrator{
+           dt                         0.00100
+        }
+      }
+    }
+
+
+

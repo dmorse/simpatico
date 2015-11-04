@@ -1,10 +1,11 @@
 mcMd_configIos_=mcMd/configIos/ConfigIo.cpp \
     mcMd/configIos/ConfigIoFactory.cpp \
-    mcMd/configIos/DdMdConfigIo.cpp \
-    mcMd/configIos/McConfigIo.cpp \
     mcMd/configIos/McMdConfigIo.cpp \
+    mcMd/configIos/McConfigIo.cpp \
     mcMd/configIos/MdConfigIo.cpp \
-    mcMd/configIos/LammpsConfigIo.cpp 
+    mcMd/configIos/DdMdConfigIo.cpp \
+    mcMd/configIos/LammpsConfigIo.cpp \
+    mcMd/configIos/SpcConfigIo.cpp 
 
 mcMd_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_configIos_))
