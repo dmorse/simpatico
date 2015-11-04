@@ -22,7 +22,7 @@ namespace McMd
    * Returns a pointer to the new generator, or null if no appropriate
    * generator is found.
    *
-   * \ingroup McMd_Generators_Module
+   * \ingroup McMd_Generator_Module
    * 
    * \param species Species object
    * \param system parent McSystem
@@ -35,7 +35,7 @@ namespace McMd
    * Returns a pointer to the new generator, or null if no appropriate
    * generator is found.
    * 
-   * \ingroup McMd_Generators_Module
+   * \ingroup McMd_Generator_Module
    * 
    * \param species Species object
    * \param system parent McSystem
