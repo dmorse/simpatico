@@ -12,7 +12,6 @@
 #include "MdConfigIo.h"
 #include "DdMdConfigIo.h"
 #include "LammpsConfigIo.h"
-#include "SpcConfigIo.h"
 
 namespace McMd
 {
@@ -52,9 +51,6 @@ namespace McMd
       if (className == "DdMdConfigIo_Molecule") {
          bool hasMolecules = true;
          ptr = new DdMdConfigIo(*systemPtr_, hasMolecules);
-      } else
-      if (className == "SpcConfigIo") {
-         ptr = new SpcConfigIo(*systemPtr_);
       } 
       return ptr;
    }
