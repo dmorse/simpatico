@@ -7,20 +7,23 @@ include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/mcMd/tests/species/sources.mk
+include $(SRC_DIR)/mcMd/tests/generators/sources.mk
 
-all: $(mcMd_tests_species_OBJS)
+TEST=mcMd/tests/generators/Test
+
+all: $(mcMd_tests_generators_OBJS)
 
 clean:
-	rm -f $(mcMd_tests_species_OBJS) 
-	rm -f $(mcMd_tests_species_OBJS:.o=.d)
-	rm -f $(mcMd_tests_species_OBJS:.o=)
+	rm -f $(mcMd_tests_generators_OBJS) 
+	rm -f $(mcMd_tests_generators_OBJS:.o=.d)
+	rm -f $(mcMd_tests_generators_OBJS:.o=)
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f binary
+	rm -f out/config
+	rm -f *.rst
 
--include $(mcMd_tests_species_OBJS:.o=.d)
+-include $(mcMd_tests_generators_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)

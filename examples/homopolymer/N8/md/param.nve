@@ -38,8 +38,7 @@ MdSimulation{
       length                1.000000000000e+00
     }
     EnergyEnsemble{
-      type                          isothermal
-      temperature              1.0000000000000 
+      type                           adiabatic
     }
     BoundaryEnsemble{
       type                               rigid

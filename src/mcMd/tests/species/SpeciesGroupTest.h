@@ -4,7 +4,7 @@
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/species/SpeciesGroup.tpp>
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/archives/BinaryFileIArchive.h>
 

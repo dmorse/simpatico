@@ -211,6 +211,12 @@ namespace McMd
    } 
 
    /*
+   * Get the maximum allowed atom index + 1.
+   */
+   int CellList::atomCapacity() const
+   {  return atomCapacity_; }
+
+   /*
    * Get total number of atoms in this CellList.
    */
    int CellList::nAtom() const
