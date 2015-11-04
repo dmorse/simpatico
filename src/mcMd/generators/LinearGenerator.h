@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Generates random configurations for linear molecules.
    *
-   * \ingroup McMd_Generators_Module
+   * \ingroup McMd_Generator_Module
    *
    */
    class LinearGenerator : public Generator

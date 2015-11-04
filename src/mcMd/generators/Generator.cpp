@@ -17,6 +17,9 @@ namespace McMd
 
    using namespace Util;
 
+   /*
+   * Constructor.
+   */
    Generator::Generator(Species& species, System& system)
     : speciesPtr_(&species),
       simulationPtr_(&system.simulation()),
@@ -25,7 +28,16 @@ namespace McMd
       bondPotentialPtr_(0)
    {}
 
+   /*
+   * Destructor (virtual because it is an abstract base class).
+   */
+   Generator::~Generator()
+   {}
+
    #ifdef INTER_BOND
+   /*
+   * Set bond potential for molecules that have bonds.
+   */
    void Generator::setBondPotential(BondPotential& bondPotential)
    {  bondPotentialPtr_ = &bondPotential; }
    #endif
@@ -107,6 +119,8 @@ namespace McMd
                             const DArray<double>& diameters,
                             CellList& cellList)
    {
+      // Set maximum atom id = atomCapacity - 1, and allocate
+      // arrays in cellList that are indexed by atom id
       cellList.setAtomCapacity(atomCapacity);
 
       // Compute maximum exclusion diameter

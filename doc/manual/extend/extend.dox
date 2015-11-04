@@ -4,7 +4,7 @@ namespace McMd
 /*! \page extend_page 4 Extending Simpatico
 
 \ref source_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref hoomd_page  (Next)
+\ref developer_page  (Next)
 <BR>
 
 Users may extend the capabilities of Simpatico by writing new subclasses of a set of base classes that represent elements of a simulation. Different base class are used to represent molecular species, potential energy functions, analyzers, file formats, and Monte Carlo or molecular dynamics algorithms.
@@ -30,7 +30,7 @@ For larger projects, one can also  organize a set several related classes that i
 <BR> 
 \ref source_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref hoomd_page  (Next)
+\ref developer_page  (Next)
 
 */
 

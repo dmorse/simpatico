@@ -29,7 +29,7 @@ namespace McMd
    /**
    * Generates initial configurations for molecules of one species.
    *
-   * \ingroup McMd_Generators_Module
+   * \ingroup McMd_Generator_Module
    */
    class Generator 
    {
@@ -44,6 +44,11 @@ namespace McMd
       * \param system  parent System
       */
       Generator(Species& species, System& system);
+
+      /**
+      * Destructor.
+      */
+      virtual ~Generator();
 
       #ifdef INTER_BOND
       /**
