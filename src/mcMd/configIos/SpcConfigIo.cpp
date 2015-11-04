@@ -466,12 +466,10 @@ namespace McMd
    {
       System::ConstMoleculeIterator molIter;
       ConstArrayIterator< Group<N> > groupIter;
-      Species* speciesPtr;
       int i;
       int nSpecies = simulation().nSpecies();
       int groupId = 0;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
          system().begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
             for (molIter->begin(groupIter); groupIter.notEnd(); ++groupIter) {

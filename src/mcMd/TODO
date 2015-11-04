@@ -1,4 +1,3 @@
-
 Constant Pressure MD 
 --------------------
 
@@ -29,39 +28,19 @@ Deformable Boundaries
 AtomType
 --------
 
-  - Add static bool atomHaveDiameters_ and non-static double diameter_ members
+  - Add static bool hasAtomDiameters_ and non-static double diameter_ members
 
-  - Make Simulation a friend of AtomType
+  - Simulation a friend of AtomType, so that static hasAtomDiameters
+    variable can be read in Simulation block of the param file. Alternatively,
+    provide a static function to optionall read this parameter.
 
-  - Add optional atomHaveDiameters_ parameter in Simulation::readParameters
-
-  - Optionally read and write diameter_ members. Initialize to 1.0 by default.
-
-Generator
----------
-
-  - Write unit test for PointGenerator
-
-  - Write LinearGenerator and a corresponding unit test
-
-  - Add optional diameter and epsilon parameters to atom type. 
-
-  - Add a command to generate molecules, with scale and an nMolecule for each
-    species. The command should create a temporary cell list and first fill
-    it with all molecules and atoms already in the system. The command will
-    allow for either multiple species in one command or multiple commands with
-    different species.
-
-  - Add method to associate a generator with a Species.
+  - Add code to read diameter_ member if hasAtomDiametrers_. 
 
 Species
 -------
 
-- Replace Species generator method by non-member function template with 
-  explicit specializations for Linear and Atom.
-
-- Move Species, SpeciesGroup etc. to a new Chem namespace, so it can be 
-  used in Tool namespace.
+- Move Species, SpeciesGroup etc. to a new Topo namespace, so the Species
+  class heirarchy can be used for analysis in the Tool namespace.
 
 Serialization
 -------------
