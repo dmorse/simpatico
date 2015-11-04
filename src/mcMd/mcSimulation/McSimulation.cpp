@@ -550,8 +550,11 @@ namespace McMd
                   if (capacities[iSpecies] > 0) {
                      ptr = generatorFactory(species(iSpecies), system());
                      UTIL_CHECK(ptr);
-                     ptr->generate(capacities[iSpecies], diameters, cellList);
+                     success = ptr->generate(capacities[iSpecies], diameters, cellList);
                      delete ptr;
+                     if (!success) {
+                        Log::file() << "Failed to complete species " << iSpecies << "\n";
+                     }
                      UTIL_CHECK(success);
                   }
                }

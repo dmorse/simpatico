@@ -90,7 +90,7 @@ namespace McMd
 
       // Attempt to place all molecules in Species
       int speciesId = species().id();
-      int maxAttempt = 500;
+      int maxAttempt = 200;
       int iAttempt;
       bool success;
       for (int iMol = 0; iMol < nMolecule; ++iMol) {
@@ -104,6 +104,9 @@ namespace McMd
             ++iAttempt;
          }
          if (!success) {
+            system().removeMolecule(newMolecule);
+            Log::file() << "Failed to insert Linear molecule " 
+                        << iMol << "\n";
             return false;
          }
       }
