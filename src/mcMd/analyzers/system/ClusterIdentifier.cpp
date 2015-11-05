@@ -121,8 +121,10 @@ namespace McMd
    void ClusterIdentifier::identifyClusters()
    {
 
-      // Clear cell list, clusters array and all links
-      cellList_.clear();
+      // Initialize all data structures:
+      // Setup a grid of empty cells
+      cellList_.setup(system().boundary(), cutoff_);
+      // Clear clusters array and all links
       clusters_.clear();
       for (int i = 0; i < links_.capacity(); ++i) {
          links_[i].clear();
