@@ -464,6 +464,9 @@ namespace McMd
                      UTIL_CHECK(ptr);
                      success = ptr->generate(capacities[iSpecies], diameters, cellList);
                      delete ptr;
+                     if (!success) {
+                        Log::file() << "Failed to complete species " << iSpecies << "\n";
+                     }
                      UTIL_CHECK(success);
                   }
                }

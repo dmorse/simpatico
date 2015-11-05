@@ -43,8 +43,7 @@ namespace McMd
          success = attemptPlaceAtom(*atomPtr, diameters, cellList);
       }
       if (!success) {
-         cellList.deleteAtom(*atomPtr);
-         return false; // Failure to insert first atom
+         return false; 
       }
 
       Vector v;
@@ -67,6 +66,7 @@ namespace McMd
                                                   bondType);
             atomPtr->position() += v;
             success = attemptPlaceAtom(*atomPtr, diameters, cellList);
+            ++iAttempt;
          }
          if (!success) {
             for (int j = 0; j < iAtom; ++j) {
