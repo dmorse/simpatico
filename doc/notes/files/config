@@ -21,22 +21,30 @@ SPECIES:
    [hasAngles]
    [hasDihedrals]
    nSpecies  [int]
-
    for each species {
-      speciesId  nMolecule nAtom [nBond] [nAngle] [nDihedral]
+      nMolecule  int
+      nAtom int
+      for each atom {
+         id type
+      }
+      For each relevant type of group:
+      nGroup int
+      for each relevant group {
+         id typeId atomId0, atomId1, ...
+      }
    }
 
    Comments:
 
-   1) The presence of this block indicates that atom and group ids
-   are in molecular order.
+   1) The presence of this block indicates that atom and group ids are 
+   in molecular order.
 
-   2) The flags hasBonds, hasAngles, and hasDihedrals are optional,
-   and are all set false by default.
+   2) The flags hasBonds, hasAngles, and hasDihedrals are optional, and 
+   are all set false by default.
 
-   3) For each species, the variables nBond, nAngle, and nDihedral 
-   are each required if and only if the associated flag hasBonds, 
-   hasAngles, or hasDihedrals is set.
+   3) For each species, the variables nBond, nAngle, and nDihedral are each 
+   required if and only if the associated flag hasBonds, hasAngles, or 
+   hasDihedrals is set.
 
    4) The ddSim program will write this block if the input configuration
    was read from a file which contained it. It will thus preserve and
@@ -44,6 +52,12 @@ SPECIES:
 
 ATOMS: 
 
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nAtom
+    }
+   ]
    [ordered]
    format [i][m][t]p[v][s][c]
    nAtom integer
@@ -59,24 +73,56 @@ ATOMS:
 
    Comments:
 
-   1) The ordered flag is optional, and is set false by default.
+   1) The molecular and ordered flags are optional, and are both set false by default.
 
-   2) The default output formats for different simulation programs:
+   2) The molecular flag is implied by the SPECIES block, and is optional if species is
+      set. An error should be thrown if both appear and are not consistent.
+
+   3) When molecular is set, it is followed by a list indicating the number nMolecule
+      of molecules in each species and the number nAtom of atoms in each species
+ 
+   4) The default output formats for different simulation programs:
+
+       mdSim and mcSim write a species block, but no molecular block
+       ddSim writes a molecular block if atoms are in molecular order
+       ddSim extracts only nMolecule, nAtom, nGroup numbers from SPECIES block
 
        mdSim writes all of the above, including shift when known
        mcSim writes all of the above except velocity and shift
        ddSim writes all that it can (context and shift optional)
 
-       Note: ddSim must know if atoms are in canonical molecular order
-
 BONDS, ANGLES, or DIHEDRALS:
    
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nGroup
+    }
+   ]
    [ordered]
    nGroup  int
    For each {
       groupId atomId0 ... atomId(N-1) typeId
    }
 
-   The format is essentially the same for each type of covalent bond,
-   except for the block label BONDS, ANGLES, or DIHEDRALS.
+   Remarks:
 
+   1) The format is essentially the same for each type of covalent bond, except for the 
+   block label BONDS, ANGLES, or DIHEDRALS.
+
+   2) If the block is molecular, the reading program can check that atoms are all in the
+   same molecule.
+
+   3) If a SPECIES block and a GROUP block are both present, the reading program can check 
+   consistency of all atom ids in the group block with the species declaration.
+
+   4) If a SPECIES block is present but no GROUP block is present, the reading program
+   can generate all groups, if needed. 
+
+   5) If a SPECIES block is present in the config file and in the param file, the program
+   can check consistency.
+
+   6) Proposal: Redesign mdSim and mcSim to allow allocation of memory for atoms and groups
+   to be delayed until the config file is read.
+
+   7) Question: Is this getting TOO flexible? Flexibility can be confusing to new users.
