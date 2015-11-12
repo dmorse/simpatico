@@ -1,22 +1,26 @@
 Trajectory file (binary):
 
    Header:
+
       nAtom int
-      frameFormat - bitfield with flags that include: molecular?, 
-                     fixed? ordered?, velocity? shift? (other?)
       headerFormat - bitfield indicating which optional info follows
-      [MOLECULES] - molecule & species sizes, required iff molecular 
-      [ATOMTYPES] - Format, followed by per atom: typeId, [charge]
-      [BONDS][ANGLES][DIHEDRALS]
+      [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
+      [ATOM] - Format, followed by per atom: typeId, [mass], [charge]
+
    Frame:
+
       iStep
       boundary
+      nAtom int
+      frameFormat - bitfield with flags that include: isMolecular,
+                    isOrdered, hasShift, hasVelocity, hasCharge, 
+                    hasMolecule, hasSpecial
       ATOMS (id, position, optionally shift, velocity)
 
 Trajectory frame format:
 
    FRAME:
      For each atom {
-        id position(scaled, as 3xuint) [shift 3 x int] [velocity]
+        id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
      }
 
