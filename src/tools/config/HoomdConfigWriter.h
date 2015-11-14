@@ -36,6 +36,8 @@ namespace Tools
    * type map file and configFile is the name of the
    * new Hoomd XML configuration file. 
    *
+   * \sa \ref tools_config_HoomdTypeMap_page
+   *
    * \ingroup Tools_ConfigWriter_Module
    */
    class HoomdConfigWriter  : public ConfigWriter
