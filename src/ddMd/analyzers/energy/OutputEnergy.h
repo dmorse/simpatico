@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_OutputEnergy_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Energy_Module
    */
    class OutputEnergy : public Analyzer
    {

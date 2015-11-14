@@ -25,7 +25,7 @@ namespace McMd
    * blocks for molecules in the same species. It does not require that 
    * the atoms be ordered consecutively by id within the dump file.
    *
-   * \ingroup McMd_TrajectoryReader_Module
+   * \ingroup McMd_Trajectory_Module
    */
    class LammpsDumpReader : public TrajectoryReader
    {

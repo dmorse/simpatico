@@ -22,8 +22,6 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * \ingroup DdMd_Analyzer_Module
-   *
    * OrderParamNucleation is designed to evaluate a sort of 
    * composition profile in the specific case of nucleating a
    * lamellar ordered phase in a small region at the center of
@@ -50,7 +48,7 @@ namespace DdMd
    * }
    * \endcode
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Misc_Module
    */
    class OrderParamNucleation : public Analyzer
    {
