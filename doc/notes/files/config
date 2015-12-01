@@ -1,7 +1,7 @@
 Configuration file structure (ascii):
 
    BOUNDARY (same as current)
-   [SPECIES]
+   [MOLECULES]
    ATOMS - format variable, indicated within block
    ([TOPOLOGY] | [BONDS] [ANGLES] [DIHEDRALS])
 
@@ -12,7 +12,7 @@ BOUNDARY:
 
    [Boundary]
 
-MOLECULE TYPES:
+MOLECULES:
 
    [hasBonds]
    [hasAngles]
@@ -23,10 +23,25 @@ MOLECULE TYPES:
    }
 
    Comments: 
-   This section is optional. If it appears, the ATOMS section and any GROUP sections
-   must be in molecular order.
+   
+   1) This section is optional. If it appears, the ATOMS section and any GROUP sections
+   must be in molecular order. 
 
-ATOMS: 
+   2) hasBonds, hasAngles, hasDihedrals and isOpen blocks are optional arguments that 
+   are false if absent, and true if present
+
+   3) Values of nBond, nAngle, nDihedral are must be present if and only [hasBonds], 
+   [hasAngles], or [hasDihedrals] is set. The order of values (when present) is fixed.
+
+   4) The mcSim and mdSim programs will always output a MOLECULES block.
+
+   5) The ddSim program will write the MOLECULES block if the input configuration was read 
+   from a file that contained it. 
+
+   6) The mcSim and mdSim programs will validate information in this block against that
+   given in their parameter files.
+
+ATOMS:
 
    [ordered]
    nAtom integer
@@ -43,31 +58,48 @@ ATOMS:
 
    Comments:
 
-   1) The ordered flags are optional, and are set false by default.
+   1) The ordered flag is optional, and is set false by default (i.e., if string is absent)
 
-   2) The presence of a SPECIES indicates that atom ids are in 
-   molecular order, consecutive within each molecule, molecules of 
-   the same species consecutive within a block. This should be tested.
+   2) The presence of a MOLECULES block before the atom block indicates that atom ids 
+   are in molecular order, consecutive within each molecule, with molecules of the 
+   same species consecutive within a block. This precondition should be tested.
 
-   3) The ddSim program will write the SPECIES block if the input 
-   configuration was read from a file that contained it. It will thus 
-   preserve and output molecular ordering, if it can.
+   3) The default output formats:
 
-   4) The default output formats for different simulation programs:
+       - mdSim will output positions and velocities, shifts if possible
+       - ddSim will output positions and velocities, shifts if possible
 
-   Each program outputs as much information as it can
-   mcSim and mdSim will each output in molecular format
-   mcSim and mdSim will output groups by default, but not read them
-   mdSim will output positions and velocities, shifts if possible
-   ddSim will read and write molecule block specifications
+   4) All of the programs (mcSim, mdSim, ddSim an ppMd) should be able to handle either
+   ordered or unordered files.
 
 TOPOLOGY
 
-   1) This optional block, if present, will contain information about the
-   bonds angles etc. of a single molecule of each species.
+   Species 1 
+   Bonds
+   id  type atomId0 atomId1
+    .....
+   Angles
+   id  type atomId0 atomId1 atomid2
+   ...
+   
+   1) This optional block, if present, will contain information about the bonds angles 
+   etc. of a single molecule of each species.
 
-   2) If this block is present, no BONDS, ANGLES, DIHEDRALS groups should
-   be present.
+   2) If this block is present, no BONDS, ANGLES, DIHEDRALS groups should be present,
+   since this information would be redundant.
+
+   3) mcSim and mdSim will always output a TOPOLOGY block.
+
+   4) ddSim will be able to read a TOPOLOGY block and will replicate all groups (bonds,
+   angles, etc.) when the information is read.
+
+   5) ddSim will output a TOPOLOGY block if a TOPOLOGY block was present on input. 
+
+   6) mcSim and mdSim can ignore the topology block or cross check for consistency,
+   since equivalent information is in the parameter file. 
+
+   7) Inclusion of compact topology information in the config file makes it unnecssary 
+   to define a separate topology file format.
 
 BONDS, ANGLES, or DIHEDRALS:
    
@@ -79,13 +111,9 @@ BONDS, ANGLES, or DIHEDRALS:
 
    Remarks:
 
-   1) The format is essentially the same for each type of covalent 
-   bond, except for the block label BONDS, ANGLES, or DIHEDRALS.
+   1) The format is essentially the same for each type of covalent bond, except for 
+   the block label BONDS, ANGLES, or DIHEDRALS.
 
    2) The meaning of the optional ordered flag is similar to that for atoms.
 
-   3) If the file is molecular, the reading program can check that atoms are 
-   all in the same molecule.
-
-   4) None of these blocks should be present if a TOPOLOGY block is present.
-
+   3) These blocks will only appear if there is no TOPOLOGY block.
