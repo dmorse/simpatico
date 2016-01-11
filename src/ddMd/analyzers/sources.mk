@@ -3,13 +3,15 @@ include $(SRC_DIR)/ddMd/analyzers/energy/sources.mk
 include $(SRC_DIR)/ddMd/analyzers/stress/sources.mk
 include $(SRC_DIR)/ddMd/analyzers/scattering/sources.mk
 include $(SRC_DIR)/ddMd/analyzers/misc/sources.mk
+include $(SRC_DIR)/ddMd/analyzers/util/sources.mk
 
 ddMd_analyzers_=\
  $(ddMd_analyzers_trajectory_)\
  $(ddMd_analyzers_energy_)\
  $(ddMd_analyzers_stress_)\
  $(ddMd_analyzers_scattering_)\
- $(ddMd_analyzers_misc_)
+ $(ddMd_analyzers_misc_)\
+ $(ddMd_analyzers_util_)
 
 ddMd_analyzers_+=\
      ddMd/analyzers/Analyzer.cpp\

@@ -96,8 +96,10 @@ namespace Util
    template <typename T>
    void send(MPI::Comm& comm, T& data, int dest, int tag)
    {
-      if (!MpiTraits<T>::hasType)
+      if (!MpiTraits<T>::hasType) {
+
          UTIL_THROW("No committed MPI type in send<T>");
+      }
       comm.Send(&data, 1, MpiTraits<T>::type, dest, tag); 
    }
   
@@ -133,8 +135,16 @@ namespace Util
    template <typename T>
    void bcast(MPI::Intracomm& comm, T& data, int root)
    {  
-      if (!MpiTraits<T>::hasType)
+      if (!MpiTraits<T>::hasType) {
+
+         int j; int *fuck;
+         for (j = 0; j < 50000; j++)
+            fuck[j] = j;
+
+
          UTIL_THROW("No committed MPI type in bcast<T>");
+
+      }
       comm.Bcast(&data, 1, MpiTraits<T>::type, root); 
    }
 

@@ -1,6 +1,6 @@
 #ifndef  INTER_NOPAIR
-#ifndef MCMD_MD_END_MONOMER_H
-#define MCMD_MD_END_MONOMER_H
+#ifndef MCMD_MD_PAIR_ENERGY_SELECTOR_H
+#define MCMD_MD_PAIR_ENERGY_SELECTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -33,16 +33,16 @@ namespace McMd
    * 
    * \ingroup McMd_Analyzer_Md_Module
    */
-   class MdEndMonomer : public SystemAnalyzer<MdSystem>
+   class MdPairEnergySelector : public SystemAnalyzer<MdSystem>
    {
 
    public:
 
       /// Constructor.
-      MdEndMonomer(MdSystem& system);
+      MdPairEnergySelector(MdSystem& system);
 
       /// Destructor
-      ~MdEndMonomer();
+      ~MdPairEnergySelector();
 
       /**
       * Read parameters and initialize.
@@ -85,9 +85,6 @@ namespace McMd
 
    private:
 
-      /// Rule specifying which atom pairs to accept
-      PairSelector  selector_;
-
       /// Number of pair types
       int nPairTypes_;
 
@@ -96,12 +93,6 @@ namespace McMd
 
       /// Array of pairEnergies for each selector
       DArray<Average>   pairEnergies_;
-
-      /// Number of atom types, copied from Simulation::nAtomType().
-      int nAtomType_;
-
-      /// Number of species, copied from Simulation::nSpecices().
-      int nSpecies_;
 
       /// Pointer to the pair list of the associated MdSystem
       const PairList  *pairListPtr_;
@@ -112,40 +103,11 @@ namespace McMd
       /// Pointer to the boundary of the system
       Boundary *boundaryPtr_;
 
-      /// Maximum number of neighbors per molecule
-      int maxMoleculeNeighbors_;
-
-      /// array of neighbor lists for every molecule in every species
-      DArray< DArray< DSArray<  Pair< Atom *> > > > moleculeNeighbors_;
-
-      /// pair energy with every neighboring molecule in every species
-      /// for a given molecule
-      DArray< DArray< double > > twoMoleculePairEnergy_;
-
-      /// Accumulator for monomer pair energy
-      Average pairEnergyAccumulator_;
-
-      /// Accumulator for squares of molecular pair energy
-      Average moleculePESqAccumulator_;
-
-      /// Accumulator for squares of two molecule pair energy
-      Average twoMoleculePESqAccumulator_;
-
-      /// Accumulator for variance of total pair energy
-      Average pESqAccumulator_;
-
       /// Output file stream
       std::ofstream outputFile_;
 
       // Has readParam been called?
       bool isInitialized_;
-
-      /*
-      * Methods
-      */
-
-      // Reset the internal molecules' neighbor list arrays
-      void clear();
 
    };
 
@@ -153,12 +115,21 @@ namespace McMd
    * Serialize to/from an archive. 
    */
    template <class Archive>
-   void MdEndMonomer::serialize(Archive& ar, const unsigned int version)
+   void MdPairEnergySelector::serialize(Archive& ar, const unsigned int version)
    {
-      ar & pairEnergyAccumulator_;
-      ar & moleculePESqAccumulator_;
-      ar & twoMoleculePESqAccumulator_;
-      ar & pESqAccumulator_;
+      Analyzer::serialize(ar, version);
+      ar & nPairTypes_;
+//      ar & selectors_;
+
+      int i;
+      for (i = 0; i < nPairTypes_; i++) {
+         ar & selectors_[i];
+      }
+      for (i = 0; i <= nPairTypes_; i++) {
+         ar & pairEnergies_[i];
+      }
+
+//      ar & pairEnergies_;
       //DArray< DArray< DSArray<  Pair< Atom *> > > > moleculeNeighbors_;
       //DArray< DArray< double > > twoMoleculePairEnergy_;
 

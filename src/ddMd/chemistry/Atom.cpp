@@ -167,6 +167,9 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<unsigned int>(plan().flags());
+      if (hasAtomContext_) {
+         buffer.pack<AtomContext>(context());
+      }
       buffer.incrementSendSize();
    }
 
@@ -184,6 +187,11 @@ namespace DdMd
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
+
+      if (hasAtomContext_) {
+         buffer.unpack<AtomContext>(context());
+      }
+
       buffer.decrementRecvSize();
    }
 
@@ -196,6 +204,11 @@ namespace DdMd
       size += 2*sizeof(int); 
       size += sizeof(Vector); 
       size += sizeof(unsigned int);
+
+      if (hasAtomContext_) {
+         size += sizeof(AtomContext);      // context
+      }
+
       return size;
    }
 

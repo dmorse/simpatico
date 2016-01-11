@@ -298,6 +298,17 @@ namespace DdMd
       void unpackGhost(Buffer& buffer);
 
       /**
+      * Copies Local atom stuf to this atom
+      */
+      void copyLocalGhost(const Atom& sendAtom);
+
+      /**
+      * Updates position of local ghost
+      */
+      void copyLocalUpdate(const Atom& sendAtom);
+                  // atomPtr->copyLocalUpdate(sendArray_(i, j)[k]);
+
+      /**
       * Pack updated ghost position into send buffer.
       *
       * Packs position Vector, increments buffer sendSize counter.
@@ -522,6 +533,25 @@ namespace DdMd
    */
    inline const Plan& Atom::plan() const
    {  return arrayPtr_->plans_[localId_ >> 1]; }
+
+   /*
+   * Copies Local atom stuf to this atom
+   */
+   inline void Atom::copyLocalGhost(const Atom& sendAtom)
+   {
+      arrayPtr_->ids_[localId_ >> 1] = sendAtom.id();
+      typeId_ = sendAtom.typeId();
+      arrayPtr_->plans_[localId_ >> 1].setFlags(sendAtom.plan().flags());
+      position_ = sendAtom.position();
+      arrayPtr_->contexts_[localId_ >> 1] = sendAtom.context();
+   }
+
+   /*
+   * Updates position of local ghost
+   */
+   inline void Atom::copyLocalUpdate(const Atom& sendAtom)
+   {  position_ = sendAtom.position(); }
+               // atomPtr->copyLocalUpdate(sendArray_(i, j)[k]);
 
    /*
    * Get the global id for this Atom.
