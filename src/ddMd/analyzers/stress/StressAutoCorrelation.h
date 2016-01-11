@@ -30,7 +30,7 @@ namespace DdMd
    * stress, using symmetry relations appropriate for an isotropic
    * fluid.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Stress_Module
    */
    class StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
    {

@@ -5,7 +5,7 @@ namespace DdMd
 
 \section ddMd_analyzer_PairEnergyAverage_synopsis_sec Synopsis
 
-This analyzer computes an average nonbonded pair energy.
+This analyzer compute average nonbonded pair energy for particular pairs of species.
 
 If nSamplePerBlock > 0, it outputs block average values every interval*nSamplePerBlock time steps. Each block average is an average of nSamplePerBlock values.
 

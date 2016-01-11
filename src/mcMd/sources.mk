@@ -10,6 +10,7 @@ include $(SRC_DIR)/mcMd/trajectory/sources.mk
 include $(SRC_DIR)/mcMd/mdIntegrators/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/sources.mk
+include $(SRC_DIR)/mcMd/generators/sources.mk
 include $(SRC_DIR)/mcMd/user/sources.mk
 
 mcMd_=\
@@ -25,6 +26,7 @@ mcMd_=\
     $(mcMd_mdIntegrators_) \
     $(mcMd_mcMoves_) \
     $(mcMd_analyzers_) \
+    $(mcMd_generators_) \
     $(mcMd_user_)
 
 ifdef MCMD_PERTURB

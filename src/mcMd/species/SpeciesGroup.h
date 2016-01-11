@@ -62,7 +62,7 @@ namespace McMd
    * Molecule. Each SpeciesGroup is thus a prototype for constructing one Group
    * for each Molecule within a Species.
    *
-   * \ingroup McMd_Chemistry_Module
+   * \ingroup McMd_Species_Module
    */
    template <int NAtom>
    class SpeciesGroup

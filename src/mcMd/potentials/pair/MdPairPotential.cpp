@@ -38,12 +38,13 @@ namespace McMd
    */ 
    void MdPairPotential::buildPairList() 
    {
+      // Precondition
+      if (!pairList_.isInitialized()) {
+         UTIL_THROW("PairList not initialized in MdPairPotential::buildPairList");
+      }
 
-      // Recalculate the grid for the internal CellList
-      pairList_.makeGrid(boundary());
-
-      // Clear all atoms from the internal CellList
-      pairList_.clear();
+      // Setup an empty pair list and internal cell list.
+      pairList_.setup(boundary());
 
       // Add every atom in this System to the CellList
       System::MoleculeIterator molIter;

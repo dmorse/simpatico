@@ -2,9 +2,9 @@ namespace Tools
 {
 
 /**
-* \defgroup Tools_ConfigReader_Module Config File Readers
+* \defgroup Tools_Config_Module Config File IO
+* \brief Configuration file readers and writers
 *
-* \brief Configuration file reader / writers.
 * \ingroup Tools_Module
 */
 

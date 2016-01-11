@@ -10,4 +10,11 @@ namespace DdMd
    * is a container for Analyzers associated with a simulation.
    */
 
+   /**
+   * \defgroup DdMd_Analyzer_Base_Module Analyzer Base 
+   * \ingroup  DdMd_Analyzer_Module
+   *  
+   * Base classes for analyzers.
+   */
+
 }

@@ -1,0 +1,57 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "generatorFactory.h"
+#include <mcMd/generators/Generator.h>
+#include <mcMd/generators/PointGenerator.h>
+#include <mcMd/generators/LinearGenerator.h>
+
+#include <mcMd/species/Species.h>
+#include <mcMd/species/Point.h>
+#include <mcMd/species/Linear.h>
+
+#include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mdSimulation/MdSystem.h>
+
+namespace McMd
+{
+
+   class System;
+
+   Generator* generatorFactory(Species& species, McSystem& system)
+   {
+      Generator* ptr = 0;
+      if (dynamic_cast<Point*>(&species)) {
+         ptr = new PointGenerator(species, system);
+      }
+      #ifdef INTER_BOND 
+      else 
+      if (dynamic_cast<Linear*>(&species)) {
+         ptr = new LinearGenerator(species, system);
+         ptr->setBondPotential(system.bondPotential());
+      }
+      #endif
+      return ptr;
+   }
+
+   Generator* generatorFactory(Species& species, MdSystem& system)
+   {
+      Generator* ptr = 0;
+      if (dynamic_cast<Point*>(&species)) {
+         ptr = new PointGenerator(species, system);
+      }
+      #ifdef INTER_BOND 
+      else 
+      if (dynamic_cast<Linear*>(&species)) {
+         ptr = new LinearGenerator(species, system);
+         ptr->setBondPotential(system.bondPotential());
+      }
+      #endif
+      return ptr;
+   }
+
+}

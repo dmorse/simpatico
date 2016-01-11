@@ -48,19 +48,6 @@ namespace McMd
       */
       virtual ~Linear();
 
-      /**
-      * Generate random molecules
-      *
-      * \param nMolecule number of molecules to genearte
-      * \param exclusionRadius array of exclusion radii for every atom type
-      * \param system the System
-      * \param bondPotentialPtr the bond potential
-      * \param boundary the boundary to generate atoms in
-      */
-      virtual void generateMolecules(int nMolecule,
-         DArray<double> exclusionRadius, System &system,
-         BondPotential *bondPotentialPtr, const Boundary &boundary);
-
    protected:
 
       #ifdef INTER_ANGLE 
@@ -134,26 +121,6 @@ namespace McMd
       */
       void buildLinear();
 
-   private:
-
-      /**
-      * Try to place an atom. If successful, recursively call tryPlace
-      * again to place next atom
-      *
-      * \param atomIter iterator pointing to the atom to be placed
-      * \param exclusionRadius the exclusion radius
-      * \param system the System
-      * \param cellList the cell list
-      * \param bondPotential the bond potential
-      *
-      * \returns true if particle could be placed
-      */
-      bool tryPlaceAtom(Molecule &molecule, int atomId,
-         DArray<double> exclusionRadius, System& system, CellList &cellList,
-         BondPotential *bondPotentialPtr, const Boundary &boundary);
-
-      /// Maximum attempts to place an atom using generateChains
-      int maxPlacementAttempts_;
    };
 
 } 

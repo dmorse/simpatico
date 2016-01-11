@@ -15,6 +15,10 @@ clean:
 	rm -f $(mcMd_tests_species_OBJS) 
 	rm -f $(mcMd_tests_species_OBJS:.o=.d)
 	rm -f $(mcMd_tests_species_OBJS:.o=)
+	$(MAKE) clean-outputs
+
+clean-outputs:
+	rm -f binary
 
 -include $(mcMd_tests_species_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

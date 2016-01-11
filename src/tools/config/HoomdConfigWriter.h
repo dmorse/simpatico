@@ -22,6 +22,22 @@ namespace Tools
    /**
    * Hoomd-blue XML format for configuration files.
    *
+   * This config file writer requires access to an 
+   * auxiliary file containing the mapping between
+   * atom type strings used in the Hoomd XML file
+   * format and the integer atom type ids used 
+   * internally by simpatico. The required syntax
+   * for the WRITE_CONFIG command in the mdPp command
+   * file is thus
+   * \code
+   *    WRITE_CONFIG auxiliaryFile configFile
+   * \endcode
+   * where auxiliaryFile is the name of the auxilary
+   * type map file and configFile is the name of the
+   * new Hoomd XML configuration file. 
+   *
+   * \sa \ref tools_config_HoomdTypeMap_page
+   *
    * \ingroup Tools_ConfigWriter_Module
    */
    class HoomdConfigWriter  : public ConfigWriter

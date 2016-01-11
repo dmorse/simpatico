@@ -43,7 +43,7 @@ public:
       Lin[1] =  3.0;
       Lin[2] =  4.0;
       boundary.setOrthorhombic(Lin);  
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setup(boundary, cutoff);
 
       TEST_ASSERT(cellList.gridDimension(0) == 1);
       TEST_ASSERT(cellList.gridDimension(1) == 2);
@@ -65,8 +65,8 @@ public:
       Lin[1] =  3.0;  // 2 cells
       Lin[2] =  4.0;  // 3 cells
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(10, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(10);
+      cellList.setup(boundary, cutoff);
 
       x =  1;
       y =  3;
@@ -87,8 +87,8 @@ public:
       Lin[1] =  3.0;
       Lin[2] =  4.0;
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(10, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(10);
+      cellList.setup(boundary, cutoff);
 
       // Test consistency of CellIndexFromCoord and CellCoordFromIndex
       x =  0;
@@ -116,8 +116,8 @@ public:
       Lin[1] = 3.0;
       Lin[2] = 4.0;
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(10, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(10);
+      cellList.setup(boundary, cutoff);
 
       TEST_ASSERT(cellList.totCells_ == 6);
       TEST_ASSERT(cellList.gridDimension(0) == 1);
@@ -140,8 +140,8 @@ public:
       Lin[1] =  3.0; // 2 cells
       Lin[2] =  4.0; // 3 cells
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(10, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(10);
+      cellList.setup(boundary, cutoff);
 
       TEST_ASSERT(cellList.gridDimension(0) == 2);
       TEST_ASSERT(cellList.gridDimension(1) == 2);
@@ -175,8 +175,8 @@ public:
       //Lin[1] =  3.3;  // 2 cells, y=0
       //Lin[2] =  2.5;  // 2 cells, z=1, icell=1
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(maxNAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(maxNAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate and initialize an array of Atoms
       RArray<Atom> atoms;
@@ -219,8 +219,8 @@ public:
       //Lin[1] =  3.0;  // 2 cells, y = 1
       //Lin[2] =  2.5;  // 2 cells, z = 1
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(maxNAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(maxNAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate and initialize an array of Atoms
       RArray<Atom>  atoms;
@@ -270,8 +270,8 @@ public:
       //Lin[1] =  3.0;  // 2 cells,  x1=2 x2=2
       //Lin[2] =  4.0;  // 3 cells,  x1=0 x2=0
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(N_PART, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(N_PART);
+      cellList.setup(boundary, cutoff);
 
       // Allocate and initialize an array of N_PART atoms
       RArray<Atom>  atoms;
@@ -352,8 +352,8 @@ public:
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(nAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(nAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate Atom 
       RArray<Atom>  atoms;
@@ -402,8 +402,8 @@ public:
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(nAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(nAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate Atom 
       RArray<Atom> atoms;
@@ -457,8 +457,8 @@ public:
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(nAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(nAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate atoms array
       RArray<Atom> atoms;
@@ -517,8 +517,8 @@ public:
       // Set up CellList
       Vector Lin(2.0, 3.0, 4.0);
       boundary.setOrthorhombic(Lin);  
-      cellList.allocate(nAtom, boundary, cutoff);
-      cellList.makeGrid(boundary, cutoff);
+      cellList.setAtomCapacity(nAtom);
+      cellList.setup(boundary, cutoff);
 
       // Allocate Atoms and initialize Ids
       RArray<Atom>  atoms;

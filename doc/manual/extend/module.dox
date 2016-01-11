@@ -4,7 +4,7 @@ namespace McMd
 /*! \page extend_module_page 4.7 Modules
 
 \ref extend_subfactory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref hoomd_page  (Next)
+\ref developer_page  (Next)
 <BR>
  
 A module is a class that encapsulates a set of classes that were designed for a 
@@ -156,7 +156,7 @@ The creation of a module class can be convenient, but is not necessary.
 <BR>
 \ref extend_subfactory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref hoomd_page  (Next)
+\ref developer_page  (Next)
  
 */
 }
