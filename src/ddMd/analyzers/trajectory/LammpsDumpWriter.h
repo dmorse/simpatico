@@ -18,7 +18,7 @@ namespace DdMd
    /**
    * Write a trajectory in the Lammps dump format.
    *
-   * \ingroup McMd_TrajectoryWriter_Module
+   * \ingroup DdMd_Analyzer_Trajectory_Module
    */
    class LammpsDumpWriter : public TrajectoryWriter
    {

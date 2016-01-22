@@ -22,7 +22,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_OutputPairEnergies_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Energy_Module
    */
    class OutputPairEnergies : public Analyzer
    {

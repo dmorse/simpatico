@@ -34,7 +34,7 @@ namespace Tools
 * where auxiliaryFile is the path to the required auxiliary
 * data file. 
 *
-* \ingroup Tools_Module
+* \ingroup Tools_Config_Module
 */
 
 }

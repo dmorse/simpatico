@@ -22,7 +22,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_OutputPressure_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Stress_Module
    */
    class OutputPressure : public Analyzer
    {
