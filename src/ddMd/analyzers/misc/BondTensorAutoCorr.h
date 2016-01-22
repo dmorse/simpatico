@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * Calculate stress autocorrelation function.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Misc_Module
    */
    class BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
    {

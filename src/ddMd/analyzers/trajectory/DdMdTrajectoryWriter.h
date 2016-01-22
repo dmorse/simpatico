@@ -18,7 +18,7 @@ namespace DdMd
    /**
    * Native binary trajectory format for ddSim.
    *
-   * \ingroup McMd_TrajectoryWriter_Module
+   * \ingroup DdMd_Analyzer_Trajectory_Module
    */
    class DdMdTrajectoryWriter : public TrajectoryWriter
    {

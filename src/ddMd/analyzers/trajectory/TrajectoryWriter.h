@@ -34,7 +34,7 @@ namespace DdMd
    /**
    * Base class to write a trajectory to a single file.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Trajectory_Module
    */
    class TrajectoryWriter : public Analyzer
    {

@@ -26,7 +26,7 @@ namespace McMd
    * a species occur in the file consecutively. Currently it has only been 
    * tested with Hoomd generated trajectory files.
    *
-   * \ingroup McMd_TrajectoryReader_Module
+   * \ingroup McMd_Trajectory_Module
    */
    class DCDTrajectoryReader : public TrajectoryReader
    {

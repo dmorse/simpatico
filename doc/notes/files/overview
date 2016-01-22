@@ -102,7 +102,7 @@ Workflows:
     the information about species, so that it can be passed on to mcSim or mdSim or mdPp for
     postprocessing.
 
-  - For coonsideration:
+  - For consideration:
 
     1) Should this config file also contain information about molecular structure? No, 
     intially. We could consider adding it later, but this is a separable question.

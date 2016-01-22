@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_OutputTemperature_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Energy_Module
    */
    class OutputTemperature : public Analyzer
    {
