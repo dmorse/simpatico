@@ -38,7 +38,7 @@ namespace Util
 
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
-#include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/species/SpeciesGroup.tpp>
 #include <mcMd/analyzers/util/PairSelector.h>
 
 namespace McMd

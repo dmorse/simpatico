@@ -30,7 +30,7 @@ namespace DdMd
    * intended for use as a base class for classes that compute and average
    * specific symmetric-tensor-valued physical variables.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Base_Module
    */
    class SymmTensorAverageAnalyzer : public Analyzer
    {
