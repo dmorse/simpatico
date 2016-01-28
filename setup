@@ -108,6 +108,7 @@ cp src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSyst
 cp src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
 cp src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
 cp src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
+cp src/mcMd/generators/generatorFactory.cpp_r src/mcMd/generators/generatorFactory.cpp
 
 cp src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
 cp src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp

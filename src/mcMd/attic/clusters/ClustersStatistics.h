@@ -1,15 +1,14 @@
-#ifndef MCMD_CLUSTERS_DYNAMICS_H
-#define MCMD_CLUSTERS_DYNAMICS_H
+#ifndef MCMD_CLUSTERS_STATISTICS_H
+#define MCMD_CLUSTERS_STATISTICS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include <mcMd/analyzers/SystemAnalyzer.h>              // base class template
-#include <mcMd/analyzers/system/ClustersFinder.h>       // base class template
 #include <mcMd/simulation/System.h>                     // class template parameter
 #include <mcMd/neighbor/CellList.h>                     // member
 #include <util/accumulators/IntDistribution.h>          // member
@@ -31,16 +30,25 @@ namespace McMd
    /**
    * This class is intended to identify Clusters in polymeric systems.
    */
-   class ClustersDynamics : public SystemAnalyzer<System>
+   class ClustersStatistics : public SystemAnalyzer<System>
    {
+   
    public:
-      
+      /**
+      * Cluster struct definition.
+      */
+      struct Cluster
+      {
+         Molecule* self_;
+         int clusterId_;
+      };
+
       /**
       * Constructor.
       *
       * \param system reference to parent System object
       */
-      ClustersDynamics(System &system);
+      ClustersStatistics(System &system);
    
       /**
       * Read parameters from file, and allocate data array.
@@ -64,6 +72,11 @@ namespace McMd
       */
       virtual void setup();
    
+      /** 
+      * Roots out all the Clusters.
+      */
+      virtual void findClusters(Molecule* molPtr, int clusterId);
+
       /** 
       * Returns molecule cluster Id
       */
@@ -118,26 +131,26 @@ namespace McMd
       /// TypeId of touching cores
       double  cutoff_;
 
-      /// TypeId of touching cores
-      double  criterion_;
+      /// CellList of specified atoms of the species of interest
+      CellList cellList_;
 
-      /// Histogram min bin.
+      /// Array of relevant species' molecules with Cluster tags
+      DArray<Cluster>  clusters_;
+
+      /// Array of length of different Clusters
+      GArray<int> clusterLengths_;
+
+      /// Histogram Min bin.
       int  histMin_;
 
-      /// Histogram max bin.
+      /// Histogram Min bin.
       int  histMax_;
 
-      /// Cluster Statistics
-      ClustersFinder *oldClustersPtr_;
-
-      /// Cluster Statistics
-      ClustersFinder *newClustersPtr_;
-
-      /// Cluster Statistics
-      ClustersFinder oldClusters_;
-
-      /// Cluster Statistics
-      ClustersFinder newClusters_;
+      /// Distribution of the Clusters.
+      IntDistribution  hist_;
+   
+      /// Number of configurations dumped thus far(first dump is zero).
+      long  nSample_;
 
       /// Has readParam been called?
       bool  isInitialized_;
@@ -148,7 +161,7 @@ namespace McMd
    * Serialize to/from an archive. 
    */
    template <class Archive>
-   void ClustersDynamics::serialize(Archive& ar, const unsigned int version)
+   void ClustersStatistics::serialize(Archive& ar, const unsigned int version)
    {  
       Analyzer::serialize(ar, version);
       ar & speciesId_;

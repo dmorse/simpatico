@@ -98,9 +98,6 @@ namespace McMd
       /// Verlet neighbor pair list for nonbonded interactions.
       PairList pairList_;
 
-      /// Maximum boundary (used to allocated memory for PairList).
-      Boundary maxBoundary_;
-
    };
 
    // Inline functions

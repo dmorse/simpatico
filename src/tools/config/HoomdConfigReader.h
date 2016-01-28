@@ -28,6 +28,22 @@ namespace Tools
    /**
    * Reader for Hoomd-blue XML configuration files.
    *
+   * This config file reader requires access to an 
+   * auxiliary file containing the mapping between
+   * atom type strings used in the Hoomd XML file
+   * format and the integer atom type ids used 
+   * internally by simpatico. The required syntax
+   * for the READ_CONFIG command in the mdPp command
+   * file is thus
+   * \code
+   *    READ_CONFIG auxiliaryFile configFile
+   * \endcode
+   * where auxiliaryFile is the name of the auxilary
+   * type map file and configFile is the name of the
+   * new Hoomd XML configuration file. 
+   *
+   * \sa \ref tools_config_HoomdTypeMap_page
+   *
    * \ingroup Tools_ConfigReader_Module
    */
    class HoomdConfigReader  : public ConfigReader

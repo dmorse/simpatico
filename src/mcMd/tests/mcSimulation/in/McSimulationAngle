@@ -43,7 +43,6 @@ McSimulation{
                           1.00         1.00
       cutoff              1.12246      1.12246
                           1.12246      1.12246
-      maxBoundary  orthorhombic   2.0    3.0     4.0
     }
     BondPotential{
       kappa               100.00      
@@ -67,7 +66,6 @@ McSimulation{
       nStep                       20
       MdSystem{
         MdPairPotential{
-           maxBoundary  orthorhombic   2.5    3.5     4.5
            PairList{
              atomCapacity                30
              pairCapacity              1000

@@ -1,0 +1,132 @@
+Goal: Design files that can be used by multiple programs within
+the Simpatico package.
+
+Requirements / proposals:
+
+ - Design three shared file types: configuration (initialization), 
+   trajectory (analysis), and topology (molecule structure).
+
+ - Don't worry about compatibility with other MD programs - this
+   is a separate problem, to be handled separately
+
+ - Self-documenting configuration and trajectory formats (allows 
+   adaptation and validation) with several format variants. A single 
+   class should be able to read any usable variant of this format, 
+   with appropriate error checking, and throw exceptions for 
+   variants that they cannot handle.
+
+ - Configuration and trajectory files that are intended for use
+   by McMd programs must have atom ids in "molecular" order. This 
+   requires that atom ids are consecutive from 0, ordered with
+   atoms in the same molecule labelled in a consecutive block, and
+   molecules of the same species listed consecutively, and with ids
+   of corresponding atoms ordered in the same way within molecules
+   of the same type. Files that obey this convention for atom ids 
+   should document this fact, and should indicate the number of 
+   molecules of each species and the number of atoms per molecule.
+
+ - Configuration and trajectory files may or may not contain "ordered" 
+   atoms, implying that atoms with consecutive ids appear consecutively 
+   in the file.  Note that the question of whether the file format is 
+   ordered, which is a property of the order in which atoms appear 
+   within a file, is independent of whether the atom indices themselves 
+   are in "molecular" order, which is a property of how index values 
+   are assigned to atoms. A configuration file can be ordered without 
+   having molecular ordered atom indices or can contain molecular 
+   ordered atom indices without being ordered within the file. Files 
+   that are ordered must document this fact in the file format 
+   descriptor. 
+
+ - DdMd will need to be able to read, store, and write back out basic 
+   information about species (number of molecules of each type, and 
+   number of atoms per molecule) in order to allow it to validate 
+   (on input) and document (on output) that a configuration is in 
+   molecular order.
+
+ - McMd programs should read configuration and trajectory format
+   variants produced by DdMd (ordered or disordered). The reader
+   for an mcSim or mdSim program should require that atom ids be 
+   assigned in molecular order, but should not require that the 
+   file be orderd (i.e., that atoms be listed consecutively within
+   the file). 
+
+ - In the configuration file, if the system is molecular, groups
+   may be output in compact molecular format (one molecule per
+   species). When DdMd reads this format, it must generate the full 
+   set of groups from the prototype structure for each species.
+
+ - McMd programs should write a configuration format that can be 
+   used to initialize DdMd, which must include groups. Atom ids
+   used in this format must be in molecular order, and should 
+   also be ordered (since there is no reason not to). The format 
+   should contain information about species and molecule sizes, 
+   so that this information can be output back by ddSim for use 
+   by whatever program is used for data analysis (which could 
+   also be mcSim or mdSim).
+
+ - The postprocessing program in the Tools namespace must read 
+   all formats produced by DdMd, with atom ids in molecular
+   order or not, but should be able to read and make use of 
+   information about molecules and species when this is included 
+   in the file.
+
+ - Allow verbose ascii configuration files, but provide a binary,
+   very compact minimal trajectory file format.
+
+ - Allow but do not require trajectory files to contain a header
+   with some information about molecular order (molecule and species 
+   sizes, fixed atom info (types, charges, etc). The trajectory file 
+   should NOT, however, contain information about groups or molecular
+   topology. Readers should check for consistency of redundant data.
+
+ - The trajectory file format should allow per-atom information that
+   is fixed to be specified either in the header or per frame, but
+   not both. Specifying information in the header is a promise that
+   it is fixed. These choices should be documented in the file.
+
+ - Provide a separate per-species topology file format. This can be 
+   written by (md|mc)Sim and read by MdPp for molecule based analysis. 
+   It will not be readable by ddSim.
+
+ - Postprocessing programs can read both a configuration file and a 
+   trajectory to obtain complete connectivitiy information in a form
+   that is not explicitly molecular (i.e., does not impose the 
+   requirement that all molecules in a species have the same topology).
+
+---------------------------------------------------------------------
+Workflows:
+
+ - When a system is generated by mcSim or mdSim, that program would 
+   write an simpatico spc file in molecular format (atoms sequentially 
+   within a molecule, molecules of the same species consecutive with 
+   each species). This file should give topology information in a 
+   compact form.
+
+ - The ddSim program should read the spc file produced by mcSim or mdSim, 
+   and should retain basic information about species, so that it can be 
+   passed on to mcSim or mdSim or mdPp for postprocessing.
+
+ - For consideration:
+
+   1) Should the as-generated file contain information about shifts? Yes, 
+   eventually, though this could be delayed.  All programs should be able 
+   to read config files with or without shifts.  Programs that generate 
+   initial conditions should generate molecules with short bonds between 
+   absolute positions (i.e., between values of vector position + shift)
+
+   3) How to control which options to include in config files written by 
+   ddSim?  Answer: Allow for more complicated command lines by using a 
+   buffer that reads the rest of the line after a command, broadcasts it 
+   and then allows it to determine the number of words.
+
+---------------------------------------------------------------------
+Plan:
+
+ 1) McMd ConfigIo for configuration format      (SpcConfigIo)
+ 2) Add simple species to DdMd::Simulation
+ 3) DdMd ConfigIo for configuration format      (SpcConfigIo)
+ 4) McMd TrajectoryIo for trajectory format     (SptTrajectoryIo)
+ 5) DdMd Writer for trajectory format           (SptTrajectoryWriter)
+ 6) Tools reader                                (SptTrajectoryReader)
+ 7) Allow optional arguments in command lines
+ 8) Divide readers and writers for McMd

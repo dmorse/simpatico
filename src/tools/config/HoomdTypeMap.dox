@@ -1,0 +1,33 @@
+namespace Tools
+{
+
+/*! \page tools_config_HoomdTypeMap_page Hoomd Type Map File
+
+The Tools:HoomdConfigReader and Tools::HoomdConfigWriter classes each require an auxiliary type map file that contains a mapping between the integer atom and group type identifiers used in all of the simpatico programs and string identifiers used in the Hoomd XML configuration file format.
+
+\section tools_config_HoomdTypeMap_command_sec Commands
+
+The name of the auxiliary type map file must be given as the first of two string parameters of the READ_CONFIG or WRITE_CONFIG commands in the command script for the mdPp postprocessor. The syntax for both commands is
+\code
+   READ_CONFIG  typeMapFile configFile
+   WRITE_CONFIG typeMapFile configFile
+\endcode
+where typeMapFile is the path to auxiliary type map file and configFile is the nameo of the Hoomd XML configuration file to be read from or written to.
+
+\section tools_config_HoomdTypeMap_example_sec Type File Format
+
+Here is an example of the format of a type map file for a system with two types of atom and one type of bond, with no angles or dihedrals:
+\code
+   ATOM TYPES:
+     nType 2
+     Types 0 A
+           1 B
+   BOND TYPES:
+     nType 1
+     Types 0 polymer
+\endcode
+In this example, the atom types with indexes 0 and 1 in simpatico are referred to by labels 'A' and 'B' in the Hoomd XML file, while the single bond type is type 0 in simpatico and type 'polymer' in the Hoomd file.
+
+*/
+
+}

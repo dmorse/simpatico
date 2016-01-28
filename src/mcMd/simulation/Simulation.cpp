@@ -11,7 +11,7 @@
 #include <mcMd/analyzers/AnalyzerManager.h>
 #include <mcMd/species/SpeciesManager.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/species/SpeciesGroup.tpp>
 #include <mcMd/chemistry/Activate.h>
 
 // namespace Util
@@ -622,7 +622,8 @@ namespace McMd
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
-      bondPtr = &bonds_[firstBondIds_[iSpecies]];
+      // bondPtr = &bonds_[firstBondIds_[iSpecies]];
+      bondPtr = &bonds_[0] + firstBondIds_[iSpecies];
 
       // Loop over molecules in Species
       for (iMol = 0; iMol < capacity; ++iMol) {
@@ -692,7 +693,8 @@ namespace McMd
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
-      anglePtr = &angles_[firstAngleIds_[iSpecies]];
+      // anglePtr = &angles_[firstAngleIds_[iSpecies]];
+      anglePtr = &angles_[0] + firstAngleIds_[iSpecies];
 
       // Loop over molecules in Species
       for (iMol = 0; iMol < capacity; ++iMol) {
@@ -757,7 +759,8 @@ namespace McMd
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
-      dihedralPtr = &dihedrals_[firstDihedralIds_[iSpecies]];
+      //dihedralPtr = &dihedrals_[firstDihedralIds_[iSpecies]];
+      dihedralPtr = &dihedrals_[0] + firstDihedralIds_[iSpecies];
 
       // Loop over molecules in Species
       for (iMol = 0; iMol < capacity; ++iMol) {

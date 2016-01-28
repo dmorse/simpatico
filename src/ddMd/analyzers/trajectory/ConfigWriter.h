@@ -31,7 +31,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_ConfigWriter_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Trajectory_Module
    */
    class ConfigWriter : public Analyzer
    {

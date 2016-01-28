@@ -30,9 +30,9 @@ namespace McMd
    * A PairList (or Verlet list) is a list of neighboring pairs of Atoms that 
    * are separated by a distance less than a specified cutoff. The cutoff for
    * the Verlet list is the sum of a potential cutoff, which is passed as a 
-   * parameter to allocate(), and a "skin", which is read by readParameters().
+   * parameter to initialize(), and a "skin", which is read by readParameters().
    *
-   * After a PairList is constructed, the allocate() method must be called to
+   * After a PairList is constructed, the initialize() method must be called to
    * allocate memory for both the data structures required to store the PairList
    * and for a private CellList object that is used to construct the PairList.
    *
@@ -104,26 +104,21 @@ namespace McMd
       /**
       * Allocate memory and initialize.
       *
-      * Allocate all memory required by the PairList and the CellList,
-      * and initialize the grid of Cell objects. 
+      * Initial allocation of memory required by the PairList.
       *
-      * Precondition: readParameters() must be invoked before allocate(),
+      * Precondition: readParameters() must be invoked before initialize(),
       * so that values of atomCapacity, pairCapacity, skin are known.
-      * The allocate() method can only be called once.
+      * The initialize() method can only be called once.
       *
-      * \param atomIdEnd       maximum allowed atom Id, plus 1
-      * \param boundary        Boundary object with maximum dimensions
-      * \param potentialCutoff Range of pair potential
+      * \param atomIdEnd  maximum allowed atom Id, plus 1
+      * \param potentialCutoff  range of pair potential, without skin
       */
-      void 
-      allocate(int atomIdEnd, const Boundary &boundary, double potentialCutoff);
+      void initialize(int atomIdEnd, double potentialCutoff);
   
       /**
-      * Make the grid of cells for the internal Cell List.
-      *
-      * Precondition: This PairList must be allocated.
+      * Setup an empty grid of cells for the internal cell list.
       */ 
-      void makeGrid(const Boundary &boundary);
+      void setup(const Boundary &boundary);
 
       /**
       * Clear the PairList and CellList.
@@ -177,9 +172,9 @@ namespace McMd
       int nPair() const;
 
       /**
-      * Has memory been allocated for this PairList?
+      * Has the initialize function been called?
       */
-      bool isAllocated() const;
+      bool isInitialized() const;
    
       /**
       * Returns true if PairList is current, false otherwise.
@@ -228,7 +223,7 @@ namespace McMd
    private:
   
       /// Private CellList, used to create PairList.
-      CellList cellList_;
+      CellList  cellList_;
 
       /// Array of pointers to 1st (or primary) atom in each pair.
       DArray<Atom*>  atom1Ptrs_;  
@@ -237,45 +232,53 @@ namespace McMd
       DArray<Atom*>  atom2Ptrs_;  
 
       /// Array of indices in atom2Ptrs_ of first neighbor of an Atom.
-      DArray<int>    first_; 
+      DArray<int>  first_; 
 
       /// Array of old atom positions.
-      DArray<Vector> oldPositions_;
+      DArray<Vector>  oldPositions_;
 
       /// Extra distance to add to pair potential cutoff.
-      double skin_;
+      double  skin_;
    
       /// Pair list cutoff radius (pair potential cutoff + skin_).
       double cutoff_;
    
       /// Maximum number of atoms (dimension of atom1Ptrs_).
-      int    atomCapacity_;     
+      int  atomCapacity_;     
    
       /// Maximum number of distinct pairs (dimension of atom2Ptrs_).
-      int    pairCapacity_;     
+      int  pairCapacity_;     
    
       /// Number of primary atoms in atom1Ptrs_.
-      int    nAtom1_;      
+      int  nAtom1_;      
 
       /// Number of secondary atoms in atom2Ptrs_, or number of pairs.
-      int    nAtom2_; 
+      int  nAtom2_; 
    
       /// Total number of atoms in the PairList.
-      int    nAtom_;     
+      int  nAtom_;     
    
       /// Index one less than the first element of atom1Ptrs_ for atoms 
       /// with no neighbors.
-      int    tList1_;     
+      int  tList1_;     
 
       /// Maximum value of nAtom_ since instantiation.
-      int    maxNAtom_;     
+      int  maxNAtom_;     
    
       /// Maximum value of nAtom2_ (# of pairs) encountered since instantiation.
-      int    maxNAtom2_;     
+      int  maxNAtom2_;     
    
       /// The number of times this PairList has been built since instantiation.
-      int    buildCounter_;
+      int  buildCounter_;
+
+      /// Has the initialize function been called?
+      bool isInitialized_;
   
+      /**
+      * Allocate memory for PairList.
+      */
+      void allocate();
+
       /* 
       * Implementation Notes:
       *
@@ -349,43 +352,43 @@ namespace McMd
    * Add an Atom to the CellList.
    */ 
    inline void PairList::addAtom(Atom &atom)
-   { cellList_.addAtom(atom); }
+   {  cellList_.addAtom(atom); }
 
    /*
    * Get the current number of atoms in the pairlist.
    */ 
    inline int PairList::nAtom() const
-   { return nAtom_; }
+   {  return nAtom_; }
 
    /*
    * Get the current number of pairs.
    */ 
    inline int PairList::nPair() const
-   { return nAtom2_; }
+   {  return nAtom2_; }
 
    /*
    * Get the maximum value of aAtom() since instantiation.
    */ 
    inline int PairList::maxNAtom() const
-   { return maxNAtom_; }
+   {  return maxNAtom_; }
 
    /*
    * Get the maximum value of nPair() since instantiation.
    */ 
    inline int PairList::maxNPair() const
-   { return maxNAtom2_; }
+   {  return maxNAtom2_; }
 
    /*
    * Get the number of times this PairList has been built.
    */ 
    inline int PairList::buildCounter() const
-   { return buildCounter_; }
+   {  return buildCounter_; }
 
    /*
-   * Has memory been allocated for this PairList?
+   * Has the initialize function been called?
    */ 
-   inline bool PairList::isAllocated() const
-   { return cellList_.isAllocated(); }
+   inline bool PairList::isInitialized() const
+   {  return isInitialized_; }
 
 } 
 #endif

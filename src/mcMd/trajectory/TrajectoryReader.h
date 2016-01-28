@@ -22,9 +22,9 @@ namespace McMd
    class System;
 
    /**
-   * Trajectory file reader.
+   * Trajectory file reader (base class).
    *
-   * \ingroup McMd_TrajectoryReader_Module
+   * \ingroup McMd_Trajectory_Module
    */
    class TrajectoryReader
    {
