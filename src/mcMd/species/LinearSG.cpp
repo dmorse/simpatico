@@ -135,7 +135,7 @@ namespace McMd
 
    /*
    * Recursive function to try to place an atom.
-   */
+   *
    bool
    LinearSG::tryPlaceAtom(Molecule& molecule,
                           int atomId,
@@ -211,9 +211,9 @@ namespace McMd
       return hasBeenPlaced;
    }
 
-   /*
+   *
    * Generate random molecules
-   */
+   
    void
    LinearSG::generateMolecules(int nMolecule,
                                DArray<double> exclusionRadius,
@@ -319,7 +319,7 @@ namespace McMd
          }
       }
       #endif
-
+      
    }
-
+*/
 }

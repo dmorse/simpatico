@@ -22,7 +22,7 @@ namespace McMd
 
    class System;
    class Species;
-
+   class SpeciesMutator;
    /**
    * Identifies clusters of molecules, such as micelles.
    */
@@ -51,7 +51,7 @@ namespace McMd
       * \param cutoff pair distance cutoff
       */
       virtual 
-      void initialize(int speciesId, int atomTypeId, double cutoff);
+      void initialize(int speciesId, int atomTypeId, double cutoff, int desiredSubtype = 0);
    
       /**
       * Find all clusters.
@@ -114,7 +114,11 @@ private:
 
       /// Cutoff distance for touching cores
       double cutoff_;
-
+      
+      /// Is the species mutable
+      bool isMutable_;
+      /// If the species is mutable, what is the desired subtype
+      int desiredSubtype_;
       /**
       * Return parent system by reference.
       */
