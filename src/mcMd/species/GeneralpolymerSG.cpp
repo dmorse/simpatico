@@ -134,7 +134,7 @@ namespace McMd
    }
    /**
    * Recursive function to try to place an atom.
-   */
+   
    bool GeneralpolymerSG::tryPlaceAtom(Molecule& molecule, int atomId,
       DArray<double> exclusionRadius, System& system, CellList &cellList,
       BondPotential *bondPotentialPtr, const Boundary &boundary)
@@ -202,9 +202,9 @@ namespace McMd
 
       return hasBeenPlaced;
    }
-   /**
+   **
    * Generate random molecules
-   */
+   *
    void GeneralpolymerSG::generateMolecules(int nMolecule, 
       DArray<double> exclusionRadius, System& system,
       BondPotential *bondPotentialPtr, const Boundary &boundary)
@@ -304,8 +304,9 @@ namespace McMd
             }
          }
       }
+      
       #endif
-
+     
    } 
-
+*/
 } 

@@ -54,7 +54,12 @@ namespace McMd
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
-
+      Species* speciesPtr;
+      speciesPtr = &(system().simulation().species(speciesId_)); 
+      isMutable_ = (speciesPtr->isMutable());
+      if (isMutable_) {
+         read<int>(in, "speciesSubtype", speciesSubtype_);
+      }
       read<int>(in, "atomTypeId", atomTypeId_);
       if (atomTypeId_ < 0) {
          UTIL_THROW("Negative atomTypeId");
@@ -69,12 +74,13 @@ namespace McMd
       }
 
       // Initialize ClusterIdentifier
-      identifier_.initialize(speciesId_, atomTypeId_, cutoff_);
+      identifier_.initialize(speciesId_, atomTypeId_, cutoff_, speciesSubtype_);
       read<int>(in,"histMin", histMin_);
       read<int>(in,"histMax", histMax_);
       hist_.setParam(histMin_, histMax_);
       hist_.clear();
     
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       isInitialized_ = true;
    }
 
@@ -92,6 +98,13 @@ namespace McMd
       }
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
+      }
+
+      Species* speciesPtr;
+      speciesPtr = &(system().simulation().species(speciesId_)); 
+      isMutable_ = (speciesPtr->isMutable());
+      if (isMutable_) {
+         loadParameter<int>(ar, "speciesSubtype", speciesSubtype_);
       }
 
       loadParameter<int>(ar, "atomTypeId", atomTypeId_);
@@ -151,13 +164,21 @@ namespace McMd
          }
          ++nSample_;
       }
+
+
+      int min = hist_.min();
+      int nBin = hist_.nBin();
+      for (int i = 0; i < nBin; ++i) {
+         outputFile_ << Int(i + min) << "  " 
+                     <<  Dbl(double(hist_.data()[i])) << "\n";
+      }
    }
 
    /*
    * Output results to file after simulation is completed.
    */
    void ClusterHistogram::output() 
-   {
+   {  outputFile_.close();
       // Write parameter file
       fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       writeParam(outputFile_);

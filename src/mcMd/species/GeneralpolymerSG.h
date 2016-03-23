@@ -64,9 +64,9 @@ namespace McMd
       * \param bondPotentialPtr the bond potential
       * \param boundary the boundary to generate atoms in
       */
-      virtual void generateMolecules(int nMolecule,
-         DArray<double> exclusionRadius, System &system,
-         BondPotential *bondPotentialPtr, const Boundary &boundary);
+      //virtual void generateMolecules(int nMolecule,
+      //   DArray<double> exclusionRadius, System &system,
+      //   BondPotential *bondPotentialPtr, const Boundary &boundary);
 
    protected:
    
@@ -135,9 +135,9 @@ namespace McMd
       *
       * \returns true if particle could be placed
       */
-      bool tryPlaceAtom(Molecule &molecule, int atomId,
-         DArray<double> exclusionRadius, System& system, CellList &cellList,
-         BondPotential *bondPotentialPtr, const Boundary &boundary);
+      //bool tryPlaceAtom(Molecule &molecule, int atomId,
+      //   DArray<double> exclusionRadius, System& system, CellList &cellList,
+      //   BondPotential *bondPotentialPtr, const Boundary &boundary);
 
       int maxPlacementAttempts_ = 500;
       DArray<int> beadIdentities_;

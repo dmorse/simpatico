@@ -76,7 +76,7 @@ namespace DdMd
    *
    * \sa \ref ddMd_analyzer_StructureFactor_page "param file format"
    * 
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Scattering_Module
    */
    class StructureFactor : public Analyzer
    {

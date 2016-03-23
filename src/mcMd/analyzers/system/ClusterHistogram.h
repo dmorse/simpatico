@@ -118,6 +118,11 @@ namespace McMd
       /// Has readParam been called?
       bool  isInitialized_;
 
+      /// Is the species of interest mutable? 
+      bool  isMutable_;
+      /// If the species is mutable what subtype is of interest?
+      int   speciesSubtype_;
+
    };
 
    /**

@@ -12,6 +12,7 @@
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
+#include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
@@ -45,17 +46,25 @@ namespace McMd
    * Initial setup.
    */
    void
-   ClusterIdentifier::initialize(int speciesId, int atomTypeId, double cutoff)
+   ClusterIdentifier::initialize(int speciesId, int atomTypeId, double cutoff, int desiredSubtype)
    {
+      // Set member variables
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;
       cutoff_ = cutoff;
+      desiredSubtype_= desiredSubtype;
+      // Allocate memory
       Species* speciesPtr = &system().simulation().species(speciesId);
+      isMutable_= (speciesPtr->isMutable());      
       int moleculeCapacity = speciesPtr->capacity();
       links_.allocate(moleculeCapacity);
       clusters_.reserve(64);
-      int atomCapacity = moleculeCapacity*speciesPtr->nAtom();
+      int atomCapacity = system().simulation().atomCapacity();
       cellList_.setAtomCapacity(atomCapacity);
+
+      // Note: We must set the cellist atom capacity to the total atom capacity,
+      // even though we are only interested in clusters of one species, because 
+      // the celllist atom capacity sets the maximum allowed atom index value.
    }
 
    /*
@@ -121,20 +130,29 @@ namespace McMd
    void ClusterIdentifier::identifyClusters()
    {
 
-      // Clear cell list, clusters array and all links
-      cellList_.clear();
+      // Initialize all data structures:
+      // Setup a grid of empty cells
+      cellList_.setup(system().boundary(), cutoff_);
+      // Clear clusters array and all links
       clusters_.clear();
       for (int i = 0; i < links_.capacity(); ++i) {
          links_[i].clear();
       }
-
+      bool isDesiredType;
       // Build the cellList, associate Molecule with ClusterLink.
       // Iterate over molecules of species speciesId_
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
+         /// A bunch of mutator stuff
+         if (isMutable_) {
+            Species* speciesPtr = &system().simulation().species(speciesId_);
+            SpeciesMutator* mutatorPtr = &speciesPtr->mutator();
+            isDesiredType = (desiredSubtype_== mutatorPtr->moleculeStateId( system().molecule(speciesId_,molIter->id())));
+         }
 
+         if (!isMutable_ || (isMutable_ && isDesiredType  )) {
          // Associate this Molecule with a ClusterLink
          links_[molIter->id()].setMolecule(*molIter.get());
 
@@ -143,9 +161,11 @@ namespace McMd
             if (atomIter->typeId() == atomTypeId_) {
                system().boundary().shift(atomIter->position());
                cellList_.addAtom(*atomIter);
+              
             }
 
          }
+        }
       }
 
       // Identify all clusters
@@ -154,7 +174,12 @@ namespace McMd
       int clusterId = 0;
       system().begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
-
+         if (isMutable_) {
+            Species* speciesPtr = &system().simulation().species(speciesId_);
+            SpeciesMutator* mutatorPtr = &speciesPtr->mutator();
+            isDesiredType = (desiredSubtype_== mutatorPtr->moleculeStateId( system().molecule(speciesId_,molIter->id())));
+         }
+         if (!isMutable_ || (isMutable_ && isDesiredType  )) {
          // Find the link with same index as this molecule
          linkPtr = &(links_[molIter->id()]);
          assert (&(linkPtr->molecule()) == molIter.get());
@@ -177,16 +202,16 @@ namespace McMd
 
             clusterId++;
          }
-
+        }
       }
 
       // Validity check - throws exception on failure.
-      isValid();
+      //isValid();
    }
 
    bool ClusterIdentifier::isValid() const
-   {
-      // Check clusters
+   {   
+    // Check clusters
       int nCluster = clusters_.size();
       int nMolecule = 0;
       for (int i = 0; i < nCluster; ++i) {
@@ -195,16 +220,16 @@ namespace McMd
          }
          nMolecule += clusters_[i].size();
       }
-      if (nMolecule != systemPtr_->nMolecule(speciesId_)) {
-         UTIL_THROW("Error in number of molecules");
-      }
-   
+     // WARNING CONSISTENCY CHECK IS CURRENTLY DISABLED
+     // if (nMolecule != systemPtr_->nMolecule(speciesId_)) {
+     //   UTIL_THROW("Error in number of molecules");
+     // }
+     // WARNING CONSISTENCY CHECK IS CURENTLY DISABLED 
       // Check molecules and links
       ClusterLink const * linkPtr;
       System::ConstMoleculeIterator molIter;
       systemPtr_->begin(speciesId_, molIter);
       for ( ; molIter.notEnd(); ++molIter) {
-
          linkPtr = &(links_[molIter->id()]);
          if (&(linkPtr->molecule()) != molIter.get()) {
             UTIL_THROW("Link without correct molecule association");
@@ -212,8 +237,8 @@ namespace McMd
          if (linkPtr->clusterId() == -1) {
             UTIL_THROW("Unmarked molecule");
          }
+      
       }
-
       // Normal return (no errors)
       return true;
    }
