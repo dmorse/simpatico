@@ -71,7 +71,7 @@ namespace McMd
       *   Choose a randomly selected molecule of the given subtype
       */ 
    
-      Molecule& randomSGMolecule(int speciesId,  int flipType);
+      Molecule& randomSGMolecule(int speciesId, int nSubType, int flipType);
    protected:
    
       /// Integer index for molecular species.
@@ -86,6 +86,8 @@ namespace McMd
      
       /// Select which semigrand molecule subtype that needs flipping
       int flipSubtype_;
+      
+      double numoWeight_;
    };
 
 }      

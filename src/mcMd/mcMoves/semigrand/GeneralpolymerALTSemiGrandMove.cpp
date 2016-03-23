@@ -79,17 +79,25 @@ namespace McMd
       SpeciesMutator* mutatorPtr = &speciesPtr_->mutator();
       int oldStateCount = mutatorPtr->stateOccupancy(0);
       if  (oldStateCount == Ulimit_) {
-      flipSubtype_ = 0;
-      } else
+      if (flipSubtype_ == 1) {
+        bool accept = false;
+        return accept;
+        }
+      } 
       if (oldStateCount == Llimit_) {
-      flipSubtype_ = 1;
-      }
-      else {
-      int flipSubtype_ = simulation().random().uniformInt(0,2);
+      flipSubtype_ = simulation().random().uniformInt(0,2);
+      if (flipSubtype_ == 0){
+         bool accept = false;
+         return accept;
+       }
+      } 
+      if (oldStateCount>Llimit_ && oldStateCount < Ulimit_) {
+      flipSubtype_ = simulation().random().uniformInt(0,2);
       }
        // Instead of flipping a random molecule, flip one using the selective flipper
       //Molecule& molecule = system().randomMolecule(speciesId_);
-      Molecule& molecule = randomSGMolecule(speciesId_, flipSubtype_);
+      oldStateCount = mutatorPtr->stateOccupancy(flipSubtype_);
+      Molecule& molecule = randomSGMolecule(speciesId_, oldStateCount, flipSubtype_);
       //SpeciesMutator* mutatorPtr = &speciesPtr_->mutator();
       #ifndef INTER_NOPAIR
       // Calculate pair energy for the chosen molecule
@@ -100,26 +108,21 @@ namespace McMd
       int oldStateId = speciesPtr_->mutator().moleculeStateId(molecule);
       int newStateId = (oldStateId == 0) ? 1 : 0;
       speciesPtr_->mutator().setMoleculeState(molecule, newStateId);
-
-      int state0 = mutatorPtr->stateOccupancy(0);
-      int state1 = mutatorPtr->stateOccupancy(1);
       #ifdef INTER_NOPAIR 
-
       bool   accept = true;
-
       #else // ifndef INTER_NOPAIR
       int newStateTotal = mutatorPtr->stateOccupancy(0);
       // Recalculate pair energy for the molecule
       double newEnergy = system().pairPotential().moleculeEnergy(molecule);
-
+      double numoWeight = (double)(mutatorPtr->stateOccupancy(oldStateId)+1)/(double)(mutatorPtr->stateOccupancy(newStateId));
       // Decide whether to accept or reject
       double oldWeight = speciesPtr_->mutator().stateWeight(oldStateId);
       double newWeight = speciesPtr_->mutator().stateWeight(newStateId);
-      double ratio  = boltzmann(newEnergy - oldEnergy)*newWeight/oldWeight;
+      double ratio  = boltzmann(newEnergy - oldEnergy)*newWeight/oldWeight*numoWeight;
       bool   accept = random().metropolis(ratio);
       #endif
 
-      if ((accept)&(newStateTotal <= Ulimit_)&(newStateTotal>=Llimit_)) {
+      if (accept) {
       
            incrementNAccept();
 
@@ -133,9 +136,9 @@ namespace McMd
 
       return accept;
    }
- Molecule& GeneralpolymerALTSemiGrandMove::randomSGMolecule(int speciesId,  int flipType)
+ Molecule& GeneralpolymerALTSemiGrandMove::randomSGMolecule(int speciesId, int nSubType,  int flipType)
    {
-      int moleculeId,nType,nMol,index,type;
+      int moleculeId,nMol,index,type;
       int count = 0;
       //int shouldFlip = 1;
       nMol = system().nMolecule(speciesId);
@@ -144,7 +147,7 @@ namespace McMd
                      << " = " << nMol << std::endl;
          UTIL_THROW("Number of molecules in species <= 0");
       }
-      index = simulation().random().uniformInt(0, nType);
+      index = simulation().random().uniformInt(0, nSubType);
       for (int i=0; i<nMol; ++i) {
         type = speciesPtr_->mutator().moleculeStateId(system().molecule(speciesId, i));
 //        std::cout << type << "     " << moleculeId << "     ";
