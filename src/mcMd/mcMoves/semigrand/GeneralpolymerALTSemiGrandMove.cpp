@@ -35,8 +35,8 @@ namespace McMd
       // Read parameters
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);
-      read<int>(in, "Upperlimit", Ulimit_);
-      read<int>(in, "Lowerlimit", Llimit_);
+      read<int>(in, "UpperLimit", Ulimit_);
+      read<int>(in, "LowerLimit", Llimit_);
       // Cast the Species to HomopolymerSG
       speciesPtr_ = dynamic_cast<GeneralpolymerSG*>(&(simulation().species(speciesId_)));
       if (!speciesPtr_) {
@@ -79,6 +79,7 @@ namespace McMd
       SpeciesMutator* mutatorPtr = &speciesPtr_->mutator();
       int oldStateCount = mutatorPtr->stateOccupancy(0);
       if  (oldStateCount == Ulimit_) {
+      flipSubtype_ = simulation().random().uniformInt(0,2);
       if (flipSubtype_ == 1) {
         bool accept = false;
         return accept;

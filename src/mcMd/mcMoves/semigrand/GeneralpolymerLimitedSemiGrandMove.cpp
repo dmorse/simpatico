@@ -35,7 +35,8 @@ namespace McMd
       // Read parameters
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);
-      read<int>(in, "limit", limit_);
+      read<int>(in, "UpperLimit", Ulimit_);
+      read<int>(in, "LowerLimit", Llimit_);
       // Cast the Species to HomopolymerSG
       speciesPtr_ = dynamic_cast<GeneralpolymerSG*>(&(simulation().species(speciesId_)));
       if (!speciesPtr_) {
@@ -100,10 +101,9 @@ namespace McMd
       double newWeight = speciesPtr_->mutator().stateWeight(newStateId);
       double ratio  = boltzmann(newEnergy - oldEnergy)*newWeight/oldWeight;
       bool   accept = random().metropolis(ratio);
-      accept = !(newStateTotal > limit_);
       #endif
 
-      if (accept) {
+      if (accept && newStateTotal >= Llimit_ && newStateTotal <= Ulimit_) {
 
          incrementNAccept();
 

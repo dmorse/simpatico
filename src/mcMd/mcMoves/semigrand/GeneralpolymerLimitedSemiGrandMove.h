@@ -75,8 +75,8 @@ namespace McMd
       GeneralpolymerSG* speciesPtr_;
 
       /// Limit on number of subspecies molecules that exist
-      int limit_;
-
+      int Ulimit_;
+      int Llimit_;
    };
 
 }      
