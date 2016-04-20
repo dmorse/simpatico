@@ -170,14 +170,19 @@ namespace McMd
       int nMolecules = speciesPtr->capacity();
       int min = hist_.min();
       int nBin = hist_.nBin();
-      
+      ClusterLink* LinkPtr;      
       // Write the time step to the data file
       outputFile_ << iStep << "  ";
       // Cycle through all the surfactant molecules; if they are in a micelle set status = 1, otherwise set status = 0;
       for (int i = 0; i < nMolecules; i++) {
          bool inCluster = false;
-          
-         if (inCluster == true) {
+         // Get the molecule link
+         LinkPtr = &(identifier_.link(i));
+         // Use the link to get the cluster id
+         int clusterId = LinkPtr->clusterId();
+         // Determine the cluster size
+         int clusterSize = identifier_.cluster(clusterId).size();
+         if (clusterSize > 10) {
          outputFile_ << 1 << "  ";
          }
          else {
