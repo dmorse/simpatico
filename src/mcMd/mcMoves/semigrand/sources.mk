@@ -6,7 +6,7 @@ mcMd_mcMoves_semigrand_+= \
     mcMd/mcMoves/semigrand/GeneralpolymerSemiGrandMove.cpp \
     mcMd/mcMoves/semigrand/GeneralpolymerLimitedSemiGrandMove.cpp \
     mcMd/mcMoves/semigrand/GeneralpolymerALTSemiGrandMove.cpp \
-    mcMd/mcMoves/semigrand/WangLandauAdaptiveStepMove.cpp \
+    mcMd/mcMoves/semigrand/WangLandauAdaptiveStepMove.cpp  \\
     mcMd/mcMoves/semigrand/WangLandauALTMove.cpp
 endif
 
