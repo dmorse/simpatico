@@ -64,7 +64,7 @@ namespace McMd
       */
       virtual void sample(long iStep);
       
-      vector comCalculator(DArray micelleIds); 
+      Vector comCalculator(DArray<int> micelleIds); 
       /**
       * Output results at end of simulation.
       */
@@ -130,16 +130,17 @@ namespace McMd
       /// If the species is mutable what subtype is of interest?
       int   speciesSubtype_;
       
-      DArray InMicelle_;
+      DArray<int> InMicelle_;
       //// Various stuff for position calcs
       // Bead of interest
       int beadNumber_;
       // The micelle COM
-      Vector MicelleCOM_;
-
+      Vector micelleCOM_;
+      int particleCount_;
       DArray<Vector> SurfactantPositions_;
       DArray<Vector> UnwrappedPositions_;
-
+      DArray<int> micelleFlux_;
+      DArray<int> priorMicelleFlux_;
    };
 
    /**

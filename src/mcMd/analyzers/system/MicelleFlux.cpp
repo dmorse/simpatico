@@ -16,7 +16,7 @@
 #include <mcMd/chemistry/Atom.h>
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
-
+#include <util/boundary/Boundary.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/misc/ioUtil.h>
@@ -28,7 +28,7 @@ namespace McMd
    using namespace Util;
 
    /// Constructor.
-   MicelleFlux::ExchangeDynamics(System& system) 
+   MicelleFlux::MicelleFlux(System& system) 
     : SystemAnalyzer<System>(system),
       identifier_(system),
       hist_(),
@@ -80,13 +80,16 @@ namespace McMd
       read<int>(in, "beadNumber", beadNumber_);
       // Initialize ClusterIdentifier
       identifier_.initialize(speciesId_, atomTypeId_, cutoff_, speciesSubtype_);
-      read<int>(in,"histMin", histMin_);
-      read<int>(in,"histMax", histMax_);
-      hist_.setParam(histMin_, histMax_);
-      hist_.clear();
-    
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       isInitialized_ = true;
+      int speciesCapacity=system().simulation().species(speciesId_).capacity();
+      micelleFlux_.allocate(speciesCapacity);
+      priorMicelleFlux_.allocate(speciesCapacity);
+      InMicelle_.allocate(speciesCapacity);
+      
+      for (int i = 0; i < speciesCapacity; i++) {
+        priorMicelleFlux_[i]=-1;
+      }
    }
 
    /*
@@ -124,12 +127,8 @@ namespace McMd
 
       loadParameter<double>(ar, "radius", radius_);
       
-      loadParameter<double>(ar, "beadNumber", beadNumber_);
+      loadParameter<int>(ar, "beadNumber", beadNumber_);
       identifier_.initialize(speciesId_, atomTypeId_, cutoff_);
-      loadParameter<int>(ar, "histMin", histMin_);
-      loadParameter<int>(ar, "histMax", histMax_);
-      ar >> hist_;
-
       ar >> nSample_;
 
       isInitialized_ = true;
@@ -144,9 +143,6 @@ namespace McMd
       ar & speciesId_;
       ar & atomTypeId_;
       ar & cutoff_;
-      ar & histMin_;
-      ar & histMax_;
-      ar & hist_;
       ar & nSample_;
    }
 
@@ -156,7 +152,6 @@ namespace McMd
    void MicelleFlux::setup() 
    {  
       if (!isInitialized_) UTIL_THROW("Object is not initialized");
-      hist_.clear();
       nSample_ = 0;
    }
 
@@ -164,39 +159,49 @@ namespace McMd
    *  Calculate the micelle's center of mass
    */
    
-   vector MicelleFlux::comCalculator(DArray micelleIds)
+   Vector MicelleFlux::comCalculator(DArray<int> micelleIds)
    { Species* speciesPtr;
      speciesPtr = &(system().simulation().species(speciesId_));
      int nMolecules = speciesPtr -> capacity();
      int clusterSize = 0;
-     vector centralMolecule;
-     vector r;
-     vector comTrack;
-     int particleCount;    
- 
-     for (int i = 0 i < nMolecules; i++) {
+     Vector centralMolecule;
+     Vector r;
+     Vector comTrack;
+     for (int j=0; j<Dimension; ++j){
+       comTrack[j] =0;
+     }
+     Vector centralAtom;
+     Vector lengths = system().boundary().lengths();
+     particleCount_=0;  
+     for (int i = 0; i < nMolecules; ++i) {
        if (micelleIds[i] == 1)
-         {  for (int k = 0; k < beadNumber_; k++)
-            { particleCount = particleCount+1;
-            r = system().molecule(speciesId_, i).atom(0).position();
+         {  for (int k = 0; k < beadNumber_; ++k)
+            { 
+            particleCount_ = particleCount_+1;
+            r = system().molecule(speciesId_, i).atom(k).position();
             if (clusterSize == 0)
-               {centralAtom == r;
+               {centralAtom = r;
                }
             clusterSize = clusterSize + 1;
-            for (j=0; j<Dimension; ++j) {
-                if (centralAtom[j]-r[j] > lengths[j]/2)
-                   { comTrack[j] = comTrack[j]+r[j]-lengths[j];
-                   }else{0
-                comTrack[j]=comTrack[j]+r[j]
+            for (int j=0; j<Dimension; ++j) {
+                if (std::abs(centralAtom[j]-r[j]) > lengths[j]/2) {
+                    if ((r[j]-centralAtom[j]) > 0)
+                      {comTrack[j] = comTrack[j]+r[j]+lengths[j];}
+                      else 
+                      {comTrack[j] = comTrack[j]+r[j]-lengths[j];}
+                    } else {
+                    comTrack[j]=comTrack[j]+r[j];
                 }
               
             }
+            }
          }
-         }
-         for (j=0; j<Dimension; ++j) {
-            comTrack[j]=comTrack[j]/particleCount;
-         }
+      }  
+         for (int j=0; j<Dimension; ++j) {
+            comTrack[j]=comTrack[j]/particleCount_;
+        }
         return comTrack;
+   
    }
 
 
@@ -207,20 +212,13 @@ namespace McMd
    { 
       if (isAtInterval(iStep)) {
          identifier_.identifyClusters();
-         for (int i = 0; i < identifier_.nCluster(); i++) {
-             hist_.sample(identifier_.cluster(i).size());
-         }
          ++nSample_;
       }
-
       Species* speciesPtr;
       speciesPtr = &(system().simulation().species(speciesId_)); 
       int nMolecules = speciesPtr->capacity();
-      int min = hist_.min();
-      int nBin = hist_.nBin();
       ClusterLink* LinkPtr;      
       // Write the time step to the data file
-      outputFile_ << iStep << "  ";
       // Cycle through all the surfactant molecules; if they are in a micelle set status = 1, otherwise set status = 0;
       for (int i = 0; i < nMolecules; i++) {
          bool inCluster = false;
@@ -231,37 +229,43 @@ namespace McMd
          // Determine the cluster size
          int clusterSize = identifier_.cluster(clusterId).size();
          if (clusterSize > 10) {
-         inMicelle_[i]=1;
+         InMicelle_[i]=1;
          }
          else {
-         inMicelle_[i]=0;
+         InMicelle_[i]=0;
          }
       }
-      vector r;
-      micelleCOM_=comCalculator(inMicelle_);
+      Vector r;
+      micelleCOM_=comCalculator(InMicelle_);
+      Vector lengths = system().boundary().lengths();
       double distance;
       for (int i = 0; i < nMolecules; i++) {
           distance = 0;
-          r = system().molecule(speciesId_, i).atom(beadPosition_).position();
-          for (int j = 0; j < Dimensions; j++)
-          { if micelleCOM_[j]-r[j] > Length[j]/2
-              distance = distance + (micelleCOM_[j]-r[j]-Length[j])^2;
-            else
-              distance = distance + (micelleCOM_[j]-r[j])^2;
+          r = system().molecule(speciesId_, i).atom(beadNumber_).position();
+          for (int j = 0; j < Dimension; j++)
+          { if (std::abs(micelleCOM_[j]-r[j]) > lengths[j]/2) {
+                    if ((r[j]-micelleCOM_[j]) > 0)
+                      distance = distance + pow(micelleCOM_[j]-r[j]+lengths[j],2);
+                      else 
+                      distance = distance + pow(micelleCOM_[j]-r[j]-lengths[j],2);
+                    } else {
+                    distance = distance + pow(micelleCOM_[j]-r[j],2);
+                }
           }
           distance = sqrt(distance);
-          if distance > r
-             micelleFlux_[i] = 0
-          if inMicelle_[i] = 1
-             micelleFlux_[i] = 1
-          else priorMicelleFlux == 0
-             micelleFlux_[i] = 0
+          if (distance > radius_) {
+             micelleFlux_[i] = 0;}
+          else if (InMicelle_[i] == 1){
+             micelleFlux_[i] = 1;}
+          else {
+             micelleFlux_[i] = priorMicelleFlux_[i];}
           }
           for (int i = 0; i < nMolecules; i++) {
             outputFile_ << micelleFlux_[i] << "  ";
-          if i == nMolecules -1
+          if (i == nMolecules -1)
             outputFile_ << "\n";
           }
+          priorMicelleFlux_=micelleFlux_;
           
 
    }
@@ -277,15 +281,7 @@ namespace McMd
       outputFile_.close();
 
       // Write histogram output
-      fileMaster().openOutputFile(outputFileName(".hist"), outputFile_);
       // hist_.output(outputFile_);
-      int min = hist_.min();
-      int nBin = hist_.nBin();
-      for (int i = 0; i < nBin; ++i) {
-         outputFile_ << Int(i + min) << "  " 
-                     <<  Dbl(double(hist_.data()[i])/double(nSample_)) << "\n";
-      }
-      outputFile_.close();
    }
 
 }
