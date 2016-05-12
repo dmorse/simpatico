@@ -1,0 +1,80 @@
+Proposal: class ClusterTracker 
+
+   - A ClusterTracker has 2 private ClusterIdentier objects and 
+     two pointers that can be toggled, so that the pointer to the 
+     new and old identifers is constantly toggled. 
+
+   - Add a function to the Cluster to change the id, and 
+     recursively change the ids stored in all ClusterLink objects. 
+
+   - Definitions: 
+
+        S   = cluster size
+        S_m = minimum size
+        Proper: Cluster with X > X_m
+        P  = # of proper clusters in new identifier
+        Po = # of proper clusters in old identifier
+
+        H = Cn x Co integer matrix. 
+        H(i,j) = number of molecules in new cluster i from old cluster j
+        Sum_j H (i,j) = size of new cluster i - added free molecules
+
+        Ho = Co x Cn integer matrix. First index =
+        Ho(i,j) = number of molecules in old cluster i now in new cluster j
+        Sum_j Ho(i,j) = size of new cluster j - lost free molecules
+
+   - Maintain lists of:
+
+        - Cluster ids in old cluster
+        - Unused cluster ids
+
+   At each sampling step:
+
+     Identify all new clusters, indexed in the order found.
+  
+     Po = P
+     Make an array of ids of proper clusters in new Identifier.
+     Compute P (# of proper clusters) in process.
+  
+     For each proper cluster i in newIdentifier:
+  
+        Loop over molecules in cluster:
+ 
+           Get cluster id j of each molecule in old Identifier.
+           Check if a proper cluster.
+           Increment Hn(i,j)
+  
+     For each proper cluster i in the old Identifier:
+  
+        Loop over molecules in cluster:
+
+           Get cluster id j of each molecule in old Identifier.
+           Check if a proper cluster.
+           Increment Hn(i,j)
+
+     For each proper cluster i in newIdentifier:
+
+        Find number of molecules from old proper clusters:
+
+        If more than some fraction F of molecules from old proper
+        clusters come from one cluster, tentatively assign the new 
+        cluster the same Id as the old.
+
+        If this test assigns the same old id to two new clusters,
+        signal that fission occurred, by storing a record of the
+        event.  Use two new ids and retire the old one, putting 
+        it at the back of a circular queue.
+
+        If more than some fraction F of molecules in i come from 
+        two previous clusters, signal fusion. 
+
+        If a cluster first appears (grows larger than the lower
+        tracking threshhold), mark it as "new", store its birth 
+        data. When a cluster marked as new exceeds a larger 
+        "established" threshhold, signal an "association" event.
+
+        When a cluster is larger than some "established" threshhold, 
+        mark it as an established cluster.  When a cluster that is 
+        marked as "established" drops below detection threshhold, 
+        signal a dissociation event. Retire the cluster number.
+        

@@ -1,5 +1,5 @@
-#ifndef MCMD_CLUSTER_MOLECULE_H
-#define MCMD_CLUSTER_MOLECULE_H
+#ifndef MCMD_CLUSTER_LINK_H
+#define MCMD_CLUSTER_LINK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,6 +16,8 @@ namespace McMd
 
    /**
    * Molecule in a cluster.
+   *
+   * A cluster is defined by a linked list of ClusterLink objects.
    */
    struct ClusterLink
    {
@@ -49,15 +51,21 @@ namespace McMd
 
    private:
 
+      /// Pointer to the associated molecule.
       Molecule* moleculePtr_;
+
+      /// Pointer to the next link.
       ClusterLink* next_;
+
+      /// Integer id of the associated cluster.
       int clusterId_;
 
       friend class Cluster;
 
    };
 
-   inline
+   // Set ClusterLink to default null state.
+   inline 
    void ClusterLink::clear()
    {
       moleculePtr_ = 0;  
@@ -65,18 +73,22 @@ namespace McMd
       clusterId_ = -1;  
    }
 
+   // Set pointer to associated Molecule.
    inline
    void ClusterLink::setMolecule(Molecule& molecule)
    {  moleculePtr_ = &molecule;  }
 
+   // Get the associated molecule by reference.
    inline
    Molecule& ClusterLink::molecule() const
    {  return *moleculePtr_; }
 
+   // Get a pointer to the next link.
    inline
    ClusterLink* ClusterLink::next() const
    {  return next_; }
 
+   // Get the id of the associated cluster.
    inline
    int ClusterLink::clusterId() const
    {  return clusterId_; }

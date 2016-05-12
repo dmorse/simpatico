@@ -15,6 +15,13 @@ namespace McMd
 
    /**
    * Cluster of molecules.
+   *
+   * A Cluster is implemented as a linked list of ClusterLink
+   * objects, each of which is associated with a molecule. A
+   * Cluster has a pointer to the first ClusterLink and a size 
+   * member that counts the number of links (or molecules), but 
+   * does not own the associated ClusterLink or Molecule 
+   * objects.
    */
    class Cluster
    {
@@ -55,7 +62,7 @@ namespace McMd
       {  return id_; }
 
       /**
-      * Get the number of molecules/links in the cluster.
+      * Get the number of molecules or links in the cluster.
       */
       int size() const
       {  return size_; }
