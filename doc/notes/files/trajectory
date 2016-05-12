@@ -1,34 +1,24 @@
+SIMPATICO TRAJECTORY FILE FORMAT
+
+   File extension *.smt
+
+   Remarks:
+
+   1) This is a binary file format, which should be as compact as possible.
+   2) The file consists of a sequence of independent frames, with no header.
+   3) A postprocessor must normally also read a param and/or config file.
+
 Trajectory file (binary):
-
-   Header:
-
-      nAtom int
-      headerFormat - bitfield indicating which optional info follows. 
-                  Flags: hasSpecies, hasAtomsHeader, hasMoleculesHeader
-      [SPECIES] - nMolecule & nAtom per molecule, iff isMolecular 
-      [ATOMS] - Format, followed by per atom data
-               atomFormat - hasType, hasMass, hasCharge, n = nOptInt, m = nOptreal
-               id, typeId, [mass], [charge], nx[optInt], mx[optReal]
-      [MOLECULES] - Format (nOptInt, nOptReal). For each molecule id, optional info.
 
    Frame:
 
       iStep
       boundary
       nAtom int
-      frameFormat - bitfield with flags that include: isMolecular,
-                    isOrdered, hasShift, hasVelocity, hasCharge, 
+      frameFormat - bitfield with flags that include:
+                    isOrdered, hasType, hasShift, hasVelocity, hasCharge, 
                     hasMolecule, nOptInt, nOptReal
-      For each atom (id, position, optionally shift, velocity)
-      hasMoleculeData
-      if hasMoleculeData
-         nOptInt, nOptReal
-         For each species( For each molecule (id, optional data))
-
-Trajectory frame format:
-
-   FRAME:
-     For each atom {
-        id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
-     }
+      For each atom {
+         id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
+      }
 
