@@ -164,7 +164,7 @@ namespace McMd
      speciesPtr = &(system().simulation().species(speciesId_));
      int nMolecules = speciesPtr -> capacity();
      int clusterSize = 0;
-     Vector centralMolecule;
+//     Vector centralMolecule;
      Vector r;
      Vector comTrack;
      for (int j=0; j<Dimension; ++j){
@@ -186,9 +186,9 @@ namespace McMd
             for (int j=0; j<Dimension; ++j) {
                 if (std::abs(centralAtom[j]-r[j]) > lengths[j]/2) {
                     if ((r[j]-centralAtom[j]) > 0)
-                      {comTrack[j] = comTrack[j]+r[j]+lengths[j];}
-                      else 
                       {comTrack[j] = comTrack[j]+r[j]-lengths[j];}
+                      else 
+                      {comTrack[j] = comTrack[j]+r[j]+lengths[j];}
                     } else {
                     comTrack[j]=comTrack[j]+r[j];
                 }
@@ -200,6 +200,7 @@ namespace McMd
          for (int j=0; j<Dimension; ++j) {
             comTrack[j]=comTrack[j]/particleCount_;
         }
+        std::cout << comTrack << '\n';
         return comTrack;
    
    }
@@ -213,7 +214,7 @@ namespace McMd
       if (isAtInterval(iStep)) {
          identifier_.identifyClusters();
          ++nSample_;
-      }
+      //}
       Species* speciesPtr;
       speciesPtr = &(system().simulation().species(speciesId_)); 
       int nMolecules = speciesPtr->capacity();
@@ -253,6 +254,7 @@ namespace McMd
                 }
           }
           distance = sqrt(distance);
+          std::cout << distance << '\n';
           if (distance > radius_) {
              micelleFlux_[i] = 0;}
           else if (InMicelle_[i] == 1){
@@ -267,7 +269,7 @@ namespace McMd
           }
           priorMicelleFlux_=micelleFlux_;
           
-
+    } 
    }
 
    /*
