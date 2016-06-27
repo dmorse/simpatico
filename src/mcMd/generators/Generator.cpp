@@ -10,6 +10,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
 #include <mcMd/species/Species.h>
+#include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/neighbor/CellList.h>
 
 namespace McMd
@@ -93,9 +94,16 @@ namespace McMd
       int maxAttempt = 200;
       int iAttempt;
       bool success;
+      bool isMutable;
+      Species* speciesPtr;
       for (int iMol = 0; iMol < nMolecule; ++iMol) {
          Molecule &newMolecule= simulation().getMolecule(speciesId);
          system().addMolecule(newMolecule);
+         speciesPtr = &system().simulation().species(speciesId);
+         isMutable = speciesPtr->isMutable();
+         if (isMutable) {
+           speciesPtr->mutator().setMoleculeState(newMolecule, 0);
+         }
          success = false;
          iAttempt = 0;
          while (!success && iAttempt < maxAttempt) {
@@ -109,7 +117,7 @@ namespace McMd
                         << iMol << "\n";
             return false;
          }
-      }
+      }    
       return true;
    }
 
