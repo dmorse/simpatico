@@ -3,6 +3,7 @@ include $(SRC_DIR)/mcMd/analyzers/system/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/mcSystem/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/mdSystem/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/simulation/sources.mk
+include $(SRC_DIR)/mcMd/analyzers/trajectory/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/mutable/sources.mk
 
 mcMd_analyzers_=\
@@ -11,6 +12,7 @@ mcMd_analyzers_=\
     $(mcMd_analyzers_mcSystem_) \
     $(mcMd_analyzers_mdSystem_) \
     $(mcMd_analyzers_simulation_) \
+    $(mcMd_analyzers_trajectory_) \
     $(mcMd_analyzers_mutable_) \
     mcMd/analyzers/Analyzer.cpp \
     mcMd/analyzers/AnalyzerManager.cpp 
