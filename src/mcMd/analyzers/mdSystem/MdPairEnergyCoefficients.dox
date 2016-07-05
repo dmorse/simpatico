@@ -1,0 +1,50 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdPairEnergyCoefficients_page MdPairEnergyCoefficients
+
+\section mcMd_analyzer_MdPairEnergyCoefficients_overview_sec Synopsis
+
+This analyzer calculates the vector autocorrelation function for
+the vector separation of a specific pair of atoms within molecules
+of a specific species. For example, by choosing the two atoms to
+be the first and last atoms of a linear chain, one can calculate
+the autocorrelation function of the end-to-end vector.
+
+\section mcMd_analyzer_MdPairEnergyCoefficients_param_sec Parameters
+The parameter file format is:
+\code
+   MdPairEnergyCoefficients{ 
+      interval              int
+      outputFileName        string
+      selector              PairSelector
+      maxMoleculeNeighbors  int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> selector </td>
+     <td> PairSelector object to specify pair type </td>
+  </tr>
+  <tr> 
+     <td> maxMoleculeNeighbors </td>
+     <td> number of data samples retained in history </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_MdPairEnergyCoefficients_out_sec Output Files
+
+To be documented (See output function)
+
+*/
+
+}
