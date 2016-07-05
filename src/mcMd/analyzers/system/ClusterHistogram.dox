@@ -1,0 +1,64 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_ClusterHistogram_page ClusterHistogram
+
+\section mcMd_analyzer_ClusterHistogram_overview_sec Synopsis
+
+This analyzer identifies micellar clusters present in the system 
+every interval steps and accumulates a histogram of observed 
+cluster sizes, which is output at the end of the simulation.
+
+\section mcMd_analyzer_ClusterHistogram_param_sec Parameters
+The parameter file format is:
+\code
+   ClusterHistogram{ 
+      interval           int
+      outputFileName     string
+      speciesId          int
+      atomTypeId         int
+      cutoff             double
+      histMin            int
+      histMax            int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> atomTypeId </td>
+     <td> integer index of selected (core block) atom type </td>
+  </tr>
+  <tr> 
+     <td> cutoff </td>
+     <td> neighbor cutoff distance </td>
+  </tr>
+  <tr> 
+     <td> histMin </td>
+     <td> minimum size (aggregation number) in histogram
+  </tr>
+  <tr> 
+     <td> histMax </td>
+     <td> maximum size (aggregation number) in histogram
+  </tr>
+</table>
+
+\section mcMd_analyzer_ClusterHistogram_out_sec Output Files
+
+Output histogram of cluster size frequencies {outputFileName}.dat in two column format.
+Entries in the first column are values of aggregation number, i.e., the number of molecules in a cluster.
+Entries in the second column are probabilties of finding a cluster of that size in a single snapshot.
+*/
+
+}

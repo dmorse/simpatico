@@ -8,11 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>            // base class template
-#include <mcMd/simulation/System.h>                   // base class templ param
-#include <mcMd/analyzers/system/ClusterIdentifier.h>  // member
-#include <util/boundary/Boundary.h>                   // member (typedef)
-#include <util/accumulators/IntDistribution.h>        // member
+#include <mcMd/analyzers/SystemAnalyzer.h>           // base class templ
+#include <mcMd/simulation/System.h>                  // class templ param
+#include <mcMd/analyzers/system/ClusterIdentifier.h> // member
+#include <util/boundary/Boundary.h>                  // member (typedef)
+#include <util/accumulators/IntDistribution.h>       // member
 
 namespace McMd
 {
@@ -24,7 +24,7 @@ namespace McMd
    */
    class ClusterHistogram : public SystemAnalyzer<System>
    {
-   
+
    public:
 
       /**
@@ -33,7 +33,7 @@ namespace McMd
       * \param system reference to parent System object
       */
       ClusterHistogram(System &system);
-   
+
       /**
       * Read parameters from file, and allocate data array.
       *
@@ -48,19 +48,19 @@ namespace McMd
       * \param in parameter input stream
       */
       virtual void readParameters(std::istream& in);
-   
-      /** 
+
+      /**
       * Clear accumulator.
       */
       virtual void setup();
-   
+
       /**
       * Identify clusters in configuration.
       *
       * \param iStep step counter
       */
       virtual void sample(long iStep);
-   
+
       /**
       * Output results at end of simulation.
       */
@@ -81,7 +81,7 @@ namespace McMd
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Serialize to/from an archive. 
+      * Serialize to/from an archive.
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
@@ -93,7 +93,7 @@ namespace McMd
 
       /// Distribution of the Clusters.
       IntDistribution  hist_;
-   
+
       /// Output file stream
       std::ofstream outputFile_;
 
@@ -121,11 +121,11 @@ namespace McMd
    };
 
    /**
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class Archive>
    void ClusterHistogram::serialize(Archive& ar, const unsigned int version)
-   {  
+   {
       Analyzer::serialize(ar, version);
       ar & speciesId_;
       ar & atomTypeId_;
