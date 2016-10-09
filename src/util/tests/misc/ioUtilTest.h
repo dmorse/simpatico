@@ -26,7 +26,7 @@ public:
    void tearDown()
    {};
 
-   void testRStrip() 
+   void testRStrip1() 
    {
       printMethod(TEST_FUNC);
 
@@ -35,6 +35,22 @@ public:
       int len = rStrip(full);
       TEST_ASSERT(len == 22);
       TEST_ASSERT(full == lean);
+   }
+
+   void testRStrip2()
+   {
+      printMethod(TEST_FUNC);
+
+      std::string full("  important stuff # comment about important stuff");
+      std::string lean("  important stuff");
+      int len = rStrip(full);
+      TEST_ASSERT(len == 17);
+      TEST_ASSERT(full == lean);
+
+      full = "# this is totally a comment line";
+      len = rStrip(full);
+      TEST_ASSERT(len == 0);
+      TEST_ASSERT(full.empty());
    }
 
    /*
@@ -149,7 +165,8 @@ public:
 };
 
 TEST_BEGIN(ioUtilTest)
-TEST_ADD(ioUtilTest, testRStrip)
+TEST_ADD(ioUtilTest, testRStrip1)
+TEST_ADD(ioUtilTest, testRStrip2)
 TEST_ADD(ioUtilTest, testGetLine)
 TEST_ADD(ioUtilTest, testGetNextLine1)
 TEST_ADD(ioUtilTest, testGetNextLine2)
