@@ -98,6 +98,7 @@ namespace Util
    {
       if (!MpiTraits<T>::hasType)
          UTIL_THROW("No committed MPI type in send<T>");
+
       comm.Send(&data, 1, MpiTraits<T>::type, dest, tag); 
    }
   
@@ -132,10 +133,10 @@ namespace Util
    */
    template <typename T>
    void bcast(MPI::Intracomm& comm, T& data, int root)
-   {  
+   {
       if (!MpiTraits<T>::hasType)
          UTIL_THROW("No committed MPI type in bcast<T>");
-      comm.Bcast(&data, 1, MpiTraits<T>::type, root); 
+      comm.Bcast(&data, 1, MpiTraits<T>::type, root);
    }
 
    // C Array partial specializations

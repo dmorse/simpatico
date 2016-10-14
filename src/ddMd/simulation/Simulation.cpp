@@ -602,7 +602,7 @@ namespace DdMd
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
          msg += className;
-         UTIL_THROW("msg.c_str()");
+         UTIL_THROW(msg.c_str());
       }
       #ifdef DDMD_MODIFIERS
       readParamCompositeOptional(in, *modifierManagerPtr_);

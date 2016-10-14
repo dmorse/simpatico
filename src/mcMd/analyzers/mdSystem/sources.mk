@@ -3,6 +3,7 @@ mcMd_analyzers_mdSystem_=\
     mcMd/analyzers/mdSystem/MdEnergyOutput.cpp \
     mcMd/analyzers/mdSystem/MdKineticEnergyAverage.cpp \
     mcMd/analyzers/mdSystem/MdPairEnergyCoefficients.cpp \
+	mcMd/analyzers/mdSystem/MdPairEnergySelector.cpp \
     mcMd/analyzers/mdSystem/MdPotentialEnergyAverage.cpp \
     mcMd/analyzers/mdSystem/MdPressureAverage.cpp \
     mcMd/analyzers/mdSystem/MdStressAutoCorr.cpp \
