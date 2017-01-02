@@ -140,7 +140,7 @@ namespace McMd
    }
 
    /* 
-   * Evaluate end-to-end vectors of all chains, add to ensemble.
+   * Sample data by calling ClusterIdentifier::identifyClusters.
    */
    void ClusterHistogram::sample(long iStep) 
    { 

@@ -47,15 +47,22 @@ namespace McMd
    void
    ClusterIdentifier::initialize(int speciesId, int atomTypeId, double cutoff)
    {
+      // Set member variables
       speciesId_ = speciesId;
       atomTypeId_ = atomTypeId;
       cutoff_ = cutoff;
+
+      // Allocate memory
       Species* speciesPtr = &system().simulation().species(speciesId);
       int moleculeCapacity = speciesPtr->capacity();
       links_.allocate(moleculeCapacity);
       clusters_.reserve(64);
-      int atomCapacity = moleculeCapacity*speciesPtr->nAtom();
+      int atomCapacity = system().simulation().atomCapacity();
       cellList_.setAtomCapacity(atomCapacity);
+
+      // Note: We must set the cellist atom capacity to the total atom capacity,
+      // even though we are only interested in clusters of one species, because 
+      // the celllist atom capacity sets the maximum allowed atom index value.
    }
 
    /*
@@ -121,8 +128,10 @@ namespace McMd
    void ClusterIdentifier::identifyClusters()
    {
 
-      // Clear cell list, clusters array and all links
-      cellList_.clear();
+      // Initialize all data structures:
+      // Setup a grid of empty cells
+      cellList_.setup(system().boundary(), cutoff_);
+      // Clear clusters array and all links
       clusters_.clear();
       for (int i = 0; i < links_.capacity(); ++i) {
          links_[i].clear();

@@ -16,7 +16,7 @@ Requirements / proposals:
      variants that they cannot handle.
 
    - Configuration and trajectory files that are intended for use
-     by McMd programs must have atom ids in "canonical" molecule order.
+     by McMd programs must have atom ids in "molecular" order.
      This requires that atom ids are consecutive from 0, ordered with
      atoms in the same molecule labelled in a consecutive block, and
      molecules of the same species listed consecutively, and with ids
@@ -25,22 +25,23 @@ Requirements / proposals:
      should document this fact, and should indicate the number of 
      molecules of each species and the number of atoms per molecule. 
 
-   - Configuration files may or may not contain "ordered", implying 
+   - Configuration files may or may not contain "ordered" atoms, implying 
      that atoms with consecutive ids appear consecutively in the file. 
      Note that the question of whether the file format is ordered, 
      which is a property of the order in which atoms appear within a 
      file, is independent of whether the atom indices themselves are
-     in "canonical" order, which is a property of how index values 
+     in "molecular" order, which is a property of how index values 
      are assigned to atoms. A configuration file can be ordered 
-     without having canonical atom indices or can contain canonical
-     atom indices without being ordered. Files that are ordered 
-     should document this fact in the file format descriptor. 
+     without having molecular ordered atom indices or can contain 
+     molecular ordered atom indices without being ordered within 
+     the file. Files that are ordered should document this fact in 
+     the file format descriptor. 
 
    - DdMd will need to be able to read, store, and write back out
      basic information about species (number of molecules of each
      type, and number of atoms per molecule) in order to allow it
      to validate (on input) and document (on output) that a 
-     configuration is in canonical molecular order.
+     configuration is in molecular order.
 
    - McMd programs should read configuration and trajectory format
      variants produced by DdMd (ordered or disordered). The reader
@@ -51,30 +52,43 @@ Requirements / proposals:
 
    - McMd programs should write a configuration format that can be 
      used to initialize DdMd, which must include groups. Atom ids
-     used in this format must be in canonical molecular order, and
-     should also be ordered (since there is no reason not to). The
-     format should contain information about species and molecule
-     sizes, so that this information can be output back by ddSim 
-     for use by whatever program is used for data analysis (which
-     could also be mcSim or mdSim).
+     used in this format must be in molecular order, and should 
+     also be ordered (since there is no reason not to). The format 
+     should contain information about species and molecule sizes, 
+     so that this information can be output back by ddSim for use 
+     by whatever program is used for data analysis (which could 
+     also be mcSim or mdSim).
 
    - The postprocessing program in the Tools namespace must read 
-     all formats produced by DdMd, with atom ids in canonical 
-     molecule order or not, but should be able to read and make 
-     use of information about molecules and species when this is 
-     included in the file. 
+     all formats produced by DdMd, with atom ids in molecular
+     order or not, but should be able to read and make use of 
+     information about molecules and species when this is included 
+     in the file. 
 
-   - Allow verbose ascii configuration files, but provide a very 
-     compact binary trajectory file format.
-
-   - Provide a separate topology file format. This can be written
-     by (md|mc)Sim and read by MdPp for molecule based analysis. 
-     It will not be required by ddSim during a simulation.
+   - Allow verbose ascii configuration files, but provide a binary,
+     very compact minimal trajectory file format.
 
    - Allow but do not require trajectory files to contain a header
-     with configuration information (molecule and species sizes, 
-     fixed atom info (types, etc.), groups). Readers should check 
-     for consistency of redundant data.
+     with some information about molecular order (molecule and species 
+     sizes, fixed atom info (types, charges, etc). The trajectory file 
+     should NOT, however, contain information about groups or molecular
+     topology. Readers should check for consistency of redundant data.
+
+   - The trajectory file format should allow per-atom information that
+     is fixed to be specified either in the header or per frame, but
+     not both. Specifying information in the header is a promise that
+     it is fixed. These choices should be self-documented in the file.
+
+   - Provide a separate per-species topology file format. This can be 
+     written by (md|mc)Sim and read by MdPp for molecule based 
+     analysis.  It will not be required by ddSim during a simulation.
+
+   - Optionally allow inclusion of topology information in a configuration
+     file, but not in a trajectory file. Postprocessing programs can read
+     both a configuration file and a trajectory to obtain complete 
+     information. When topology information is included in the config 
+     file, ordering and indexing of species will be consistent with that
+     used in any trajectory files produced during the simulation.
 
 ---------------------------------------------------------------------
 Workflows:
@@ -88,7 +102,7 @@ Workflows:
     the information about species, so that it can be passed on to mcSim or mdSim or mdPp for
     postprocessing.
 
-  - For coonsideration:
+  - For consideration:
 
     1) Should this config file also contain information about molecular structure? No, 
     intially. We could consider adding it later, but this is a separable question.

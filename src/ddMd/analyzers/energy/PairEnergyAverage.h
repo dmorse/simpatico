@@ -18,11 +18,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write simulation energies to Log output.
+   * Compute average of pair energy.
    *
    * \sa \ref ddMd_analyzer_PairEnergyAverage_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Energy_Module
    */
    class PairEnergyAverage : public Analyzer
    {

@@ -185,11 +185,15 @@ namespace McMd
       fileMaster().openOutputFile(outputFileName(), outputFile_);
       writeParam(outputFile_); 
       outputFile_ << std::endl;
-      outputFile_ << "nMolecule       " << accumulator_.nEnsemble() << std::endl;
-      outputFile_ << "bufferCapacity  " << accumulator_.bufferCapacity() << std::endl;
-      outputFile_ << "nSample         " << accumulator_.nSample() << std::endl;
+      outputFile_ << "nMolecule       " << accumulator_.nEnsemble() 
+                  << std::endl;
+      outputFile_ << "bufferCapacity  " << accumulator_.bufferCapacity()
+                  << std::endl;
+      outputFile_ << "nSample         " << accumulator_.nSample() 
+                  << std::endl;
       outputFile_ << std::endl;
-      outputFile_ << "average   " << accumulator_.average() << std::endl;
+      outputFile_ << "average   " << accumulator_.average() 
+                  << std::endl;
       outputFile_ << std::endl;
       outputFile_ << "Format of *.dat file" << std::endl;
       outputFile_ << "[int time in samples]  [double autocorrelation function]" 

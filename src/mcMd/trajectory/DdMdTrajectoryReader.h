@@ -26,7 +26,7 @@ namespace McMd
    * with consecutive ids for atoms in the same molecule and consecutive 
    * blocks for molecules in the same species.
    *
-   * \ingroup McMd_TrajectoryReader_Module
+   * \ingroup McMd_Trajectory_Module
    */
    class DdMdTrajectoryReader : public TrajectoryReader
    {

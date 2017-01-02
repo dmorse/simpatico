@@ -1,10 +1,8 @@
 Configuration file structure (ascii):
 
    BOUNDARY (same as current)
-   [SPECIES] - presence indicates canonical atom id order
    ATOMS - format variable, indicated within block
    [BONDS]
-   [LINKS]
    [ANGLES]
    [DIHEDRALS]
 
@@ -15,38 +13,17 @@ BOUNDARY:
 
    [Boundary]
 
-SPECIES:
-
-   [hasBonds]
-   [hasAngles]
-   [hasDihedrals]
-   nSpecies  [int]
-
-   for each species {
-      speciesId  nMolecule nAtom [nBond] [nAngle] [nDihedral]
-   }
-
-   Comments:
-
-   1) The presence of this block indicates that atom and group ids
-   are in molecular order.
-
-   2) The flags hasBonds, hasAngles, and hasDihedrals are optional,
-   and are all set false by default.
-
-   3) For each species, the variables nBond, nAngle, and nDihedral 
-   are each required if and only if the associated flag hasBonds, 
-   hasAngles, or hasDihedrals is set.
-
-   4) The ddSim program will write this block if the input configuration
-   was read from a file which contained it. It will thus preserve and
-   output molecular ordering, if it can.
-
 ATOMS: 
 
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nAtom
+    }
+   ]
    [ordered]
-   format [i][m][t]p[v][s][c]
    nAtom integer
+   format [i][m][t]p[v][s][c]
 
    Format flags:
    i = global id (tag)                   only required for DdMd
@@ -59,24 +36,47 @@ ATOMS:
 
    Comments:
 
-   1) The ordered flag is optional, and is set false by default.
+   1) The molecular and ordered flags are optional, and are set 
+   false by default.
 
-   2) The default output formats for different simulation programs:
+   2) The presence of the molecular block indicates that atom ids 
+   are in molecular order, consecutive within each molecule, 
+   molecules of the same species consecutive within a block.
 
-       mdSim writes all of the above, including shift when known
-       mcSim writes all of the above except velocity and shift
-       ddSim writes all that it can (context and shift optional)
+   3) The ddSim program will write the molecular block if the input 
+   configuration was read from a file that contained it. It will 
+   thus preserve and output molecular ordering, if it can.
 
-       Note: ddSim must know if atoms are in canonical molecular order
+   4) The default output formats for different simulation programs:
+
+   Each program outputs as much information as it can
+   mcSim and mdSim will each output in molecular format
+   mcSim and mdSim will output groups by default, but not read them
+   mdSim will output positions and velocities, shifts if possible
+   ddSim will read and write molecule block specifications
 
 BONDS, ANGLES, or DIHEDRALS:
    
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nGroup
+    }
+   ]
    [ordered]
    nGroup  int
    For each {
       groupId atomId0 ... atomId(N-1) typeId
    }
 
-   The format is essentially the same for each type of covalent bond,
-   except for the block label BONDS, ANGLES, or DIHEDRALS.
+   Remarks:
+
+   1) The format is essentially the same for each type of covalent 
+   bond, except for the block label BONDS, ANGLES, or DIHEDRALS.
+
+   2) The meaning of the optional molecular block and optional ordered
+   flag are similar to those for atoms.
+
+   3) If the block is molecular, the reading program can check that 
+   atoms are all in the same molecule.
 
