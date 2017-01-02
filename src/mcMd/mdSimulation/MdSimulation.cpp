@@ -8,6 +8,11 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdAnalyzerManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
+#include <mcMd/species/Species.h>
+#include <mcMd/generators/Generator.h>
+#include <mcMd/generators/generatorFactory.h>
+#include <mcMd/analyzers/Analyzer.h>
+#include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
@@ -18,9 +23,6 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/trajectory/TrajectoryReader.h>
-#include <mcMd/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
@@ -427,9 +429,9 @@ namespace McMd
                analyzeTrajectory(min, max, classname, filename);
             } else 
             if (command == "GENERATE_MOLECULES") {
-               DArray<double> ExclusionRadii;
-               DArray<int>    capacities;
-               ExclusionRadii.allocate(nAtomType());
+               DArray<double> diameters;
+               DArray<int> capacities;
+               diameters.allocate(nAtomType());
                capacities.allocate(nSpecies());
 
                // Parse command
@@ -441,25 +443,37 @@ namespace McMd
                   inBuffer >> capacities[iSpecies];
                   Log::file() << "  " << capacities[iSpecies];
                }
-               Label radiusLabel("Radii:");
-               inBuffer >> radiusLabel;
+               Label diameterLabel("Diameters:");
+               inBuffer >> diameterLabel;
                for (int iType=0; iType < nAtomType(); iType++) {
-                  inBuffer >> ExclusionRadii[iType];
-                  Log::file() << "  " << ExclusionRadii[iType];
+                  inBuffer >> diameters[iType];
+                  Log::file() << "  " << diameters[iType];
                }
                Log::file() << std::endl;
 
+               // Setup a local cell list
+               CellList cellList;
+               Generator::setupCellList(atomCapacity(), system().boundary(),
+                                        diameters, cellList);
+
+               // Generate molecules for each species
+               Generator* ptr;
+               bool success;
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-                  species(iSpecies).generateMolecules(
-                     capacities[iSpecies], ExclusionRadii, system(),
-                     #ifdef INTER_BOND
-                     &system().bondPotential(),
-                     #endif
-                     system().boundary());   
+                  if (capacities[iSpecies] > 0) {
+                     ptr = generatorFactory(species(iSpecies), system());
+                     UTIL_CHECK(ptr);
+                     success = ptr->generate(capacities[iSpecies], diameters, cellList);
+                     delete ptr;
+                     if (!success) {
+                        Log::file() << "Failed to complete species " << iSpecies << "\n";
+                     }
+                     UTIL_CHECK(success);
+                  }
                }
 
                #ifndef INTER_NOPAIR 
-               // Generate pair list
+               // Generate system pair list
                system().pairPotential().buildPairList();
                #endif
 

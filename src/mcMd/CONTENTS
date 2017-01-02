@@ -29,7 +29,8 @@ mdSimulation   molecular dynamics (MD) Simulation and System subclasses
 mdIntegrators  specific MD integrators (derived from MdIntegrator)
 configIos      configuration file IO 
 analyzers      data analysis (classes derived from Analyzer)
-trajectory     MD trajectory (multi-configuration) file IO.
+trajectory     MD trajectory (multi-configuration) file IO
+generators     classes to generate initial configurations
 perturb        free energy perturbation theory
 misc           miscellaneous utilities
 user           space for user-defined classes

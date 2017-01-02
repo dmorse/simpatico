@@ -158,158 +158,156 @@ namespace McMd
    {
       if (isAtInterval(iStep)) {
 
-         #ifndef INTER_NOPAIR
-//            if (!system().isPairListCurrent()) {
-//               system().buildPairList();
-//             }
+//       if (!system().isPairListCurrent()) {
+//          system().buildPairList();
+//       }
 
-            // First clear neighbor list
-            clear();
+         // First clear neighbor list
+         clear();
 
-            // Loop over pairs and construct neighbor list per molecule
-            PairIterator iter;
-            Atom *atom0Ptr;
-            Atom *atom1Ptr;
+         // Loop over pairs and construct neighbor list per molecule
+         PairIterator iter;
+         Atom *atom0Ptr;
+         Atom *atom1Ptr;
 
-            for (pairListPtr_->begin(iter); iter.notEnd(); ++iter) {
-               iter.getPair(atom0Ptr, atom1Ptr);
-               if (selector_.match(*atom0Ptr, *atom1Ptr)) {
-                  Pair< Atom * > atomPair;
-                  Molecule *moleculePtr;
-                  Species *speciesPtr;
-                  int speciesId, moleculeId;
+         for (pairListPtr_->begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            if (selector_.match(*atom0Ptr, *atom1Ptr)) {
+               Pair< Atom * > atomPair;
+               Molecule *moleculePtr;
+               Species *speciesPtr;
+               int speciesId, moleculeId;
 
-                  atomPair[0] = atom0Ptr;
-                  atomPair[1] = atom1Ptr;
+               atomPair[0] = atom0Ptr;
+               atomPair[1] = atom1Ptr;
 
-                  // Store pair in neighbor list of boths atoms' molecules
-                  // (do double counting, since pair list counts only unique
-                  // pairs)
-                  moleculePtr = & atom0Ptr->molecule();
-                  speciesPtr =  & moleculePtr->species();
-                  speciesId = speciesPtr->id();
-                  moleculeId = moleculePtr->id();
+               // Store pair in neighbor list of boths atoms' molecules
+               // (do double counting, since pair list counts only unique
+               // pairs)
+               moleculePtr = & atom0Ptr->molecule();
+               speciesPtr =  & moleculePtr->species();
+               speciesId = speciesPtr->id();
+               moleculeId = moleculePtr->id();
 
-                  moleculeNeighbors_[speciesId][moleculeId].
-                     append(atomPair);
+               moleculeNeighbors_[speciesId][moleculeId].
+                  append(atomPair);
 
-                  moleculePtr = & atom1Ptr->molecule();
-                  speciesPtr =  & moleculePtr->species();
-                  speciesId = speciesPtr->id();
-                  moleculeId = moleculePtr->id();
+               moleculePtr = & atom1Ptr->molecule();
+               speciesPtr =  & moleculePtr->species();
+               speciesId = speciesPtr->id();
+               moleculeId = moleculePtr->id();
 
-                  // store atomPair in reverse order
-                  atomPair[0] = atom1Ptr;
-                  atomPair[1] = atom0Ptr;
+               // store atomPair in reverse order
+               atomPair[0] = atom1Ptr;
+               atomPair[1] = atom0Ptr;
 
-                  moleculeNeighbors_[speciesId][moleculeId].
-                     append(atomPair);
-               } 
-            } // end pair loop
+               moleculeNeighbors_[speciesId][moleculeId].
+                  append(atomPair);
+            } 
+         } // end pair loop
 
-            // Now loop over all molecules
-            double moleculePESq = 0.0;
-            double pairEnergy=0.0;
-            double twoMoleculePESq=0.0;
+         // Now loop over all molecules
+         double moleculePESq = 0.0;
+         double pairEnergy=0.0;
+         double twoMoleculePESq=0.0;
 
-            double rsq;
-            int iSpecies1, iMolecule1;
+         double rsq;
+         int iSpecies1, iMolecule1;
 
-            for (iSpecies1 = 0; iSpecies1 < nSpecies_; ++iSpecies1) {
-               Species *species1Ptr;
+         for (iSpecies1 = 0; iSpecies1 < nSpecies_; ++iSpecies1) {
+            Species *species1Ptr;
 
-               species1Ptr = &system().simulation().species(iSpecies1); 
-               for (iMolecule1 = 0; iMolecule1 < species1Ptr->capacity();
-                  ++iMolecule1) {
-                  int iSpecies2, iMolecule2;
+            species1Ptr = &system().simulation().species(iSpecies1); 
+            for (iMolecule1 = 0; iMolecule1 < species1Ptr->capacity();
+               ++iMolecule1) {
+               int iSpecies2, iMolecule2;
 
-                  double moleculePairEnergy=0.0;
-                  
-                  // clear array for pair energy with neighboring molecules
-                  for (iSpecies2 = 0; iSpecies2 < nSpecies_; ++iSpecies2) {
+               double moleculePairEnergy=0.0;
+               
+               // clear array for pair energy with neighboring molecules
+               for (iSpecies2 = 0; iSpecies2 < nSpecies_; ++iSpecies2) {
+                  Species *species2Ptr;
+
+                  species2Ptr = &system().simulation().species(iSpecies2);
+                  for (iMolecule2 = 0; iMolecule2 < species2Ptr->capacity();
+                     ++iMolecule2) {
+                     twoMoleculePairEnergy_[iSpecies2][iMolecule2]=0.0;
+                  }
+               }
+
+               // Loop over this molecule's neighbors
+               DSArray< Pair< Atom *> > *neighborsPtr;
+               ConstArrayIterator< Pair< Atom *> > it;
+
+               neighborsPtr=&moleculeNeighbors_[iSpecies1][iMolecule1];
+               for (neighborsPtr->begin(it); it.notEnd(); ++it) {
+                  Atom *atom0Ptr, *atom1Ptr;
+                  atom0Ptr = (*it)[0];
+                  atom1Ptr = (*it)[1];
+
+                  if (selector_.match(*atom0Ptr,*atom1Ptr)) {
+                     double energy;
                      Species *species2Ptr;
+                     Molecule *molecule2Ptr;
+                     int species2Id,molecule2Id;
 
-                     species2Ptr = &system().simulation().species(iSpecies2);
-                     for (iMolecule2 = 0; iMolecule2 < species2Ptr->capacity();
-                        ++iMolecule2) {
-                        twoMoleculePairEnergy_[iSpecies2][iMolecule2]=0.0;
-                     }
+                     // Load second atom's molecule and species
+                     molecule2Ptr = &atom1Ptr->molecule();
+                     species2Ptr = &atom1Ptr->molecule().species();
+                     species2Id = species2Ptr->id();
+                     molecule2Id = molecule2Ptr->id();
+
+                     rsq = boundaryPtr_->distanceSq(atom0Ptr->position(),
+                        atom1Ptr->position());
+                     energy = pairPotentialPtr_->energy(rsq,
+                        atom0Ptr->typeId(), atom1Ptr->typeId());
+
+                     // increment pair energy of this molecule pair
+                     twoMoleculePairEnergy_[species2Id][molecule2Id] +=
+                        energy;
+                  } 
+               } // end neighbors loop
+
+               // sum the molecular pair energies and their squares
+               for (iSpecies2 = 0; iSpecies2 < nSpecies_; ++iSpecies2) {
+                  Species *species2Ptr;
+
+                  species2Ptr = &system().simulation().species(iSpecies2);
+                  for (iMolecule2 = 0; iMolecule2 < species2Ptr->capacity();
+                     ++iMolecule2) {
+                     double energy = 
+                        twoMoleculePairEnergy_[iSpecies2][iMolecule2];
+                     moleculePairEnergy += energy;
+                     twoMoleculePESq += energy*energy;
                   }
 
-                  // Loop over this molecule's neighbors
-                  DSArray< Pair< Atom *> > *neighborsPtr;
-                  ConstArrayIterator< Pair< Atom *> > it;
+               }
 
-                  neighborsPtr=&moleculeNeighbors_[iSpecies1][iMolecule1];
-                  for (neighborsPtr->begin(it); it.notEnd(); ++it) {
-                     Atom *atom0Ptr, *atom1Ptr;
-                     atom0Ptr = (*it)[0];
-                     atom1Ptr = (*it)[1];
+               // accumulate total molecular pair energy and its square
+               pairEnergy += moleculePairEnergy;
+               moleculePESq += moleculePairEnergy*moleculePairEnergy;
 
-                     if (selector_.match(*atom0Ptr,*atom1Ptr)) {
-                        double energy;
-                        Species *species2Ptr;
-                        Molecule *molecule2Ptr;
-                        int species2Id,molecule2Id;
+            } // end molecule loop
 
-                        // Load second atom's molecule and species
-                        molecule2Ptr = &atom1Ptr->molecule();
-                        species2Ptr = &atom1Ptr->molecule().species();
-                        species2Id = species2Ptr->id();
-                        molecule2Id = molecule2Ptr->id();
+         }  // end species loop
 
-                        rsq = boundaryPtr_->distanceSq(atom0Ptr->position(),
-                           atom1Ptr->position());
-                        energy = pairPotentialPtr_->energy(rsq,
-                           atom0Ptr->typeId(), atom1Ptr->typeId());
+         // Sample sum of pair energies
+         pairEnergyAccumulator_.sample(pairEnergy);
 
-                        // increment pair energy of this molecule pair
-                        twoMoleculePairEnergy_[species2Id][molecule2Id] +=
-                           energy;
-                     } 
-                  } // end neighbors loop
+         // Sample sum of squares of molecular pair energy
+         moleculePESqAccumulator_.sample(moleculePESq);
 
-                  // sum the molecular pair energies and their squares
-                  for (iSpecies2 = 0; iSpecies2 < nSpecies_; ++iSpecies2) {
-                     Species *species2Ptr;
+         // Sample sum of squares of two molecule pair energy
+         twoMoleculePESqAccumulator_.sample(twoMoleculePESq);
 
-                     species2Ptr = &system().simulation().species(iSpecies2);
-                     for (iMolecule2 = 0; iMolecule2 < species2Ptr->capacity();
-                        ++iMolecule2) {
-                        double energy = 
-                           twoMoleculePairEnergy_[iSpecies2][iMolecule2];
-                        moleculePairEnergy += energy;
-                        twoMoleculePESq += energy*energy;
-                     }
+         // Sample square of total pair energy
+         pESqAccumulator_.sample(pairEnergy*pairEnergy);
 
-                  }
+         outputFile_ << Dbl(pairEnergy);
+         outputFile_ << Dbl(moleculePESq);
+         outputFile_ << Dbl(twoMoleculePESq);
+         outputFile_ << Dbl(pairEnergy*pairEnergy);
 
-                  // accumulate total molecular pair energy and its square
-                  pairEnergy += moleculePairEnergy;
-                  moleculePESq += moleculePairEnergy*moleculePairEnergy;
-
-               } // end molecule loop
-
-            }  // end species loop
-
-            // Sample sum of pair energies
-            pairEnergyAccumulator_.sample(pairEnergy);
-
-            // Sample sum of squares of molecular pair energy
-            moleculePESqAccumulator_.sample(moleculePESq);
-
-            // Sample sum of squares of two molecule pair energy
-            twoMoleculePESqAccumulator_.sample(twoMoleculePESq);
-
-            // Sample square of total pair energy
-            pESqAccumulator_.sample(pairEnergy*pairEnergy);
-
-            outputFile_ << Dbl(pairEnergy);
-            outputFile_ << Dbl(moleculePESq);
-            outputFile_ << Dbl(twoMoleculePESq);
-            outputFile_ << Dbl(pairEnergy*pairEnergy);
-
-         #endif
          outputFile_ << std::endl;
       }
    }
@@ -328,13 +326,11 @@ namespace McMd
       outputFile_ << std::endl;
 
       outputFile_ << "File format:" << std::endl;
-      #ifndef INTER_NOPAIR
       outputFile_ << "  ";
       outputFile_ << "[pairE]        ";
       outputFile_ << "[moPairESq]    ";
       outputFile_ << "[twoMolPairESq]";
       outputFile_ << "[pairESq]      ";
-      #endif
       outputFile_ << std::endl;
 
       outputFile_.close();

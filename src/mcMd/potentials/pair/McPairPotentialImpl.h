@@ -47,12 +47,12 @@ namespace McMd
       virtual ~McPairPotentialImpl();
 
       /**
-      * Reads maxBoundary and pair potential Interaction blocks.
+      * Reads the pair potential Interaction blocks.
       * 
-      * This method reads the maxBoundary and Interaction parameter blocks,
-      * and then allocates memory for an internal CellList. It passes
-      * simulation().nAtomType() as an argument Interaction::setNAtomType() 
-      * before calling Interaction::readParameters().
+      * This method reads the Interaction parameter blocks, and initializes
+      * an internal CellList. It passes the value simulation().nAtomType() 
+      * to the Interaction::setNAtomType() function before calling 
+      * Interaction::readParameters().
       */
       virtual void readParameters(std::istream& in);
 
@@ -229,12 +229,8 @@ namespace McMd
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
 
-      // Read maxBoundary (needed to allocate memory for cell list).
-      read<Boundary>(in, "maxBoundary", maxBoundary_);
-
-      // Allocate memory for the CellList.
-      cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
-                         maxPairCutoff());
+      // Set atom capacity and allocate memory in the CellList.
+      cellList_.setAtomCapacity(simulation().atomCapacity());
    }
 
    /*
@@ -251,12 +247,8 @@ namespace McMd
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
 
-      // Read maxBoundary (needed to allocate memory for cell list).
-      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
-
       // Allocate memory for the CellList.
-      cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
-                         maxPairCutoff());
+      cellList_.setAtomCapacity(simulation().atomCapacity());
    }
 
    /*
@@ -266,7 +258,6 @@ namespace McMd
    void McPairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {
       interaction().save(ar);
-      ar << maxBoundary_;
    }
 
    /*

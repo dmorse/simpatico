@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * Periodically write virial stress tensor components to file.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Stress_Module
    */
    class VirialStressTensor : public Analyzer
    {

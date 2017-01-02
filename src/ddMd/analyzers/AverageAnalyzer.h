@@ -29,7 +29,7 @@ namespace DdMd
    * is intended for use as a base class for Analyzers that evaluate averages
    * and (optionally) block averages for specific physical variables.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Base_Module
    */
    class AverageAnalyzer : public Analyzer
    {

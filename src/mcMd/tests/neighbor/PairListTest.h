@@ -43,7 +43,7 @@ public:
       std::ifstream in;
       openInputFile("in/PairList", in);
       pairList.readParam(in);
-      pairList.allocate(nAtom, boundary, potentialCutoff);
+      pairList.initialize(nAtom, potentialCutoff);
 
       try {
          pairList.isValid();
@@ -76,7 +76,7 @@ public:
       std::ifstream in;
       openInputFile("in/PairList", in);
       pairList.readParam(in);
-      pairList.allocate(nAtom, boundary, potentialCutoff);
+      pairList.initialize(nAtom, potentialCutoff);
 
       // Allocate Atoms and initialize Ids
       RArray<Atom>  atoms;
@@ -92,13 +92,15 @@ public:
          atoms[i].position() = pos;
       }
 
-      // Add atoms
-      pairList.clear();
+      // Setup pair list (set up internal cell list)
+
+      // Add all atoms to cell list
+      pairList.setup(boundary);
       for (i=0; i < nAtom; ++i) {
          pairList.addAtom(atoms[i]);
       }
 
-      // Build pairList
+      // Build pairList from completed cell list
       pairList.build(boundary);
 
       // Use PairList::isValid() as test

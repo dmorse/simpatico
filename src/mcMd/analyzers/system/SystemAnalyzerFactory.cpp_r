@@ -19,6 +19,7 @@
 #include "CompositionProfile.h"
 #include "VanHove.h"
 #include "BoundaryAverage.h"
+#include "ClusterHistogram.h"
 
 #ifdef INTER_BOND
 #include "RadiusGyration.h"
@@ -89,10 +90,13 @@ namespace McMd
       } else 
       if (className == "AtomMSD") {
          ptr = new AtomMSD(system());
-      }
+      } else
       if (className == "VanHove") {
          ptr = new VanHove(system());
-      }
+      } else
+      if (className == "ClusterHistogram") {
+         ptr = new ClusterHistogram(system());
+      } 
 
       #ifdef INTER_BOND 
       else

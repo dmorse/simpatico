@@ -16,11 +16,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Output and evaluate average of external energy.
+   * Compute and analyze pair energies.
    *
    * \sa \ref ddMd_analyzer_PairEnergyAnalyzer_page "param file format"
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Energy_Module
    */
    class PairEnergyAnalyzer : public AverageAnalyzer
    {

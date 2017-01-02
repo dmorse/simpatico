@@ -51,7 +51,7 @@ namespace McMd
       if (className == "DdMdConfigIo_Molecule") {
          bool hasMolecules = true;
          ptr = new DdMdConfigIo(*systemPtr_, hasMolecules);
-      }
+      } 
       return ptr;
    }
 

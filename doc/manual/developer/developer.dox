@@ -1,9 +1,9 @@
 namespace McMd
 {
 
-/*! \page developer_page 6 Developer Information
+/*! \page developer_page 5 Developer Information
 
-\ref hoomd_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
  
 <h2> Contents:</h2> 
@@ -18,7 +18,7 @@ namespace McMd
  
 
 <BR> 
-\ref hoomd_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up) 
  
 */

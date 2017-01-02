@@ -21,7 +21,10 @@ mcMd_analyzers_system_+=\
     mcMd/analyzers/system/IntraStructureFactorGrid.cpp \
     mcMd/analyzers/system/LinearRouseAutoCorr.cpp \
     mcMd/analyzers/system/RadiusGyration.cpp \
-    mcMd/analyzers/system/RingRouseAutoCorr.cpp 
+    mcMd/analyzers/system/RingRouseAutoCorr.cpp \
+    mcMd/analyzers/system/ClusterIdentifier.cpp \
+    mcMd/analyzers/system/ClusterHistogram.cpp \
+    mcMd/analyzers/system/Cluster.cpp 
 endif
 
 mcMd_analyzers_system_SRCS=\

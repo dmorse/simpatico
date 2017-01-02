@@ -44,7 +44,7 @@ namespace DdMd
    * Analyzer::simulation() method, which returns the parent Simulation 
    * by reference.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Base_Module
    */
    class Analyzer : public ParamComposite
    {

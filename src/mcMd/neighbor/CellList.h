@@ -89,30 +89,14 @@ namespace McMd
       virtual ~CellList();
 
       /**
-      * Allocate memory for this CellList.
+      * Set atom capacity.
       *
-      * This function:
-      *
-      *   - Allocates an array of atomCapacity CellTag objects.
-      *   - Allocates an array of Cell objects sized for this boundary.
-      *
-      * The capacity of the array of Cells is chosen such that the dimension
-      * each cell within the specified Boundary is greater than or equal to the 
-      * parameter "cutoff". The cutoff parameter must be greater than or equal 
-      * to the maximum range of the nonbonded pair potential. The Boundary object 
-      * passed to this function should be chosen, for simulations with variable
-      * boundary dimensions, to contain more cells than the maximum you expect 
-      * to encounter during the simulation. In simulations with a rigid boundary,
-      * the actual boundary dimensions can be used.
-      *
-      * This function does not populate the CellList with atoms. See the
-      * CellList::addAtom() functions.
+      * This function sets the atom capacity (the maximum number of atoms), and
+      * allocates an array of atomCapacity CellTag objects.
       *
       * \param atomCapacity dimension of global array of atoms
-      * \param boundary     maximum Boundary for allocation of array of cells
-      * \param cutoff       minimum dimension of a cell in any direction
       */
-      void allocate(int atomCapacity, const Boundary &boundary, double cutoff);
+      void setAtomCapacity(int atomCapacity);
 
       /**
       * Serialize to/from an Archive.
@@ -124,7 +108,7 @@ namespace McMd
       void serialize(Archive& ar, const unsigned int version);
 
       /**
-      * Initialize grid geometry and set pointer to Boundary.
+      * Setup grid of empty cells.
       *
       * The number of cells in each direction is chosen such that the dimension
       * of each cell in each direction is greater than or equal to the cutoff
@@ -132,13 +116,21 @@ namespace McMd
       * parameter should thus be equal to or greater than the maximum range of
       * nonbonded interactions.
       *
-      * \param boundary Boundary object for the system
-      * \param cutoff   Minimum dimension of a cell in any direction
+      * After calculating the grid dimensions, this this function may allocate
+      * or resizes the array of cells if necessary, and then calls clear().
+      * It also retains a pointer to the Boundary, which is used to determine
+      * the correct cell by the cellIndexFromPosition() function.
+      *
+      * \param boundary  Boundary object for the system
+      * \param cutoff  Minimum dimension of a cell in any direction
       */
-      void makeGrid (const Boundary &boundary, double cutoff);
+      void setup(const Boundary &boundary, double cutoff);
 
       /**
       * Sets all Cell objects to empty state (no Atoms).
+      *
+      * This function does not change the cell grid dimensions, and does not
+      * allocate or reallocate any memory.
       */
       void clear();
 
@@ -186,11 +178,12 @@ namespace McMd
       *
       * Upon return, array neighbors contains pointers to all Atom objects 
       * in the cell containing the position pos, and in all neighboring cells.
-      * The number of such Atoms is given by the size() of this FSArray < Atom* >
-      * array.
+      * The number of such atoms is given by the logical size() of this array.
       *
-      * \param pos        position Vector, pos = {x, y, z}
-      * \param neighbors  array of pointers to neighbor Atoms.
+      * See the definition of the typedef CellList::NeighborArray.  
+      *
+      * \param pos  position Vector, pos = {x, y, z}
+      * \param neighbors  array of pointers to neighboring Atoms
       */
       void
       getNeighbors(const Vector &pos, NeighborArray &neighbors) const;
@@ -232,9 +225,9 @@ namespace McMd
       int nAtom() const;
 
       /**
-      * Has memory been allocated for this CellList?
+      * Get the maximum allowed atom index + 1.
       */
-      bool isAllocated() const;
+      int atomCapacity() const;
 
       /**
       * Return true if valid, or throw Exception.
@@ -290,13 +283,13 @@ namespace McMd
       IntVector maxCells_; 
 
       /// Number of cells yz plane = numCells_[1]*numCells_[2]
-      int    YZCells_;        
+      int  YZCells_;        
  
       /// Total number of cells in grid.
-      int    totCells_;        
+      int  totCells_;        
 
-      /// Maximum atom id.
-      int    atomCapacity_;        
+      /// Maximum atom id + 1.
+      int  atomCapacity_;        
 
       /// Pointer to associated Boundary (set in makeGrid)
       const Boundary* boundaryPtr_; 
@@ -471,9 +464,6 @@ namespace McMd
 
    inline int CellList::gridDimension(int i) const
    {  return numCells_[i]; }
-
-   inline bool CellList::isAllocated() const
-   {  return (cells_.capacity() > 0); }
 
    /*
    * Serialize to/from an Archive.

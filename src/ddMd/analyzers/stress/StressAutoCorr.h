@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * Compute stress autocorrelation function for a liquid.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Stress_Module
    */
    class StressAutoCorr : public Analyzer
    {

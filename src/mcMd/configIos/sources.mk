@@ -1,9 +1,9 @@
 mcMd_configIos_=mcMd/configIos/ConfigIo.cpp \
     mcMd/configIos/ConfigIoFactory.cpp \
-    mcMd/configIos/DdMdConfigIo.cpp \
-    mcMd/configIos/McConfigIo.cpp \
     mcMd/configIos/McMdConfigIo.cpp \
+    mcMd/configIos/McConfigIo.cpp \
     mcMd/configIos/MdConfigIo.cpp \
+    mcMd/configIos/DdMdConfigIo.cpp \
     mcMd/configIos/LammpsConfigIo.cpp 
 
 mcMd_configIos_SRCS=\
