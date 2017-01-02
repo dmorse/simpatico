@@ -42,12 +42,7 @@ namespace McMd
    void DdMdTrajectoryReader::open(std::string filename)
    {
       // Open trajectory file
-      file_.open(filename.c_str());
-      if (file_.fail()) {
-         std::string message;
-         message= "Error opening trajectory file. Filename: " + filename;
-         UTIL_THROW(message.c_str());
-      }
+      simulation().fileMaster().openInputFile(filename, file_);
 
       BinaryFileIArchive ar(file_);
       int nAtom;
