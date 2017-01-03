@@ -24,7 +24,7 @@ namespace DdMd
    * This template works for Data types float or double, std::complex<real>
    * with float or double real type, Util::Vector and Util::Tensor.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Base_Module
    */
    template <typename Data, typename Product>
    class AutoCorrAnalyzer : public Analyzer

@@ -54,10 +54,6 @@ For single-processor Monte-Carlo simulation, mcSim currently provides the follow
 </ul>
 The configuration bias and rebridging move algorithms were all designed for use with flexible bead-spring models of polymers, and have been not modified for use with chemicall realistic models with strong angle potentials.
 
-\section features_hoomd_sec GPU Acceleration: Integration with Hoomd-blue
-
-Simpatico provides an optional module that allows the use of the <a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> code for MD on the GPU as a fast engine for hybrid MC simulations.  In this mode, an instance of Hoomd-blue is used to implement a hybrid MC move within an mcSim simulation. Short NVE (for NVT ensemble) or NPH (for NPT ensembles) MD simulations are carried out on a GPU, while the main loop is implemented on the CPU, as are any other MC moves.  Integration with Hoomd-blue provides a dramatic increase in the speed of MD and HMC simulations: We obtain a speed-up by approximately a factor of 30 for for bead-spring polymer melts with repulsive Lennard-Jones (i.e., Weeks-Chandler-Anderson) pair interactions.
-
 \section features_analysis_sec Data Analysis
 
 Simpatico is distributed with a collection of classes for statistical analysis, referred to as "analyzers".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:

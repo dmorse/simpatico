@@ -13,7 +13,7 @@
 #ifdef UTIL_MPI
 
 #include <util/mpi/MpiTraits.h>
-#include <mcMd/chemistry/SpeciesGroup.h>
+#include <mcMd/species/SpeciesGroup.h>
 #include <util/containers/Pair.h>
 
 namespace Util

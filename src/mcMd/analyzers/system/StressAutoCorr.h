@@ -27,28 +27,28 @@ namespace McMd
    template <class SystemType>
    class StressAutoCorr : public SystemAnalyzer<SystemType>
    {
-   
+
    public:
-   
+
       /**
       * Constructor.
       *
-      * \param system parent SystemType object. 
+      * \param system parent SystemType object.
       */
       StressAutoCorr(SystemType& system);
-   
+
       /**
       * Destructor.
       */
       virtual ~StressAutoCorr();
-   
+
       /**
       * Read parameters from file and initialize.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
-   
+
       /**
       * Load internal state from an archive.
       *
@@ -71,12 +71,12 @@ namespace McMd
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
-  
+
       /**
       * Setup before beginning of loop.
       */
       virtual void setup();
-  
+
       /**
       * Sample stress tensor and add to accumulator.
       *
@@ -93,9 +93,9 @@ namespace McMd
 
       /**
       * Compute total stress tensor.
-      * 
+      *
       * \param stress Stress tensor (on return).
-      */ 
+      */
       virtual void computeStress(Tensor& stress) = 0;
 
       using SystemAnalyzer<SystemType>::readInterval;
@@ -108,12 +108,12 @@ namespace McMd
       using SystemAnalyzer<SystemType>::outputFileName;
       using SystemAnalyzer<SystemType>::fileMaster;
       using SystemAnalyzer<SystemType>::system;
-  
+
    private:
- 
+
       /// Output file stream
       std::ofstream  outputFile_;
- 
+
       /// Statistical accumulator.
       AutoCorrelation<Tensor, double>  accumulator_;
 
@@ -150,8 +150,8 @@ namespace McMd
    */
    template <class SystemType>
    StressAutoCorr<SystemType>::~StressAutoCorr()
-   {} 
-   
+   {}
+
    /*
    * Read parameters and initialize.
    */
@@ -196,12 +196,12 @@ namespace McMd
 
 
    /*
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class SystemType>
    template <class Archive>
-   void 
-   StressAutoCorr<SystemType>::serialize(Archive& ar, 
+   void
+   StressAutoCorr<SystemType>::serialize(Archive& ar,
                                       const unsigned int version)
    {
       Analyzer::serialize(ar, version);
@@ -213,15 +213,15 @@ namespace McMd
    * Set up immediately before simulation.
    */
    template <class SystemType>
-   void StressAutoCorr<SystemType>::setup() 
+   void StressAutoCorr<SystemType>::setup()
    {
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized");
-      }  
-      accumulator_.clear(); 
+      }
+      accumulator_.clear();
    }
 
-   /* 
+   /*
    * Evaluate pressure, and add to accumulator.
    */
    template <class SystemType>
@@ -268,15 +268,15 @@ namespace McMd
    * Output results to file after simulation is completed.
    */
    template <class SystemType>
-   void StressAutoCorr<SystemType>::output() 
+   void StressAutoCorr<SystemType>::output()
    {
       // Write parameters to *.prm file
       fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      writeParam(outputFile_); 
+      writeParam(outputFile_);
       outputFile_ << std::endl;
-      outputFile_ << "bufferCapacity  " 
+      outputFile_ << "bufferCapacity  "
                   << accumulator_.bufferCapacity() << std::endl;
-      outputFile_ << "nSample         " 
+      outputFile_ << "nSample         "
                   << accumulator_.nSample() << std::endl;
       outputFile_ << std::endl;
       outputFile_.close();
@@ -284,8 +284,8 @@ namespace McMd
       // Write autocorrelation function to data file
       fileMaster().openOutputFile(outputFileName(".corr"), outputFile_);
       accumulator_.output(outputFile_);
-      outputFile_.close(); 
+      outputFile_.close();
    }
 
 }
-#endif 
+#endif

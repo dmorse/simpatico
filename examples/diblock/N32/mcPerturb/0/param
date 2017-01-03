@@ -31,7 +31,6 @@ McSimulation{
     BoundaryEnsemble{
       type                  rigid
     }
-    maxBoundary             orthorhombic 30.0  30.0  30.0
     LJPair{
       epsilon               1.000000000000e+00  1.000000000000e+00
                             1.000000000000e+00  1.000000000000e+00

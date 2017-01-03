@@ -28,30 +28,31 @@ Analyzer Types (or base classes):
 T = data type
 N = name type
 
-Average:                    Average of a single global scalar
-                            - Total energy
-                            - Total kinetic energy
-                            - Total pressure
-                            - RadiusGyration
-AverageList<N>              Container of averages, with ids of type N
-                            - Energy components (string ids)
-                            - Pressure components (string ids)
-                            - StructureFactor (names are IntVector indices)
-AverageMatrix:              container of averages, accessible by id pair
-                            PairEnergyAverage
-TensorAverage:              Stress
-TensorAverageList<N>:       Stress components
+AverageAnalyzer:               Average of a single global scalar
+                               - Total energy
+                               - Total kinetic energy
+                               - Total pressure
+                               - RadiusGyration
+TensorAverageAnalyzer:         Stress
+SymmTensorAverageAnalyzer:     Stress
+ListAverageAnalyzer            Container of averages, with string ids
+                               - Energy components (string ids)
+                               - Pressure components (string ids)
+                               - StructureFactor (IntVector index ids)
+SymmTensorAverageList:         Stress components
+MatrixAverageAnalyzer:         container of averages, accessible by id pair
+SymmMatrixAverageAnalyzer:     PairEnergyEverages
 
-AutoCorrAnalyzer<T>:        StressAutoCorr
-MsdEnsmeble<T>:             AtomMsd, MoleculeComMsd
-AutoCorrEnsemble<T>:        IntraPairAutoCorr (T = Vector)
-                            IntraBondTensorAutoCorr (T = Tensor)
-AutoCorrList<T,N>:          VanHove functions (N = IntVector, Miller indices)
+AutoCorrAnalyzer<T,P>:         StressAutoCorr (single sequence)
+MsdEnsmebleAnalyzer<T,P>:      AtomMsd, MoleculeComMsd
+AutoCorrEnsembleAnalyzer<T,P>: IntraPairAutoCorr (T = Vector)
+                               IntraBondTensorAutoCorr (T = Tensor)
+AutoCorrList<T,P>:             Van Hove
 
-DistributionAnalyzer:       single distribution (energy?)
-DistributionList<K>:        list of distinct distributions
-                            Box size distribution
-                            Bond length distribution (multiple bond types)
+DistributionAnalyzer:          single distribution (energy?)
+ListDistributionList:          list of distinct distributions
+                               Box size distribution
+                               Bond length (multiple bond types)
 
 File Types:
 -----------
@@ -72,7 +73,8 @@ Discussion:
     of this can be used by a parser to determine which analyzer this is.
 
   - Data files: A data file, with extension *.dat contains a sequence of 
-    values. The first column should always be a time stamp. 
+    values written at intervals during the simulation. The first column 
+    should always be an MC or MD time step index.
 
   - Format files: A data format file, with extension *.dfm, gives names 
     and data types for the columns in the associated *.dat file

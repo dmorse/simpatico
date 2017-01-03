@@ -1,0 +1,26 @@
+===================================================================
+Proposal:
+
+   - Have a new namespace Topo that contains information about 
+     molecular types (aka, species)
+
+   - Classes in this namespace would define only information and data 
+     types that can be used in any program (e.g., no pointers to 
+     specific atom types). This is already true of McMd::Species.
+
+   - File formats for exchanging information about topoology would 
+     be defined by code in the new Topo namespace.
+
+   - A class Chem::StructureBase would contain only the number of atoms,
+
+---------------------------------------------------------------
+DdMd
+
+   - Observation: The minimal data for each species that would be required to allow an analysis program to validate that the atoms and groups are in molecule order would be the number of molecules of each type, and the number of atoms, bonds, angles, and dihedrals per molecule.
+  
+   - We need a file format that can be used to exchange this structural information between programs.
+
+   - It would sometimes be useful to have more detailed information about topology, but this is not strictly necessary in ddMd. I propose to not make it an essential part of DdMd::Simulation.
+
+   - Data structures: Define class DdMd:::Species. DdMd::Simulation could have a DArray<DdMd::Species> species array, and a bool hasSpecies flag.
+

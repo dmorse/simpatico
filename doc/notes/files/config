@@ -1,0 +1,82 @@
+Configuration file structure (ascii):
+
+   BOUNDARY (same as current)
+   ATOMS - format variable, indicated within block
+   [BONDS]
+   [ANGLES]
+   [DIHEDRALS]
+
+---------------------------------------------------------------------
+Blocks in configuration file:
+
+BOUNDARY:
+
+   [Boundary]
+
+ATOMS: 
+
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nAtom
+    }
+   ]
+   [ordered]
+   nAtom integer
+   format [i][m][t]p[v][s][c]
+
+   Format flags:
+   i = global id (tag)                   only required for DdMd
+   m = context (species, molecule, atom) only required for DdMd
+   t = type id                           only required for DdMd
+   p = position                          always required
+   v = velocity                          required by MD simulations
+   s = shift                             optional for MD simulations
+   c = charge                            (possibility, for future)
+
+   Comments:
+
+   1) The molecular and ordered flags are optional, and are set 
+   false by default.
+
+   2) The presence of the molecular block indicates that atom ids 
+   are in molecular order, consecutive within each molecule, 
+   molecules of the same species consecutive within a block.
+
+   3) The ddSim program will write the molecular block if the input 
+   configuration was read from a file that contained it. It will 
+   thus preserve and output molecular ordering, if it can.
+
+   4) The default output formats for different simulation programs:
+
+   Each program outputs as much information as it can
+   mcSim and mdSim will each output in molecular format
+   mcSim and mdSim will output groups by default, but not read them
+   mdSim will output positions and velocities, shifts if possible
+   ddSim will read and write molecule block specifications
+
+BONDS, ANGLES, or DIHEDRALS:
+   
+   [molecular
+    nSpecies int
+    for each species {
+       id  nMolecule  nGroup
+    }
+   ]
+   [ordered]
+   nGroup  int
+   For each {
+      groupId atomId0 ... atomId(N-1) typeId
+   }
+
+   Remarks:
+
+   1) The format is essentially the same for each type of covalent 
+   bond, except for the block label BONDS, ANGLES, or DIHEDRALS.
+
+   2) The meaning of the optional molecular block and optional ordered
+   flag are similar to those for atoms.
+
+   3) If the block is molecular, the reading program can check that 
+   atoms are all in the same molecule.
+

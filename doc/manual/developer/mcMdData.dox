@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page developer_mcMdData_page 6.5 Data Structures (mcSim and mdSim)
+/*! \page developer_mcMdData_page 5.5 Data Structures (mcSim and mdSim)
 
 \ref developer_iterator_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref developer_test_page  (Next)

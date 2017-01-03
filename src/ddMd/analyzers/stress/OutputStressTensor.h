@@ -20,7 +20,7 @@ namespace DdMd
    /**
    * Periodically write (tensor) StressTensor to file.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup DdMd_Analyzer_Stress_Module
    */
    class OutputStressTensor : public Analyzer
    {

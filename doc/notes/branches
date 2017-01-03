@@ -1,0 +1,10 @@
+Current branches of dmorse/simpatico on github.com:
+
+master      main (most stable) branch
+bugfix      used to work out bug fixes in master (synch with master)
+devel       main development branch (feed features into this)
+semigrand   jmysona's work on semigrand and Wang-Landau
+coulomb     work on adding coulomb potentials (incomplete)
+groups      adding reverse communication for bonded groups (buggy)
+species     work on generator classes, related changes
+

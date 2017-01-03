@@ -48,8 +48,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref extend_module_page   </li>
    </ul>
  </li>
- <li> \subpage hoomd_page     "5. Hoomd-blue integration" </li>
- <li> \subpage developer_page "6. Developer Information"
+ <li> \subpage developer_page "5. Developer Information"
    <ul style="list-style: none;">
    <li> \ref developer_build_page </li>
    <li> \ref developer_standards_page </li>

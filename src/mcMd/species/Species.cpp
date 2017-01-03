@@ -8,10 +8,7 @@
 #include "Species.h"
 
 #include <util/global.h>                    
-//#include <mcMd/chemistry/Atom.h>
-#include <mcMd/chemistry/SpeciesGroup.tpp>  
-
-//#include <mcMd/potentials/bond/BondPotential.h>
+#include <mcMd/species/SpeciesGroup.tpp>  
 
 #ifdef UTIL_MPI
 #include <mcMd/simulation/McMd_mpi.h>       // to read DArray<SpeciesBond>
@@ -636,17 +633,5 @@ namespace McMd
 
       return true;
    }
-
-   /*
-   * Generate random molecules (default implementation - throws exception)
-   */
-   void Species::generateMolecules(int nMolecule,
-                                   DArray<double> exclusionRadius, 
-                                   System &system,
-                                   #ifdef INTER_BOND
-                                   BondPotential *bondPotentialPtr, 
-                                   #endif
-                                   const Boundary& boundary) 
-   {  UTIL_THROW("generateMolecules() not implemented."); }
 
 } 

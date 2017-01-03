@@ -39,7 +39,6 @@ McSimulation{
                           1.00         1.00
       cutoff              1.12246      1.12246
                           1.12246      1.12246
-      maxBoundary  orthorhombic   2.0    3.0     4.0
     }
     BondPotential{
       kappa               100.00      

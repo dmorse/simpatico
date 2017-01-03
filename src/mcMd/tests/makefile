@@ -38,6 +38,7 @@ endif
 
 clean-outputs:
 	cd chemistry; $(MAKE) clean-outputs
+	cd species; $(MAKE) clean-outputs
 	cd mcSimulation; $(MAKE) clean-outputs
 	cd mdSimulation; $(MAKE) clean-outputs
 
