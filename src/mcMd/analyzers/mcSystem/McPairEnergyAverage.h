@@ -25,6 +25,9 @@ namespace McMd
    /**
    * McPairEnergyAverage averages of total potential energy.
    *
+   * See \ref mcMd_analyzer_McPairEnergyAverage_page "here" for 
+   * the parameter file format and any other user documentation.
+   *
    * \ingroup McMd_Analyzer_Mc_Module
    */
    class McPairEnergyAverage : public SystemAnalyzer<McSystem>

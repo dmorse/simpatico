@@ -27,8 +27,11 @@ namespace McMd
    class PairList;
 
    /**
-   * Analyzer to output the total pair energy and the
-   * sum of squares of the monomeric and molecular pair energy
+   * Analyzer to output the total pair energy and the sum
+   * of squares of the monomeric and molecular pair energy
+   *
+   * See \ref mcMd_analyzer_MdPairEnergyCoefficients_page "here" 
+   * for the parameter file format and any other user documentation.
    * 
    * \ingroup McMd_Analyzer_Md_Module
    */
