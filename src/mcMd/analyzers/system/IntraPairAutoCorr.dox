@@ -17,8 +17,10 @@ The parameter file format is:
    IntraPairAutoCorr{ 
       interval           int
       outputFileName     string
-      samplePerBlock     int
       speciesId          int
+      atom1Id            int
+      atom2Id            int
+      capacity           int
    }
 \endcode
 in which
@@ -51,7 +53,7 @@ in which
 
 \section mcMd_analyzer_IntraPairAutoCorr_out_sec Output Files
 
-Output autocorrelation function to {outputFileName}.dat as column of values. The output() function calls AutoCorrArray<double, double>::output(), which defines the format.
+Output autocorrelation function to {outputFileName}.dat as two columns of values. Entries in the first column are delay times in samples. Entries in the second column are values of the autocorrelation function. The output() function calls AutoCorrArray<double, double>::output(), which defines this format.
 
 */
 

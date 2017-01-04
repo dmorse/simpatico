@@ -33,6 +33,9 @@ namespace McMd
    * transformation of the atom types of some or all atoms
    * in the molecule. 
    *
+   * See \ref mcMd_analyzer_McMuExchange_page "here" for the
+   * parameter file format and any other user documentation.
+   *
    * \ingroup McMd_Analyzer_Mc_Module
    */
    class McMuExchange : public SystemAnalyzer<McSystem>

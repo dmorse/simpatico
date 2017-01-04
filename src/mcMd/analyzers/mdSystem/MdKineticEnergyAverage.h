@@ -22,6 +22,9 @@ namespace McMd
    /**
    * MdKineticEnergyAverage averages of total kinetic energy.
    *
+   * See \ref mcMd_analyzer_MdKineticEnergyAverage_page "here" for 
+   * the parameter file format and any other user documentation.
+   *
    * \ingroup McMd_Analyzer_Md_Module
    */
    class MdKineticEnergyAverage : public SystemAnalyzer<MdSystem>

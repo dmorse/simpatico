@@ -9,8 +9,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/util/AverageAnalyzer.h>  // base class template
-#include <mcMd/mcSimulation/McSystem.h>               // base template parameter
+#include <mcMd/analyzers/util/AverageAnalyzer.h> // base class template
+#include <mcMd/mcSimulation/McSystem.h>          // base template parameter
 
 #include <cstdio> 
 
@@ -21,6 +21,9 @@ namespace McMd
 
    /**
    * McExternalEnergyAverage averages of total external energy.
+   *
+   * See \ref mcMd_analyzer_McExternalEnergyAverage_page "here" for 
+   * the parameter file format and any other user documentation.
    *
    * \ingroup McMd_Analyzer_Mc_Module
    */

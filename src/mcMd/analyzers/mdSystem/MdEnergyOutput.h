@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
-#include <mcMd/mdSimulation/MdSystem.h>         // base template parameter
+#include <mcMd/mdSimulation/MdSystem.h>     // base template parameter
 #include <util/global.h> 
 
 namespace McMd
@@ -19,6 +19,9 @@ namespace McMd
 
    /**
    * Analyzer to output total potential and kinetic energies.
+   *
+   * See \ref mcMd_analyzer_MdEnergyOutput_page "here" for 
+   * the parameter file format and any other user documentation.
    * 
    * \ingroup McMd_Analyzer_Md_Module
    */

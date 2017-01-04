@@ -44,24 +44,29 @@ namespace McMd
       /**
       * Open trajectory file and read header, if any.
       *
-      * Note: By convention, this function does not add any prefixes
-      * to the trajectory file path. The filename argument should thus 
-      * be given as a relative path defined relative to the directory 
-      * from which the program is executed.
+      * By convention, this function treats the trajectory filename
+      * as the name of an input file, and opens the file using the 
+      * FileMaster:openInutFile function. This function prepends the 
+      * input prefix (if any) to the file path. If compiled with MPI 
+      * enabled, so that each processor simulates a different system, 
+      * it also prepends a processor id prefix before the input prefix.
       *
-      * \param filename input file name, relative to working directory.
+      * \param filename trajectory input file name.
       */
       virtual void open(std::string filename) = 0;
 
       /**
       * Read a single frame. Frames are assumed to be read consecutively. 
       *
+      * This function reads a frame from the trajectory file that was
+      * opened by the open() function.
+      *
       * \return true if a frame is avaiable, false if at end of file
       */
       virtual bool readFrame() = 0;
 
       /**
-      * Close trajectory file.
+      * Close the trajectory file.
       */
       virtual void close() = 0;
 

@@ -22,6 +22,9 @@ namespace McMd
    *
    * See class template IntraBondTensorAutoCorr for further information.
    *
+   * See \ref mcMd_analyzer_MdIntraBondTensorAutoCorr_page "here" for 
+   * the parameter file format and any other user documentation.
+   *
    * \sa McMd::IntraBondTensorAutoCorr
    *
    * \ingroup McMd_Analyzer_Md_Module

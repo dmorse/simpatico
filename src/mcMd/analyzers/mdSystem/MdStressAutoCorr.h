@@ -17,6 +17,9 @@ namespace McMd
    /**
    * Analyzer to calculate average isotropic pressure.
    *
+   * See \ref mcMd_analyzer_MdStressAutoCorr_page "here" for the
+   * parameter file format and any other user documentation.
+   *
    * This analyzer computes the stress autocorrelation function
    * \f[
    *    C(t) = k_{B}T G(t)
