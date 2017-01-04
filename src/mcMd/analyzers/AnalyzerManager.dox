@@ -1,0 +1,108 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_AnalyzerManager_page  AnalyzerManager
+
+\section mcMd_analyzer_AnalyzerManager_synopsis_sec Synopsis
+
+An AnalyzerManager is a container for an unspecifiecd number (zero or more)
+analyzer objects, i.e., of instances of subclasses of McMd::Analyzer. 
+
+\sa McMd::AnalyzerManager
+
+\section mcMd_analyzer_AnalyzerManager_param_sec Parameter File Format
+The parameter file format for an AnalyzerManager contains a series of 
+any number of parameter file blocks for analyzer objects, with one space
+between analyzer class blocks. Below is an example showing a parameter
+block for an AnalyzerManager with two objects that are instances of 
+fictitious analyzer classes named Analyzer1 and Analyzer2, in which 
+ellipses are used to represent the body of the parameter file format 
+for each analyzer.
+
+\code
+  AnalyzerManager{
+
+    Analyzer1{
+        ....
+    }
+
+    Analyzer2{
+        ....
+    }
+
+  }
+\endcode
+The AnalzyerManager parameter file block may contain any number of such
+blocks, or may be empty.  
+
+When an AnalyzerManager parameter block is read, the string in the 
+opening line of each analyzer subblock, without the opening bracket, is
+compared to a list of analyzer classes. This list is defined by the 
+implemenation of the associated McAnalyzerFactory (for Monte Carlo
+simulations) or MdANalyzerFactory (for molecular dynamics simulations.
+If the analyzer class name is recognized, an object of the specified 
+class is created and the body of its parameter file block is read by 
+calling the readParameters() member function of the new object. If 
+the name is not recognized, an Exception is thrown and execution 
+stops. 
+
+\section mcMd_analyzer_AnalyzerManager_McMd_sec MC/MD Analyzers
+
+The following standard analyzers can be used in either Monte Carlo 
+(MC) or molecular dynamics (MD) simulations:
+
+<ul style="list-style: none;">
+  <li> \ref mcMd_analyzer_AtomMSD_page </li>
+  <li> \ref mcMd_analyzer_BlockRadiusGyration_page </li>
+  <li> \ref mcMd_analyzer_BondLengthDist_page </li>
+  <li> \ref mcMd_analyzer_BoundaryAverage_page </li>
+  <li> \ref mcMd_analyzer_ComMSD_page </li>
+  <li> \ref mcMd_analyzer_CompositionProfile_page </li>
+  <li> \ref mcMd_analyzer_ConfigWriter_page </li>
+  <li> \ref mcMd_analyzer_IntraPairAutoCorr_page </li>
+  <li> \ref mcMd_analyzer_IntraStructureFactor_page </li>
+  <li> \ref mcMd_analyzer_RDF_page </li>
+  <li> \ref mcMd_analyzer_StructureFactor_page </li>
+  <li> \ref mcMd_analyzer_StructureFactorGrid_page </li>
+  <li> \ref mcMd_analyzer_StructureFactorP_page </li>
+  <li> \ref mcMd_analyzer_StructureFactorPGrid_page </li>
+  <li> \ref mcMd_analyzer_VanHove_page </li>
+</ul>
+
+\section mcMd_analyzer_AnalyzerManager_McAnalyzers_sec MC Analyzers
+
+The following analyzers can only be used in MC simulations:
+
+<ul style="list-style: none;">
+  <li> \ref mcMd_analyzer_McBondEnergyAverage_page </li>
+  <li> \ref mcMd_analyzer_McEnergyAverage_page </li>
+  <li> \ref mcMd_analyzer_McEnergyOutput_page </li>
+  <li> \ref mcMd_analyzer_McExternalEnergyAverage_page </li>
+  <li> \ref mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
+  <li> \ref mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
+  <li> \ref mcMd_analyzer_McPairEnergyAverage_page </li>
+  <li> \ref mcMd_analyzer_McPressureAverage_page </li>
+  <li> \ref mcMd_analyzer_McStressAutoCorrelation_page </li>
+  <li> \ref mcMd_analyzer_McVirialStressTensorAverage_page </li>
+  <li> \ref mcMd_analyzer_McNVTChemicalPotential_page </li>
+  <li> \ref mcMd_analyzer_McMuExchange_page </li>
+</ul>
+
+\section mcMd_analyzer_AnalyzerManager_MdAnalyzers_sec MD Analyzers
+
+The following analyzers can only be used in MD simulations:
+
+<ul style="list-style: none;">
+  <li> \subpage mcMd_analyzer_MdEnergyOutput_page </li>
+  <li> \subpage mcMd_analyzer_MdIntraBondStressAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdStressAutoCorr_page </li>
+</ul>
+ 
+*/
+
+}

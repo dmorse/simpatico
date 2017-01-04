@@ -27,7 +27,7 @@ namespace McMd
    * molecule. These are the building blocks of configuration bias
    * regrowth and reptation algorithms for linear chains.
    *
-   * \ingroup McMd_McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module 
    */
    class CfbLinear : public SystemMove
    {

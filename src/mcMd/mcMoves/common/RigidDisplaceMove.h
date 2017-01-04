@@ -23,7 +23,9 @@ namespace McMd
    /**
    * Random rigid displacement of a molecule.
    *
-   * \ingroup McMd_McMove_Module MD_Module
+   * \sa \ref mcMd_mcMove_RigidDisplaceMove_page "parameter file format"
+   *
+   * \ingroup McMd_McMove_Module McMove_Module
    */
    class RigidDisplaceMove : public SystemMove 
    {
