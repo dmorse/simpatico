@@ -3,11 +3,10 @@ namespace McMd
 
 /*! \page mcMd_analyzers_page  McMd Analyzers
 
-\sa McMd_Analyzer_Module (developer documentation)
 
 Lists of analyzers available for use with either mcSim 
 (Monte Carlo) or mdSim (molecular dynamics) simulations
-are given below. Separate lists are given for analyzerz 
+are given below. Separate lists are given for analyzers
 that can be used with either mcSim or mdSim simulations 
 and of analyzers that work with only one of these programs.
 
@@ -69,6 +68,11 @@ The following analyzers can only be used in MD simulations:
   <li> \subpage mcMd_analyzer_MdStressAutoCorr_page </li>
 </ul>
  
-*/
 
+Parameter file blocks for analyzer classes appear as subblocks
+of a \subpage mcMd_analyzer_AnalyzerManager_page block.
+
+\sa McMd_Analyzer_Module (developer documentation)
+
+*/
 }

@@ -3,15 +3,20 @@ namespace McMd
 
 /*! \page mcMd_species_page  Molecular Species
 
-\sa McMd_Species_Module (developer documentation)
- 
 User documentation for classes that represent molecular species in
 mcSim or mdSim simulations.
 
 <ul style="list-style: none;">
   <li> \subpage mcMd_species_Species_page </li>
+  <li> \subpage mcMd_species_Homopolymer_page </li>
+  <li> \subpage mcMd_species_Diblock_page </li>
 </ul>
 
+Parameter file blocks for individual species appear as subblocks
+of a \subpage mcMd_species_SpeciesManager_page block.
+
+\sa McMd_Species_Module (developer documentation)
+ 
 */
 
 }
