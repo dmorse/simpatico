@@ -20,6 +20,9 @@ namespace McMd
    /**
    * Autocorrelation for bond stress of a molecule.
    *
+   * See \ref mcMd_analyzer_MdIntraBondStressAutoCorr_page "here" 
+   * for the parameter file format and any other user documentation.
+   *
    * \ingroup McMd_Analyzer_Md_Module
    */
    class MdIntraBondStressAutoCorr : public IntraBondStressAutoCorr<MdSystem>
