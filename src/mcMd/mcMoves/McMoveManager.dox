@@ -8,7 +8,8 @@ namespace McMd
 An McMoveManager is a container for one or more Monte Carlo moves, i.e., 
 of instances of subclasses of McMd::McMove. 
 
-\sa McMd::McMoveManager
+\sa McMd::McMoveManager "Developer documentation for McMd::McMoveManager"
+\sa \ref mcMd_mcMoves_page "User documentation for Monte Carlo Move classes"
 
 \section mcMd_mcMove_McMoveManager_param_sec Parameter File Format
 
@@ -50,14 +51,14 @@ If the name is not recognized, an Exception is thrown and execution halts.
 Here is an incomplete list of available standard Monte Carlo moves.
 
 <ul style="list-style: none;">
-  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
-  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
-  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
-  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
-  <li> \subpage mcMd_mcMove_EndSwapMove_page </li>
-  <li> \subpage mcMd_mcMove_CfbLinearEndMove_page </li>
-  <li> \subpage mcMd_mcMove_CfbReptateMove_page </li>
-  <li> \subpage mcMd_mcMove_CfbRebridgeMove_page </li>
+  <li> \ref mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \ref mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \ref mcMd_mcMove_HybridMdMove_page </li>
+  <li> \ref mcMd_mcMove_HybridNphMdMove_page </li>
+  <li> \ref mcMd_mcMove_EndSwapMove_page </li>
+  <li> \ref mcMd_mcMove_CfbLinearEndMove_page </li>
+  <li> \ref mcMd_mcMove_CfbReptateMove_page </li>
+  <li> \ref mcMd_mcMove_CfbRebridgeMove_page </li>
 </ul>
 */
 

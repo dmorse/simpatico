@@ -7,6 +7,8 @@ namespace McMd
    *  
    * An Analyzer object represents a data analysis or data output operation
    * that is carried out periodically during a simulation. 
+   *
+   * \sa \ref mcMd_analyzers_page "User documentation"
    */
 
    /**

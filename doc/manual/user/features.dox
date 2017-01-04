@@ -12,9 +12,8 @@ These pages provide links to user documentation for features of each program tha
 <h2> Contents:</h2> 
    <ul style="list-style: none;">
    <li> \subpage user_features_inter_page </li>
-   <li> \subpage user_features_ddSim_page </li>
-   <li> \subpage user_features_mdSim_page </li>
-   <li> \subpage user_features_mcSim_page </li>
+   <li> \subpage user_features_ddmd_page </li>
+   <li> \subpage user_features_mcmd_page </li>
    </ul>
 
 <BR> 

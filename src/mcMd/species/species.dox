@@ -1,0 +1,17 @@
+namespace McMd
+{
+
+/*! \page mcMd_species_page  Molecular Species
+
+\sa McMd_Species_Module (developer documentation)
+ 
+User documentation for classes that represent molecular species in
+mcSim or mdSim simulations.
+
+<ul style="list-style: none;">
+  <li> \subpage mcMd_species_Species_page </li>
+</ul>
+
+*/
+
+}

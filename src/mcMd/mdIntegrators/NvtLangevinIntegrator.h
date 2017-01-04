@@ -20,6 +20,9 @@ namespace McMd
    /**
    * A NVT molecular dynamics integrator with a Langevin thermostat.
    *
+   * \sa \ref mcMd_integrator_NvtLangevinIntegrator_page "parameter file format"
+   * \sa \ref algorithms_Langevin_page "algorithm"
+   *
    * This class approximately integrates the Langevin equation
    * \f[
    *    m\frac{d{\bf v}}{dt}  
@@ -29,9 +32,6 @@ namespace McMd
    * in which \f$\gamma\f$ is a velocity relaxation rate (inverse 
    * time) parameter and \f${\bf f}^{\rm (r)}\f$ is a random force.
    * 
-   * \sa \ref mcMd_integrator_NvtLangevinIntegrator_page "parameter file format"
-   * \sa \ref algorithms_Langevin_page "algorithm"
-   *
    * \ingroup McMd_MdIntegrator_Module
    */
    class NvtLangevinIntegrator : public MdIntegrator

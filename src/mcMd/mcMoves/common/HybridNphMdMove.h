@@ -25,7 +25,7 @@ namespace McMd
    /**
    * HybridNphMove is a hybrid Molecular Dynamics MC move for NPT ensemble.
    *
-   * \sa \ref mcMd_mcMove_HybridNphMove_page "parameter file format"
+   * \sa \ref mcMd_mcMove_HybridNphMdMove_page "parameter file format"
    *
    * \ingroup McMd_McMove_Module 
    */

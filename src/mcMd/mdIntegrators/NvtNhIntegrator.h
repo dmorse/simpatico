@@ -22,6 +22,8 @@ namespace McMd
    /**
    * A Nose-Hoover NVT molecular dynamics integrator.
    *
+   * \sa \ref mcMd_integrator_NvtNhIntegrator_page "parameter file format"
+   *
    * The step() function implements a reversible velocity-verlet MD NVT 
    * integrator step for the Nose-Hoover equations, as described by
    * Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
@@ -30,7 +32,6 @@ namespace McMd
    * D. Frenkel and B. Smit, "Understanding Molecular Simulation,"  
    * Academic Press, 1996. Chapter 6 (Eqs. 6.1.24 - 6.1.27).
    *
-   * \sa \ref mcMd_integrator_NvtNhIntegrator_page "parameter file format"
    * \ingroup McMd_MdIntegrator_Module
    */
    class NvtNhIntegrator : public MdIntegrator

@@ -8,7 +8,8 @@ namespace McMd
 An SpeciesManager is a container for an unspecifiecd number (zero or more)
 species objects, i.e., of instances of subclasses of McMd::Species. 
 
-\sa McMd::SpeciesManager
+\sa McMd::SpeciesManager   "Class Reference for McMd::SpeciesManager"
+\sa \ref mcMd_species_page "User documention for species subclasses"
 
 \section mcMd_species_SpeciesManager_param_sec Parameter File Format
 
@@ -45,8 +46,8 @@ file block is read by calling the readParameters() member function of
 the new object. If the name is not recognized, an Exception is thrown
 and execution halts. 
 
-\section mcMd_species_SpeciesManager_species_sec Species 
-
+User documention for available species classes, including parameter file
+formats, is available \ref mcMd_species_page "here"
 */
 
 }
