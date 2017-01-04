@@ -20,6 +20,9 @@ namespace McMd
    /**
    * MdPotentialEnergyAverage averages of total potential energy.
    *
+   * See \ref mcMd_analyzer_MdPotentialEnergyAverage_page "here" for 
+   * the parameter file format and any other user documentation.
+   *
    * \ingroup McMd_Analyzer_Md_Module
    */
    class MdPotentialEnergyAverage : public SystemAnalyzer<MdSystem>
