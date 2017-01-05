@@ -18,6 +18,17 @@ namespace McMd
    /**
    * A Homopolymer species of chain molecules.
    *
+   * A hompolymer is a chemically homogeneous linear chain of nAtom
+   * atoms. All atoms are of the same atom type, with all bonds of 
+   * the same bond type. A Homopolymer may optionally have angle
+   * potentials for each sequences of three susbseuqent atoms, in
+   * which case all angle potentials must be of the same angle type.
+   * A Homopolymer may also optionally have dihedral potentials among
+   * all sequences of four subsequent atoms, which (if present) must 
+   * all be of the same dihedral type.
+   *
+   * \sa \ref mcMd_species_Homopolymer_page "parameter file format"
+   * 
    * \ingroup McMd_Species_Module
    */
    class Homopolymer : public Linear

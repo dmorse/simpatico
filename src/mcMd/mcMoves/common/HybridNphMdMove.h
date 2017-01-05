@@ -10,7 +10,7 @@
 
 #include <mcMd/mcMoves/SystemMove.h>  // base class
 #include <util/containers/DArray.h>   // member template
-#include <util/space/Vector.h>         // member template parameter
+#include <util/space/Vector.h>        // member template parameter
 #include <mcMd/mdIntegrators/NphIntegrator.h>         
 
 namespace McMd
@@ -23,9 +23,11 @@ namespace McMd
    
 
    /**
-   * HybridMdMove is a hybrid Molecular Dynamics MC move.
+   * HybridNphMove is a hybrid Molecular Dynamics MC move for NPT ensemble.
    *
-   * \ingroup McMd_McMove_Module MD_Module
+   * \sa \ref mcMd_mcMove_HybridNphMdMove_page "parameter file format"
+   *
+   * \ingroup McMd_McMove_Module 
    */
    class HybridNphMdMove : public SystemMove 
    {

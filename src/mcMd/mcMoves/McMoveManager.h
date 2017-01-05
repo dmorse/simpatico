@@ -25,6 +25,8 @@ namespace McMd
    /**
    * Manager for a set of McMove objects.
    *
+   * \sa \ref mcMd_mcMove_McMoveManager_page "param file format"
+   *
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_McMove_Module
    */

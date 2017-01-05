@@ -1,0 +1,65 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_McMoveManager_page McMoveManager
+
+\section mcMd_mcMove_McMoveManager_synopsis_sec Synopsis
+
+An McMoveManager is a container for one or more Monte Carlo moves, i.e., 
+of instances of subclasses of McMd::McMove. 
+
+\sa McMd::McMoveManager "Developer documentation for McMd::McMoveManager"
+\sa \ref mcMd_mcMoves_page "User documentation for Monte Carlo Move classes"
+
+\section mcMd_mcMove_McMoveManager_param_sec Parameter File Format
+
+The parameter file format for an McMoveManager contains a series of any 
+number of parameter file blocks for McMove objects, with one space
+between McMove class blocks. Below is an example showing a parameter
+block for an McMoveManager with two objects that are instances of 
+fictitious McMove classes named McMove1 and McMove2, in which 
+ellipses are used to represent the body of the parameter file format 
+for each McMove.
+
+\code
+  McMoveManager{
+
+    McMove1{
+        ....
+    }
+
+    McMove2{
+        ....
+    }
+
+  }
+\endcode
+The McMoveManager parameter file block may contain any number of such
+blocks, but must contain at least one in order for the simulation to
+function.
+
+When an McMoveManager parameter block is read, the string in the opening 
+line of each McMove subblock, without the opening bracket, is compared to 
+a list of McMove subclass names. This list is defined by the implemenation 
+of the associated McMoveFactory class. If the name is recognized, an object 
+of the specified class is created and the body of its parameter file block 
+is read by calling the readParameters() member function of the new object. 
+If the name is not recognized, an Exception is thrown and execution halts.
+
+\section mcMd_mcMove_McMoveManager_param_sec Monte Carlo Moves
+
+Here is an incomplete list of available standard Monte Carlo moves.
+
+<ul style="list-style: none;">
+  <li> \ref mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \ref mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \ref mcMd_mcMove_HybridMdMove_page </li>
+  <li> \ref mcMd_mcMove_HybridNphMdMove_page </li>
+  <li> \ref mcMd_mcMove_EndSwapMove_page </li>
+  <li> \ref mcMd_mcMove_CfbLinearEndMove_page </li>
+  <li> \ref mcMd_mcMove_CfbReptateMove_page </li>
+  <li> \ref mcMd_mcMove_CfbRebridgeMove_page </li>
+</ul>
+*/
+
+}

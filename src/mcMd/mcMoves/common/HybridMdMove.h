@@ -24,7 +24,9 @@ namespace McMd
    /**
    * HybridMdMove is a hybrid Molecular Dynamics MC move.
    *
-   * \ingroup McMd_McMove_Module MD_Module
+   * \sa \ref mcMd_mcMove_HybridMdMove_page "parameter file format"
+   *
+   * \ingroup McMd_McMove_Module 
    */
    class HybridMdMove : public SystemMove 
    {
