@@ -5,11 +5,12 @@ namespace McMd
 
 \section mcMd_species_SpeciesManager_synopsis_sec Synopsis
 
-An SpeciesManager is a container for an unspecifiecd number (zero or more)
-species objects, i.e., of instances of subclasses of McMd::Species. 
+An SpeciesManager is a container for any number of species objects 
+(i.e., of instances of subclasses of McMd::Species), each of which
+represents a species within a mixture. 
 
 \sa McMd::SpeciesManager   "Class Reference for McMd::SpeciesManager"
-\sa \ref mcMd_species_page "User documention for species subclasses"
+\sa \ref mcMd_species_page "User documenation for Species subclasses"
 
 \section mcMd_species_SpeciesManager_param_sec Parameter File Format
 

@@ -20,6 +20,8 @@ namespace McMd
    *
    * In this implementation, all of the bonds have the same type Id.
    *
+   * \sa \ref mcMd_species_Diblock_page "parmameter file format"
+   *
    * \ingroup McMd_Species_Module
    */
    class Diblock : public Linear

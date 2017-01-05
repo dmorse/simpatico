@@ -22,6 +22,7 @@ for dihedral potentials.
 Homopolymerhe parameter file format is:
 \code
   Homopolymer{
+    moleculeCapacity  int
     nAtom             int
     atomType          int
     bondType          int
@@ -46,6 +47,11 @@ is satisfied. Specifically:
 
 The parameter meanings are as follows:
 <table>
+  <tr> 
+     <td> moleculeCapacity </td>
+     <td> number of molecules for which memory is allocated </td>
+     <td> required </td>
+  </tr>
   <tr> 
      <td> nAtom </td>
      <td> number of atoms (monomers) in chain </td>
