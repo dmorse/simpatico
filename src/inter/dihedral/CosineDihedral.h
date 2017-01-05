@@ -31,6 +31,8 @@ namespace Inter
    * \f]
    * where phi is the dihedral potential, as defined in \ref Inter_Dihedral_Module.
    *
+   * \sa \ref inter_dihedral_CosineDihedral_page "parameter file format"
+   *
    * \ingroup Inter_Dihedral_Module
    */
    class CosineDihedral : public ParamComposite 
