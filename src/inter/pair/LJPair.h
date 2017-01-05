@@ -24,7 +24,7 @@ namespace Inter
    * This class defines a Lennard-Jones potential that is cutoff and
    * shifted so that the potential is zero at the cutoff distance.
    *
-   * \sa \ref inter_pair_LJPair_page
+   * \sa \ref inter_pair_LJPair_page "Parameter file format"
    * \sa \ref inter_pair_interface_page
    * \sa \ref inter_pair_page
    * 
