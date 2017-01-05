@@ -20,6 +20,8 @@ namespace McMd
    /**
    * An explictly reversible/measure-preserving Parrinello-Rahman type NPH integrator.
    *
+   * \sa \ref mcMd_integrator_NphIntegrator_page "parameter file format"
+   *
    * TwoStepNPH can be used in three modes:
    *  - isotropic volume flucutations, cubic box
    *  - anisotropic volume fluctuations, orthorhombic box
@@ -36,7 +38,6 @@ namespace McMd
    *  Trotter expansion technique introduced by Tuckerman et al. J. Chem.
    *  Phys.  97, pp. 1990 (1992).
    *
-   * \sa \ref mcMd_integrator_NphIntegrator_page "parameter file format"
    * \ingroup McMd_MdIntegrator_Module
    */
    class NphIntegrator : public MdIntegrator

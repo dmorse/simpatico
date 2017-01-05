@@ -21,7 +21,9 @@ namespace McMd
    /**
    * Random displacement of one atom.
    *
-   * \ingroup McMd_McMove_Module MD_Module
+   * \sa \ref mcMd_mcMove_AtomDisplaceMove_page "param file format"
+   *
+   * \ingroup McMd_McMove_Module McMove_Module
    */
    class AtomDisplaceMove : public SystemMove 
    {

@@ -29,6 +29,8 @@ namespace Inter
    * \f]
    * where phi is the dihedral potential defined in \ref Inter_Dihedral_Module.
    *
+   * \sa \ref inter_dihedral_MultiHarmonicDihedral_page "parameter file format"
+   *   
    * \ingroup Inter_Dihedral_Module
    */
    class MultiHarmonicDihedral : public ParamComposite 

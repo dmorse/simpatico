@@ -1,0 +1,21 @@
+/*! \page user_features_mcmd_page 2.8.4 Options for mcSim and mdSim
+
+\ref user_features_ddmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Links to user documention of features that can be used with mcSim, 
+mdSim or both:
+
+<ul style="list-style: none;">
+  <li> \subpage mcMd_species_page </li>
+  <li> \subpage mcMd_mcMoves_page </li>
+  <li> \subpage mcMd_mdIntegrators_page </li>
+  <li> \subpage mcMd_analyzers_page </li>
+</ul>
+
+<BR>
+\ref user_features_ddmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+*/

@@ -1,7 +1,7 @@
 /*! \page user_features_inter_page 2.8.1 Potential Energies (Interactions)
 
 \ref user_features_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref user_features_ddSim_page (Next)
+\ref user_features_ddmd_page (Next)
 <BR>
 
 The potential energy used by any Simpatico simulation may contain:
@@ -70,6 +70,6 @@ User documentation for each interaction class documents the format of the block 
  
 <BR>
 \ref user_features_page (Prev / Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_features_ddSim_page (Next)
+\ref user_features_ddmd_page (Next)
 
 */

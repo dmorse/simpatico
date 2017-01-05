@@ -27,7 +27,7 @@ namespace Inter
    *
    * Implements a harmonic potential with a nonzero rest length.
    *
-   * \sa \ref inter_bond_HarmonicBond_page
+   * \sa \ref inter_bond_HarmonicBond_page "Parameter file format"
    * \sa \ref inter_bond_interface_page
    *
    * \ingroup Inter_Bond_Module

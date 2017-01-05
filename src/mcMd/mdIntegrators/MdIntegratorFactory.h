@@ -20,6 +20,8 @@ namespace McMd
 
    /**
    * Default Factory for subclasses of MdIntegrator.
+   *
+   * \sa \ref mcMd_mdIntegrators_page
    */
    class MdIntegratorFactory : public Factory<MdIntegrator> 
    {
