@@ -10,7 +10,9 @@ mcMd_analyzers_system_=\
     mcMd/analyzers/system/SystemAnalyzerFactory.cpp \
     mcMd/analyzers/system/VanHove.cpp \
     mcMd/analyzers/system/BoundaryAverage.cpp \
-    mcMd/analyzers/system/ConfigWriter.cpp 
+    mcMd/analyzers/system/ConfigWriter.cpp \
+    mcMd/analyzers/system/LammpsDumpWriter.cpp \
+    mcMd/analyzers/system/TrajectoryWriter.cpp
 
 ifdef INTER_BOND
 mcMd_analyzers_system_+=\
@@ -24,6 +26,9 @@ mcMd_analyzers_system_+=\
     mcMd/analyzers/system/RingRouseAutoCorr.cpp \
     mcMd/analyzers/system/ClusterIdentifier.cpp \
     mcMd/analyzers/system/ClusterHistogram.cpp \
+    mcMd/analyzers/system/ExchangeDynamics.cpp \
+    mcMd/analyzers/system/MicelleFlux.cpp \
+    mcMd/analyzers/system/ClusterHistogramInd.cpp \
     mcMd/analyzers/system/Cluster.cpp 
 endif
 

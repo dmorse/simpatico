@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ClusterHistogram.h"
+#include "ExchangeDynamics.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
@@ -28,7 +28,7 @@ namespace McMd
    using namespace Util;
 
    /// Constructor.
-   ClusterHistogram::ClusterHistogram(System& system) 
+   ExchangeDynamics::ExchangeDynamics(System& system) 
     : SystemAnalyzer<System>(system),
       identifier_(system),
       hist_(),
@@ -40,10 +40,10 @@ namespace McMd
       histMax_(),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("ClusterHistogram"); }
+   {  setClassName("ExchangeDynamics"); }
 
    /// Read parameters from file, and allocate arrays.
-   void ClusterHistogram::readParameters(std::istream& in) 
+   void ExchangeDynamics::readParameters(std::istream& in) 
    {  
       readInterval(in);
       readOutputFileName(in);
@@ -87,7 +87,7 @@ namespace McMd
    /*
    * Load state from an archive.
    */
-   void ClusterHistogram::loadParameters(Serializable::IArchive& ar)
+   void ExchangeDynamics::loadParameters(Serializable::IArchive& ar)
    {
       // Load interval and outputFileName
       Analyzer::loadParameters(ar);
@@ -130,7 +130,7 @@ namespace McMd
    /*
    * Save state to archive.
    */
-   void ClusterHistogram::save(Serializable::OArchive& ar)
+   void ExchangeDynamics::save(Serializable::OArchive& ar)
    {
       Analyzer::save(ar);
       ar & speciesId_;
@@ -145,7 +145,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void ClusterHistogram::setup() 
+   void ExchangeDynamics::setup() 
    {  
       if (!isInitialized_) UTIL_THROW("Object is not initialized");
       hist_.clear();
@@ -153,9 +153,9 @@ namespace McMd
    }
 
    /* 
-   * Sample data by calling ClusterIdentifier::identifyClusters.
+   * Evaluate end-to-end vectors of all chains, add to ensemble.
    */
-   void ClusterHistogram::sample(long iStep) 
+   void ExchangeDynamics::sample(long iStep) 
    { 
       if (isAtInterval(iStep)) {
          identifier_.identifyClusters();
@@ -165,19 +165,43 @@ namespace McMd
          ++nSample_;
       }
 
-
+      Species* speciesPtr;
+      speciesPtr = &(system().simulation().species(speciesId_)); 
+      int nMolecules = speciesPtr->capacity();
       int min = hist_.min();
       int nBin = hist_.nBin();
-      for (int i = 0; i < nBin; ++i) {
-         outputFile_ << Int(i + min) << "  " 
-                     <<  Dbl(double(hist_.data()[i])) << "\n";
+      ClusterLink* LinkPtr;      
+      // Write the time step to the data file
+      outputFile_ << iStep << "  ";
+      // Cycle through all the surfactant molecules; if they are in a micelle set status = 1, otherwise set status = 0;
+      for (int i = 0; i < nMolecules; i++) {
+         bool inCluster = false;
+         // Get the molecule link
+         LinkPtr = &(identifier_.link(i));
+         // Use the link to get the cluster id
+         int clusterId = LinkPtr->clusterId();
+         // Determine the cluster size
+         int clusterSize = identifier_.cluster(clusterId).size();
+         if (clusterSize > 10) {
+         outputFile_ << 1 << "  ";
+         }
+         else {
+         outputFile_ << 0 << "  ";
+         }
+         if (i == nMolecules - 1) {
+         outputFile_ << "\n";
+         }
       }
+     // for (int i = 0; i < nBin; ++i) {
+     //    outputFile_ << Int(i + min) << "  " 
+     //                <<  Dbl(double(hist_.data()[i])) << "\n";
+     // }
    }
 
    /*
    * Output results to file after simulation is completed.
    */
-   void ClusterHistogram::output() 
+   void ExchangeDynamics::output() 
    {  outputFile_.close();
       // Write parameter file
       fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);

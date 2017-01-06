@@ -375,6 +375,14 @@ namespace McMd
       Molecule& randomMolecule(int speciesId);
 
       /**
+      * Get a random Molecule of specified semigrand species and type
+      * 
+      * \param 
+      */
+
+      Molecule& randomSGMolecule(int speciesId, int typeId, int nType);       
+
+      /**
       * Initialize an iterator for molecules of one species in this System.
       *
       * \param speciesId integer Id for the desired Species (input)

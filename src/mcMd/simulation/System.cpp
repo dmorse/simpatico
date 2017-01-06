@@ -1078,6 +1078,32 @@ namespace McMd
    }
 
    /*
+   * Get a randomly chosen semigrand molecule of desired type
+   */
+   Molecule& System::randomSGMolecule(int speciesId, int typeId, int nType)
+   {
+      int moleculeId,type,nMol,index;
+      int count = 0;
+      nMol = nMolecule(speciesId);
+      if (nType <= 0) {
+         Log::file() << "Number of molecules in species " << speciesId
+                     << " = " << nType << std::endl;
+         UTIL_THROW("Number of molecules in species <= 0");
+      }
+      index = simulation().random().uniformInt(0, nType);
+      for (int i=0; i<nMol; ++i) {
+        // type = speciesPtr_->mutator().moleculeStateId(molecule);
+         if (type==typeId) {
+            count=count+1;
+            if (count==index) {
+               moleculeId = i;
+               break;
+            }
+         }
+      }
+      return molecule(speciesId, moleculeId); 
+   }
+   /*
    * Return the total number of atoms in this System.
    */
    int System::nAtom() const

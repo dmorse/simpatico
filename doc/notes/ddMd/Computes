@@ -14,31 +14,74 @@ Make Compute a template, which can be applied to double, Vector, Tensor or
 even a DArray of any of these. 
 
 -------------------------------------------------------------------------
-Compute class:
+Compute class hierarchy:
 
-template <typename T>
-class Compute : protected Setable<T> 
+class Compute
 {
 
 public:
 
    /// Compute the quantity
-   void compute() = 0;
-
-   /// Access the value
-   using Setable<T>::value();
+   virtual void compute() = 0;
 
    /// Unset the value
-   using Setable<T>::unset();
+   virtual void unset() = 0;
 
    /// Query whether the value is set.
-   using Setable<T>::isSet();
+   virtual bool isSet() = 0;
+
+   /// Return a pointer to an Accessor<T> of appropriate type T.
+   template <T>
+   Accessor<T>& accessor()
+   {
+      Accessor<T>* ptr = dynamic_cast< Accessor<T> >(this);
+      // Add error checking.
+      return *ptr;
+   }
+
+}
+
+template <typename T>
+class Accessor : public Compute 
+{
+
+public:
+
+   /// Access the value
+   const T& value() = 0;
+
+}
+
+template <typename T>
+class AccessorTemplate : public Accessor<T>
+{
+
+public:
+
+   /// Access the value.
+   const T& value()
+   {  return data_.value(); }
+
+   virtual void unset()
+   {  data_.unset(); }
+
+   virtual bool isSet()
+   {  return data_.isSet(); }
+
+protected:
+
+   Setable<T>& data()
+   {  return data_; }
+
+private:
+
+   Setable<T> data_;
 
 }
 
 Note: The implementation of the compute() function would have access to the 
-inherited set and assignment operators of Setable<T>, either of which could 
-be used to set the value. 
+set and assignment operators of data_, either of which could be used to set 
+the value. 
 
 Often, a compute would be associated with a parent class that is naturally
 responsible for computation of the value, such as a potential energy class
@@ -59,11 +102,3 @@ class ComputeManager:
 
  - Provides methods that provide access to a compute by name or by index.
 
- - Have compute manager maintain separate lists for each type of compute,
-   and different accessors, getScalarCompute(std::string ....)
-
- - Start with global scalar (double), Vector and Tensor, which can be 
-   used to represent energies, pressures, and stress. Think about whether 
-   the notion is useful for per atom or per molecule quantities. 
-
--------------------------------------------------------------------------

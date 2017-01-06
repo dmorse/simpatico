@@ -15,7 +15,9 @@ mcMd_species_+= \
     mcMd/species/Multiblock.cpp \
     mcMd/species/HomopolymerSG.cpp \
     mcMd/species/Ring.cpp \
-    mcMd/species/HomoRing.cpp 
+    mcMd/species/HomoRing.cpp \
+    mcMd/species/GeneralpolymerSG.cpp \
+    mcMd/species/LinearSG.cpp 
 endif
 
 mcMd_species_SRCS=\
