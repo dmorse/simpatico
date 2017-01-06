@@ -62,6 +62,13 @@ namespace McMd
    * Molecule. Each SpeciesGroup is thus a prototype for constructing one Group
    * for each Molecule within a Species.
    *
+   * A SpeciesGroup<N> object can be input or output to file using overloaded 
+   * inserter (<<) and extractor (>>) operators, like a built in type. The 
+   * text representation contains a sequence of atom ids followed by the group
+   * type id, as described in a separate file.
+   *
+   * \sa \ref mcMd_species_SpeciesGroup_page "text representation"
+   *
    * \ingroup McMd_Species_Module
    */
    template <int NAtom>
