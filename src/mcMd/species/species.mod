@@ -5,6 +5,8 @@ namespace McMd {
    * \ingroup McMd_Module
    *
    * Classes that represent molecular species.
+   *
+   * \sa \ref mcMd_species_page "User documention"
    */
 
 }

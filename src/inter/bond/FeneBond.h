@@ -31,7 +31,7 @@ namespace Inter
    * than a cutoff rl at which the FENE potentail reaches a parameter 
    * energyCutoff, and a linear potential for all r > rl.
    *
-   * \sa \ref inter_bond_FeneBond_page
+   * \sa \ref inter_bond_FeneBond_page "Parameter file format"
    * \sa \ref inter_bond_interface_page
    *
    * \ingroup Inter_Bond_Module

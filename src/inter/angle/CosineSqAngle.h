@@ -27,6 +27,8 @@ namespace Inter
    * This class implements an angle potential: 
    *    kappa (cos[theta0] - cos[theta])^2.
    *
+   * \sa \ref inter_angle_CosineSqAngle_page "parameter file format"
+   *
    * \ingroup Inter_Angle_Module
    */
    class CosineSqAngle : public ParamComposite 

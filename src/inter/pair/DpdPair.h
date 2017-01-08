@@ -22,7 +22,7 @@ namespace Inter
    * Soft pair potential used in dissipative particle dynamics (DPD) simulations 
    * of Groot, Warren et al. 
    *
-   * \sa \ref inter_pair_DpdPair_page
+   * \sa \ref inter_pair_DpdPair_page "Parameter file format"
    * \sa \ref inter_pair_interface_page
    * \sa \ref inter_pair_page
    * 

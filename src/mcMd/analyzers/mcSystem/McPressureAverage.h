@@ -16,6 +16,9 @@ namespace McMd
 
    /**
    * Analyzer to calculate average isotropic pressure.
+   *
+   * See \ref mcMd_analyzer_McPressureAverage_page "here" for 
+   * the parameter file format and any other user documentation.
    */
    class McPressureAverage : public PressureAverage<McSystem>
    {

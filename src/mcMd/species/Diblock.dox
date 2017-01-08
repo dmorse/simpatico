@@ -1,0 +1,131 @@
+namespace McMd
+{
+
+/*! \page mcMd_species_Diblock_page  Diblock
+
+\section mcMd_species_Diblock_synopsis_sec Synopsis
+
+Linear diblock copolymer molecular species.
+
+A Diblock is a species linear diblock copolymer containing 
+two chemically homogeneous blocks of atoms, in which atoms
+within each block have the same atomType (i.e., the same
+atom type id). All bonds must have the same bondType id,
+throughout both blocks, including the junction bond. 
+A Diblock may optionally have a bending potential between 
+each sequence of three consecutive atoms. If present, all
+angle potentials within and between the two blocks must
+also have the same angle type id, and thus be described
+by the same parameters. A Diblock may also have dihedral 
+potentials between each set of four consecutive beads, 
+which, if present, must all have the same dihedral type
+id.
+
+\sa McMd::Diblock
+
+\section mcMd_species_Diblock_param_sec Parameters
+Diblockhe parameter file format is:
+\code
+  Diblock{
+    moleculeCapcacity int
+    blockLengths      Array int[2]
+    atomTypes         Array int[2]
+    bondType          int
+    [hasAngles        bool]
+    (angleType        int)
+    [hasDihedrals     bool]
+    (dihedralType     int)
+  }
+\endcode
+Square brackets indicate optional parameters. The
+optional boolean parameters hasAngles and hasDihedrals
+are both taken to be false by default, if absent.
+Parentheses indicate conditional parameters, which 
+are required if and only if a particular condition 
+is satisfied. Specifically:
+
+ - Parameter angleType is required if and only if (iff)
+   parameter hasAngles is present and true.
+
+ - Parameter dihedral Type is required if and only if (iff)
+   parameter hasAngles is present and true.
+
+The array parameters blockLengths and atomTypes have two
+elements each, whose values appear with a single array 
+element on each line, with the parameter name only on the 
+first line. Here is an example of simple parameter block 
+for a species that may contain up to 200 block copolymer
+molecules of 32 beads each, with 12 beads of type 0 in the 
+first block and 20 beads of type 1 in the second, with 
+bonds of bond type id equal to 0.
+\code
+  Diblock{
+    moleculeCapacity  200
+    blockLengths       12
+                       20
+    atomTypes           0
+                        1
+    bondType            0
+  }
+\endcode
+The absence of the optional parameters hasAngle and 
+hasDihedral and of the conditional angleType and
+dihedralType parameters indicates that this species
+of molecule has no angle or dihedral potentials, i.e.,
+that it is a completely flexible chain. 
+
+The parameter meanings are as follows:
+<table>
+  <tr> 
+     <td> moleculeCapacity </td>
+     <td> number of molecules for which memory is allocated </td>
+     <td> required </td>
+  </tr>
+  <tr> 
+     <td> blockLengths </td>
+     <td> array of number of atoms in each block </td>
+     <td> required </td>
+  </tr>
+  <tr> 
+     <td> atomTypes </td>
+     <td> array of monomer type ids for each block </td>
+     <td> required </td>
+  </tr>
+  <tr> 
+     <td> bondType </td>
+     <td> bond type id of all bonds </td>
+     <td> required </td>
+  </tr>
+  <tr> 
+     <td> hasAngles </td>
+     <td> true iff molecule has angle potentials </td>
+     <td> optional (default false) </td>
+  </tr>
+  <tr> 
+     <td> angleType </td>
+     <td> angle type id of all angle potentials </td>
+     <td> conditional </td>
+  </tr>
+  <tr> 
+     <td> hasDihedrals </td>
+     <td> true iff molecule has dihedral potentials </td>
+     <td> optional (default false) </td>
+  </tr>
+  <tr> 
+     <td> dihedralType </td>
+     <td> dihedral type id of all dihedral potentials </td>
+     <td> conditional </td>
+  </tr>
+</table>
+A parameter block to describe a flexible diblock copolymer, 
+with no angle or dihedral potentials, needs to include only 
+the blockLengths, atomTypes and bondType parameters, as in 
+the above example. A parameter block to describe a worm-like 
+chain must also include parametr hasAngles, which should be 
+set true, and an angleType parameter. A parameter block to 
+describe a homogeneous polymer with angle and dihedral
+potentials must include all 7 possible parameters.
+
+*/
+
+}

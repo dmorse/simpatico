@@ -16,6 +16,9 @@ namespace McMd
 
    /**
    * Calculate average scalar pressure for an MdSystem.
+   *
+   * See \ref mcMd_analyzer_MdPressureAverage_page "here" for 
+   * the parameter file format and any other user documentation.
    */
    class MdPressureAverage : public PressureAverage<MdSystem>
    {

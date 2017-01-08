@@ -1,0 +1,38 @@
+namespace McMd
+{
+
+/*! \page mcMd_species_SpeciesGroup_page  SpeciesGroup
+
+\section mcMd_species_SpeciesGroup_synopsis_sec Synopsis
+
+A group of covalently interacting atom within any molecule of one species.
+
+SpeciesGroup is a class template for an class that describes a covalent 
+group within a Species of molecule. A Group<N> object describes a group
+of N atoms, which holds integer identifiers for the N atoms in the group 
+and an integer group type identifier. The atoms are identified by integer
+indices that identifies the position of each atom within a molecule by an
+integer greater than or equal to 0 and less than the number of atoms in 
+a molecule of that species. 
+
+\sa McMd::SpeciesGroup
+
+\section mcMd_species_SpeciesGroup_format_sec File Format
+The text representation of a species SpeciesGroup<N> is as follows
+\code
+  atomId1 atomId2 \cdots atomIdN groupTypeId
+\endcode
+where atomId1, ..., atomIdN are integer identifiers for the n atoms, 
+and groupTypId is an identifier for the type of group (i.e., the type
+of bond, angle, or dihedral potential). 
+
+For example, a text representation for a SpeciesGroup<2> 
+\code
+  4  5  1
+\endcode
+represents a bond that connects that 4th and 5th atoms in each
+molecule of the species with a bond of bond type id 1. 
+
+*/
+
+}
