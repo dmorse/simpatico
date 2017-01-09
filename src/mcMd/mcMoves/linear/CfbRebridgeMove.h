@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Config-bias move for internal segment of a flexible linear polymer.
    *
-   * \sa \ref mcMd_mcMove_CfbRebridgeMove_page "param file format"
+   * \sa \ref mcMd_mcMove_CfbRebridgeMove_page "parameter file format"
    *
    * \ingroup McMd_McMove_Module
    */

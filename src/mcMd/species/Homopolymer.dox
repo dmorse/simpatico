@@ -9,12 +9,21 @@ Linear chain of atoms of the same type.
 
 A homopolymer is a chain of nAtom atoms with the same
 atomType (i.e., the same type id) connected by bonds 
-of the same bondType. It may optionally have a bending
-potential between each sequence of three consecutive
-atoms and a dihedral potential between each set of four
-consecutive beads (if any). All angle potentials, if 
-present, must also be of the same type, and similarly
-for dihedral potentials. 
+of the same bondType. 
+
+If the code is compiled with angle potentials enabled (i.e.,
+with INTER_ANGLE defined), a Hompolymer may optionally have 
+a bending potential between each sequence of three consecutive 
+atoms. All angle potentials, if present, are characterized by
+the same angle potential type id, and are thus described by 
+the same parameters.
+
+If the code is compiled with dihedral potentials enabled (i.e.,
+with INTER_DIHEDRAL defined), a Hompolymer may optionally have 
+a dihedral potential between each sequence of four consecutive 
+atoms. All dihedral potentials, if present, are characterized 
+by the same angle potential type id, and are thus described by 
+the same parameters.
 
 \sa McMd::Homopolymer
 
@@ -32,15 +41,23 @@ Homopolymerhe parameter file format is:
     (dihedralType     int)
   }
 \endcode
-Square brackets indicate optional parameters. The
-ptional boolean parameters hasAngles and hasDihedrals
-are both taken to be false by default, if absent.
-Parentheses indicate conditional parameters, which 
-are required if and only if a particular condition 
-is satisfied. Specifically:
+Square brackets indicate optional parameters, while parentheses
+indicate parameters whose presence or absence is conditional on
+the presence or absence or values of earlier parameters, as
+discussed in more detail below.
+
+Parameters related angle and dihedral potentials (the last four 
+parameters in this format) are valid only if the code has been 
+compiled with angle and dihedral potentials enabled, respectively.
+
+When the code is compiled with the relevant parameters enabled, 
+the boolean parameters hasAngles and hasDihedrals are optional, 
+and are both taken to be false by default if absent.  The 
+conditional parameters angleType and dihedral type are required
+if any and only if the following conditions are satisfied:
 
  - Parameter angleType is required if and only if (iff)
-   parameter hasAngles is present and true.
+   parameter hasAngles is present in the file and set to true.
 
  - Parameter dihedral Type is required if and only if (iff)
    parameter hasAngles is present and true.
