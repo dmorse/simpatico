@@ -26,7 +26,7 @@ namespace McMd
    * Note: This is a rewrite of the CfbEndMove class, based on a new
    * CfbLinear class. The two classes are functionally equivalent.
    *
-   * \sa \ref mcMd_mcMove_CfbLinearEndMove_page "param file format"
+   * \sa \ref mcMd_mcMove_CfbLinearEndMove_page "parameter file format"
    *
    * \ingroup McMd_McMove_Module
    */

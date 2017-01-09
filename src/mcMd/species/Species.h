@@ -61,6 +61,7 @@ namespace McMd
    * A subclass that represents a mutable species must have an associated
    * SpeciesMutator. See documentation for Species::setMutatorPtr().
    *
+   * \sa \ref mcMd_species_Species_page "parameter file format"
    * \ingroup McMd_Species_Module
    */
    class Species : public ParamComposite

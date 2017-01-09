@@ -1,11 +1,13 @@
-#ifndef MCMD_HOMORING_H
-#define MCMD_HOMORING_H
+#ifndef MCMD_HOMO_RING_H
+#define MCMD_HOMO_RING_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
+*
+* Author: Jian Qin
 */
 
 #include "Ring.h"
@@ -16,8 +18,12 @@ namespace McMd
    using namespace Util;
 
    /**
-   * A HomoRing species of loop molecules.
+   * A species of homogeneous ring molecules.
    *
+   * A HomoRing is a chemically homogeneous ring of atoms, in which
+   * all atoms are of the same type.
+   *
+   * \sa \ref mcMd_species_HomoRing_page "parameter file format"
    * \ingroup McMd_Species_Module
    */
    class HomoRing : public Ring

@@ -1,41 +1,44 @@
 namespace McMd
 {
 
-/*! \page mcMd_species_Diblock_page  Diblock
+/*! \page mcMd_species_Multiblock_page  Multiblock
 
-\section mcMd_species_Diblock_synopsis_sec Synopsis
+\section mcMd_species_Multiblock_synopsis_sec Synopsis
 
-Linear diblock copolymer molecular species.
+Linear multi-block copolymer molecular species.
 
-A Diblock is a species linear diblock copolymer containing 
-two chemically homogeneous blocks of atoms, in which atoms
-within each block have the same atomType (i.e., the same
-atom type id). All bonds must have the same bondType id,
-throughout both blocks, including the junction bond. 
+A Multiblock is a species linear block copolymer containing 
+one or more chemically homogeneous blocks of atoms in which 
+atoms within each block have the same atomType (i.e., the same
+atom type id). All bonds in a Multiblock have the same bondType 
+id, throughout all blocks, including any junction bonds.  
 
 If the code is compiled with angle potentials enabled (i.e.,
-with INTER_ANGLE defined), a Diblock may optionally have a 
-bending potential between each sequence of three consecutive 
+with INTER_ANGLE defined), a Hompolymer may optionally have 
+a bending potential between each sequence of three consecutive 
 atoms. All angle potentials, if present, are characterized by
 the same angle potential type id, and are thus described by 
 the same parameters.
 
 If the code is compiled with dihedral potentials enabled (i.e.,
-with INTER_DIHEDRAL defined), a Diblock may optionally have a 
-dihedral potential between each sequence of four consecutive 
+with INTER_DIHEDRAL defined), a Hompolymer may optionally have 
+a dihedral potential between each sequence of four consecutive 
 atoms. All dihedral potentials, if present, are characterized 
 by the same angle potential type id, and are thus described by 
 the same parameters.
 
-\sa McMd::Diblock
 
-\section mcMd_species_Diblock_param_sec Parameters
-Diblockhe parameter file format is:
+
+\sa McMd::Multiblock
+
+\section mcMd_species_Multiblock_param_sec Parameters
+Multiblock parameter file format is:
 \code
-  Diblock{
+  Multiblock{
     moleculeCapcacity int
-    blockLengths      Array int[2]
-    atomTypes         Array int[2]
+    nBlock            int
+    blockLengths      Array int[nBlock]
+    atomTypes         Array int[nBlock]
     bondType          int
     [hasAngles        bool]
     (angleType        int)
@@ -43,9 +46,9 @@ Diblockhe parameter file format is:
     (dihedralType     int)
   }
 \endcode
-Square brackets indicate optional parameters, while parentheses
-indicate parameters whose presence or absence is conditional on
-the presence or absence or values of earlier parameters, as
+Here, square brackets indicate optional parameters, while 
+parentheses indicate parameters whose presence or absence is 
+conditional on presence and/or values earlier parameters, as
 discussed in more detail below.
 
 Parameters related angle and dihedral potentials (the last four 
@@ -64,35 +67,44 @@ if any and only if the following conditions are satisfied:
  - Parameter dihedral Type is required if and only if (iff)
    parameter hasAngles is present and true.
 
-The required array parameters blockLengths and atomTypes have 
-two elements each, whose values appear with a single array 
-element on each line, with the parameter name only on the 
-first line. Here is an example of simple parameter block 
-for a species that may contain up to 200 block copolymer
-molecules of 32 beads each, with 12 beads of type 0 in the 
-first block and 20 beads of type 1 in the second, with 
-bonds of bond type id equal to 0.
+The array parameters blockLengths and atomTypes are both arrays 
+of nBlock integer elements. Each element of each such array-valued 
+parameter appears on a separate line, preceded by the parameter 
+name (blockLengths or atomTypes) only on the first line.
+
+Below is an example of simple parameter block for a species 
+that may contain up to 200 block triblock copolymer molecules 
+of 32 beads each, with 12 beads of type 2 in the first block,
+8 beads of type 0 in the second block and 10 beads of type 1
+in the third block, with bonds of bond type id equal to 0.
 \code
-  Diblock{
+  Multiblock{
     moleculeCapacity  200
+    nBlock              3
     blockLengths       12
-                       20
-    atomTypes           0
-                        1
-    bondType            0
+                        8
+                       10
+    atomTypes           2
+                        0
+    bondType            1
   }
 \endcode
 The absence of the optional parameters hasAngle and 
-hasDihedral and of the conditional angleType and
-dihedralType parameters indicates that this species
-of molecule has no angle or dihedral potentials, i.e.,
-that it is a completely flexible chain. 
+hasDihedral and of the conditional angleType and dihedralType 
+parameters indicates that this species of molecule has no 
+angle or dihedral potentials, i.e., that it is a completely 
+flexible chain. 
 
 The parameter meanings are as follows:
 <table>
   <tr> 
      <td> moleculeCapacity </td>
      <td> number of molecules for which memory is allocated </td>
+     <td> required </td>
+  </tr>
+  <tr> 
+     <td> nBlock </td>
+     <td> number of blocks </td>
      <td> required </td>
   </tr>
   <tr> 
@@ -137,7 +149,7 @@ the blockLengths, atomTypes and bondType parameters, as in
 the above example. A parameter block to describe a worm-like 
 chain must also include parametr hasAngles, which should be 
 set true, and an angleType parameter. A parameter block to 
-describe a diblock copolymer with angle and dihedral potentials 
+describe a block copolymer with angle and dihedral potentials 
 must include all possible parameters.
 
 */

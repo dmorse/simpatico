@@ -20,6 +20,7 @@ namespace McMd
    *
    * In this implementation, all of the bonds have the same type Id.
    *
+   * \sa \ref mcMd_species_Multiblock_page "parameter file format"
    * \ingroup McMd_Species_Module
    */
    class Multiblock : public Linear
