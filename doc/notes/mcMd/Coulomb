@@ -1,11 +1,12 @@
--------------------------------------------------------------------------------
+----------------------------------------------------------------------
 Existing classes in mcMd/potentials/coulomb:
 
    CoulombPotential : ParamComposite
    -> Base class for coulomb potentials (i.e., k-space potentials)
 
-   Proposal: Change name of CoulombPotential to KSpacePotential to
+   Proposal: Change name of CoulombPotential to LongRangePotential to
    indicate usability for, e.g., dipolar forces, long range 1/r^6 etc.
+   This is also close to the convention in Lammps.
 
    EwaldCoulombPotential : CoulombPotential, CoulombSystemMixIn
    -> Implementation of CoulombPotential
@@ -24,7 +25,7 @@ Proposed design:
 
    Principles:
 
-   1) Both KSpacePotential and PairPotential classes have a 
+   1) Both LongRangePotential and PairPotential classes have a 
    hierarchy with an abstract base class that defines an
    interface and implementation classes or template that 
    define nuts and bolts of the implementation.
@@ -33,12 +34,12 @@ Proposed design:
    forces are computed in the same loop by template instantiation
    MdCoulombPairPotential<PairInteraction, CoulombPairInteraction>
 
-   3) Values for physical and algorithm parameters associated
-   with Coulomb interactions are input in the KSpacePotential 
-   part of the parameter file, but are shared as needed with 
-   the PairPotential class (mechanism discussed below).
+   3) Values for physical and algorithm parameters associated with 
+    Coulomb interactions are input in the LongRangePotential part 
+    of the parameter file, but are shared as needed with the 
+    PairPotential class (mechanism discussed below).
 
-   4) KSpacePotential part of the parameter file should appear
+   4) LongRangePotential part of the parameter file should appear
    in the parameter file, if at all, as the first potential
    energy block, before the PairPotential block. 
 
@@ -65,9 +66,9 @@ Proposed design:
    6) MdPairPotential<Pair, RSpace> has a private pointer to the 
       EwaldSharedData base class of the EwaldPotential. The pointer 
       is passed in the factory that creates the pair potential object 
-      using a constructor that takes a references to the KSpacePotential
+      using a constructor that takes a references to the LongRangePotential
       as an argument. This constructor will have to use a dynamic cast
-      of KSpacePotential to EwaldColumbPotential to get a pointer to a
+      of LongRangePotential to EwaldColumbPotential to get a pointer to a
       EwaldCoulombPotential, and then access the sharedData() member to
       get the address of the EwaldSharedData object.
 
@@ -94,98 +95,136 @@ Proposed design:
 
    /// Abstract base class for potentials with K-space part
    /// Interface class - no data
-   KSpacePotential : public ParamComposite
+   LongRangePotential : public ParamComposite
    {
    public:
-       virtual void addForce() = 0;
-       virtual void computeEnergy() = 0;
-       virtual void computeEnergy() = 0;
-       -> public pure virtual accessors kspaceEnergy() and kspaceStress()
-       -> public upre virtual accessors rspaceEnergy() and rspaceStress()
+
+       /// Add K-Space forces
+       void addForces();
+
+       /// Compute KSpace energy and stress components
+       void computeKSpaceEnergy();
+       void computeKSpaceStress();
+
+       // Return total energy and stress
+       double energy();
+       void getStress(double& pressure);
+       void getStress(Vector& stress);
+       void getStress(Tensor& stress);
+
+       // Return K-space contributions
+       double kspaceEnergy();
+       void getKSpaceStress(Tensor& stress);
+
+       // Return R-space contributions
+       double rSpaceEnergy();
+       void getRSpaceStress(Tensor& stress);
+
+   }
 
    /// Class template for sharing data between pair and kspace potentials
-   EwaldSharedData {
+   class EwaldSharedData 
+   {
+    public:
 
-       protected:
+       // Accumulators for short-range parts of energy and stress
+       double rSpaceEnergy_;
+       Tensor rSpaceStress_;
 
-          // Accumulators for short-range parts of energy and stress
-          double rSpaceEnergy_;
-          double rSpaceStress_;
+    protected:
 
-          // Algorithmic parameters
-          double alpha_;
+       // Algorithmic parameters
+       double alpha_;
 
-          // Physical Parameters
-          double epsilon_;
+       // Physical Parameters
+       double epsilon_;
 
    }
 
    /// Ewald Coulomb pair interaction class (similar to LJPair)
    class EwaldCoulombPairInteraction : public ParamComposite
-
-   /// Pair potential class template
-   template <class PairInteraction, CoulombInteraction>
-   class MdCoulombPairPotentialImpl<PairInteraction, CoulombInteraction> 
-    : public EwaldSharedData
    {
-
-       // Force evaluation, which adds both types of pair force.
-       virtual void addForces();
-
-       /** 
-       * Thermo computes, which increment different accumulator variables.
-       * Conventional nonbonded pair energy and stress are added to member
-       * variables of this class.  Ewald RSpace energy and stress are 
-       * added corresponding protected data members of the base class
-       * RSpacePotentialData<CoulombInteraction>.
-       */
-       virtual void computeEnergy();
-       virtual void computeStress();
-
-       // Accessors for nonbonded non-Ewald coulomb energy and stress.
-       double energy();
-       double pressure();
-       Tensor& stress();
+      void setSharedData(EwaldSharedData& data);
    }
 
    /**
    * Ewald Coulomb potential concrete class
    */
-   EwaldCoulombPotential : public KSpacePotential
+   EwaldCoulombPotential : public LongRangePotential
    {
    public:
 
-       // Constructor
-       EwaldCoulombPotential(MdPairPotential& )
-       {
-          // cast to RSpacePotentialData<EwaldCoulombPairInteraction>* pointer.
-          // Retain address in private pointer variable.
-       }
+      // Constructor
+      EwaldCoulombPotential(System& )
+      {}
 
-       /// Add K-Space forces
-       void addForces();
+      /// Add K-Space forces
+      void addForces();
 
-       /// Compute K-Space forces
-       void computeEnergy();
-       void computeStress();
+      /// Compute KSpace energy and stress components
+      void computeKSpaceEnergy();
+      void computeKSpaceStress();
 
-       // Return total Coulomb energy and stress
-       double energy();
-       void stress(double& pressure);
-       void stress(tensor& stress);
-  
-       // Return K-space contributions
-       double kspaceEnergy();
-       void stress(double& pressure);
-       void stress(Tensor& stress);
+      // Return total Coulomb energy and stress (kspace + rspace)
+      double energy();
+      void getStress(double& pressure);
+      void getStress(Vector& stress);
+      void getStress(Tensor& stress);
 
-       // Return R-space contributions
-       double rspaceEnergy();
-       void rspaceStress(double& pressure);
-       void rspaceStress(Tensor& stress);
+      // Return K-space contributions
+      double kspaceEnergy();
+      void getKSpaceStress(Tensor& stress);
 
-    private:
+      // Return R-space contributions
+      double rSpaceEnergy();
+      void getRSpaceStress(Tensor& stress);
 
-       RSpacePotentialData<EwaldCoulombPairInteraction>* rSpaceDataPtr_;
+      // Return pointer to shared EwaldSharedBase part
+      EwaldSharedData& sharedData()
+      {
+         EwaldSharedData* ptr = this;
+         return &ptr;
+      }
 
-    }
+   }
+
+   /// Pair potential class template
+   template <class PairInteraction, CoulombInteraction>
+   class MdCoulombPairPotentialImpl<PairInteraction, CoulombInteraction> 
+    : public MdPairPotential
+   {
+
+      MdCoulombPotentialImpl(System& system)
+      {
+         /// Get pointer to LongRangePotential.
+         LongRangePotential* lrPtr = 0;
+         lrPtr = &system.longRangePotential();
+
+         /// Dynamic cast to a pointer to EwaldCoulombPotential.
+         EwaldCoulombPotential* ewaldPtr = 0; 
+         ewaldPtr = dynamic_cast<EwaldCoulombPotential*>(lrPtr);
+
+         // Get pointer to EwaldSharedData part 
+         sharedPtr = &(ewaldPtr->sharedData());
+      }
+
+      // Force evaluation, which adds both types of pair force.
+      virtual void addForces();
+
+      /** 
+      * Thermo computes, which increment different accumulator variables.
+      * Conventional nonbonded pair energy and stress are added to member
+      * variables of this class.  Ewald RSpace energy and stress are 
+      * added corresponding members of EwaldSharedData.
+      */
+      virtual void computeEnergy();
+      virtual void computeStress(double& stress);
+      virtual void computeStress(Vector& stress);
+      virtual void computeStress(Tensor& stress);
+
+   private:
+
+      EwaldSharedData* sharedDataPtr_;
+
+   }
+
