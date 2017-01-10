@@ -1,0 +1,63 @@
+
+For configuration files:
+
+   1) SmpConfigWriter for McMd. This will allow config files
+      to be generated. 
+ 
+   2) Write AtomSpecies and GroupSpecies classes for DdMd.
+      Add arrays of these objects to DdMd::Simulation to 
+      allow them to be stored.
+
+   3) Write SmpConfigReader and SmpConfigWriter for DdMd. 
+      These should only store number of molecules per block
+      and number of atoms/groups per molecule. The reader 
+      should populate the AtomSpecies and GroupSpecies classes 
+      from information in the config file, if provided.
+
+For trajectory files:
+
+   1) Write trajectory file writer for DdMd.
+
+   2) Write trajectory file reader and writer for McMd.
+
+For topology file, if any:
+
+   1) Define a Tools::Species class in which block information
+      can be stored.  Write code to infer topology from first
+      molecule of a configuration file that is in molecular 
+      order. Parameter file or read separate topology file?
+
+   2) Question: Is the Species class in the Tools namespace
+      the same as the one in the McMd namespace? Should we
+      share or duplicate code? Possible difference: Topology
+      information may be absent. What is required?
+
+   3) Decide on method(s) of reading topology information from
+      file into a postprocessor for use with a trajectory file. 
+      Options:
+
+         - Parameter file (as in McMd)
+         - Topology file(s)
+
+      Proposal:
+
+         Create a topology file text format analogous to 
+         that used for the Species base class in the McMd 
+         param file, but with fewer spaces (e.g., labels 
+         can be on separate lines above data).
+
+         Create a Tools::Species class that can read and
+         write this format.
+
+         Allow McMd::Species to read and write this 
+         information.
+
+Force field file (?):
+
+    Consider creating another ForceField format to allow 
+    communication of potential energy parameters and atom 
+    labelling schemes between programs.
+
+    Provide mechanism for McMd and DdMd programs to read
+    in the force field before reading in remaining parameters
+    of the potential energy.
