@@ -5,22 +5,25 @@ Trajectory file (binary):
       nAtom int
       headerFormat - bitfield indicating which optional info follows
       [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
-      [ATOM] - Format, followed by per atom: typeId, [mass], [charge]
+      [ATOM] 
+         format - bitfield with flags hasMass and hasCharge
+         For each atom{
+            typeId, [mass], [charge]
+         }
 
    Frame:
 
       iStep
-      boundary
+      boundary -> Need to develop binary format. Serialize format?
       nAtom int
       frameFormat - bitfield with flags that include: isMolecular,
                     isOrdered, hasShift, hasVelocity, hasCharge, 
                     hasMolecule, hasSpecial
       ATOMS (id, position, optionally shift, velocity)
-
-Trajectory frame format:
-
-   FRAME:
-     For each atom {
-        id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
-     }
+         For each atom {
+           id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
+         }
+         Note: Position is stored in scaled coordinates, as 3 x uint
+               Shift, if present, is 3 x small int
+               Velocity, if present, is 3 x single precision float
 
