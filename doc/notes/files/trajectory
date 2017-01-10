@@ -1,26 +1,61 @@
-Trajectory file (binary):
+SIMPATICO TRAJECTORY FILE FORMAT
 
-   Header:
+   File extension *.smt
+
+   Remarks:
+
+   1) This is a binary file format, which should be as compact as 
+   possible. 
+
+   2) Each frame should contain mutable per-atom data (no topology info)
+
+   3) Question: Should a file consists of a sequence of independent 
+   frames, with no header, or should it have a header?
+
+   3) If no header, a postprocessor is required to read a param 
+   and/or config file to obtain information about mass and charge 
+   associated with types, as well as topology information. (Though
+   some analysis operations may not require this information). The
+   postprocessor needs bools variables to indicate whether it has
+   atomType (mass and charge) and and topology information.
+
+   4) Possibility: Make the entire header optional? The postprocessor
+   can then get mass and charge information either from the header or 
+   from a param or topology file, if available.
+
+   5) Related Question: Could we also provide optional topology 
+   information, in another header?
+
+FORMAT:
+
+   Header (if any):
 
       nAtom int
       headerFormat - bitfield indicating which optional info follows
       [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
-      [ATOM] - Format, followed by per atom: typeId, [mass], [charge]
+      [ATOM] 
+         format - bitfield with flags hasMass and hasCharge
+         For each atom{
+            typeId, [mass], [charge]
+         }
 
    Frame:
 
       iStep
-      boundary
+      boundary -> Need to develop binary format. Serialize format?
       nAtom int
-      frameFormat - bitfield with flags that include: isMolecular,
+      [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
+      frameFormat - bitfield with flags that include:
                     isOrdered, hasShift, hasVelocity, hasCharge, 
                     hasMolecule, hasSpecial
       ATOMS (id, position, optionally shift, velocity)
+         For each atom {
+           id position (scaled) [shift] [velocity]
+         }
 
-Trajectory frame format:
+      Remarks:
 
-   FRAME:
-     For each atom {
-        id position (scaled, as 3xuint) [shift 3 x small int] [velocity]
-     }
-
+      1) The [MOLECULE] block is allowed only if there is no header.
+      2) Position is stored in scaled coordinates, as 3 x uint
+      3) Shift, if present, is 3 x small int
+      4) Velocity, if present, is 3 x single precision float
