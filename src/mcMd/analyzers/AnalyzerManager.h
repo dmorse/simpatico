@@ -19,7 +19,7 @@ namespace McMd
    /**
    * Manager for a list of Analyzer objects.
    *
-   * \sa \ref mcMd_analyzer_AnalyzerManager_page "param file format"
+   * \sa \ref mcMd_analyzer_AnalyzerManager_page "parameter file format"
    *
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Analyzer_Module

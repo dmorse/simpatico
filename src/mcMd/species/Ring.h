@@ -6,6 +6,8 @@
 *
 * Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
+*
+* Author: Jian Qin
 */
 
 #include "Species.h"

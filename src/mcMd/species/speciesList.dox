@@ -11,6 +11,8 @@ mcSim or mdSim simulations:
   <li> \subpage mcMd_species_Point_page </li>
   <li> \subpage mcMd_species_Homopolymer_page </li>
   <li> \subpage mcMd_species_Diblock_page </li>
+  <li> \subpage mcMd_species_Multiblock_page </li>
+  <li> \subpage mcMd_species_HomoRing_page </li>
 </ul>
 
 Parameter file blocks for individual species appear as subblocks
