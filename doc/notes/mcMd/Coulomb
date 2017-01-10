@@ -2,17 +2,20 @@
 Existing classes in mcMd/potentials/coulomb:
 
    CoulombPotential : ParamComposite
-   -> Base class for CoulombPotentials (i.e., k-space potentials)
-  
+   -> Base class for coulomb potentials (i.e., k-space potentials)
+
+   Proposal: Change name of CoulombPotential to KSpacePotential to
+   indicate usability for, e.g., dipolar forces, long range 1/r^6 etc.
+
    EwaldCoulombPotential : CoulombPotential, CoulombSystemMixIn
    -> Implementation of CoulombPotential
   
    EwaldCoulombPair 
    -> Pair interaction for short range Ewald Coulomb interaction
   
-   CoulombPotential has an associated EwaldCoulombPair, which is set by 
-   the setPairInteraction() method. CoulombPotential is also a friend of
-   EwaldCoulombPair, and so can modify its parameters. 
+   CoulombPotential has an associated EwaldCoulombPair, which is set 
+   by the setPairInteraction() method. CoulombPotential is also a 
+   friend of EwaldCoulombPair, and so can modify its parameters. 
 
    MdCoulombPairPotential<PairInteraction, CoulombInteraction>
 
@@ -21,43 +24,73 @@ Proposed design:
 
    Principles:
 
-   1) Short-range non-Coulomb and short range part of Coulomb
-   forces are computed by the same class, which is a modified
-   template implementation of MdPairPotential that is takes
-   the Interaction classes that implement the two parts of the
-   pair potential as parameters. 
+   1) Both KSpacePotential and PairPotential classes have a 
+   hierarchy with an abstract base class that defines an
+   interface and implementation classes or template that 
+   define nuts and bolts of the implementation.
 
-   2) Values for physical and algorithm parameters associated
-   with Coulomb interactions are input in the CoulombPotential
-   part of the parameter file, but are shared as needed with
+   2) Short-range non-Coulomb and short range part of Coulomb
+   forces are computed in the same loop by template instantiation
+   MdCoulombPairPotential<PairInteraction, CoulombPairInteraction>
+
+   3) Values for physical and algorithm parameters associated
+   with Coulomb interactions are input in the KSpacePotential 
+   part of the parameter file, but are shared as needed with 
    the PairPotential class (mechanism discussed below).
 
-   3) Both CoulombPotential and PairPotential classes have 
-   a hierarchy with an abstract base class that defines an
-   interface and implementation classes that define nuts and
-   bolts of the implementation.
+   4) KSpacePotential part of the parameter file should appear
+   in the parameter file, if at all, as the first potential
+   energy block, before the PairPotential block. 
 
    4) Data is shared between the pair and long-range implementation
-   classes by an instance of a specialized class called something
-   like EwaldSharedData. One of the two implementation classes is
-   derived from EwaldShared data (probably as a private base class), 
-   as well as from the class that defines its interface. The other 
-   one holds a pointer to the same object, which it should obtain
-   either when it is constructed or immediately after. Getting 
-   this to work may require a dynamic cast of a pointer to an
-   abstract base class to the implementation class, since the
-   existence of a EwaldSharedData class is not visible in either 
-   abstract base class.
+   classes by an instance of a specialized structure called something
+   like EwaldSharedData. EwaldSharedData provides places to store:
 
-   5) Values of the energy and stress will be accumulated
-   separately by the PairPotential implementation for the  
-   actual non-coulombic pair interaction and the short range
-   part of the Coulomb energy, and this info will we shared with
-   the CoulombPotential implementation class through the
-   EwaldSharedData class.
+      - Physical Coulomb parameters (e.g., dielectric constant)
+      - Shared algorithmic Coulomb parameters (e.g., alpha and r cutoff)
+      - Accumulated values of r-space contributions to Coulomb 
+        energy and stress
 
 
+   5) EwaldCoulombPotential is derived from EwaldSharedData, as a
+      private base class.
 
+      Physical and algorithmic input parameter members of EwaldShared
+      Data are declared protected, and energy and stress accumulators
+      are declared public. 
+
+      EwaldCoulombPotential will have a public member sharedData()
+      that returns the EwaldSharedData as a non-const reference.
+
+   6) MdPairPotential<Pair, RSpace> has a private pointer to the 
+      EwaldSharedData base class of the EwaldPotential. The pointer 
+      is passed in the factory that creates the pair potential object 
+      using a constructor that takes a references to the KSpacePotential
+      as an argument. This constructor will have to use a dynamic cast
+      of KSpacePotential to EwaldColumbPotential to get a pointer to a
+      EwaldCoulombPotential, and then access the sharedData() member to
+      get the address of the EwaldSharedData object.
+
+
+   7) Values of the energy and stress arising from the non-coulombic
+      pair potential will be accumulated separately from those arising
+      from the r-space part of the coulomb / kspace potential. The
+      short range coulomb parts will be accumulated in values that
+      are members of EwaldSharedData, and so will be accessible in
+      the EwaldCoulombPotential.  
+
+    8) The KSpace potential will provide accessors to allow access
+       to either KSpace and RSpace components of energy and stress
+       separately, or just the total, to allow public access to
+       some results broken down in a way needed to test algorihms.
+
+    9) The energy and stress accessors of the PairPotential class
+       will only report the non-coulombic (e.g., Lennard-Jones)
+       contributions, leaving it to the KSpace potential to return
+       values of the short-range Coulombic contributions.
+
+-------------------------------------------------------------------
+       Class sketches:
 
    /// Abstract base class for potentials with K-space part
    /// Interface class - no data
