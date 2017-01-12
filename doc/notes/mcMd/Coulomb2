@@ -6,11 +6,17 @@ Proposed design:
        // Abstract base class for Fourier space potentials
        class KSpacePotential 
 
+       // Base class to hold Ewald rspace parameters 
+       class EwaldRSpaceParameters;
+
        // Implementation for Ewald
        class Ewaldotential : public KSpacePotential
 
        // Abstract base class for Md Pair Potentials
        class MdPairPotential;
+
+       // Class to hold Ewald rspace energy and stress accumulators
+       class EwaldRSpaceAccumulators;
 
        // Implementation for Ewald + nonCoulomb Pair
        template <class Pair>
@@ -32,36 +38,41 @@ Proposed design:
    accumulators.
 
    3) Values for physical and algorithm parameters associated with 
-   Coulomb interactions are input in the KSpacePotential part 
-   of the parameter file, but are shared as needed with the 
+   Coulomb interactions are input in the KSpacePotential part of 
+   the parameter file, but are shared as needed with the 
    PairPotential class (mechanism described below).
 
    4) KSpacePotential part of the parameter file should appear
    in the parameter file, if at all, as the first potential
-   energy block, before the PairPotential block. 
+   energy block, before the PairPotential block. This allows the
+   code that reads the PairPotential block of the parameter file
+   to make decisions based on full knowledge of the parameters 
+   of the Ewald algorithm, including the rspace cutoff.
 
-
-   5) EwaldPotential provides public member functions 
-   to access values of the physical and algorithmic parameters
-   required to define the r-space part of the Coulomb potential,
-   namely dielectric constant, alpha, and r-space cutoff.
+   5) EwaldPotential provides public member functions to access 
+   values of the physical and algorithmic parameters required to 
+   define the r-space part of the Coulomb potential, namely 
+   dielectric constant, alpha, and r-space cutoff.
 
    6) MdEwaldPairPotentialImpl<Pair> has public memmber functions 
    to access values of rSpace energy and stress accumulators, 
    and to unset all energy and stress accumulators.
 
-   7) The EwaldPotential and MdCoulombPotential<Pair, RSpace>
-   implementation classes hold pointers to one another. The required
-   addresses are obtained in each case by using a dynamic cast of
-   a pointer to the base class down to the relevant subclass. 
+   7) The EwaldPotential and MdEwaldPairPotentialImpl<Pair>
+   implementation classes hold pointers to one another. The 
+   required addresses are obtained in each case by using a 
+   dynamic cast of a pointer to the base class down to the 
+   relevant subclass. 
 
    8) The energy and stress accessors of the MdPairPotential base
    class, which are implemented by the MdEwaldPairPotentialImpl
    template, return values of the non-coulombic (e.g., Lennard-Jones)
-   part of the potential.
+   part of the potential. A separate set of functions of
+   MdEwaldPairPotentialImpl<Pair> provide access to the rspace
+   part of the coulomb energy and stress.
 
 -------------------------------------------------------------------
-       Class sketches:
+    Class sketches:
 
    /// Abstract base class for potentials with K-space part
    /// Interface class - no data
@@ -71,49 +82,89 @@ Proposed design:
 
        void setPairPotential(MdPairPotential& pairPotential) = 0;
 
-       /// Add K-Space forces
+       // Add K-Space forces
        virtual void addForces() = 0;
 
-       /// Compute KSpace energy and stress components
+       // Compute KSpace energy and stress components
        virtual void computeEnergy() = 0;
        virtual void computeStress() = 0;
 
-       virtual void unsetKSpaceEnergy();
-       virtual void unsetKSpaceStress();
+       // Unset accumulators for kspace energy and stress components.
+       virtual void unsetEnergy();
+       virtual void unsetSress();
 
        // Return total energy and stress
-       virtual double energy() = 0;
-       virtual double pressure() = 0;
-       virtual Tensor stress() = 0;
+       virtual double energy() const = 0;
+       virtual double pressure() const = 0;
+       virtual Tensor stress() const = 0;
 
        // Return K-space contributions
-       virtual double kSpaceEnergy() = 0;
-       virtual double kSpacePressure() = 0;
-       virtual Tensor kSpaceStress() = 0;
+       virtual double kSpaceEnergy() const = 0;
+       virtual double kSpacePressure() const = 0;
+       virtual Tensor kSpaceStress() const = 0;
 
        // Return R-space contributions
-       virtual double rSpaceEnergy() = 0;
-       virtual double rSpacePressure() = 0;
-       virtual Tensor rSpaceStress() = 0;
+       virtual double rSpaceEnergy() const = 0;
+       virtual double rSpacePressure() const = 0;
+       virtual Tensor rSpaceStress() const = 0;
+
+       // Note: Public functions to return rspace components are
+       // needed in this base class because the MdPairPotential base 
+       // class interface does not provide access to these values, and
+       // the user has access to the MdEwaldPairPotentialImpl<Pair>
+       // only through a pointer to the MdPairPotential base class.
+       // Because they are specific to Coulomb interactions, it makes
+       // more sense to provide access here rather than in the
+       // interface for MdPairPotential.
+
+   }
+
+   class EwaldRSpaceParameters
+   {
+   public:
+
+      double alpha() const 
+      {  return alpha_; }
+
+      double epsilon() const 
+      {  return alpha_; }
+
+      double rCutoff() const 
+      {  return rCutoff_; }
+
+   protected:
+
+      // Physical Parameters
+      double epsilon_;
+
+      // Algorithmic parameters
+      double alpha_;
+      double rCutoff_;
+
    }
 
    /**
-   * Ewald Coulomb potential concrete class
+   * Ewald KSpace Coulomb potential implementation class
    */
-   EwaldPotential : public KSpacePotential
+   EwaldPotential : public KSpacePotential, 
+                    public EwaldRSpaceParameters
    {
    public:
 
       // Constructor
-      EwaldPotential(System& )
+      EwaldPotential(System& system)
       {}
 
-      /// Add K-Space forces
+      // Add K-Space forces
       void addForces();
 
-      /// Compute KSpace energy and stress components
+      // Compute KSpace energy and stress components
       void computeEnergy();
       void computeStress();
+
+      // Unset KSpace energy and stress components
+      void unsetEnergy();
+      void unsetStress();
 
       // Return total Coulomb energy and stress (kspace + rspace)
       double energy();
@@ -126,94 +177,119 @@ Proposed design:
       Tensor kSpaceStress();
 
       // Return R-space contributions
-      double rSpaceEnergy();
+      double rSpaceEnergy()
+      { return rspaceAccumulatorPtr_->rSpaceEnergy(); }
+
       double kSpacePressure();
+
       Tensor kSpaceStress();
-
-      // Accessors for parameters required by RSpace potential
-
-      double alpha() const 
-      {  return alpha_; }
-
-      double epsilon() const 
-      {  return alpha_; }
-
-      double rCutoff() const 
-      {  return rCutoff_; }
+      { return rspaceAccumulatorPtr_->rSpaceStress(); }
 
     private:
 
-      // Physical Parameters
-      double epsilon_;
+      // KSpace part of Coulomb energy
+      Setable<double> energy_;
 
-      // Algorithmic parameters
-      double alpha_;
-      double rCutoff_;
+      // KSpace part of Coulomb stress.
+      Setable<double> stress_;
 
+      // Pointer to accumulator part of MdEwaldPairPotentialImpl
+      EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
    }
 
    /// Ewald Coulomb pair interaction class (analogous to LJPair)
    class EwaldPair : public ParamComposite
    {
-      void setParams(EwaldPotential& ewaldPotential);
+   public:
+
+      void setParams(EwaldRSpaceParameters& ewaldParams)
+      {  ewaldParamPtr_ = & ewaldParams; }
+
+   private:
+
+      EwaldRSpaceParameters* ewaldParamPtr_;
+
    }
 
+   /// Base class containing Ewald RSpace accumulators
+   class EwaldRSpaceAccumulators
+   {
+
+      // Check if energy and stress accumulators are set.
+
+      void isSetEnergy() const
+      {  return rSpaceEnergy_.isSet(); }
+
+      void isSetStress() const
+      { return rSpaceStress_.isSet(); }
+
+      // Note: Because non-Coulombic and Ewald rSpace accumulators
+      // are set and unset together in MdEwaldPairPotentialImpl, 
+      // it is only necessary to check the rSpace accumulators
+      // to know the state of both accumulators.
+
+      double rSpaceEnergy() const
+      { return rSpaceEnergy_.value(); }
+
+      Tensor rSpaceStress() const
+      { return rSpaceStress_.value(); }
+
+      Tensor rSpacePressure() const;
+
+   protected:
+
+      Setable<Tensor> stress_;       // non-Coulombic
+      Setable<Tensor> pairStress_;   // rspace Coulombic
+
+   }
 
    /// Ewald +_Pair potential class template
    template <class Pair>
    class MdEwaldPairPotentialImpl<Pair>
-    : public MdPairPotential
+    : public MdPairPotential, public EwaldRSpaceAccumulators
    {
 
       MdEwaldPairPotentialImpl(System& system)
       {
-         /// Get pointer to KSpacePotential.
+         // Get pointer to KSpacePotential.
          KSpacePotential* kspacePtr = 0;
          kspacePtr = &system.longRangePotential();
 
-         /// Dynamic cast to a pointer to EwaldPotential.
+         // Dynamic cast to a pointer to EwaldPotential.
          EwaldPotential* ewaldPtr = 0; 
          ewaldPtr = dynamic_cast<EwaldPotential*>(kspacePtr);
 
+         // Pass address of EwaldPotential to EwaldPair interaction
+         ewaldPair.setParams(*ewaldPtr);
       }
 
       // Force evaluation, which adds both types of pair force.
       virtual void addForces();
 
       /** 
-      * Thermo computes, which increment different accumulator 
-      * variables.  Conventional nonbonded pair energy and stress 
-      * are added to member variables of this class.  Ewald RSpace 
-      * energy and stress are added corresponding members of 
-      * EwaldShareAccumulator base class.
+      * Thermo computes, which computes nonCoulombic and coulombic
+      * parts, but stores them in different accumulator variables.
+      * The implementation should also mark both accumulators as set.
       */
       virtual void computeEnergy();
       virtual void computeStress();
 
+      // Unset both energy accumulators.
       void unsetEnergy();
       { 
          energy_.unset(); 
          rSpaceEnergy_.unset(); 
       }
 
+      // Unset both stress accumulators.
       void unsetStress();
       { 
          stress_.unset(); 
          rSpaceStress_.unset(); 
       }
 
-      void isSetEnergy() const
-      { return energy_.isSet(); }
-
-      // Get non-coulombic pair energy.
-      double energy()
-      {  return energy_.value(); }
-
       double rSpaceEnergy() const
       { return rSpaceEnergy_.value(); }
-
-      void isSetStress() const
-      { return stress_.isSet(); }
 
       // Get non-coulombic pair stress.
       Tensor stress()
@@ -222,26 +298,18 @@ Proposed design:
       // Get non-coulombic pair pressure.
       double pressure();
 
-      Tensor rSpaceStress() const
-      { return rSpaceStress_.value(); }
-
-      Tensor rSpacePressure() const;
-
    private:
 
       Setable<double> energy_;       // non-Coulombic
       Setable<double> pairEnergy_;   // rspace Coulombic
 
-      Setable<Tensor> stress_;       // non-Coulombic
-      Setable<Tensor> pairStress_;   // rspace Coulombic
-
       // Pointer to associated EwaldPotential
       EwaldPotential* ewaldPtr_;
 
-      // Non-Coulombic Pair interaction
+      // Non-Coulombic pair interaction
       Pair pair_;
 
-      // Ewald short-range Interaction
+      // Ewald short-range pair Interaction
       EwaldPair ewaldPair_;
 
    }
