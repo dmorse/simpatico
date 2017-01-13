@@ -4,93 +4,91 @@ Proposed design:
    Classes:
 
        // Abstract base class for Fourier space potentials for MD
-       class MdKSpacePotential 
+       class MdCoulombPotential 
 
        // Base class to hold Ewald rspace parameters 
-       class EwaldRSpaceParameters;
+       class EwaldParameters;
 
        // MD Ewald implementation 
-       // Has a private pointer to EwaldRSpaceAccumulators
+       // Has a private pointer to EwaldRSpaceAccumulator
 
-       class Ewaldotential : public MdKSpacePotential, 
-                             public EwaldRSpaceParameters
+       class EwaldPotential : public MdCoulombPotential, 
+                              public EwaldParameters
 
        // Abstract base class for Md Pair Potentials, with or without
        // short-range Coulombic parts
        class MdPairPotential;
 
        // Class to hold Ewald rspace energy and stress accumulators
-       class EwaldRSpaceAccumulators;
+       class EwaldRSpaceAccumulator;
 
        // Pair Interaction for short range part of Ewald.
-       // Holds a pointer to EwaldRSpaceParameters base class.
+       // Holds a pointer to EwaldParameters base class.
        class EwaldPair;
 
        // Implementation for Ewald + nonCoulomb Pair
-       // Has a EwaldPair, and a pointer to EwaldRSpaceParameters
+       // Has a EwaldPair, and a pointer to EwaldParameters
 
        template <class Pair>
        class MdEwaldPairPotentialImpl<Pair> : public MdPairPotential
 
    Principles:
 
-   1) MdKSpacePotential and PairPotential classes each have a 
-   hierarchy with an abstract base class that defines an interface 
-   and implementation class or class template that define nuts and 
-   bolts of the implementation.
+   1) MdCoulombPotential and PairPotential are abstract base classes 
+   with functions that are implemented by concrete subclasses
+   MdEwaldPotential and MdEwaldPairPotentialImpl<Pair>, respectively.
 
-   2) Short-range non-Coulomb and short range part of Coulomb 
-   forces are computed in the same loop by template instantiation 
-   MdEwaldPairPotentialImpl<Pair>, but are stored in different
+   2) Short-range non-Coulomb pair potentials and short range part 
+   of the Coulomb potential are computed in the same loop by template 
+   instantiation MdEwaldPairPotentialImpl<Pair>. Corresponding energy
+   and stress components are, however, stored in different
    accumulators.
 
-   3) Values for physical and algorithm parameters associated with 
-   Coulomb interactions are input in the MdKSpacePotential part of 
-   the parameter file, but are shared as needed with the 
-   PairPotential class (mechanism described below).
+   3) Values for physical and algorithm parameters associated 
+   with Coulomb interactions are input in the CoulombPotential 
+   part of the parameter file, but are shared as needed with the 
+   MdEwaldPairPotentialImpl<Pair> class (mechanism described below).
 
-   4) MdKSpacePotential part of the parameter file should appear
-   in the parameter file, if at all, as the first potential
-   energy block, before the PairPotential block. This allows the
-   code that reads the PairPotential block of the parameter file
-   to make decisions based on full knowledge of the parameters 
-   of the Ewald algorithm, including the rspace cutoff.
+   4) MdCoulombPotential part of the parameter file should appear
+   first in the parameter file, if at all, before the MdPairPotential 
+   block. This allows the code that reads the PairPotential block of 
+   the parameter file to make decisions regarding, e.g., the Verlet
+   list cutoff, based on full knowledge of the rSpaceCutoff of the 
+   Ewald algorithm.
 
-   5) EwaldRSpaceParameters has public member functions to access 
-   values of the physical and algorithmic parameters required to 
-   define the r-space part of the Coulomb potential, namely 
-   dielectric constant, alpha, and r-space cutoff. These variables
-   are all protected members so that they can be modified by the
-   MdEwaldPotential derived class.
+   5) EwaldParameters has public member functions to access values 
+   of the physical and algorithmic parameters required to define 
+   the r-space and k-space parts of the Coulomb potential, namely 
+   dielectric constant, alpha, r-space cutoff and the k-Space cutoff
+   or grid. These variables are all protected members so that they 
+   can be modified by the MdEwaldPotential derived class.
 
-   6) MdEwaldRSpaceParmaeters provides public member functions to
-   to access rSpace energy and stress accumulators. These accumulators
+   6) EwaldRSpaceAccumulator provides public member functions to
+   access rSpace energy and stress accumulators. These accumulators
    are Setable<Type> protected members, so that they can be modified
    by the MdEwaldPairPotentialImpl<Pair> derived class.
 
-   7) The MdEwaldPotential holds a pointer to the EwaldRSpaceAccumulator
-   base class of MdEwaldPairPotentialImpl<Pair>, and 
-   MdEwaldPairPotentialImpl<Pair> holds a pointer to the 
-   EwaldRSpaceParameters base class of MdEwaldPotential.  The required 
-   addresses are obtained in each case by using a dynamic cast of a 
-   pointer to the base class to the relevant implementation subclass,
-   and then casting this to a pointer to the EwaldRSpace.. base class 
-   part.
+   7) The EwaldPotential has a pointer to the EwaldRSpaceAccumulator
+   base class of MdEwaldPairPotentialImpl<Pair>. Similarly, the
+   EwaldPair has a pointer to the EwaldParameters base class of 
+   MdEwaldPotential. The required addresses are obtained in each 
+   case by using a dynamic cast of a pointer to the base class 
+   to the relevant implementation subclass, and then casting this 
+   to a pointer to a base class.  (See class skeletons for details).
 
    8) The energy and stress accessors of the MdPairPotential base
    class, which are implemented by the MdEwaldPairPotentialImpl<Pair>
    template, return values of the non-coulombic (e.g., Lennard-Jones)
-   part of the potential. A separate set of non-iherited functions of
-   MdEwaldPairPotentialImpl<Pair> provide access to the rspace
-   part of the coulomb energy and stress. 
-   
+   part of the pair potential. A separate set of non-iherited 
+   functions of MdEwaldPairPotentialImpl<Pair> provide public 
+   access to the rspace part of the coulomb energy and stress. 
 
 -------------------------------------------------------------------
-    Class sketches:
+   Class sketches:
 
    /// Abstract base class for potentials with K-space part
    /// Interface class - no data
-   MdKSpacePotential : public ParamComposite
+   MdCoulombPotential : public ParamComposite
    {
    public:
 
@@ -133,7 +131,7 @@ Proposed design:
 
    }
 
-   class EwaldRSpaceParameters
+   class EwaldParameters
    {
    public:
 
@@ -155,13 +153,16 @@ Proposed design:
       double alpha_;
       double rCutoff_;
 
+      // Need some way of specifying k-space cutoff, either
+      // as a value or dimensions of a grid.
+
    }
 
    /**
    * Ewald KSpace Coulomb potential implementation class
    */
-   MdEwaldPotential : public MdKSpacePotential, 
-                    public EwaldRSpaceParameters
+   MdEwaldPotential : public MdCoulombPotential, 
+                      public EwaldParameters
    {
    public:
 
@@ -172,11 +173,11 @@ Proposed design:
       // Add K-Space forces
       void addForces();
 
-      // Compute KSpace energy and stress components
+      // Compute KSpace energy and stress components (inherited)
       void computeEnergy();
       void computeStress();
 
-      // Unset KSpace energy and stress components
+      // Unset KSpace energy and stress components (inherited)
       void unsetEnergy();
       void unsetStress();
 
@@ -185,12 +186,12 @@ Proposed design:
       double pressure();
       Tensor stress();
 
-      // Return K-space contributions
+      // Return K-space contributions (inherited)
       double kspaceEnergy();
       double kSpacePressure();
       Tensor kSpaceStress();
 
-      // Return R-space contributions
+      // Return R-space contributions (inherited)
       double rSpaceEnergy()
       { return rspaceAccumulatorPtr_->rSpaceEnergy(); }
 
@@ -205,7 +206,7 @@ Proposed design:
       Setable<double> energy_;
 
       // KSpace part of Coulomb stress.
-      Setable<double> stress_;
+      Setable<Tensor> stress_;
 
       // Pointer to accumulator part of MdEwaldPairPotentialImpl
       EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
@@ -216,17 +217,17 @@ Proposed design:
    {
    public:
 
-      void setParams(EwaldRSpaceParameters& ewaldParams)
+      void setParams(EwaldParameters& ewaldParams)
       {  ewaldParamPtr_ = & ewaldParams; }
 
    private:
 
-      EwaldRSpaceParameters* ewaldParamPtr_;
+      EwaldParameters* ewaldParamPtr_;
 
    }
 
    /// Base class containing Ewald RSpace accumulators
-   class EwaldRSpaceAccumulators
+   class EwaldRSpaceAccumulator
    {
 
       // Check if energy and stress accumulators are set.
@@ -260,13 +261,13 @@ Proposed design:
    /// Ewald +_Pair potential class template
    template <class Pair>
    class MdEwaldPairPotentialImpl<Pair>
-    : public MdPairPotential, public EwaldRSpaceAccumulators
+    : public MdPairPotential, public EwaldRSpaceAccumulator
    {
 
       MdEwaldPairPotentialImpl(MdSystem& system)
       {
-         // Get pointer to MdKSpacePotential.
-         MdKSpacePotential* kspacePtr = 0;
+         // Get pointer to MdCoulombPotential.
+         MdCoulombPotential* kspacePtr = 0;
          kspacePtr = &system.kspacePotential();
 
          // Dynamic cast to a pointer to MdEwaldPotential.
