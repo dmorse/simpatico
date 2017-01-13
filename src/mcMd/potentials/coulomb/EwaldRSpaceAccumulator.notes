@@ -1,0 +1,32 @@
+   /// Base class holding Ewald RSpace energy & stress accumulators
+   class EwaldRSpaceAccumulator
+   {
+
+      // Check if energy and stress accumulators are set.
+
+      void isSetEnergy() const
+      {  return rSpaceEnergy_.isSet(); }
+
+      void isSetStress() const
+      { return rSpaceStress_.isSet(); }
+
+      // Note: Because non-Coulombic and Ewald rSpace accumulators
+      // are set and unset together in MdEwaldPairPotentialImpl, 
+      // it is only necessary to check the rSpace accumulators
+      // to know the state of both accumulators.
+
+      double rSpaceEnergy() const
+      { return rSpaceEnergy_.value(); }
+
+      Tensor rSpaceStress() const
+      { return rSpaceStress_.value(); }
+
+      Tensor rSpacePressure() const;
+
+   protected:
+
+      Setable<double> rSpaceEnergy_;  
+      Setable<Tensor> rSpaceStress_;  
+
+   };
+
