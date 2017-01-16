@@ -7,7 +7,6 @@ include $(SRC_DIR_REL)/mcMd/config.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include sources.mk
 
-
 all: $(mcMd_potentials_coulomb_OBJS)
 
 clean:

@@ -23,7 +23,7 @@ endif
 
 ifdef INTER_COULOMB
 include $(SRC_DIR)/mcMd/potentials/coulomb/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_coulomb_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_coulomb_) 
 endif
 
 ifdef MCMD_LINK
