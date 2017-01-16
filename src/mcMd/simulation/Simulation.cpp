@@ -220,7 +220,7 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       hasCoulomb_ = 0;
-      read<int>(in, "hasCoulomb", hasCoulomb_, false); // optional
+      readOptional<int>(in, "hasCoulomb", hasCoulomb_); 
       if ((hasCoulomb_ != 0) && (hasCoulomb_ != 1)) {
          UTIL_THROW("hasCoulomb must be 0 or 1");
       }
@@ -287,11 +287,11 @@ namespace McMd
       loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       #endif
       #ifdef INTER_COULOMB
-      hasCoulomb_ = false;
+      hasCoulomb_ = 0;
       loadParameter<int>(ar, "hasCoulomb", hasCoulomb_, false);
       #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_ = false;
+      hasExternal_ = 0;
       loadParameter<int>(ar, "hasExternal", hasExternal_, false);
       #endif
       #ifdef MCMD_LINK
@@ -338,7 +338,6 @@ namespace McMd
       Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
       #ifdef INTER_COULOMB
-      //ar << hasCoulomb_;
       Parameter::saveOptional(ar, hasCoulomb_, hasCoulomb_);
       #endif
       #ifdef INTER_EXTERNAL

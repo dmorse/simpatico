@@ -239,6 +239,21 @@ namespace McMd
          readPotentialStyles(in);
       }
 
+      #ifdef INTER_COULOMB
+      if (!isCopy()) {
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_ =
+                       coulombFactory().factory(coulombStyle());
+            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
+            }
+            readParamComposite(in, *coulombPotentialPtr_);
+         }
+      }
+      #endif
+
       #ifndef INTER_NOPAIR
       if (!isCopy()) {
          assert(pairPotentialPtr_ == 0);
@@ -284,19 +299,6 @@ namespace McMd
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
             readParamComposite(in, *dihedralPotentialPtr_);
-         }
-         #endif
-
-         #ifdef INTER_COULOMB
-         assert(coulombPotentialPtr_ == 0);
-         if (simulation().hasCoulomb()) {
-            coulombPotentialPtr_ =
-                       coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
-            if (coulombPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create CoulombPotential");
-            }
-            readParamComposite(in, *coulombPotentialPtr_);
          }
          #endif
 
@@ -371,9 +373,24 @@ namespace McMd
    void MdSystem::loadParameters(Serializable::IArchive& ar)
    {
       if (!isCopy()) {
+
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
+
+         #ifdef INTER_COULOMB
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb() > 0) {
+            coulombPotentialPtr_ =
+                       coulombFactory().factory(coulombStyle());
+            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
+            }
+            loadParamComposite(ar, *coulombPotentialPtr_);
+         }
+         #endif
+
       }
 
       #ifndef INTER_NOPAIR
@@ -421,19 +438,6 @@ namespace McMd
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
             loadParamComposite(ar, *dihedralPotentialPtr_);
-         }
-         #endif
-
-         #ifdef INTER_COULOMB
-         assert(coulombPotentialPtr_ == 0);
-         if (simulation().hasCoulomb() > 0) {
-            coulombPotentialPtr_ =
-                       coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
-            if (coulombPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create CoulombPotential");
-            }
-            loadParamComposite(ar, *coulombPotentialPtr_);
          }
          #endif
 
@@ -510,6 +514,11 @@ namespace McMd
       if (!isCopy()) {
          saveFileMaster(ar);
          savePotentialStyles(ar);
+         #ifdef INTER_COULOMB
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_->save(ar);
+         }
+         #endif
       }
       #ifndef INTER_NOPAIR
       pairPotentialPtr_->save(ar);
@@ -528,11 +537,6 @@ namespace McMd
          #ifdef INTER_DIHEDRAL
          if (simulation().nDihedralType() > 0) {
             dihedralPotentialPtr_->save(ar);
-         }
-         #endif
-         #ifdef INTER_COULOMB
-         if (simulation().hasCoulomb()) {
-            coulombPotentialPtr_->save(ar);
          }
          #endif
          #ifdef MCMD_LINK
