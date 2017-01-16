@@ -1,4 +1,5 @@
 mcMd_potentials_pair_=\
+    mcMd/potentials/pair/PairPotential.cpp \
     mcMd/potentials/pair/McPairPotential.cpp \
     mcMd/potentials/pair/MdPairPotential.cpp \
     mcMd/potentials/pair/PairFactory.cpp
