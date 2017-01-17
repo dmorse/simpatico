@@ -84,7 +84,14 @@ namespace McMd
       #ifdef INTER_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   { setClassName("McSystem"); }
+   { 
+      setClassName("McSystem"); 
+
+      // Actions taken when particles are moved
+      positionSignal().addObserver(*this, &McSystem::unsetPotentialEnergies);
+      positionSignal().addObserver(*this, &McSystem::unsetVirialStress);
+   }
+
 
    /*
    * Destructor.
@@ -484,6 +491,18 @@ namespace McMd
       return energy;
    }
 
+   /*
+   * Unset all precomputed potential energy components.
+   */
+   void McSystem::unsetPotentialEnergies()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetEnergy();
+      }
+      #endif
+   }
+
    // -------------------------------------------------------------
    // Pressure/Stress Evaluators (including all components)
 
@@ -592,6 +611,18 @@ namespace McMd
             stress(i, i) += rho*temperature;
          }
       }
+   }
+
+   /*
+   * Unset all precomputed virial stress components.
+   */
+   void McSystem::unsetVirialStress()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetStress();
+      }
+      #endif
    }
 
    // -------------------------------------------------------------

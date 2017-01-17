@@ -91,7 +91,13 @@ namespace McMd
       mdIntegratorPtr_(0),
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
-   {  setClassName("MdSystem"); }
+   {  
+      setClassName("MdSystem"); 
+
+      // Set actions taken when particles are moved
+      positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
+      positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
+   }
 
    /*
    * Constructor, copy of a System.
@@ -171,6 +177,10 @@ namespace McMd
          tetherPotentialPtr_ = &system.tetherPotential();
       }
       #endif
+
+      // Set actions taken when particles are moved
+      positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
+      positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
    }
 
    /*
@@ -224,9 +234,6 @@ namespace McMd
       return *mdIntegratorFactoryPtr_;
    }
 
-
-
-
    /*
    * Read parameter and configuration files, initialize system.
    */
@@ -238,6 +245,21 @@ namespace McMd
          readFileMaster(in);
          readPotentialStyles(in);
       }
+
+      #ifdef INTER_COULOMB
+      if (!isCopy()) {
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_ =
+                       coulombFactory().factory(coulombStyle());
+            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
+            }
+            readParamComposite(in, *coulombPotentialPtr_);
+         }
+      }
+      #endif
 
       #ifndef INTER_NOPAIR
       if (!isCopy()) {
@@ -284,19 +306,6 @@ namespace McMd
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
             readParamComposite(in, *dihedralPotentialPtr_);
-         }
-         #endif
-
-         #ifdef INTER_COULOMB
-         assert(coulombPotentialPtr_ == 0);
-         if (simulation().hasCoulomb()) {
-            coulombPotentialPtr_ =
-                       coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
-            if (coulombPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create CoulombPotential");
-            }
-            readParamComposite(in, *coulombPotentialPtr_);
          }
          #endif
 
@@ -371,9 +380,24 @@ namespace McMd
    void MdSystem::loadParameters(Serializable::IArchive& ar)
    {
       if (!isCopy()) {
+
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
+
+         #ifdef INTER_COULOMB
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb() > 0) {
+            coulombPotentialPtr_ =
+                       coulombFactory().factory(coulombStyle());
+            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
+            }
+            loadParamComposite(ar, *coulombPotentialPtr_);
+         }
+         #endif
+
       }
 
       #ifndef INTER_NOPAIR
@@ -421,19 +445,6 @@ namespace McMd
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
             loadParamComposite(ar, *dihedralPotentialPtr_);
-         }
-         #endif
-
-         #ifdef INTER_COULOMB
-         assert(coulombPotentialPtr_ == 0);
-         if (simulation().hasCoulomb() > 0) {
-            coulombPotentialPtr_ =
-                       coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
-            if (coulombPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create CoulombPotential");
-            }
-            loadParamComposite(ar, *coulombPotentialPtr_);
          }
          #endif
 
@@ -510,6 +521,11 @@ namespace McMd
       if (!isCopy()) {
          saveFileMaster(ar);
          savePotentialStyles(ar);
+         #ifdef INTER_COULOMB
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_->save(ar);
+         }
+         #endif
       }
       #ifndef INTER_NOPAIR
       pairPotentialPtr_->save(ar);
@@ -528,11 +544,6 @@ namespace McMd
          #ifdef INTER_DIHEDRAL
          if (simulation().nDihedralType() > 0) {
             dihedralPotentialPtr_->save(ar);
-         }
-         #endif
-         #ifdef INTER_COULOMB
-         if (simulation().hasCoulomb()) {
-            coulombPotentialPtr_->save(ar);
          }
          #endif
          #ifdef MCMD_LINK
@@ -812,6 +823,18 @@ namespace McMd
    }
 
    /*
+   * Unset precomputed potential energy components.
+   */
+   void MdSystem::unsetPotentialEnergy()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetEnergy();
+      }
+      #endif
+   }
+
+   /*
    * Return total kinetic energy.
    */
    double MdSystem::kineticEnergy() const
@@ -975,6 +998,20 @@ namespace McMd
       computeKineticStress(kineticStress);
       stress += kineticStress;
    }
+
+   /*
+   * Unset precomputed virial stress components.
+   */
+   void MdSystem::unsetVirialStress()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetStress();
+      }
+      #endif
+   }
+
+   // Miscellaneous member functions
 
    /*
    * Return true if this MdSystem is valid, or an throw Exception.

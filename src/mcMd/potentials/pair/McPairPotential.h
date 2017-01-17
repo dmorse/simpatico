@@ -133,9 +133,6 @@ namespace McMd
       /// Cell list for atom positions.
       CellList cellList_;
 
-      /// Alias for global atoms_ DArray of parent simulation.
-      // RArray<Atom> atoms_;
-
    };
 
    // Inline functions
