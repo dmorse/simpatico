@@ -160,7 +160,7 @@ namespace McMd
       if (system.hasCoulombPotential()) {
          coulombPotentialPtr_ = &system.coulombPotential();
       }
-      #endif // if 0
+      #endif
       #endif
       #ifdef INTER_EXTERNAL
       if (system.hasExternalPotential()) {
@@ -588,9 +588,9 @@ namespace McMd
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
          coulombPotential().makeWaves();
+         Log::file() << "Initial coulombPotential nWave = " 
+                     << coulombPotential().nWave() << std::endl;
       }
-      Log::file() << "Initial coulombPotential nWave = " 
-                  << coulombPotential().nWave() << std::endl;
       #endif
       calculateForces();
    }

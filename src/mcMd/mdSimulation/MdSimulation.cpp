@@ -363,7 +363,9 @@ namespace McMd
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
                fileMaster().openInputFile(filename, inputFile);
+               std::cout << "Opened config file" << std::endl;
                system().readConfig(inputFile);
+               std::cout << "Finished reading config file" << std::endl;
                inputFile.close();
             } else
             if (command == "THERMALIZE") {
