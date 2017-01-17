@@ -26,42 +26,9 @@
 #
 #      ./configure [options]
 #
-# Command Line Options: 
-#   
-# Each of the following options enables or disables a feature. Each such
-# options takes 0 or 1 as a required argument, using 1 to denote "enable"
-# and 0 to denote "disable".
-#
-#   -m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)
-#   -g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)
-#   -b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)
-#   -a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)
-#   -d (0|1)   dihedral potentials         (defines/undefines INTER_DIHEDRAL)
-#   -c (0|1)   coulomb potentials          (defines/undefines INTER_COULOMB)
-#   -e (0|1)   external potentials         (defines/undefines INTER_EXTERNAL)
-#   -l (0|1)   McMd links (mutable bonds)  (defines/undefines MCMD_LINK)
-#   -s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)
-#   -f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)
-#   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
-#   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
-#
-# These command line options do not enable or disable features: 
-#
-#   -j compiler  Chooses a compiler, set COMPILER=compiler in config.mk
-#   -q           query: prints report of options that are enabled / disabled.
-#
-# Examples:
-#
-# To disable debugging and enable angle and dihedral potentials:
-#
-#   >  ./configure -g0 -a1 -d1
-#
-# To set COMPILER=intel in config.mk
-#
-#   >  ./configure -j intel
-#
+# Call "./configure -h" to print a full list of command line options.
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -224,7 +191,47 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
       fi
       echo `grep "^ *COMPILER *=" config.mk` >&2
       ;;
-  esac
+    h)
+      echo "The configure script may be called prior to compiling to enable or"
+      echo "disable specific compile time features, to query which features are"
+      echo "currently set to be enabled (option -q) or to choose a compiler."
+      echo "This script must be called from the directory that contains the"
+      echo "script file, and only effects code built in the same directory tree."
+      echo " "
+      echo "Command Line Options:"
+      echo "-h           help: prints explanation of options (this command)"
+      echo "-q           query: prints report of options that are enabled / disabled."
+      echo "-j compiler  Choose a compiler name: sets COMPILER=compiler in config.mk"
+      echo " "
+      echo "Each of the following options enables or disables a feature by defining"
+      echo "or undefining a corresponding preprocessor macro. Each such option"
+      echo "takes 0 or 1 as a required argument, using 1 to enable the feature"
+      echo "or 0 to disable." 
+      echo " "
+      echo "-m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)"
+      echo "-g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)"
+      echo "-b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)"
+      echo "-a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)"
+      echo "-d (0|1)   dihedral potentials         (defines/undefines INTER_DIHEDRAL)"
+      echo "-c (0|1)   coulomb potentials          (defines/undefines INTER_COULOMB)"
+      echo "-e (0|1)   external potentials         (defines/undefines INTER_EXTERNAL)"
+      echo "-l (0|1)   McMd links (mutable bonds)  (defines/undefines MCMD_LINK)"
+      echo "-s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)"
+      echo "-f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)"
+      echo "-u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)"
+      echo "-k (0|1)   dependency generation       (defines/undefines MAKEDEP)"
+      echo " "
+      echo "Examples:"
+      echo " "
+      echo "To query which features are currently set to be enabled:"
+      echo ">  ./configure -q"
+      echo "To disable debugging and enable angle and dihedral potentials:"
+      echo ">  ./configure -g0 -a1 -d1"
+      echo "To set COMPILER=intel in config.mk"
+      echo ">  ./configure -j intel"
+      echo "  "
+      ;;
+    esac
 
   if [ -n "$MACRO" ]; then
     
