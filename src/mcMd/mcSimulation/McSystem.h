@@ -10,6 +10,7 @@
 
 #include <mcMd/simulation/System.h>     // base class
 #include <mcMd/neighbor/CellList.h>     // member
+#include <util/signal/Signal.h>         // members
 #include <util/global.h>
 
 namespace McMd
@@ -147,7 +148,20 @@ namespace McMd
       template <typename T>
       void computeStress(T& stress) const;
 
-      // ----------------------------------------------------------------------
+      /**
+      * Unset potential precomputed potential energy components.
+      */
+      void unsetPotentialEnergies();
+
+      /**
+      * Unset precomputed virial stress components.
+      */
+      void unsetVirialStress();
+
+      //@}
+      /// \name Potential Energy Accessors
+      //@{
+
 
       #ifndef INTER_NOPAIR
       /**
@@ -225,11 +239,20 @@ namespace McMd
       #endif
 
       //@}
+      /// \name Miscellaneous
+      //@{
+
+      /**
+      * Signal to indicate change in atomic positions.
+      */
+      Signal<>& positionSignal();
 
       /**
       * Return true if McSystem is valid, or throw Exception.
       */
       virtual bool isValid() const;
+
+      //@}
 
    protected:
 
@@ -286,6 +309,12 @@ namespace McMd
       /// Pointer to an TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
+
+      /// Signal to indicate change in atomic positions.
+      Signal<>  positionSignal_;
+
+      /// Signal to indicate change in atomic velocities.
+      Signal<>  velocitySignal_;
 
       /*
       * Implementations of the explicit specializations of the public
@@ -402,6 +431,12 @@ namespace McMd
    inline void McSystem::setPairPotential(McPairPotential* pairPotentialPtr)
    {  pairPotentialPtr_ = pairPotentialPtr; }
    #endif
+
+   /*
+   * Signal to indicate change in atomic positions.
+   */
+   inline Signal<>& McSystem::positionSignal()
+   { return positionSignal_; }
 
 }
 #endif

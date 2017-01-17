@@ -121,6 +121,8 @@ namespace McMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = dtHalf/mass;
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
    }
 
    /*
@@ -171,6 +173,8 @@ namespace McMd
 
          }
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       // First half of update of xi_
       xi_ += xiDot_*dtHalf;
@@ -196,6 +200,7 @@ namespace McMd
             }
          }
       }
+      system().velocitySignal().notify();
 
       // Update xiDot and complete update of xi_
       T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
