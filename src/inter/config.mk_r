@@ -29,6 +29,9 @@ INTER_BOND=1
 # Define INTER_DIHEDRAL, enable 4-body dihedral torsion potentials
 #INTER_DIHEDRAL=1
 
+# Define INTER_COULOMB, enable Coulomb potentials
+#INTER_COULOMB=1
+
 # Define INTER_EXTERNAL, enable external potentials
 #INTER_EXTERNAL=1
 
@@ -94,6 +97,12 @@ endif
 ifdef INTER_DIHEDRAL
 INTER_DEFS+= -DINTER_DIHEDRAL
 INTER_SUFFIX:=$(INTER_SUFFIX)_d
+endif
+
+# Enable Coulomb potential
+ifdef INTER_COULOMB
+INTER_DEFS+= -DINTER_COULOMB
+INTER_SUFFIX:=$(INTER_SUFFIX)_c
 endif
 
 # Enable external potential
