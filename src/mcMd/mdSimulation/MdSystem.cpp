@@ -91,7 +91,13 @@ namespace McMd
       mdIntegratorPtr_(0),
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
-   {  setClassName("MdSystem"); }
+   {  
+      setClassName("MdSystem"); 
+
+      // Set actions taken when particles are moved
+      positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
+      positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
+   }
 
    /*
    * Constructor, copy of a System.
@@ -171,6 +177,10 @@ namespace McMd
          tetherPotentialPtr_ = &system.tetherPotential();
       }
       #endif
+
+      // Set actions taken when particles are moved
+      positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
+      positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
    }
 
    /*
@@ -223,9 +233,6 @@ namespace McMd
       }
       return *mdIntegratorFactoryPtr_;
    }
-
-
-
 
    /*
    * Read parameter and configuration files, initialize system.
@@ -816,6 +823,18 @@ namespace McMd
    }
 
    /*
+   * Unset precomputed potential energy components.
+   */
+   void MdSystem::unsetPotentialEnergy()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetEnergy();
+      }
+      #endif
+   }
+
+   /*
    * Return total kinetic energy.
    */
    double MdSystem::kineticEnergy() const
@@ -979,6 +998,20 @@ namespace McMd
       computeKineticStress(kineticStress);
       stress += kineticStress;
    }
+
+   /*
+   * Unset precomputed virial stress components.
+   */
+   void MdSystem::unsetVirialStress()
+   {
+      #ifndef INTER_NOPAIR
+      if (pairPotentialPtr_) {
+         pairPotential().unsetStress();
+      }
+      #endif
+   }
+
+   // Miscellaneous member functions
 
    /*
    * Return true if this MdSystem is valid, or an throw Exception.

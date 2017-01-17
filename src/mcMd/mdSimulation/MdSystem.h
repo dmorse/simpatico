@@ -9,6 +9,7 @@
 */
 
 #include <mcMd/simulation/System.h>     // base class
+#include <util/signal/Signal.h>         // members
 
 #include <util/global.h>
 
@@ -155,6 +156,11 @@ namespace McMd
       double potentialEnergy();
 
       /**
+      * Unset all precomputed potential energy components.
+      */
+      void unsetPotentialEnergy();
+
+      /**
       * Compute total pressure (T=double), xyz pressures (T=Vector) or stress 
       * (T=Tensor).
       *
@@ -185,6 +191,11 @@ namespace McMd
       */
       template <typename T>
       void computeVirialStress(T& stress) const;
+
+      /**
+      * Unset precomputed virial stress components.
+      */
+      void unsetVirialStress();
 
       /**
       * Compute kinetic stress mvv, arising from velocities.
@@ -325,6 +336,20 @@ namespace McMd
       void shiftAtoms();
 
       //@}
+      /// \name Signals
+      //@{
+
+      /**
+      * Signal to indicate change in atomic positions.
+      */
+      Signal<>& positionSignal();
+
+      /**
+      * Signal to indicate change in atomic velocities.
+      */
+      Signal<>& velocitySignal();
+
+      //@}
       /// \name Accessors
       //@{
 
@@ -354,6 +379,12 @@ namespace McMd
 
    private:
       
+      /// Signal to indicate change in atomic positions.
+      Signal<>  positionSignal_;
+
+      /// Signal to indicate change in atomic velocities.
+      Signal<>  velocitySignal_;
+
       #ifndef INTER_NOPAIR 
       /// Pointer to an MdPairPotential. 
       MdPairPotential* pairPotentialPtr_;
@@ -439,9 +470,7 @@ namespace McMd
    * Does a bond potential exist?
    */
    inline bool MdSystem::hasBondPotential() const
-   {
-      return bool(bondPotentialPtr_); 
-   }
+   {  return bool(bondPotentialPtr_); }
 
    /*
    * Return bond potential by reference.
@@ -458,9 +487,7 @@ namespace McMd
    * Does an angle potential exist?
    */
    inline bool MdSystem::hasAnglePotential() const
-   {
-      return bool(anglePotentialPtr_); 
-   }
+   {  return bool(anglePotentialPtr_); }
 
    /*
    * Return angle potential by reference.
@@ -545,7 +572,10 @@ namespace McMd
    * Return tether potential by reference.
    */
    inline TetherPotential& MdSystem::tetherPotential() const
-   {  return *tetherPotentialPtr_; }
+   {  
+      assert(tetherPotentialPtr_);  
+      return *tetherPotentialPtr_; 
+   }
    #endif
 
    /*
@@ -556,6 +586,18 @@ namespace McMd
       assert(mdIntegratorPtr_);  
       return *mdIntegratorPtr_; 
    }
+
+   /*
+   * Signal to indicate change in atomic positions.
+   */
+   inline Signal<>& MdSystem::positionSignal()
+   {  return positionSignal_; }
+
+   /*
+   * Signal to indicate change in atomic velocities.
+   */
+   inline Signal<>& MdSystem::velocitySignal()
+   {  return velocitySignal_; }
 
 } 
 #endif
