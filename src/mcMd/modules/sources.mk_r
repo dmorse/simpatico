@@ -1,0 +1,10 @@
+
+mcMd_modules_=\
+    #mcMd/modules/Class1.cpp \
+    #mcMd/modules/Class2.cpp 
+
+mcMd_modules_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_modules_))
+mcMd_modules_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_modules_:.cpp=.o))
+
