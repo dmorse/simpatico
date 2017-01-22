@@ -1,7 +1,7 @@
+#include $(SRC_DIR)/mcMd/modules/sliplink/sources.mk
 
 mcMd_modules_=\
-    #mcMd/modules/Class1.cpp \
-    #mcMd/modules/Class2.cpp 
+#    $(mcMd_modules_sliplink_) 
 
 mcMd_modules_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_modules_))

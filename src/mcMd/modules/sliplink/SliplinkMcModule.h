@@ -1,23 +1,20 @@
-#ifndef SLIPLINK_MC_MODULE_H
-#define SLIPLINK_MC_MODULE_H
+#ifndef MCMD_SLIPLINK_MC_MODULE_H
+#define MCMD_SLIPLINK_MC_MODULE_H
 
-#include <mcMd/mcSimulation/McModule.h>
-
-namespace Util
-{  template <class T> class Factory; }
+// Custom factory classes
+#include <mcMd/mcSimulation/McSimulation.h>
+#include "analyzers/SliplinkMcAnalyzerFactory.h"
+#include "mcMoves/SliplinkMcMoveFactory.h"
 
 namespace McMd 
 {
 
    using namespace Util;
 
-   class McMove;
-   class Analyzer;
-
    /**
    * Module for slip link simulation. 
    */
-   class SliplinkMcModule : public McModule
+   class SliplinkMcModule 
    {
 
    public:
@@ -29,21 +26,10 @@ namespace McMd
       */
       SliplinkMcModule(McSimulation& sim);
 
-      /**
-      * Destructor.  
-      */
-      virtual ~SliplinkMcModule();
-
-      /**
-      * Add Analyzer and McMove sub-factories.
-      */
-      virtual void addFactories();
-   
    private:
    
-      Factory<Analyzer>* analyzerFactoryPtr_;
-
-      Factory<McMove>*     mcMoveFactoryPtr_;
+      SliplinkMcAnalyzerFactory analyzerFactory_;
+      SliplinkMcMoveFactory mcMoveFactory_;
    
    };
 
