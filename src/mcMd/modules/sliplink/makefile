@@ -12,15 +12,17 @@ include $(BLD_DIR)/util/config.mk
 include $(BLD_DIR)/inter/config.mk
 include $(BLD_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
-include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
-include $(SRC_DIR)/mcMd/sources.mk
+#include $(SRC_DIR)/util/sources.mk
+#include $(SRC_DIR)/inter/sources.mk
+#include $(SRC_DIR)/mcMd/sources.mk
+include $(SRC_DIR)/mcMd/modules/sliplink/sources.mk
 
 #-------------------------------------------------------------------
 # Major targets
 
-all:	
-	$(MAKE) $(mcMd_modules_sliplink_OBJS)
+.phony: all clean
+
+all: $(mcMd_modules_sliplink_OBJS)
 
 clean:
 	-rm -f $(mcMd_modules_sliplink_OBJS) $(mcMd_modules_sliplink_OBJS:.o=.d)

@@ -3,10 +3,23 @@ The src/modules directory is intended a place for users to add
 to allow either program to be used for a specific application.
 Each subdirectory of src/modules should contain the source code
 for a single such module and should have a subdirectory name 
-which is the name of the module.
+which is the name of the module. 
+
+A module named "stuff" in subdirectory src/mcMd/modules/stuff must 
+contain a makefile fragment named src/mcMd/modules/stuff/sources.mk
+that defines a makefile variable mcMd_modules_stuff_ that expands
+to a list of all of the *.cpp source files in that module.  
+
+To enable the simpatico makefile system to compile the source
+files in a module, the user must make some small modifications
+of the user file src/mcMd/modules/sources.mk. Instructions for
+doing so are given in the repository version of the file, 
+named src/mcMd/modules/sources.mk_r.
 
 The modules/sliplink directory contains an example of a complete 
-module. This particular module contains code that was added to
+module. The file src/mcMd/modules/sources.mk_r contains commented
+out lines that would be required to enable compilation of this
+module.  This particular module contains code that was added to
 simpatico to allow it to be used for Monte Carlo simulations of
 a coarse-grained model of entangled chains in which entanglements
 were modelled by mobile links between chains. 

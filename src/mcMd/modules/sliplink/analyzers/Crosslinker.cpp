@@ -42,8 +42,8 @@ namespace McMd
    void Crosslinker::setup() 
    {
      // Initialize the private CellList
-     cellList_.allocate(system().nAtom(), system().boundary(), cutoff_);
-     cellList_.makeGrid(system().boundary(), cutoff_);
+     cellList_.setAtomCapacity(system().simulation().atomCapacity());
+     cellList_.setup(system().boundary(), cutoff_);
 
    }
  
