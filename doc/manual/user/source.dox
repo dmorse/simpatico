@@ -22,9 +22,9 @@ Instructions for installing git on different platforms are given in the document
 
 \section compile_getcode_section Cloning the Repository
 
-To obtain a personal clone of the git repository, via the read-only "git" communication protocol, you should cd to the directory you want to contain the simpatico root directory and enter the command
+To obtain a working copy of the simpatico git repository, you should change directory (cd) to the directory you want to contain the simpatico root directory and enter the command
 \code
-> git clone --recursive git://github.com/dmorse/simpatico.git
+> git clone --recursive https://github.com/dmorse/simpatico.git
 \endcode
 This should create a complete working copy of the simpatico source code in a new subdirectory named "simpatico/" of the directory from which you invoked the above command.
 
@@ -32,7 +32,8 @@ The above instructions are for users who simply want to get a copy of simpatico 
 <ul>
 <li> Create a user account on github.com, if they do not already have one.</li>
 <li> Create a user fork of simpatico on their personal github account</li>
-<li> Clone their personal fork of simpatico to a local machine, using the --recursive option and using a communication protocol that allows write access, such as https or ssh. </li>
+<li> Clone their personal fork of simpatico to a local machine, using the --recursive option and using a communication protocol that is set up to allow them write access. </li>
+</ul>
 
 Herefafter, we assume that the root directory of the simpatico working copy is named simpatico/.  References to paths that do not start explicitly with a prefix "simpatico/" should be understood to be relative paths, relative to this directory. The directory structure is explained \ref source_directory_page "here".
 
