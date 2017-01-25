@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page user_features_page 2.8 Parameter File Options
+/*! \page user_features_page 2.9 Run-Time Options
 
 \ref user_analysis_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_restart_page  (Next) 
@@ -14,6 +14,7 @@ These pages provide links to user documentation for features of each program tha
    <li> \subpage user_features_inter_page </li>
    <li> \subpage user_features_ddmd_page </li>
    <li> \subpage user_features_mcmd_page </li>
+   <li> \subpage user_features_tools_page </li>
    </ul>
 
 <BR> 
