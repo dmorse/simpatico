@@ -20,34 +20,17 @@ parallelization.
 Getting the Source Code:
 ------------------------
 
-Simpatico source code may be obtained either by downloading a compressed
-tar file from the github project web page
-
-<http://dmorse.github.com/simpatico/index.html> 
-
-or by using git to clone the github repository from the repository page
+Simpatico source code may be obtained by using git to clone the github repository 
+from the repository page
                                                                              
 <https://github.com/dmorse/simpatico>.
 
-Either method gets you a current copy of the master branch from the git 
-repository. 
+Use the command
 
-If you download a tarball, the tar file will be named something like 
-dmorse-simpatico-id.tar, where "id" denotes a denotes a hexadecimal 
-identifier for the most recent commit to the git repository.  When you 
-extract the tar file (tar -xvf), the source files will be extracted into 
-a directory with the same name, dmorse-simpatico-id/.  To recreate the 
-same directory structure as that used in the repository, in which the 
-root directory is named simpatico/, you may want to rename this root 
-directory to simpatico/, before running the ./setup script.  To unpack 
-the tar file and move the directory, enter:
+git clone --recursive https://github.com/dmorse/simpatico.git
 
-   > tar -xvf dmorse-simpatico-id.tar
-   > mv  dmorse-simpatico-id simpatico
-
-from the parent directory that will contain the simpatico root directory. 
-If you move the root directory after running the setup script (see below), 
-you must rerun the setup script. 
+The --recursive option is necessary to clone some git submodules that are 
+maintained in separate repositories. 
 
 Documentation:
 --------------

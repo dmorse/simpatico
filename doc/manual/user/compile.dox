@@ -1,34 +1,10 @@
-/*! \page user_compile_page 2.1 Compiling 
+/*! \page user_compile_page 2.2 Compiling 
 
+\ref user_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_usage_page (Next) 
 <BR>
 
-Simpatico is distributed only as source code, and must be compiled by the user. All source code is written in ANSI standard C++. By default, all code follows the ANSI 1998 C++98 standard, though it is possible to compile a version that uses a few features from C+11. The package has been developed and tested using the gcc and intel compilers in a linux environment, and with the gcc compiler in Mac OS X.  It should compile with any modern, standard compliant C++ compiler.   
-
-The single-processor programs mcSim and mdSim have no external dependencies.  A Message Passing Interface (MPI) library is required to compile the ddSim parallel MD program. An MPI library is also required by the multiprocessor versions of mcSim and mdSim, which implement embarassingly parallel simulations in which each processor simulates a different physical system.
-
-The build system uses unix makefiles, and is thus designed to work only in unix-like environments (i.e., gnu/linux or Mac OS X). It was developed using the gnu version of make (gmake), which is the default on all modern linux distributions and on Mac OS.
-
-\section compile_getcode_section Getting the source code
-
-The source code for simpatico is hosted on <a href=http://github.com>github</a>, as project dmorse/simpatico.  The source code may be obtained either by: (1) using a git client to clone the public <a href=https://github.com/dmorse/simpatico>git repository</a>, or (2) downloading a compressed tar file.  We recommend using a git client to obtain a working copy of the source code, since this makes it easier to update the code to obtain bug fixes and new features.
-
-Using Git: Before attempting to use git to clone the source code, first check whether the "git" executable is installed on your machine, by entering "> which git". If this does not return a valid path, you need install git. To obtain a read-only clone of the git repository, via the read-only "git" communication protocol, you should cd to the directory you want to contain the simpatico root directory, and enter:
-
-\code
-> git clone git://github.com/dmorse/simpatico.git
-\endcode
-This will create a working copy of the source code in a new subdirectory named "simpatico/". User/developers that want to be able to contribute to the project or share their additions to the code with others should instead create a user account on github, create a user fork of simpatico on their github account, and use a communication protocol that allows read-write access, such as ssh, to clone their own fork of github.
-
-Getting a tarball: A compressed tar file of the source code can be obtained from the (very simple) <a href=http://dmorse.github.com/simpatico/index.html>home page</a>.  After downloading, move the compressed tar file to the directory that you want to contain the simpatico root directory, and then enter 
-\code
-> tar -xvf filename
-\endcode
-from this directory, where "filename" denotes the name of the gzipped tar file. This will create a subdirectory with a name of the form dmorse-simpatico-ID/, where "ID" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory "simpatico/", which is the name it is given when you clone the repository.
-
-Herefafter, we assume that the root project directory is named simpatico/.  References to paths that do not start explicitly with a prefix "simpatico/" should be understood to be relative paths, relative to this directory. The directory structure is explained \ref source_directory_page "here".
-
-\section compile_short_section Short instructions
+\section compile_short_section Short Instructions
 
 Here is a brief summary of instructions for compiling all of the simpatico programs:
 
@@ -192,7 +168,9 @@ and then recompile. All of the available optional features are discussed \ref us
 
 As noted above, configure script may invoked with the -j option to set the value of the COMPILER identifier string, which chooses a compiler. This option takes the desired value of the COMPILER identifier (gcc or intel) as an argument. 
 
-\section compile_root_configure_section The configure script (root directory)
+Invoking the configure script with the -h ("help") option gives a list of all command line options accepted by command, along with some information about relationships what preprocessor macros are defined or undefined by specific commands.
+
+\section compile_configureroot_section The configure script (root directory)
 
 The simpatico/ root directory also contains a bash script named "configure" that can be used to apply changes simultaneously to the bld/serial and bld/parallel directories. This version of the script must be invoked from the root directory. It accepts the same options as the configure scripts in the build directories, with one exception: It does not accept the "-m" option, which enables or disables MPI, because MPI should normally be enabled bld/parallel and disabled in bld/serial. The root directory configure script works by simply invoking the ./configure scripts in the bld/serial and bld/parallel directories. It does not effect the configuration of in-source builds. The output of this script echoes the outputs produced by the build-directory configure scripts. The "-q" option can be used to show the current configuration in both subdirectories of bld/.
 
@@ -245,6 +223,7 @@ Note that the g++ compiler is used for dependency analysis even if another compi
 Automatic generation of dependency files is an essential feature for developers - It makes it possible to safely rebuild a program after you modify one or two files, and have the build system recompile only what needs to be recompiled. This feature is not, however, strictly necessary for users who simply want to compile one version of the code and use it as is, without modifying any C++ files.  It is possible to disable automatic dependency generation in any build directory by entering "./configure -k0" from the root of that build directory. The only good reason to do so is as a temporary measure if you run into trouble that you suspect arises from a problem in the dependency generation system, e.g., if compilation fails because the operating system cannot find a python interpeter or if python cannot find the makeDepend.py python script. If the PATH and PYTHONPATH are set correctly, however, this should not be necessary.
 
 <BR>
+\ref user_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_usage_page (Next) 
 
