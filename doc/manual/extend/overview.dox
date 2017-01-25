@@ -1,0 +1,31 @@
+namespace McMd
+{
+
+/*! \page extend_overview_page 4.1 Overview: Adding New Classes
+
+\ref extend_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Users can extend the capability of simpatico by writing new C++ classes that provide new features or algorithms. We will refer to these in what follows as "user classes". Each user class must be a subclass of one of a set of existing base classes that represent different elements of a simulation, such as molecular species, potential energy functions, analyzers, and Monte Carlo or molecular dynamics algorithms.
+
+The procedures described here for adding new classes to simpatico allow user classes to be compiled along with the main simpatico source code, by the same build system, and then optionally enabled in a particular simulation, at run time, by adding an appropriate block to the parameter file. This generally involves three steps:
+<ul>
+  <li>(1) Write the source code for a user class that implements a new capability.
+  <li>(2) Add the new class to a list of files that will be compiled by the simpatico build system, by modifying one of the makefile fragments that contain these lists. </li>
+  <li>(3) Modify the behavior of a relevant Factory class, to enable the parameter file block associated with a new class to be recognized and parsed if it appears a parameter file. 
+</ul>
+Two slightly different variants of this procedure are described in what follows, the choice of which depends upon how many user classes are added and whether the developer wants to distribute the new classes in a form that is convenient for use by others:
+<ul>
+  <li>(Method 1) Adding a few classes for personal use.
+  <li>(Method 2) Creating a module of related classes for distribution.
+<ul>
+In what follows, unless stated otherwise, we focus on method 1 (adding a few classes for personal use), and defer discussion of method 2 (creating a module) until a separate \ref \extend_module_page "page".
+
+<BR> 
+\ref extend_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
+
+*/
+
+}
