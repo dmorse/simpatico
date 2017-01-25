@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page user_features_page 2.8 Parameter File Options
+/*! \page user_features_page 2.9 Run-Time Options
 
 \ref user_analysis_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_restart_page  (Next) 
