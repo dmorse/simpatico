@@ -5,11 +5,10 @@ namespace McMd
 
 \section mcMd_analyzer_MdPairEnergyCoefficients_overview_sec Synopsis
 
-This analyzer calculates the vector autocorrelation function for
-the vector separation of a specific pair of atoms within molecules
-of a specific species. For example, by choosing the two atoms to
-be the first and last atoms of a linear chain, one can calculate
-the autocorrelation function of the end-to-end vector.
+Analyzer to output the total pair energy and the sum of squares of the monomeric 
+and molecular pair energy, for use in analysis of thermodynamic perturbation theory.
+
+NOTE: Only partially documented. For now treat, source code as documentation.
 
 \section mcMd_analyzer_MdPairEnergyCoefficients_param_sec Parameters
 The parameter file format is:

@@ -6,6 +6,7 @@
 
 <h2> Contents:</h2>
    <ul style="list-style: none;">
+   <li> \subpage user_source_page   </li>
    <li> \subpage user_compile_page   </li>
    <li> \subpage user_usage_page     </li>
    <li> \subpage user_param_page     </li>
