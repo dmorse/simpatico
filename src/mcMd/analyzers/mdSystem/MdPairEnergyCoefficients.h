@@ -108,10 +108,10 @@ namespace McMd
       /// Maximum number of neighbors per molecule
       int maxMoleculeNeighbors_;
 
-      /// array of neighbor lists for every molecule in every species
+      /// Array of neighbor lists for every molecule in every species
       DArray< DArray< DSArray<  Pair< Atom *> > > > moleculeNeighbors_;
 
-      /// pair energy with every neighboring molecule in every species
+      /// Pair energy with every neighboring molecule in every species
       /// for a given molecule
       DArray< DArray< double > > twoMoleculePairEnergy_;
 
