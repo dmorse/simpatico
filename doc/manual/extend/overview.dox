@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_overview_page 4.1 Overview: Adding New Classes
+/*! \page extend_overview_page 4.1 Overview
 
 \ref extend_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
@@ -9,18 +9,42 @@ namespace McMd
 
 Users can extend the capability of simpatico by writing new C++ classes that provide new features or algorithms. We will refer to these in what follows as "user classes". Each user class must be a subclass of one of a set of existing base classes that represent different elements of a simulation, such as molecular species, potential energy functions, analyzers, and Monte Carlo or molecular dynamics algorithms.
 
+\section extent_overview_procedures Overview: Adding New Classes
+
 The procedures described here for adding new classes to simpatico allow user classes to be compiled along with the main simpatico source code, by the same build system, and then optionally enabled in a particular simulation, at run time, by adding an appropriate block to the parameter file. This generally involves three steps:
+<ol>
+  <li> Write a user class that implements a new capability, and place the source files for that class in an appropriate place within the simpatico directory tree.
+  <li> Add the new class to a list of files that will be compiled by the simpatico build system, by modifying a makefile fragment in the directory that contains the new source files. </li>
+  <li> Enable the parameter file block associated with a new class to be recognized and correctly parsed if it is added to a parameter file. This is done by modifying the behavior of a related Factory class.
+</ol>
+Two slightly different variants of this procedure are described in what follows. Specifically, different procedures are recommended depending on whether the user wants to: 
+<ol>
+  <li> Adding a few classes for personal use.
+  <li> Creating a module of related classes for distribution.
+<ol>
+The procedure for adding a few files for personal use (method 1) is simpler, and is what most people will do first. The procedure for creating a module (method 2) is slightly more involved, and should be used if the developers wants to distribute a larger set of related classes for use by others, in a form that is convenient for potential users.
+
+\section extent_overview_namespace Namespaces 
+
+Every class in the simpatico source code is defined within one of 5 C++ namespaces, which are named Util, Inter, McMd, DdMd and Tools. The source code in each namespace is located within the directory tree within a corresponding subdirectory of the simpatico/src directory: Source files for the McMd namespace are in src/mcMd, files for the DdMd namespace are in src/ddMd, files for the Inter namespace are in src/inter, ect. Every user class must also be defined within one of these namespaces, where the choice of namespace depends on the intended purpose of the class:
 <ul>
-  <li>(1) Write the source code for a user class that implements a new capability.
-  <li>(2) Add the new class to a list of files that will be compiled by the simpatico build system, by modifying one of the makefile fragments that contain these lists. </li>
-  <li>(3) Modify the behavior of a relevant Factory class, to enable the parameter file block associated with a new class to be recognized and parsed if it appears a parameter file. 
+<li> Classes that provide new features for the ddSim parallel program should be in namespace DdMd. </il>
+<li> Classes that provide new features for the mdSim and/or mcSim program should be in namespace McMd. </il>
+<li> Classes that define new potential energy functions, should be defined in namespace Inter. </il>
+<li> Classes that provide new features for postprocessor program should be defined in namespace Tools. </il>
+<ul>
+Classes defined in the DdMd namespace are available for use in ddSim, but not in the mcSim or mdSim single processor programs. Conversely, classes programs defined in the McMd namespace are accessible for use in mcSim or mdSim, but not in ddSim. New potential energy classes in the Inter namespace can generally be made available for use in any of the simulation programs.
+
+\section extent_overview_location File Location
+
+Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree that are provided for this purpose. Generally, user classes that are defined in a particular namespace must be placed either in the user/ subdirectory or in a subdirectory of the modules/ subdirectory of the corresponding namespace level directory. Thus, for example, user classes that are defined in the DdMd namespace should be placed in either src/ddMd/user or in a subdirectory of src/ddMd/modules. 
+
+The choice of whether to put new user source files in a user/ subdirectory or a modules/ subdirectory is up to the user (either will work fine), but should be governed by the following convention:
+<ul>
+<li> User classes that are intended only for personal use, and that are not organized into modules, should be added to the user/ subdirectory of the relevant namespace level directory, e.g., in mcMd/user or ddMd/user. </li>
+<li> Collections of source files that are organized into a module that is intended for distribution to others should be placed in a subdirectory of the modules/ subdirectory of the relevant namespace, with a separate subdirectory fo r each such module.</li> 
 </ul>
-Two slightly different variants of this procedure are described in what follows, the choice of which depends upon how many user classes are added and whether the developer wants to distribute the new classes in a form that is convenient for use by others:
-<ul>
-  <li>(Method 1) Adding a few classes for personal use.
-  <li>(Method 2) Creating a module of related classes for distribution.
-<ul>
-In what follows, unless stated otherwise, we focus on method 1 (adding a few classes for personal use), and defer discussion of method 2 (creating a module) until a separate \ref \extend_module_page "page".
+In the simpatico git repository, the user/ subdirectory of each namespace level directory does not contain any C++ code, and is intended as a place for users to add new files. Several of the corresponding modules/ subdirectories are also empty. The directory src/mcMd/modules contains one module in subdirectory src/mcMd/modules/sliplink as an example.
 
 <BR> 
 \ref extend_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
