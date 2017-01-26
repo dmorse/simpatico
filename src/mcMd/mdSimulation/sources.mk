@@ -1,7 +1,6 @@
 
 mcMd_mdSimulation_=\
     mcMd/mdSimulation/MdAnalyzerManager.cpp \
-    mcMd/mdSimulation/MdModule.cpp \
     mcMd/mdSimulation/MdSimulation.cpp \
     mcMd/mdSimulation/MdSystem.cpp 
 
