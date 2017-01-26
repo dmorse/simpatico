@@ -5,7 +5,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -108,10 +108,10 @@ namespace McMd
       /// Maximum number of neighbors per molecule
       int maxMoleculeNeighbors_;
 
-      /// array of neighbor lists for every molecule in every species
+      /// Array of neighbor lists for every molecule in every species
       DArray< DArray< DSArray<  Pair< Atom *> > > > moleculeNeighbors_;
 
-      /// pair energy with every neighboring molecule in every species
+      /// Pair energy with every neighboring molecule in every species
       /// for a given molecule
       DArray< DArray< double > > twoMoleculePairEnergy_;
 

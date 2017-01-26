@@ -1,8 +1,8 @@
-/*! \page user_commands_page 2.4 Command Files
+/*! \page user_commands_page 2.5 Command Files
 
  \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_cfgfile_page (Next) 
- <BR>
+<BR>
 
 For any Simpatico simulation program, after the parameter file is processed by the readParam() method, the progress of a simulation is controlled by a command file, which is processed by a readCommand() method. The name of the command file is usually specified in command line argument that invokes the program, as an argument of the -c command line option. If the name of the command file is not specified in the command line, it can instead by given in the parameter file as the value of the optional commandFileName parameter in the FileMaster block of the parameter file. 
 
@@ -240,6 +240,6 @@ The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled 
 
  <BR>
  \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_page        (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page         (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_cfgfile_page (Next) 
 */
