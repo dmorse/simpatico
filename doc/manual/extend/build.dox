@@ -1,15 +1,17 @@
 namespace McMd
 {
 
-/*! \page extend_build_page 4.2 Build system (adding new classes)
+/*! \page extend_build_page 4.3 Build system 
 
-\ref extend_base_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_base_page   (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_factory_page  (Next)
 <BR> 
 
 Simpatico is built using a system of unix makefiles. Here, we discuss how to add a new class to the list of source files maintained by the build system, so that the new class will be compiled and linked along with the rest of the source code. 
 
-Any new class that is a subclass of an existing simpatico base class should be defined within the same C++ namespace as the base class. Header (*.h) and source (*.cpp) files for each such class should be placed in a subdirectory named user/ of the corresponding namespace level directory. Source (*.cpp) and header (*.h) files for classes that are defined in the McMd namespace should be placed in the src/mcMd/user/ directory. Source and header files for new classes defined in the DdMd namespace, which will accessible only by ddSim, should be placed in the src/ddMd/user/ directory. Files for classes that define new interaction potential functions should be placed the directory src/inter/user, as discussed in more detail \ref extend_potential_page "here". Files for classes that are defined in the Util namespace should be placed in the src/util/user directory.
+Every subdirectory of the simpatico src/ directory contains a file named sources.mk that defines a makefile variables that lists all of the *.cpp source files in that directory and its subdirectories that need to be be compiled. The name of the variable obtained by taking the path to the directory, relative to the src/ directory, and replacing directory separator slashes by underscores, and adding a trailing underscore. The name of the variable that expands to a list of all of the source files in the src/mcMd directory is thus mcMd_, while the name of the variable that contains a list of all of the source files in the src/mcMd/user directory is mcMd_user.  The makefile variable associated with a directory that contains one or more subdirectories is constructed by first concatenating the values of the variables associated with all of the subdirectories that contain source files and then adding the names of any individual files in that directory. In order to add a user file to the simpatico build system, the user thus simply needs to add the name of the source file to the definition of the appropriate makefile variable. 
+
+User files that are defined within a particular simpatico namespace must be placed in either the user/ or modules/ directory of the corresponding namespace level directory, using the user/ subdirectory for individual classes and the modules/ subdirectory for modules. Thus for example, a class that provides a new feature for ddSim and that is defined in the DdMd namespace should be placed in ddMd/user directory.
 
 After placing new C++ files in the appropriate user/ directory, the user must also modify a file named "sources.mk" in that directory. The "sources.mk" file in any subdirectory of src/ is a makefile fragment that contains a list of all of the source files in that directory. The source.mk file in user/ directory initially contains an empty list of such files. For example, the beginning of the file src/mcMd/user/ initially looks like this:
 \code

@@ -7,18 +7,11 @@ namespace McMd
 \ref developer_page  (Next)
 <BR>
 
-Users may extend the capabilities of Simpatico by writing new subclasses of a set of base classes that represent elements of a simulation. Different base class are used to represent molecular species, potential energy functions, analyzers, file formats, and Monte Carlo or molecular dynamics algorithms.
-
-The procedure for adding a new capability or algorithm generally involves three steps:
-<ul>
-  <li>Write a new C++ class that implements the new capability. This should be derived from one of the existing base classes. </li>
-  <li>Incorporate the new class into the simpatico build system, so it can be compiled and linked into one or more executables. </li>
-  <li>Modify the implementation of an associated Factory class, so that the parameter file block associated with the new class will be recognized if it appears in a parameter file. 
-</ul>
-For larger projects, one can also  organize a set several related classes that implement related algorithms into a Module. Each of the these procedures is discussed in greater greater detail in the following subpages.
+Simpatico is designed to be easily extensible. Users may extend any of the simulation programs in the simpatico package by writing new classes to implement new capabilities. We will refer to such classes here as "user classes". User classes may define new data analysis algorithms, Monte Carlo moves, molecule dynamics integrators, potential energy functions, molecular species, and file formats. Procedures for writing new classes, compiling them and incorporating them into one or more of the simpatico simulation programs are described in detail in the following subpages.
 
 <h2> Contents:</h2>
 <ul style="list-style: none;">
+  <li> \subpage extend_overview_page </li>
   <li> \subpage extend_base_page </li>
   <li> \subpage extend_build_page </li>
   <li> \subpage extend_factory_page      </li>
