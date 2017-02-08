@@ -1,33 +1,17 @@
 namespace McMd
 {
 
-/*! \page extend_overview_page 4.1 Overview
+/*! \page extend_overview_page 4.1 Source File Locations
 
 \ref extend_page  (Prev/Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
 
-\section extent_overview_procedures Adding a user class
-
-Adding a new user class to the simpatico source code generally involves three steps:
-<ol>
-  <li> Write a new user class. Source files for the new class must be placed in an appropriate subdirectory within the simpatico directory tree. </li>
-  <li> Add the new class to a list of files that will be compiled by the simpatico build system. This is done by editing a file named sources.mk in the directory that contains the new source files, which lists source files in that directory. </li>
-  <li> Enable the relevant simulation program or programs to recognize and parse the parameter file block associated with the new class.  This is done by modifying the behavior of an associated Factory class that is responsible for parsing the relevant part of the parameter file. </li>
-</ol>
-Each of these steps is discussed in more detail below and in the following pages.
-
-Two slightly different methods for adding new classes are described in what follows. 
-<ul>
-  <li> Add a few classes for personal use (Method 1) </li>
-  <li> Create a module of related classes for distribution (Method 2) </li>
-</ul>
-The procedure for adding a few files for personal use (method 1) is somewhat simpler, and is what most people should do first. The procedure for creating a module (method 2) should be considered by developer/users who want to distribute a larger set of related classes in a form that is convenient for other potential users.
+Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined. 
 
 \section extent_overview_namespace Namespaces
-
-Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined. Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Inter, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
+Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Inter, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
 <table>
   <tr> 
     <td> <b>Namespace</b> </td>
@@ -71,9 +55,9 @@ Every new user class must also be defined within one of these namespaces. The ch
 </ul>
 The DdMd and McMd namespaces are mutually exclusive. Classes defined in the DdMd namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs. Classes defined in the McMd namespace are accessible for use in either mcSim or mdSim, but not in ddSim. Potential energy classes defined in the Inter namespace can, however, be made accessible for use in any simulation or analysis program.
 
-As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next \ref user_extend_base "page".
+As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next \ref extend_base_page "page".
 
-\section extent_overview_location Subdirectories for user files
+\section extent_overview_location User File Directories
 
 Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree, in directories that are provided for this purpose. 
 
