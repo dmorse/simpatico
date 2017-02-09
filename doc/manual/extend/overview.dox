@@ -7,7 +7,6 @@ namespace McMd
 \ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-
 Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined. 
 
 \section extent_overview_namespace Namespaces
@@ -59,12 +58,19 @@ As already noted, most types of user classes must be derived from a base class t
 
 \section extent_overview_location User File Directories
 
-Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree, in directories that are provided for this purpose. 
+Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree, in directories that are provided for this purpose.  Each namespace level directory contains two subdirectories named user/ and modules/ that are intended as locations for user files.  Thus, for example, user classes that are defined in the DdMd namespace should be placed in either src/ddMd/user or src/ddMd/modules directory subtree. 
 
-User classes that are defined in a particular namespace must be placed either in the user/ or modules/ subdirectory of the corresponding namespace level directory. Thus, for example, user classes that are defined in the DdMd namespace should be placed in either src/ddMd/user or src/ddMd/modules directory subtree. The choice of whether to put new user source files in a user/ or modules/ subdirectory should be governed by the following convention:
+Two slightly different methods of adding new classes are described in what follows, which differ in (among other things) where these files should be located.  Specifically, different methods are recommended for:
 <ul>
-<li> Classes that are intended only for personal use (method 1) should be added to the relevant user/ subdirectory. </li>
-<li> Modules that are intended for distribution (method 2) should be placed the modules/ subdirectory.
+  <li> Adding a few user classes for personal use (Method 1), or </li>
+  <li> Creating a module of related classes for distribution (Method 2) </li>
+</ul>
+The procedure for adding a few files for personal use (Method 1) is somewhat simpler, and is what most people should try first. Method 2 should be considered by developers who want to distribute a set of related classes in a form that is convenient for other potential users.
+
+The choice of a location for user files should be governed by the following convention:
+<ul>
+<li> Classes that are intended only for personal use (method 1) should be placed in the user/ subdirectory of the relevant namespace level directory. </li>
+<li> Modules that are intended for distribution (method 2) should be placed in the relevant modules/ subdirectory.
 </ul>
 In method 2, each module should be placed in a separate subdirectory of the modules/ subdirectory of the relevant namespace level directory.
 

@@ -9,27 +9,17 @@ namespace McMd
 
 Simpatico is designed to be extensible. Users may extend to any simulation program in the package by writing new C++ classes to implement new capabilities. We will refer to such new classes as "user classes". User classes may define new data analysis algorithms, Monte Carlo moves, molecule dynamics integrators, potential energy functions, molecular species, and file formats. 
 
-To incorporate a user file into a simpatico program, users must place the source files for the classes in one of several special directories within the simpatico directory tree that are provided for this purpose. This allows user classes to be compiled by the same build system as that used to compile the existing code. Features provided by user classes are added generally enabled at run time by adding an associated parameter file block at an appropriate location in the simulation parameter file. Thus, for example, the appearance of the parameter file block associated with a user class that is a subclass of the Analyzer base class within the AnalyzerManager block of the parameter file would instruct the program to add an instance of the user-defined analyzer class to the list of Analyzer objects that it uses for data analysis and output during a simulation.  Incorporating a new user class to a simpatico program thus generally involves three steps:
+Most types of new user class must be subclasses of an existing abstract base class that defines the interface for a particular element of a simulation. For example, a class that implements a new Monte Carlo move for the mcSim Monte Carlo program must be defined in the McMd namespace and must be a subclass of the McMd::McMove base class.  User classes are compiled using the same build system as that used to compile the base source code, and are compiled along with the base code. To make that possible, source files for user classes must be placed within one of several special directories within the simpatico src/ directory tree that are provided for this purpose. When a simulation is run, a user class is generally enabled by adding an associated parameter file block at an appropriate location within the simulation parameter file. Thus, for example, the appearance within of the parameter file block for a new subclass of McMove within the McMoveManager block of the parameter file for an mcSim simulation would instruct the mcSim program to add an instance of the new class to the list of Monte Carlo move objects from which it selects at random during the simulation. 
+
+Incorporating a new user class into a simpatico program thus generally involves three steps:
 <ol>
-  <li> Write a new class, which in most cases must be a subclass of some existing base class.  </li>
+  <li> Write a new class. In most cases, thus must be a subclass of some existing base class.  </li>
   <li> Add the new class to the simpatico build system, so that it may be compiled. </li>
   <li> Enable a simulation program to recognize the associated parameter file block. </li>
 </ol>
-A new file can be added to the build system (step 2) simply by adding the name of the source file 
-to a list in a file named "sources.mk" in the directory that contains the source file.  To enable 
-a simulation program to read the parameter file block associated with a new class, the user must 
-generally modify the behavior of an assocaited Factory class. The simplest way to do this is to 
-edit the source code of the Factory class.  
+Each of these steps is described in more detail in what follows. A new file can be added to the build system (step 2) simply by adding the name of the source file to a list in a file named "sources.mk" in the directory that contains the source file, as discussed \ref extend_build_page "here".  To enable a simulation program to read the parameter file block associated with a new class, the user must generally modify the behavior of an assocaited Factory class that is responsible for parsing the relevant part of the parameter file. The simplest way to do this is to edit the source code of the Factory class, as discussed \ref extend_factory_page "here".
 
-Two slightly different methods of adding new classes are described in what follows. Specifically,
-slightly different procedures are recommended in order to:
-<ul>
-  <li> Add a few classes for personal use (Method 1), or </li>
-  <li> Create a module of related classes for distribution (Method 2) </li>
-</ul>
-The procedure for adding a few files for personal use (method 1) is simpler, and is what most people should try first. The procedure for creating a module (method 2) should be considered by developers who want to distribute a set of related classes in a form that is convenient for other potential users.
-
-The following pages describe procedures for writing and adding user classes in more detail.
+The following pages describe procedures for adding user classes in more detail.
 <h2> Contents:</h2>
 <ul style="list-style: none;">
   <li> \subpage extend_overview_page </li>
