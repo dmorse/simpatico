@@ -12,12 +12,10 @@
 #include <mcMd/simulation/System.h>
 
 // CoulombPotential interfaces and implementation classes
-#include <mcMd/potentials/coulomb/CoulombPotential.h>
 
 // Coulomb Potential interaction classes
-#include <mcMd/potentials/coulomb/EwaldCoulombPotential.h>
-#include <mcMd/potentials/coulomb/RefinedEwaldCoulombPotential.h>
-#include <mcMd/potentials/coulomb/FineEwaldCoulombPotential.h>
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#include <mcMd/potentials/coulomb/MdEwaldPotential.h>
 
 
 namespace McMd
@@ -29,17 +27,17 @@ namespace McMd
    * Default constructor.
    */
    CoulombFactory::CoulombFactory(System& system)
-    : Factory<CoulombPotential>(),
+    : Factory<MdCoulombPotential>(),
       systemPtr_(&system)
    {}
 
    /*
    * Return a pointer to a new CoulombPotential, if possible.
    */
-   CoulombPotential* 
+   MdCoulombPotential* 
    CoulombFactory::factory(const std::string& name) const
    {
-      CoulombPotential* ptr = 0;
+      MdCoulombPotential* ptr = 0;
 
       // Try subfactories first.
       ptr = trySubfactories(name);
@@ -48,7 +46,8 @@ namespace McMd
       if (name == "Ewald") {
          //ptr = new FineEwaldCoulombPotential(*systemPtr_);
          //ptr = new RefinedEwaldCoulombPotential(*systemPtr_);
-         ptr = new EwaldCoulombPotential(*systemPtr_);
+         //ptr = new EwaldCoulombPotential(*systemPtr_);
+         ptr = new MdEwaldPotential(*systemPtr_);
       } 
       return ptr;
    }

@@ -37,7 +37,7 @@ namespace McMd
    class DihedralPotential;
    #endif
    #ifdef INTER_COULOMB
-   class CoulombPotential;
+   class MdCoulombPotential;
    #endif
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
@@ -263,7 +263,7 @@ namespace McMd
       /**
       * Return CoulombPotential by reference.
       */
-      CoulombPotential& coulombPotential() const;
+      MdCoulombPotential& coulombPotential() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -407,7 +407,7 @@ namespace McMd
 
       #ifdef INTER_COULOMB
       /// Pointer to a CoulombPotential. 
-      CoulombPotential* coulombPotentialPtr_;
+      MdCoulombPotential* coulombPotentialPtr_;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -526,7 +526,7 @@ namespace McMd
    /*
    * Return Coulomb potential by reference.
    */
-   inline CoulombPotential& MdSystem::coulombPotential() const
+   inline MdCoulombPotential& MdSystem::coulombPotential() const
    {  
       assert(coulombPotentialPtr_);  
       return *coulombPotentialPtr_; 

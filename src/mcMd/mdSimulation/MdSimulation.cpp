@@ -601,7 +601,6 @@ namespace McMd
 
          // Take one MD step with the MdIntegrator
          system_.mdIntegrator().step();
-
       }
       timer.stop();
       double time  = timer.time();

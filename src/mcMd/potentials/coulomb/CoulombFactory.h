@@ -9,7 +9,8 @@
 */
 
 #include <util/param/Factory.h>                        // base class template
-#include <mcMd/potentials/coulomb/CoulombPotential.h>  // template argument
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>  // template argument
+#include <mcMd/potentials/coulomb/MdEwaldPotential.h>
 
 #include <string>
 #include <vector>
@@ -24,7 +25,7 @@ namespace McMd
    *
    * \ingroup McMd_Bond_Module
    */
-   class CoulombFactory : public Factory<CoulombPotential>
+   class CoulombFactory : public Factory<MdCoulombPotential>
    {
 
    public:
@@ -37,7 +38,7 @@ namespace McMd
       /**
       * Return a pointer to a new CoulombPotential, if possible.
       */
-      CoulombPotential* factory(const std::string& subclass) const;
+      MdCoulombPotential* factory(const std::string& subclass) const;
 
    private:
 

@@ -82,7 +82,7 @@ namespace McMd
          #endif
          #ifdef INTER_COULOMB
          if (system().hasCoulombPotential()) {
-            double coulombk = system().coulombPotential().kspaceEnergy();
+            double coulombk = system().coulombPotential().energy();
             potential += coulombk;
             outputFile_ << Dbl(coulombk);
          }
@@ -147,6 +147,12 @@ namespace McMd
          outputFile_ << "[dihedral]   ";
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (system().hasCoulombPotential()) {
+         outputFile_ << "[coulomb]    ";
+      }
+      #endif
+ 
       #ifdef MCMD_LINK
       if (system().hasLinkPotential()) {
          outputFile_ << "[link]       ";
