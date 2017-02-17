@@ -38,6 +38,8 @@ namespace McMd
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes())
    {
+      const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
+      Tensor unitTensor_(unitMatrix_);
       // Note: Don't setClassName - using "CoulombPotential" base class name
    }
 
@@ -371,7 +373,6 @@ namespace McMd
    {
       int i;
       double x, y; //real and image part of rho[i].
-      Tensor unitTensor; //diagonal equal to 1.
       Tensor K,stressTensor;// temp stress tensor.
       IntVector q;//vector indices.
       Vector qv,q0,q1,q2; //reciprocalVector.
@@ -384,7 +385,6 @@ namespace McMd
       unsetStress();
 
       //add a new method in Tensor.h for acquiring unit matrix.
-      unitTensor.setUnitTensor();
       qv.zero();
 
       for (i = 0; i < waves_.size(); ++i) {
@@ -399,7 +399,7 @@ namespace McMd
          K.dyad(qv,qv);
          K *= (2 * ( ( 0.25 / (ewaldInteraction_.alpha()*ewaldInteraction_.alpha())
                      + (1.0 / ksq_[i]) ) ) );
-         K.subtract(unitTensor, K);
+         K.subtract(unitTensor_, K);
          x = rho_[i].real();
          y = rho_[i].imag();
          K *= (g_[i] * ( x*x + y*y));

@@ -167,12 +167,6 @@ namespace McMd
       /// Fourier modes of charge density.
       GArray<DCMPLX> rho_;
 
-      /// Prefactor for self part coulomb energy.
-      double selfPrefactor_;
-
-      /// Prefactor for force calculation in kspace.
-      double forcePrefactor_;
-
       /**
       * Calculate fourier modes of charge density.
       */
@@ -187,6 +181,11 @@ namespace McMd
       // KSpace part of Coulomb stress.
       Setable<Tensor> kSpaceStress_;
 
+      /// Prefactor for self part coulomb energy.
+      double selfPrefactor_;
+
+      /// unitMatrix.
+      Tensor unitTensor_;
 
    };
 
