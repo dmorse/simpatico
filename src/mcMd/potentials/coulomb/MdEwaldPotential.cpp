@@ -38,6 +38,7 @@ namespace McMd
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes())
    {
+      //initialize unit tensor.
       const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
       Tensor unitTensor_(unitMatrix_);
       // Note: Don't setClassName - using "CoulombPotential" base class name
