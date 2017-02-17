@@ -75,8 +75,8 @@ namespace McMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = 0.5*dt_/mass;
       }
-      //system().positionSignal().notify();
-      //system().velocitySignal().notify();
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
    }
 
    /*
