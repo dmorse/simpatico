@@ -403,7 +403,7 @@ namespace McMd
    */
    double McSystem::atomPotentialEnergy(const Atom &atom) const
    {
-      double energy = 0;
+      double energy = 0.0;
       #ifndef INTER_NOPAIR
       energy += pairPotential().atomEnergy(atom);
       #endif
