@@ -62,9 +62,9 @@ namespace McMd
    */
    McSystem::McSystem()
     :
-      System(),
+      System()
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_(0)
+      , pairPotentialPtr_(0)
       #endif
       #ifdef INTER_BOND
       , bondPotentialPtr_(0)
