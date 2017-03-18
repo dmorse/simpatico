@@ -1,8 +1,12 @@
 
-mcMd_simulation_=mcMd/simulation/McMd_mpi.cpp \
+mcMd_simulation_= \
     mcMd/simulation/Simulation.cpp \
     mcMd/simulation/System.cpp \
     mcMd/simulation/SubSystem.cpp \
+
+ifdef UTIL_MPI
+mcMd_simulation_ += mcMd/simulation/McMd_mpi.cpp 
+endif
 
 mcMd_simulation_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_simulation_))
