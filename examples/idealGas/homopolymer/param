@@ -43,21 +43,16 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                           100
+    baseInterval                          1000
 
-    McEnergyOutput{
-      interval                           10000
-      outputFileName                    energy
+    LogProgress{
+      interval                         1000000
     }
 
     McEnergyAverage{
       interval                           10000
       outputFileName                 energyAve
-      nSamplePerBlock                       10
-    }
-
-    LogProgress{
-      interval                          200000
+      nSamplePerBlock                      100
     }
 
     BondLengthDist{
@@ -70,15 +65,22 @@ McSimulation{
     }
 
     AtomMSD{
-      interval                           10000
+      interval                           50000
       outputFileName                   AtomMSD
       speciesId                              0
       atomId                                 5
-      capacity                             400
+      capacity                            1000
+    }
+
+    ComMSD{
+      interval                           50000
+      outputFileName                    ComMSD
+      speciesId                              0
+      capacity                            1000
     }
 
     IntraPairAutoCorr{
-      interval                           10000
+      interval                           50000
       outputFileName       IntraPairAutoCorr
       speciesId                              0
       atom1Id                                0
@@ -92,6 +94,11 @@ McSimulation{
 
   saveInterval               200000
   saveFileName              restart
+
+    McEnergyOutput{
+      interval                          100000
+      outputFileName                    energy
+    }
 
     RadiusGyration{
       interval                           10000
