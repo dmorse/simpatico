@@ -28,13 +28,13 @@ Deformable Boundaries
 AtomType
 --------
 
-  - Add static bool hasAtomDiameters_ and non-static double diameter_ members
+- Add static bool hasAtomDiameters_ and non-static double diameter_ members
 
-  - Simulation a friend of AtomType, so that static hasAtomDiameters
-    variable can be read in Simulation block of the param file. Alternatively,
-    provide a static function to optionall read this parameter.
+- Simulation a friend of AtomType, so that static hasAtomDiameters
+  variable can be read in Simulation block of the param file. Alternatively,
+  provide a static function to optionall read this parameter.
 
-  - Add code to read diameter_ member if hasAtomDiametrers_. 
+- Add code to read diameter_ member if hasAtomDiametrers_. 
 
 Species
 -------

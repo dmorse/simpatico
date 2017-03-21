@@ -34,40 +34,38 @@ namespace McMd
    */
    #ifdef UTIL_MPI
    Simulation::Simulation(MPI::Intracomm& communicator)
-    : nSystem_(1),
+    : iStep_(0),
+      nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
-      communicatorPtr_(&communicator),
+      moleculeCapacity_(0),
       nAtomType_(-1),
+      atomCapacity_(0)
+      #ifndef INTER_NOPAIR
+      , maskedPairPolicy_(MaskBonded)
+      #endif
       #ifdef INTER_BOND
-      nBondType_(-1),
+      , nBondType_(-1)
+      , bondCapacity_(0)
       #endif
       #ifdef INTER_ANGLE
-      nAngleType_(-1),
+      , nAngleType_(-1)
+      , angleCapacity_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      nDihedralType_(-1),
+      , nDihedralType_(-1)
+      , dihedralCapacity_(0)
       #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_(-1),
+      , hasExternal_(-1)
       #endif
       #ifdef MCMD_LINK
-      nLinkType_(-1),
+      , nLinkType_(-1)
       #endif
       #ifdef INTER_TETHER
-      hasTether_(-1),
+      , hasTether_(-1)
       #endif
-      atomCapacity_(0),
-      #ifdef INTER_BOND
-      bondCapacity_(0),
-      #endif
-      #ifdef INTER_ANGLE
-      angleCapacity_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralCapacity_(0),
-      #endif
-      maskedPairPolicy_(MaskBonded)
+      , communicatorPtr_(&communicator)
    {
       setClassName("Simulation");
       Util::initStatic();
@@ -95,42 +93,40 @@ namespace McMd
    * Constructor.
    */
    Simulation::Simulation()
-    : nSystem_(1),
+    : iStep_(0), 
+      nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
-      #ifdef UTIL_MPI
-      communicatorPtr_(0),
-      #endif
+      moleculeCapacity_(0),
       nAtomType_(-1),
+      atomCapacity_(0)
+      #ifndef INTER_NOPAIR
+      , maskedPairPolicy_(MaskBonded)
+      #endif
       #ifdef INTER_BOND
-      nBondType_(-1),
+      , nBondType_(-1)
+      , bondCapacity_(0)
       #endif
       #ifdef INTER_ANGLE
-      nAngleType_(-1),
+      , nAngleType_(-1)
+      , angleCapacity_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      nDihedralType_(-1),
+      , nDihedralType_(-1)
+      , dihedralCapacity_(0)
       #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_(-1),
+      , hasExternal_(-1)
       #endif
       #ifdef MCMD_LINK
-      nLinkType_(-1),
+      , nLinkType_(-1)
       #endif
       #ifdef INTER_TETHER
-      hasTether_(-1),
+      , hasTether_(-1)
       #endif
-      atomCapacity_(0),
-      #ifdef INTER_BOND
-      bondCapacity_(0),
+      #ifdef UTIL_MPI
+      , communicatorPtr_(0)
       #endif
-      #ifdef INTER_ANGLE
-      angleCapacity_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralCapacity_(0),
-      #endif
-      maskedPairPolicy_(MaskBonded)
    {
       setClassName("Simulation");
       Util::initStatic();
@@ -240,7 +236,9 @@ namespace McMd
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
 
+      #ifndef INTER_NOPAIR
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
+      #endif
 
       readParamComposite(in, *speciesManagerPtr_);
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
@@ -293,7 +291,9 @@ namespace McMd
       }
       loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
 
+      #ifndef INTER_NOPAIR
       loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
+      #endif
       loadParamComposite(ar, *speciesManagerPtr_);
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
          species(iSpecies).setId(iSpecies);
@@ -332,7 +332,9 @@ namespace McMd
       #endif
 
       ar << atomTypes_;
+      #ifndef INTER_NOPAIR
       ar & maskedPairPolicy_;
+      #endif
       (*speciesManagerPtr_).save(ar);
       random_.save(ar);
    }
@@ -649,11 +651,13 @@ namespace McMd
                bondPtr->setAtom(1, *atom1Ptr);
                bondPtr->setTypeId(type);
 
+               #ifndef INTER_NOPAIR
                // If MaskBonded, add each bonded atom to its partners Mask
                if (maskedPairPolicy_ == MaskBonded) {
                   atom0Ptr->mask().append(*atom1Ptr);
                   atom1Ptr->mask().append(*atom0Ptr);
                }
+               #endif
 
                ++bondPtr;
             }
@@ -1022,6 +1026,7 @@ namespace McMd
                      UTIL_THROW("Bond is inactive");
                   }
 
+                  #ifndef INTER_NOPAIR
                   // If MaskBonded, check that bonded atoms are masked
                   if (maskedPairPolicy_ == MaskBonded) {
 
@@ -1033,6 +1038,7 @@ namespace McMd
                      }
 
                   }
+                  #endif
 
                   ++bondPtr;
                }

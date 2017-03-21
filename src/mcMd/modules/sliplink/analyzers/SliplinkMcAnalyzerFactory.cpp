@@ -1,7 +1,5 @@
-#ifndef SLIPLINK_MC_ANALYZER_FACTORY_CPP
-#define SLIPLINK_MC_ANALYZER_FACTORY_CPP
-
 #include "SliplinkMcAnalyzerFactory.h"  
+#include <mcMd/mcSimulation/McSimulation.h>  
 #include <mcMd/mcSimulation/McSystem.h>  
 
 // Include headers for any user defined Analyzers for MC simulations
@@ -75,5 +73,3 @@ namespace McMd
    }
 
 }
-
-#endif

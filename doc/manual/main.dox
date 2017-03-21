@@ -41,6 +41,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
  </li>
  <li> \subpage extend_page  "4. Extending Simpatico" </li>
    <ul style="list-style: none;">
+   <li> \ref extend_overview_page  </li>
    <li> \ref extend_base_page  </li>
    <li> \ref extend_build_page </li>
    <li> \ref extend_factory_page      </li>

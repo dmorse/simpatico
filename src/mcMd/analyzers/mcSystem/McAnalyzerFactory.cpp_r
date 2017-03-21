@@ -9,15 +9,26 @@
 
 #include "McEnergyOutput.h"
 #include "McEnergyAverage.h"
-#include "McPairEnergyAverage.h"
-#include "McExternalEnergyAverage.h"
-#include "McBondEnergyAverage.h"
 #include "McPressureAverage.h"
 #include "McVirialStressTensorAverage.h"
-#include "McIntraBondStressAutoCorr.h"
-#include "McIntraBondTensorAutoCorr.h"
-#include "McNVTChemicalPotential.h"
+
+#ifndef INTER_NOPAIR
+#include "McPairEnergyAverage.h"
 #include "McMuExchange.h"
+#endif
+
+#ifdef INTER_BOND
+#include "McIntraBondStressAutoCorr.h"
+#include "McBondEnergyAverage.h"
+#include "McIntraBondTensorAutoCorr.h"
+#ifndef INTER_NOPAIR
+#include "McNVTChemicalPotential.h"
+#endif
+#endif
+
+#ifdef INTER_EXTERNAL
+#include "McExternalEnergyAverage.h"
+#endif
 
 #include <mcMd/analyzers/mutable/TypeDistribution.h>
 #include <mcMd/analyzers/mutable/SemiGrandDistribution.h>
@@ -62,21 +73,15 @@ namespace McMd
       } else
       if (className == "McVirialStressTensorAverage") {
          ptr = new McVirialStressTensorAverage(system());
-      } else
-      if (className == "McMuExchange") {
-         ptr = new McMuExchange(system());
-      } else
-      if (className == "TypeDistribution") {
-         ptr = new TypeDistribution(system());
-      } else 
-      if (className == "SemiGrandDistribution") {
-         ptr = new SemiGrandDistribution(system());
-      }
+      } 
 
       #ifndef INTER_NOPAIR
       else
       if (className == "McPairEnergyAverage") {
          ptr = new McPairEnergyAverage(system());
+      } else
+      if (className == "McMuExchange") {
+         ptr = new McMuExchange(system());
       } 
       #endif
 
@@ -90,10 +95,13 @@ namespace McMd
       } else
       if (className == "McIntraBondTensorAutoCorr") {
          ptr = new McIntraBondTensorAutoCorr(system());
-      } else
+      } 
+      #ifndef INTER_NOPAIR
+      else
       if (className == "McNVTChemicalPotential") {
          ptr = new McNVTChemicalPotential(system());
       }
+      #endif 
       #endif 
 
       #ifdef INTER_EXTERNAL
@@ -103,6 +111,15 @@ namespace McMd
       } 
       #endif
 
+      // Semi-grand ensemble
+      else
+      if (className == "TypeDistribution") {
+         ptr = new TypeDistribution(system());
+      } else 
+      if (className == "SemiGrandDistribution") {
+         ptr = new SemiGrandDistribution(system());
+      }
+ 
       // If none of the above are matched, try SystemAnalyzerFactory
       if (!ptr) {
          ptr = systemFactory_.factory(className);
