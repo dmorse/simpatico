@@ -13,6 +13,9 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <mcMd/chemistry/Atom.h>        // member container template argument
 #include <mcMd/chemistry/Molecule.h>    // member container template argument
+#ifndef INTER_NOPAIR
+#include <mcMd/chemistry/MaskPolicy.h>  // member 
+#endif
 #ifdef INTER_BOND
 #include <mcMd/chemistry/Bond.h>        // typedef
 #endif
@@ -22,7 +25,6 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>    // typedef
 #endif
-#include <mcMd/chemistry/MaskPolicy.h>  // member 
 #include <mcMd/chemistry/AtomType.h>    // member container template parameter
 #include <util/misc/FileMaster.h>       // member
 #include <util/random/Random.h>         // member
@@ -232,15 +234,78 @@ namespace McMd
       //@{
 
       /**
+      * Get value of step index for main MC or MD loop.
+      */
+      int iStep() const;
+
+      /**
       * Get the number of atom types.
       */
       int nAtomType() const;
+
+      /**
+      * Get a single AtomType object by const reference.
+      *
+      * \param i integer index of desired AtomType
+      */
+      const AtomType& atomType(int i) const;
+
+      /**
+      * Get a const Array of all AtomType objects.
+      */
+      const Array<AtomType>& atomTypes() const;
+
+      /**
+      * Get the number of Species in this Simulation.
+      */
+      int nSpecies() const;
+     
+      /**
+      * Get a specific Species by const reference.
+      * 
+      * \param i integer index of desired Species
+      */ 
+      const Species& species(int i) const;
+
+      /**
+      * Get the total number of Molecules allocated.
+      */
+      int moleculeCapacity() const;
+
+      /**
+      * Get the total number of Atoms allocated.
+      */
+      int atomCapacity() const;
+
+      /**
+      * Get the number of Systems in this Simulation.
+      *
+      * This will return 1 for an McSimulation or MdSimulation.
+      */
+      int nSystem() const;
+
+      /**
+      * Return true if Simulation is valid, or throw an Exception.
+      */
+      virtual bool isValid() const;
+
+      #ifndef INTER_NOPAIR
+      /**
+      * Return the value of the mask policy (MaskNone or MaskBonded).
+      */
+      MaskPolicy maskedPairPolicy() const;
+      #endif
 
       #ifdef INTER_BOND
       /**
       * Get the number of bond types.
       */
       int nBondType() const;
+
+      /**
+      * Get the total number of Bonds allocated.
+      */
+      int bondCapacity() const;
       #endif
 
       #ifdef INTER_ANGLE
@@ -248,6 +313,11 @@ namespace McMd
       * Get the number of angle types.
       */
       int nAngleType() const;
+
+      /**
+      * Get the total number of Angles allocated.
+      */
+      int angleCapacity() const;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -255,6 +325,11 @@ namespace McMd
       * Get the number of dihedral types.
       */
       int nDihedralType() const;
+
+      /**
+      * Get the total number of Dihedrals allocated.
+      */
+      int dihedralCapacity() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -278,86 +353,14 @@ namespace McMd
       int hasTether() const;
       #endif
 
-      /**
-      * Get the number of Systems in this Simulation.
-      *
-      * This will return 1 for an McSimulation or MdSimulation.
-      */
-      int nSystem() const;
-
-      /**
-      * Get the number of Species in this Simulation.
-      */
-      int nSpecies() const;
-     
-      /**
-      * Get the total number of Molecules allocated.
-      */
-      int moleculeCapacity() const;
-
-      /**
-      * Get the total number of Atoms allocated.
-      */
-      int atomCapacity() const;
-
-      #ifdef INTER_BOND
-      /**
-      * Get the total number of Bonds allocated.
-      */
-      int bondCapacity() const;
-      #endif
-
-      #ifdef INTER_ANGLE
-      /**
-      * Get the total number of Angles allocated.
-      */
-      int angleCapacity() const;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Get the total number of Dihedrals allocated.
-      */
-      int dihedralCapacity() const;
-      #endif
-
-      /**
-      * Return the value of the mask policy (MaskNone or MaskBonded).
-      */
-      MaskPolicy maskedPairPolicy() const;
-
-      /**
-      * Get a specific Species by const reference.
-      * 
-      * \param i integer index of desired Species
-      */ 
-      const Species& species(int i) const;
-
-      /**
-      * Get a single AtomType object by const reference.
-      *
-      * \param i integer index of desired AtomType
-      */
-      const AtomType& atomType(int i) const;
-
-      /**
-      * Get a const Array of all AtomType objects.
-      */
-      const Array<AtomType>& atomTypes() const;
-
-      /**
-      * Get value of step index for main MC or MD loop.
-      */
-      int iStep() const;
-
-      /**
-      * Return true if Simulation is valid, or throw an Exception.
-      */
-      virtual bool isValid() const;
-
       //@}
 
    protected:
+
+      /**
+      * Step index for main MC or MD loop.
+      */
+      int  iStep_;
 
       /**
       * Number of Systems of interacting molecules (> 1 in Gibbs ensemble).
@@ -366,11 +369,6 @@ namespace McMd
       * Note that nSystem_ is initialized to 1 in the Simulation constructor.
       */
       int  nSystem_;
-
-      /**
-      * Step index for main MC or MD loop.
-      */
-      int  iStep_;
 
       /**
       * Set the associated AnalyzerManager.
@@ -389,142 +387,15 @@ namespace McMd
 
    private:
 
-      /// \name Composite members
-      //@{
-      
-      /// Random number generator.
+      /** 
+      * Random number generator.
+      */
       Random random_;
-
-      /**
-      * Array of AtomType objects for all types in simulation.
-      *
-      * Each AtomType stores the name and mass for a type of Atom.
-      */
-      DArray<AtomType> atomTypes_;
-
-      /** 
-      * Array of all Molecule objects, for all Species.
-      */
-      DArray<Molecule> molecules_;
-
-      /** 
-      * Arrays of pointers to unused molecules of each species.
-      *
-      * Each ArrayStack<Molecule> contains pointers to unused
-      * Molecule objects within the block reservoir for one species.
-      */
-      DArray< ArrayStack<Molecule> > reservoirs_;
-
-      /**
-      * Array of all Atom objects.
-      *
-      * The atoms_ Array contains all Atom objects available in a simulation.
-      * The Atoms associated with one Molecule form a sequential block. Blocks
-      * of Atoms associated with Molecules of the same Species are also stored
-      * sequentially within a larger block of Atoms allocated for that Species.
-      *
-      * This RArray is an alias (i.e., a shallow copy) of a DArray that is a
-      * private static member of the Atom class.
-      */
-      RArray<Atom> atoms_;
-
-      #ifdef INTER_BOND
-      /**
-      * Array of all Bond objects.
-      *
-      * The organization of bonds_ is closely anologous to of atoms_: The 
-      * Bonds associated with a Molecule are stored in a contiguous block, 
-      * and blocks associated with molecules are of the same Species are 
-      * stored sequentially within a larger block.
-      */
-      DArray<Bond> bonds_;
-      #endif
-
-      #ifdef INTER_ANGLE
-      /**
-      * Array of all Angle objects.
-      *
-      * The organization of angles_ is closely anologous to that of bonds_: The 
-      * Angles associated with a Molecule are stored in a contiguous block, 
-      * and blocks associated with molecules are of the same Species are 
-      * stored sequentially within a larger block.
-      */
-      DArray<Angle> angles_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Array of all Dihedral objects.
-      *
-      * The organization of dihedrals_ is closely anologous to that of angles_:
-      * The Dihedrals associated with a Molecule are stored in a contiguous
-      * block, and blocks associated with molecules are of the same Species are
-      * stored sequentially within a larger block.
-      */
-      DArray<Dihedral> dihedrals_;
-      #endif
-
-      /**
-      * Array containing indices to the first Molecule of each species.
-      *
-      * Element firstAtomIds[i] is an integer index for the first Molecule of the
-      * block of the molecules_ Array associated with species number i.
-      */
-      DArray<int> firstMoleculeIds_;
-
-      /**
-      * Array containing indices to the first Atom of each species.
-      *
-      * Element firstAtomIds[i] is an integer index for the first Atom of the
-      * block of the atoms_ Array associated with species number i.
-      */
-      DArray<int> firstAtomIds_;
-
-      #ifdef INTER_BOND
-      /**
-      * Array containing indices to the first Bond of each species.
-      *
-      * Element firstBondIds[i] is an integer index for the first Bond of the
-      * block of the bonds_ Array associated with species number i.
-      */
-      DArray<int> firstBondIds_;
-      #endif
-
-      #ifdef INTER_ANGLE
-      /**
-      * Array containing indices to the first Angle of each species.
-      *
-      * Element firstAngleIds[i] is an integer index for the first Angle of the
-      * block of the angles_ Array associated with species number i.
-      */
-      DArray<int> firstAngleIds_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Array containing indices to the first Dihedral of each species.
-      *
-      * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
-      * block of the dihedrals_ Array associated with species number i.
-      */
-      DArray<int> firstDihedralIds_;
-      #endif
 
       /**
       * Object for opening associated input and output files.
       */
       FileMaster fileMaster_;
-
-      #ifdef UTIL_MPI
-      /**
-      * Stream for log file output (serial jobs use std::cout).
-      */
-      std::ofstream logFile_;
-      #endif
-
-      //@}
-      /// \name Pointer members
-      //@{
 
       /**
       * Manager for molecular Species.
@@ -541,35 +412,193 @@ namespace McMd
       */
       AnalyzerManager* analyzerManagerPtr_;
 
-      #ifdef UTIL_MPI
-      /// Pointer to the simulation communicator.
-      MPI::Intracomm* communicatorPtr_;
-      #endif
- 
-      //@}
-      /// \name Integer and Bool members
-      //@{
+      /** 
+      * Array of all Molecule objects, for all Species.
+      */
+      DArray<Molecule> molecules_;
 
-      /// Number of atom types.
+      /**
+      * Array containing indices to the first Molecule of each species.
+      *
+      * Element firstAtomIds[i] is an integer index for the first Molecule of the
+      * block of the molecules_ Array associated with species number i.
+      */
+      DArray<int> firstMoleculeIds_;
+
+      /** 
+      * Arrays of pointers to unused molecules of each species.
+      *
+      * Each ArrayStack<Molecule> contains pointers to unused
+      * Molecule objects within the block reservoir for one species.
+      */
+      DArray< ArrayStack<Molecule> > reservoirs_;
+
+      /**
+      * Number of molecules allocated.
+      *
+      * The number of Molecule objects allocated in the molecules_ Array, 
+      * for all Species in all Systems. This should be equal to the sum 
+      * of values of capacity() for each Species.
+      */
+      int moleculeCapacity_;
+
+      /**
+      * Array of AtomType objects for all types in simulation.
+      *
+      * Each AtomType stores the name and mass for a type of Atom.
+      */
+      DArray<AtomType> atomTypes_;
+
+      /**
+      * Array of all Atom objects.
+      *
+      * The atoms_ Array contains all Atom objects available in a simulation.
+      * The Atoms associated with one Molecule form a sequential block. Blocks
+      * of Atoms associated with Molecules of the same Species are also stored
+      * sequentially within a larger block of Atoms allocated for that Species.
+      *
+      * This RArray is an alias (i.e., a shallow copy) of a DArray that is a
+      * private static member of the Atom class.
+      */
+      RArray<Atom> atoms_;
+
+      /**
+      * Array containing indices to the first Atom of each species.
+      *
+      * Element firstAtomIds[i] is an integer index for the first Atom of the
+      * block of the atoms_ Array associated with species number i.
+      */
+      DArray<int> firstAtomIds_;
+
+      /**
+      * Number of atom types.
+      */
       int nAtomType_;
 
+      /**
+      * Number of atoms allocated.
+      *
+      * The number of Atom objects allocated in the atoms_ Array, for all 
+      * Species in all Systems.  The atomCapacity should be equal to the
+      * sum of values of capacity()*nAtom() for each Species.
+      */
+      int atomCapacity_;
+
+      #ifndef INTER_NOPAIR
+      /**
+      * Policy for suppressing pair interactions for some atom pairs.
+      *
+      * Allowed values of enum MaskPolicy:
+      *
+      *  - MaskNone:   no masked pairs
+      *  - MaskBonded:  mask pair interaction between bonded atoms
+      */
+      MaskPolicy maskedPairPolicy_;
+      #endif
+
       #ifdef INTER_BOND
-      /// Number of bond types.
+      /**
+      * Array of all Bond objects.
+      *
+      * The organization of bonds_ is closely anologous to of atoms_: The 
+      * Bonds associated with a Molecule are stored in a contiguous block, 
+      * and blocks associated with molecules are of the same Species are 
+      * stored sequentially within a larger block.
+      */
+      DArray<Bond> bonds_;
+
+      /**
+      * Array containing indices to the first Bond of each species.
+      *
+      * Element firstBondIds[i] is an integer index for the first Bond of the
+      * block of the bonds_ Array associated with species number i.
+      */
+      DArray<int> firstBondIds_;
+
+      /**
+      * Number of bond types.
+      */
       int nBondType_;
+
+      /**
+      * Number of bonds allocated.
+      *
+      * The number of Bond objects allocated in the DArray bonds_ , for all
+      * Species in all Systems.
+      */
+      int bondCapacity_;
       #endif
 
       #ifdef INTER_ANGLE
-      /// Number of angle types.
+      /**
+      * Array of all Angle objects.
+      *
+      * The organization of angles_ is closely anologous to that of bonds_: The 
+      * Angles associated with a Molecule are stored in a contiguous block, 
+      * and blocks associated with molecules are of the same Species are 
+      * stored sequentially within a larger block.
+      */
+      DArray<Angle> angles_;
+
+      /**
+      * Array containing indices to the first Angle of each species.
+      *
+      * Element firstAngleIds[i] is an integer index for the first Angle of the
+      * block of the angles_ Array associated with species number i.
+      */
+      DArray<int> firstAngleIds_;
+
+      /**
+      * Number of angle types.
+      */
       int nAngleType_;
+
+      /**
+      * Number of angles allocated.
+      *
+      * The number of Angle objects allocated in the DArray angles_, for all
+      * Species in all Systems.
+      */
+      int angleCapacity_;
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Number of dihedral types.
+      /**
+      * Array of all Dihedral objects.
+      *
+      * The organization of dihedrals_ is closely anologous to that of angles_:
+      * The Dihedrals associated with a Molecule are stored in a contiguous
+      * block, and blocks associated with molecules are of the same Species are
+      * stored sequentially within a larger block.
+      */
+      DArray<Dihedral> dihedrals_;
+
+      /**
+      * Array containing indices to the first Dihedral of each species.
+      *
+      * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
+      * block of the dihedrals_ Array associated with species number i.
+      */
+      DArray<int> firstDihedralIds_;
+
+      /**
+      * Number of dihedral types.
+      */
       int nDihedralType_;
+
+      /**
+      * Number of dihedrals allocated.
+      *
+      * The number of Dihedral objects allocated in the DArray dihedrals_, for all
+      * Species in all Systems.
+      */
+      int dihedralCapacity_;
       #endif
 
       #ifdef INTER_EXTERNAL
-      /// Does an external potential exist? (0 false or 1 true)
+      /**
+      * Does an external potential exist? (0 if false or 1 if true)
+      */
       int hasExternal_;
       #endif
 
@@ -583,64 +612,18 @@ namespace McMd
       int hasTether_;
       #endif
 
+      #ifdef UTIL_MPI
       /**
-      * Number of molecules allocated.
-      *
-      * The number of Molecule objects allocated in the molecules_ Array, 
-      * for all Species in all Systems. This should be equal to the sum 
-      * of values of capacity() for each Species.
+      * Stream for log file output (serial jobs use std::cout).
       */
-      int moleculeCapacity_;
+      std::ofstream logFile_;
 
       /**
-      * Number of atoms allocated.
-      *
-      * The number of Atom objects allocated in the atoms_ Array, for all 
-      * Species in all Systems.  The atomCapacity should be equal to the
-      * sum of values of capacity()*nAtom() for each Species.
+      * Pointer to the simulation communicator.
       */
-      int atomCapacity_;
-
-      #ifdef INTER_BOND
-      /**
-      * Number of bonds allocated.
-      *
-      * The number of Bond objects allocated in the DArray bonds_ , for all
-      * Species in all Systems.
-      */
-      int bondCapacity_;
+      MPI::Intracomm* communicatorPtr_;
       #endif
-
-      #ifdef INTER_ANGLE
-      /**
-      * Number of angles allocated.
-      *
-      * The number of Angle objects allocated in the DArray angles_, for all
-      * Species in all Systems.
-      */
-      int angleCapacity_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Number of dihedrals allocated.
-      *
-      * The number of Dihedral objects allocated in the DArray dihedrals_, for all
-      * Species in all Systems.
-      */
-      int dihedralCapacity_;
-      #endif
-
-      /**
-      * Policy for suppressing pair interactions for some atom pairs.
-      *
-      * Allowed values of enum MaskPolicy:
-      *
-      *  - MaskNone:   no masked pairs
-      *  - MaskBonded:  mask pair interaction between bonded atoms
-      */
-      MaskPolicy maskedPairPolicy_;
-
+ 
       //@}
 
       /**
@@ -744,8 +727,10 @@ namespace McMd
    {  return dihedralCapacity_; }
    #endif
 
+   #ifndef INTER_NOPAIR
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
+   #endif
 
    inline Random& Simulation::random()
    {  return random_; }

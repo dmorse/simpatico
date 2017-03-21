@@ -161,13 +161,10 @@ namespace McMd
                                                     ptr2->position());
                         t2 = ptr2->typeId();
                         if (&(ptr1->molecule()) != &(ptr2->molecule())) {
-
                            // Intermolecular atom pair 
                            dE -= potential.energy(rsq, t1, t2);
                            dE += potential.energy(rsq, t1New, t2);
-
-                        } else {
-
+                        } else {  
                            // Intramolecular atom pair 
                            if (id2 > id1) {
                               dE -= potential.energy(rsq, t1, t2);
@@ -182,9 +179,9 @@ namespace McMd
                                  dE += potential.energy(rsq, t1New, t2);
                               }
                            }
-
                         }
                      }
+
                   }
                } // end loop over neighbors
             } // end loop over flipped atoms
