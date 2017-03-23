@@ -24,6 +24,7 @@
 #include <inter/external/PeriodicExternal.h>
 #include <inter/external/GeneralPeriodicExternal.h>
 #include <inter/external/NucleationExternal.h>
+#include <inter/external/SphericalTabulatedExternal.h>
 
 namespace McMd
 {

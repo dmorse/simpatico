@@ -7,7 +7,8 @@ inter_external_=\
     inter/external/SimplePeriodicExternal.cpp \
     inter/external/GeneralPeriodicExternal.cpp \
     inter/external/NucleationExternal.cpp \
-    inter/external/PeriodicExternal.cpp
+    inter/external/PeriodicExternal.cpp \
+    inter/external/SphericalTabulatedExternal.cpp 
 
 inter_external_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_external_))
