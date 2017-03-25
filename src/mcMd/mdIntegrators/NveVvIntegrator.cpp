@@ -142,8 +142,8 @@ namespace McMd
          }
       }
       #endif
-      system().positionSignal().notify();
-      system().velocitySignal().notify();
+      //system().positionSignal().notify();
+      //system().velocitySignal().notify();
 
       system().calculateForces();
 
@@ -173,7 +173,7 @@ namespace McMd
          }
       }
       #endif
-      system().velocitySignal().notify();
+      //system().velocitySignal().notify();
 
       #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {

@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -12,6 +12,7 @@
 // PairPotential interfaces and implementation classes
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/MdPairPotentialImpl.h>
+#include <mcMd/potentials/pair/MdEwaldPairPotentialImpl.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 
@@ -81,24 +82,25 @@ namespace McMd
    PairFactory::mdFactory(const std::string& name, System& system) const
    {
       MdPairPotential* ptr = 0;
+      MdSystem& mdsystem = dynamic_cast<MdSystem&>(system);
 
       // Try subfactories first
-      ptr = tryMdSubfactories(name, system);
-      if (ptr) return ptr;
+      //ptr = tryMdSubfactories(name, system);
+      //if (ptr) return ptr;
 
       if (name == "LJPair") {
-         ptr = new MdPairPotentialImpl<LJPair>(system);
+         ptr = new MdEwaldPairPotentialImpl<LJPair>(mdsystem);
       } else
       if (name == "WcaPair") {
-         ptr = new MdPairPotentialImpl<WcaPair>(system);
+         ptr = new MdEwaldPairPotentialImpl<WcaPair>(mdsystem);
       } else
       if (name == "DpdPair") {
-         ptr = new MdPairPotentialImpl<DpdPair>(system);
+         ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
       } 
       #ifdef INTER_BOND 
       else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
-         ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
+         ptr = new MdEwaldPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(mdsystem);
       }
       #endif
       return ptr;
@@ -185,3 +187,4 @@ namespace McMd
    }
 
 }
+

@@ -135,10 +135,10 @@ namespace McMd
       setClassName("MdSystem");
 
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
-      if (pairPotentialPtr_ == 0) {
-         UTIL_THROW("Failed attempt to clone McPairPotential");
-      }
+      //pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
+      //if (pairPotentialPtr_ == 0) {
+      //   UTIL_THROW("Failed attempt to clone McPairPotential");
+      //}
       #endif
       #ifdef INTER_BOND
       if (system.hasBondPotential()) {
@@ -270,6 +270,7 @@ namespace McMd
          }
       }
       readParamComposite(in, *pairPotentialPtr_);
+      
       #endif
 
       if (!isCopy()) {
@@ -755,7 +756,7 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
-         coulombPotential().addKSpaceForces();
+         coulombPotential().addForces();
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -801,7 +802,7 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
-         energy += coulombPotential().kspaceEnergy();
+         energy += coulombPotential().kSpaceEnergy();
       }
       #endif
       #ifdef MCMD_LINK
@@ -937,9 +938,9 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
-         T coulombStress;
-         coulombPotential().computeKSpaceStress(coulombStress);
-         stress += coulombStress;
+         //T coulombStress;
+         //coulombPotential().computeStress(coulombStress);
+         //stress += coulombStress;
       }
       #endif
       #ifdef MCMD_LINK

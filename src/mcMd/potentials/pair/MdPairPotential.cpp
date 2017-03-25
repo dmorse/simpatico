@@ -19,7 +19,7 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+    /* 
    * Constructor.
    */
    MdPairPotential::MdPairPotential(System& system)
