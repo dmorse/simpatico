@@ -63,15 +63,15 @@ MdSimulation{
     }
   }
   AnalyzerManager{
-    baseInterval                         100
+    baseInterval                          20
 
     LogProgress{
-      interval                          100
+       interval                           20
     }
 
     MdEnergyOutput{
       interval                           100
-      outputFileName                   energy
+      outputFileName                  energy
     }
 
     ConfigWriter{
