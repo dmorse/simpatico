@@ -20,7 +20,10 @@ namespace McMd
       charge_(0.0),
       #endif
       name_(),
-      id_(-1) 
+      id_(-1)
+      #ifdef INTER_COULOMB
+      , hasCharge_(0)
+      #endif
    {}
 
    // Destructor
@@ -31,6 +34,12 @@ namespace McMd
    void AtomType::setId(int id)
    {  id_ = id; }
 
+   #ifdef INTER_COULOMB
+   // Set the hasCharge property
+   void AtomType::setHasCharge(bool hasCharge)
+   {  hasCharge_ = hasCharge; }
+   #endif
+
    /* 
    * Input a AtomType from an istream, without line breaks.
    */
@@ -39,7 +48,9 @@ namespace McMd
       in >> atomType.name_;
       in >> atomType.mass_;
       #ifdef INTER_COULOMB
-      in >> atomType.charge_;
+      if (atomType.hasCharge_) {
+         in >> atomType.charge_;
+      }
       #endif
       return in;
    }
@@ -56,8 +67,10 @@ namespace McMd
       out.precision(Parameter::Precision);
       out << atomType.mass_;
       #ifdef INTER_COULOMB
-      out.width(Parameter::Width);
-      out << atomType.charge_;
+      if (atomType.hasCharge_) {
+         out.width(Parameter::Width);
+         out << atomType.charge_;
+      }
       #endif
       return out;
    }
@@ -78,8 +91,12 @@ namespace Util
       send<double>(comm, mass, dest, tag);
 
       #ifdef INTER_COULOMB
-      double charge = data.charge();
-      send<double>(comm, charge, dest, tag);
+      bool hasCharge = data.hasCharge();
+      send<bool>(comm, hasCharge, dest, tag);
+      if (hasCharge) {
+         double charge = data.charge();
+         send<double>(comm, charge, dest, tag);
+      }
       #endif
    }
 
@@ -95,9 +112,14 @@ namespace Util
       data.setMass(mass);
 
       #ifdef INTER_COULOMB
-      double  charge; 
-      recv<double>(comm, charge, source, tag);
-      data.setCharge(charge);
+      bool hasCharge
+      recv<bool>(comm, hasCharge, source, tag);
+      data.setHasCharge(hasCharge);
+      if (hasCharge) {
+         double  charge; 
+         recv<double>(comm, charge, source, tag);
+         data.setCharge(charge);
+      }
       #endif
    }
 
@@ -107,26 +129,36 @@ namespace Util
       std::string  name;
       double  mass; 
       #ifdef INTER_COULOMB
-      double  charge; 
+      double  charge;
+      bool hasCharge; 
       #endif
       int  rank = comm.Get_rank();
       if (rank == root) {
          name = data.name();
          mass = data.mass();
          #ifdef INTER_COULOMB
-         charge = data.charge();
+         hasCharge = data.hasCharge();
+         if (hasCharge) {
+            charge = data.charge();
+         }
          #endif
       }
       bcast<std::string>(comm, name, root);
       bcast<double>(comm, mass, root);
       #ifdef INTER_COULOMB
-      bcast<double>(comm, charge, root);
+      bcast<bool>(comm, hasCharge, root);
+      if (hasCharge) {
+         bcast<double>(comm, charge, root);
+      }
       #endif
       if (rank != root) {
          data.setName(name);
          data.setMass(mass);
          #ifdef INTER_COULOMB
-         data.setCharge(charge);
+         data.setHasCharge(hasCharge);
+         if (hasCharge) {
+            data.setCharge(charge);
+         }
          #endif
       }
    }

@@ -16,6 +16,8 @@
 namespace McMd
 {
 
+   using namespace Util;
+
    /**
    * Descriptor for a type of Atom.
    *
@@ -59,7 +61,19 @@ namespace McMd
 
       #ifdef INTER_COULOMB
       /**
-      * Set the charge.
+      * Set the "hasCharge" property.
+      *
+      * An AtomType has an associated electrical charge value if and
+      * only if hasCharge is true. The charge appears in the text file
+      * format used by the inserter and extractor if and only if the
+      * hasCharge property is set true.
+      *
+      * \param bool hasCharge.
+      */
+      void setHasCharge(bool hasCharge);
+
+      /**
+      * Set the charge value.
       *
       * \param charge atom electrical charge
       */
@@ -83,6 +97,11 @@ namespace McMd
       double mass() const;
 
       #ifdef INTER_COULOMB
+      /**
+      * Does this type have a charge value?
+      */
+      bool hasCharge() const;
+
       /**
       * Get the electrical charge.
       */
@@ -114,6 +133,9 @@ namespace McMd
 
       /// Integer index.
       int  id_;
+
+      /// Does this type have a charge value?
+      bool hasCharge_;
 
    //friends:
 
@@ -159,10 +181,19 @@ namespace McMd
 
    #ifdef INTER_COULOMB
    /*
+   * Get the hasCharge bool flag.
+   */
+   inline bool AtomType::hasCharge() const
+   {  return hasCharge_; }
+
+   /*
    * Get the electrical charge.
    */
    inline double AtomType::charge() const
-   {  return charge_; }
+   {
+      UTIL_ASSERT(hasCharge_);  
+      return charge_; 
+   }
    #endif
 
    /*
@@ -184,7 +215,7 @@ namespace McMd
    *
    * Format:
    *
-   *    name  [string] mass [double]
+   *    name  [string] mass [double] charge [double]
    *
    * \param in  input stream
    * \param atomType  AtomType to be read from stream
@@ -197,7 +228,7 @@ namespace McMd
    *
    * Format, one one line with no line break:
    *
-   *    name  mass
+   *    name  mass [charge]
    *
    * \param  out  output stream
    * \param  atomType  AtomType to be written to stream
@@ -218,7 +249,10 @@ namespace McMd
       ar & atomType.name_;
       ar & atomType.mass_;
       #ifdef INTER_COULOMB
-      ar & atomType.charge_;
+      ar & atomType.hasCharge_;
+      if (atomType.hasCharge_) {
+         ar & atomType.charge_;
+      }
       #endif
    }
 

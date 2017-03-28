@@ -250,6 +250,9 @@ namespace McMd
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
+         #ifdef INTER_COULOMB
+         atomTypes_[i].setHasCharge(hasCoulomb_);
+         #endif
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
 

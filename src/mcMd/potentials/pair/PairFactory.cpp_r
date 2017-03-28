@@ -85,24 +85,48 @@ namespace McMd
       MdSystem& mdsystem = dynamic_cast<MdSystem&>(system);
 
       // Try subfactories first
-      //ptr = tryMdSubfactories(name, system);
-      //if (ptr) return ptr;
+      ptr = tryMdSubfactories(name, system);
+      if (ptr) return ptr;
 
-      if (name == "LJPair") {
-         ptr = new MdEwaldPairPotentialImpl<LJPair>(mdsystem);
-      } else
-      if (name == "WcaPair") {
-         ptr = new MdEwaldPairPotentialImpl<WcaPair>(mdsystem);
-      } else
-      if (name == "DpdPair") {
-         ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
-      } 
-      #ifdef INTER_BOND 
-      else
-      if (name == "CompensatedPair<DpdPair,FeneBond>") {
-         ptr = new MdEwaldPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(mdsystem);
+      if (mdsystem.simulation().hasCoulomb()) {
+         // std::cout << "Attempting to construct MdEwaldPairPotentialImpl instance - charged system" 
+         //           << std::endl;
+         if (name == "LJPair") {
+            ptr = new MdEwaldPairPotentialImpl<LJPair>(mdsystem);
+         } else
+         if (name == "WcaPair") {
+            ptr = new MdEwaldPairPotentialImpl<WcaPair>(mdsystem);
+         } else
+         if (name == "DpdPair") {
+            ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
+         } 
+         #ifdef INTER_BOND 
+         else
+         if (name == "CompensatedPair<DpdPair,FeneBond>") {
+            ptr = new 
+            MdEwaldPairPotentialImpl<CompensatedPair<DpdPair,FeneBond> >(mdsystem);
+         }
+         #endif
+      } else {
+         // std::cout << "Attempting to instantiate MdPairPotentialImpl instance - neutral system" 
+         //          << std::endl;
+         if (name == "LJPair") {
+            ptr = new MdPairPotentialImpl<LJPair>(mdsystem);
+         } else
+         if (name == "WcaPair") {
+            ptr = new MdPairPotentialImpl<WcaPair>(mdsystem);
+         } else
+         if (name == "DpdPair") {
+            ptr = new MdPairPotentialImpl<DpdPair>(mdsystem);
+         } 
+         #ifdef INTER_BOND 
+         else
+         if (name == "CompensatedPair<DpdPair,FeneBond>") {
+            ptr = new 
+            MdPairPotentialImpl<CompensatedPair<DpdPair,FeneBond> >(mdsystem);
+         }
+         #endif
       }
-      #endif
       return ptr;
    }
 
