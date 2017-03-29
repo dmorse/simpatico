@@ -1,14 +1,12 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
   nAtomType                              2
   nBondType                              1
-  hasCoulomb                             0
-  atomTypes                    A    1.0   1.0
-                               B    1.0  -1.0
+  atomTypes                    A       1.0  
+                               B       1.0  
   maskedPairPolicy                MaskBonded
   SpeciesManager{
 
@@ -39,7 +37,6 @@ MdSimulation{
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
                             1.122460000000e+00  1.122460000000e+00
-      maxBoundary                 cubic  10.5 
       PairList{
         atomCapacity                        1000
         pairCapacity                        4000
@@ -60,7 +57,7 @@ MdSimulation{
        dt                   0.005
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                        1000
 
     LogProgress{
@@ -135,3 +132,5 @@ MdSimulation{
       capacity                         1000
     }
 
+  hasCoulomb                             0
+      maxBoundary                 cubic  10.5 

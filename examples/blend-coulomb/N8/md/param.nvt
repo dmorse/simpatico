@@ -1,6 +1,5 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -33,6 +32,12 @@ MdSimulation{
     pairStyle                        LJPair
     bondStyle                  HarmonicBond
     coulombStyle                      Ewald
+    CoulombPotential{
+      epsilon               1.000000000000e+00
+      alpha                 2.500000000000e+00
+      rSpaceCutoff          1.800000000000e+00
+      kSpaceCutoff          1.200000000000e+01
+    }
     MdPairPotential{
       epsilon               1.000000000000e+00  1.300000000000e+00
                             1.300000000000e+00  1.000000000000e+00
@@ -43,7 +48,7 @@ MdSimulation{
       maxBoundary                 cubic  10.5 
       PairList{
         atomCapacity                        1000
-        pairCapacity                        4000
+        pairCapacity                       40000
         skin                  3.000000000000e-01
       }
     }

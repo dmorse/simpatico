@@ -34,8 +34,8 @@ MdSimulation{
     coulombStyle                      Ewald
     CoulombPotential{
       epsilon               1.000000000000e+00
-      alpha                 3.000000000000e+00
-      rSpaceCutoff          4.000000000000e+01
+      alpha                 2.000000000000e+00
+      rSpaceCutoff          2.000000000000e+00
       kSpaceCutoff          4.000000000000e+00
     }
     MdPairPotential{
@@ -47,7 +47,7 @@ MdSimulation{
                             1.122460000000e+00  1.122460000000e+00
       PairList{
         atomCapacity                        1000
-        pairCapacity                        4000
+        pairCapacity                       40000
         skin                  3.000000000000e-01
       }
     }

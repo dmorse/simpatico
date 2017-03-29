@@ -1,6 +1,5 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -33,6 +32,12 @@ MdSimulation{
     pairStyle                        LJPair
     bondStyle                  HarmonicBond
     coulombStyle                      Ewald
+    CoulombPotential{
+      epsilon               1.000000000000e+00
+      alpha                 2.000000000000e+00
+      rSpaceCutoff          2.000000000000e+00
+      kSpaceCutoff          4.000000000000e+00
+    }
     MdPairPotential{
       epsilon               1.000000000000e+00  1.300000000000e+00
                             1.300000000000e+00  1.000000000000e+00
@@ -40,22 +45,15 @@ MdSimulation{
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
                             1.122460000000e+00  1.122460000000e+00
-      maxBoundary                 cubic  10.5 
       PairList{
         atomCapacity                        1000
-        pairCapacity                        4000
+        pairCapacity                       40000
         skin                  3.000000000000e-01
       }
     }
     BondPotential{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
-    }
-    CoulombPotential{
-      epsilon               1.000000000000e+00
-      alpha                 0.500000000000e+00
-      rCutoff               8.000000000000e+00
-      kCutoff               5.000000000000e+00
     }
     EnergyEnsemble{
       type                  adiabatic
@@ -67,7 +65,7 @@ MdSimulation{
        dt                   0.002 
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                         100
 
     LogProgress{
@@ -142,3 +140,4 @@ MdSimulation{
       capacity                         1000
     }
 
+      maxBoundary                 cubic  10.5 

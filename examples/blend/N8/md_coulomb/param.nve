@@ -1,15 +1,14 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
   nAtomType                              2
   nBondType                              1
-  hasCoulomb                             0
+  hasCoulomb                             1
   atomTypes                    A    1.0   1.0
                                B    1.0  -1.0
-  maskedPairPolicy                MaskBonded
+  maskedPairPolicy                 MaskBonded
   SpeciesManager{
 
     Homopolymer{
@@ -32,6 +31,13 @@ MdSimulation{
   MdSystem{
     pairStyle                        LJPair
     bondStyle                  HarmonicBond
+    coulombStyle                      Ewald
+    CoulombPotential{
+      epsilon         1.0
+      alpha           2.0
+      rSpaceCutoff    2.0
+      kSpaceCutoff    4.0
+    }
     MdPairPotential{
       epsilon               1.000000000000e+00  1.300000000000e+00
                             1.300000000000e+00  1.000000000000e+00
@@ -41,7 +47,7 @@ MdSimulation{
                             1.122460000000e+00  1.122460000000e+00
       PairList{
         atomCapacity                        1000
-        pairCapacity                        4000
+        pairCapacity                       40000
         skin                  3.000000000000e-01
       }
     }
