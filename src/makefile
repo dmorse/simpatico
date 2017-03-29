@@ -57,6 +57,9 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f mcMd/user/sources.mk
 	rm -f ddMd/user/sources.mk
 	rm -f tools/user/sources.mk
+	rm -f mcMd/modules/sources.mk
+	rm -f mcMd/mcSim.cpp
+	rm -f mcMd/mdSim.cpp
 endif
 	rm -f util/config.mk
 	rm -f inter/config.mk

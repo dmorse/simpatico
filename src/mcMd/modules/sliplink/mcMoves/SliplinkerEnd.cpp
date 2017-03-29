@@ -50,11 +50,13 @@ namespace McMd
    {
      System::MoleculeIterator molIter;
      Atom                    *atom0Ptr, *atom1Ptr;
-     Molecule                *mol0Ptr, *mol1Ptr;
+     Molecule*                mol0Ptr;
+     //Molecule*                mol1Ptr;
      Molecule*                molIPtr;
      double                   prob, dRSq, mindRSq=cutoff_*cutoff_, rnd, norm;
      int                      i, ntrials, j, nNeighbor, idLink, id0, id1;
-     int                      iAtom0, iAtom1, n0;
+     int                      iAtom0, n0;
+     // int                   iAtom1;
      Link*                    linkPtr;
      static const int         maxNeighbor = CellList::MaxNeighbor;
      double                   cdf[maxNeighbor], energy, sum;
@@ -87,7 +89,7 @@ namespace McMd
 	    // Loop over neighboring atoms
 	    for (j = 0; j < nNeighbor; ++j) {
 	      atom1Ptr = neighbors_[j];
-	      mol1Ptr = &atom1Ptr->molecule();
+	      // mol1Ptr = &atom1Ptr->molecule();
 	      id1 = atom1Ptr->id();
 	
               // Check if atoms are the same
@@ -157,8 +159,8 @@ namespace McMd
               mol0Ptr = &atom0Ptr->molecule();
               iAtom0 = atom0Ptr->indexInMolecule();
 
-              mol1Ptr = &atom1Ptr->molecule();
-              iAtom1 = atom1Ptr->indexInMolecule();
+              // mol1Ptr = &atom1Ptr->molecule();
+              // iAtom1 = atom1Ptr->indexInMolecule();
 
 	      // If atom 0 is at the end of a chain, try to delete the slip-spring
 	      if (iAtom0 == 0 || iAtom0 == mol0Ptr->nAtom() - 1){
@@ -177,7 +179,7 @@ namespace McMd
 		  // Loop over neighboring atoms
 		  for (j = 0; j < nNeighbor; ++j) {
 		    atom1Ptr = neighbors_[j];
-		    mol1Ptr = &atom1Ptr->molecule();
+		    // mol1Ptr = &atom1Ptr->molecule();
 	            id1 = atom1Ptr->id();
 	
                     // Check if atoms are the same

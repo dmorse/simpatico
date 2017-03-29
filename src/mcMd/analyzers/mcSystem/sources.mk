@@ -4,8 +4,12 @@ mcMd_analyzers_mcSystem_=\
     mcMd/analyzers/mcSystem/McPairEnergyAverage.cpp \
     mcMd/analyzers/mcSystem/McPressureAverage.cpp \
     mcMd/analyzers/mcSystem/McVirialStressTensorAverage.cpp \
-    mcMd/analyzers/mcSystem/McMuExchange.cpp \
     mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp 
+
+ifndef INTER_NOPAIR
+mcMd_analyzers_mcSystem_+=\
+    mcMd/analyzers/mcSystem/McMuExchange.cpp 
+endif
 
 ifdef INTER_BOND
 mcMd_analyzers_mcSystem_+=\

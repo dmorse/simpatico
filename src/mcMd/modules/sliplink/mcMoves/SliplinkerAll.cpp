@@ -54,11 +54,12 @@ namespace McMd
      Molecule::AtomIterator   atomIter;
      Atom                    *atom0Ptr, *atom1Ptr;
      Atom*                    atomPtr;
-     Molecule                *mol0Ptr, *mol1Ptr;
+     // Molecule                *mol0Ptr, *mol1Ptr;
      Molecule*                molIPtr;
      double                   prob, dRSq, mindRSq=cutoff_*cutoff_, rnd, norm;
      int                      i, ntrials, j, nNeighbor, idLink, iAtom, id1, id0;
-     int                      iAtom0, iAtom1, iMolecule0, iMolecule1, n0;
+     // int                      iAtom0, iAtom1, iMolecule0, iMolecule1;
+     int                      n0;
      Link*                    linkPtr;
      static const int         maxNeighbor = CellList::MaxNeighbor;
      double                   cdf[maxNeighbor], energy, sum;
@@ -74,8 +75,8 @@ namespace McMd
 	  incrementNAttempt();		
 	  // Choose a molecule and atom at random
 	  molIPtr  = &(system().randomMolecule(speciesId_));
-	  iMolecule0 = system().moleculeId(*molIPtr);
-	  iAtom   = random().uniformInt(0, molIPtr->nAtom());
+	  // iMolecule0 = system().moleculeId(*molIPtr);
+	  iAtom = random().uniformInt(0, molIPtr->nAtom());
 	  atomPtr = &molIPtr->atom(iAtom);
 	  id0 = atomPtr->id();
 	  
@@ -88,8 +89,8 @@ namespace McMd
 	  // Loop over neighboring atoms
 	  for (j = 0; j < nNeighbor; ++j) {
 	    atom1Ptr = neighbors_[j];
-	    mol1Ptr = &atom1Ptr->molecule();
-	    iMolecule1 = system().moleculeId(*mol1Ptr);	
+	    // mol1Ptr = &atom1Ptr->molecule();
+	    // iMolecule1 = system().moleculeId(*mol1Ptr);	
 	    id1 = atom1Ptr->id();
 	    
             // Check if atoms are the same
@@ -100,7 +101,6 @@ namespace McMd
 		dRSq = system().boundary().distanceSq(atomPtr->position(), atom1Ptr->position());
 		if (dRSq <= mindRSq) {
 		  energy = system().linkPotential().energy(dRSq, 0);
-		  //energy = 0.5*dRSq;
 		  sum = sum + boltzmann(energy);
 		  cdf[n0] = sum;
 		  idneighbors[n0] = j;
@@ -136,17 +136,19 @@ namespace McMd
 	  // Choose a link at random
 	  if (system().linkMaster().nLink() > 0){
 	    idLink = random().uniformInt(0, system().linkMaster().nLink());
+
 	    // Indentify the atoms for this link.
 	    linkPtr = &(system().linkMaster().link(idLink));
 	    atom0Ptr = &(linkPtr->atom0());
-	    mol0Ptr = &atom0Ptr->molecule();
-	    iMolecule0 = system().moleculeId(*mol0Ptr);
-	    iAtom0 = atom0Ptr->indexInMolecule();	    
+	    // mol0Ptr = &atom0Ptr->molecule();
+	    // iMolecule0 = system().moleculeId(*mol0Ptr);
+	    // iAtom0 = atom0Ptr->indexInMolecule();	    
 	    atom1Ptr = &(linkPtr->atom1());
-	    mol1Ptr = &atom1Ptr->molecule();
-	    iMolecule1 = system().moleculeId(*mol1Ptr);
-	    iAtom1 = atom1Ptr->indexInMolecule();
-	    // try to delete the slip-spring	
+	    // mol1Ptr = &atom1Ptr->molecule();
+	    // iMolecule1 = system().moleculeId(*mol1Ptr);
+	    // iAtom1 = atom1Ptr->indexInMolecule();
+
+	    // Try to delete the slip-spring	
 	    dRSq = system().boundary().distanceSq(atom0Ptr->position(), atom1Ptr->position());
 	    // try to delete the link if the bond is smaller than the cutoff
 	    if (dRSq <= mindRSq) {    
@@ -159,8 +161,8 @@ namespace McMd
 	      // Loop over neighboring atoms
 	      for (j = 0; j < nNeighbor; ++j) {
 		atom1Ptr = neighbors_[j];
-		mol1Ptr = &atom1Ptr->molecule();
-		iMolecule1 = system().moleculeId(*mol1Ptr);
+		// mol1Ptr = &atom1Ptr->molecule();
+		// iMolecule1 = system().moleculeId(*mol1Ptr);
 	        id1 = atom1Ptr->id();
 	    
                 // Check if atoms are the same
@@ -185,7 +187,7 @@ namespace McMd
 	      prob = system().simulation().atomCapacity() * boltzmann(-mu_) * cdf[n0-1];	    
 	      prob = 2.0 * system().linkMaster().nLink() / prob; 	            
 	      if (system().simulation().random().uniform(0.0, 1.0) < prob) {        
-		system().linkMaster().removeLink(idLink); 
+                system().linkMaster().removeLink(idLink); 
 		incrementNAccept();  
 	      }  
 	    }

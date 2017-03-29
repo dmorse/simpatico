@@ -36,6 +36,10 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/
 # Copy the makeDep dependency-maker script
 cp scripts/python/makeDep bin/
 
+# Copy repository versions of main programs to user copies
+cp src/mcMd/mdSim.cpp_r src/mcMd/mdSim.cpp
+cp src/mcMd/mcSim.cpp_r src/mcMd/mcSim.cpp
+
 # Namespace config.mk in src/ directory (for in-source builds)
 cp src/util/config.mk_r src/util/config.mk
 cp src/inter/config.mk_r src/inter/config.mk
@@ -89,6 +93,9 @@ cp src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp src/tools/user/sources.mk_r src/tools/user/sources.mk
 cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
+
+# Copy repository versions of sources.mk files in modules directories.
+cp src/mcMd/modules/sources.mk_r src/mcMd/modules/sources.mk
 
 # ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.

@@ -1,8 +1,9 @@
 namespace McMd
 {
 
-/*! \page extend_base_page 4.1 Base Classes
+/*! \page extend_base_page 4.2 Base Classes
 
+\ref extend_overview_page  (Prev)
 \ref extend_build_page  (Next)
 <BR> 
 
@@ -51,6 +52,7 @@ Implementation of subclasses of these DdMd base classes generally require interp
 Subclasses of the potential energy classes in either the McMd or DdMd namespaces are implemented differently than the other base classes discussed above. Each subclass of a "potential" classes is implemented as an instantiation of a class template that takes a simpler "interaction" class as an argument. Consequences of this peculiarity are discussed in more detail \ref extend_potential_page "here".
 
 <BR> 
+\ref extend_overview_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_build_page  (Next)
 

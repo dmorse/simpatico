@@ -65,8 +65,10 @@ namespace McMd
          }
       }
 
+      #ifndef INTER_NOPAIR
       // Identify policy for masking nonbonded interactions.
       maskPolicy_ = simulation().maskedPairPolicy();
+      #endif
 
       // Allocate memory for junction arrays
       int nAtom = speciesPtr->nAtom();
@@ -130,9 +132,11 @@ namespace McMd
             UTIL_THROW("Inconsistent or unequal bond type ids");
          }
       }
+      #ifndef INTER_NOPAIR
       if (maskPolicy_ != simulation().maskedPairPolicy()) {
          UTIL_THROW("Inconsistent values of maskPolicy_");
       }
+      #endif
    }
 
    /*

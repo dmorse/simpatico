@@ -1,7 +1,7 @@
 include $(SRC_DIR)/inter/user/sources.mk
 
-inter_SRCS=\
-    $(inter_user_SRCS)
+inter_=\
+    $(inter_user_)
 
 ifndef INTER_NOPAIR
 include $(SRC_DIR)/inter/pair/sources.mk
