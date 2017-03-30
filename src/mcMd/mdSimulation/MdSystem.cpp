@@ -30,7 +30,7 @@
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #ifdef INTER_COULOMB
-#include <mcMd/potentials/coulomb/CoulombPotential.h>
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/CoulombFactory.h>
 #endif
 #ifdef INTER_EXTERNAL
@@ -252,7 +252,6 @@ namespace McMd
          if (simulation().hasCoulomb()) {
             coulombPotentialPtr_ =
                        coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
             if (coulombPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create CoulombPotential");
             }
@@ -391,7 +390,6 @@ namespace McMd
          if (simulation().hasCoulomb() > 0) {
             coulombPotentialPtr_ =
                        coulombFactory().factory(coulombStyle());
-            //coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
             if (coulombPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create CoulombPotential");
             }

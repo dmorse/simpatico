@@ -1,7 +1,7 @@
 mcMd_potentials_coulomb_=\
    mcMd/potentials/coulomb/CoulombFactory.cpp  \
    mcMd/potentials/coulomb/MdCoulombPotential.cpp \
-	mcMd/potentials/coulomb/EwaldInteraction.cpp \
+   mcMd/potentials/coulomb/EwaldInteraction.cpp \
    mcMd/potentials/coulomb/MdEwaldPotential.cpp 
 
 mcMd_potentials_coulomb_SRCS=\
