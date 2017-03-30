@@ -55,6 +55,9 @@ namespace McMd
    */
    void MdEwaldPotential::readParameters(std::istream& in)
    {
+      // Read EwaldInteraction block containing parameters
+      bool nextIndent = false;
+      addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
 
       //Calculate prefactors frequently used in this class.

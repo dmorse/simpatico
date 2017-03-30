@@ -1,5 +1,0 @@
-Note:
-
-MdPairCoulombPotentialImpl.h is the old version, which we will retain for the moement.
-
-MdEwaldPairPotentialImpl.h will be the new version, as described in the file doc/notes/mcMd/Coulomb and in the MdEwaldPairPotentialImpl.notes file.
