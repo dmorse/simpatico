@@ -20,9 +20,8 @@ RefinedEwaldCoulombPotential
 Proposed names of new files:
 
 MdCoulombPotential
-EwaldParameters
-EwaldPotential
-EwaldPair
+MdEwaldPotential
+EwaldInteraction
 EwaldRSpaceAccumulator
 
 

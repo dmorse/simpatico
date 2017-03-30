@@ -12,11 +12,7 @@ namespace McMd
 
   class EwaldRSpaceAccumulator 
   {
-
-     template <typename T>
-     friend class MdEwaldPairPotentialImpl;
-
-     public:
+  public:
 
      /*
      * Constructor.
@@ -29,23 +25,41 @@ namespace McMd
         rSpaceStress_.unset();
      }
 
+     /**
+     * Is the r-space energy set?
+     */
      bool isSetEnergy() const
      {  return rSpaceEnergy_.isSet(); }
 
+     /**
+     * Is the r-space stress set?
+     */
      bool isSetStress() const
      { return rSpaceStress_.isSet(); }
 
+     /**
+     * Return the r-space energy.
+     */
      double rSpaceEnergy() const
      { return rSpaceEnergy_.value(); }
 
+     /**
+     * Return the r-space stress.
+     */
      Tensor rSpaceStress() const
      { return rSpaceStress_.value(); }
      
      //Tensor rSpacePressure() const;
 
-     protected:
+  private:
+
      Setable<double> rSpaceEnergy_;
      Setable<Tensor> rSpaceStress_;
+
+  // friend:
+
+     template <typename T>
+     friend class MdEwaldPairPotentialImpl;
                   
   };
 }

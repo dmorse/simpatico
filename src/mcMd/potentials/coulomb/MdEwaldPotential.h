@@ -1,5 +1,5 @@
-#ifndef MD_EWALD_POTENTIAL_H
-#define MD_EWALD_POTENTIAL_H
+#ifndef MCMD_MD_EWALD_POTENTIAL_H
+#define MCMD_MD_EWALD_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/coulomb/MdCoulombPotential.h>            // base class
-#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>        // member
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>              // member
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
+#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
+#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Tensor.h>           // member template parameter
@@ -40,10 +40,10 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Ewald Coulomb potential class.
+   * Ewald Coulomb potential class for MD simulations.
    *
    * This class implements the k-space sums for an Ewald  
-   * summation of the Coulomb forces.
+   * summation of the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
@@ -129,10 +129,10 @@ namespace McMd
 
       //@}
       
-      // Accumulator for energy and stress of real space.
+      // R-space energy and stress contributions
       EwaldRSpaceAccumulator rSpaceAccumulator_;
 
-      // 
+      // Ewald Interaction - core Ewald computations
       EwaldInteraction ewaldInteraction_;
 
    protected:
@@ -172,19 +172,18 @@ namespace McMd
       */
       void computeKSpaceCharge();
 
-
    private:
 
-      // KSpace part of Coulomb energy
+      // K-space part of Coulomb energy
       Setable<double> kSpaceEnergy_;
 
-      // KSpace part of Coulomb stress.
+      // K-space part of Coulomb stress.
       Setable<Tensor> kSpaceStress_;
 
-      /// Prefactor for self part coulomb energy.
+      /// Prefactor for self-interaction correction.
       double selfPrefactor_;
 
-      /// unitMatrix.
+      /// Unit Matrix (constant).
       Tensor unitTensor_;
 
    };
