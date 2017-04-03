@@ -8,13 +8,16 @@
 #include <mcMd/potentials/pair/PairFactory.h>
 
 #include <mcMd/simulation/System.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 // PairPotential interfaces and implementation classes
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/MdPairPotentialImpl.h>
-#include <mcMd/potentials/pair/MdEwaldPairPotentialImpl.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/pair/MdEwaldPairPotentialImpl.h>
+#endif
 
 // Pair Potential interaction classes
 #include <inter/pair/LJPair.h>
@@ -88,26 +91,10 @@ namespace McMd
       ptr = tryMdSubfactories(name, system);
       if (ptr) return ptr;
 
-      if (mdsystem.simulation().hasCoulomb()) {
-         // std::cout << "Attempting to construct MdEwaldPairPotentialImpl instance - charged system" 
-         //           << std::endl;
-         if (name == "LJPair") {
-            ptr = new MdEwaldPairPotentialImpl<LJPair>(mdsystem);
-         } else
-         if (name == "WcaPair") {
-            ptr = new MdEwaldPairPotentialImpl<WcaPair>(mdsystem);
-         } else
-         if (name == "DpdPair") {
-            ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
-         } 
-         #ifdef INTER_BOND 
-         else
-         if (name == "CompensatedPair<DpdPair,FeneBond>") {
-            ptr = new 
-            MdEwaldPairPotentialImpl<CompensatedPair<DpdPair,FeneBond> >(mdsystem);
-         }
-         #endif
-      } else {
+      #ifdef INTER_COULOMB
+      if (!mdsystem.simulation().hasCoulomb()) {
+      #endif
+
          // std::cout << "Attempting to instantiate MdPairPotentialImpl instance - neutral system" 
          //          << std::endl;
          if (name == "LJPair") {
@@ -126,7 +113,30 @@ namespace McMd
             MdPairPotentialImpl<CompensatedPair<DpdPair,FeneBond> >(mdsystem);
          }
          #endif
+
+      #ifdef INTER_COULOMB
+      } else {
+         // std::cout << "Attempting to construct MdEwaldPairPotentialImpl instance - charged system" 
+         //           << std::endl;
+         if (name == "LJPair") {
+            ptr = new MdEwaldPairPotentialImpl<LJPair>(mdsystem);
+         } else
+         if (name == "WcaPair") {
+            ptr = new MdEwaldPairPotentialImpl<WcaPair>(mdsystem);
+         } else
+         if (name == "DpdPair") {
+            ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
+         } 
+         #ifdef INTER_BOND 
+         else
+         if (name == "CompensatedPair<DpdPair,FeneBond>") {
+            ptr = new 
+            MdEwaldPairPotentialImpl<CompensatedPair<DpdPair,FeneBond> >(mdsystem);
+         }
+         #endif
       }
+      #endif
+
       return ptr;
    }
 
