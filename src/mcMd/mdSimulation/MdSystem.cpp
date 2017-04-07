@@ -135,28 +135,33 @@ namespace McMd
       setClassName("MdSystem");
 
       #ifndef INTER_NOPAIR
-      //pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
-      //if (pairPotentialPtr_ == 0) {
-      //   UTIL_THROW("Failed attempt to clone McPairPotential");
-      //}
+      assert(pairPotentialPtr_ == 0);
+      pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
+      if (pairPotentialPtr_ == 0) {
+         UTIL_THROW("Failed attempt to clone McPairPotential");
+      }
       #endif
       #ifdef INTER_BOND
+      assert(bondPotentialPtr_ == 0);
       if (system.hasBondPotential()) {
          bondPotentialPtr_ = &system.bondPotential();
       }
       #endif
       #ifdef INTER_ANGLE
+      assert(anglePotentialPtr_ == 0);
       if (system.hasAnglePotential()) {
          anglePotentialPtr_ = &system.anglePotential();
       }
       #endif
       #ifdef INTER_DIHEDRAL
+      assert(dihedralPotentialPtr_ == 0);
       if (system.hasDihedralPotential()) {
          dihedralPotentialPtr_ = &system.dihedralPotential();
       }
       #endif
       #ifdef INTER_COULOMB
       #if 0
+      assert(coulombPotentialPtr_ == 0);
       if (system.hasCoulombPotential()) {
          coulombPotentialPtr_ = &system.coulombPotential();
       }
@@ -527,34 +532,34 @@ namespace McMd
          #endif
       }
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_->save(ar);
+      pairPotential().save(ar);
       #endif
       if (!isCopy()) {
          #ifdef INTER_BOND
          if (simulation().nBondType() > 0) {
-            bondPotentialPtr_->save(ar);
+            bondPotential().save(ar);
          }
          #endif
          #ifdef INTER_ANGLE
          if (simulation().nAngleType() > 0) {
-            anglePotentialPtr_->save(ar);
+            anglePotential().save(ar);
          }
          #endif
          #ifdef INTER_DIHEDRAL
          if (simulation().nDihedralType() > 0) {
-            dihedralPotentialPtr_->save(ar);
+            dihedralPotential().save(ar);
          }
          #endif
          #ifdef MCMD_LINK
          if (simulation().nLinkType() > 0) {
             saveLinkMaster(ar);
-            linkPotentialPtr_->save(ar);
+            linkPotential().save(ar);
          }
          #endif
          #ifdef INTER_EXTERNAL
          assert(externalPotentialPtr_ == 0);
          if (simulation().hasExternal() > 0) {
-            externalPotentialPtr_->save(ar);
+            externalPotential().save(ar);
          }
          #endif
          #ifdef INTER_TETHER
@@ -827,9 +832,7 @@ namespace McMd
    void MdSystem::unsetPotentialEnergy()
    {
       #ifndef INTER_NOPAIR
-      if (pairPotentialPtr_) {
-         pairPotential().unsetEnergy();
-      }
+      pairPotential().unsetEnergy();
       #endif
    }
 
@@ -1004,9 +1007,7 @@ namespace McMd
    void MdSystem::unsetVirialStress()
    {
       #ifndef INTER_NOPAIR
-      if (pairPotentialPtr_) {
-         pairPotential().unsetStress();
-      }
+      pairPotential().unsetStress();
       #endif
    }
 
@@ -1019,7 +1020,7 @@ namespace McMd
    {
       System::isValid();
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_->pairList().isValid();
+      pairPotential().pairList().isValid();
       #endif
       return true;
    }

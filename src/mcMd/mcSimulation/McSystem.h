@@ -363,7 +363,10 @@ namespace McMd
    * Return the McPairPotential by reference.
    */
    inline McPairPotential& McSystem::pairPotential() const
-   {  return *pairPotentialPtr_; }
+   {  
+      assert(pairPotentialPtr_);
+      return *pairPotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_BOND
@@ -377,7 +380,10 @@ namespace McMd
    * Return the BondPotential by const reference.
    */
    inline BondPotential& McSystem::bondPotential() const
-   {  return *bondPotentialPtr_; }
+   {  
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_ANGLE
@@ -391,7 +397,10 @@ namespace McMd
    * Return angle potential by reference.
    */
    inline AnglePotential& McSystem::anglePotential() const
-   {  return *anglePotentialPtr_; }
+   {  
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_DIHEDRAL
@@ -405,7 +414,10 @@ namespace McMd
    * Return dihedral potential by reference.
    */
    inline DihedralPotential& McSystem::dihedralPotential() const
-   {  return *dihedralPotentialPtr_; }
+   {  
+      assert(anglePotentialPtr_);
+      return *dihedralPotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_COULOMB
