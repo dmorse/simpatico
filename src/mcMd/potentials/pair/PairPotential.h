@@ -117,46 +117,43 @@ namespace McMd
       virtual void unsetStress();
 
       /**
-      * Compute and store the total nonbonded pressure.
+      * Compute all short range pair-wise stress components.
       *
-      * If the stress is already known (i.e., set). this function
-      * does nothing and returns. Otherwise, it computes all stress
-      * arising from short range non-bonded interactions, stores
-      * the value and marks it as set.
+      * This function computes and stores the stress arising from the
+      * non-Coulomb pair interaction. 
       *
-      * In a charged system, this function computes and separately
-      * stores stress contributions arising from non-Coulombic pair
-      * interactions and from the short range part of the Coulomb
-      * potential. 
+      * In a charged system, this function also computes and separately
+      * stores stress contributions arising from the short-range part 
+      * of the Coulomb potential. The resulting stress is shared with
+      * the associated CoulombPotential object.
       */
       virtual void computeStress() = 0;
 
       /**
-      * Compute and return pair stress tensor.
+      * Get pair stress tensor.
       *
-      * This calls computeStress(), then returns stored value of
-      * the stress arising from non-Coulombic pair interactions.
+      * If necessary, this function calls computeStress() before
+      * accessing value.
       *
       * \param stress (output) pair stress tensor
       */
       virtual void computeStress(Tensor& stress);
 
       /**
-      * Compute and return xx, yy, zz pair pressures.
+      * Compute and return xx, yy, zz non-Coulomb pair pressures.
       *
-      * This calls computeStress(), then returns stored values of
-      * the pressures arising from non-Coulombic pair interactions.
+      * If necessary, this function calls computeStress() before
+      * accessing values.
       *
       * \param pressures (output) diagonal pair stress components
       */
       virtual void computeStress(Vector& pressures);
 
       /**
-      * Compute and return scalar pair pressure.
+      * Compute and return scalar (non-Coulomb) pair pressure.
       *
-      * Pressure is the average of the diagonal stress components. 
-      * This function calls computeStress(), then returns stored value
-      * of the pressure arising from non-Coulombic pair interactions.
+      * If necessary, this function calls computeStress() before
+      * accessing values.
       *
       * \param pressure (output) scalar pair pressure.
       */

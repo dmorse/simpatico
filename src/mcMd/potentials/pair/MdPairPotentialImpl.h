@@ -352,10 +352,6 @@ namespace McMd
    template <class Interaction>
    void MdPairPotentialImpl<Interaction>::computeEnergy()
    {
-
-      // If the pair energy is already known, do nothing and return.
-      if (energy_.isSet()) return;
-
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -379,14 +375,15 @@ namespace McMd
    }
 
    /*
-   * Add nonBonded pair forces to atomic forces.
+   * Compute all short-range pair contributions to stress.
    */
    template <class Interaction>
    void MdPairPotentialImpl<Interaction>::computeStress()
    {
-
-      // If pair stress is already known, do nothing and return.
-      if (stress_.isSet()) return;
+      // Update PairList if necessary
+      if (!isPairListCurrent()) {
+         buildPairList();
+      }
 
       Tensor stress;
       Vector dr;

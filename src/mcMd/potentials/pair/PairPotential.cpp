@@ -17,7 +17,9 @@ namespace McMd
    */
    double PairPotential::energy()
    {
-      computeEnergy();
+      if (!energy_.isSet()) {
+         computeEnergy();
+      }
       return energy_.value();
    }
 
@@ -28,21 +30,28 @@ namespace McMd
    {  stress_.unset(); }
 
    /*
-   * Compute x, y, z nonbonded pressures.
+   * Get the nonbonded stress tensor.
    */
    void PairPotential::computeStress(Tensor& stress)
    {
-      computeStress();
+      // If necessary, compute stress 
+      if (!stress_.isSet()) {
+         computeStress();
+      }
+
+      // Get pair stress tensor
       stress = stress_.value();
    }
 
    /*
-   * Compute the total nonbonded pressure
+   * Get the nonbonded x, y, z pressures
    */
    void PairPotential::computeStress(Vector& pressures)
    {
-      // Compute stress if necessary.
-      computeStress();
+      // If necessary, compute stress 
+      if (!stress_.isSet()) {
+         computeStress();
+      }
 
       // Get diagonal components of pair stress.
       for (int i=0; i < Dimension; ++i) {
@@ -51,14 +60,16 @@ namespace McMd
    }
 
    /*
-   * Compute the total nonbonded pressure
+   * Get the nonbonded pressure
    */
    void PairPotential::computeStress(double& pressure)
    {
-      // Compute stress if necessary.
-      computeStress();
+      // If necessary, compute stress 
+      if (!stress_.isSet()) {
+         computeStress();
+      }
 
-      // Compute pressure = average of diagonal components.
+      // Get pressure = average of diagonal components.
       pressure = 0.0;
       for (int i=0; i < Dimension; ++i) {
          pressure += stress_.value()(i, i);

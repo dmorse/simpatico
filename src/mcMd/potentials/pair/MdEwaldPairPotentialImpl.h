@@ -13,18 +13,6 @@
 #include <mcMd/potentials/coulomb/EwaldInteraction.h>
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>
 
-   /**
-   * Implementation of a pair potential for a charged system.
-   *
-   * This class computes forces and energies for all short ranged
-   * pair interactions for a charged system, including both   
-   * non-Coulomb (e.g., Lennard-Jones) pair interactions and the
-   * short range part of the Coulomb interaction in the Ewald method.
-   * The addForces() method adds both types of forces to atom forces,
-   * but separate accessors are given for non-Coulombic and short
-   * range Coulomb contributions to energy and stress.
-   */
-
 namespace Util
 {
    class Vector;
@@ -40,10 +28,26 @@ namespace McMd
    class EwaldInteraction;
    class MdEwaldPotential;
 
+   /**
+   * Implementation of a pair potential for a charged system.
+   *
+   * This class computes forces and energies for all short ranged
+   * pair interactions for a charged system, including both the
+   * non-Coulomb (e.g., Lennard-Jones) pair interaction and the
+   * short range part of the Coulomb interaction in the Ewald method.
+   * The addForces() method adds both types of forces to atom forces.
+   * The computeEnergy() and computeStress() functions compute and
+   * store separateley values of non-coulombic and coulombic 
+   * contributions to the energy and stress. Coulombic contributions
+   * to the stress are shared with the associated CoulombPotential
+   * object, and are publically accessible through functions of that 
+   * object.
+   */
    template <class Interaction>
    class MdEwaldPairPotentialImpl : public MdPairPotential
    {
-      public:
+   public:
+
       /**
       * Constructor.
       */
@@ -191,8 +195,8 @@ namespace McMd
       MdEwaldPotential* ewaldPtr_; 
  
       // Pointers to EwaldRSpaceAccumulator and EwaldInteraction.
-      EwaldRSpaceAccumulator*  rSpaceAccumulatorPtr_;
-      EwaldInteraction*         ewaldInteractionPtr_;
+      EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
+      EwaldInteraction* ewaldInteractionPtr_;
 
       // Non-Coulomb pair accumulators
       Setable<Tensor> pairStress_; 
@@ -224,7 +228,7 @@ namespace McMd
    using namespace Util;
 
    /*
-   * Default constructor.
+   * Constructor.
    */
    template <class Interaction>
    MdEwaldPairPotentialImpl<Interaction>::MdEwaldPairPotentialImpl(MdSystem& system)
@@ -240,7 +244,6 @@ namespace McMd
          ewaldPtr_ = dynamic_cast<MdEwaldPotential*>(kspacePtr_);
  
          rSpaceAccumulatorPtr_ = &ewaldPtr_->rSpaceAccumulator_;
- 
          ewaldInteractionPtr_  = &ewaldPtr_->ewaldInteraction_;
  
          pairPtr_ = new Interaction;
@@ -261,6 +264,9 @@ namespace McMd
       }
    }
 
+   /*
+   * Read parameers and initialize object.
+   */
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
@@ -272,12 +278,15 @@ namespace McMd
          pairPtr_->readParameters(in);
       }
 
+      // Require that the Ewald rSpaceCutoff >= pair potential maxPairCutoff
+      UTIL_CHECK(ewaldInteractionPtr_->rSpaceCutoff() >= pairPtr_->maxPairCutoff())
+      // double cutoff = (ewaldInteractionPtr_->rSpaceCutoff() > pairPtr_->maxPairCutoff()) ?
+      //                 ewaldInteractionPtr_->rSpaceCutoff(): pairPtr_->maxPairCutoff();
+      double cutoff = ewaldInteractionPtr_->rSpaceCutoff();
+
       readParamComposite(in, pairList_);
  
-      // Initialize the PairList using larger cutoff between pair interaction and coulomb 
-      // interaction. 
-      double cutoff = (ewaldInteractionPtr_->rSpaceCutoff() > pairPtr_->maxPairCutoff()) ?
-                       ewaldInteractionPtr_->rSpaceCutoff(): pairPtr_->maxPairCutoff();
+      // Initialize the PairList 
       pairList_.initialize(simulation().atomCapacity(), cutoff);
 
       //Initialize prefactor for coulomb part.
@@ -298,6 +307,7 @@ namespace McMd
          addParamComposite(*pairPtr_, nextIndent);
          pairPtr_->loadParameters(ar);
       }
+      UTIL_CHECK(ewaldInteractionPtr_->rSpaceCutoff() >= pairPtr_->maxPairCutoff())
       loadParamComposite(ar, pairList_);
 
       //Initialize prefactor for coulomb part.
@@ -339,7 +349,7 @@ namespace McMd
    }
 
    /*
-   * Return maximum cutoff.
+   * Return maximum cutoff for non-Coulomb interactions.
    */
    template <class Interaction>
    double MdEwaldPairPotentialImpl<Interaction>::maxPairCutoff() const
@@ -364,13 +374,14 @@ namespace McMd
       }
 
       PairIterator iter;
-      Vector       force;
-      double       forceOverR;
-      double       rsq;
-      Atom        *atom0Ptr;
-      Atom        *atom1Ptr;
-      int          type0, type1;
-      double       qProduct;
+      Vector force;
+      double forceOverR;
+      double rsq;
+      double qProduct;
+      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      Atom *atom0Ptr;
+      Atom *atom1Ptr;
+      int type0, type1;
 
       // Loop over nonbonded neighbor pairs
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
@@ -378,12 +389,15 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(),
                           force);
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
-         qProduct = (*atomTypesPtr_)[type0].charge()*(*atomTypesPtr_)[type1].charge();
-         if (rsq < pairPtr_->cutoffSq(type0, type1)) {
-            forceOverR =  pairPtr_->forceOverR(rsq, type0, type1);
-            forceOverR += ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
+         if (rsq < ewaldCutoff) {
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            qProduct = (*atomTypesPtr_)[type0].charge();
+            qProduct *= (*atomTypesPtr_)[type1].charge();
+            forceOverR = ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
+            if (rsq < pairPtr_->cutoffSq(type0, type1)) {
+               forceOverR += pairPtr_->forceOverR(rsq, type0, type1);
+            }
             force *= forceOverR;
             atom0Ptr->force() += force;
             atom1Ptr->force() -= force;
@@ -412,25 +426,32 @@ namespace McMd
       Atom *atom0Ptr;
       Atom *atom1Ptr;
       double rsq;
-      double noncenergy = 0.0;
-      double cenergy    = 0.0;
       double qProduct;
+      double pEnergy = 0.0;
+      double cEnergy = 0.0;
+      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      int type0, type1;
 
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
 
-         qProduct =  (*atomTypesPtr_)[atom0Ptr->typeId()].charge();
-         qProduct *= (*atomTypesPtr_)[atom1Ptr->typeId()].charge();
-
-         rsq = boundary().
-               distanceSq(atom0Ptr->position(), atom1Ptr->position());
-         noncenergy += pairPtr_->energy(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
-         cenergy    += ewaldInteractionPtr_->rSpaceEnergy(rsq, qProduct);
+         rsq = boundary().distanceSq(atom0Ptr->position(), atom1Ptr->position());
+         if (rsq < ewaldCutoff) {
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            if (rsq < pairPtr_->cutoffSq(type0, type1)) {
+               pEnergy += pairPtr_->energy(rsq, atom0Ptr->typeId(), 
+                                                atom1Ptr->typeId());
+            }
+            qProduct = (*atomTypesPtr_)[type0].charge();
+            qProduct *= (*atomTypesPtr_)[type1].charge();
+            cEnergy += ewaldInteractionPtr_->rSpaceEnergy(rsq, qProduct);
+         }
       }
 
-      energy_.set(noncenergy); 
+      energy_.set(pEnergy); 
       //fourpiepsi_ is prefactor of rpart coulomb energy.
-      rSpaceAccumulatorPtr_->rSpaceEnergy_.set(fourpiepsi_ * 0.5 * cenergy);
+      rSpaceAccumulatorPtr_->rSpaceEnergy_.set(fourpiepsi_ * 0.5 * cEnergy);
    }
 
    /*
@@ -439,23 +460,26 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeStress()
    {
-
-      // If pair stress is already known, do nothing and return.
-      //if (stress_.isSet()) return;
-
-      Tensor stress; Vector dr;
+      Tensor pStress;  // Non-Coulomb pair stress
+      Tensor cStress;  // Short-range Coulomb pair stress
+      Vector dr;
       Vector force;
       double rsq;
-      double forceOverR        = 0.0;
-      double forceOverRcoulomb = 0.0;
+      double qProduct;
+      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
       PairIterator iter;
       Atom* atom1Ptr;
       Atom* atom0Ptr;
       int type0, type1;
-      double qProduct;
 
-      // Set all elements of stress tensor to zero.
-      setToZero(stress);
+      // Update PairList if necessary
+      if (!isPairListCurrent()) {
+         buildPairList();
+      }
+
+      // Set all stress accumulator tensors to zero.
+      setToZero(pStress);
+      setToZero(cStress);
 
       // Loop over nonbonded neighbor pairs
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
@@ -463,38 +487,34 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
 
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
+         if (rsq < ewaldCutoff) {
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
 
-         if (rsq < pairPtr_->cutoffSq(type0, type1)) {
+            // Non-Coulomb stress
+            if (rsq < pairPtr_->cutoffSq(type0, type1)) {
+               force  = dr;
+               force *= pairPtr_->forceOverR(rsq, type0, type1);
+               incrementPairStress(force, dr, pStress);
+            }
 
-            //stress from pair potential.
-            force  = dr;
-            forceOverR =  pairPtr_->forceOverR(rsq, type0, type1);
-            force *= forceOverR;
-            incrementPairStress(force, dr, stress);
-         }
-
-         if (rsq < ewaldInteractionPtr_->rSpaceCutoff()) {
-
-            //charges.
-            qProduct =  (*atomTypesPtr_)[atom0Ptr->typeId()].charge();
-            qProduct *= (*atomTypesPtr_)[atom1Ptr->typeId()].charge();
-
-            //stress from r-space coulomb potential.
+            // Short-range Coulomb stress 
+            qProduct =  (*atomTypesPtr_)[type0].charge();
+            qProduct *= (*atomTypesPtr_)[type1].charge();
             force = dr;
-            forceOverRcoulomb = ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
-            force *= forceOverRcoulomb;
-            incrementPairStress(force, dr, stress);
+            force *= ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
+            incrementPairStress(force, dr, cStress);
          }
- 
       }
 
       // Normalize by volume
-      stress /= boundary().volume();
-      normalizeStress(stress);
+      pStress /= boundary().volume();
+      cStress /= boundary().volume();
+      normalizeStress(pStress);
+      normalizeStress(cStress);
 
-      pairStress_.set(stress);
+      pairStress_.set(cStress);
+      rSpaceAccumulatorPtr_->rSpaceStress_.set(cStress);
    }
 
 }
