@@ -53,6 +53,13 @@ namespace McMd
       void setId(int Id);
 
       /**
+      * Set the name string.
+      *
+      * \param name name string
+      */
+      void setName(std::string name);
+
+      /**
       * Set the mass.
       *
       * \param mass atom mass
@@ -61,31 +68,32 @@ namespace McMd
 
       #ifdef INTER_COULOMB
       /**
-      * Set the "hasCharge" property.
+      * Set the boolean "hasCharge" property.
       *
       * An AtomType has an associated electrical charge value if and
-      * only if hasCharge is true. The charge appears in the text file
-      * format used by the inserter and extractor if and only if the
-      * hasCharge property is set true.
+      * only if hasCharge is true.  A charge value appears in the
+      * text file format used by the inserter and extractor iostream
+      * operators if and only if the hasCharge property is set true. 
       *
-      * \param bool hasCharge.
+      * The hasCharge property should be set true for all atom types 
+      * (even those with no charge) if the system has any charged
+      * atom types, and thus has Coulomb interactions, and should be
+      * set false for all atom types for a neutral system with no 
+      * Coulomb interactions. 
+      *
+      * \param hasCharge true if this system has Coulomb interactions.
       */
       void setHasCharge(bool hasCharge);
 
       /**
       * Set the charge value.
       *
+      * Precondition: The hasCharge property must have been set true.
+      *
       * \param charge atom electrical charge
       */
       void setCharge(double charge);
       #endif
-
-      /**
-      * Set the name string.
-      *
-      * \param name name string
-      */
-      void setName(std::string name);
 
       //@}
       /// \name Accessors
@@ -103,7 +111,7 @@ namespace McMd
       bool hasCharge() const;
 
       /**
-      * Get the electrical charge.
+      * Get the electrical charge value.
       */
       double charge() const;
       #endif
@@ -154,24 +162,16 @@ namespace McMd
    // Inline member functions.
 
    /*
-   * Set the mass.
+   * Get the type id.
    */
-   inline void AtomType::setMass(double mass)
-   {  mass_ = mass; }
-
-   #ifdef INTER_COULOMB
-   /*
-   * Set the electrical charge.
-   */
-   inline void AtomType::setCharge(double charge)
-   {  charge_ = charge; }
-   #endif 
+   inline int  AtomType::id() const
+   {  return id_; }
 
    /*
-   * Set the name string.
+   * Get the name string.
    */
-   inline void AtomType::setName(std::string name)
-   {  name_ = name; }
+   inline const std::string& AtomType::name() const
+   {  return name_; }
 
    /*
    * Get the mass.
@@ -196,19 +196,7 @@ namespace McMd
    }
    #endif
 
-   /*
-   * Get the name string.
-   */
-   inline const std::string& AtomType::name() const
-   {  return name_; }
-
-   /*
-   * Get the type id.
-   */
-   inline int  AtomType::id() const
-   {  return id_; }
-
-   // Friend operator declarations
+   // Declarations of friend extracter and inserter functions
 
    /**
    * istream extractor (>>) for an AtomType.

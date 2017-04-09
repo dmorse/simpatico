@@ -1,5 +1,5 @@
-#ifndef EWALD_INTERACTION_H
-#define EWALD_INTERACTION_H
+#ifndef MCMD_EWALD_INTERACTION_H
+#define MCMD_EWALD_INTERACTION_H
 
 /*
  * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,6 +22,8 @@ namespace McMd
    * Implementation of pairwise r- and k-space Ewald interaction.
    *
    * This class defines the standard Ewald potential.
+   *
+   * \ingroup McMd_Coulomb_Module
    */
    class EwaldInteraction : public ParamComposite
    {

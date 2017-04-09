@@ -44,7 +44,6 @@ namespace McMd
       */
       MdPairPotential(System& system);
 
-
       /** 
       * Destructor.
       */

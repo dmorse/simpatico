@@ -834,6 +834,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotential().unsetEnergy();
       #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().unsetEnergy();
+      }
+      #endif
    }
 
    /*
@@ -1008,6 +1013,11 @@ namespace McMd
    {
       #ifndef INTER_NOPAIR
       pairPotential().unsetStress();
+      #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().unsetStress();
+      }
       #endif
    }
 

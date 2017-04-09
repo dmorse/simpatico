@@ -34,11 +34,34 @@ namespace McMd
    void AtomType::setId(int id)
    {  id_ = id; }
 
+   /*
+   * Set the name string.
+   */
+   void AtomType::setName(std::string name)
+   {  name_ = name; }
+
+   /*
+   * Set the mass.
+   */
+   void AtomType::setMass(double mass)
+   {  mass_ = mass; }
+
    #ifdef INTER_COULOMB
-   // Set the hasCharge property
+   /*
+   * Set the hasCharge property.
+   */
    void AtomType::setHasCharge(bool hasCharge)
    {  hasCharge_ = hasCharge; }
-   #endif
+
+   /*
+   * Set the electrical charge.
+   */
+   void AtomType::setCharge(double charge)
+   {
+      UTIL_CHECK(hasCharge_);  
+      charge_ = charge; 
+   }
+   #endif 
 
    /* 
    * Input a AtomType from an istream, without line breaks.

@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/Factory.h>                        // base class template
-#include <mcMd/potentials/coulomb/MdCoulombPotential.h>  // template argument
+#include <util/param/Factory.h>                         // base class template
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h> // template argument
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
 
 #include <string>
@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Factory for CoulombPotential objects.
    *
-   * \ingroup McMd_Bond_Module
+   * \ingroup McMd_Coulomb_Module
    */
    class CoulombFactory : public Factory<MdCoulombPotential>
    {

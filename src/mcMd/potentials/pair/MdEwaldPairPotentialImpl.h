@@ -149,28 +149,33 @@ namespace McMd
       virtual void addForces();
 
       /** 
-      * Thermo computes, which computes nonCoulombic and coulombic
-      * parts, but stores them in different accumulator variables.
-      * The implementation should also mark both accumulators as set.
+      * Functions computeEnergy() and computeStress compute both
+      * non-Coulombic pair and short-range coulombic pair energy
+      * or stress contributions, respectively, but stores them in
+      * in different accumulator variables.
+      */
+
+      /**
+      * Unset both energy accumulators.
+      */
+      void unsetEnergy();
+
+      /**
+      * Compute and store all short-range pair energies.
       */
       virtual void computeEnergy();
+
+      /**
+      * Unset both stress accumulators.
+      */
+      void unsetStress();
+
+      /**
+      * Compute and store all short-range pair stress contributions.
+      */
       virtual void computeStress();
 
       //@}
-
-      // Unset both energy accumulators.
-      void unsetEnergy()
-      { 
-         energy_.unset(); 
-         rSpaceAccumulatorPtr_->rSpaceEnergy_.unset(); 
-      }
-
-      // Unset both stress accumulators.
-      void unsetStress()
-      { 
-         pairStress_.unset(); 
-         rSpaceAccumulatorPtr_->rSpaceStress_.unset(); 
-      }
 
       double rSpaceEnergy() const
       { return rSpaceAccumulatorPtr_->rSpaceEnergy_.value(); }
@@ -182,21 +187,18 @@ namespace McMd
       // Get non-coulombic pair pressure.
       double pressure();
 
-   protected:
-
-      // Non-Coulombic pair interaction
-      Interaction* pairPtr_;
-
    private:
 
-      const Array<AtomType>* atomTypesPtr_;
+      // Pointer to non-Coulombic pair interaction
+      Interaction* pairPtr_;
 
-      MdCoulombPotential* kspacePtr_;
-      MdEwaldPotential* ewaldPtr_; 
- 
-      // Pointers to EwaldRSpaceAccumulator and EwaldInteraction.
-      EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
+      // Pointers to Ewald Coulomb interaction (owned by Coulomb potential)
       EwaldInteraction* ewaldInteractionPtr_;
+
+      // Pointer to EwaldRSpaceAccumulator (owned by Coulomb potential)
+      EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
+
+      const Array<AtomType>* atomTypesPtr_;
 
       // Non-Coulomb pair accumulators
       Setable<Tensor> pairStress_; 
@@ -234,17 +236,21 @@ namespace McMd
    MdEwaldPairPotentialImpl<Interaction>::MdEwaldPairPotentialImpl(MdSystem& system)
     : MdPairPotential(system),
       pairPtr_(0),
+      ewaldInteractionPtr_(0),
+      rSpaceAccumulatorPtr_(0),
       atomTypesPtr_(&system.simulation().atomTypes()),
       isCopy_(false)
    {
          // Get pointer to MdCoulombPotential.
-         kspacePtr_ = &system.coulombPotential();
+         MdCoulombPotential* kspacePtr;
+         kspacePtr = &system.coulombPotential();
  
          // Dynamic cast to a pointer to MdEwaldPotential.
-         ewaldPtr_ = dynamic_cast<MdEwaldPotential*>(kspacePtr_);
+         MdEwaldPotential* ewaldPtr; 
+         ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
  
-         rSpaceAccumulatorPtr_ = &ewaldPtr_->rSpaceAccumulator_;
-         ewaldInteractionPtr_  = &ewaldPtr_->ewaldInteraction_;
+         ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction_;
+         rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator_;
  
          pairPtr_ = new Interaction;
          // Pass address of MdEwaldPotential to EwaldPair interaction.
@@ -261,6 +267,8 @@ namespace McMd
       if (pairPtr_ && !isCopy_) {
          delete pairPtr_;
          pairPtr_ = 0;
+         ewaldInteractionPtr_ = 0;
+         rSpaceAccumulatorPtr_ = 0;
       }
    }
 
@@ -307,7 +315,8 @@ namespace McMd
          addParamComposite(*pairPtr_, nextIndent);
          pairPtr_->loadParameters(ar);
       }
-      UTIL_CHECK(ewaldInteractionPtr_->rSpaceCutoff() >= pairPtr_->maxPairCutoff())
+      UTIL_CHECK(ewaldInteractionPtr_->rSpaceCutoff() >= 
+                 pairPtr_->maxPairCutoff())
       loadParamComposite(ar, pairList_);
 
       //Initialize prefactor for coulomb part.
@@ -331,7 +340,9 @@ namespace McMd
    * Return pair energy for a single pair.
    */
    template <class Interaction> double
-   MdEwaldPairPotentialImpl<Interaction>::energy(double rsq, int iAtomType, int jAtomType) const
+   MdEwaldPairPotentialImpl<Interaction>::energy(double rsq, 
+                                                 int iAtomType, int jAtomType) 
+   const
    {  return pairPtr_->energy(rsq, iAtomType, jAtomType); }
 
    /*
@@ -407,6 +418,16 @@ namespace McMd
    }
 
    /*
+   * Unset both energy accumulators.
+   */
+   template <class Interaction>
+   void MdEwaldPairPotentialImpl<Interaction>::unsetEnergy()
+   { 
+      energy_.unset(); 
+      rSpaceAccumulatorPtr_->rSpaceEnergy_.unset(); 
+   }
+
+   /*
    * Compute and store pair interaction energy.
    * Does nothing if energy is already set.
    */
@@ -452,6 +473,16 @@ namespace McMd
       energy_.set(pEnergy); 
       //fourpiepsi_ is prefactor of rpart coulomb energy.
       rSpaceAccumulatorPtr_->rSpaceEnergy_.set(fourpiepsi_ * 0.5 * cEnergy);
+   }
+
+   /*
+   * Unset both pair and short-range coulomb stress accumulators.
+   */
+   template <class Interaction>
+   void MdEwaldPairPotentialImpl<Interaction>::unsetStress()
+   { 
+      pairStress_.unset(); 
+      rSpaceAccumulatorPtr_->rSpaceStress_.unset(); 
    }
 
    /*

@@ -10,6 +10,11 @@ namespace McMd
 
   using namespace Util;
 
+  /**
+  * Utility class to store r-space Coulomb energy and stress.
+  *
+  * \ingroup McMd_Coulomb_Module
+  */
   class EwaldRSpaceAccumulator 
   {
   public:

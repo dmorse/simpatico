@@ -13,6 +13,7 @@
 #include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
 
 #include <util/space/IntVector.h>        // member template parameter
+#include <util/space/Vector.h>           // member template parameter
 #include <util/space/Tensor.h>           // member template parameter
 #include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
@@ -22,12 +23,6 @@
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
-
-namespace Util
-{
-   class Vector;
-   class Tensor;
-}
 
 namespace McMd
 {

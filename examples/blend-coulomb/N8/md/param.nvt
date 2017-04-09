@@ -45,7 +45,6 @@ MdSimulation{
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
                             1.122460000000e+00  1.122460000000e+00
-      maxBoundary                 cubic  10.5 
       PairList{
         atomCapacity                        1000
         pairCapacity                       40000
@@ -55,12 +54,6 @@ MdSimulation{
     BondPotential{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
-    }
-    CoulombPotential{
-      epsilon               1.000000000000e+00
-      alpha                 0.500000000000e+00
-      rCutoff               8.000000000000e+00
-      kCutoff               3.000000000000e+00
     }
     EnergyEnsemble{
       type                  isothermal
@@ -74,7 +67,7 @@ MdSimulation{
        tauT                 1.000
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                         100
 
     LogProgress{
@@ -149,3 +142,4 @@ MdSimulation{
       capacity                         1000
     }
 
+      maxBoundary                 cubic  10.5 

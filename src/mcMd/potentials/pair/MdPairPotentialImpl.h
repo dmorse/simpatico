@@ -55,10 +55,10 @@ namespace McMd
       /**
       * Read pair potential interaction and pair list blocks.
       *
-      * This method reads the pair potential Interaction parameter and
-      * PairList blocks, and initializes an internal PairList. Before
-      * calling the Interaction::readParameters method, it passes
-      * nAtomType to Interaction::setNAtomType().
+      * This method reads the pair potential Interaction parameter 
+      * and PairList blocks, and initializes an internal PairList. 
+      * Before calling the Interaction::readParameters method, it 
+      * passes nAtomType to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
@@ -95,10 +95,10 @@ namespace McMd
       /**
       * Return force / separation for a single pair.
       *
-      * \param rsq       square distance between atoms in pair
-      * \param iAtomType atom type index of 1st atom
-      * \param jAtomType atom type index of 2nd atom
-      * \return repulsive force (< 0 if attractive) over distance
+      * \param rsq  square distance between atoms in pair
+      * \param iAtomType  atom type index of 1st atom
+      * \param jAtomType  atom type index of 2nd atom
+      * \return  repulsive force (< 0 if attractive) over distance
       */
       virtual
       double forceOverR(double rsq, int iAtomType, int jAtomType) const;
@@ -111,9 +111,9 @@ namespace McMd
       /**
       * Modify a parameter, identified by a string.
       *
-      * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
+      * \param name  parameter name
+      * \param i  type index of first atom
+      * \param j  type index of first atom
       * \param value  new value of parameter
       */
       void set(std::string name, int i, int j, double value)
@@ -122,9 +122,9 @@ namespace McMd
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
+      * \param name  parameter name
+      * \param i  type index of first atom
+      * \param j  type index of first atom
       */
       double get(std::string name, int i, int j) const
       {  return interactionPtr_->get(name, i, j); }
@@ -346,8 +346,7 @@ namespace McMd
    }
 
    /*
-   * Compute and store pair interaction energy.
-   * Does nothing if energy is already set.
+   * Compute and store all short-range pair energy components.
    */
    template <class Interaction>
    void MdPairPotentialImpl<Interaction>::computeEnergy()
@@ -371,6 +370,7 @@ namespace McMd
                    energy(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
       }
 
+      // Set value of Setable<double> energy_ 
       energy_.set(energy);
    }
 
