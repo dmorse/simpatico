@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2017, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -74,7 +74,7 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
 
-      //Calculate prefactors frequently used in this class.
+      // Calculate selfPrefactor_
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
    }
@@ -251,51 +251,6 @@ namespace McMd
    }
 
    /*
-   * Calculate the k-space contribution to the Coulomb energy.
-   */
-   void MdEwaldPotential::computeEnergy()
-   {
-      // unset energy accumulator.
-      //unsetEnergy();
-
-      System::MoleculeIterator imolIter, jmolIter;
-      Molecule::AtomIterator iatomIter, jatomIter;
-      double kPart = 0.0;
-      double x, y,rhoSq;
-      int nSpecies(simulationPtr_->nSpecies());
-
-      // Compute Fourier components of charge density.
-      computeKSpaceCharge();
-
-      for (int i = 0; i < waves_.size(); ++i) {
-         x = rho_[i].real();
-         y = rho_[i].imag();
-         rhoSq = x*x + y*y;
-         kPart += ewaldInteraction_.kSpacePotential(rhoSq, g_[i]);
-      }
-      kPart *= 0.5 / (ewaldInteraction_.epsilon()*boundaryPtr_->volume());
-
-      // calculate selfnergy part in ewald summation.
-      double selfenergy(0.0); //store the self part energy
-      double icharge;
-      int iAtomType;
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, imolIter);
-         for ( ; imolIter.notEnd(); ++imolIter) {
-            for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
-               iAtomType = iatomIter->typeId();
-               icharge = (*atomTypesPtr_)[iAtomType].charge();
-               selfenergy += icharge * icharge;
-            }
-         }
-      } 
-      selfenergy *= selfPrefactor_;
-
-      // Correct for conjugate wave contribution in k-part.
-      kSpaceEnergy_.set(2.0 * kPart - selfenergy);
-  }
-
-   /*
    * Add k-space Coulomb forces for all atoms.
    */
    void MdEwaldPotential::addForces()
@@ -392,8 +347,50 @@ namespace McMd
    }
 
    /*
-   * calculate the r and k contribution to stress, which haven't been tested yet.
-   * computeStress() for coulomb energy part in MdSystem.cpp is off.
+   * Calculate the k-space contribution to the Coulomb energy.
+   */
+   void MdEwaldPotential::computeEnergy()
+   {
+      System::MoleculeIterator imolIter, jmolIter;
+      Molecule::AtomIterator iatomIter, jatomIter;
+      double kPart = 0.0;
+      double x, y,rhoSq;
+      int nSpecies(simulationPtr_->nSpecies());
+
+      // Compute Fourier components of charge density.
+      computeKSpaceCharge();
+
+      for (int i = 0; i < waves_.size(); ++i) {
+         x = rho_[i].real();
+         y = rho_[i].imag();
+         rhoSq = x*x + y*y;
+         kPart += ewaldInteraction_.kSpacePotential(rhoSq, g_[i]);
+      }
+      kPart *= 0.5 / (ewaldInteraction_.epsilon()*boundaryPtr_->volume());
+
+      // calculate selfnergy part in ewald summation.
+      double selfenergy(0.0); //store the self part energy
+      double icharge;
+      int iAtomType;
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         systemPtr_->begin(iSpecies, imolIter);
+         for ( ; imolIter.notEnd(); ++imolIter) {
+            for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
+               iAtomType = iatomIter->typeId();
+               icharge = (*atomTypesPtr_)[iAtomType].charge();
+               selfenergy += icharge * icharge;
+            }
+         }
+      } 
+      selfenergy *= selfPrefactor_;
+
+      // Correct for conjugate wave contribution in k-part.
+      kSpaceEnergy_.set(2.0 * kPart - selfenergy);
+   }
+
+   /*
+   * Compute the k contribution to stress.
+   * computeStress() for coulomb part in MdSystem.cpp is off.
    */
    void MdEwaldPotential::computeStress()
    {
@@ -407,8 +404,6 @@ namespace McMd
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
-
-      unsetStress();
 
       //add a new method in Tensor.h for acquiring unit matrix.
       qv.zero();
@@ -430,7 +425,7 @@ namespace McMd
          y = rho_[i].imag();
          K *= (g_[i] * ( x*x + y*y));
          stressTensor += K;  
-         }
+      }
        
       stressTensor /= (2 * ewaldInteraction_.epsilon() * boundaryPtr_->volume());   
 
@@ -438,5 +433,6 @@ namespace McMd
       stressTensor *= 2; 
       kSpaceStress_.set(stressTensor);
    }
+
 } 
 #endif
