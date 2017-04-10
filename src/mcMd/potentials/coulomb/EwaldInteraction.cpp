@@ -46,7 +46,7 @@ namespace McMd
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
       kSpaceCutoffSq_ = other.kSpaceCutoffSq_;
 
-      /// prefactors for real space energy.
+      /// Prefactors for real space energy.
       fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
    }
@@ -85,7 +85,7 @@ namespace McMd
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
       kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
 
-      /// prefactors for real space energy.
+      /// Prefactors for real space energy.
       fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
  
@@ -102,6 +102,9 @@ namespace McMd
       loadParameter<double>(ar, "alpha", alpha_);
       loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
       loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
+
+      rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
+      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
 
       /// Compute prefactors for real space energy and force
       fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 

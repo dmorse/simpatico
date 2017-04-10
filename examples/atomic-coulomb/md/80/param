@@ -78,7 +78,7 @@ MdSimulation{
       outputFileName              config.
     }
   }
-  saveInterval                  1000
+  saveInterval                   200
   saveFileName               restart
 }
 

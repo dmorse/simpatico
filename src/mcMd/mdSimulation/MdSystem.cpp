@@ -616,9 +616,7 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
-         Log::file() << "Entering Coulomb makeWaves in loadConfig" << std::endl;
          coulombPotential().makeWaves();
-         Log::file() << "Finished Coulomb makeWaves in loadConfig" << std::endl;
       }
       #endif
       calculateForces();

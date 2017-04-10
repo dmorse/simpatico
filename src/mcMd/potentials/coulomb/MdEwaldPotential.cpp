@@ -103,13 +103,12 @@ namespace McMd
    */
    void MdEwaldPotential::makeWaves()
    {
-      Vector    b0, b1, b2;     // Recprocal basis vectors.
-      Vector    q0, q1, q2, q;  // Partial and complete wavevectors.
-      Vector    kv;             // Integer wavevector expressed as real vector
+      Vector    b0, b1, b2;    // Recprocal basis vectors.
+      Vector    q0, q1, q2, q; // Partial and complete wavevectors.
+      Vector    kv;            // Wavevector (as real vector)
       // double    prefactor(-0.25/ewaldInteraction_.alpha()/ewaldInteraction_.alpha());
       // double    kCutoffSq(ewaldInteraction_.kSpaceCutoffSq());
       double    ksq;
-      double    pi2(2.0*Constants::Pi);
       IntVector maxK, k;       // Max and running wave indices.
       int       mink1, mink2;  // Minimum k-indices
       int       j;
@@ -118,9 +117,9 @@ namespace McMd
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-
       // Get max wave indices and reserve arrays
       double kSpaceCutoff = ewaldInteraction_.kSpaceCutoff();
+      double pi2 = 2.0*Constants::Pi;
       for (j=0; j < Dimension; ++j) {
          maxK[j] = 
              ceil(kSpaceCutoff*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
@@ -199,13 +198,15 @@ namespace McMd
          } // for k[1]
       } // for k[0]
 
+      // Resize work arrays
+      UTIL_CHECK(waves_.size() > 0);
+      UTIL_CHECK(upper0_ - base0_ + 1 > 0);
+      UTIL_CHECK(upper1_ - base1_ + 1 > 0);
+      UTIL_CHECK(upper2_ - base2_ + 1 > 0);
+      rho_.resize(waves_.size());
       fexp0_.resize(upper0_ - base0_ + 1);
       fexp1_.resize(upper1_ - base1_ + 1);
       fexp2_.resize(upper2_ - base2_ + 1);
-
-      // Allocate fourier modes for charge density.
-      rho_.resize(waves_.size());
-
    }
 
    /*
