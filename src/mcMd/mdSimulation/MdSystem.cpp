@@ -389,8 +389,10 @@ namespace McMd
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
+      }
 
-         #ifdef INTER_COULOMB
+      #ifdef INTER_COULOMB
+      if (!isCopy()) {
          assert(coulombPotentialPtr_ == 0);
          if (simulation().hasCoulomb() > 0) {
             coulombPotentialPtr_ =
@@ -400,9 +402,8 @@ namespace McMd
             }
             loadParamComposite(ar, *coulombPotentialPtr_);
          }
-         #endif
-
       }
+      #endif
 
       #ifndef INTER_NOPAIR
       if (!isCopy()) {
@@ -525,15 +526,20 @@ namespace McMd
       if (!isCopy()) {
          saveFileMaster(ar);
          savePotentialStyles(ar);
-         #ifdef INTER_COULOMB
+      }
+
+      #ifdef INTER_COULOMB
+      if (!isCopy()) {
          if (simulation().hasCoulomb()) {
             coulombPotentialPtr_->save(ar);
          }
-         #endif
       }
+      #endif
+
       #ifndef INTER_NOPAIR
       pairPotential().save(ar);
       #endif
+
       if (!isCopy()) {
          #ifdef INTER_BOND
          if (simulation().nBondType() > 0) {
@@ -557,13 +563,12 @@ namespace McMd
          }
          #endif
          #ifdef INTER_EXTERNAL
-         assert(externalPotentialPtr_ == 0);
-         if (simulation().hasExternal() > 0) {
+         if (simulation().hasExternal()) {
             externalPotential().save(ar);
          }
          #endif
          #ifdef INTER_TETHER
-         if (simulation().hasTether() > 0) {
+         if (simulation().hasTether()) {
             saveTetherMaster(ar);
             tetherPotentialPtr_->save(ar);
          }
@@ -611,7 +616,9 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
+         Log::file() << "Entering Coulomb makeWaves in loadConfig" << std::endl;
          coulombPotential().makeWaves();
+         Log::file() << "Finished Coulomb makeWaves in loadConfig" << std::endl;
       }
       #endif
       calculateForces();
@@ -808,14 +815,14 @@ namespace McMd
          energy += coulombPotential().kSpaceEnergy();
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         energy += linkPotential().energy();
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().energy();
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         energy += linkPotential().energy();
       }
       #endif
       #ifdef INTER_TETHER
