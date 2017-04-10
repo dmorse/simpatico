@@ -62,19 +62,9 @@ namespace McMd
       virtual void addForces() = 0;
 
       /**
-      * Unset the long range kspace part of Coulomb energy.
-      */
-      virtual void unsetEnergy() = 0;
-
-      /**
       * Calculate the long range kspace part of Coulomb energy.
       */
       virtual void computeEnergy() = 0;
-
-      /**
-      * Unset the long range kspace part of Coulomb stress.
-      */
-      virtual void unsetStress() = 0;
 
       /**
       * Compute kspace part of Coulomb stress.
@@ -93,15 +83,22 @@ namespace McMd
       virtual int nWave() const = 0;
 
       // Return K-space contributions
-      virtual double kSpaceEnergy() const = 0;
-      virtual Tensor kSpaceStress() const = 0;
+      /**
+      * Unset the long range kspace part of Coulomb energy.
+      */
+      virtual void unsetEnergy() = 0;
 
-      // Return R-space contributions
-      virtual double rSpaceEnergy() const = 0;
-      virtual Tensor rSpaceStress() const = 0;
-
-      // Return total energy and stress
+      virtual double kSpaceEnergy() = 0;
+      virtual double rSpaceEnergy() = 0;
       virtual double energy() = 0;
+
+      /**
+      * Unset the long range kspace part of Coulomb stress.
+      */
+      virtual void unsetStress() = 0;
+
+      virtual Tensor kSpaceStress() = 0;
+      virtual Tensor rSpaceStress() = 0;
       virtual Tensor stress() = 0;
 
       //@}

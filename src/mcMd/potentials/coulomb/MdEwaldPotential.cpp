@@ -31,12 +31,12 @@ namespace McMd
    */
    MdEwaldPotential::MdEwaldPotential(System& system)
     : MdCoulombPotential(),
-      rSpaceAccumulator_(),
       ewaldInteraction_(),
       simulationPtr_(&system.simulation()),
       systemPtr_(&system),
       boundaryPtr_(&system.boundary()),
-      atomTypesPtr_(&system.simulation().atomTypes())
+      atomTypesPtr_(&system.simulation().atomTypes()),
+      rSpaceAccumulator_()
    {
       //initialize unit tensor.
       const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
@@ -63,6 +63,28 @@ namespace McMd
       //Calculate prefactors frequently used in this class.
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void MdEwaldPotential::loadParameters(Serializable::IArchive &ar)
+   {
+      bool nextIndent = false;
+      addParamComposite(ewaldInteraction_, nextIndent);
+      ewaldInteraction_.loadParameters(ar);
+
+      //Calculate prefactors frequently used in this class.
+      double pi = Constants::Pi;
+      selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void MdEwaldPotential::save(Serializable::OArchive &ar)
+   {
+      ewaldInteraction_.save(ar);
    }
 
    /*

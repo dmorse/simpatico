@@ -67,15 +67,30 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+
       /**
-      * Generate wavevectors for the current boundary and kCutoff.
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
       */
-      virtual void makeWaves();
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       //@}
       /// \name System energy and stress.
       //@{
       
+      /**
+      * Generate wavevectors for the current boundary and kCutoff.
+      */
+      virtual void makeWaves();
+
       /**
       * Add k-space Coulomb forces for all atoms.
       */
@@ -93,51 +108,58 @@ namespace McMd
       */
       virtual void computeStress();
    
-      // Unset KSpace energy and stress components
-      virtual void unsetEnergy();
-      virtual void unsetStress();
-
       //@}
-      /// \name Accessors (const)
+      /// \name Accessors 
       //@{
 
+      /**
+      * Unset KSpace energy.
+      */
+      void unsetEnergy();
+
       // Return K-Space contributions
-      virtual double kSpaceEnergy() const;
-      //virtual double kSpacePressure() const;
-      virtual Tensor kSpaceStress() const;
+      virtual double kSpaceEnergy(); 
+      virtual double rSpaceEnergy();
+      virtual double energy();
 
-      // Return R-Space contributions
-      virtual double rSpaceEnergy() const;
-      //virtual double rSPacePressure() const;
-      virtual Tensor rSpaceStress() const;
+      /**
+      * Unset KSpace stress.
+      */
+      void unsetStress();
 
-      // Return total Coulomb energy and stress (kspace + rspace)
-      virtual double energy() ;
-      //virtual double pressure() ;
+      virtual Tensor kSpaceStress();
+      virtual Tensor rSpaceStress();
       virtual Tensor stress() ;
       
+      //@}
+   
 
       /**
       * Current number of wavevectors with |k| < kCutoff.
       */
       int nWave() const;
 
-      //@}
-      
-      // R-space energy and stress contributions
-      EwaldRSpaceAccumulator rSpaceAccumulator_;
+      EwaldRSpaceAccumulator& rSpaceAccumulator()   
+      {  return rSpaceAccumulator_; }
+
+      EwaldInteraction& ewaldInteraction()
+      { return ewaldInteraction_; }
+
+   private:
 
       // Ewald Interaction - core Ewald computations
       EwaldInteraction ewaldInteraction_;
 
-   protected:
-
+      // Pointer to parent Simulation
       Simulation* simulationPtr_;
 
+      // Pointer to parent System
       System* systemPtr_;
 
+      // Pointer to boundary of associated System.
       Boundary* boundaryPtr_;
 
+      // Pointer to array of atom types
       const Array<AtomType>* atomTypesPtr_;
 
       /// Exponential factor accessors.
@@ -162,12 +184,14 @@ namespace McMd
       /// Fourier modes of charge density.
       GArray<DCMPLX> rho_;
 
-      /**
-      * Calculate fourier modes of charge density.
-      */
-      void computeKSpaceCharge();
+      /// Unit Matrix (constant).
+      Tensor unitTensor_;
 
-   private:
+      /// Prefactor for self-interaction correction.
+      double selfPrefactor_;
+
+      // R-space energy and stress contributions
+      EwaldRSpaceAccumulator rSpaceAccumulator_;
 
       // K-space part of Coulomb energy
       Setable<double> kSpaceEnergy_;
@@ -175,39 +199,36 @@ namespace McMd
       // K-space part of Coulomb stress.
       Setable<Tensor> kSpaceStress_;
 
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
-
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
+      /**
+      * Calculate Fourier coefficients of charge density.
+      */
+      void computeKSpaceCharge();
 
    };
 
    inline void MdEwaldPotential::unsetEnergy() 
    {  kSpaceEnergy_.unset(); }
 
-   inline void MdEwaldPotential::unsetStress()
-   {  kSpaceStress_.unset(); }
-
-   inline double MdEwaldPotential::kSpaceEnergy() const
+   inline double MdEwaldPotential::kSpaceEnergy()
    {  return kSpaceEnergy_.value(); }
 
-   inline Tensor MdEwaldPotential::kSpaceStress() const
-   {  return kSpaceStress_.value(); }
-
-   inline double MdEwaldPotential::rSpaceEnergy() const
+   inline double MdEwaldPotential::rSpaceEnergy() 
    {  return rSpaceAccumulator_.rSpaceEnergy(); }
 
-   inline Tensor MdEwaldPotential::rSpaceStress() const
-   {  return rSpaceAccumulator_.rSpaceStress(); }
-
    inline double MdEwaldPotential::energy() 
-   {  computeEnergy();
+   {  
+      computeEnergy();
       return kSpaceEnergy_.value() + rSpaceAccumulator_.rSpaceEnergy();
    }
 
-   //inline double pressure()
-   //{  return kSpace}
+   inline void MdEwaldPotential::unsetStress()
+   {  kSpaceStress_.unset(); }
+
+   inline Tensor MdEwaldPotential::kSpaceStress()
+   {  return kSpaceStress_.value(); }
+
+   inline Tensor MdEwaldPotential::rSpaceStress()
+   {  return rSpaceAccumulator_.rSpaceStress(); }
 
    inline Tensor MdEwaldPotential::stress() 
    { 
@@ -220,5 +241,4 @@ namespace McMd
 
 } 
 #endif
-
 

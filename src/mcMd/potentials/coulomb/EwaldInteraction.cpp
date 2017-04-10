@@ -97,20 +97,13 @@ namespace McMd
    */
    void EwaldInteraction::loadParameters(Serializable::IArchive &ar)
    {
-      #ifdef UTIL_MPI
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(epsilon_);
-      loader.load(alpha_);
-      loader.load(rSpaceCutoff);
-      loader.load(kSpaceCutoff);
-      #else
-      ar >> epsilon_;
-      ar >> alpha_;
-      ar >> rSpaceCutoff_;
-      ar >> kSpaceCutoff_;
-      #endif
+      // Load all parameters that appear in parameter file
+      loadParameter<double>(ar, "epsilon", epsilon_);
+      loadParameter<double>(ar, "alpha", alpha_);
+      loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
+      loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
 
-      /// prefactors for real space energy.
+      /// Compute prefactors for real space energy and force
       fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
  
@@ -152,6 +145,9 @@ namespace McMd
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_;
       kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_;
 
+      /// Compute prefactors for real space energy and force
+      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
    }
 
    /*
