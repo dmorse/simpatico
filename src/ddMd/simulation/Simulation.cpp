@@ -20,10 +20,8 @@
 #include <ddMd/modifiers/ModifierManager.h>
 #endif
 
-#ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <ddMd/potentials/pair/PairFactory.h>
-#endif
 #ifdef INTER_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
 #include <ddMd/potentials/bond/BondFactory.h>
@@ -120,9 +118,7 @@ namespace DdMd
       modifierManagerPtr_(0),
       #endif
       analyzerManagerPtr_(0),
-      #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
-      #endif
       #ifdef INTER_BOND
       bondFactoryPtr_(0),
       #endif
@@ -137,9 +133,7 @@ namespace DdMd
       #endif
       integratorFactoryPtr_(0),
       configIoFactoryPtr_(0),
-      #ifndef DDMD_NOPAIR
       pairStyle_(),
-      #endif
       #ifdef INTER_BOND
       bondStyle_(),
       #endif
@@ -532,7 +526,6 @@ namespace DdMd
 
       // Create and read potential energy classes
 
-      #ifndef DDMD_NOPAIR
       // Pair Potential
       assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
@@ -541,7 +534,6 @@ namespace DdMd
       }
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
       readParamComposite(in, *pairPotentialPtr_);
-      #endif
 
       #ifdef INTER_BOND
       // Bond Potential
@@ -724,7 +716,6 @@ namespace DdMd
       // Load potentials styles and parameters
       loadPotentialStyles(ar);
 
-      #ifndef DDMD_NOPAIR
       // Pair Potential
       assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
@@ -733,7 +724,6 @@ namespace DdMd
       }
       loadParamComposite(ar, *pairPotentialPtr_);
       pairPotential().setReverseUpdateFlag(reverseUpdateFlag_);
-      #endif
 
       #ifdef INTER_BOND
       // Bond Potential
@@ -922,9 +912,7 @@ namespace DdMd
 
       // Potential energy styles and potential classes
       savePotentialStyles(ar);
-      #ifndef DDMD_NOPAIR
       pairPotential().save(ar);
-      #endif
       #ifdef INTER_BOND
       if (nBondType_) {
          bondPotential().save(ar);
@@ -1034,9 +1022,7 @@ namespace DdMd
    */
    void Simulation::readPotentialStyles(std::istream &in)
    {
-      #ifndef DDMD_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
-      #endif
       #ifdef INTER_BOND
       if (nBondType_) {
          read<std::string>(in, "bondStyle", bondStyle_);
@@ -1072,9 +1058,7 @@ namespace DdMd
    */
    void Simulation::loadPotentialStyles(Serializable::IArchive& ar)
    {
-      #ifndef INTER_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
-      #endif
       #ifdef INTER_BOND
       if (nBondType_) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
@@ -1106,9 +1090,7 @@ namespace DdMd
    */
    void Simulation::savePotentialStyles(Serializable::OArchive& ar)
    {
-      #ifndef INTER_NOPAIR
       ar << pairStyle_;
-      #endif
       #ifdef INTER_BOND
       if (nBondType_) {
          ar << bondStyle_;
@@ -2084,7 +2066,6 @@ namespace DdMd
 
    // --- Potential Factories and Styles -------------------------------
 
-   #ifndef DDMD_NOPAIR
    /*
    * Return the PairFactory by reference.
    */
@@ -2102,7 +2083,6 @@ namespace DdMd
    */
    std::string Simulation::pairStyle() const
    {  return pairStyle_;  }
-   #endif
 
    #ifdef INTER_BOND
    /*

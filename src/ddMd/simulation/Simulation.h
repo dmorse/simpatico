@@ -501,7 +501,6 @@ namespace DdMd
       /// \name Potential Energy Classes (Objects, Style Strings and Factories)
       //@{
 
-      #ifndef INTER_NOPAIR
       /**
       * Get the PairPotential by const reference.
       */
@@ -521,7 +520,6 @@ namespace DdMd
       * Get the Factory<PairPotential> by reference.
       */
       Factory<PairPotential>& pairFactory();
-      #endif
 
       #ifdef INTER_BOND
       /**
@@ -953,10 +951,8 @@ namespace DdMd
       /// AnalyzerManager
       AnalyzerManager* analyzerManagerPtr_;
 
-      #ifndef INTER_NOPAIR
       /// Pointer to a PairPotential factory.
       Factory<PairPotential>* pairFactoryPtr_;
-      #endif
 
       #ifdef INTER_BOND
       /// Pointer to a Factory<BondPotential>.
@@ -984,10 +980,8 @@ namespace DdMd
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
 
-      #ifndef INTER_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
-      #endif
 
       #ifdef INTER_BOND
       /// Name of bond potential style.
