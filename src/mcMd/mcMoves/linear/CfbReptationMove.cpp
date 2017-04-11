@@ -346,7 +346,9 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         oldEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         if (system().hasExternalPotential()) {
+            oldEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         }
          #endif
 
          #ifndef INTER_NOPAIR
@@ -355,7 +357,9 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         newEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         if (system().hasExternalPotential()) {
+            newEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         }
          #endif
 
          #ifndef INTER_NOPAIR

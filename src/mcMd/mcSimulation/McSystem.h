@@ -415,7 +415,7 @@ namespace McMd
    */
    inline DihedralPotential& McSystem::dihedralPotential() const
    {  
-      assert(anglePotentialPtr_);
+      assert(dihedralPotentialPtr_);
       return *dihedralPotentialPtr_; 
    }
    #endif
@@ -437,20 +437,6 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_LINK
-   /*
-   * Does a link potential exist?
-   */
-   inline bool McSystem::hasLinkPotential() const
-   {  return bool(linkPotentialPtr_); }
-
-   /*
-   * Return link potential by reference.
-   */
-   inline BondPotential& McSystem::linkPotential() const
-   {  return *linkPotentialPtr_; }
-   #endif
-
    #ifdef INTER_EXTERNAL
    /*
    * Does an external potential exist?
@@ -462,7 +448,27 @@ namespace McMd
    * Return external potential by reference.
    */
    inline ExternalPotential& McSystem::externalPotential() const
-   {  return *externalPotentialPtr_; }
+   {
+      assert(externalPotentialPtr_);  
+      return *externalPotentialPtr_; 
+   }
+   #endif
+
+   #ifdef MCMD_LINK
+   /*
+   * Does a link potential exist?
+   */
+   inline bool McSystem::hasLinkPotential() const
+   {
+      assert(linkPotentialPtr_);  
+      return bool(linkPotentialPtr_); 
+   }
+
+   /*
+   * Return link potential by reference.
+   */
+   inline BondPotential& McSystem::linkPotential() const
+   {  return *linkPotentialPtr_; }
    #endif
 
    #ifdef INTER_TETHER
@@ -470,7 +476,10 @@ namespace McMd
    * Return tether potential by reference.
    */
    inline TetherPotential& McSystem::tetherPotential() const
-   {  return *tetherPotentialPtr_; }
+   { 
+      assert(tetherPotentialPtr_);  
+      return *tetherPotentialPtr_; 
+   }
    #endif
 
    #ifndef INTER_NOPAIR

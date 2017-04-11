@@ -149,10 +149,11 @@ namespace McMd
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
-      AnglePotential& anglePotential = system().anglePotential();
+      AnglePotential* anglePotentialPtr = 0;
       int angleTypeId;
       bool hasAngle = false;
       if (hasAngles_) {
+         anglePotentialPtr = &system().anglePotential();
          int atom2Id = atomId - 2*sign;
          if (shift) {
             assert(sign == 1);
@@ -170,15 +171,17 @@ namespace McMd
             u2 /= r2; // unit vector
             cosTheta = u1.dot(u2);
             angleTypeId = molecule.bond(atomId - 2*shift).typeId();
-            energy += anglePotential.energy(cosTheta, angleTypeId);
+            energy += anglePotentialPtr->energy(cosTheta, angleTypeId);
          }
       }
       #endif
 
       #ifdef INTER_EXTERNAL
-      ExternalPotential& externalPotential = system().externalPotential();
+      ExternalPotential* externalPotentialPtr = 0;
       if (hasExternal_) {
-         energy += externalPotential.atomEnergy(atom0);
+         externalPotentialPtr = &system().externalPotential();
+         assert(externalPotentialPtr);
+         energy += externalPotentialPtr->atomEnergy(atom0);
       }
       #endif
 
@@ -207,14 +210,17 @@ namespace McMd
          trialEnergy = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngle) {
-            cosTheta = u1.dot(u2);
-            trialEnergy += anglePotential.energy(cosTheta, angleTypeId);
+         if (hasAngles_) {
+            if (hasAngle) {
+               cosTheta = u1.dot(u2);
+               trialEnergy += anglePotentialPtr->energy(cosTheta, angleTypeId);
+            }
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (hasExternal_) {
-            trialEnergy += externalPotential.atomEnergy(atom0);
+            assert(externalPotentialPtr);
+            trialEnergy += externalPotentialPtr->atomEnergy(atom0);
          }
          #endif
 
@@ -255,10 +261,11 @@ namespace McMd
       Vector v2, u2;
       double r2, cosTheta;
       Vector* pos2Ptr;
-      AnglePotential& anglePotential = system().anglePotential();
+      AnglePotential* anglePotentialPtr = 0;
       int angleTypeId;
       bool hasAngle = false;
       if (hasAngles_) {
+         anglePotentialPtr = &system().anglePotential();
          int atom2Id = atomId - 2*sign;
          if (shift) {
             assert(sign == 1);
@@ -278,9 +285,13 @@ namespace McMd
          }
       }
       #endif
+
       #ifdef INTER_EXTERNAL
-      ExternalPotential& externalPotential 
-                                      = system().externalPotential();
+      ExternalPotential* externalPotentialPtr = 0;
+      if (hasExternal_) {
+         externalPotentialPtr = &system().externalPotential();
+         assert(externalPotentialPtr);
+      }
       #endif
 
       // Loop over nTrial trial positions:
@@ -305,16 +316,19 @@ namespace McMd
          trialEnergy[iTrial] = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngle) {
-            cosTheta = u1.dot(u2);
-            trialEnergy[iTrial] += 
-                        anglePotential.energy(cosTheta, angleTypeId);
+         if (hasAngles_) {
+            if (hasAngle) {
+               cosTheta = u1.dot(u2);
+               trialEnergy[iTrial] += 
+                    anglePotentialPtr->energy(cosTheta, angleTypeId);
+            }
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (hasExternal_) {
+            assert(externalPotentialPtr);
             trialEnergy[iTrial] +=
-                        externalPotential.atomEnergy(atom0);
+                        externalPotentialPtr->atomEnergy(atom0);
          }
          #endif
 
