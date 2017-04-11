@@ -47,6 +47,17 @@ dihedral: Melts of short linear polymers with an angle potential and a
           The required executable names should contain suffixes _a and _d, 
           mdSim_a_d, mcSim_a_d, or ddSim_a_d.
 
+electrolyte: Mixture of two opposititely charged species of pointer 
+          particles. Configure compilation by entering "./configure -c1"
+          to enable Coulomb interactions. The executable names should
+          contain a suffix _c.
+
+polyelectrolyte: Mixture of two opposititely charged species of 
+          homo-polyelectrolyte chains, with no counterions. Configure 
+          compilation by entering "./configure -c1" to enable Coulomb 
+          interactions, to produce executable whose name should contain 
+          a suffix _c.
+
 external: Flexible bead-spring polymers in external one-body potentials. 
           These examples require a version of the code in which external
           potentials are enabled by entering "./configure -e1" from the

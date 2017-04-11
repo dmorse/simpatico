@@ -35,8 +35,7 @@ namespace McMd
       simulationPtr_(&system.simulation()),
       systemPtr_(&system),
       boundaryPtr_(&system.boundary()),
-      atomTypesPtr_(&system.simulation().atomTypes()),
-      rSpaceAccumulator_()
+      atomTypesPtr_(&system.simulation().atomTypes())
    {
       //initialize unit tensor.
       const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};

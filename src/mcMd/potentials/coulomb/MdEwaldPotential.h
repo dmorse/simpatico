@@ -37,7 +37,7 @@ namespace McMd
    /**
    * Ewald Coulomb potential class for MD simulations.
    *
-   * This class implements the k-space sums for an Ewald  
+   * This class implements the k-space sums for an Ewald
    * summation of the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
@@ -85,11 +85,16 @@ namespace McMd
       //@}
       /// \name System energy and stress.
       //@{
-      
+
       /**
       * Generate wavevectors for the current boundary and kCutoff.
       */
       virtual void makeWaves();
+
+      /**
+      * Current number of wavevectors with |k| < kCutoff.
+      */
+      int nWave() const;
 
       /**
       * Add k-space Coulomb forces for all atoms.
@@ -107,43 +112,18 @@ namespace McMd
       * \param stress (output) pressure
       */
       virtual void computeStress();
-   
+
       //@}
-      /// \name Accessors 
+      /// \name Miscellaneous Accessors
       //@{
 
-      /**
-      * Unset KSpace energy.
-      */
-      void unsetEnergy();
-
-      // Return K-Space contributions
-      virtual double kSpaceEnergy(); 
-      virtual double rSpaceEnergy();
-      virtual double energy();
-
-      /**
-      * Unset KSpace stress.
-      */
-      void unsetStress();
-
-      virtual Tensor kSpaceStress();
-      virtual Tensor rSpaceStress();
-      virtual Tensor stress() ;
-      
-      //@}
-   
-
-      /**
-      * Current number of wavevectors with |k| < kCutoff.
-      */
-      int nWave() const;
-
-      EwaldRSpaceAccumulator& rSpaceAccumulator()   
+      EwaldRSpaceAccumulator& rSpaceAccumulator()
       {  return rSpaceAccumulator_; }
 
       EwaldInteraction& ewaldInteraction()
       { return ewaldInteraction_; }
+
+      //@}
 
    private:
 
@@ -190,15 +170,6 @@ namespace McMd
       /// Prefactor for self-interaction correction.
       double selfPrefactor_;
 
-      // R-space energy and stress contributions
-      EwaldRSpaceAccumulator rSpaceAccumulator_;
-
-      // K-space part of Coulomb energy
-      Setable<double> kSpaceEnergy_;
-
-      // K-space part of Coulomb stress.
-      Setable<Tensor> kSpaceStress_;
-
       /**
       * Calculate Fourier coefficients of charge density.
       */
@@ -206,39 +177,6 @@ namespace McMd
 
    };
 
-   inline void MdEwaldPotential::unsetEnergy() 
-   {  kSpaceEnergy_.unset(); }
-
-   inline double MdEwaldPotential::kSpaceEnergy()
-   {  return kSpaceEnergy_.value(); }
-
-   inline double MdEwaldPotential::rSpaceEnergy() 
-   {  return rSpaceAccumulator_.rSpaceEnergy(); }
-
-   inline double MdEwaldPotential::energy() 
-   {  
-      computeEnergy();
-      return kSpaceEnergy_.value() + rSpaceAccumulator_.rSpaceEnergy();
-   }
-
-   inline void MdEwaldPotential::unsetStress()
-   {  kSpaceStress_.unset(); }
-
-   inline Tensor MdEwaldPotential::kSpaceStress()
-   {  return kSpaceStress_.value(); }
-
-   inline Tensor MdEwaldPotential::rSpaceStress()
-   {  return rSpaceAccumulator_.rSpaceStress(); }
-
-   inline Tensor MdEwaldPotential::stress() 
-   { 
-      Tensor temp = kSpaceStress_.value();
-             temp += rSpaceAccumulator_.rSpaceStress();
-      return temp;
-   } 
-      
-
-
-} 
+}
 #endif
 

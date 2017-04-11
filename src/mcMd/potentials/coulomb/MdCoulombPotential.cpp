@@ -29,6 +29,50 @@ namespace McMd
    */
    MdCoulombPotential::~MdCoulombPotential()
    {}
+
+   void MdCoulombPotential::unsetEnergy()
+   {  kSpaceEnergy_.unset(); }
+
+   void MdCoulombPotential::unsetStress()
+   {  kSpaceStress_.unset(); }
+
+   double MdCoulombPotential::kSpaceEnergy()
+   {
+      if (!kSpaceEnergy_.isSet()) {
+         computeEnergy();
+      }
+      return kSpaceEnergy_.value();
+   }
+
+   double MdCoulombPotential::rSpaceEnergy()
+   {  return rSpaceAccumulator_.rSpaceEnergy(); }
+
+   double MdCoulombPotential::energy()
+   {
+      double temp;
+      temp  = kSpaceEnergy();
+      temp += rSpaceAccumulator_.rSpaceEnergy();
+      return temp;
+   }
+
+   Tensor MdCoulombPotential::kSpaceStress() 
+   {
+      if (!kSpaceStress_.isSet()) {
+         computeStress();
+      }
+      return kSpaceStress_.value();
+   }
+
+   Tensor MdCoulombPotential::rSpaceStress()
+   {  return rSpaceAccumulator_.rSpaceStress(); }
+
+   Tensor MdCoulombPotential::stress()
+   {
+      Tensor temp;
+      temp = kSpaceStress();
+      temp += rSpaceAccumulator_.rSpaceStress();
+      return temp;
+   }
  
 } 
 #endif

@@ -8,15 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>   // base class
+#include <util/param/ParamComposite.h>                   // base class
+#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
+#include <util/misc/Setable.h>                           // member template
+#include <util/space/Tensor.h>                           // template parameter
 
 #include <complex>
-
-namespace Util
-{
-   class Vector;
-   class Tensor;
-}
 
 namespace McMd
 {
@@ -57,14 +54,14 @@ namespace McMd
       virtual void makeWaves() = 0;
 
       /**
+      * Current number of wavevectors.
+      */
+      virtual int nWave() const = 0;
+
+      /**
       * Add k-space Coulomb forces for all atoms.
       */
       virtual void addForces() = 0;
-
-      /**
-      * Calculate the long range kspace part of Coulomb energy.
-      */
-      virtual void computeEnergy() = 0;
 
       /**
       * Compute kspace part of Coulomb stress.
@@ -74,40 +71,75 @@ namespace McMd
       virtual void computeStress() = 0;
    
       //@}
-      /// \name Accessors (const)
+      /// \name Energy
       //@{
 
       /**
-      * Current number of wavevectors.
+      * Unset k-space energy.
       */
-      virtual int nWave() const = 0;
-
-      // Return K-space contributions
-      /**
-      * Unset the long range kspace part of Coulomb energy.
-      */
-      virtual void unsetEnergy() = 0;
-
-      virtual double kSpaceEnergy() = 0;
-      virtual double rSpaceEnergy() = 0;
-      virtual double energy() = 0;
+      virtual void unsetEnergy();
 
       /**
-      * Unset the long range kspace part of Coulomb stress.
+      * Calculate the long range kspace part of Coulomb energy.
       */
-      virtual void unsetStress() = 0;
+      virtual void computeEnergy() = 0;
 
-      virtual Tensor kSpaceStress() = 0;
-      virtual Tensor rSpaceStress() = 0;
-      virtual Tensor stress() = 0;
+      /**
+      * Get long-range k-space part of Coulomb energy.
+      */
+      double kSpaceEnergy();
+
+      /**
+      * Return short-range r-space part of Coulomb energy.
+      */
+      double rSpaceEnergy();
+
+      /**
+      * Get total Coulomb energy.
+      */
+      double energy();
+
+      //@}
+      /// \name Stress
+      //@{
+
+      /**
+      * Unset k-space stress.
+      */
+      virtual void unsetStress();
+
+      /**
+      * Get long-range k-space part of Coulomb stress.
+      */
+      Tensor kSpaceStress();
+
+      /**
+      * Return short-range r-space part of Coulomb stress.
+      */
+      Tensor rSpaceStress();
+
+      /**
+      * Get total Coulomb stress.
+      */
+      Tensor stress();
 
       //@}
 
    protected:
 
-      /// Has readParam been called?
+      /// R-space energy and stress contributions
+      EwaldRSpaceAccumulator rSpaceAccumulator_;
+
+      /// K-space part of Coulomb energy
+      Setable<double> kSpaceEnergy_;
+
+      /// K-space part of Coulomb stress.
+      Setable<Tensor> kSpaceStress_;
+
+      /// Have parameters been set?
       bool isInitialized_;
 
    };
+
 } 
 #endif
