@@ -84,7 +84,14 @@ namespace McMd
       #ifdef INTER_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   { setClassName("McSystem"); }
+   { 
+      setClassName("McSystem"); 
+
+      // Actions taken when particles are moved
+      positionSignal().addObserver(*this, &McSystem::unsetPotentialEnergies);
+      positionSignal().addObserver(*this, &McSystem::unsetVirialStress);
+   }
+
 
    /*
    * Destructor.
@@ -127,6 +134,7 @@ namespace McMd
       readPotentialStyles(in);
 
       #ifndef INTER_NOPAIR
+      assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().mcFactory(pairStyle(), *this);
       if (pairPotentialPtr_ == 0) {
          UTIL_THROW("Failed attempt to create McPairPotential");
@@ -317,25 +325,21 @@ namespace McMd
       saveFileMaster(ar);
       savePotentialStyles(ar);
       #ifndef INTER_NOPAIR 
-      assert(pairPotentialPtr_);
-      pairPotentialPtr_->save(ar); 
+      pairPotential().save(ar); 
       #endif
       #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
-         assert(bondPotentialPtr_);
-         bondPotentialPtr_->save(ar); 
+         bondPotential().save(ar); 
       }
       #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
-         assert(anglePotentialPtr_);
-         anglePotentialPtr_->save(ar); 
+         anglePotential().save(ar); 
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
-         assert(dihedralPotentialPtr_);
-         dihedralPotentialPtr_->save(ar); 
+         dihedralPotential().save(ar); 
       }
       #endif
       #ifdef MCMD_LINK
@@ -484,6 +488,16 @@ namespace McMd
       return energy;
    }
 
+   /*
+   * Unset all precomputed potential energy components.
+   */
+   void McSystem::unsetPotentialEnergies()
+   {
+      #ifndef INTER_NOPAIR
+      pairPotential().unsetEnergy();
+      #endif
+   }
+
    // -------------------------------------------------------------
    // Pressure/Stress Evaluators (including all components)
 
@@ -594,6 +608,16 @@ namespace McMd
       }
    }
 
+   /*
+   * Unset all precomputed virial stress components.
+   */
+   void McSystem::unsetVirialStress()
+   {
+      #ifndef INTER_NOPAIR
+      pairPotential().unsetStress();
+      #endif
+   }
+
    // -------------------------------------------------------------
    // Miscellaneous
    
@@ -612,7 +636,8 @@ namespace McMd
    {
       System::isValid();
       #ifndef INTER_NOPAIR
-      pairPotentialPtr_->cellList().isValid();
+      UTIL_CHECK(pairPotentialPtr_);
+      pairPotential().cellList().isValid();
       #endif
       return true;
    }

@@ -24,6 +24,10 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#include <mcMd/potentials/coulomb/MdEwaldPotential.h>
+#endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif

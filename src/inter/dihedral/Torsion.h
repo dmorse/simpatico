@@ -87,12 +87,12 @@ namespace Inter
       v2.cross(b2, b3);
       d2 = v2.square();
       if (d2 < 1.0E-10) {
-         return 1;
+         return 1; // error code
       }
       d2 = sqrt(d2); 
 
       cosPhi = v1.dot(v2)/(d1*d2);
-      return 0;
+      return 0; // Normal completion
    }
 
    /*

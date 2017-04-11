@@ -107,6 +107,7 @@ cp src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleF
 cp src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
 cp src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
 cp src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
+cp src/mcMd/potentials/coulomb/CoulombFactory.cpp_r src/mcMd/potentials/coulomb/CoulombFactory.cpp
 cp src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
 cp src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
 cp src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp

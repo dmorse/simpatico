@@ -235,6 +235,8 @@ namespace McMd
          }
 
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
    }
 
@@ -273,6 +275,8 @@ namespace McMd
             }
          }
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       #if 0
       #ifndef INTER_NOPAIR
@@ -306,6 +310,7 @@ namespace McMd
             }
          }
       }
+      system().velocitySignal().notify();
 
       // Recompute disipative force (but not random forces).
       computeDpdForces(false);

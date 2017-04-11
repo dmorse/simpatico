@@ -332,6 +332,13 @@ namespace McMd
       int dihedralCapacity() const;
       #endif
 
+      #ifdef INTER_COULOMB
+      /**
+      * Does a Coulomb potential exist?
+      */
+      int hasCoulomb() const;
+      #endif
+
       #ifdef INTER_EXTERNAL
       /**
       * Does an external potential exist?
@@ -595,6 +602,11 @@ namespace McMd
       int dihedralCapacity_;
       #endif
 
+      #ifdef INTER_COULOMB
+      /// Does an Coulomb potential exist? (0 false or 1 true)
+      int  hasCoulomb_;
+      #endif
+
       #ifdef INTER_EXTERNAL
       /**
       * Does an external potential exist? (0 if false or 1 if true)
@@ -688,6 +700,11 @@ namespace McMd
    {  return nDihedralType_; }
    #endif
 
+   #ifdef INTER_COULOMB
+   inline int Simulation::hasCoulomb() const
+   {  return hasCoulomb_; }
+   #endif
+
    #ifdef INTER_EXTERNAL
    inline int Simulation::hasExternal() const
    {  return hasExternal_; }
@@ -734,6 +751,9 @@ namespace McMd
 
    inline Random& Simulation::random()
    {  return random_; }
+
+   inline const Array<AtomType>& Simulation::atomTypes() const
+   {  return atomTypes_; }
 
    inline const AtomType& Simulation::atomType(int i) const
    {  return atomTypes_[i]; }

@@ -100,6 +100,8 @@ namespace McMd
          cv_[i] = mass*cv;
          cr_[i] = sqrt(mass*cr);
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
    }
 
@@ -170,6 +172,8 @@ namespace McMd
          }
       }
       #endif
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       // Calculate conservative force
       system().calculateForces();
@@ -222,6 +226,7 @@ namespace McMd
          }
       }
       #endif
+      system().velocitySignal().notify();
 
       #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {

@@ -56,6 +56,9 @@ namespace McMd
       , nDihedralType_(-1)
       , dihedralCapacity_(0)
       #endif
+      #ifdef INTER_COULOMB
+      , hasCoulomb_(-1)
+      #endif
       #ifdef INTER_EXTERNAL
       , hasExternal_(-1)
       #endif
@@ -114,6 +117,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       , nDihedralType_(-1)
       , dihedralCapacity_(0)
+      #endif
+      #ifdef INTER_COULOMB
+      , hasCoulomb_(-1)
       #endif
       #ifdef INTER_EXTERNAL
       , hasExternal_(-1)
@@ -208,6 +214,13 @@ namespace McMd
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
+      #ifdef INTER_COULOMB
+      hasCoulomb_ = 0;
+      readOptional<int>(in, "hasCoulomb", hasCoulomb_); 
+      if ((hasCoulomb_ != 0) && (hasCoulomb_ != 1)) {
+         UTIL_THROW("hasCoulomb must be 0 or 1");
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = 0; // Default value 
       readOptional<int>(in, "hasExternal", hasExternal_); 
@@ -229,11 +242,16 @@ namespace McMd
       }
       #endif
 
-      // Allocate and read an array of AtomType objects
+      // Allocate and initialize array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
+         #ifdef INTER_COULOMB
+         atomTypes_[i].setHasCharge(hasCoulomb_);
+         #endif
       }
+
+      // Read AtomType data from file
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
 
       #ifndef INTER_NOPAIR
@@ -271,8 +289,12 @@ namespace McMd
       nDihedralType_ = 0;
       loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       #endif
+      #ifdef INTER_COULOMB
+      hasCoulomb_ = 0;
+      loadParameter<int>(ar, "hasCoulomb", hasCoulomb_, false);
+      #endif
       #ifdef INTER_EXTERNAL
-      hasExternal_ = false;
+      hasExternal_ = 0;
       loadParameter<int>(ar, "hasExternal", hasExternal_, false);
       #endif
       #ifdef MCMD_LINK
@@ -319,6 +341,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
+      #endif
+      #ifdef INTER_COULOMB
+      Parameter::saveOptional(ar, hasCoulomb_, hasCoulomb_);
       #endif
       #ifdef INTER_EXTERNAL
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);

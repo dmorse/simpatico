@@ -714,8 +714,6 @@ RECURSIVE              = YES
 EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
                          ../src/tools/hoomd/xmlParser.cpp \
                          ../src/tools/hoomd/ExtractTopologyMain.cpp \
-                         ../src/inter//coulomb \
-                         ../src/mcMd/potentials/coulomb \
                          ../src/mcMd/attic \
                          ../src/ddMd/potentials/coulomb \
                          ../src/ddMd/attic 
@@ -1604,6 +1602,7 @@ PREDEFINED             = UTIL_MPI \
                          INTER_ANGLE \
                          INTER_DIHEDRAL \
                          INTER_EXTERNAL \
+                         INTER_COULOMB \
                          MCMD_LINK \
                          MCMD_PERTURB \
                          DDMD_MODIFIERS 

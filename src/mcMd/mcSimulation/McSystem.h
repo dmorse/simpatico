@@ -10,6 +10,7 @@
 
 #include <mcMd/simulation/System.h>     // base class
 #include <mcMd/neighbor/CellList.h>     // member
+#include <util/signal/Signal.h>         // members
 #include <util/global.h>
 
 namespace McMd
@@ -29,6 +30,9 @@ namespace McMd
    #endif
    #ifdef INTER_DIHEDRAL
    class DihedralPotential;
+   #endif
+   #ifdef INTER_COULOMB
+   class CoulombPotential;
    #endif
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
@@ -147,7 +151,20 @@ namespace McMd
       template <typename T>
       void computeStress(T& stress) const;
 
-      // ----------------------------------------------------------------------
+      /**
+      * Unset potential precomputed potential energy components.
+      */
+      void unsetPotentialEnergies();
+
+      /**
+      * Unset precomputed virial stress components.
+      */
+      void unsetVirialStress();
+
+      //@}
+      /// \name Potential Energy Accessors
+      //@{
+
 
       #ifndef INTER_NOPAIR
       /**
@@ -193,6 +210,18 @@ namespace McMd
       DihedralPotential& dihedralPotential() const;
       #endif
 
+      #ifdef INTER_COULOMB
+      /**
+      * Does a Coulomb potential exist?.
+      */
+      bool hasCoulombPotential() const;
+
+      /**
+      * Return CoulombPotential by reference.
+      */
+      CoulombPotential& coulombPotential() const;
+      #endif
+
       #ifdef MCMD_LINK
       /**
       * Does a link potential exist?.
@@ -225,11 +254,20 @@ namespace McMd
       #endif
 
       //@}
+      /// \name Miscellaneous
+      //@{
+
+      /**
+      * Signal to indicate change in atomic positions.
+      */
+      Signal<>& positionSignal();
 
       /**
       * Return true if McSystem is valid, or throw Exception.
       */
       virtual bool isValid() const;
+
+      //@}
 
    protected:
 
@@ -272,6 +310,11 @@ namespace McMd
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
+      #ifdef INTER_COULOMB
+      /// Pointer to a CoulombPotential. 
+      CoulombPotential* coulombPotentialPtr_;
+      #endif
+
       #ifdef MCMD_LINK
       /// Pointer to the McLinkPotential.
       BondPotential* linkPotentialPtr_;
@@ -286,6 +329,12 @@ namespace McMd
       /// Pointer to an TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
+
+      /// Signal to indicate change in atomic positions.
+      Signal<>  positionSignal_;
+
+      /// Signal to indicate change in atomic velocities.
+      Signal<>  velocitySignal_;
 
       /*
       * Implementations of the explicit specializations of the public
@@ -314,7 +363,10 @@ namespace McMd
    * Return the McPairPotential by reference.
    */
    inline McPairPotential& McSystem::pairPotential() const
-   {  return *pairPotentialPtr_; }
+   {  
+      assert(pairPotentialPtr_);
+      return *pairPotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_BOND
@@ -328,7 +380,10 @@ namespace McMd
    * Return the BondPotential by const reference.
    */
    inline BondPotential& McSystem::bondPotential() const
-   {  return *bondPotentialPtr_; }
+   {  
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_ANGLE
@@ -342,7 +397,10 @@ namespace McMd
    * Return angle potential by reference.
    */
    inline AnglePotential& McSystem::anglePotential() const
-   {  return *anglePotentialPtr_; }
+   {  
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_; 
+   }
    #endif
 
    #ifdef INTER_DIHEDRAL
@@ -356,7 +414,27 @@ namespace McMd
    * Return dihedral potential by reference.
    */
    inline DihedralPotential& McSystem::dihedralPotential() const
-   {  return *dihedralPotentialPtr_; }
+   {  
+      assert(anglePotentialPtr_);
+      return *dihedralPotentialPtr_; 
+   }
+   #endif
+
+   #ifdef INTER_COULOMB
+   /*
+   * Does a Coulomb potential exist?
+   */
+   inline bool McSystem::hasCoulombPotential() const
+   {  return bool(coulombPotentialPtr_); }
+
+   /*
+   * Return Coulomb potential by reference.
+   */
+   inline CoulombPotential& McSystem::coulombPotential() const
+   {  
+      assert(coulombPotentialPtr_);  
+      return *coulombPotentialPtr_; 
+   }
    #endif
 
    #ifdef MCMD_LINK
@@ -402,6 +480,12 @@ namespace McMd
    inline void McSystem::setPairPotential(McPairPotential* pairPotentialPtr)
    {  pairPotentialPtr_ = pairPotentialPtr; }
    #endif
+
+   /*
+   * Signal to indicate change in atomic positions.
+   */
+   inline Signal<>& McSystem::positionSignal()
+   { return positionSignal_; }
 
 }
 #endif

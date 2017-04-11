@@ -65,6 +65,9 @@ namespace McMd
    #ifdef INTER_DIHEDRAL
    class DihedralPotential;
    #endif
+   #ifdef INTER_COULOMB
+   class CoulombFactory;
+   #endif
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
@@ -440,6 +443,18 @@ namespace McMd
       * Return dihedral potential style string.
       */
       std::string dihedralStyle() const;
+      #endif
+
+      #ifdef INTER_COULOMB
+      /**
+      * Get the associated Coulomb Factory by reference.
+      */
+      CoulombFactory& coulombFactory();
+
+      /**
+      * Return coulomb potential style string.
+      */
+      std::string coulombStyle() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -832,6 +847,11 @@ namespace McMd
       Factory<DihedralPotential>* dihedralFactoryPtr_;
       #endif
   
+      #ifdef INTER_COULOMB
+      /// Pointer to CoulombPotential Factory
+      CoulombFactory*  coulombFactoryPtr_;
+      #endif
+  
       #ifdef INTER_EXTERNAL
       /// Pointer to ExternalPotential factory
       Factory<ExternalPotential>* externalFactoryPtr_;
@@ -893,6 +913,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
+      #endif
+
+      #ifdef INTER_COULOMB
+      /// Name of coulomb potential style.
+      std::string coulombStyle_;
       #endif
 
       #ifdef INTER_EXTERNAL

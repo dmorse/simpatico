@@ -27,7 +27,6 @@
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
 #include <util/misc/Log.h>
-//#include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/misc/ioUtil.h>
 #include <util/misc/Timer.h>
@@ -364,7 +363,9 @@ namespace McMd
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
                fileMaster().openInputFile(filename, inputFile);
+               std::cout << "Opened config file" << std::endl;
                system().readConfig(inputFile);
+               std::cout << "Finished reading config file" << std::endl;
                inputFile.close();
             } else
             if (command == "THERMALIZE") {
@@ -559,6 +560,11 @@ namespace McMd
       } else {
          iStep_ = 0;
          system().shiftAtoms();
+         #ifdef UTIL_COULOMB
+         if (system().hasCoulombPotential()) {
+            system().coulombPotential().makeWaves();
+         }
+         #endif
          system().calculateForces();
          analyzerManager().setup();
          system_.mdIntegrator().setup();
@@ -595,7 +601,6 @@ namespace McMd
 
          // Take one MD step with the MdIntegrator
          system_.mdIntegrator().step();
-
       }
       timer.stop();
       double time  = timer.time();
