@@ -170,8 +170,8 @@ namespace McMd
 
          #ifdef INTER_EXTERNAL
          if (system().hasExternalPotential()) {
-            trialEnergy += system().externalPotential()
-                                   .atomEnergy(*endPtr);
+            trialEnergy += 
+               system().externalPotential().atomEnergy(*endPtr);
          }
          #endif
 
@@ -253,7 +253,10 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         trialEnergy[iTrial] += system().externalPotential().atomEnergy(*endPtr);
+         if (system().hasExternalPotential()) {
+            trialEnergy[iTrial] += 
+                system().externalPotential().atomEnergy(*endPtr);
+         }
          #endif
 
          trialProb[iTrial] = boltzmann(trialEnergy[iTrial]);

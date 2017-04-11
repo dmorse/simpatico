@@ -96,7 +96,9 @@ namespace McMd
          oldEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
          #ifdef INTER_EXTERNAL
-         oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         if (system().hasExternalPotential()) {
+            oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
          #endif
          #ifdef INTER_TETHER
          oldEnergy += system().atomTetherEnergy(*atomPtr);
@@ -118,7 +120,9 @@ namespace McMd
          newEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
          #ifdef INTER_EXTERNAL
-         newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         if (system().hasExternalPotential()) {
+            newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
          #endif
          #ifdef INTER_TETHER
          newEnergy += system().atomTetherEnergy(*atomPtr);
