@@ -22,11 +22,12 @@ namespace McMd
    /**
    * A move that swaps the ends of a linear hetero-polymer.
    *
-   * This move changes the energy if of a linear heteropolymer 
-   * by reversing the sequence of atom types. When applied to
-   * a diblock copolymer, is swaps the A and B blocks. It is
-   * pointless if applied to a homopolymer, or to a symmetric
-   * ABA triblock. 
+   * This move changes the energy if of a linear heteropolymer by
+   * reversing the sequence of atom types. When applied to a diblock
+   * copolymer, it swaps the A and B blocks.
+   *
+   * Limitation: This implementation only works with flexible chains,
+   * with no angle or dihedral potentials.
    *
    * \sa \ref mcMd_mcMove_EndSwapMove_page "parameter file format"
    *
@@ -34,19 +35,19 @@ namespace McMd
    */
    class EndSwapMove : public SystemMove
    {
-   
+
    public:
-   
+
       /**
-      * Constructor. 
+      * Constructor.
       */
       EndSwapMove(McSystem& system);
-   
+
       /**
       * Read species to which displacement is applied.
       */
       virtual void readParameters(std::istream& in);
-   
+
       /**
       * Load internal state from an archive.
       *
@@ -62,22 +63,22 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Generate and accept or reject configuration bias move
+      * Generate and accept or reject a move
       */
       virtual bool move();
-   
+
    protected:
-   
+
       /// Integer index for molecular species.
       int speciesId_;
 
       /// Array of atom type indices
       DArray<int> atomTypeIds_;
- 
+
       /// Array of atomic positions (temporary).
       DArray<Vector> positions_;
- 
+
    };
 
-}      
+}
 #endif
