@@ -27,6 +27,13 @@ namespace McMd
    * molecule. These are the building blocks of configuration bias
    * regrowth and reptation algorithms for linear chains.
    *
+   * Limitations: The current implementation works with model with 
+   * external and angle potentials, but does not yet work with
+   * dihedral potentials. The treatment of angle potentials does
+   * not use the angle potential to bias the choice of trial bond
+   * orientations, and so is not efficient for strong angle 
+   * potentials. 
+   *
    * \ingroup McMd_McMove_Module 
    */
    class CfbLinear : public SystemMove
