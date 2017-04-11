@@ -24,9 +24,9 @@ McSimulation{
     pairStyle               LJPair
     bondStyle               HarmonicBond
     McPairPotential{
-      epsilon               1.000000000000e+00  
-      sigma                 1.000000000000e+00  
-      cutoff                1.122460000000e+00  
+      epsilon               1.000000000000e+00
+      sigma                 1.000000000000e+00
+      cutoff                1.122460000000e+00
     }
     BondPotential{
       kappa                 2.000000000000e+03
@@ -119,19 +119,19 @@ McSimulation{
       nSamplePerBlock                     10
     }
 
-    McPressureAverage{
-      interval                          1000
-      outputFileName             pressureAve
-      nSamplePerBlock                      1
-    }
-
     McPairEnergyAverage{
       interval                          1000
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           all  -1  -1
     }
-   
+
+    McPressureAverage{
+      interval                          1000
+      outputFileName             pressureAve
+      nSamplePerBlock                     10
+    }
+
     RadiusGyration{
       interval                          1000
       outputFileName          RadiusGyration
@@ -152,7 +152,7 @@ McSimulation{
       outputFileName      IntraPairAutoCorr
       speciesId                           0
       atom1Id                             0
-      atom2Id                             7 
+      atom2Id                             7
       capacity                         1000
     }
 

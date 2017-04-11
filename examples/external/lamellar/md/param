@@ -25,9 +25,9 @@ MdSimulation{
     seed                           13741892
   }
   MdSystem{
-    pairStyle                        LJPair
-    bondStyle                  HarmonicBond 
-    externalStyle        TanhCosineExternal
+    pairStyle                   LJPair
+    bondStyle                   HarmonicBond 
+    externalStyle               LamellarOrderingExternal
     MdPairPotential{
       epsilon               1.000000000000e+00  1.000000000000e+00
                             1.000000000000e+00  1.000000000000e+00
@@ -83,15 +83,6 @@ MdSimulation{
       speciesId                            0
     }
 
-    CompositionProfile{
-       interval                          1000
-       outputFileName           CompositionProfile
-       nDirections                        3
-       intVectors                    0  0  1
-                                     1  0  0
-                                     0  1  0
-    }
-
     StructureFactorGrid{
       interval                           1000
       outputFileName         StructureFactorGrid
@@ -135,5 +126,14 @@ MdSimulation{
       outputFileName                pairEnergy
       nSamplePerBlock                        1
       selector                             All         0         1
+    }
+
+    CompositionProfile{
+       interval                          1000
+       outputFileName           CompositionProfile
+       nDirection                          3
+       intVectors                    0  0  1
+                                     1  0  0
+                                     0  1  0
     }
 

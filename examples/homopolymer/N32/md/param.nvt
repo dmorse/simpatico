@@ -61,6 +61,24 @@ MdSimulation{
       outputFileName                  energy
     }
 
+    MdPotentialEnergyAverage{
+      interval                           100
+      outputFileName            potentialAve
+      nSamplePerBlock                     10
+    }
+
+    MdKineticEnergyAverage{
+      interval                           100
+      outputFileName              kineticAve
+      nSamplePerBlock                     10
+    }
+
+    MdPressureAverage{
+      interval                           100
+      outputFileName             pressureAve
+      nSamplePerBlock                     10
+    }
+
     RadiusGyration{
       interval                           100
       outputFileName          RadiusGyration
