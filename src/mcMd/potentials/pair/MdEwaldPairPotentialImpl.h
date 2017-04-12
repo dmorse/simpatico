@@ -456,7 +456,8 @@ namespace McMd
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
 
-         rsq = boundary().distanceSq(atom0Ptr->position(), atom1Ptr->position());
+         rsq = boundary().distanceSq(atom0Ptr->position(), 
+                                     atom1Ptr->position());
          if (rsq < ewaldCutoff) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
@@ -470,9 +471,9 @@ namespace McMd
          }
       }
 
+      // Set energy accumulators
       energy_.set(pEnergy); 
-      //fourpiepsi_ is prefactor of rpart coulomb energy.
-      rSpaceAccumulatorPtr_->rSpaceEnergy_.set(fourpiepsi_ * 0.5 * cEnergy);
+      rSpaceAccumulatorPtr_->rSpaceEnergy_.set(cEnergy);
    }
 
    /*

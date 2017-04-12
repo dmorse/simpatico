@@ -93,8 +93,8 @@ namespace McMd
       /**
       * Returns interaction energy for a single pair of atoms. 
       *
-      * \param rsq square of distance between atoms
-      * \return    pair interaction energy
+      * \param rsq  square of distance between atoms
+      * \return  pair interaction energy
       */
       double rSpaceEnergy(double rSq, double qProduct) const;
 
@@ -105,7 +105,6 @@ namespace McMd
       * \return    pair interaction energy
       */
       double kSpacePotential(double rhoSq, double prefactor) const;
-  
 
       /**
       * Returns ratio of scalar pair interaction force to pair separation.
@@ -156,7 +155,6 @@ namespace McMd
       * \return    kCutoffSq_
       */
       double kSpaceCutoffSq() const;
- 
  
       /**
       * Get Ewald paramter alpha.
@@ -248,16 +246,16 @@ namespace McMd
    inline double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) const 
    {
       double r = sqrt(rsq);
-      return  (qProduct * erfc(alpha_*r) / r);
+      return  fourpiepsi_ * qProduct * erfc(alpha_*r) / r;
    }
 
-   /* 
+   /*
    * Calculate r-space force/distance for a pair of charges.
    */
    inline double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
    {
       double r = sqrt(rSq);
-      return fourpiepsi_*qProduct*( erfc(alpha_*r) + twoalpha_*r*exp(-alpha_*alpha_*rSq)) / (r*rSq); 
+      return fourpiepsi_*qProduct*(erfc(alpha_*r) + twoalpha_*r*exp(-alpha_*alpha_*rSq))/(r*rSq); 
    }
 
    /* 
