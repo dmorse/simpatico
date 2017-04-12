@@ -12,12 +12,12 @@ MdSimulation{
   SpeciesManager{
 
     Point{
-      moleculeCapacity                      40 
+      moleculeCapacity                      400 
       type                                   0
     }
 
     Point{
-      moleculeCapacity                      40 
+      moleculeCapacity                      400 
       type                                   1
     }
 
@@ -31,20 +31,20 @@ MdSimulation{
     coulombStyle                      Ewald
     CoulombPotential{
       epsilon               1.000000000000e+00
-      alpha                 2.500000000000e+00
-      rSpaceCutoff          1.800000000000e+00
-      kSpaceCutoff          1.200000000000e+01
+      alpha                 1.000000000000e+00
+      rSpaceCutoff          3.500000000000e+00
+      kSpaceCutoff          5.000000000000e+00
     }
     MdPairPotential{
-      epsilon               1.000000000000e+00 1.300000000000e+00
-                            1.300000000000e+00 1.000000000000e+00
+      epsilon               1.000000000000e+00 1.000000000000e+00
+                            1.000000000000e+00 1.000000000000e+00
       sigma                 1.000000000000e+00 1.000000000000e+00
                             1.000000000000e+00 1.000000000000e+00
       cutoff                1.122460000000e+00 1.122460000000e+00
                             1.122460000000e+00 1.122460000000e+00 
       PairList{
         atomCapacity                        1000
-        pairCapacity                        5000
+        pairCapacity                      200000
         skin                  2.500000000000e-01
       }
     }
@@ -53,37 +53,39 @@ MdSimulation{
       length                1.000000000000e+00
     }
     EnergyEnsemble{
-      type                           adiabatic
+      type                          isothermal
+      temperature                       1.0000
     }
     BoundaryEnsemble{
       type                               rigid
     }
-    NveVvIntegrator{
-       dt                   1.000000000000e-03
+    NvtNhIntegrator{
+       dt                   5.000000000000e-03
+       tauT                         0.50000000
     }
   }
   AnalyzerManager{
-    baseInterval                          100
+    baseInterval                          20
 
     LogProgress{
-      interval                            100
+       interval                           20
     }
 
     MdEnergyOutput{
-      interval                            100
-      outputFileName                   energy
+      interval                           100
+      outputFileName                  energy
     }
+
     ConfigWriter{
-      interval                          10000
+      interval                           100          
       outputFileName              config.
     }
   }
-  saveInterval                   200
+  saveInterval                  5000
   saveFileName               restart
 }
 
-
     ConfigWriter{
-      interval                           4000
-      outputFileName              dump/config.
+      interval                           20000
+      outputFileName              config.
     }

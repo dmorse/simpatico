@@ -43,7 +43,11 @@ namespace McMd
    public:
 
       /// Maximum number of atoms per cell.
+      #ifdef INTER_COULOMB
+      static const int MaxAtomCell = 253; 
+      #else
       static const int MaxAtomCell = 61; 
+      #endif
    
       /// A null (uninitialized) index value.
       static const int NullIndex   = -1; 
