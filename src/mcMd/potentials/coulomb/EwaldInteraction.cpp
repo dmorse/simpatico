@@ -47,8 +47,8 @@ namespace McMd
       kSpaceCutoffSq_ = other.kSpaceCutoffSq_;
 
       /// Prefactors for real space energy.
-      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
+      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
    }
    
    /* 
@@ -56,18 +56,18 @@ namespace McMd
    */
    EwaldInteraction& EwaldInteraction::operator = (const EwaldInteraction& other)
    {
-      epsilon_        = other.epsilon_;
-      alpha_          = other.alpha_;
-      rSpaceCutoff_   = other.rSpaceCutoff_;
-      kSpaceCutoff_   = other.kSpaceCutoff_;
-      isInitialized  = other.isInitialized;
+      epsilon_ = other.epsilon_;
+      alpha_ = other.alpha_;
+      rSpaceCutoff_ = other.rSpaceCutoff_;
+      kSpaceCutoff_ = other.kSpaceCutoff_;
+      isInitialized = other.isInitialized;
 
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
       kSpaceCutoffSq_ = other.kSpaceCutoffSq_;
 
-      /// prefactors for real space energy.
-      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
+      // Derived constants
+      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
  
       return *this;
    }
@@ -82,12 +82,11 @@ namespace McMd
       read<double>(in, "rSpaceCutoff", rSpaceCutoff_);
       read<double>(in, "kSpaceCutoff", kSpaceCutoff_);
 
+      // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
       kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
-
-      /// Prefactors for real space energy.
-      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
+      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
  
       isInitialized = true;
    }
@@ -103,12 +102,11 @@ namespace McMd
       loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
       loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
 
+      // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
       kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
-
-      /// Compute prefactors for real space energy and force
-      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
+      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
  
       isInitialized = true;
    }
@@ -149,8 +147,8 @@ namespace McMd
       kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_;
 
       /// Compute prefactors for real space energy and force
-      fourpiepsi_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      twoalpha_ = 2.0*alpha_/sqrt(Constants::Pi);
+      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
+      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
    }
 
    /*

@@ -192,8 +192,8 @@ namespace McMd
       double kSpaceCutoffSq_;   ///< Reciprocal space cutoff.
 
       /// prefactors for real space potential
-      double fourpiepsi_;
-      double twoalpha_;
+      double ce_;
+      double cf_;
 
       /**
       * Was this object initialized by calling (read|load)Parameters ?
@@ -246,7 +246,7 @@ namespace McMd
    inline double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) const 
    {
       double r = sqrt(rsq);
-      return  fourpiepsi_ * qProduct * erfc(alpha_*r) / r;
+      return ce_*qProduct*erfc(alpha_*r)/r;
    }
 
    /*
@@ -255,7 +255,8 @@ namespace McMd
    inline double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
    {
       double r = sqrt(rSq);
-      return fourpiepsi_*qProduct*(erfc(alpha_*r) + twoalpha_*r*exp(-alpha_*alpha_*rSq))/(r*rSq); 
+      double x = alpha_*r;
+      return ce_*qProduct*(erfc(x) + cf_*r*exp(-x*x))/(r*rSq); 
    }
 
    /* 
