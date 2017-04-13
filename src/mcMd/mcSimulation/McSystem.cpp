@@ -501,6 +501,11 @@ namespace McMd
           bondPotential().unsetEnergy();
       }
       #endif
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential()) {
+          anglePotential().unsetEnergy();
+      }
+      #endif
    }
 
    // -------------------------------------------------------------
@@ -624,6 +629,11 @@ namespace McMd
       #ifdef INTER_BOND
       if (hasBondPotential()) {
           bondPotential().unsetStress();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential()) {
+          anglePotential().unsetStress();
       }
       #endif
    }
