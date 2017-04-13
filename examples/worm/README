@@ -3,12 +3,19 @@ wormlike chains of 8 atoms.
 
 These simulations all require versions of the main programs
 that have been compiled with angle potentials enabled. These
- created by cd'ing to bld/parallel, for parallel programs, 
-or bld/serial, for serial programs, and entering
+ created by cd'ing to bld/parallel, for parallel programs, or 
+bld/serial, for serial programs, and entering
 
 > ./configure -a1 
 
-before recompiling. The examples will also run with programs
-in which other optional features (e.g., dihedrals or external
-potentials) have also been enabled. 
+before recompiling. To compile in source (i.e., within the
+src/ directory) enter the same command from that directory
+before recompiling. The names of the resulting executables
+(installed in simpatico/bin by default) should include a
+"_a" suffix to indicate that angles have been enabled, giving,
+e.g., mcSim_a or ddSim_a.  The examples will also run with 
+programs in which other optional features (e.g., dihedrals 
+or external potentials) have also been enabled at compile
+time, though not invoked in the parameter file for this
+example.
 

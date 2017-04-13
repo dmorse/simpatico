@@ -78,6 +78,12 @@ MdSimulation{
       nSamplePerBlock                   10
     }
 
+    MdPressureAverage{
+      interval                         100
+      outputFileName              pressure 
+      nSamplePerBlock                   10
+    }
+
   }
   saveInterval                      1000
   saveFileName                   restart
