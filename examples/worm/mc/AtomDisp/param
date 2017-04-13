@@ -57,39 +57,45 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                    100000
+    baseInterval                   100000
 
     LogProgress{
-      interval                      200000
+      interval                     200000
     }
 
     McEnergyAverage{
-      interval                      200000
-      outputFileName                energy
-      nSamplePerBlock                   10
+      interval                     200000
+      outputFileName               energy
+      nSamplePerBlock                  10
     }
     
     McPairEnergyAverage{
-      interval                      200000
-      outputFileName               pairEnergy
-      nSamplePerBlock                   10
-      selector                    inter -1 -1
+      interval                     200000
+      outputFileName           pairEnergy
+      nSamplePerBlock                  10
+      selector                inter -1 -1
     }
     
+    McPressureAverage{
+      interval                     200000
+      outputFileName             pressure 
+      nSamplePerBlock                  10
+    }
+
     RadiusGyration{
-      interval                      200000
-      outputFileName              RgSq
-      nSamplePerBlock               10
-      speciesId                     0
+      interval                     200000
+      outputFileName                 RgSq
+      nSamplePerBlock                  10
+      speciesId                         0
     }
 
     IntraPairAutoCorr{
-      interval                  4000000
-      outputFileName        IntraPairAutoCorr
-      speciesId                      0
-      atom1Id                        0
-      atom2Id                        7
-      capacity                     500
+      interval                    4000000
+      outputFileName    IntraPairAutoCorr
+      speciesId                         0
+      atom1Id                           0
+      atom2Id                           7
+      capacity                        500
     }
   }
   saveInterval                  400000
