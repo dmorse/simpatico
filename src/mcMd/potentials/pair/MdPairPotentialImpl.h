@@ -10,6 +10,7 @@
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
+#include <mcMd/simulation/stress.h>
 #include <util/space/Tensor.h>
 #include <util/misc/Setable.h>
 #include <util/global.h>
@@ -166,6 +167,12 @@ namespace McMd
 
       Interaction& interaction() const
       {  return *interactionPtr_; }
+
+      /*
+      * Generalized stress computation.
+      */
+      template <typename T>
+      void computeStressImpl(T& stress);
 
    private:
 
@@ -378,8 +385,52 @@ namespace McMd
    * Compute all short-range pair contributions to stress.
    */
    template <class Interaction>
+   template <typename T>
+   void MdPairPotentialImpl<Interaction>::computeStressImpl(T& stress)
+   {
+      // Update PairList if necessary
+      if (!isPairListCurrent()) {
+         buildPairList();
+      }
+
+      Vector dr;
+      Vector force;
+      double rsq;
+      PairIterator iter;
+      Atom* atom1Ptr;
+      Atom* atom0Ptr;
+      int type0, type1;
+
+      // Set all elements of stress tensor to zero.
+      setToZero(stress);
+
+      // Loop over nonbonded neighbor pairs
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+         iter.getPair(atom0Ptr, atom1Ptr);
+         rsq = boundary().
+               distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
+         type0 = atom0Ptr->typeId();
+         type1 = atom1Ptr->typeId();
+         if (rsq < interaction().cutoffSq(type0, type1)) {
+            force  = dr;
+            force *= interaction().forceOverR(rsq, type0, type1);
+            incrementPairStress(force, dr, stress);
+         }
+      }
+
+      // Normalize by volume
+      stress /= boundary().volume();
+      normalizeStress(stress);
+
+   }
+
+   /*
+   * Compute all short-range pair contributions to stress.
+   */
+   template <class Interaction>
    void MdPairPotentialImpl<Interaction>::computeStress()
    {
+      #if 0
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -410,11 +461,12 @@ namespace McMd
             incrementPairStress(force, dr, stress);
          }
       }
+      #endif
 
-      // Normalize by volume
-      stress /= boundary().volume();
-      normalizeStress(stress);
+      Tensor stress;
+      computeStressImpl(stress);
 
+      // Set value of Setable<double> energy_ 
       stress_.set(stress);
    }
 
