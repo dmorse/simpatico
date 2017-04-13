@@ -144,21 +144,13 @@ namespace McMd
       /// \name Global force and energy calculators
       //@{
 
-
        // Force evaluation, which adds both types of pair force.
       virtual void addForces();
-
-      /** 
-      * Functions computeEnergy() and computeStress compute both
-      * non-Coulombic pair and short-range coulombic pair energy
-      * or stress contributions, respectively, but stores them in
-      * in different accumulator variables.
-      */
 
       /**
       * Unset both energy accumulators.
       */
-      void unsetEnergy();
+      virtual void unsetEnergy();
 
       /**
       * Compute and store all short-range pair energies.
@@ -168,7 +160,7 @@ namespace McMd
       /**
       * Unset both stress accumulators.
       */
-      void unsetStress();
+      virtual void unsetStress();
 
       /**
       * Compute and store all short-range pair stress contributions.
@@ -176,16 +168,6 @@ namespace McMd
       virtual void computeStress();
 
       //@}
-
-      double rSpaceEnergy() const
-      { return rSpaceAccumulatorPtr_->rSpaceEnergy_.value(); }
-
-      // Get non-coulombic pair stress.
-      Tensor stress()
-      { return pairStress_.value(); }
-
-      // Get non-coulombic pair pressure.
-      double pressure();
 
    private:
 
@@ -200,13 +182,7 @@ namespace McMd
 
       const Array<AtomType>* atomTypesPtr_;
 
-      // Non-Coulomb pair accumulators
-      Setable<Tensor> pairStress_; 
-
-      // Prefactor for coulomb part.
-      double fourpiepsi_;
-
-      bool            isCopy_;
+      bool isCopy_;
    };
 }
 
@@ -297,8 +273,6 @@ namespace McMd
       // Initialize the PairList 
       pairList_.initialize(simulation().atomCapacity(), cutoff);
 
-      //Initialize prefactor for coulomb part.
-      fourpiepsi_ = 1.0 / (4.0*Constants::Pi*ewaldInteractionPtr_->epsilon()) ; 
    }
 
    /*
@@ -319,8 +293,6 @@ namespace McMd
                  pairPtr_->maxPairCutoff())
       loadParamComposite(ar, pairList_);
 
-      //Initialize prefactor for coulomb part.
-      fourpiepsi_ = 1.0 / (4.0*Constants::Pi*ewaldInteractionPtr_->epsilon()) ; 
    }
 
    /*
@@ -434,9 +406,6 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeEnergy()
    {
-      // If the pair energy is already known, do nothing and return.
-      //if (energy_.isSet()) return;
-
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -482,7 +451,7 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::unsetStress()
    { 
-      pairStress_.unset(); 
+      stress_.unset(); 
       rSpaceAccumulatorPtr_->rSpaceStress_.unset(); 
    }
 
@@ -545,7 +514,7 @@ namespace McMd
       normalizeStress(pStress);
       normalizeStress(cStress);
 
-      pairStress_.set(cStress);
+      stress_.set(pStress);
       rSpaceAccumulatorPtr_->rSpaceStress_.set(cStress);
    }
 

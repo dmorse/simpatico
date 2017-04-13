@@ -8,10 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/space/Tensor.h>
 #include <util/misc/Setable.h>
-#include <util/global.h>
-#include <string>
 
 namespace McMd
 {
@@ -31,7 +28,7 @@ namespace McMd
       /**
       * Mark the energy as unknown.
       */
-      virtual void unsetEnergy();
+      void unsetEnergy();
 
       /**
       * Calculate the total nonBonded pair energy for the associated System.

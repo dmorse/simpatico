@@ -496,6 +496,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotential().unsetEnergy();
       #endif
+      #ifdef INTER_BOND
+      if (hasBondPotential()) {
+          bondPotential().unsetEnergy();
+      }
+      #endif
    }
 
    // -------------------------------------------------------------
@@ -615,6 +620,11 @@ namespace McMd
    {
       #ifndef INTER_NOPAIR
       pairPotential().unsetStress();
+      #endif
+      #ifdef INTER_BOND
+      if (hasBondPotential()) {
+          bondPotential().unsetStress();
+      }
       #endif
    }
 

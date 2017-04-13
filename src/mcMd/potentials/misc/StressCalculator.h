@@ -34,7 +34,7 @@ namespace McMd
       /**
       * Mark the stress as unknown.
       */
-      virtual void unsetStress();
+      void unsetStress();
 
       /**
       * Compute the stress Tensor
@@ -49,7 +49,7 @@ namespace McMd
       *
       * \param stress (output) pair stress tensor
       */
-      virtual void computeStress(Tensor& stress);
+      void computeStress(Tensor& stress);
 
       /**
       * Compute and return xx, yy, zz non-Coulomb pair pressures.
@@ -59,7 +59,7 @@ namespace McMd
       *
       * \param pressures (output) diagonal pair stress components
       */
-      virtual void computeStress(Vector& pressures);
+      void computeStress(Vector& pressures);
 
       /**
       * Compute and return scalar (non-Coulomb) pair pressure.
@@ -69,7 +69,7 @@ namespace McMd
       *
       * \param pressure (output) scalar pair pressure.
       */
-      virtual void computeStress(double& pressure);
+      void computeStress(double& pressure);
 
       //@}
 

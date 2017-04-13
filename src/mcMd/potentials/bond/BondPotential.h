@@ -8,7 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>   // base class
+#include <util/param/ParamComposite.h>               // base class
+#include <mcMd/potentials/misc/EnergyCalculator.h>   // base class
+#include <mcMd/potentials/misc/StressCalculator.h>   // base class
 
 #include <string>
 
@@ -31,7 +33,8 @@ namespace McMd
    *
    * \ingroup McMd_Bond_Module
    */
-   class BondPotential : public ParamComposite
+   class BondPotential : public ParamComposite, 
+                         public EnergyCalculator, public StressCalculator
    {
 
    public:
@@ -57,6 +60,9 @@ namespace McMd
       */
       virtual double energy(double rSq, int type) const = 0;
    
+      // Prevent hiding of inherited function energy();
+      using EnergyCalculator::energy;
+    
       /**
       * Returns force/distance for one bond, for use in MD.
       *
@@ -123,34 +129,7 @@ namespace McMd
       * Add bond forces to all atomic forces.
       */
       virtual void addForces() = 0;
-      //{  UTIL_THROW("Unimplemented method"); }
 
-      /**
-      * Calculate the total nonBonded pair energy for the associated System.
-      */
-      virtual double energy() const = 0;
-
-      /**
-      * Compute total nonbonded pressure
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const = 0;
-
-      /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const = 0;
-
-      /**
-      * Compute stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const = 0;
-    
       //@}
 
    };
