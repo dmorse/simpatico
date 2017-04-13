@@ -24,12 +24,12 @@ namespace McMd
    */
    void StressCalculator::computeStress(Tensor& stress)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }
 
-      // Get pair stress tensor
+      // Get full stress tensor
       stress = stress_.value();
    }
 
@@ -38,23 +38,23 @@ namespace McMd
    */
    void StressCalculator::computeStress(Vector& pressures)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }
 
-      // Get diagonal components of pair stress.
+      // Get diagonal components of stress tensor (pressures)
       for (int i=0; i < Dimension; ++i) {
          pressures[i] = stress_.value()(i, i);
       }
    }
 
    /*
-   * Get the nonbonded pressure
+   * Get the isotropic pressure = Tr(stress)/3
    */
    void StressCalculator::computeStress(double& pressure)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }

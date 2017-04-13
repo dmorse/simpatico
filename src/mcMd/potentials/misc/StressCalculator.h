@@ -11,8 +11,7 @@
 #include <util/space/Tensor.h>
 #include <util/misc/Setable.h>
 
-namespace Util
-{
+namespace Util {
    class Vector;
 }
 
@@ -34,10 +33,10 @@ namespace McMd
       /**
       * Mark the stress as unknown.
       */
-      void unsetStress();
+      virtual void unsetStress();
 
       /**
-      * Compute the stress Tensor
+      * Compute and store the stress tensor.
       */
       virtual void computeStress() = 0;
 
@@ -52,7 +51,7 @@ namespace McMd
       void computeStress(Tensor& stress);
 
       /**
-      * Compute and return xx, yy, zz non-Coulomb pair pressures.
+      * Get the xx, yy, zz non-Coulomb pair pressures.
       *
       * If necessary, this function calls computeStress() before
       * accessing values.
@@ -62,7 +61,7 @@ namespace McMd
       void computeStress(Vector& pressures);
 
       /**
-      * Compute and return scalar (non-Coulomb) pair pressure.
+      * Get the scalar pressure.
       *
       * If necessary, this function calls computeStress() before
       * accessing values.
