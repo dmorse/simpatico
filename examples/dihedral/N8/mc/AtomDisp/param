@@ -27,10 +27,10 @@ McSimulation{
     seed                          13451892
   }
   McSystem{
-    pairStyle       LJPair
-    bondStyle       HarmonicBond
-    angleStyle      CosineAngle
-    dihedralStyle   CosineDihedral
+    pairStyle                       LJPair
+    bondStyle                 HarmonicBond
+    angleStyle               HarmonicAngle
+    dihedralStyle           CosineDihedral
     McPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -41,10 +41,11 @@ McSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             4.000000000000e+00
+      kappa             20.00000000000e+00
+      theta0            60.00000000000e+00
     }
     DihedralPotential{
-      kappa             4.000000000000e+00
+      kappa             1.000000000000e+00
     }
     EnergyEnsemble{
       type                      isothermal
