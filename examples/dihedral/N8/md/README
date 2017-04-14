@@ -1,11 +1,13 @@
-System:
+System
+------
 
     melt of 100 chains of 8 atoms.
 
     Requires a version of mdSim compiled with angles (-a) and
     dihedrals (-d) enabled.
 
-Usage:
+Usage
+-----
 
 Serial NVE MD simulation:
 
