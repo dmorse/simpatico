@@ -138,34 +138,6 @@ namespace McMd
       */
       virtual void addForces()
       {  UTIL_THROW("Unimplemented method"); }
-
-      #if 0
-      /**
-      * Compute and return the total Dihedral energy for the associated System.
-      */
-      virtual double energy() const = 0;
-
-      /**
-      * Compute total dihedral pressure
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const = 0;
-
-      /**
-      * Compute x, y, z dihedral pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const = 0;
-
-      /**
-      * Compute dihedral stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const = 0;
-      #endif
     
    };
 

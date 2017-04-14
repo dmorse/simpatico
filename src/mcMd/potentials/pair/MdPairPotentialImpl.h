@@ -421,7 +421,6 @@ namespace McMd
       // Normalize by volume
       stress /= boundary().volume();
       normalizeStress(stress);
-
    }
 
    /*
@@ -430,43 +429,10 @@ namespace McMd
    template <class Interaction>
    void MdPairPotentialImpl<Interaction>::computeStress()
    {
-      #if 0
-      // Update PairList if necessary
-      if (!isPairListCurrent()) {
-         buildPairList();
-      }
-
-      Tensor stress;
-      Vector dr;
-      Vector force;
-      double rsq;
-      PairIterator iter;
-      Atom* atom1Ptr;
-      Atom* atom0Ptr;
-      int type0, type1;
-
-      // Set all elements of stress tensor to zero.
-      setToZero(stress);
-
-      // Loop over nonbonded neighbor pairs
-      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         rsq = boundary().
-               distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
-         if (rsq < interaction().cutoffSq(type0, type1)) {
-            force  = dr;
-            force *= interaction().forceOverR(rsq, type0, type1);
-            incrementPairStress(force, dr, stress);
-         }
-      }
-      #endif
-
       Tensor stress;
       computeStressImpl(stress);
 
-      // Set value of Setable<double> energy_ 
+      // Set value of Setable<double> stress_
       stress_.set(stress);
    }
 

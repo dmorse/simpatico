@@ -71,16 +71,16 @@ McSimulation{
     }
 
     McEnergyAverage{
-      interval                      100000
+      interval                       50000
       outputFileName                energy
       nSamplePerBlock                   10
     }
     
     McPairEnergyAverage{
-      interval                      100000
-      outputFileName               pairEnergy
+      interval                       50000
+      outputFileName            pairEnergy
       nSamplePerBlock                   10
-      selector                    inter -1 -1
+      selector                 inter -1 -1
     }
     
     McPressureAverage{
@@ -90,20 +90,12 @@ McSimulation{
     }
     
     RadiusGyration{
-      interval                      200000
-      outputFileName              RgSq
-      nSamplePerBlock               10
-      speciesId                     0
+      interval                       50000
+      outputFileName                  RgSq
+      nSamplePerBlock                   10
+      speciesId                          0
     }
 
-    IntraPairAutoCorr{
-      interval                        4000000
-      outputFileName        IntraPairAutoCorr
-      speciesId                             0
-      atom1Id                               0
-      atom2Id                               7
-      capacity                            500
-    }
   }
   saveInterval         1000000
   saveFileName         restart
@@ -158,3 +150,11 @@ McSimulation{
       }
     }
     
+    IntraPairAutoCorr{
+      interval                        4000000
+      outputFileName        IntraPairAutoCorr
+      speciesId                             0
+      atom1Id                               0
+      atom2Id                               7
+      capacity                            500
+    }

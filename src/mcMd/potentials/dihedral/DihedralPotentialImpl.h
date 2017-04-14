@@ -175,34 +175,6 @@ namespace McMd
       */
       virtual void computeStress();
 
-      #if 0
-      /**
-      * Compute and return total dihedral potential energy of this System.
-      */
-      virtual double energy() const;
-
-      /**
-      * Compute total dihedral pressure
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z dihedral pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute dihedral stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-      #endif
-
       //@}
 
    private:
@@ -494,28 +466,13 @@ namespace McMd
    template <class Interaction>
    void DihedralPotentialImpl<Interaction>::computeStress()
    {
+      // Compute stress tensor
       Tensor stress;
       computeStressImpl(stress);
 
       // Set value of Setable<double> energy_ 
       stress_.set(stress);
    }
-
-   #if 0
-   template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(double& stress) const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
-        const
-   {  computeStressImpl(stress); }
-   #endif
 
    template <class Interaction>
    inline Interaction& DihedralPotentialImpl<Interaction>::interaction()

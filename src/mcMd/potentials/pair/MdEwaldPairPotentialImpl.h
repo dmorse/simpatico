@@ -174,15 +174,22 @@ namespace McMd
       // Pointer to non-Coulombic pair interaction
       Interaction* pairPtr_;
 
-      // Pointers to Ewald Coulomb interaction (owned by Coulomb potential)
+      // Pointer to Ewald Coulomb interaction (owned by MdCoulombPotential)
       EwaldInteraction* ewaldInteractionPtr_;
 
-      // Pointer to EwaldRSpaceAccumulator (owned by Coulomb potential)
+      // Pointer to EwaldRSpaceAccumulator (owned by MdCoulombPotential)
       EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
 
+      // Pointer to array of AtomType objects (contain mass and charge)
       const Array<AtomType>* atomTypesPtr_;
 
+      // True iff this is a copy of an MC pair potential (for hybrid MC).
       bool isCopy_;
+
+      // Get an AtomType
+      const AtomType& atomType(int i)
+      {  return (*atomTypesPtr_)[i]; }
+
    };
 }
 
@@ -494,7 +501,7 @@ namespace McMd
 
             // Non-Coulomb stress
             if (rsq < pairPtr_->cutoffSq(type0, type1)) {
-               force  = dr;
+               force = dr;
                force *= pairPtr_->forceOverR(rsq, type0, type1);
                incrementPairStress(force, dr, pStress);
             }
