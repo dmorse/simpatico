@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                        in/
+    inputPrefix                     ../in/
     outputPrefix                      out/
   }
   nAtomType                              1
@@ -93,6 +93,12 @@ McSimulation{
       outputFileName         pairEnergy
       nSamplePerBlock               10
       selector             inter -1 -1
+    }
+    
+    McPressureAverage{
+      interval                         10
+      outputFileName             pressure
+      nSamplePerBlock                  10
     }
     
     RadiusGyration{

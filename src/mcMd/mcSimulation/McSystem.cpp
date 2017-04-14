@@ -506,6 +506,11 @@ namespace McMd
           anglePotential().unsetEnergy();
       }
       #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential()) {
+          dihedralPotential().unsetEnergy();
+      }
+      #endif
    }
 
    // -------------------------------------------------------------
@@ -634,6 +639,11 @@ namespace McMd
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
           anglePotential().unsetStress();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential()) {
+          dihedralPotential().unsetStress();
       }
       #endif
    }

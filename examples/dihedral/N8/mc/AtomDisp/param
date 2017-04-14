@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                        in/
+    inputPrefix                     ../in/
     outputPrefix                      out/
   }
   nAtomType                              1
@@ -64,23 +64,29 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                    100000
+    baseInterval                     10000
 
     LogProgress{
       interval                      200000
     }
 
     McEnergyAverage{
-      interval                      200000
+      interval                      100000
       outputFileName                energy
       nSamplePerBlock                   10
     }
     
     McPairEnergyAverage{
-      interval                      200000
+      interval                      100000
       outputFileName               pairEnergy
       nSamplePerBlock                   10
       selector                    inter -1 -1
+    }
+    
+    McPressureAverage{
+      interval                       50000
+      outputFileName              pressure
+      nSamplePerBlock                   20
     }
     
     RadiusGyration{

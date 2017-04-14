@@ -9,6 +9,9 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <mcMd/potentials/misc/EnergyCalculator.h>   // base class
+#include <mcMd/potentials/misc/StressCalculator.h>   // base class
+
 #include <string>
 
 namespace Util
@@ -29,7 +32,9 @@ namespace McMd
    *
    * \ingroup McMd_Dihedral_Module
    */
-   class DihedralPotential : public ParamComposite
+   class DihedralPotential : public ParamComposite,
+                             public EnergyCalculator, public StressCalculator
+   
    {
 
    public:
@@ -65,6 +70,9 @@ namespace McMd
       double energy(const Vector& R1, const Vector& R2, const Vector& R3,
                     int type) const = 0;
  
+      // Prevent hiding of inherited function energy();
+      using EnergyCalculator::energy;
+    
       /**
       * Returns derivatives of energy with respect to bond vectors.
       *
@@ -123,11 +131,6 @@ namespace McMd
       }
 
       /**
-      * Compute and return the total Dihedral energy for the associated System.
-      */
-      virtual double energy() const = 0;
-
-      /**
       * Add dihedral potential forces to all atomic forces.
       *
       * Default version throws an exception.This allows testing of subclasses 
@@ -135,6 +138,12 @@ namespace McMd
       */
       virtual void addForces()
       {  UTIL_THROW("Unimplemented method"); }
+
+      #if 0
+      /**
+      * Compute and return the total Dihedral energy for the associated System.
+      */
+      virtual double energy() const = 0;
 
       /**
       * Compute total dihedral pressure
@@ -156,6 +165,7 @@ namespace McMd
       * \param stress (output) pressures.
       */
       virtual void computeStress(Util::Tensor& stress) const = 0;
+      #endif
     
    };
 
