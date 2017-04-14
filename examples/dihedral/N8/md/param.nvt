@@ -65,7 +65,7 @@ MdSimulation{
     }
   }
   AnalyzerManager{
-    baseInterval                       1000
+    baseInterval                       100
 
     LogProgress{
       interval                       10000
@@ -78,20 +78,26 @@ MdSimulation{
       speciesId                          0
     }
 
+    MdEnergyOutput{
+      interval                       10000
+      outputFileName                energy
+    }
+
     MdPotentialEnergyAverage{
-      interval                         1000
-      outputFileName       potentialEnergy
+      interval                        1000
+      outputFileName             potential
       nSamplePerBlock                   10
     }
 
-    MdEnergyOutput{
-      interval                         10000
-      outputFileName        energyOutput
+    MdKineticEnergyAverage{
+      interval                        1000
+      outputFileName         kineticEnergy
+      nSamplePerBlock                   10
     }
 
-    MdKineticEnergyAverage{
-      interval                         1000
-      outputFileName         kineticEnergy
+    MdPressureAverage{
+      interval                         100
+      outputFileName              pressure
       nSamplePerBlock                   10
     }
 
