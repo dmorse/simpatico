@@ -46,13 +46,19 @@ McSimulation{
     baseInterval                          1000
 
     LogProgress{
-      interval                         1000000
+      interval                         5000000
     }
 
     McEnergyAverage{
       interval                           10000
-      outputFileName                 energyAve
+      outputFileName                    energy
       nSamplePerBlock                      100
+    }
+
+    McPressureAverage{
+      interval                           10000
+      outputFileName                  pressure
+      nSamplePerBlock                     1000
     }
 
     BondLengthDist{
