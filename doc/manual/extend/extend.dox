@@ -7,18 +7,22 @@ namespace McMd
 \ref developer_page  (Next)
 <BR>
 
-Users may extend the capabilities of Simpatico by writing new subclasses of a set of base classes that represent elements of a simulation. Different base class are used to represent molecular species, potential energy functions, analyzers, file formats, and Monte Carlo or molecular dynamics algorithms.
+Simpatico is designed to be extensible. Users may extend to any simulation program in the package by writing new C++ classes to implement new capabilities. We will refer to such new classes as "user classes". User classes may define new data analysis algorithms, Monte Carlo moves, molecule dynamics integrators, potential energy functions, molecular species, and file formats. 
 
-The procedure for adding a new capability or algorithm generally involves three steps:
-<ul>
-  <li>Write a new C++ class that implements the new capability. This should be derived from one of the existing base classes. </li>
-  <li>Incorporate the new class into the simpatico build system, so it can be compiled and linked into one or more executables. </li>
-  <li>Modify the implementation of an associated Factory class, so that the parameter file block associated with the new class will be recognized if it appears in a parameter file. 
-</ul>
-For larger projects, one can also  organize a set several related classes that implement related algorithms into a Module. Each of the these procedures is discussed in greater greater detail in the following subpages.
+Most types of new user class must be subclasses of an existing abstract base class that defines the interface for a particular element of a simulation. For example, a class that implements a new Monte Carlo move for the mcSim Monte Carlo program must be defined in the McMd namespace and must be a subclass of the McMd::McMove base class.  User classes are compiled using the same build system as that used to compile the base source code, and are compiled along with the base code. To make that possible, source files for user classes must be placed within one of several special directories within the simpatico src/ directory tree that are provided for this purpose. When a simulation is run, a user class is generally enabled by adding an associated parameter file block at an appropriate location within the simulation parameter file. Thus, for example, the appearance within of the parameter file block for a new subclass of McMove within the McMoveManager block of the parameter file for an mcSim simulation would instruct the mcSim program to add an instance of the new class to the list of Monte Carlo move objects from which it selects at random during the simulation. 
 
+Incorporating a new user class into a simpatico program thus generally involves three steps:
+<ol>
+  <li> Write a new class. In most cases, thus must be a subclass of some existing base class.  </li>
+  <li> Add the new class to the simpatico build system, so that it may be compiled. </li>
+  <li> Enable a simulation program to recognize the associated parameter file block. </li>
+</ol>
+Each of these steps is described in more detail in what follows. A new file can be added to the build system (step 2) simply by adding the name of the source file to a list in a file named "sources.mk" in the directory that contains the source file, as discussed \ref extend_build_page "here".  To enable a simulation program to read the parameter file block associated with a new class, the user must generally modify the behavior of an assocaited Factory class that is responsible for parsing the relevant part of the parameter file. The simplest way to do this is to edit the source code of the Factory class, as discussed \ref extend_factory_page "here".
+
+The following pages describe procedures for adding user classes in more detail.
 <h2> Contents:</h2>
 <ul style="list-style: none;">
+  <li> \subpage extend_overview_page </li>
   <li> \subpage extend_base_page </li>
   <li> \subpage extend_build_page </li>
   <li> \subpage extend_factory_page      </li>
@@ -35,3 +39,5 @@ For larger projects, one can also  organize a set several related classes that i
 */
 
 }
+
+

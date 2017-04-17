@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -698,6 +698,7 @@ namespace McMd
          UTIL_THROW("McSimulation not initialized");
       }
 
+      // Setup before main loop
       if (isContinuation) {
          Log::file() << "Restarting from iStep = " 
                      << iStep_ << std::endl;
@@ -709,17 +710,20 @@ namespace McMd
       int beginStep = iStep_;
       int nStep = endStep - beginStep;
       Log::file() << std::endl;
+      system().positionSignal().notify();
 
       // Main Monte Carlo loop
       Timer timer;
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Analyzers and restart outut
+         // Call analyzers and restart output
          if (Analyzer::baseInterval > 0) {
             if (iStep_ % Analyzer::baseInterval == 0) {
+               system().positionSignal().notify();
                save(saveFileName_);
                analyzerManager().sample(iStep_);
+               system().positionSignal().notify();
             }
          }
 
@@ -732,6 +736,7 @@ namespace McMd
          if (system().hasPerturbation()) {
             if (system().hasReplicaMove()) {
                if (system().replicaMove().isAtInterval(iStep_)) {
+                  system().positionSignal().notify();
                   bool success = system().replicaMove().move();
                   #ifndef INTER_NOPAIR
                   if (success) {
@@ -752,8 +757,10 @@ namespace McMd
       assert(iStep_ == endStep);
       if (Analyzer::baseInterval > 0) {
          if (iStep_ % Analyzer::baseInterval == 0) {
+            system().positionSignal().notify();
             save(saveFileName_);
             analyzerManager().sample(iStep_);
+            system().positionSignal().notify();
          }
       }
 

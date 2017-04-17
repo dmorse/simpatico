@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -170,8 +170,8 @@ namespace McMd
 
          #ifdef INTER_EXTERNAL
          if (system().hasExternalPotential()) {
-            trialEnergy += system().externalPotential()
-                                   .atomEnergy(*endPtr);
+            trialEnergy += 
+               system().externalPotential().atomEnergy(*endPtr);
          }
          #endif
 
@@ -253,7 +253,10 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         trialEnergy[iTrial] += system().externalPotential().atomEnergy(*endPtr);
+         if (system().hasExternalPotential()) {
+            trialEnergy[iTrial] += 
+                system().externalPotential().atomEnergy(*endPtr);
+         }
          #endif
 
          trialProb[iTrial] = boltzmann(trialEnergy[iTrial]);

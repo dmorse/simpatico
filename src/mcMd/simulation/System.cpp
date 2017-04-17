@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -29,6 +29,9 @@
 #endif
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralFactory.h>
+#endif
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/CoulombFactory.h>
 #endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalFactory.h>
@@ -90,6 +93,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
+      #ifdef INTER_COULOMB
+      coulombFactoryPtr_(0),
+      #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(0),
       #endif
@@ -122,6 +128,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombStyle_(),
       #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(),
@@ -177,6 +186,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(other.dihedralFactoryPtr_),
       #endif
+      #ifdef INTER_COULOMB
+      coulombFactoryPtr_(other.coulombFactoryPtr_),
+      #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
       #endif
@@ -209,6 +221,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(other.dihedralStyle_),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombStyle_(other.coulombStyle_),
       #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(other.externalStyle_),
@@ -263,14 +278,19 @@ namespace McMd
             delete dihedralFactoryPtr_;
          }
          #endif
+         #ifdef INTER_COULOMB
+         if (coulombFactoryPtr_) {
+            delete coulombFactoryPtr_;
+         }
+         #endif
          #ifdef INTER_EXTERNAL
          if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
-         if (linkMasterPtr_) {
-            delete linkMasterPtr_;
+         if (linkFactoryPtr_) {
+            delete linkFactoryPtr_;
          }
          #endif
          #ifdef INTER_TETHER
@@ -445,6 +465,11 @@ namespace McMd
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         read<std::string>(in, "coulombStyle", coulombStyle_);
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
@@ -485,6 +510,11 @@ namespace McMd
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         loadParameter<std::string>(ar, "coulombStyle", coulombStyle_);
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
@@ -523,6 +553,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          ar << dihedralStyle_;
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         ar << coulombStyle_;
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -1167,7 +1202,26 @@ namespace McMd
    */
    std::string System::dihedralStyle() const
    {  return dihedralStyle_;  }
+   #endif
 
+   #ifdef INTER_COULOMB
+   /*
+   * Return the CoulombFactory by reference.
+   */
+   CoulombFactory& System::coulombFactory()
+   {
+      if (coulombFactoryPtr_ == 0) {
+         coulombFactoryPtr_ = new CoulombFactory(*this);
+      }
+      assert(coulombFactoryPtr_);
+      return *coulombFactoryPtr_;
+   }
+
+   /*
+   * Get the coulomb style string.
+   */
+   std::string System::coulombStyle() const
+   {  return coulombStyle_;  }
    #endif
 
    #ifdef INTER_EXTERNAL

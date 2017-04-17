@@ -1,0 +1,34 @@
+#----------------------------------------------------------
+# To enable compilation of a module named "stuff" that is
+# located in subdirectory mcMd/modules/stuff, modify this
+# file by:
+#
+#   - Adding a line:
+#    "include $(SRC_DIR)/mcMd/modules/stuff/sources.mk
+#
+#   - Modifying the command which sets the value of
+#     the variable mcMd_modules_ to include the value 
+#     $(mcMd_modules_stuff_) 
+#
+# This will cause the simpatico makefile system to compile
+# all source files in mcMd_modules_stuff_ and to add the
+# resulting compiled code to the src/mcMd/libmcmd.a static
+# library file. 
+#
+# See commented out code in the repository version of
+# this file to see an example of how to enable compilation
+# of the sliplink module.
+#----------------------------------------------------------
+
+#include $(SRC_DIR)/mcMd/modules/sliplink/sources.mk
+
+mcMd_modules_=
+#mcMd_modules_=\
+#    $(mcMd_modules_sliplink_)\
+#    $(mcMd_modules_myModule_)
+
+mcMd_modules_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_modules_))
+mcMd_modules_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_modules_:.cpp=.o))
+

@@ -1,0 +1,19 @@
+System
+------
+
+    Ideal gas of 100 wormlike chains, each of 8 atoms
+
+Usage
+-----
+
+Change directory (cd) to an example subdirectory, then enter:
+
+MC simulation:
+
+    mcSim_a -e -p param -c commands
+
+Restart and extend previous simulation
+
+    mdcim_a -e -r restart -c restart.cmd
+
+

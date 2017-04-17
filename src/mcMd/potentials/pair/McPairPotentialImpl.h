@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -125,7 +125,7 @@ namespace McMd
       const Interaction& interaction() const;
 
       //@}
-      /// \name System energy and stress calculators
+      /// \name Energy and stress calculators
       //@{
 
       /**
@@ -145,39 +145,24 @@ namespace McMd
       double moleculeEnergy(const Molecule& molecule) const;
 
       /**
-      * Return total nonbonded pair potential energy of this System.
+      * Compute and store nonbonded pair energy of this System.
+      *
+      * If energy is already known (set), this function does nothing.
       */
-      double energy();
+      virtual void computeEnergy();
 
       /**
-      * Compute total nonbonded pressure
+      * Compute and store total short-range pair stress.
       *
-      * \param stress (output) pressure.
+      * If stress is already known (set), this function does nothing.
       */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
+      virtual void computeStress();
 
       //@}
 
    private:
   
       Interaction interaction_;
- 
-      template <typename T>
-      void computeStressImpl(T& stress) const;
 
    };
 
@@ -264,14 +249,18 @@ namespace McMd
    * Return pair energy for a single pair.
    */
    template <class Interaction>
-   double McPairPotentialImpl<Interaction>::energy(double rsq, int iAtomType, int jAtomType) const
-   { return interaction().energy(rsq, iAtomType, jAtomType); }
+   double 
+   McPairPotentialImpl<Interaction>::energy(double rsq, int iAtomType, int jAtomType) 
+   const
+   {  return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.
    */
    template <class Interaction>
-   double McPairPotentialImpl<Interaction>::forceOverR(double rsq, int iAtomType, int jAtomType) const
+   double 
+   McPairPotentialImpl<Interaction>::forceOverR(double rsq, int iAtomType, int jAtomType) 
+   const
    { 
       if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) {
          return interaction().forceOverR(rsq, iAtomType, jAtomType); 
@@ -285,7 +274,7 @@ namespace McMd
    */
    template <class Interaction>
    double McPairPotentialImpl<Interaction>::maxPairCutoff() const
-   { return interaction().maxPairCutoff(); }
+   {  return interaction().maxPairCutoff(); }
 
    /* 
    * Return nonbonded pair energy for one Atom.
@@ -371,10 +360,10 @@ namespace McMd
    }
 
    /*
-   * Return total nonbonded pair potential energy for System.
+   * Compute and store total nonbonded pair potential energy for System.
    */
    template <class Interaction>
-   double McPairPotentialImpl<Interaction>::energy()
+   void McPairPotentialImpl<Interaction>::computeEnergy()
    {
       Atom  *iAtomPtr, *jAtomPtr;
       double energy;
@@ -420,16 +409,17 @@ namespace McMd
 
       } // cells
 
-      return energy;
+      // Store local variable energy in Setable<double> class member energy_
+      energy_.set(energy);
    }
 
    /*
-   * Return nonbonded pair stress or pressure (implementation template).
+   * Compute nonbonded pair stress.
    */
    template <class Interaction>
-   template <typename T>
-   void McPairPotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   void McPairPotentialImpl<Interaction>::computeStress()
    {
+      Tensor stress;
       Vector force, dr;
       double rsq;
       const Atom *atom0Ptr, *atom1Ptr;
@@ -481,25 +471,9 @@ namespace McMd
       stress /= boundary().volume();
       normalizeStress(stress);
 
+      // Store local Tensor variable stress in Setable<Tensor> class member stress_.
+      stress_.set(stress);
    }
-
-
-   template <class Interaction>
-   void McPairPotentialImpl<Interaction>::computeStress(double& stress) const
-   {  computeStressImpl(stress); }
-
-
-   template <class Interaction>
-   void McPairPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-
-   template <class Interaction>
-   void McPairPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
-        const
-   {  computeStressImpl(stress); }
-
 
    template <class Interaction>
    inline Interaction& McPairPotentialImpl<Interaction>::interaction()

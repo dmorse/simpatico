@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -28,12 +28,14 @@ namespace McMd
       SystemMove(system),
       speciesId_(-1)
    {
-      /* Preconditions:  
+      /* 
+      * Preconditions:  
       * For now, Usage with angles and dihedrals is prohibited. This
       * move would work fine with homogeneous angles and dihedrals,
       * and could be modified to work with heterogeneous potentials,
       * but the required checks or modifications are not implemented.
       */
+
       #ifdef INTER_ANGLE
       if (system.hasAnglePotential()) {
          UTIL_THROW("CfbEndBase unusable with heterogeneous dihedrals");
@@ -135,9 +137,11 @@ namespace McMd
       oldEnergy += system().pairPotential().moleculeEnergy(*molPtr);
       #endif
       #ifdef INTER_EXTERNAL
-      for (i = 0; i < nAtom; ++i) {
-         atomPtr = &molPtr->atom(i);
-         oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+      if (system().hasExternalPotential()) {
+         for (i = 0; i < nAtom; ++i) {
+            atomPtr = &molPtr->atom(i);
+            oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
       }
       #endif
 
@@ -153,16 +157,18 @@ namespace McMd
       newEnergy += system().pairPotential().moleculeEnergy(*molPtr);
       #endif
       #ifdef INTER_EXTERNAL
-      for (i = 0; i < nAtom; ++i) {
-         molPtr->atom(i).setTypeId(atomTypeIds_[nAtom - 1 - i]);   
-         atomPtr = &molPtr->atom(i);
-         newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+      if (system().hasExternalPotential()) {
+         for (i = 0; i < nAtom; ++i) {
+            molPtr->atom(i).setTypeId(atomTypeIds_[nAtom - 1 - i]);   
+            atomPtr = &molPtr->atom(i);
+            newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
       }
       #endif
 
       // Restore original sequence of atom type Ids
       for (i = 0; i < nAtom; ++i) {
-         molPtr->atom(i).setTypeId(atomTypeIds_[i]);   
+         molPtr->atom(i).setTypeId(atomTypeIds_[i]);
       }
    
       // Decide whether to accept or reject

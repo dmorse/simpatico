@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -152,8 +152,9 @@ namespace McMd
       for (i = 0; i < nRegrow_; ++i) {
          atom0Ptr = &molPtr->atom(atomId);
          atom1Ptr = atom0Ptr - sign;
-         addAtom(*molPtr, *atom0Ptr, *atom1Ptr, atomId, sign, rosenbluth, energy);
-         rosen_f  *= rosenbluth;
+         addAtom(*molPtr, *atom0Ptr, *atom1Ptr, atomId, sign,
+                 rosenbluth, energy);
+         rosen_f *= rosenbluth;
          energy_f += energy;
          #ifndef INTER_NOPAIR
          // Add end atom to cell list

@@ -16,6 +16,7 @@ namespace McMd
 {
 
    class System;
+   class MdSystem;
    class MdPairPotential;
    class McPairPotential;
 
@@ -116,3 +117,4 @@ namespace McMd
  
 }
 #endif
+

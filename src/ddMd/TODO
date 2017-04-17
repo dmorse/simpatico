@@ -20,6 +20,11 @@ Exchanger:
 - Add memory usage statistics, to measure which communication step (atom
   exchange or ghost exchange) uses the most memory
 
+- Improve error checking of conditions that can lead to incomplete groups.
+  Under what conditions can a group span two boundaries in the same direction ?
+  Is there a bound to how far a ghost can move without causing a possible error ?
+
+=======
 Non-orthogonal boundaries:
 --------------------------
 

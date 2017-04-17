@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -235,6 +235,8 @@ namespace McMd
          }
 
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
    }
 
@@ -273,6 +275,8 @@ namespace McMd
             }
          }
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       #if 0
       #ifndef INTER_NOPAIR
@@ -306,6 +310,7 @@ namespace McMd
             }
          }
       }
+      system().velocitySignal().notify();
 
       // Recompute disipative force (but not random forces).
       computeDpdForces(false);

@@ -84,6 +84,12 @@ McSimulation{
       nSamplePerBlock                     10
       selector                           all  -1  -1
     }
+
+    MdPressureAverage{
+      interval                           100
+      outputFileName             pressureAve
+      nSamplePerBlock                     10
+    }
    
     RadiusGyration{
       interval                           100

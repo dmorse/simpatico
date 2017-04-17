@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -80,11 +80,11 @@ namespace McMd
             outputFile_ << Dbl(dihedral);
          }
          #endif
-         #ifdef MCMD_LINK
-         if (system().hasLinkPotential()) {
-            double link = system().linkPotential().energy();
-            potential += link;
-            outputFile_ << Dbl(link);
+         #ifdef INTER_COULOMB
+         if (system().hasCoulombPotential()) {
+            double coulombk = system().coulombPotential().energy();
+            potential += coulombk;
+            outputFile_ << Dbl(coulombk);
          }
          #endif
          #ifdef INTER_EXTERNAL
@@ -92,6 +92,13 @@ namespace McMd
             double external = system().externalPotential().energy();
             potential += external;
             outputFile_ << Dbl(external);
+         }
+         #endif
+         #ifdef MCMD_LINK
+         if (system().hasLinkPotential()) {
+            double link = system().linkPotential().energy();
+            potential += link;
+            outputFile_ << Dbl(link);
          }
          #endif
          #ifdef INTER_TETHER
@@ -140,6 +147,12 @@ namespace McMd
          outputFile_ << "[dihedral]   ";
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (system().hasCoulombPotential()) {
+         outputFile_ << "[coulomb]    ";
+      }
+      #endif
+ 
       #ifdef MCMD_LINK
       if (system().hasLinkPotential()) {
          outputFile_ << "[link]       ";

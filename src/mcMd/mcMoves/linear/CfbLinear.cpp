@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -66,7 +66,10 @@ namespace McMd
       hasAngles_ = system().hasAnglePotential() && species.nAngle() > 0;
       #endif
       #ifdef INTER_DIHEDRAL
-      hasDihedrals_ = system().hasAnglePotential() && species.nDihedral() > 0;
+      hasDihedrals_ = system().hasDihedralPotential() && species.nDihedral() > 0;
+      if (hasDihedrals_) {
+         UTIL_THROW("CfbLinear does not (yet) work with dihedrals");
+      }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = system().hasExternalPotential();
@@ -126,17 +129,16 @@ namespace McMd
       Vector& pos0 = atom0.position();
       Vector& pos1 = atom1.position();
 
-      // Calculate bond length and energy
+      // Calculate bond length, unit vector, and energy
       Vector v1; // Vector between atoms 0 and 1
       Vector u1; // Unit vector parallel to v1
       double r1, bondEnergy;
       int bondTypeId = molecule.bond(atomId - shift).typeId();
       r1 = boundary().distanceSq(pos1, pos0, v1); 
-      // Here r1 = bond length squared, v1 = pos1 - pos0
       bondEnergy = system().bondPotential().energy(r1, bondTypeId);
       r1 = sqrt(r1); // bond length
       u1 = v1;
-      u1 /= r1;      // unit vector
+      u1 /= r1;      // bond unit vector
 
       #ifndef INTER_NOPAIR
       McPairPotential& pairPotential = system().pairPotential();
@@ -146,10 +148,8 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      Vector v2, u2;
-      double r2, cosTheta;
-      Vector* pos2Ptr;
-      AnglePotential& anglePotential = system().anglePotential();
+      Vector u2;
+      AnglePotential* anglePotentialPtr = 0;
       int angleTypeId;
       bool hasAngle = false;
       if (hasAngles_) {
@@ -163,22 +163,26 @@ namespace McMd
          }
          if (hasAngle) {
             Atom& atom2 = molecule.atom(atom2Id);
-            pos2Ptr = &(atom2.position());
-            r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); // v2=p2-p1
+            Vector* pos2Ptr = &(atom2.position());
+            Vector v2; // v2=p2-p1
+            double r2 = boundary().distanceSq(*pos2Ptr, pos1, v2); 
             r2 = sqrt(r2); // r2 = |v2| = length of bond 2
             u2 = v2;
             u2 /= r2; // unit vector
-            cosTheta = u1.dot(u2);
+            double cosTheta = u1.dot(u2);
             angleTypeId = molecule.bond(atomId - 2*shift).typeId();
-            energy += anglePotential.energy(cosTheta, angleTypeId);
+            anglePotentialPtr = &system().anglePotential();
+            energy += anglePotentialPtr->energy(cosTheta, angleTypeId);
          }
       }
       #endif
 
       #ifdef INTER_EXTERNAL
-      ExternalPotential& externalPotential = system().externalPotential();
+      ExternalPotential* externalPotentialPtr = 0;
       if (hasExternal_) {
-         energy += externalPotential.atomEnergy(atom0);
+         externalPotentialPtr = &system().externalPotential();
+         assert(externalPotentialPtr);
+         energy += externalPotentialPtr->atomEnergy(atom0);
       }
       #endif
 
@@ -207,14 +211,18 @@ namespace McMd
          trialEnergy = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngle) {
-            cosTheta = u1.dot(u2);
-            trialEnergy += anglePotential.energy(cosTheta, angleTypeId);
+         if (hasAngles_) {
+            if (hasAngle) {
+               assert(anglePotentialPtr);
+               double cosTheta = u1.dot(u2);
+               trialEnergy += anglePotentialPtr->energy(cosTheta, angleTypeId);
+            }
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (hasExternal_) {
-            trialEnergy += externalPotential.atomEnergy(atom0);
+            assert(externalPotentialPtr);
+            trialEnergy += externalPotentialPtr->atomEnergy(atom0);
          }
          #endif
 
@@ -251,11 +259,9 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      // Calculate vector v2 = pos2 - pos1, r2 = |v2|
-      Vector v2, u2;
-      double r2, cosTheta;
-      Vector* pos2Ptr;
-      AnglePotential& anglePotential = system().anglePotential();
+      // Compute vector v2 = pos2 - pos1, r2 = |v2|
+      Vector u2;
+      AnglePotential* anglePotentialPtr = 0;
       int angleTypeId;
       bool hasAngle = false;
       if (hasAngles_) {
@@ -268,19 +274,25 @@ namespace McMd
             hasAngle = (atom2Id < molecule.nAtom());
          }
          if (hasAngle) {
-            angleTypeId = molecule.bond(atomId - 2*shift).typeId();
             Atom* atom2Ptr = &atom1 - sign;
-            pos2Ptr = &(atom2Ptr->position());
-            r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
-            r2 = sqrt(r2);
+            Vector* pos2Ptr = &(atom2Ptr->position());
+            Vector v2;
+            double r2 = boundary().distanceSq(*pos2Ptr, pos1, v2);
+            r2 = sqrt(r2); // r2 = |v2| = |p2 - p1|
             u2 = v2;
             u2 /= r2;  // unit vector
+            anglePotentialPtr = &system().anglePotential();
+            angleTypeId = molecule.bond(atomId - 2*shift).typeId();
          }
       }
       #endif
+
       #ifdef INTER_EXTERNAL
-      ExternalPotential& externalPotential 
-                                      = system().externalPotential();
+      ExternalPotential* externalPotentialPtr = 0;
+      if (hasExternal_) {
+         externalPotentialPtr = &system().externalPotential();
+         assert(externalPotentialPtr);
+      }
       #endif
 
       // Loop over nTrial trial positions:
@@ -305,16 +317,20 @@ namespace McMd
          trialEnergy[iTrial] = 0.0;
          #endif
          #ifdef INTER_ANGLE
-         if (hasAngle) {
-            cosTheta = u1.dot(u2);
-            trialEnergy[iTrial] += 
-                        anglePotential.energy(cosTheta, angleTypeId);
+         if (hasAngles_) {
+            if (hasAngle) {
+               assert(anglePotentialPtr);
+               double cosTheta = u1.dot(u2);
+               trialEnergy[iTrial] += 
+                  anglePotentialPtr->energy(cosTheta, angleTypeId);
+            }
          }
          #endif
          #ifdef INTER_EXTERNAL
          if (hasExternal_) {
+            assert(externalPotentialPtr);
             trialEnergy[iTrial] +=
-                        externalPotential.atomEnergy(atom0);
+                        externalPotentialPtr->atomEnergy(atom0);
          }
          #endif
 

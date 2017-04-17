@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -132,9 +132,6 @@ namespace McMd
 
       /// Cell list for atom positions.
       CellList cellList_;
-
-      /// Alias for global atoms_ DArray of parent simulation.
-      // RArray<Atom> atoms_;
 
    };
 

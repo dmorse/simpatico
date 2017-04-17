@@ -4,18 +4,19 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
+#include <util/space/Tensor.h>
+#include <util/misc/Setable.h>
 #include <util/global.h>
 
 namespace Util
 {
    class Vector;
-   class Tensor;
 }
 
 namespace McMd
@@ -36,28 +37,28 @@ namespace McMd
 
    public:
 
-      /** 
+      /**
       * Constructor.
       */
       MdPairPotentialImpl(System& system);
 
-      /** 
+      /**
       * Constructor (copied from McPairPotentialImpl)
       */
       MdPairPotentialImpl(McPairPotentialImpl<Interaction>& other);
 
-      /** 
+      /**
       * Destructor.
       */
       virtual ~MdPairPotentialImpl();
 
       /**
       * Read pair potential interaction and pair list blocks.
-      * 
-      * This method reads the pair potential Interaction parameter and
-      * PairList blocks, and initializes an internal PairList. Before 
-      * calling the Interaction::readParameters method, it passes 
-      * nAtomType to Interaction::setNAtomType().
+      *
+      * This method reads the pair potential Interaction parameter 
+      * and PairList blocks, and initializes an internal PairList. 
+      * Before calling the Interaction::readParameters method, it 
+      * passes nAtomType to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
@@ -77,26 +78,29 @@ namespace McMd
       */
       virtual void save(Serializable::OArchive &ar);
 
+      /// \name Pair Interaction Interface
+      //@{
+
       /**
       * Return pair energy for a single pair.
-      * 
+      *
       * \param rsq       square distance between atoms in pair
       * \param iAtomType atom type index of 1st atom
       * \param jAtomType atom type index of 2nd atom
       * \return energy of pair
       */
-      virtual 
+      virtual
       double energy(double rsq, int iAtomType, int jAtomType) const;
 
       /**
       * Return force / separation for a single pair.
       *
-      * \param rsq       square distance between atoms in pair
-      * \param iAtomType atom type index of 1st atom
-      * \param jAtomType atom type index of 2nd atom
-      * \return repulsive force (< 0 if attractive) over distance
+      * \param rsq  square distance between atoms in pair
+      * \param iAtomType  atom type index of 1st atom
+      * \param jAtomType  atom type index of 2nd atom
+      * \return  repulsive force (< 0 if attractive) over distance
       */
-      virtual 
+      virtual
       double forceOverR(double rsq, int iAtomType, int jAtomType) const;
 
       /**
@@ -107,9 +111,9 @@ namespace McMd
       /**
       * Modify a parameter, identified by a string.
       *
-      * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
+      * \param name  parameter name
+      * \param i  type index of first atom
+      * \param j  type index of first atom
       * \param value  new value of parameter
       */
       void set(std::string name, int i, int j, double value)
@@ -118,9 +122,9 @@ namespace McMd
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name   parameter name
-      * \param i      type index of first atom
-      * \param j      type index of first atom
+      * \param name  parameter name
+      * \param i  type index of first atom
+      * \param j  type index of first atom
       */
       double get(std::string name, int i, int j) const
       {  return interactionPtr_->get(name, i, j); }
@@ -130,43 +134,33 @@ namespace McMd
       */
       virtual std::string interactionClassName() const;
 
-      /**
-      * Calculate the total nonBonded pair energy for this System.
-      * 
-      * Rebuilds the PairList if necessary before calculating energy.
-      */
-      virtual double energy();
+      //@}
+      /// \name Global force and energy calculators
+      //@{
 
       /**
       * Calculate non-bonded pair forces for all atoms in this System.
       *
       * Adds non-bonded pair forces to the current values of the
-      * forces for all atoms in this system. Before calculating 
-      * forces, the method checks if the pair list is current, 
+      * forces for all atoms in this system. Before calculating
+      * forces, the method checks if the pair list is current,
       * and rebuilds it if necessary.
       */
       virtual void addForces();
 
       /**
-      * Compute total nonbonded pressure
+      * Calculate and store pair energy for this System.
       *
-      * \param stress (output) pressure.
+      * Rebuilds the PairList if necessary before calculating energy.
       */
-      virtual void computeStress(double& stress) const;
+      virtual void computeEnergy();
 
       /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
+      * Compute and store the total nonbonded pressure
       */
-      virtual void computeStress(Util::Vector& stress) const;
+      virtual void computeStress();
 
-      /**
-      * Compute nonbonded stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
+      //@}
 
    protected:
 
@@ -174,27 +168,23 @@ namespace McMd
       {  return *interactionPtr_; }
 
    private:
-  
+
       Interaction* interactionPtr_;
 
       bool       isCopy_;
- 
-      template <typename T>
-      void computeStressImpl(T& stress) const;
 
    };
 
 }
 
-#include <mcMd/simulation/System.h> 
-#include <mcMd/simulation/Simulation.h> 
+#include <mcMd/simulation/System.h>
+#include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/stress.h>
-#include <mcMd/neighbor/PairIterator.h> 
-#include <util/boundary/Boundary.h> 
+#include <mcMd/neighbor/PairIterator.h>
+#include <util/boundary/Boundary.h>
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
-#include <util/space/Tensor.h>
 #include <util/accumulators/setToZero.h>
 
 #include <fstream>
@@ -204,7 +194,7 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+   /*
    * Default constructor.
    */
    template <class Interaction>
@@ -214,7 +204,7 @@ namespace McMd
       isCopy_(false)
    {  interactionPtr_ = new Interaction; }
 
-   /* 
+   /*
    * Constructor, copy from McPairPotentialImpl<Interaction>.
    */
    template <class Interaction>
@@ -224,12 +214,12 @@ namespace McMd
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
- 
-   /* 
-   * Destructor. 
+
+   /*
+   * Destructor.
    */
    template <class Interaction>
-   MdPairPotentialImpl<Interaction>::~MdPairPotentialImpl() 
+   MdPairPotentialImpl<Interaction>::~MdPairPotentialImpl()
    {
       if (interactionPtr_ && !isCopy_) {
          delete interactionPtr_;
@@ -248,7 +238,7 @@ namespace McMd
          interaction().readParameters(in);
       }
 
-      // Initialize the PairList 
+      // Initialize the PairList
       readParamComposite(in, pairList_);
       double cutoff = interaction().maxPairCutoff();
       pairList_.initialize(simulation().atomCapacity(), cutoff);
@@ -258,7 +248,7 @@ namespace McMd
    * Load internal state from an archive.
    */
    template <class Interaction>
-   void 
+   void
    MdPairPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
       ar >> isCopy_;
@@ -287,20 +277,20 @@ namespace McMd
    /*
    * Return pair energy for a single pair.
    */
-   template <class Interaction> double 
-   MdPairPotentialImpl<Interaction>::energy(double rsq, 
+   template <class Interaction> double
+   MdPairPotentialImpl<Interaction>::energy(double rsq,
                                         int iAtomType, int jAtomType) const
    {  return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.
    */
-   template <class Interaction> double 
-   MdPairPotentialImpl<Interaction>::forceOverR(double rsq, 
+   template <class Interaction> double
+   MdPairPotentialImpl<Interaction>::forceOverR(double rsq,
                                         int iAtomType, int jAtomType) const
    {
-      if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) { 
-         return interaction().forceOverR(rsq, iAtomType, jAtomType); 
+      if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) {
+         return interaction().forceOverR(rsq, iAtomType, jAtomType);
       } else {
          return 0.0;
       }
@@ -320,36 +310,7 @@ namespace McMd
    std::string MdPairPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
 
-   /* 
-   * Return nonBonded Pair interaction energy
-   */
-   template <class Interaction>
-   double MdPairPotentialImpl<Interaction>::energy()
-   {
-
-      // Update PairList if necessary
-      if (!isPairListCurrent()) {
-         buildPairList();
-      }
-
-      // Loop over pairs
-      PairIterator iter;
-      Atom *atom0Ptr;
-      Atom *atom1Ptr;
-      double rsq;
-      double energy=0;
-      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         rsq = boundary().
-               distanceSq(atom0Ptr->position(), atom1Ptr->position());
-         energy += interaction().
-                   energy(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
-      }
-
-      return energy;
-   } 
- 
-   /* 
+   /*
    * Add nonBonded pair forces to atomic forces.
    */
    template <class Interaction>
@@ -371,34 +332,69 @@ namespace McMd
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
-               distanceSq(atom0Ptr->position(), atom1Ptr->position(), force);
+               distanceSq(atom0Ptr->position(), atom1Ptr->position(),
+                          force);
          type0 = atom0Ptr->typeId();
          type1 = atom1Ptr->typeId();
-         if (rsq < interaction().cutoffSq(type0, type1)) { 
+         if (rsq < interaction().cutoffSq(type0, type1)) {
             force *= interaction().forceOverR(rsq, type0, type1);
             atom0Ptr->force() += force;
             atom1Ptr->force() -= force;
          }
       }
 
-   } 
+   }
 
-   /* 
-   * Add nonBonded pair forces to atomic forces.
+   /*
+   * Compute and store all short-range pair energy components.
    */
    template <class Interaction>
-   template <typename T>
-   void MdPairPotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   void MdPairPotentialImpl<Interaction>::computeEnergy()
    {
+      // Update PairList if necessary
+      if (!isPairListCurrent()) {
+         buildPairList();
+      }
 
-      Vector       dr;
-      Vector       force;
-      double       rsq;
+      // Loop over pairs
       PairIterator iter;
-      Atom        *atom1Ptr;
-      Atom        *atom0Ptr;
-      int          type0, type1;
+      Atom *atom0Ptr;
+      Atom *atom1Ptr;
+      double rsq;
+      double energy = 0.0;
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+         iter.getPair(atom0Ptr, atom1Ptr);
+         rsq = boundary().
+               distanceSq(atom0Ptr->position(), atom1Ptr->position());
+         energy += interaction().
+                   energy(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
+      }
 
+      // Set value of Setable<double> energy_ 
+      energy_.set(energy);
+   }
+
+   /*
+   * Compute all short-range pair contributions to stress.
+   */
+   template <class Interaction>
+   void MdPairPotentialImpl<Interaction>::computeStress()
+   {
+      // Update PairList if necessary
+      if (!isPairListCurrent()) {
+         buildPairList();
+      }
+
+      Tensor stress;
+      Vector dr;
+      Vector force;
+      double rsq;
+      PairIterator iter;
+      Atom* atom1Ptr;
+      Atom* atom0Ptr;
+      int type0, type1;
+
+      // Set all elements of stress tensor to zero.
       setToZero(stress);
 
       // Loop over nonbonded neighbor pairs
@@ -415,26 +411,12 @@ namespace McMd
          }
       }
 
-      // Normalize by volume 
+      // Normalize by volume
       stress /= boundary().volume();
       normalizeStress(stress);
 
+      stress_.set(stress);
    }
-
-   template <class Interaction>
-   void MdPairPotentialImpl<Interaction>::computeStress(double& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void MdPairPotentialImpl<Interaction>::computeStress(Util::Vector& stress)
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void MdPairPotentialImpl<Interaction>::computeStress(Util::Tensor& stress)
-        const
-   {  computeStressImpl(stress); }
 
 }
 #endif

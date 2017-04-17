@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -75,6 +75,8 @@ namespace McMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = 0.5*dt_/mass;
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
    }
 
    /*
@@ -140,6 +142,8 @@ namespace McMd
          }
       }
       #endif
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       system().calculateForces();
 
@@ -169,6 +173,7 @@ namespace McMd
          }
       }
       #endif
+      system().velocitySignal().notify();
 
       #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {

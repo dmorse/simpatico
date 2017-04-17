@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -54,7 +54,7 @@ namespace McMd
       void initialize(int speciesId, int atomTypeId, double cutoff);
    
       /**
-      * Find all clusters.
+      * Identify all clusters (main operation).
       */
       void identifyClusters();
 
@@ -89,7 +89,7 @@ namespace McMd
       */
       bool isValid() const;
 
-private:
+   private:
 
       /// Array of ClusterLink objects, indexed by molecule id.
       DArray<ClusterLink> links_;
@@ -115,6 +115,8 @@ private:
       /// Cutoff distance for touching cores
       double cutoff_;
 
+      // Private functions
+
       /**
       * Return parent system by reference.
       */
@@ -127,5 +129,6 @@ private:
       void processNextMolecule(Cluster& cluster);
 
    };
+
 }
 #endif

@@ -62,14 +62,20 @@ MdSimulation{
     }
 
     MdPotentialEnergyAverage{
-      interval                          1000
+      interval                           100
       outputFileName      potentialEnergyAve
       nSamplePerBlock                     10
     }
 
     MdKineticEnergyAverage{
-      interval                          1000
+      interval                           100
       outputFileName        kineticEnergyAve
+      nSamplePerBlock                     10
+    }
+
+    MdPressureAverage{
+      interval                           100
+      outputFileName             pressureAve
       nSamplePerBlock                     10
     }
 

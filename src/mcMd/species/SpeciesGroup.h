@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -61,6 +61,13 @@ namespace McMd
    * an array of pointers to specific Atom objects that all belong to a specific
    * Molecule. Each SpeciesGroup is thus a prototype for constructing one Group
    * for each Molecule within a Species.
+   *
+   * A SpeciesGroup<N> object can be input or output to file using overloaded 
+   * inserter (<<) and extractor (>>) operators, like a built in type. The 
+   * text representation contains a sequence of atom ids followed by the group
+   * type id, as described in a separate file.
+   *
+   * \sa \ref mcMd_species_SpeciesGroup_page "text representation"
    *
    * \ingroup McMd_Species_Module
    */

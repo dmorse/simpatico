@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -19,7 +19,7 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+    /* 
    * Constructor.
    */
    MdPairPotential::MdPairPotential(System& system)
@@ -43,10 +43,10 @@ namespace McMd
          UTIL_THROW("PairList not initialized in MdPairPotential::buildPairList");
       }
 
-      // Setup an empty pair list and internal cell list.
+      // Set up an empty PairList with an empty internal CellList.
       pairList_.setup(boundary());
 
-      // Add every atom in this System to the CellList
+      // Add every Atom in this System to the CellList
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {

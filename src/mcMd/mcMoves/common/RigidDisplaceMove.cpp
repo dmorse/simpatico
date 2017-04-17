@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -96,7 +96,9 @@ namespace McMd
          oldEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
          #ifdef INTER_EXTERNAL
-         oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         if (system().hasExternalPotential()) {
+            oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
          #endif
          #ifdef INTER_TETHER
          oldEnergy += system().atomTetherEnergy(*atomPtr);
@@ -118,7 +120,9 @@ namespace McMd
          newEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
          #ifdef INTER_EXTERNAL
-         newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         if (system().hasExternalPotential()) {
+            newEnergy += system().externalPotential().atomEnergy(*atomPtr);
+         }
          #endif
          #ifdef INTER_TETHER
          newEnergy += system().atomTetherEnergy(*atomPtr);

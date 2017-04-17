@@ -1,7 +1,6 @@
 
 mcMd_mcSimulation_=\
     mcMd/mcSimulation/McAnalyzerManager.cpp \
-    mcMd/mcSimulation/McModule.cpp \
     mcMd/mcSimulation/McSimulation.cpp \
     mcMd/mcSimulation/McSystem.cpp \
     mcMd/mcSimulation/McSystemAccess.cpp 

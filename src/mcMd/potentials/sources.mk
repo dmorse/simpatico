@@ -21,6 +21,11 @@ include $(SRC_DIR)/mcMd/potentials/dihedral/sources.mk
 mcMd_potentials_+=$(mcMd_potentials_dihedral_) 
 endif
 
+ifdef INTER_COULOMB
+include $(SRC_DIR)/mcMd/potentials/coulomb/sources.mk
+mcMd_potentials_+=$(mcMd_potentials_coulomb_) 
+endif
+
 ifdef MCMD_LINK
 include $(SRC_DIR)/mcMd/potentials/link/sources.mk
 mcMd_potentials_+=$(mcMd_potentials_link_) 

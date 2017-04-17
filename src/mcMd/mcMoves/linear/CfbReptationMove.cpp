@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -75,8 +75,10 @@ namespace McMd
          }
       }
 
+      #ifndef INTER_NOPAIR
       // Identify policy for masking nonbonded interactions.
       maskPolicy_ = simulation().maskedPairPolicy();
+      #endif
  
       // Allocate memory for junction arrays
       int nAtom = speciesPtr->nAtom();
@@ -145,9 +147,11 @@ namespace McMd
             UTIL_THROW("Inconsistent or unequal bond type ids");
          }
       }
+      #ifndef INTER_NOPAIR
       if (maskPolicy_ != simulation().maskedPairPolicy()) {
          UTIL_THROW("Inconsistent values of maskPolicy_");
       }
+      #endif
 
       ar & junctions_; 
       ar & lTypes_; 
@@ -342,7 +346,9 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         oldEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         if (system().hasExternalPotential()) {
+            oldEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         }
          #endif
 
          #ifndef INTER_NOPAIR
@@ -351,7 +357,9 @@ namespace McMd
          #endif
 
          #ifdef INTER_EXTERNAL
-         newEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         if (system().hasExternalPotential()) {
+            newEnergy += system().externalPotential().atomEnergy(*hAtomPtr);
+         }
          #endif
 
          #ifndef INTER_NOPAIR

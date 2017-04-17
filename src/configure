@@ -26,44 +26,15 @@
 #
 #      ./configure [options]
 #
-# Command Line Options: 
-#   
-# Each of the following options enables or disables a feature. Each such
-# options takes 0 or 1 as a required argument, using 1 to denote "enable"
-# and 0 to denote "disable".
-#
-#   -m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)
-#   -g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)
-#   -b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)
-#   -a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)
-#   -d (0|1)   dihedral potentials         (defines/undefines INTER_DIHEDRAL)
-#   -e (0|1)   external potentials         (defines/undefines INTER_EXTERNAL)
-#   -l (0|1)   McMd links (mutable bonds)  (defines/undefines MCMD_LINK)
-#   -s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)
-#   -f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)
-#   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
-#   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
-#
-# These command line options do not enable or disable features: 
-#
-#   -j compiler  Chooses a compiler, set COMPILER=compiler in config.mk
-#   -q           query: prints report of options that are enabled / disabled.
-#
-# Examples:
-#
-# To disable debugging and enable angle and dihedral potentials:
-#
-#   >  ./configure -g0 -a1 -d1
-#
-# To set COMPILER=intel in config.mk
-#
-#   >  ./configure -j intel
-#
+# Call "./configure -h" to print a full list of command line options.
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
+while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
 
-  if [ -n "$MACRO" ]; then 
-    MACRO=""
+  if [ -n "$MACRO_ON" ]; then 
+    MACRO_ON=""
+  fi
+  if [ -n "$MACRO_OFF" ]; then 
+    MACRO_OFF=""
   fi
   if [ -n "$FILE" ]; then 
     FILE=""
@@ -71,52 +42,62 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
   
   case $opt in
     m)
-      MACRO=UTIL_MPI
+      MACRO_ON=UTIL_MPI
       VALUE=1
       FILE=config.mk
       ;;
     g)
-      MACRO=UTIL_DEBUG
+      MACRO_ON=UTIL_DEBUG
       VALUE=1
       FILE=util/config.mk
       ;;
+    p)
+      MACRO_OFF=INTER_NOPAIR
+      VALUE=1
+      FILE=inter/config.mk
+      ;;
     b)
-      MACRO=INTER_BOND
+      MACRO_ON=INTER_BOND
       VALUE=1
       FILE=inter/config.mk
       ;;
     a)
-      MACRO=INTER_ANGLE
+      MACRO_ON=INTER_ANGLE
       VALUE=1
       FILE=inter/config.mk
       ;;
     d)
-      MACRO=INTER_DIHEDRAL
+      MACRO_ON=INTER_DIHEDRAL
+      VALUE=1
+      FILE=inter/config.mk
+      ;;
+    c)
+      MACRO_ON=INTER_COULOMB
       VALUE=1
       FILE=inter/config.mk
       ;;
     e)
-      MACRO=INTER_EXTERNAL
+      MACRO_ON=INTER_EXTERNAL
       VALUE=1
       FILE=inter/config.mk
       ;;
     l)
-      MACRO=MCMD_LINK
+      MACRO_ON=MCMD_LINK
       VALUE=1
       FILE=mcMd/config.mk
       ;;
     f)
-      MACRO=MCMD_PERTURB
+      MACRO_ON=MCMD_PERTURB
       VALUE=1
       FILE=mcMd/config.mk
       ;;
     s)
-      MACRO=MCMD_SHIFT
+      MACRO_ON=MCMD_SHIFT
       VALUE=1
       FILE=mcMd/config.mk
       ;;
     u)
-      MACRO=DDMD_MODIFIERS
+      MACRO_ON=DDMD_MODIFIERS
       VALUE=1
       FILE=ddMd/config.mk
       ;;
@@ -164,6 +145,11 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
       else
          echo "-g OFF - debugging" >&2
       fi
+      if [ `grep "^ *INTER_NOPAIR *= *1" inter/config.mk` ]; then
+         echo "-b OFF - pair potential" >&2
+      else
+         echo "-b ON  - pair potential" >&2
+      fi
       if [ `grep "^ *INTER_BOND *= *1" inter/config.mk` ]; then
          echo "-b ON  - bond potential" >&2
       else
@@ -178,6 +164,11 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
          echo "-d ON  - dihedral potential" >&2
       else
          echo "-d OFF - dihedral potential" >&2
+      fi
+      if [ `grep "^ *INTER_COULOMB *= *1" inter/config.mk` ]; then
+         echo "-c ON  - coulomb potential" >&2
+      else
+         echo "-c OFF - coulomb potential" >&2
       fi
       if [ `grep "^ *INTER_EXTERNAL *= *1" inter/config.mk` ]; then
          echo "-e ON  - external potential" >&2
@@ -213,29 +204,97 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:j:q" opt; do
       fi
       echo `grep "^ *COMPILER *=" config.mk` >&2
       ;;
-  esac
+    h)
+      echo "The configure script may be called prior to compiling to enable or"
+      echo "disable specific compile time features, to query which features are"
+      echo "currently set to be enabled (option -q) or to choose a compiler."
+      echo "This script must be called from the directory that contains the"
+      echo "script file, and only effects code built in the same directory tree."
+      echo " "
+      echo "Command Line Options:"
+      echo "-h           help: prints explanation of options (this command)"
+      echo "-q           query: lists options that are enabled / disabled."
+      echo "-j compiler  Choose a compiler: sets COMPILER=compiler in config.mk"
+      echo " "
+      echo "Each of the following options enables or disables a feature by defining"
+      echo "or undefining a corresponding preprocessor macro. Each such option"
+      echo "takes 0 or 1 as a required argument, using 1 to enable the feature"
+      echo "or 0 to disable." 
+      echo " "
+      echo "-m (0|1)   mpi parallelization         (undefines/defines UTIL_MPI)"
+      echo "-g (0|1)   debugging                   (undefines/defines UTIL_DEBUG)"
+      echo "-p (0|1)   pair potentials             (defines/undefines INTER_NOPAIR)"
+      echo "-b (0|1)   bond potentials             (undefines/defines INTER_BOND)"
+      echo "-a (0|1)   angle potentials            (undefines/defines INTER_ANGLE)"
+      echo "-d (0|1)   dihedral potentials         (undefines/defines INTER_DIHEDRAL)"
+      echo "-c (0|1)   coulomb potentials          (undefines/defines INTER_COULOMB)"
+      echo "-e (0|1)   external potentials         (undefines/defines INTER_EXTERNAL)"
+      echo "-l (0|1)   McMd links (mutable bonds)  (undefines/defines MCMD_LINK)"
+      echo "-s (0|1)   McMd shift                  (undefines/defines MCMD_SHIFT)"
+      echo "-f (0|1)   McMd perturbation           (undefines/defines MCMD_PERTURB)"
+      echo "-u (0|1)   DdMd modifiers              (undefines/defines DDMD_MODIFIERS)"
+      echo "-k (0|1)   dependency generation       (undefines/defines MAKEDEP)"
+      echo " "
+      echo "Examples:"
+      echo " "
+      echo "To query which features are currently set to be enabled:"
+      echo ">  ./configure -q"
+      echo "To disable debugging and enable angle and dihedral potentials:"
+      echo ">  ./configure -g0 -a1 -d1"
+      echo "To set COMPILER=intel in config.mk"
+      echo ">  ./configure -j intel"
+      echo "  "
+      ;;
+    esac
 
-  if [ -n "$MACRO" ]; then
+
+  if [ -n "$MACRO_ON" ]; then
     
     case $OPTARG in
     0)  # Disable (comment out) the macro=1 definition
-      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
-         echo "Disabling $MACRO in file $FILE" >&2
-         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
-         sed "s/^ *$MACRO=/#$MACRO=/" temp > "$FILE"
+      if [ `grep "^ *$MACRO_ON *= *1" "$FILE"` ]; then
+         echo "Disabling $MACRO_ON in file $FILE" >&2
+         sed "s/$MACRO_ON *=.*$/$MACRO_ON=1/" "$FILE" > temp
+         sed "s/^ *$MACRO_ON=/#$MACRO_ON=/" temp > "$FILE"
          rm temp
       else
-         echo "$MACRO already disabled in file $FILE" >&2
+         echo "$MACRO_ON already disabled in file $FILE" >&2
       fi
       ;;
     1) # Enable (uncomment) the macro=1 definition
-      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
-         echo "$MACRO already enabled in file $FILE" >&2
+      if [ `grep "^ *$MACRO_ON *= *1" "$FILE"` ]; then
+         echo "$MACRO_ON already enabled in file $FILE" >&2
       else
-         echo "Enabling $MACRO in file $FILE" >&2
-         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
-         sed "s/^ *# *$MACRO=/$MACRO=/" temp > "$FILE"
+         echo "Enabling $MACRO_ON in file $FILE" >&2
+         sed "s/$MACRO_ON *=.*$/$MACRO_ON=1/" "$FILE" > temp
+         sed "s/^ *# *$MACRO_ON=/$MACRO_ON=/" temp > "$FILE"
          rm temp
+      fi
+      ;;
+    esac
+  fi
+
+  if [ -n "$MACRO_OFF" ]; then
+    
+    case $OPTARG in
+    0) # Disable feature by uncommenting the MACRO_OFF=1 definition
+      if [ `grep "^ *$MACRO_OFF *= *1" "$FILE"` ]; then
+         echo "$MACRO_OFF already defined in file $FILE" >&2
+      else
+         echo "Disabling feature by defining $MACRO_OFF in file $FILE" >&2
+         sed "s/$MACRO_OFF *=.*$/$MACRO_OFF=1/" "$FILE" > temp
+         sed "s/^ *# *$MACRO_OFF=/$MACRO_OFF=/" temp > "$FILE"
+         rm temp
+      fi
+      ;;
+    1)  # Enable feature by commenting out the MACRO_OFF=1 definition
+      if [ `grep "^ *$MACRO_OFF *= *1" "$FILE"` ]; then
+         echo "Enabling feature by undefining $MACRO_OFF in file $FILE" >&2
+         sed "s/$MACRO_OFF *=.*$/$MACRO_OFF=1/" "$FILE" > temp
+         sed "s/^ *$MACRO_OFF=/#$MACRO_OFF=/" temp > "$FILE"
+         rm temp
+      else
+         echo "$MACRO_OFF already undefined in file $FILE" >&2
       fi
       ;;
     esac

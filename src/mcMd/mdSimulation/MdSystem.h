@@ -4,16 +4,17 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include <mcMd/simulation/System.h>     // base class
+#include <util/signal/Signal.h>         // members
 
 #include <util/global.h>
 
-namespace Util { 
-   template <typename T> class Factory; 
+namespace Util {
+   template <typename T> class Factory;
 }
 
 namespace McMd
@@ -34,6 +35,9 @@ namespace McMd
    #endif
    #ifdef INTER_DIHEDRAL
    class DihedralPotential;
+   #endif
+   #ifdef INTER_COULOMB
+   class MdCoulombPotential;
    #endif
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
@@ -60,15 +64,15 @@ namespace McMd
    */
    class MdSystem : public System
    {
-   
+
    public:
 
-      /**   
+      /**
       * Constructor.
       */
       MdSystem();
 
-      /** 
+      /**
       * Constructor, copy from McSystem.
       *
       * Used to create child MdSystem for Hybrid MD/MC move.
@@ -77,7 +81,7 @@ namespace McMd
       */
       MdSystem(McSystem& system);
 
-      /** 
+      /**
       * Destructor.
       */
       virtual ~MdSystem();
@@ -85,7 +89,7 @@ namespace McMd
       /**
       * Read parameters from input file.
       *
-      * This method calls System::readParameters(in), reads potentials, and 
+      * This method calls System::readParameters(in), reads potentials, and
       * allocates the pairList.
       *
       * \param in file stream.
@@ -111,7 +115,7 @@ namespace McMd
       *
       * This calls System::readConfig(), followed by
       * pairPotential().buildPairList() and calculateForces().
-      * 
+      *
       * \param in configuration file input stream
       */
       virtual void readConfig(std::istream& in);
@@ -133,8 +137,8 @@ namespace McMd
       * Compute all forces in this System.
       *
       * This method zero all forces and then calls the addForces()
-      * method of each of the potential objects (pair, bond, etc.). 
-      * The McPairPotential::addForces() method updates the pair 
+      * method of each of the potential objects (pair, bond, etc.).
+      * The McPairPotential::addForces() method updates the pair
       * list if necessary before calculating pair forces. On exit,
       * all atomic forces are updated to values corresponding to
       * current positions.
@@ -152,13 +156,18 @@ namespace McMd
       double potentialEnergy();
 
       /**
-      * Compute total pressure (T=double), xyz pressures (T=Vector) or stress 
+      * Unset all precomputed potential energy components.
+      */
+      void unsetPotentialEnergy();
+
+      /**
+      * Compute total pressure (T=double), xyz pressures (T=Vector) or stress
       * (T=Tensor).
       *
-      * In this and all other stress / pressure calculator method templates, 
-      * typename T must be double to obtain total pressure, Util::Vector to 
-      * obtain the x, y, and z diagonal pressure components, or Util::Tensor 
-      * to obtain the full stress tensor.  These templates work only for 
+      * In this and all other stress / pressure calculator method templates,
+      * typename T must be double to obtain total pressure, Util::Vector to
+      * obtain the x, y, and z diagonal pressure components, or Util::Tensor
+      * to obtain the full stress tensor.  These templates work only for
       * these three types. The function parameter "stress" is set to the
       * desired value.
       *
@@ -184,6 +193,11 @@ namespace McMd
       void computeVirialStress(T& stress) const;
 
       /**
+      * Unset precomputed virial stress components.
+      */
+      void unsetVirialStress();
+
+      /**
       * Compute kinetic stress mvv, arising from velocities.
       *
       * \sa MdSystem::computeStress(T&) regarding allowed types for T.
@@ -203,7 +217,7 @@ namespace McMd
       */
       MdPairPotential& pairPotential() const;
       #endif
-   
+
       /**
       * Does a bond potential exist?.
       */
@@ -240,16 +254,16 @@ namespace McMd
       DihedralPotential& dihedralPotential() const;
       #endif
 
-      #ifdef MCMD_LINK
+      #ifdef INTER_COULOMB
       /**
-      * Does a link potential exist?.
+      * Does a Coulomb potential exist?.
       */
-      bool hasLinkPotential() const;
+      bool hasCoulombPotential() const;
 
       /**
-      * Return link potential by reference.
+      * Return CoulombPotential by reference.
       */
-      BondPotential& linkPotential() const;
+      MdCoulombPotential& coulombPotential() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -264,6 +278,18 @@ namespace McMd
       ExternalPotential& externalPotential() const;
       #endif
 
+      #ifdef MCMD_LINK
+      /**
+      * Does a link potential exist?.
+      */
+      bool hasLinkPotential() const;
+
+      /**
+      * Return link potential by reference.
+      */
+      BondPotential& linkPotential() const;
+      #endif
+
       #ifdef INTER_TETHER
       /**
       * Return TetherPotential by reference.
@@ -275,7 +301,7 @@ namespace McMd
       /// \name Mutators
       //@{
 
-      /** 
+      /**
       * Set all atomic forces to zero.
       */
       void setZeroForces();
@@ -304,10 +330,24 @@ namespace McMd
       /**
       * Shift all atoms into primary cell.
       *
-      * Shifts all atom positions into the primary image of the periodic 
-      * boundary. 
+      * Shifts all atom positions into the primary image of the periodic
+      * boundary.
       */
       void shiftAtoms();
+
+      //@}
+      /// \name Signals
+      //@{
+
+      /**
+      * Signal to indicate change in atomic positions.
+      */
+      Signal<>& positionSignal();
+
+      /**
+      * Signal to indicate change in atomic velocities.
+      */
+      Signal<>& velocitySignal();
 
       //@}
       /// \name Accessors
@@ -338,39 +378,50 @@ namespace McMd
       virtual ConfigIo* newDefaultConfigIo();
 
    private:
-      
-      #ifndef INTER_NOPAIR 
-      /// Pointer to an MdPairPotential. 
+
+      /// Signal to indicate change in atomic positions.
+      Signal<>  positionSignal_;
+
+      /// Signal to indicate change in atomic velocities.
+      Signal<>  velocitySignal_;
+
+      #ifndef INTER_NOPAIR
+      /// Pointer to an MdPairPotential.
       MdPairPotential* pairPotentialPtr_;
       #endif
-  
+
       #ifdef INTER_BOND
-      /// Pointer to an BondPotential. 
+      /// Pointer to an BondPotential.
       BondPotential* bondPotentialPtr_;
       #endif
 
       #ifdef INTER_ANGLE
-      /// Pointer to an AnglePotential. 
+      /// Pointer to an AnglePotential.
       AnglePotential* anglePotentialPtr_;
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Pointer to an DihedralPotential. 
+      /// Pointer to a DihedralPotential.
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Pointer to the MdLinkPotential. 
-      BondPotential* linkPotentialPtr_;
+      #ifdef INTER_COULOMB
+      /// Pointer to a CoulombPotential.
+      MdCoulombPotential* coulombPotentialPtr_;
       #endif
 
       #ifdef INTER_EXTERNAL
-      /// Pointer to an ExternalPotential. 
+      /// Pointer to an ExternalPotential.
       ExternalPotential* externalPotentialPtr_;
       #endif
 
+      #ifdef MCMD_LINK
+      /// Pointer to the MdLinkPotential.
+      BondPotential* linkPotentialPtr_;
+      #endif
+
       #ifdef INTER_TETHER
-      /// Pointer to an TetherPotential. 
+      /// Pointer to an TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
 
@@ -384,13 +435,13 @@ namespace McMd
       bool createdMdIntegratorFactory_;
 
       /*
-      * Implementations of the explicit specializations of the public 
+      * Implementations of the explicit specializations of the public
       * stress calculators computeVirialStress(T& ) etc. for T = double,
-      * Util::Vector and Util::Tensor simply call these private method 
-      * templates. This allows a single private template method to be 
-      * used to compile the 3 relevant explicit specializations of each 
-      * stress calculator, while allowing the template implementations 
-      * to be defined in MdSystem.cpp, rather than in this header file. 
+      * Util::Vector and Util::Tensor simply call these private method
+      * templates. This allows a single private template method to be
+      * used to compile the 3 relevant explicit specializations of each
+      * stress calculator, while allowing the template implementations
+      * to be defined in MdSystem.cpp, rather than in this header file.
       */
 
       template <typename T>
@@ -402,15 +453,15 @@ namespace McMd
    };
 
    // Inline functions
-  
-   #ifndef INTER_NOPAIR 
+
+   #ifndef INTER_NOPAIR
    /*
    * Return PairPotential by reference.
    */
    inline MdPairPotential& MdSystem::pairPotential() const
    {
       assert(pairPotentialPtr_);
-      return *pairPotentialPtr_; 
+      return *pairPotentialPtr_;
    }
    #endif
 
@@ -419,17 +470,15 @@ namespace McMd
    * Does a bond potential exist?
    */
    inline bool MdSystem::hasBondPotential() const
-   {
-      return bool(bondPotentialPtr_); 
-   }
+   {  return bool(bondPotentialPtr_); }
 
    /*
    * Return bond potential by reference.
    */
    inline BondPotential& MdSystem::bondPotential() const
-   {  
-      assert(bondPotentialPtr_);  
-      return *bondPotentialPtr_; 
+   {
+      assert(bondPotentialPtr_);
+      return *bondPotentialPtr_;
    }
    #endif
 
@@ -438,17 +487,15 @@ namespace McMd
    * Does an angle potential exist?
    */
    inline bool MdSystem::hasAnglePotential() const
-   {
-      return bool(anglePotentialPtr_); 
-   }
+   {  return bool(anglePotentialPtr_); }
 
    /*
    * Return angle potential by reference.
    */
    inline AnglePotential& MdSystem::anglePotential() const
    {
-      assert(anglePotentialPtr_);  
-      return *anglePotentialPtr_; 
+      assert(anglePotentialPtr_);
+      return *anglePotentialPtr_;
    }
    #endif
 
@@ -457,36 +504,32 @@ namespace McMd
    * Does a dihedral potential exist?
    */
    inline bool MdSystem::hasDihedralPotential() const
-   {
-      return bool(dihedralPotentialPtr_); 
-   }
+   {  return bool(dihedralPotentialPtr_); }
 
    /*
    * Return dihedral potential by reference.
    */
    inline DihedralPotential& MdSystem::dihedralPotential() const
-   {  
-      assert(dihedralPotentialPtr_);  
-      return *dihedralPotentialPtr_; 
+   {
+      assert(dihedralPotentialPtr_);
+      return *dihedralPotentialPtr_;
    }
    #endif
 
-   #ifdef MCMD_LINK
+   #ifdef INTER_COULOMB
    /*
-   * Does a link potential exist?
+   * Does a Coulomb potential exist?
    */
-   inline bool MdSystem::hasLinkPotential() const
-   {
-      return bool(linkPotentialPtr_); 
-   }
+   inline bool MdSystem::hasCoulombPotential() const
+   {  return bool(coulombPotentialPtr_); }
 
    /*
-   * Return link potential by reference.
+   * Return Coulomb potential by reference.
    */
-   inline BondPotential& MdSystem::linkPotential() const
-   {  
-      assert(linkPotentialPtr_);  
-      return *linkPotentialPtr_; 
+   inline MdCoulombPotential& MdSystem::coulombPotential() const
+   {
+      assert(coulombPotentialPtr_);
+      return *coulombPotentialPtr_;
    }
    #endif
 
@@ -495,17 +538,32 @@ namespace McMd
    * Does an external potential exist?
    */
    inline bool MdSystem::hasExternalPotential() const
-   {
-      return bool(externalPotentialPtr_); 
-   }
+   {  return bool(externalPotentialPtr_); }
 
    /*
    * Return external potential by reference.
    */
    inline ExternalPotential& MdSystem::externalPotential() const
-   {  
-      assert(externalPotentialPtr_);  
-      return *externalPotentialPtr_; 
+   {
+      assert(externalPotentialPtr_);
+      return *externalPotentialPtr_;
+   }
+   #endif
+
+   #ifdef MCMD_LINK
+   /*
+   * Does a link potential exist?
+   */
+   inline bool MdSystem::hasLinkPotential() const
+   {  return bool(linkPotentialPtr_); }
+
+   /*
+   * Return link potential by reference.
+   */
+   inline BondPotential& MdSystem::linkPotential() const
+   {
+      assert(linkPotentialPtr_);
+      return *linkPotentialPtr_;
    }
    #endif
 
@@ -514,7 +572,10 @@ namespace McMd
    * Return tether potential by reference.
    */
    inline TetherPotential& MdSystem::tetherPotential() const
-   {  return *tetherPotentialPtr_; }
+   {
+      assert(tetherPotentialPtr_);
+      return *tetherPotentialPtr_;
+   }
    #endif
 
    /*
@@ -522,9 +583,21 @@ namespace McMd
    */
    inline MdIntegrator& MdSystem::mdIntegrator()
    {
-      assert(mdIntegratorPtr_);  
-      return *mdIntegratorPtr_; 
+      assert(mdIntegratorPtr_);
+      return *mdIntegratorPtr_;
    }
 
-} 
+   /*
+   * Signal to indicate change in atomic positions.
+   */
+   inline Signal<>& MdSystem::positionSignal()
+   {  return positionSignal_; }
+
+   /*
+   * Signal to indicate change in atomic velocities.
+   */
+   inline Signal<>& MdSystem::velocitySignal()
+   {  return velocitySignal_; }
+
+}
 #endif

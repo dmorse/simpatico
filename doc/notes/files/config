@@ -1,68 +1,174 @@
-Configuration file structure (ascii):
+SIMPATICO CONFIGURATION FILE FORMAT
 
-   BOUNDARY (same as current)
-   ATOMS - format variable, indicated within block
-   [BONDS]
-   [ANGLES]
-   [DIHEDRALS]
+Configuration file extension:  *.smc
+
+This is an ascii file format that is designed to be used as the initial
+configuration for starting any Simpatico simulation. 
 
 ---------------------------------------------------------------------
-Blocks in configuration file:
+High level file structure (ascii):
 
+   BOUNDARY (same as current)
+   [SPECIES]
+   ATOMS - format variable, indicated within block
+   [TOPOLOGY] 
+   [BONDS] 
+   [ANGLES] 
+   [DIHEDRALS]
+
+Comments:
+
+1) The SPECIES and TOPOLOGY sections must both be present or both
+be absent. Their presence indicates that the system is molecular.
+
+2) The BONDS, ANGLES, DIHEDRALS sections are each optional. These
+groups should normally be absent in a molecular system. They are 
+used in a non-molecular system to list all covalent groups, and 
+can be used in a molecular system to list additional covalent groups 
+(e.g., inter-molecular crosslinks).
+
+3) The single processor mdSim and mcSim programs will normally write
+config files in molecular format, with a SPECIES and TOPOLOGY block.
+They will also only read files with this format.
+
+4) The parallel ddSim program will read files in either molecular or
+non-molecular format, and will preserve all information present in a
+molecular input file, so that it can be written back to file.
+
+---------------------------------------------------------------------
 BOUNDARY:
 
    [Boundary]
 
-ATOMS: 
+   Remark: This can use the existing file format, which is defiend by
+   the Boundary class.
 
-   [molecular
-    nSpecies int
-    for each species {
-       id  nMolecule  nAtom
-    }
-   ]
+SPECIES:
+
+   nSpecies int
+   format t[c]
+
+   species 1 {
+      nMolecule int
+      nAtom int
+      0 type
+      1 type
+      ...
+   }
+
+   ------------------
+
+   Format flags (i.e., allowed characters in format string):
+      t = atom type
+      c = charge
+
+   Comments: 
+   
+   1) This section is optional. Its appearance is a declaration that 
+   the system is molecular. This means that the ATOMS section must be 
+   in molecular order, and a topology section must follow.
+
+   2) The mcSim and mdSim programs will always output in molecular format, 
+   and thus always output a SPECIES block.
+
+   3) The ddSim program will output in molecular format if the input file 
+   was in molecular format. The program needs an isMolecular variable to
+   preserve this information.
+
+   4) The mcSim and mdSim programs should validate type information in this 
+   block against that given in their parameter files.
+
+ATOMS:
+
    [ordered]
    nAtom integer
    format [i][m][t]p[v][s][c]
+   For each atom {
+     [id][context][type][position][velocity][shift][charge]
+   }
 
    Format flags:
-   i = global id (tag)                   only required for DdMd
-   m = context (species, molecule, atom) only required for DdMd
-   t = type id                           only required for DdMd
-   p = position                          always required
-   v = velocity                          required by MD simulations
-   s = shift                             optional for MD simulations
-   c = charge                            (possibility, for future)
+   i = global id (tag)                     always include
+   m = context (species, molecule, atom)   meaningful iff molecular
+   t = type id                             required if not molecular
+   p = position                            always required
+   v = velocity                            required by MD simulations
+   s = shift                               optional for MD simulations
+   c = charge                              (possibility, for future)
 
    Comments:
 
-   1) The molecular and ordered flags are optional, and are set 
-   false by default.
+   1) The presence of a SPECIES block before the atom block indicates that 
+   atom ids are in molecular order, consecutive within each molecule, with 
+   molecules of the same species consecutive within a block. This 
+   precondition should be tested.
 
-   2) The presence of the molecular block indicates that atom ids 
-   are in molecular order, consecutive within each molecule, 
-   molecules of the same species consecutive within a block.
+   2) The ordered flag is optional, and is true if present, false if absent.
 
-   3) The ddSim program will write the molecular block if the input 
-   configuration was read from a file that contained it. It will 
-   thus preserve and output molecular ordering, if it can.
+   3) All programs (mcSim, mdSim, ddSim an ppMd) should be able to handle 
+   either ordered or unordered files.
 
-   4) The default output formats for different simulation programs:
+   4) If information that is input here repeats information given in the 
+   SPECIES section, priority is given to the per atom data given here.
 
-   Each program outputs as much information as it can
-   mcSim and mdSim will each output in molecular format
-   mcSim and mdSim will output groups by default, but not read them
-   mdSim will output positions and velocities, shifts if possible
-   ddSim will read and write molecule block specifications
+   5) By default, all programs should output atom ids for readability
+  
+   6) By default, if molecular, programs should output context for readability
+ 
+   7) Molecular dynamics programs (mdSim and ddSim) will outut velocities,
+   and shifts if possible.
+   
+TOPOLOGY
+
+   [hasBonds]
+   [hasAngles]
+   [hasDihedrals]
+
+   Species 1 {
+     nBond int
+     id  type atomId0 atomId1
+      .....
+     nAngle int
+     id  type atomId0 atomId1 atomId2
+     ...
+     nDihedral int
+     id  type atomId0 atomId1 atomId2
+     ...
+   }
+
+   Species 2 {
+     ...
+   }
+
+   Comments:
+   
+   1) This block must be present if and only if a SPECIES block is present
+
+   2) If this block is present, corresponding BONDS, ANGLES, DIHEDRALS groups 
+   should not be present, since this information would be redundant.
+
+   3) hasBonds, hasAngles, and hasDihedrals blocks are optional arguments 
+   that are false if absent, and true if present
+
+   4) Values of nBond, nAngle, nDihedral are must be present if and only 
+   [hasBonds], [hasAngles], or [hasDihedrals] is set, respectively. Lines
+   describing individual bonds must be present if nBond > 0, etc. 
+
+   5) ddSim must be able to read a TOPOLOGY block, and will replicate all 
+   groups (bonds, angles, etc.) to create corresponding group objects for
+   every molecule in each species. 
+
+   6) The mcSim and mdSim programs can ignore the topology block or cross 
+   check for consistency, since equivalent information is in the parameter 
+   file. (This choice is not part of the file format definition).
+
+   7) Note that inclusion of compact topology information in the config 
+   file makes it unnecssary to define a separate topology file format. The 
+   mdPp postprocessor can process a trajectory by reading a config file 
+   and a trajectory file, using the config file for topological information.
 
 BONDS, ANGLES, or DIHEDRALS:
    
-   [molecular
-    nSpecies int
-    for each species {
-       id  nMolecule  nGroup
-    }
-   ]
    [ordered]
    nGroup  int
    For each {
@@ -71,12 +177,19 @@ BONDS, ANGLES, or DIHEDRALS:
 
    Remarks:
 
-   1) The format is essentially the same for each type of covalent 
-   bond, except for the block label BONDS, ANGLES, or DIHEDRALS.
+   1) In a molecular system with no intramolecular bonding, the BONDS,
+   ANGLES and DIHEDRALS blocks should be absent.
 
-   2) The meaning of the optional molecular block and optional ordered
-   flag are similar to those for atoms.
+   2) In a molecular system, these blocks may be used to describe covalent
+   interactions that are not already specified by the topology block. 
 
-   3) If the block is molecular, the reading program can check that 
-   atoms are all in the same molecule.
+   3) Each of these blocks is optional. In a non-molecular system, the 
+   absence of sucha  block means that there are no groups of the specified 
+   type. In a molecular system, the absence of a block means that all such
+   groups are accounted for by the TOPOLOGY block.
 
+   4) The format is essentially the same for each type of covalent bond, 
+   except for the block label BONDS, ANGLES, or DIHEDRALS and the number
+   of atom ids.
+
+   5) The meaning of the optional ordered flag is similar to that for atoms.

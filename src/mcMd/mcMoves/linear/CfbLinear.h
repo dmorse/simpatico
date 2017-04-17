@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -26,6 +26,13 @@ namespace McMd
    * delete or add a single atom to a specified end of a Linear 
    * molecule. These are the building blocks of configuration bias
    * regrowth and reptation algorithms for linear chains.
+   *
+   * Limitations: The current implementation works with model with 
+   * external and angle potentials, but does not yet work with
+   * dihedral potentials. The treatment of angle potentials does
+   * not use the angle potential to bias the choice of trial bond
+   * orientations, and so is not efficient for strong angle 
+   * potentials. 
    *
    * \ingroup McMd_McMove_Module 
    */

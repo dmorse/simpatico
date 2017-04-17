@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,8 +21,8 @@
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 #include <util/global.h>
-#include <math.h>
 
+#include <math.h>
 #include <cstdio>
 
 namespace McMd
@@ -147,6 +147,7 @@ namespace McMd
                // trialPos = pvtPos + bondVec
                boundary().randomPosition(random(), trialPos[iTrial]);
                boundary().shift(trialPos[iTrial]);
+
                #ifndef INTER_NOPAIR
                trialEnergy[iTrial] = 
                   system().pairPotential().atomEnergy(*endPtr);
@@ -167,13 +168,20 @@ namespace McMd
             for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
                trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
             }
+
             // Choose trial position
             iTrial = random().drawFrom(trialProb, nTrial_);
+
             // Calculate total energy for chosen trial
             de = trialEnergy[iTrial];
+
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
+
+            #ifndef INTER_NOPAIR
             system().pairPotential().addAtom(*endPtr);
+            #endif
+
             rosenbluth *= w;
             energy += de;
 
@@ -220,16 +228,23 @@ namespace McMd
             for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
                trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
             }
+
             // Choose trial position
             iTrial = random().drawFrom(trialProb, nTrial_);
-            // Calculate total energy for chosen trial
+
+            // Fetch nonbonded energy for chosen trial
             de = trialEnergy[iTrial];
-            // Calculate total energy for chosen trial.
+
+            // Add bond energy
             de += system().bondPotential().energy(length*length, bondTypeId);
 
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
+
+            #ifndef INTER_NOPAIR
             system().pairPotential().addAtom(*endPtr);
+            #endif
+
             rosenbluth *= w;
             energy += de;
 
@@ -294,11 +309,14 @@ namespace McMd
             for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
                trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
             }
+
             // Choose trial position
             iTrial = random().drawFrom(trialProb, nTrial_);
-            // Calculate total energy for chosen trial
+
+            // Get nonbonded energy for chosen trial
             de = trialEnergy[iTrial];
-            // Calculate total energy for chosen trial.
+
+            // Add bonded energies
             de += system().bondPotential().energy(length*length, bondTypeId);
             #ifdef INTER_ANGLE
             de += system().anglePotential().energy(cos(angle), angleTypeId);
@@ -306,7 +324,11 @@ namespace McMd
 
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
+
+            #ifndef INTER_NOPAIR
             system().pairPotential().addAtom(*endPtr);
+            #endif
+
             rosenbluth *= w;
             energy += de;
 
@@ -314,15 +336,19 @@ namespace McMd
                 addEndAtom(molPtr, atomId, w, de);
                 rosenbluth *= w;
                 energy += de;
+                #ifndef INTER_NOPAIR
                 system().pairPotential().addAtom(molPtr->atom(atomId));
+                #endif
             }
 
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom());
             accumulator_.sample(rosenbluth, outputFile_);
 
+            #ifndef INTER_NOPAIR
             for (int atomId = 0; atomId < molPtr->nAtom(); ++atomId) {
                 system().pairPotential().deleteAtom(molPtr->atom(atomId));
             }
+            #endif
          }
 
          system().removeMolecule(*molPtr);

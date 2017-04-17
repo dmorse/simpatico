@@ -4,16 +4,18 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/space/Tensor.h>
+#include <util/misc/Setable.h>
+#include <util/global.h>
 #include <string>
 
 namespace Util
 {
    class Vector;
-   class Tensor;
 }
 
 namespace McMd
@@ -82,37 +84,92 @@ namespace McMd
       virtual std::string interactionClassName() const = 0;
 
       //@}
-      /// \name Global Energy, Force, and Stress Evaluators
+      /// \name Global Energy and Stress Evaluators
       //@{ 
 
       /**
+      * Mark the energy as unknown.
+      */
+      virtual void unsetEnergy();
+
+      /**
       * Calculate the total nonBonded pair energy for the associated System.
+      *
+      * If energy is already known (set), this function does nothign and returns.
+      *
+      * In a charged system, this function computes and separately stores the 
+      * non-Coulomb pair energy and the short-range Ewald part of the Coulomb 
+      * energy.
       */
-      virtual double energy() = 0;
+      virtual void computeEnergy() = 0;
 
       /**
-      * Compute total nonbonded pressure
+      * Return the total pair energy for this System.
       *
-      * \param stress (output) pressure.
+      * This function calls computeEnergy() and returns the stored value.
+      * of the non-Coulombic pair energy.
       */
-      virtual void computeStress(double& stress) const = 0;
+      double energy();
 
       /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
+      * Mark the stress as unknown.
       */
-      virtual void computeStress(Util::Vector& stress) const = 0;
+      virtual void unsetStress();
 
       /**
-      * Compute stress tensor.
+      * Compute all short range pair-wise stress components.
       *
-      * \param stress (output) pressures.
+      * This function computes and stores the stress arising from the
+      * non-Coulomb pair interaction. 
+      *
+      * In a charged system, this function also computes and separately
+      * stores stress contributions arising from the short-range part 
+      * of the Coulomb potential. The resulting stress is shared with
+      * the associated CoulombPotential object.
       */
-      virtual void computeStress(Util::Tensor& stress) const = 0;
+      virtual void computeStress() = 0;
+
+      /**
+      * Get pair stress tensor.
+      *
+      * If necessary, this function calls computeStress() before
+      * accessing value.
+      *
+      * \param stress (output) pair stress tensor
+      */
+      virtual void computeStress(Tensor& stress);
+
+      /**
+      * Compute and return xx, yy, zz non-Coulomb pair pressures.
+      *
+      * If necessary, this function calls computeStress() before
+      * accessing values.
+      *
+      * \param pressures (output) diagonal pair stress components
+      */
+      virtual void computeStress(Vector& pressures);
+
+      /**
+      * Compute and return scalar (non-Coulomb) pair pressure.
+      *
+      * If necessary, this function calls computeStress() before
+      * accessing values.
+      *
+      * \param pressure (output) scalar pair pressure.
+      */
+      virtual void computeStress(double& pressure);
 
       //@}
+
+   protected:
+
+      // Setable value of energy for entire system.
+      Setable<double> energy_;
+
+      // Setable value of stress tensor for entire system.
+      Setable<Tensor> stress_;
+
    };
 
-} 
+}
 #endif

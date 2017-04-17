@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -93,6 +93,8 @@ namespace McMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = 0.5*dt_/mass;
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
    }
 
    void NphIntegrator::step() 
@@ -103,7 +105,7 @@ namespace McMd
 
       nSpecies = simulation().nSpecies();
 
-      /* perform the first half step of the explicitly reversible NPH integration scheme.
+      /* Perform the first half step of the explicitly reversible NPH integration scheme.
   
          This follows from operator factorization
   
@@ -152,7 +154,7 @@ namespace McMd
 
       double extP = system().boundaryEnsemble().pressure();
 
-      // advance eta(t)->eta(t+dt/2) (step one)
+      // Advance eta(t)->eta(t+dt/2) (step one)
       if (mode_ == Orthorhombic) {
          double Vdthalf = 1.0/2.0 * volume * dt_;
          eta_[0] += Vdthalf/lengths[0] * (currP_[0] - extP);
@@ -166,10 +168,10 @@ namespace McMd
          eta_[0] += 1.0/2.0*dt_*(1.0/3.0*(currP_[0]+currP_[1]+currP_[2]) - extP);
       }
 
-      // update the box length L(t) -> L(t+dt/2) (step three)
-      // (since we still keep the accelerations a(t) computed for box length L_alpha(t) in memory,
-      // needed in step two, we can exchange the order of the two steps)
-      // also pre-calculate L(t+dt) (step 5a, only depends on eta(t) of step one)
+      // Update the box length L(t) -> L(t+dt/2) (step three)
+      // (Since we still keep accelerations a(t) computed for length L_alpha(t) in memory,
+      // needed in step two, we can exchange the order of the two steps.)
+      // Also pre-calculate L(t+dt) (step 5a, only depends on eta(t) of step one)
 
       Vector lengthsOld = lengths;
       Vector lengthsFinal;
@@ -204,9 +206,8 @@ namespace McMd
          lengthsFinal[2] = lengthsFinal[0];
       }
          
-      // update simulation box 
+      // Update simulation box 
       system().boundary().setOrthorhombic(lengthsFinal); 
-
       
       // update particles
       Atom* atomPtr;
@@ -249,6 +250,8 @@ namespace McMd
             }
          }
       }
+      system().positionSignal().notify();
+      system().velocitySignal().notify();
 
       #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
@@ -258,12 +261,13 @@ namespace McMd
 
       system().calculateForces();
 
-      /* the second step of the explicitly reversible integrator consists of the following to sub-steps
+      /* Second step of the explicitly reversible integrator consists of the following sub-steps
+      *
+      *   6) v(t+dt) = v'' + 1/2 * a(t+dt)*dt
+      *   7) eta(t+dt/2) -> eta(t+dt)
+      */
 
-         6) v(t+dt) = v'' + 1/2 * a(t+dt)*dt
-         7) eta(t+dt/2) -> eta(t+dt)
-       */
-
+      // Update velocities
       // v(t+dt) = v'' + 1/2 * a(t+dt)*dt
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
@@ -277,11 +281,12 @@ namespace McMd
             }
          }
       }
+      system().velocitySignal().notify();
 
       // now compute pressure tensor with updated virial and velocities
       system().computeStress(currP_);
 
-      //  advance eta(t+dt/2) -> eta(t+dt)
+      //  Advance eta(t+dt/2) -> eta(t+dt)
       if (mode_ == Orthorhombic) {
          double Vdthalf = 1.0/2.0 * volumeFinal * dt_;
          eta_[0] += Vdthalf/lengthsFinal[0] * (currP_[0] - extP);

@@ -1,7 +1,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2014, The Regents of the University of Minnesota
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -56,7 +56,7 @@ namespace McMd
    }
 
    /*
-   * Load parameters an archive, but do not allocate.
+   * Load parameters an archive.
    */
    void PairList::loadParameters(Serializable::IArchive &ar)
    {
