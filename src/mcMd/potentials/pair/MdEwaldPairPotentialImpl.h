@@ -368,7 +368,7 @@ namespace McMd
       double forceOverR;
       double rsq;
       double qProduct;
-      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      double ewaldCutoffSq = ewaldInteractionPtr_->rSpaceCutoffSq();
       Atom *atom0Ptr;
       Atom *atom1Ptr;
       int type0, type1;
@@ -379,7 +379,7 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(),
                           force);
-         if (rsq < ewaldCutoff) {
+         if (rsq < ewaldCutoffSq) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
             qProduct = (*atomTypesPtr_)[type0].charge();
@@ -426,7 +426,7 @@ namespace McMd
       double qProduct;
       double pEnergy = 0.0;
       double cEnergy = 0.0;
-      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      double ewaldCutoffSq = ewaldInteractionPtr_->rSpaceCutoffSq();
       int type0, type1;
 
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
@@ -434,7 +434,7 @@ namespace McMd
 
          rsq = boundary().distanceSq(atom0Ptr->position(), 
                                      atom1Ptr->position());
-         if (rsq < ewaldCutoff) {
+         if (rsq < ewaldCutoffSq) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
             if (rsq < pairPtr_->cutoffSq(type0, type1)) {
@@ -474,7 +474,7 @@ namespace McMd
       Vector force;
       double rsq;
       double qProduct;
-      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      double ewaldCutoffSq = ewaldInteractionPtr_->rSpaceCutoffSq();
       PairIterator iter;
       Atom* atom1Ptr;
       Atom* atom0Ptr;
@@ -495,7 +495,7 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
 
-         if (rsq < ewaldCutoff) {
+         if (rsq < ewaldCutoffSq) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
 
