@@ -5,12 +5,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McEnergyAnalyzer.h"
-#include <mcMd/mcSimulation/McSimulation.h>
-#include <mcMd/mcSimulation/McSystem.h>
+#include "MdEnergyAnalyzer.h"
+#include <mcMd/mdSimulation/MdSimulation.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 #ifndef INTER_NOPAIR
-#include <mcMd/potentials/pair/McPairPotential.h>
+#include <mcMd/potentials/pair/MdPairPotential.h>
 #endif
 #ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
@@ -21,6 +21,9 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
+//#ifdef INTER_COULOMB
+//#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+//#endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
@@ -41,9 +44,10 @@ namespace McMd
    /*
    * Constructor.
    */
-   McEnergyAnalyzer::McEnergyAnalyzer(McSystem& system) 
-    : SystemAnalyzer<McSystem>(system),
+   MdEnergyAnalyzer::MdEnergyAnalyzer(MdSystem& system) 
+    : SystemAnalyzer<MdSystem>(system),
       totalAveragePtr_(0),
+      kineticAveragePtr_(0),
       #ifndef INTER_NOPAIR
       pairAveragePtr_(0),
       #endif
@@ -61,22 +65,24 @@ namespace McMd
       #endif
       nSamplePerBlock_(0),
       isInitialized_(false)
-   {  setClassName("McEnergyAnalyzer"); }
+   {  setClassName("MdEnergyAnalyzer"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void McEnergyAnalyzer::readParameters(std::istream& in) 
+   void MdEnergyAnalyzer::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
       nSamplePerBlock_ = 0;
       readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
 
-      McSystem& sys = system();
+      MdSystem& sys = system();
 
       totalAveragePtr_ = new Average;
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+      kineticAveragePtr_ = new Average;
+      kineticAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       pairAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -112,7 +118,7 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void McEnergyAnalyzer::loadParameters(Serializable::IArchive &ar)
+   void MdEnergyAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
       // Load interval and outputFileName
       Analyzer::loadParameters(ar);
@@ -121,11 +127,14 @@ namespace McMd
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, isRequired);
 
-      McSystem& sys = system();
+      MdSystem& sys = system();
 
       // Load Average accumulators
       totalAveragePtr_ = new Average;
       ar >> *totalAveragePtr_;
+      kineticAveragePtr_ = new Average;
+      ar >> *kineticAveragePtr_;
+      UTIL_CHECK(kineticAveragePtr_->nSamplePerBlock() == nSamplePerBlock_);
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       ar >> *pairAveragePtr_;
@@ -166,18 +175,17 @@ namespace McMd
    /*
    * Save internal state to an archive.
    */
-   void McEnergyAnalyzer::save(Serializable::OArchive &ar)
+   void MdEnergyAnalyzer::save(Serializable::OArchive &ar)
    {
       Analyzer::save(ar);
-      //saveInterval(ar);
-      //saveOutputFileName(ar);
       bool isActive = bool(nSamplePerBlock_);
       Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
 
-      McSystem& sys = system();
+      MdSystem& sys = system();
 
       // Save average accumulators
       ar << *totalAveragePtr_;
+      ar << *kineticAveragePtr_;
       #ifndef INTER_NOPAIR
       ar << *pairAveragePtr_;
       #endif
@@ -206,11 +214,12 @@ namespace McMd
    /*
    * Reset nSample.
    */
-   void McEnergyAnalyzer::clear() 
+   void MdEnergyAnalyzer::clear() 
    {  
-      McSystem& sys = system();
+      MdSystem& sys = system();
 
       totalAveragePtr_->clear();
+      kineticAveragePtr_->clear();
       #ifndef INTER_NOPAIR
       pairAveragePtr_->clear();
       #endif
@@ -239,7 +248,7 @@ namespace McMd
    /*
    * Open outputfile
    */ 
-   void McEnergyAnalyzer::setup()
+   void MdEnergyAnalyzer::setup()
    {
       Simulation& sim = system().simulation();
 
@@ -254,12 +263,15 @@ namespace McMd
    /*
    * Output energy to file
    */
-   void McEnergyAnalyzer::sample(long iStep) 
+   void MdEnergyAnalyzer::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         McSystem& sys = system();
+         MdSystem& sys = system();
 
          //outputFile_ << Int(iStep, 10);
+         double kinetic = sys.kineticEnergy();
+         kineticAveragePtr_->sample(kinetic);
+         //outputFile_ << Dbl(kinetic, 15);
 
          double potential = 0.0;
          #ifndef INTER_NOPAIR
@@ -300,7 +312,7 @@ namespace McMd
             // outputFile_ << Dbl(external, 15);
          }
          #endif
-         double total = potential;
+         double total = kinetic + potential;
          totalAveragePtr_->sample(total);
          // outputFile_ << Dbl(total, 20)
          //             << std::endl;
@@ -309,6 +321,7 @@ namespace McMd
          if (nSamplePerBlock_ > 0 && totalAveragePtr_->isBlockComplete()) {
             int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
             outputFile_ << Int(beginStep, 12);
+            outputFile_ << Dbl(kineticAveragePtr_->blockAverage());
             #ifndef INTER_NOPAIR
             outputFile_ << Dbl(pairAveragePtr_->blockAverage());
             #endif
@@ -342,9 +355,9 @@ namespace McMd
    /*
    * Output results to file after simulation is completed.
    */
-   void McEnergyAnalyzer::output()
+   void MdEnergyAnalyzer::output()
    {
-      McSystem& sys = system();
+      MdSystem& sys = system();
       Simulation& sim = sys.simulation();
 
       // Close data (*.dat) file, if any
@@ -360,6 +373,9 @@ namespace McMd
       // Write average (*.ave) file
       sim.fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
       double ave, err;
+      ave = kineticAveragePtr_->average();
+      err = kineticAveragePtr_->blockingError();
+      outputFile_ << "Kinetic   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       #ifndef INTER_NOPAIR
       ave = pairAveragePtr_->average();
       err = pairAveragePtr_->blockingError();
@@ -400,6 +416,10 @@ namespace McMd
 
       // Write error analysis (*.aer) file
       sim.fileMaster().openOutputFile(outputFileName(".aer"), outputFile_);
+      outputFile_ << 
+      "---------------------------------------------------------------------------------\n";
+      outputFile_ << "Kinetic:\n\n";
+      kineticAveragePtr_->output(outputFile_);
       outputFile_ << 
       "---------------------------------------------------------------------------------\n";
       outputFile_ << "Pair:\n\n";

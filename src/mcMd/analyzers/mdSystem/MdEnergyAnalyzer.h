@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_ENERGY_ANALYZER_H
-#define MCMD_MC_ENERGY_ANALYZER_H
+#ifndef MCMD_MD_ENERGY_ANALYZER_H
+#define MCMD_MD_ENERGY_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/analyzers/SystemAnalyzer.h>
-#include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 namespace Util{
    class Average;
@@ -24,15 +24,15 @@ namespace McMd
    * Compute averages and output block averages of energy components.
    *
    * This class computes separate averages for each component of the
-   * total simulation energy (pair, bond, angle, etc.) as well as
+   * total simulation energy (kinetic, pair, bond, etc.) as well as
    * for the total, and periodically outputs block averages of each
    * to a file.
    *
-   * \sa \ref mcMd_analyzer_McEnergyAnalyzer_page "param file format"
+   * \sa \ref mcMd_analyzer_MdEnergyAnalyzer_page "param file format"
    *
-   * \ingroup McMd_McAnalyzer_Module
+   * \ingroup McMd_MdAnalyzer_Module
    */
-   class McEnergyAnalyzer : public SystemAnalyzer<McSystem>
+   class MdEnergyAnalyzer : public SystemAnalyzer<MdSystem>
    {
 
    public:
@@ -40,14 +40,14 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param system  parent McSystem object. 
+      * \param system  parent MdSystem object. 
       */
-      McEnergyAnalyzer(McSystem& system);
+      MdEnergyAnalyzer(MdSystem& system);
    
       /**
       * Destructor.
       */
-      virtual ~McEnergyAnalyzer()
+      virtual ~MdEnergyAnalyzer()
       {} 
    
       /**
@@ -102,6 +102,7 @@ namespace McMd
 
       // Pointers to average accumulators for energy and components
       Average* totalAveragePtr_;
+      Average* kineticAveragePtr_;
       #ifndef INTER_NOPAIR
       Average* pairAveragePtr_;
       #endif

@@ -82,7 +82,7 @@ McSimulation{
       interval                         50
     }
 
-    McEnergyAverage{
+    McEnergyAnalyzer{
       interval                         10
       outputFileName               energy
       nSamplePerBlock                  10
@@ -126,6 +126,12 @@ McSimulation{
       nTrial                         20
     }
 
+    McEnergyAverage{
+      interval                         10
+      outputFileName               energy
+      nSamplePerBlock                  10
+    }
+    
     McPressureAverage{
       interval                       10000
       outputFileName           pressureAve
