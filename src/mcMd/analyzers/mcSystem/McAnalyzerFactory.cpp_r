@@ -8,6 +8,7 @@
 #include "McAnalyzerFactory.h" // Class header
 
 #include "McEnergyOutput.h"
+#include "McEnergyAnalyzer.h"
 #include "McEnergyAverage.h"
 #include "McPressureAverage.h"
 #include "McVirialStressTensorAverage.h"
@@ -64,6 +65,9 @@ namespace McMd
 
       if (className == "McEnergyOutput") {
          ptr = new McEnergyOutput(system());
+      } else
+      if (className == "McEnergyAnalyzer") {
+         ptr = new McEnergyAnalyzer(system());
       } else
       if (className == "McEnergyAverage") {
          ptr = new McEnergyAverage(system());

@@ -1,0 +1,14 @@
+This directory contains classes that implement an Ewald Coulomb 
+interaction for the mdSim MD program.  Coulomb interactions are not 
+yet implemented for the mcSim MC program.  Classes in this directory
+are compiled iff the macro INTER_COULOMB is defined.
+
+Classes
+-------
+
+EwaldInteraction        - core rSpace and kSpace functions
+MdCoulombPotential      - Base class for coulomb potentials
+MdEwaldPotential        - Ewald implementation (k-Space summation)
+EwaldRSpaceAccumulator  - utility class to hold energy and stress
+
+

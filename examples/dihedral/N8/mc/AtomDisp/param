@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                     ../in/
+    inputPrefix                        in/
     outputPrefix                      out/
   }
   nAtomType                              1
@@ -71,7 +71,7 @@ McSimulation{
       interval                      200000
     }
 
-    McEnergyAverage{
+    McEnergyAnalyzer{
       interval                       50000
       outputFileName                energy
       nSamplePerBlock                   10
