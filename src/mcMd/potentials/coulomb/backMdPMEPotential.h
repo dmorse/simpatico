@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_EWALD_POTENTIAL_H
-#define MCMD_MD_EWALD_POTENTIAL_H
+#ifndef MD_PME_POTENTIAL_H
+#define MD_PME_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,21 +8,23 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
-#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>            // base class
+#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>        // member
+#include <mcMd/potentials/coulomb/EwaldInteraction.h>              // member
 
 #include <util/space/IntVector.h>        // member template parameter
-#include <util/space/Vector.h>           // member template parameter
 #include <util/space/Tensor.h>           // member template parameter
 #include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
+#include <util/containers/GridArray.h>   // member template
 #include <util/misc/Setable.h>           // member template
 #include <mcMd/chemistry/AtomType.h>     // member template parameter
 #include <util/containers/Array.h>       // member class template
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
+#include <fftw3.h>
+
 
 namespace McMd
 {
@@ -35,14 +37,14 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Ewald Coulomb potential class for MD simulations.
+   * PME Coulomb potential class.
    *
-   * This class implements the k-space sums for an Ewald
-   * summation of the Coulomb energy and forces.
+   * This class implements the Particle Mesh for an Ewald  
+   * summation of the Coulomb forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdEwaldPotential : public MdCoulombPotential
+   class MdPMEPotential : public MdCoulombPotential
    {
 
    public:
@@ -50,12 +52,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      MdEwaldPotential(System& system);
+      MdPMEPotential(System& system);
 
       /**
       * Destructor (does nothing).
       */
-      virtual ~MdEwaldPotential();
+      virtual ~MdPMEPotential();
 
       /// \name Initialization
       //@{
@@ -81,12 +83,13 @@ namespace McMd
       */
       virtual void save(Serializable::OArchive &ar);
 
+
       //@}
       /// \name System energy and stress.
       //@{
-
-      /**
-      * Generate wavevectors for the current boundary and kCutoff.
+      
+       /**
+      * place holder.
       */
       virtual void makeWaves();
 
@@ -94,12 +97,12 @@ namespace McMd
       * Current number of wavevectors with |k| < kCutoff.
       */
       int nWave() const;
-
+     
       /**
       * Add k-space Coulomb forces for all atoms.
       */
       virtual void addForces();
-
+      
       /**
       * Calculate the long range kspace part of Coulomb energy.
       */
@@ -111,71 +114,118 @@ namespace McMd
       * \param stress (output) pressure
       */
       virtual void computeStress();
-
+   
       //@}
-      /// \name Miscellaneous Accessors
+      /// \name Accessors (const)
       //@{
-
+      //
       EwaldRSpaceAccumulator& rSpaceAccumulator()
       {  return rSpaceAccumulator_; }
 
       EwaldInteraction& ewaldInteraction()
-      { return ewaldInteraction_; }
+      {  return ewaldInteraction_; }
 
       //@}
+      
 
    private:
 
-      // Ewald Interaction - core Ewald computations
+      // 
       EwaldInteraction ewaldInteraction_;
 
-      // Pointer to parent Simulation
       Simulation* simulationPtr_;
 
-      // Pointer to parent System
       System* systemPtr_;
 
-      // Pointer to boundary of associated System.
       Boundary* boundaryPtr_;
 
-      // Pointer to array of atom types
       const Array<AtomType>* atomTypesPtr_;
 
-      /// Exponential factor accessors.
-      double  base0_, base1_, base2_;
-      double  upper0_, upper1_, upper2_;
-      GArray<DCMPLX> fexp0_;
-      GArray<DCMPLX> fexp1_;
-      GArray<DCMPLX> fexp2_;
+      /// Grid Size.
+      IntVector gridSize_;
 
-      /// Wave vector indices.
-      GArray<IntVector> waves_;
+      /// QGrid
+      GridArray<DCMPLX> Qgrid_;
 
-      //real space vector indices.
-      GArray<Vector> reals_;
+      /// Qhatgrid
+      GridArray<DCMPLX> Qhatgrid_;
 
-      /// Values of square of Fourier wavevector.
-      GArray<double> ksq_;
+      /// BCGrid
+      GridArray<double> BCgrid_;
+      
+      /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
+      DArray<Vector> ikop_;
 
-      /// Regularized Green's function (Gaussian/ksq)
-      GArray<double> g_;
+      /// force grid x component
+      GridArray<DCMPLX> xfield_;
 
-      /// Fourier modes of charge density.
-      GArray<DCMPLX> rho_;
+      /// force grid y component
+      GridArray<DCMPLX> yfield_;
 
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
+      /// force grid z component 
+      GridArray<DCMPLX> zfield_;
 
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
+      /// order of basis spline
+      int order_;
+      
+      /// indicator.
+      bool BCikinitialized_;
+
+      /// FFT plan.
+      fftw_plan forward_plan;
+
+      /// FFT plan for electric field.
+      fftw_plan xfield_backward_plan, yfield_backward_plan, zfield_backward_plan;
 
       /**
-      * Calculate Fourier coefficients of charge density.
-      */
-      void computeKSpaceCharge();
+       * set all elements to 0 for grid.
+       */
+      template<class T> 
+      void initializeGrid(GridArray<T>& grid);
+
+      /**
+       * influence function, ie. BCgrid.
+       */
+      void influence_function();
+
+      /**
+       * compute components of B in BCgrid_.
+       */
+      double bfactor(double m , int dim);
+
+      /**
+       * ik operator.
+       */
+      void ik_differential_operator();
+      
+      /**
+       * charge assignment function, ie. Qgrid_.
+       */
+      void spreadCharge();
+
+      /**
+       * expression for basis spline with order-5.
+       */
+      double basisSpline(double x);
+
+   private:
+
+      // KSpace part of Coulomb energy
+      Setable<double> kSpaceEnergy_;
+
+      // KSpace part of Coulomb stress.
+      Setable<Tensor> kSpaceStress_;
+
+      /// Prefactor for self part coulomb energy.
+      double selfPrefactor_;
+
+      /// unitMatrix.
+      Tensor unitTensor_;
 
    };
 
-}
+
+} 
 #endif
+
 

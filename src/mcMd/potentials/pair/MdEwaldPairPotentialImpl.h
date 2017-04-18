@@ -11,6 +11,7 @@
 #include <util/global.h>
 
 #include <mcMd/potentials/coulomb/EwaldInteraction.h>
+#include <mcMd/potentials/coulomb/PMEInteraction.h>
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>
 
 namespace Util
@@ -26,7 +27,9 @@ namespace McMd
    class MdSystem;
    class EwaldRSpaceAccumulator;
    class EwaldInteraction;
+   class PMEInteraction;
    class MdEwaldPotential;
+   class MdPMEPotential;
 
    /**
    * Implementation of a pair potential for a charged system.
@@ -193,7 +196,7 @@ namespace McMd
       Interaction* pairPtr_;
 
       // Pointers to Ewald Coulomb interaction (owned by Coulomb potential)
-      EwaldInteraction* ewaldInteractionPtr_;
+      PMEInteraction* ewaldInteractionPtr_;
 
       // Pointer to EwaldRSpaceAccumulator (owned by Coulomb potential)
       EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
@@ -222,6 +225,7 @@ namespace McMd
 #include <util/accumulators/setToZero.h>
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
+#include <mcMd/potentials/coulomb/MdPMEPotential.h>
 #include <fstream>
 
 namespace McMd
@@ -246,8 +250,8 @@ namespace McMd
          kspacePtr = &system.coulombPotential();
  
          // Dynamic cast to a pointer to MdEwaldPotential.
-         MdEwaldPotential* ewaldPtr; 
-         ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
+         MdPMEPotential* ewaldPtr; 
+         ewaldPtr = dynamic_cast<MdPMEPotential*>(kspacePtr);
  
          ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
          rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();

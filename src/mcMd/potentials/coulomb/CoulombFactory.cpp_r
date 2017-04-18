@@ -16,6 +16,7 @@
 // Coulomb Potential interaction classes
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
+#include <mcMd/potentials/coulomb/MdPMEPotential.h>
 
 
 namespace McMd
@@ -48,6 +49,12 @@ namespace McMd
          //ptr = new RefinedEwaldCoulombPotential(*systemPtr_);
          //ptr = new EwaldCoulombPotential(*systemPtr_);
          ptr = new MdEwaldPotential(*systemPtr_);
+      } 
+      if (name == "PME") {
+         //ptr = new FineEwaldCoulombPotential(*systemPtr_);
+         //ptr = new RefinedEwaldCoulombPotential(*systemPtr_);
+         //ptr = new EwaldCoulombPotential(*systemPtr_);
+         ptr = new MdPMEPotential(*systemPtr_);
       } 
       return ptr;
    }

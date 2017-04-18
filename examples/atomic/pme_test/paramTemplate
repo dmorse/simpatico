@@ -1,0 +1,92 @@
+MdSimulation{
+  FileMaster{
+    inputPrefix                            in/
+    outputPrefix                          out/ 
+  }
+  nAtomType                                  2
+  nBondType                                  1
+  hasCoulomb                                 1
+  atomTypes                                  A       1.0        1.0
+                                             B       1.0       -1.0  
+  maskedPairPolicy                  MaskBonded
+  SpeciesManager{
+
+    Point{
+      moleculeCapacity                      400 
+      type                                   0
+    }
+
+    Point{
+      moleculeCapacity                      400 
+      type                                   1
+    }
+
+  }
+  Random{
+    seed                              10732192
+  }
+  MdSystem{
+    pairStyle                           LJPair
+    bondStyle                     HarmonicBond
+    coulombStyle                         Ewald
+    CoulombPotential{
+      epsilon               1.000000000000e+00
+      alpha                 ALPHA000000000e+00
+      rSpaceCutoff          RSPACE00000000e+00
+      kSpaceCutoff          KSPACE00000000e+00
+      xgridSize                            32
+      ygridSize                            32
+      zgridSize                            32
+    }
+    MdPairPotential{
+      epsilon               1.000000000000e+00 1.300000000000e+00
+                            1.300000000000e+00 1.000000000000e+00
+      sigma                 1.000000000000e+00 1.000000000000e+00
+                            1.000000000000e+00 1.000000000000e+00
+      cutoff                1.122460000000e+00 1.122460000000e+00
+                            1.122460000000e+00 1.122460000000e+00 
+      PairList{
+        atomCapacity                      1000
+        pairCapacity                      1000000
+        skin                2.500000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                           adiabatic
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    NveVvIntegrator{
+       dt                   1.000000000000e-03
+    }
+  }
+  AnalyzerManager{
+    baseInterval                          1
+
+    LogProgress{
+      interval                            1000
+    }
+
+    MdEnergyOutput{
+      interval                            10
+      outputFileName                    energy
+    }
+ 
+    ConfigWriter{
+      interval                            4000
+      outputFileName                   config. 
+    }
+  }
+  saveInterval                            5000
+  saveFileName                         restart
+}
+
+    ConfigWriter{
+      interval                            4000
+      outputFileName              dump/config.
+    }

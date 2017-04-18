@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_EWALD_POTENTIAL_H
-#define MCMD_MD_EWALD_POTENTIAL_H
+#ifndef MCMD_MD_PME_POTENTIAL_H
+#define MCMD_MD_PME_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,19 +10,21 @@
 
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
+#include <mcMd/potentials/coulomb/PMEInteraction.h>        // member
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Vector.h>           // member template parameter
 #include <util/space/Tensor.h>           // member template parameter
 #include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
+#include <util/containers/GridArray.h>   // member template
 #include <util/misc/Setable.h>           // member template
 #include <mcMd/chemistry/AtomType.h>     // member template parameter
 #include <util/containers/Array.h>       // member class template
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
+#include <fftw3.h>
 
 namespace McMd
 {
@@ -37,12 +39,12 @@ namespace McMd
    /**
    * Ewald Coulomb potential class for MD simulations.
    *
-   * This class implements the k-space sums for an Ewald
-   * summation of the Coulomb energy and forces.
+   * This class implements the particle mesh ewald sum
+   * of the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdEwaldPotential : public MdCoulombPotential
+   class MdPMEPotential : public MdCoulombPotential
    {
 
    public:
@@ -50,12 +52,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      MdEwaldPotential(System& system);
+      MdPMEPotential(System& system);
 
       /**
-      * Destructor (does nothing).
+      * Destructor (destroy fftw plan).
       */
-      virtual ~MdEwaldPotential();
+      virtual ~MdPMEPotential();
 
       /// \name Initialization
       //@{
@@ -86,12 +88,12 @@ namespace McMd
       //@{
 
       /**
-      * Generate wavevectors for the current boundary and kCutoff.
+      * place holder.
       */
       virtual void makeWaves();
 
       /**
-      * Current number of wavevectors with |k| < kCutoff.
+      * place holder.
       */
       int nWave() const;
 
@@ -106,9 +108,7 @@ namespace McMd
       virtual void computeEnergy();
 
       /**
-      * Compute kspace part of Coulomb pressure.
-      *
-      * \param stress (output) pressure
+      * place holder.
       */
       virtual void computeStress();
 
@@ -119,7 +119,7 @@ namespace McMd
       EwaldRSpaceAccumulator& rSpaceAccumulator()
       {  return rSpaceAccumulator_; }
 
-      EwaldInteraction& ewaldInteraction()
+      PMEInteraction& ewaldInteraction()
       { return ewaldInteraction_; }
 
       //@}
@@ -127,7 +127,7 @@ namespace McMd
    private:
 
       // Ewald Interaction - core Ewald computations
-      EwaldInteraction ewaldInteraction_;
+      PMEInteraction ewaldInteraction_;
 
       // Pointer to parent Simulation
       Simulation* simulationPtr_;
@@ -141,38 +141,75 @@ namespace McMd
       // Pointer to array of atom types
       const Array<AtomType>* atomTypesPtr_;
 
-      /// Exponential factor accessors.
-      double  base0_, base1_, base2_;
-      double  upper0_, upper1_, upper2_;
-      GArray<DCMPLX> fexp0_;
-      GArray<DCMPLX> fexp1_;
-      GArray<DCMPLX> fexp2_;
+      /// Grid Size.
+      IntVector gridSize_;
 
-      /// Wave vector indices.
-      GArray<IntVector> waves_;
+      /// QGrid
+      GridArray<DCMPLX> Qgrid_;
 
-      //real space vector indices.
-      GArray<Vector> reals_;
+      /// Qhatgrid
+      GridArray<DCMPLX> Qhatgrid_;
 
-      /// Values of square of Fourier wavevector.
-      GArray<double> ksq_;
+      /// BCGrid
+      GridArray<double> BCgrid_;
+      
+      /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
+      DArray<Vector> ikop_;
 
-      /// Regularized Green's function (Gaussian/ksq)
-      GArray<double> g_;
+      /// force grid x component
+      GridArray<DCMPLX> xfield_;
 
-      /// Fourier modes of charge density.
-      GArray<DCMPLX> rho_;
+      /// force grid y component
+      GridArray<DCMPLX> yfield_;
 
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
+      /// force grid z component 
+      GridArray<DCMPLX> zfield_;
+
+      /// order of basis spline
+      int order_;
+      
+      /// indicator.
+      bool BCikinitialized_;
+
+      /// FFT plan.
+      fftw_plan forward_plan;
+
+      /// FFT plan for electric field.
+      fftw_plan xfield_backward_plan, yfield_backward_plan, zfield_backward_plan;
+
+      /**
+       * set all elements to 0 for grid.
+       */
+      template<class T> 
+      void initializeGrid(GridArray<T>& grid);
+
+      /**
+       * influence function, ie. BCgrid.
+       */
+      void influence_function();
+
+      /**
+       * compute components of B in BCgrid_.
+       */
+      double bfactor(double m , int dim);
+
+      /**
+       * ik operator.
+       */
+      void ik_differential_operator();
+      
+      /**
+       * charge assignment function, ie. Qgrid_.
+       */
+      void spreadCharge();
+
+      /**
+       * expression for basis spline with order-5.
+       */
+      double basisSpline(double x);
 
       /// Prefactor for self-interaction correction.
       double selfPrefactor_;
-
-      /**
-      * Calculate Fourier coefficients of charge density.
-      */
-      void computeKSpaceCharge();
 
    };
 
