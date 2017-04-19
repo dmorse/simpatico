@@ -115,6 +115,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       Average* dihedralAveragePtr_;
       #endif
+      #ifdef INTER_COULOMB
+      Average* coulombAveragePtr_;
+      #endif
       #ifdef INTER_EXTERNAL
       Average* externalAveragePtr_;
       #endif

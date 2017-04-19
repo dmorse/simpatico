@@ -21,9 +21,9 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-//#ifdef INTER_COULOMB
-//#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
-//#endif
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
@@ -59,6 +59,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralAveragePtr_(0),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombAveragePtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
       externalAveragePtr_(0),
@@ -103,6 +106,12 @@ namespace McMd
       if (sys.hasDihedralPotential()) {
           dihedralAveragePtr_ = new Average;
           dihedralAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+          coulombAveragePtr_ = new Average;
+          coulombAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -157,6 +166,12 @@ namespace McMd
          ar >> *dihedralAveragePtr_;
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         coulombAveragePtr_ = new Average;
+         ar >> *coulombAveragePtr_;
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
          externalAveragePtr_ = new Average;
@@ -206,6 +221,12 @@ namespace McMd
          ar << *dihedralAveragePtr_;
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         ar << *coulombAveragePtr_;
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
@@ -241,6 +262,12 @@ namespace McMd
       if (sys.hasDihedralPotential()) {
          assert(dihedralAveragePtr_);
          dihedralAveragePtr_->clear();
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         coulombAveragePtr_->clear();
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -312,6 +339,15 @@ namespace McMd
             // outputFile_ << Dbl(dihedral, 15);
          }
          #endif
+         #ifdef INTER_COULOMB
+         if (sys.hasCoulombPotential()) {
+            double coulomb = sys.coulombPotential().energy();
+            potential += coulomb;
+            assert(coulombAveragePtr_);
+            coulombAveragePtr_->sample(coulomb);
+            // outputFile_ << Dbl(dihedral, 15);
+         }
+         #endif
          #ifdef INTER_EXTERNAL
          if (sys.hasExternalPotential()) {
             double external = sys.externalPotential().energy();
@@ -349,6 +385,12 @@ namespace McMd
             if (sys.hasDihedralPotential()) {
                assert(dihedralAveragePtr_);
                outputFile_ << Dbl(dihedralAveragePtr_->blockAverage());
+            }
+            #endif
+            #ifdef INTER_COULOMB
+            if (sys.hasCoulombPotential()) {
+               assert(coulombAveragePtr_);
+               outputFile_ << Dbl(coulombAveragePtr_->blockAverage());
             }
             #endif
             #ifdef INTER_EXTERNAL
@@ -416,6 +458,14 @@ namespace McMd
          outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         ave = coulombAveragePtr_->average();
+         err = coulombAveragePtr_->blockingError();
+         outputFile_ << "Coulomb   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
@@ -465,6 +515,15 @@ namespace McMd
          outputFile_ << "Dihedral:\n\n";
          assert(dihedralAveragePtr_);
          dihedralAveragePtr_->output(outputFile_);
+      }
+      #endif 
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         outputFile_ << 
+         "---------------------------------------------------------------------------------\n";
+         outputFile_ << "Coulomb:\n\n";
+         assert(coulombAveragePtr_);
+         coulombAveragePtr_->output(outputFile_);
       }
       #endif
       #ifdef INTER_EXTERNAL
