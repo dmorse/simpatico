@@ -16,7 +16,7 @@
 // Coulomb Potential interaction classes
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
-#ifdef UTIL_FFTW
+#ifdef INTER_FFTW
 #include <mcMd/potentials/coulomb/MdPMEPotential.h>
 #endif
 
@@ -49,7 +49,7 @@ namespace McMd
       if (name == "Ewald") {
          ptr = new MdEwaldPotential(*systemPtr_);
       } 
-      #ifdef UTIL_FFTW
+      #ifdef INTER_FFTW
       else if (name == "PME") {
          ptr = new MdPMEPotential(*systemPtr_);
       } 

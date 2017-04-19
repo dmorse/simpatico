@@ -79,12 +79,6 @@ BIN_DIR=$(ROOT_DIR)/bin
 #UTIL_MPI=1
 
 #-----------------------------------------------------------------------
-# FFTW Fast Fourier Transform library (enable/disble by commenting in/out
-# FFTW must be enabled to enable fast particle-mesh Ewald algorithms
-
-#UTIL_FFTW=1
-
-#-----------------------------------------------------------------------
 # C++11 Standard (Disable/enable by commenting out or uncommenting).
 # This is disabled by default. If C++11 is disabled, the code uses
 # only syntax and features defined in the older C++ 1998 standard.
@@ -106,16 +100,6 @@ BIN_DIR=$(ROOT_DIR)/bin
 
 COMPILER=gcc
 MPI_LIB=mpicxx
-
-# ------------------------------------------------------------------------
-# Paths for FFTW (depend on operating system)
-
-ifdef UTIL_FFTW
-#FFTW on linux
-FFTW_LIB=/usr/local/lib/libfftw3.a
-#FFTW on Mac OS X (Homebrew package manager)
-#FFTW_LIB=/opt/local/lib/libfftw3.a
-endif
 
 # ------------------------------------------------------------------------
 # Variables used to define makefile pattern rules:
@@ -158,9 +142,6 @@ endif
 
 # Global default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
-
-# Alternative header file location for FFTW on Max OS X (Homebrew)
-#INCLUDES+= -I/opt/local/include
 
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
