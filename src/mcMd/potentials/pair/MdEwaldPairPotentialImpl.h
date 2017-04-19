@@ -232,8 +232,9 @@ namespace McMd
          MdEwaldPotential* ewaldPtr; 
          ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
  
-         ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
+         ewaldInteractionPtr_ = &ewaldPtr->ewaldInteraction();
          rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
+         rSpaceAccumulatorPtr_->setPairPotential(*this); 
  
          pairPtr_ = new Interaction;
          // Pass address of MdEwaldPotential to EwaldPair interaction.
