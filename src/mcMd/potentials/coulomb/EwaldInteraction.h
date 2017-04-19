@@ -130,22 +130,16 @@ namespace McMd
   
       /**
       * Get real space cutoff squared.
-      *
-      * \return    rSpaceCutoffSq_
       */
       double rSpaceCutoffSq() const;
 
       /**
       * Get real space cutoff.
-      *
-      * \return    rSpaceCutoff_
       */
       double rSpaceCutoff() const;
 
       /**
       * Get reciprocal space cutoff.
-      *
-      * \return    kSpaceCutoff_
       */
       double kSpaceCutoff() const;
 

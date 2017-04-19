@@ -100,7 +100,7 @@ namespace McMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
          externalAveragePtr_ = new Average;
          externalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
@@ -149,7 +149,7 @@ namespace McMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
          externalAveragePtr_ = new Average;
          ar >> *externalAveragePtr_;
       }
@@ -188,16 +188,19 @@ namespace McMd
       #endif
       #ifdef INTER_ANGLE
       if (sys.hasAnglePotential()) {
+         assert(angleAveragePtr_);
          ar << *angleAveragePtr_;
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (sys.hasDihedralPotential()) {
+         assert(dihedralAveragePtr_);
          ar << *dihedralAveragePtr_;
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
+         assert(externalAveragePtr_);
          ar << *externalAveragePtr_;
       }
       #endif
@@ -221,16 +224,19 @@ namespace McMd
       #endif
       #ifdef INTER_ANGLE
       if (sys.hasAnglePotential()) {
+         assert(angleAveragePtr_);
          angleAveragePtr_->clear();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (sys.hasDihedralPotential()) {
+         assert(dihedralAveragePtr_);
          dihedralAveragePtr_->clear();
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
+         assert(externalAveragePtr_);
          externalAveragePtr_->clear();
       }
       #endif
@@ -280,6 +286,7 @@ namespace McMd
          if (sys.hasAnglePotential()) {
             double angle = sys.anglePotential().energy();
             potential += angle;
+            assert(angleAveragePtr_);
             angleAveragePtr_->sample(angle);
             //outputFile_ << Dbl(angle, 15);
          }
@@ -288,14 +295,16 @@ namespace McMd
          if (sys.hasDihedralPotential()) {
             double dihedral  = sys.dihedralPotential().energy();
             potential += dihedral;
+            assert(dihedralAveragePtr_);
             dihedralAveragePtr_->sample(dihedral);
             // outputFile_ << Dbl(dihedral, 15);
          }
          #endif
          #ifdef INTER_EXTERNAL
-         if (sys.hasExternal()) {
+         if (sys.hasExternalPotential()) {
             double external = sys.externalPotential().energy();
             potential += external;
+            assert(externalAveragePtr_);
             externalAveragePtr_->sample(external);
             // outputFile_ << Dbl(external, 15);
          }
@@ -319,16 +328,19 @@ namespace McMd
             #endif
             #ifdef INTER_ANGLE
             if (sys.hasAnglePotential()) {
+               assert(angleAveragePtr_);
                outputFile_ << Dbl(angleAveragePtr_->blockAverage());
             }
             #endif
             #ifdef INTER_DIHEDRAL
             if (sys.hasDihedralPotential()) {
+               assert(dihedralAveragePtr_);
                outputFile_ << Dbl(dihedralAveragePtr_->blockAverage());
             }
             #endif
             #ifdef INTER_EXTERNAL
-            if (sys.hasExternal()) {
+            if (sys.hasExternalPotential()) {
+               assert(externalAveragePtr_);
                outputFile_ << Dbl(externalAveragePtr_->blockAverage());
             }
             #endif
@@ -374,6 +386,7 @@ namespace McMd
       #endif
       #ifdef INTER_ANGLE
       if (sys.hasAnglePotential()) {
+         assert(angleAveragePtr_);
          ave = angleAveragePtr_->average();
          err = angleAveragePtr_->blockingError();
          outputFile_ << "Angle     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
@@ -381,13 +394,15 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       if (sys.hasDihedralPotential()) {
+         assert(dihedralAveragePtr_);
          ave = dihedralAveragePtr_->average();
          err = dihedralAveragePtr_->blockingError();
          outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
+         assert(externalAveragePtr_);
          ave = externalAveragePtr_->average();
          err = externalAveragePtr_->blockingError();
          outputFile_ << "External  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
@@ -419,6 +434,7 @@ namespace McMd
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
          outputFile_ << "Angle:\n\n";
+         assert(angleAveragePtr_);
          angleAveragePtr_->output(outputFile_);
       }
       #endif
@@ -427,14 +443,16 @@ namespace McMd
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
          outputFile_ << "Dihedral:\n\n";
+         assert(dihedralAveragePtr_);
          dihedralAveragePtr_->output(outputFile_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (sys.hasExternal()) {
+      if (sys.hasExternalPotential()) {
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
          outputFile_ << "External:\n\n";
+         assert(externalAveragePtr_);
          externalAveragePtr_->output(outputFile_);
       }
       #endif
