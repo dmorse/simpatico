@@ -95,6 +95,12 @@ McSimulation{
       selector             inter -1 -1
     }
 
+    McPressureAverage{
+      interval                          10
+      outputFileName           pressureAve
+      nSamplePerBlock                   10
+    }
+
     RadiusGyration{
       interval                      10
       outputFileName              RgSq
@@ -130,12 +136,6 @@ McSimulation{
       interval                         10
       outputFileName               energy
       nSamplePerBlock                  10
-    }
-
-    McPressureAverage{
-      interval                       10000
-      outputFileName           pressureAve
-      nSamplePerBlock                    1
     }
 
     RadiusGyration{
