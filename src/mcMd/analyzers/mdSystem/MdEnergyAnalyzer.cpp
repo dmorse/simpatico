@@ -21,9 +21,9 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-//#ifdef INTER_COULOMB
-//#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
-//#endif
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
@@ -48,6 +48,7 @@ namespace McMd
     : SystemAnalyzer<MdSystem>(system),
       totalAveragePtr_(0),
       kineticAveragePtr_(0),
+      potentialAveragePtr_(0),
       #ifndef INTER_NOPAIR
       pairAveragePtr_(0),
       #endif
@@ -59,6 +60,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralAveragePtr_(0),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombAveragePtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
       externalAveragePtr_(0),
@@ -83,6 +87,8 @@ namespace McMd
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       kineticAveragePtr_ = new Average;
       kineticAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+      potentialAveragePtr_ = new Average;
+      potentialAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       pairAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -103,6 +109,12 @@ namespace McMd
       if (sys.hasDihedralPotential()) {
           dihedralAveragePtr_ = new Average;
           dihedralAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+          coulombAveragePtr_ = new Average;
+          coulombAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -134,7 +146,8 @@ namespace McMd
       ar >> *totalAveragePtr_;
       kineticAveragePtr_ = new Average;
       ar >> *kineticAveragePtr_;
-      UTIL_CHECK(kineticAveragePtr_->nSamplePerBlock() == nSamplePerBlock_);
+      potentialAveragePtr_ = new Average;
+      ar >> *potentialAveragePtr_;
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       ar >> *pairAveragePtr_;
@@ -155,6 +168,12 @@ namespace McMd
       if (sys.hasDihedralPotential()) {
          dihedralAveragePtr_ = new Average;
          ar >> *dihedralAveragePtr_;
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         coulombAveragePtr_ = new Average;
+         ar >> *coulombAveragePtr_;
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -186,6 +205,7 @@ namespace McMd
       // Save average accumulators
       ar << *totalAveragePtr_;
       ar << *kineticAveragePtr_;
+      ar << *potentialAveragePtr_;
       #ifndef INTER_NOPAIR
       ar << *pairAveragePtr_;
       #endif
@@ -206,6 +226,12 @@ namespace McMd
          ar << *dihedralAveragePtr_;
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         ar << *coulombAveragePtr_;
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
@@ -223,6 +249,7 @@ namespace McMd
 
       totalAveragePtr_->clear();
       kineticAveragePtr_->clear();
+      potentialAveragePtr_->clear();
       #ifndef INTER_NOPAIR
       pairAveragePtr_->clear();
       #endif
@@ -241,6 +268,12 @@ namespace McMd
       if (sys.hasDihedralPotential()) {
          assert(dihedralAveragePtr_);
          dihedralAveragePtr_->clear();
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         coulombAveragePtr_->clear();
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -312,6 +345,15 @@ namespace McMd
             // outputFile_ << Dbl(dihedral, 15);
          }
          #endif
+         #ifdef INTER_COULOMB
+         if (sys.hasCoulombPotential()) {
+            double coulomb = sys.coulombPotential().energy();
+            potential += coulomb;
+            assert(coulombAveragePtr_);
+            coulombAveragePtr_->sample(coulomb);
+            // outputFile_ << Dbl(dihedral, 15);
+         }
+         #endif
          #ifdef INTER_EXTERNAL
          if (sys.hasExternalPotential()) {
             double external = sys.externalPotential().energy();
@@ -321,6 +363,9 @@ namespace McMd
             // outputFile_ << Dbl(external, 15);
          }
          #endif
+
+         assert(externalAveragePtr_);
+         potentialAveragePtr_->sample(potential);
          double total = kinetic + potential;
          totalAveragePtr_->sample(total);
          // outputFile_ << Dbl(total, 20)
@@ -349,6 +394,12 @@ namespace McMd
             if (sys.hasDihedralPotential()) {
                assert(dihedralAveragePtr_);
                outputFile_ << Dbl(dihedralAveragePtr_->blockAverage());
+            }
+            #endif
+            #ifdef INTER_COULOMB
+            if (sys.hasCoulombPotential()) {
+               assert(coulombAveragePtr_);
+               outputFile_ << Dbl(coulombAveragePtr_->blockAverage());
             }
             #endif
             #ifdef INTER_EXTERNAL
@@ -416,6 +467,14 @@ namespace McMd
          outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         assert(coulombAveragePtr_);
+         ave = coulombAveragePtr_->average();
+         err = coulombAveragePtr_->blockingError();
+         outputFile_ << "Coulomb   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      }
+      #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
@@ -424,9 +483,16 @@ namespace McMd
          outputFile_ << "External  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
+
+      assert(externalAveragePtr_);
+      ave = potentialAveragePtr_->average();
+      err = potentialAveragePtr_->blockingError();
+      outputFile_ << "Potential " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+
       ave = totalAveragePtr_->average();
       err = totalAveragePtr_->blockingError();
       outputFile_ << "Total     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+
       outputFile_.close();
 
       // Write error analysis (*.aer) file
@@ -466,6 +532,15 @@ namespace McMd
          assert(dihedralAveragePtr_);
          dihedralAveragePtr_->output(outputFile_);
       }
+      #endif 
+      #ifdef INTER_COULOMB
+      if (sys.hasCoulombPotential()) {
+         outputFile_ << 
+         "---------------------------------------------------------------------------------\n";
+         outputFile_ << "Coulomb:\n\n";
+         assert(coulombAveragePtr_);
+         coulombAveragePtr_->output(outputFile_);
+      }
       #endif
       #ifdef INTER_EXTERNAL
       if (sys.hasExternalPotential()) {
@@ -476,12 +551,20 @@ namespace McMd
          externalAveragePtr_->output(outputFile_);
       }
       #endif
+
+      outputFile_ << 
+      "---------------------------------------------------------------------------------\n";
+      outputFile_ << "Potential:\n\n";
+      assert(externalAveragePtr_);
+      potentialAveragePtr_->output(outputFile_);
+
       outputFile_ << 
       "---------------------------------------------------------------------------------\n";
       outputFile_ << "Total:\n\n";
+      assert(totalAveragePtr_);
       totalAveragePtr_->output(outputFile_);
-      outputFile_.close();
 
+      outputFile_.close();
    }
 
 
