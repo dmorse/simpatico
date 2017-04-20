@@ -13,7 +13,7 @@
 #-----------------------------------------------------------------------
 
 # All libraries needed for files in src/mcMd
-LIBS=$(mcMd_LIB) $(fftw_LIB) $(inter_LIB) $(util_LIB)
+LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 # C preprocessor macro definitions needed by files in src/mcMd
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)

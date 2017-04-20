@@ -438,9 +438,6 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeEnergy()
    {
-      // If the pair energy is already known, do nothing and return.
-      //if (energy_.isSet()) return;
-
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -502,7 +499,7 @@ namespace McMd
       Vector force;
       double rsq;
       double qProduct;
-      double ewaldCutoff = ewaldInteractionPtr_->rSpaceCutoff();
+      double ewaldCutoffSq = ewaldInteractionPtr_->rSpaceCutoffSq();
       PairIterator iter;
       Atom* atom1Ptr;
       Atom* atom0Ptr;
@@ -523,7 +520,7 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
 
-         if (rsq < ewaldCutoff) {
+         if (rsq < ewaldCutoffSq) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
 

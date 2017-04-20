@@ -791,15 +791,12 @@ namespace McMd
    {
       double energy = 0.0;
       #ifndef INTER_NOPAIR
-      std::cout << "794 is ok " << std::endl;
       energy += pairPotential().energy();
-      std::cout << "795 is ok " << std::endl;
       #endif
       #ifdef INTER_BOND
       if (hasBondPotential()) {
          energy += bondPotential().energy();
       }
-      std::cout << "801 is ok " << std::endl;
       #endif
       #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
@@ -815,7 +812,6 @@ namespace McMd
       if (hasCoulombPotential()) {
          energy += coulombPotential().kSpaceEnergy();
       }
-      std::cout << "817 is ok " << std::endl;
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternalPotential()) {
