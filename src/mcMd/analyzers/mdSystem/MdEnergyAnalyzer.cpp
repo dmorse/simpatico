@@ -62,12 +62,15 @@ namespace McMd
       dihedralAveragePtr_(0),
       #endif
       #ifdef INTER_COULOMB
+      coulombRSpaceAveragePtr_(0),
+      coulombKSpaceAveragePtr_(0),
       coulombAveragePtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
       externalAveragePtr_(0),
       #endif
       nSamplePerBlock_(0),
+      coulombComponents_(false),
       isInitialized_(false)
    {  setClassName("MdEnergyAnalyzer"); }
 
@@ -76,12 +79,16 @@ namespace McMd
    */
    void MdEnergyAnalyzer::readParameters(std::istream& in) 
    {
+      MdSystem& sys = system();
+
       readInterval(in);
       readOutputFileName(in);
       nSamplePerBlock_ = 0;
       readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
-
-      MdSystem& sys = system();
+      if (sys.hasCoulombPotential()) {
+         coulombComponents_ = false;
+         readOptional<bool>(in, "coulombComponents", coulombComponents_);
+      }
 
       totalAveragePtr_ = new Average;
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -113,6 +120,12 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
+          if (coulombComponents_) {
+             coulombRSpaceAveragePtr_ = new Average;
+             coulombRSpaceAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+             coulombKSpaceAveragePtr_ = new Average;
+             coulombKSpaceAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+          }
           coulombAveragePtr_ = new Average;
           coulombAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
@@ -132,14 +145,18 @@ namespace McMd
    */
    void MdEnergyAnalyzer::loadParameters(Serializable::IArchive &ar)
    {
+      MdSystem& sys = system();
+
       // Load interval and outputFileName
       Analyzer::loadParameters(ar);
 
       nSamplePerBlock_ = 0; // default value
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, isRequired);
+      if (sys.hasCoulombPotential()) {
+         loadParameter<bool>(ar, "coulombComponents", coulombComponents_, isRequired);
+      }
 
-      MdSystem& sys = system();
 
       // Load Average accumulators
       totalAveragePtr_ = new Average;
@@ -172,6 +189,12 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
+         if (coulombComponents_) {
+            coulombRSpaceAveragePtr_ = new Average;
+            ar >> *coulombRSpaceAveragePtr_;
+            coulombKSpaceAveragePtr_ = new Average;
+            ar >> *coulombKSpaceAveragePtr_;
+         }
          coulombAveragePtr_ = new Average;
          ar >> *coulombAveragePtr_;
       }
@@ -196,11 +219,15 @@ namespace McMd
    */
    void MdEnergyAnalyzer::save(Serializable::OArchive &ar)
    {
+      MdSystem& sys = system();
+
       Analyzer::save(ar);
       bool isActive = bool(nSamplePerBlock_);
       Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
-
-      MdSystem& sys = system();
+      if (sys.hasCoulombPotential()) {
+         isActive = coulombComponents_;
+         Parameter::saveOptional(ar, coulombComponents_, isActive);
+      }
 
       // Save average accumulators
       ar << *totalAveragePtr_;
@@ -228,6 +255,12 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
+         if (coulombComponents_) {
+            assert(coulombRSpaceAveragePtr_);
+            ar << *coulombRSpaceAveragePtr_;
+            assert(coulombKSpaceAveragePtr_);
+            ar << *coulombKSpaceAveragePtr_;
+         }
          assert(coulombAveragePtr_);
          ar << *coulombAveragePtr_;
       }
@@ -272,6 +305,12 @@ namespace McMd
       #endif
       #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
+         if (coulombComponents_) {
+            assert(coulombRSpaceAveragePtr_);
+            coulombRSpaceAveragePtr_->clear();
+            assert(coulombKSpaceAveragePtr_);
+            coulombKSpaceAveragePtr_->clear();
+         }
          assert(coulombAveragePtr_);
          coulombAveragePtr_->clear();
       }
@@ -289,14 +328,59 @@ namespace McMd
    */ 
    void MdEnergyAnalyzer::setup()
    {
-      Simulation& sim = system().simulation();
+      MdSystem& sys = system();
+      Simulation& sim = sys.simulation();
 
       if (outputFile_.is_open()) {
          outputFile_.close();
       }
-      std::string filename;
-      filename  = outputFileName(".dat");
-      sim.fileMaster().openOutputFile(filename, outputFile_);
+
+      if (nSamplePerBlock_ > 0) {
+
+         // Open *.fmt file with format of *.dat data file
+         std::string filename;
+         filename  = outputFileName(".fmt");
+         sim.fileMaster().openOutputFile(filename, outputFile_);
+
+         outputFile_ << "       iStep";
+         outputFile_ << "        Kinetic";
+         #ifndef INTER_NOPAIR
+         outputFile_ << "           Pair";
+         #endif
+         #ifdef INTER_BOND
+         if (sys.hasBondPotential()) {
+            outputFile_ << "           Bond";
+         }
+         #endif
+         #ifdef INTER_ANGLE
+         if (sys.hasAnglePotential()) {
+            outputFile_ << "          Angle";
+         }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (sys.hasDihedralPotential()) {
+            outputFile_ << "       Dihedral";
+         }
+         #endif
+         #ifdef INTER_COULOMB
+         if (sys.hasCoulombPotential()) {
+            outputFile_ << "        Coulomb";
+         }
+         #endif
+         #ifdef INTER_EXTERNAL
+         if (sys.hasExternalPotential()) {
+            outputFile_ << "       External";
+         }
+         #endif
+         outputFile_ << "          Total";
+         outputFile_.close();
+
+         // Open *.dat data file, leave open for writing
+         filename  = outputFileName(".dat");
+         sim.fileMaster().openOutputFile(filename, outputFile_);
+
+      }
+
    }
 
    /*
@@ -347,10 +431,21 @@ namespace McMd
          #endif
          #ifdef INTER_COULOMB
          if (sys.hasCoulombPotential()) {
+            if (coulombComponents_) {
+               // R-space contribution
+               double coulombRSpace = sys.coulombPotential().rSpaceEnergy();
+               assert(coulombRSpaceAveragePtr_);
+               coulombRSpaceAveragePtr_->sample(coulombRSpace);
+               // K-space contribution
+               double coulombKSpace = sys.coulombPotential().kSpaceEnergy();
+               assert(coulombKSpaceAveragePtr_);
+               coulombKSpaceAveragePtr_->sample(coulombKSpace);
+            }
+            // Total
             double coulomb = sys.coulombPotential().energy();
-            potential += coulomb;
             assert(coulombAveragePtr_);
             coulombAveragePtr_->sample(coulomb);
+            potential += coulomb;
             // outputFile_ << Dbl(dihedral, 15);
          }
          #endif
@@ -438,17 +533,17 @@ namespace McMd
       double ave, err;
       ave = kineticAveragePtr_->average();
       err = kineticAveragePtr_->blockingError();
-      outputFile_ << "Kinetic   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Kinetic    " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       #ifndef INTER_NOPAIR
       ave = pairAveragePtr_->average();
       err = pairAveragePtr_->blockingError();
-      outputFile_ << "Pair      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Pair       " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       #endif
       #ifdef INTER_BOND
       if (sys.hasBondPotential()) {
          ave = bondAveragePtr_->average();
          err = bondAveragePtr_->blockingError();
-         outputFile_ << "Bond      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Bond       " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_ANGLE
@@ -456,7 +551,7 @@ namespace McMd
          assert(angleAveragePtr_);
          ave = angleAveragePtr_->average();
          err = angleAveragePtr_->blockingError();
-         outputFile_ << "Angle     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Angle      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_DIHEDRAL
@@ -464,15 +559,29 @@ namespace McMd
          assert(dihedralAveragePtr_);
          ave = dihedralAveragePtr_->average();
          err = dihedralAveragePtr_->blockingError();
-         outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Dihedral   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
+
          assert(coulombAveragePtr_);
          ave = coulombAveragePtr_->average();
          err = coulombAveragePtr_->blockingError();
-         outputFile_ << "Coulomb   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Coulomb    " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+
+         if (coulombComponents_) {
+            assert(coulombRSpaceAveragePtr_);
+            ave = coulombRSpaceAveragePtr_->average();
+            err = coulombRSpaceAveragePtr_->blockingError();
+            outputFile_ << "Coulomb(R) " << Dbl(ave) 
+                        << " +- " << Dbl(err, 9, 2) << "\n";
+            assert(coulombKSpaceAveragePtr_);
+            ave = coulombKSpaceAveragePtr_->average();
+            err = coulombKSpaceAveragePtr_->blockingError();
+            outputFile_ << "Coulomb(K) " << Dbl(ave) << " +- " 
+                        << Dbl(err, 9, 2) << "\n";
+         }
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -480,18 +589,18 @@ namespace McMd
          assert(externalAveragePtr_);
          ave = externalAveragePtr_->average();
          err = externalAveragePtr_->blockingError();
-         outputFile_ << "External  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "External   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
 
       assert(externalAveragePtr_);
       ave = potentialAveragePtr_->average();
       err = potentialAveragePtr_->blockingError();
-      outputFile_ << "Potential " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Potential  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
 
       ave = totalAveragePtr_->average();
       err = totalAveragePtr_->blockingError();
-      outputFile_ << "Total     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Total      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
 
       outputFile_.close();
 

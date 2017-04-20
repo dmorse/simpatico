@@ -62,13 +62,14 @@ MdSimulation{
     baseInterval                          100
 
     LogProgress{
-      interval                            100
+      interval                            500
     }
 
     MdEnergyAnalyzer{
       interval                            100
       outputFileName                   energy
       nSamplePerBlock                      10
+      coulombComponents                     1
     }
 
     ConfigWriter{
