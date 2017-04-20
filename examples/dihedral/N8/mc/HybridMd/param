@@ -56,7 +56,7 @@ McSimulation{
     }
   }
   McMoveManager{
-    
+
     HybridMdMove{
       probability         1.000000000000e+00
       nStep                              200
@@ -87,14 +87,14 @@ McSimulation{
       outputFileName               energy
       nSamplePerBlock                  10
     }
-    
+
     McPairEnergyAverage{
       interval                       10
       outputFileName         pairEnergy
       nSamplePerBlock               10
       selector             inter -1 -1
     }
-    
+
     RadiusGyration{
       interval                      10
       outputFileName              RgSq
@@ -131,7 +131,7 @@ McSimulation{
       outputFileName               energy
       nSamplePerBlock                  10
     }
-    
+
     McPressureAverage{
       interval                       10000
       outputFileName           pressureAve
@@ -154,7 +154,7 @@ McSimulation{
       }
       selector                  inter   -1   -1
     }
-    
+
     BondLengthDist{
       interval                     20000
       outputFileName          BondLengthDist
@@ -165,4 +165,4 @@ McSimulation{
          nBin                      400
       }
     }
-    
+

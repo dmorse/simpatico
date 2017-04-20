@@ -103,6 +103,7 @@ namespace McMd
       // Pointers to average accumulators for energy and components
       Average* totalAveragePtr_;
       Average* kineticAveragePtr_;
+      Average* potentialAveragePtr_;
       #ifndef INTER_NOPAIR
       Average* pairAveragePtr_;
       #endif

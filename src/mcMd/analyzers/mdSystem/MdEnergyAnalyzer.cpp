@@ -48,6 +48,7 @@ namespace McMd
     : SystemAnalyzer<MdSystem>(system),
       totalAveragePtr_(0),
       kineticAveragePtr_(0),
+      potentialAveragePtr_(0),
       #ifndef INTER_NOPAIR
       pairAveragePtr_(0),
       #endif
@@ -86,6 +87,8 @@ namespace McMd
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       kineticAveragePtr_ = new Average;
       kineticAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
+      potentialAveragePtr_ = new Average;
+      potentialAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       pairAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -143,7 +146,8 @@ namespace McMd
       ar >> *totalAveragePtr_;
       kineticAveragePtr_ = new Average;
       ar >> *kineticAveragePtr_;
-      UTIL_CHECK(kineticAveragePtr_->nSamplePerBlock() == nSamplePerBlock_);
+      potentialAveragePtr_ = new Average;
+      ar >> *potentialAveragePtr_;
       #ifndef INTER_NOPAIR
       pairAveragePtr_ = new Average;
       ar >> *pairAveragePtr_;
@@ -201,6 +205,7 @@ namespace McMd
       // Save average accumulators
       ar << *totalAveragePtr_;
       ar << *kineticAveragePtr_;
+      ar << *potentialAveragePtr_;
       #ifndef INTER_NOPAIR
       ar << *pairAveragePtr_;
       #endif
@@ -244,6 +249,7 @@ namespace McMd
 
       totalAveragePtr_->clear();
       kineticAveragePtr_->clear();
+      potentialAveragePtr_->clear();
       #ifndef INTER_NOPAIR
       pairAveragePtr_->clear();
       #endif
@@ -357,6 +363,9 @@ namespace McMd
             // outputFile_ << Dbl(external, 15);
          }
          #endif
+
+         assert(externalAveragePtr_);
+         potentialAveragePtr_->sample(potential);
          double total = kinetic + potential;
          totalAveragePtr_->sample(total);
          // outputFile_ << Dbl(total, 20)
@@ -474,9 +483,16 @@ namespace McMd
          outputFile_ << "External  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
+
+      assert(externalAveragePtr_);
+      ave = potentialAveragePtr_->average();
+      err = potentialAveragePtr_->blockingError();
+      outputFile_ << "Potential " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+
       ave = totalAveragePtr_->average();
       err = totalAveragePtr_->blockingError();
       outputFile_ << "Total     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+
       outputFile_.close();
 
       // Write error analysis (*.aer) file
@@ -535,12 +551,20 @@ namespace McMd
          externalAveragePtr_->output(outputFile_);
       }
       #endif
+
+      outputFile_ << 
+      "---------------------------------------------------------------------------------\n";
+      outputFile_ << "Potential:\n\n";
+      assert(externalAveragePtr_);
+      potentialAveragePtr_->output(outputFile_);
+
       outputFile_ << 
       "---------------------------------------------------------------------------------\n";
       outputFile_ << "Total:\n\n";
+      assert(totalAveragePtr_);
       totalAveragePtr_->output(outputFile_);
-      outputFile_.close();
 
+      outputFile_.close();
    }
 
 
