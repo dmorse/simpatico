@@ -459,7 +459,7 @@ namespace McMd
          }
          #endif
 
-         assert(externalAveragePtr_);
+         assert(potentialAveragePtr_);
          potentialAveragePtr_->sample(potential);
          double total = kinetic + potential;
          totalAveragePtr_->sample(total);
@@ -593,7 +593,7 @@ namespace McMd
       }
       #endif
 
-      assert(externalAveragePtr_);
+      assert(potentialAveragePtr_);
       ave = potentialAveragePtr_->average();
       err = potentialAveragePtr_->blockingError();
       outputFile_ << "Potential  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
@@ -664,7 +664,7 @@ namespace McMd
       outputFile_ << 
       "---------------------------------------------------------------------------------\n";
       outputFile_ << "Potential:\n\n";
-      assert(externalAveragePtr_);
+      assert(potentialAveragePtr_);
       potentialAveragePtr_->output(outputFile_);
 
       outputFile_ << 
