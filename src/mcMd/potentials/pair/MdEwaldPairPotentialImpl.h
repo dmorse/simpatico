@@ -11,7 +11,6 @@
 #include <util/global.h>
 
 #include <mcMd/potentials/coulomb/EwaldInteraction.h>
-#include <mcMd/potentials/coulomb/PMEInteraction.h>
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>
 
 namespace Util
@@ -27,7 +26,6 @@ namespace McMd
    class MdSystem;
    class EwaldRSpaceAccumulator;
    class EwaldInteraction;
-   class PMEInteraction;
    class MdEwaldPotential;
    class MdPMEPotential;
 
@@ -196,7 +194,7 @@ namespace McMd
       Interaction* pairPtr_;
 
       // Pointers to Ewald Coulomb interaction (owned by Coulomb potential)
-      PMEInteraction* ewaldInteractionPtr_;
+      EwaldInteraction* ewaldInteractionPtr_;
 
       // Pointer to EwaldRSpaceAccumulator (owned by Coulomb potential)
       EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
@@ -249,12 +247,21 @@ namespace McMd
          MdCoulombPotential* kspacePtr;
          kspacePtr = &system.coulombPotential();
  
-         // Dynamic cast to a pointer to MdEwaldPotential.
-         MdPMEPotential* ewaldPtr; 
-         ewaldPtr = dynamic_cast<MdPMEPotential*>(kspacePtr);
- 
-         ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
-         rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
+         // Dynamic cast to a pointer to MdEwaldPotential or MdPMEPotential.
+         if (system.coulombStyle() == "Ewald"){
+            MdEwaldPotential* ewaldPtr;
+            ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
+            ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
+            rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
+         } else  
+         if (system.coulombStyle() == "PME"){
+            MdPMEPotential* ewaldPtr; 
+            ewaldPtr = dynamic_cast<MdPMEPotential*>(kspacePtr);
+            ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
+            rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
+         } else {
+            UTIL_THROW("Unrecognized coulomb style"); 
+         }
  
          pairPtr_ = new Interaction;
          // Pass address of MdEwaldPotential to EwaldPair interaction.
@@ -292,7 +299,7 @@ namespace McMd
 
       // Require that the Ewald rSpaceCutoff >= pair potential maxPairCutoff
       UTIL_CHECK(ewaldInteractionPtr_->rSpaceCutoff() >= pairPtr_->maxPairCutoff())
-      // double cutoff = (ewaldInteractionPtr_->rSpaceCutoff() > pairPtr_->maxPairCutoff()) ?
+      //double cutoff = (ewaldInteractionPtr_->rSpaceCutoff() > pairPtr_->maxPairCutoff()) ?
       //                 ewaldInteractionPtr_->rSpaceCutoff(): pairPtr_->maxPairCutoff();
       double cutoff = ewaldInteractionPtr_->rSpaceCutoff();
 

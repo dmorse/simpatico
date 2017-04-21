@@ -36,16 +36,15 @@ namespace McMd
       systemPtr_(&system),
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes()),
-      gridSize_(),
-      Qgrid_(),
-      Qhatgrid_(),
-      BCgrid_(),
-      ikop_(),
-      xfield_(),
-      yfield_(),
-      zfield_(),
-      order_(5),
-      BCikinitialized_(false)
+     // gridDimensions_(),
+     // Qgrid_(),
+     // Qhatgrid_(),
+     // BCgrid_(),
+     // ikop_(),
+     // xfield_(),
+     // yfield_(),
+     // zfield_(),
+      order_(5)
    {
       //initialize unit tensor.
       const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
@@ -73,42 +72,9 @@ namespace McMd
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
-      gridSize_[0] = ewaldInteraction_.xgridSize();
-      gridSize_[1] = ewaldInteraction_.ygridSize();
-      gridSize_[2] = ewaldInteraction_.zgridSize();
+      read<IntVector>(in, "gridDimensions",gridDimensions_);
 
-      // allocate memory for grid
-      Qgrid_.allocate(gridSize_);
-      Qhatgrid_.allocate(gridSize_);
-      BCgrid_.allocate(gridSize_);
-      ikop_.allocate(std::max(std::max(gridSize_[1],gridSize_[2]),gridSize_[0]));
 
-      xfield_.allocate(gridSize_);
-      yfield_.allocate(gridSize_);
-      zfield_.allocate(gridSize_);
-
-      // initialize fft plan for Q grid.
-      fftw_complex* inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
-      fftw_complex* outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
-      forward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inf, outf, FFTW_FORWARD,FFTW_MEASURE);
-
-      // initialize fft plan for electric field grid.
-      fftw_complex* inxf  = reinterpret_cast<fftw_complex*>(xfield_.data());
-      fftw_complex* outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
-      xfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
- 
-      fftw_complex* inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
-      fftw_complex* outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
-      yfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
-    
-      fftw_complex* inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
-      fftw_complex* outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
-      zfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
- 
       //Calculate prefactors frequently used in this class.
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
@@ -122,42 +88,8 @@ namespace McMd
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
-      gridSize_[0] = ewaldInteraction_.xgridSize();
-      gridSize_[1] = ewaldInteraction_.ygridSize();
-      gridSize_[2] = ewaldInteraction_.zgridSize();
+      loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
 
-      // allocate memory for grid
-      Qgrid_.allocate(gridSize_);
-      Qhatgrid_.allocate(gridSize_);
-      BCgrid_.allocate(gridSize_);
-      ikop_.allocate(std::max(std::max(gridSize_[1],gridSize_[2]),gridSize_[0]));
-
-      xfield_.allocate(gridSize_);
-      yfield_.allocate(gridSize_);
-      zfield_.allocate(gridSize_);
-
-      // initialize fft plan for Q grid.
-      fftw_complex* inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
-      fftw_complex* outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
-      forward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inf, outf, FFTW_FORWARD,FFTW_MEASURE);
-
-      // initialize fft plan for electric field grid.
-      fftw_complex* inxf  = reinterpret_cast<fftw_complex*>(xfield_.data());
-      fftw_complex* outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
-      xfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
- 
-      fftw_complex* inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
-      fftw_complex* outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
-      yfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
-    
-      fftw_complex* inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
-      fftw_complex* outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
-      zfield_backward_plan = fftw_plan_dft_3d(gridSize_[0],gridSize_[1],gridSize_[2],
-                                      inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
- 
       // Calculate selfPrefactor_
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
@@ -169,6 +101,7 @@ namespace McMd
    void MdPMEPotential::save(Serializable::OArchive &ar)
    {
       ewaldInteraction_.save(ar);
+      ar << gridDimensions_;
    }
 
    /*
@@ -181,7 +114,45 @@ namespace McMd
    * place holder
    */
    void MdPMEPotential::makeWaves()
-   { ;} 
+   { 
+      if (BCgrid_.size() == 0) {
+         // allocate memory for grid
+         Qgrid_.allocate(gridDimensions_);
+         Qhatgrid_.allocate(gridDimensions_);
+         BCgrid_.allocate(gridDimensions_);
+         ikop_.allocate(std::max(std::max(gridDimensions_[1],gridDimensions_[2]),gridDimensions_[0]));
+
+         xfield_.allocate(gridDimensions_);
+         yfield_.allocate(gridDimensions_);
+         zfield_.allocate(gridDimensions_);
+
+         // initialize fft plan for Q grid.
+         fftw_complex* inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
+         fftw_complex* outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
+         forward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
+                                         inf, outf, FFTW_FORWARD,FFTW_MEASURE);
+
+         // initialize fft plan for electric field grid.
+         fftw_complex* inxf  = reinterpret_cast<fftw_complex*>(xfield_.data());
+         fftw_complex* outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
+         xfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
+                                         inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
+ 
+         fftw_complex* inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
+         fftw_complex* outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
+         yfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
+                                         inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
+       
+         fftw_complex* inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
+         fftw_complex* outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
+         zfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
+                                         inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
+      }
+
+      influence_function();
+      ik_differential_operator();
+ 
+   }
 
    /*
    * set elements of grid to all zero.
@@ -226,15 +197,15 @@ namespace McMd
 
 
       // Loop over i, j, k grid point.
-      for ( double i = 0.0; i < gridSize_[0]; ++i) {
+      for ( double i = 0.0; i < gridDimensions_[0]; ++i) {
          gridPoint[0] = i;
-         m0 = (i <= gridSize_[0] / 2.0) ? i : i - gridSize_[0];
-         for ( double j = 0.0; j < gridSize_[1]; ++j) {
+         m0 = (i <= gridDimensions_[0] / 2.0) ? i : i - gridDimensions_[0];
+         for ( double j = 0.0; j < gridDimensions_[1]; ++j) {
             gridPoint[1] = j;
-            m1 = (j <= gridSize_[1] / 2.0) ? j : j - gridSize_[1];
-            for ( double k = 0.0; k < gridSize_[2]; ++k) {
+            m1 = (j <= gridDimensions_[1] / 2.0) ? j : j - gridDimensions_[1];
+            for ( double k = 0.0; k < gridDimensions_[2]; ++k) {
                gridPoint[2] = k;
-               m2 = (k <= gridSize_[2] / 2.0) ? k : k - gridSize_[2];
+               m2 = (k <= gridDimensions_[2] / 2.0) ? k : k - gridDimensions_[2];
 
                b0 = boundaryPtr_->reciprocalBasisVector(0) ;
                b1 = boundaryPtr_->reciprocalBasisVector(1) ;
@@ -266,14 +237,14 @@ namespace McMd
    double MdPMEPotential::bfactor(double m, int dim)
    {
       double pi(Constants::Pi);
-      double gridSize(gridSize_[dim]);
+      double gridDimensions(gridDimensions_[dim]);
       DCMPLX I(0.0,1.0);
 
       DCMPLX denom(0.0, 0.0);
       for (double k = 0.0; k <= order_ - 2.0; k++) {
-         denom += basisSpline(k + 1.0)*exp(2.0 * pi * I * m * k / gridSize) ;
+         denom += basisSpline(k + 1.0)*exp(2.0 * pi * I * m * k / gridDimensions) ;
       }
-      return std::norm(exp(2.0 * pi * I * (order_ -1.0) * m/gridSize) / denom);
+      return std::norm(exp(2.0 * pi * I * (order_ -1.0) * m/gridDimensions) / denom);
    }
  
    /*
@@ -302,30 +273,49 @@ namespace McMd
                charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
                boundaryPtr_->transformCartToGen(atomIter->position(), gpos);
 
+               // gpos should be (0,1), but simpatico keeps atom outside box for a while for the                  reason unknown. At least, it won't be too far away the primary cell.
+               
+               gpos[0] = gpos[0]<0 ? gpos[0]=gpos[0]+1: gpos[0];
+               gpos[1] = gpos[1]<0 ? gpos[1]=gpos[1]+1: gpos[1];
+               gpos[2] = gpos[2]<0 ? gpos[2]=gpos[2]+1: gpos[2];
+
+               gpos[0] = gpos[0]>1 ? gpos[0]=gpos[0]-1: gpos[0];
+               gpos[1] = gpos[1]>1 ? gpos[1]=gpos[1]-1: gpos[1];
+               gpos[2] = gpos[2]>1 ? gpos[2]=gpos[2]-1: gpos[2];
+
                // Find the floor grid point.
-               floorGridIdx[0]=floor(gpos[0]*gridSize_[0]);
-               floorGridIdx[1]=floor(gpos[1]*gridSize_[1]);
-               floorGridIdx[2]=floor(gpos[2]*gridSize_[2]);
+               floorGridIdx[0]=floor(gpos[0]*gridDimensions_[0]);
+               floorGridIdx[1]=floor(gpos[1]*gridDimensions_[1]);
+               floorGridIdx[2]=floor(gpos[2]*gridDimensions_[2]);
 
                // haven't incoorporate reciprocal vector * lattice vector in other kind lattice.
                // need to modify the expression of  distance.
                for (int x = 0 ; x < order_ ; ++x) {
                   ximg = floorGridIdx[0] + x - (order_ - 1);
-                  xdistance = (gpos[0]*gridSize_[0]-ximg) ;
-                  xknot = ximg < 0 ? ximg + gridSize_[0] : ximg;
+                  xdistance = (gpos[0]*gridDimensions_[0]-ximg);
+                  xknot = ximg < 0 ? ximg + gridDimensions_[0] : ximg;
                   knot[0] = xknot;
 
                   for (int y = 0 ; y < order_ ; ++y) {
                      yimg = floorGridIdx[1] + y - (order_ - 1);
-                     ydistance = (gpos[1]*gridSize_[1]-yimg) ;
-                     yknot =  yimg < 0 ? yimg + gridSize_[1] : yimg;
+                     ydistance = (gpos[1]*gridDimensions_[1]-yimg) ;
+                     yknot =  yimg < 0 ? yimg + gridDimensions_[1] : yimg;
                      knot[1] = yknot;
 
                      for (int z = 0; z < order_; ++z) {
                         zimg = floorGridIdx[2] + z - (order_ - 1);
-                        zdistance = (gpos[2]*gridSize_[2]-zimg) ;
-                        zknot =  zimg < 0 ? zimg + gridSize_[2] : zimg;
+                        zdistance = (gpos[2]*gridDimensions_[2]-zimg) ;
+                        zknot =  zimg < 0 ? zimg + gridDimensions_[2] : zimg;
                         knot[2] = zknot;
+
+                        if(!Qgrid_.isInGrid(knot)){
+                           std::cout << "atom Id  " << atomIter->id() << std::endl;
+                           std::cout << "floorGridIdx  " << floorGridIdx << std::endl;
+                           std::cout << "gpos  " << gpos << std::endl;
+                           std::cout <<"img  "<< ximg << "  " << yimg << "  " << zimg << std::endl;
+                           std::cout << "knot  " << knot << std::endl;
+                           std::cout << "Qgrid_.rank  " << Qgrid_.rank(knot) << std::endl;
+                        }
 
                         Qgrid_(knot) += charge 
                                       * basisSpline(xdistance)
@@ -365,10 +355,10 @@ namespace McMd
    {
       for (int i = 0 ; i < 3 ; ++i){
          ikop_[0][i] = 0.0;
-         ikop_[gridSize_[i]/2][i] = 0.0;
+         ikop_[gridDimensions_[i]/2][i] = 0.0;
          for (int j = 1; j < ikop_.capacity()/2; ++j) {
             ikop_[j][i] = j;
-            ikop_[gridSize_[i] - j][i] = -j;
+            ikop_[gridDimensions_[i] - j][i] = -j;
          }
       }
    }
@@ -404,20 +394,14 @@ namespace McMd
 
       spreadCharge();
  
-      if(!BCikinitialized_){
-         influence_function();
-         ik_differential_operator();
-         BCikinitialized_=true;
-      }
- 
       initializeGrid(Qhatgrid_);
  
       fftw_execute(forward_plan);
-      for (int i = 0 ; i < gridSize_[0] ; ++i) {
-         for (int j = 0 ; j < gridSize_[1] ; ++j) {
-            for (int k = 0 ; k < gridSize_[2] ; ++k) {
+      for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
+         for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
+            for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
 
-               pos = i * gridSize_[1]*gridSize_[2] + j * gridSize_[2] + k;
+               pos = i * gridDimensions_[1]*gridDimensions_[2] + j * gridDimensions_[2] + k;
 
                xfield_[pos] = TwoPiIm / boundaryPtr_->length(0) 
                             * double(ikop_[i][0]) * Qhatgrid_[pos] * BCgrid_[pos];
@@ -443,28 +427,38 @@ namespace McMd
                if( fabs(charge) > EPS) {
                   boundaryPtr_->transformCartToGen(atomIter->position(), gpos);
 
+                  // gpos should be (0,1), but simpatico keeps atom outside box for a while for                    some reason unknown. However, it won't be too far away from the primary cell.
+                  gpos[0] = gpos[0]<0 ? gpos[0]=gpos[0]+1: gpos[0];
+                  gpos[1] = gpos[1]<0 ? gpos[1]=gpos[1]+1: gpos[1];
+                  gpos[2] = gpos[2]<0 ? gpos[2]=gpos[2]+1: gpos[2];
+   
+                  gpos[0] = gpos[0]>1 ? gpos[0]=gpos[0]-1: gpos[0];
+                  gpos[1] = gpos[1]>1 ? gpos[1]=gpos[1]-1: gpos[1];
+                  gpos[2] = gpos[2]>1 ? gpos[2]=gpos[2]-1: gpos[2];
+
+
                   // Find the floor grid point.
-                  floorGridIdx[0]=floor(gpos[0]*gridSize_[0]);
-                  floorGridIdx[1]=floor(gpos[1]*gridSize_[1]);
-                  floorGridIdx[2]=floor(gpos[2]*gridSize_[2]);
+                  floorGridIdx[0]=floor(gpos[0]*gridDimensions_[0]);
+                  floorGridIdx[1]=floor(gpos[1]*gridDimensions_[1]);
+                  floorGridIdx[2]=floor(gpos[2]*gridDimensions_[2]);
     
                   fatom.zero();
                   for (int x = 0 ; x < order_ ; ++x) {
                      ximg = floorGridIdx[0] + x - (order_ - 1);
-                     xdistance = (gpos[0]*gridSize_[0]-ximg) ;
-                     xknot = ximg < 0 ? ximg + gridSize_[0] : ximg;
+                     xdistance = (gpos[0]*gridDimensions_[0]-ximg) ;
+                     xknot = ximg < 0 ? ximg + gridDimensions_[0] : ximg;
                      knot[0] = xknot;
    
                      for (int y = 0 ; y < order_ ; ++y) {
                         yimg = floorGridIdx[1] + y - (order_ - 1);
-                        ydistance = (gpos[1]*gridSize_[1]-yimg) ;
-                        yknot =  yimg < 0 ? yimg + gridSize_[1] : yimg;
+                        ydistance = (gpos[1]*gridDimensions_[1]-yimg) ;
+                        yknot =  yimg < 0 ? yimg + gridDimensions_[1] : yimg;
                         knot[1] = yknot;
    
                         for (int z = 0; z < order_; ++z) {
                            zimg = floorGridIdx[2] + z - (order_ - 1);
-                           zdistance = (gpos[2]*gridSize_[2]-zimg) ;
-                           zknot =  zimg < 0 ? zimg + gridSize_[2] : zimg;
+                           zdistance = (gpos[2]*gridDimensions_[2]-zimg) ;
+                           zknot =  zimg < 0 ? zimg + gridDimensions_[2] : zimg;
                            knot[2] = zknot;
    
                            fatom[0] +=basisSpline(xdistance)
@@ -506,18 +500,12 @@ namespace McMd
 
       spreadCharge();
  
-      if(!BCikinitialized_){
-         influence_function();
-         ik_differential_operator();
-         BCikinitialized_=true;
-      }
-
       initializeGrid(Qhatgrid_);
       fftw_execute(forward_plan);
 
-      for (int i = 0; i < gridSize_[0]; ++i) {
-         for (int j = 0; j < gridSize_[1]; ++j) {
-            for (int k = 0; k < gridSize_[2]; ++k) {
+      for (int i = 0; i < gridDimensions_[0]; ++i) {
+         for (int j = 0; j < gridDimensions_[1]; ++j) {
+            for (int k = 0; k < gridDimensions_[2]; ++k) {
                pos[0] = i;
                pos[1] = j;
                pos[2] = k;
