@@ -84,7 +84,8 @@ namespace McMd
       * \param name   parameter name
       * \param value  new value of parameter
       */
-      void set(std::string name, double value);
+      template <class T> 
+      void set(std::string name, T value);
 
       //@}
       /// \name Accessors
@@ -139,18 +140,6 @@ namespace McMd
       double rSpaceCutoff() const;
 
       /**
-      * Get reciprocal space cutoff.
-      */
-      double kSpaceCutoff() const;
-
-      /**
-      * Get reciprocal space cutoff squared.
-      *
-      * \return    kCutoffSq_
-      */
-      double kSpaceCutoffSq() const;
- 
-      /**
       * Get Ewald paramter alpha.
       *
       * \return    alpha_
@@ -182,8 +171,6 @@ namespace McMd
       double alpha_;            ///< alpha = (1 / (sigma*sqrt(2)) ).
       double rSpaceCutoff_;     ///< Ewald potential real space cutoff.
       double rSpaceCutoffSq_;   ///< Real space cutoff squared.
-      double kSpaceCutoff_;     ///< Ewald potential reciprocal space cutoff.
-      double kSpaceCutoffSq_;   ///< Reciprocal space cutoff.
 
       /// prefactors for real space potential
       double ce_;
@@ -214,25 +201,13 @@ namespace McMd
    * Return real space cutoff distance in Ewald method.
    */
    inline double EwaldInteraction::rSpaceCutoff() const
-   { return rSpaceCutoff_; }
+   {  return rSpaceCutoff_; }
 
   /* 
    * Return real space cutoff distance squared in Ewald method.
    */
    inline double EwaldInteraction::rSpaceCutoffSq() const
    { return rSpaceCutoffSq_; }
-
-  /* 
-   * Return reciprocal space cutoff distance in Ewald method.
-   */
-   inline double EwaldInteraction::kSpaceCutoff() const
-   { return kSpaceCutoff_; }
-
-   /* 
-   * Return reciprocal space cutoff distance squared in Ewald method.
-   */
-   inline double EwaldInteraction::kSpaceCutoffSq() const
-   { return kSpaceCutoffSq_; }
 
    /* 
    * Calculate r-space energy for a pair of charges.

@@ -10,7 +10,7 @@
 
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
-#include <mcMd/potentials/coulomb/PMEInteraction.h>        // member
+#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Vector.h>           // member template parameter
@@ -119,7 +119,7 @@ namespace McMd
       EwaldRSpaceAccumulator& rSpaceAccumulator()
       {  return rSpaceAccumulator_; }
 
-      PMEInteraction& ewaldInteraction()
+      EwaldInteraction& ewaldInteraction()
       { return ewaldInteraction_; }
 
       //@}
@@ -127,7 +127,7 @@ namespace McMd
    private:
 
       // Ewald Interaction - core Ewald computations
-      PMEInteraction ewaldInteraction_;
+      EwaldInteraction ewaldInteraction_;
 
       // Pointer to parent Simulation
       Simulation* simulationPtr_;
@@ -142,7 +142,7 @@ namespace McMd
       const Array<AtomType>* atomTypesPtr_;
 
       /// Grid Size.
-      IntVector gridSize_;
+      IntVector gridDimensions_;
 
       /// QGrid
       GridArray<DCMPLX> Qgrid_;
@@ -168,9 +168,6 @@ namespace McMd
       /// order of basis spline
       int order_;
       
-      /// indicator.
-      bool BCikinitialized_;
-
       /// FFT plan.
       fftw_plan forward_plan;
 

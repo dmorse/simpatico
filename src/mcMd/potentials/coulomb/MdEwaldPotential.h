@@ -169,6 +169,10 @@ namespace McMd
       /// Prefactor for self-interaction correction.
       double selfPrefactor_;
 
+      /// cutoff distance in k space
+      double kSpaceCutoff_;
+      double kSpaceCutoffSq_;
+
       /**
       * Calculate Fourier coefficients of charge density.
       */
