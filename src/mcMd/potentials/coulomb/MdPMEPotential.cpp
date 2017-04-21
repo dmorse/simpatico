@@ -36,14 +36,14 @@ namespace McMd
       systemPtr_(&system),
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes()),
-     // gridDimensions_(),
-     // Qgrid_(),
-     // Qhatgrid_(),
-     // BCgrid_(),
-     // ikop_(),
-     // xfield_(),
-     // yfield_(),
-     // zfield_(),
+      gridDimensions_(),
+      Qgrid_(),
+      Qhatgrid_(),
+      BCgrid_(),
+      ikop_(),
+      xfield_(),
+      yfield_(),
+      zfield_(),
       order_(5)
    {
       //initialize unit tensor.
@@ -307,15 +307,6 @@ namespace McMd
                         zdistance = (gpos[2]*gridDimensions_[2]-zimg) ;
                         zknot =  zimg < 0 ? zimg + gridDimensions_[2] : zimg;
                         knot[2] = zknot;
-
-                        if(!Qgrid_.isInGrid(knot)){
-                           std::cout << "atom Id  " << atomIter->id() << std::endl;
-                           std::cout << "floorGridIdx  " << floorGridIdx << std::endl;
-                           std::cout << "gpos  " << gpos << std::endl;
-                           std::cout <<"img  "<< ximg << "  " << yimg << "  " << zimg << std::endl;
-                           std::cout << "knot  " << knot << std::endl;
-                           std::cout << "Qgrid_.rank  " << Qgrid_.rank(knot) << std::endl;
-                        }
 
                         Qgrid_(knot) += charge 
                                       * basisSpline(xdistance)

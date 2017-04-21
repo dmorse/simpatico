@@ -115,8 +115,7 @@ namespace McMd
    /*
    * Modify a parameter, identified by a string.
    */
-   template <class T> 
-   void EwaldInteraction::set(std::string name, T value)
+   void EwaldInteraction::set(std::string name, double value)
    {
       if (name == "epsilon") {
          epsilon_ = value;

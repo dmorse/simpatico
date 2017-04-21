@@ -84,8 +84,7 @@ namespace McMd
       * \param name   parameter name
       * \param value  new value of parameter
       */
-      template <class T> 
-      void set(std::string name, T value);
+      void set(std::string name, double value);
 
       //@}
       /// \name Accessors
