@@ -662,13 +662,16 @@ namespace McMd
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
       #endif
+      #ifdef UTIL_DEBUG
+      isValid();
+      #endif
+
       #ifdef INTER_COULOMB
       if (hasCoulombPotential()) {
          coulombPotential().makeWaves();
       }
       #endif
       calculateForces();
-
    }
 
    /*

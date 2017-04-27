@@ -436,6 +436,10 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotential().buildCellList();
       #endif
+
+      #ifdef UTIL_DEBUG
+      isValid();
+      #endif
    }
 
    // -------------------------------------------------------------
