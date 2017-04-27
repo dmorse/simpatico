@@ -53,7 +53,7 @@ void PointGeneratorTest::testReadParamBond()
    
    TEST_ASSERT(generator.generate(500, diameters, cellList));
 
-   std::ofstream outFile("out/config");
+   std::ofstream outFile("out/point.cfg");
    system_.writeConfig(outFile);
    outFile.close();
 }

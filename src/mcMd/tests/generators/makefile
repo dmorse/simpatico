@@ -20,7 +20,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f out/config
+	rm -f out/*
 	rm -f *.rst
 
 -include $(mcMd_tests_generators_OBJS:.o=.d)
