@@ -120,6 +120,9 @@ namespace McMd
       Average* coulombRSpaceAveragePtr_;
       Average* coulombKSpaceAveragePtr_;
       Average* coulombAveragePtr_;
+
+      /// Compute rSpace and kSpace coulomb component averages?
+      bool coulombComponents_;
       #endif
       #ifdef INTER_EXTERNAL
       Average* externalAveragePtr_;
@@ -127,9 +130,6 @@ namespace McMd
 
       // Number of sample per block average
       int nSamplePerBlock_;
-
-      /// Compute rSpace and kSpace coulomb component averages?
-      bool coulombComponents_;
 
       /// Has readParam been called?
       bool isInitialized_;

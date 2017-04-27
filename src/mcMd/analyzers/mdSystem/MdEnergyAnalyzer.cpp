@@ -65,12 +65,12 @@ namespace McMd
       coulombRSpaceAveragePtr_(0),
       coulombKSpaceAveragePtr_(0),
       coulombAveragePtr_(0),
+      coulombComponents_(false),
       #endif
       #ifdef INTER_EXTERNAL
       externalAveragePtr_(0),
       #endif
       nSamplePerBlock_(0),
-      coulombComponents_(false),
       isInitialized_(false)
    {  setClassName("MdEnergyAnalyzer"); }
 
@@ -85,10 +85,12 @@ namespace McMd
       readOutputFileName(in);
       nSamplePerBlock_ = 0;
       readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
+      #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
          coulombComponents_ = false;
          readOptional<bool>(in, "coulombComponents", coulombComponents_);
       }
+      #endif
 
       totalAveragePtr_ = new Average;
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -153,10 +155,11 @@ namespace McMd
       nSamplePerBlock_ = 0; // default value
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, isRequired);
+      #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
          loadParameter<bool>(ar, "coulombComponents", coulombComponents_, isRequired);
       }
-
+      #endif
 
       // Load Average accumulators
       totalAveragePtr_ = new Average;
@@ -224,10 +227,12 @@ namespace McMd
       Analyzer::save(ar);
       bool isActive = bool(nSamplePerBlock_);
       Parameter::saveOptional(ar, nSamplePerBlock_, isActive);
+      #ifdef INTER_COULOMB
       if (sys.hasCoulombPotential()) {
          isActive = coulombComponents_;
          Parameter::saveOptional(ar, coulombComponents_, isActive);
       }
+      #endif
 
       // Save average accumulators
       ar << *totalAveragePtr_;
@@ -533,17 +538,20 @@ namespace McMd
       double ave, err;
       ave = kineticAveragePtr_->average();
       err = kineticAveragePtr_->blockingError();
-      outputFile_ << "Kinetic    " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Kinetic    " << Dbl(ave) 
+                  << " +- " << Dbl(err, 9, 2) << "\n";
       #ifndef INTER_NOPAIR
       ave = pairAveragePtr_->average();
       err = pairAveragePtr_->blockingError();
-      outputFile_ << "Pair       " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+      outputFile_ << "Pair       " << Dbl(ave) 
+                  << " +- " << Dbl(err, 9, 2) << "\n";
       #endif
       #ifdef INTER_BOND
       if (sys.hasBondPotential()) {
          ave = bondAveragePtr_->average();
          err = bondAveragePtr_->blockingError();
-         outputFile_ << "Bond       " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Bond       " << Dbl(ave) 
+                     << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_ANGLE
@@ -551,7 +559,8 @@ namespace McMd
          assert(angleAveragePtr_);
          ave = angleAveragePtr_->average();
          err = angleAveragePtr_->blockingError();
-         outputFile_ << "Angle      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Angle      " << Dbl(ave) 
+                     << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_DIHEDRAL
@@ -559,7 +568,8 @@ namespace McMd
          assert(dihedralAveragePtr_);
          ave = dihedralAveragePtr_->average();
          err = dihedralAveragePtr_->blockingError();
-         outputFile_ << "Dihedral   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Dihedral   " << Dbl(ave) 
+                     << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
       #ifdef INTER_COULOMB
@@ -568,7 +578,8 @@ namespace McMd
          assert(coulombAveragePtr_);
          ave = coulombAveragePtr_->average();
          err = coulombAveragePtr_->blockingError();
-         outputFile_ << "Coulomb    " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Coulomb    " << Dbl(ave) 
+                     << " +- " << Dbl(err, 9, 2) << "\n";
 
          if (coulombComponents_) {
             assert(coulombRSpaceAveragePtr_);
