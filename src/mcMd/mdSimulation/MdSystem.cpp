@@ -13,7 +13,10 @@
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairIterator.h>
+#include <mcMd/neighbor/CellList.h>
 #include <mcMd/mdIntegrators/MdIntegratorFactory.h>
+#include <mcMd/generators/Generator.h>
+#include <mcMd/generators/generatorFactory.h>
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -620,6 +623,52 @@ namespace McMd
       }
       #endif
       calculateForces();
+   }
+
+
+   /*
+   * Generate molecules for all species.
+   */
+   void MdSystem::generateMolecules(
+                       Array<int> const & capacities,
+                       Array<double> const & diameters)
+   {
+
+      // Setup a local cell list
+      CellList cellList;
+      Generator::setupCellList(simulation().atomCapacity(), 
+                               boundary(), diameters, cellList);
+
+      // Generate molecules for each species
+      Generator* ptr = 0;
+      int nSpecies = simulation().nSpecies();
+      bool success = false;
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         if (capacities[iSpecies] > 0) {
+            ptr = generatorFactory(simulation().species(iSpecies), *this);
+            UTIL_CHECK(ptr);
+            success = ptr->generate(capacities[iSpecies], 
+                                    diameters, cellList);
+            delete ptr;
+            if (!success) {
+               Log::file() << "Failed to complete species " 
+                           << iSpecies << "\n";
+            }
+            UTIL_CHECK(success);
+         }
+      }
+
+      #ifndef INTER_NOPAIR
+      pairPotential().clearPairListStatistics();
+      pairPotential().buildPairList();
+      #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().makeWaves();
+      }
+      #endif
+      calculateForces();
+
    }
 
    /*

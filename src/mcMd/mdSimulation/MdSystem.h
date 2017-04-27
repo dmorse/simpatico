@@ -86,6 +86,9 @@ namespace McMd
       */
       virtual ~MdSystem();
 
+      /// \name Parameter IO
+      //@{
+
       /**
       * Read parameters from input file.
       *
@@ -110,6 +113,10 @@ namespace McMd
       */
       virtual void saveParameters(Serializable::OArchive &ar);
 
+      //@}
+      /// \name Initial Configurations
+      //@{
+
       /**
       * Read system configuration from file.
       *
@@ -130,6 +137,24 @@ namespace McMd
       */
       virtual void loadConfig(Serializable::IArchive& ar);
 
+      /**
+      * Generate molecules for all species.
+      *
+      * The array capacities contains at least nSpecies
+      * elements, in which element i contains the number 
+      * of molecules to generate for species i.
+      * 
+      * The array capacities contains at least nAtomType
+      * elements, in which element i contains the steric 
+      * diameter used for atom i in the packing algorithm.
+      *
+      * \param capacities number of molecules in each species
+      * \param diameters  diameter of each atom type
+      */
+      void generateMolecules(Array<int> const & capacities,
+                             Array<double> const & diameters);
+
+      //@}
       /// \name Force, Energy and Stress calculators
       //@{
 
