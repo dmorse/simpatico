@@ -28,7 +28,7 @@ namespace McMd
    */
    bool 
    LinearGenerator::attemptPlaceMolecule(Molecule& molecule,
-                                        const DArray<double>& diameters,
+                                        Array<double> const & diameters,
                                         CellList& cellList)
    {
       Random& random = simulation().random();

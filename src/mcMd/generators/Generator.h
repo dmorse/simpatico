@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/containers/DArray.h>  // function argument, template
+#include <util/containers/Array.h>   // function argument, template
 #include <util/boundary/Boundary.h>  // typedef
 
 namespace McMd
@@ -69,7 +69,7 @@ namespace McMd
       * \param cellList  CellList object
       */
       virtual bool generate(int nMolecule,
-                            const DArray<double>& diameters,
+                            Array<double> const & diameters,
                             CellList& cellList);
 
       // Static member function
@@ -85,7 +85,7 @@ namespace McMd
       static
       void setupCellList(int atomCapacity, 
                          Boundary& boundary,
-                         const DArray<double>& diameters, 
+                         const Array<double>& diameters, 
                          CellList& cellList);
 
    protected:
@@ -108,7 +108,7 @@ namespace McMd
       * \return true on success, false on failure.
       */
       bool attemptPlaceAtom(Atom& atom, 
-                            const DArray<double>& diameters,
+                            const Array<double>& diameters,
                             CellList& cellList);
 
       /**
@@ -121,7 +121,7 @@ namespace McMd
       */
       virtual
       bool attemptPlaceMolecule(Molecule& molecule, 
-                                const DArray<double>& diameters,
+                                const Array<double>& diameters,
                                 CellList& cellList) = 0;
 
       /**

@@ -47,7 +47,7 @@ namespace McMd
    * Attempt to place an atom.
    */
    bool Generator::attemptPlaceAtom(Atom& atom,
-                             const DArray<double>& diameters, 
+                             Array<double> const & diameters, 
                              CellList& cellList)
    {
       // Shift atom position to primary image within boundary
@@ -82,7 +82,7 @@ namespace McMd
    * Generate random molecules
    */
    bool Generator::generate(int nMolecule, 
-                            const DArray<double>& diameters, 
+                            Array<double> const & diameters, 
                             CellList& cellList)
    {
       // Preconditions
@@ -127,7 +127,7 @@ namespace McMd
    void 
    Generator::setupCellList(int atomCapacity, 
                             Boundary& boundary,
-                            const DArray<double>& diameters,
+                            Array<double> const & diameters,
                             CellList& cellList)
    {
       // Set maximum atom id = atomCapacity - 1, and allocate
