@@ -1,7 +1,16 @@
+---------------------------------------------------------------------
 System:
 
     melt of 100 chains of 8 atoms.
 
+    Different example subdirectories give examples of different MC
+    moves and combinations thereof. The generate/ example uses the
+    GENERATE_MOLECULES command to generate a non-equilibrium initial 
+    configuration and then uses simple single-particle Monte Carlo 
+    moves to relax this system. All other examples use a common input
+    configuration file that is already in or very near equilibrium. 
+
+---------------------------------------------------------------------
 Usage - Changed directory to example subdirectory and enter:
 
 Serial MC simulation:

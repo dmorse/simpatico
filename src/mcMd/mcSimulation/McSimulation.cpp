@@ -523,15 +523,17 @@ namespace McMd
 
                // Parse command
                inBuffer >> system().boundary();
-               Log::file() << "  " << system().boundary();
+               Log::file() << "\n  Boundary:    " << system().boundary();
                Label capacityLabel("Capacities:");
                inBuffer >> capacityLabel;
+               Log::file() << "\n  Capacities: ";
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   inBuffer >> capacities[iSpecies];
                   Log::file() << "  " << capacities[iSpecies];
                }
                Label diameterLabel("Diameters:");
                inBuffer >> diameterLabel;
+               Log::file() << "\n  Diameters: ";
                for (int iType=0; iType < nAtomType(); iType++) {
                   inBuffer >> diameters[iType];
                   Log::file() << "  " << diameters[iType];
