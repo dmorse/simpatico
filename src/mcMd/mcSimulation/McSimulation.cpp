@@ -540,31 +540,7 @@ namespace McMd
                }
                Log::file() << std::endl;
 
-               // Setup local cell list
-               CellList cellList;
-               Generator::setupCellList(atomCapacity(), system().boundary(),
-                                        diameters, cellList);
-
-               // Generate molecules for each species
-               Generator* ptr;
-               bool success;
-               for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-                  if (capacities[iSpecies] > 0) {
-                     ptr = generatorFactory(species(iSpecies), system());
-                     UTIL_CHECK(ptr);
-                     success = ptr->generate(capacities[iSpecies], diameters, cellList);
-                     delete ptr;
-                     if (!success) {
-                        Log::file() << "Failed to complete species " << iSpecies << "\n";
-                     }
-                     UTIL_CHECK(success);
-                  }
-               }
-
-               #ifndef INTER_NOPAIR 
-               // Generate system cell list
-               system().pairPotential().buildCellList();
-               #endif
+               system().generateMolecules(capacities, diameters);
 
             } else
             if (command == "DEFORM_CELL") {

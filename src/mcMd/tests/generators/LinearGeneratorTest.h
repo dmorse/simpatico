@@ -56,7 +56,7 @@ void LinearGeneratorTest::testReadParamBond()
    bool success = generator.generate(100, diameters, cellList);
    TEST_ASSERT(success);
 
-   std::ofstream outFile("out/config");
+   std::ofstream outFile("out/linear.cfg");
    system_.writeConfig(outFile);
    outFile.close();
 }
