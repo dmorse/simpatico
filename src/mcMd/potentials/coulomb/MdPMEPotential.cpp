@@ -241,6 +241,13 @@ namespace McMd
       DCMPLX I(0.0,1.0);
 
       DCMPLX denom(0.0, 0.0);
+      
+      // if oder of spline is odd, this interpolation result fails,
+      // when 2*m = gridDimensions[dim], since 1 / 0 in this function.
+      if( order_ % 2 == 1 && m == gridDimensions_[dim] / 2.0) {
+         m = m-1 ;
+      }
+
       for (double k = 0.0; k <= order_ - 2.0; k++) {
          denom += basisSpline(k + 1.0)*exp(2.0 * pi * I * m * k / gridDimensions) ;
       }
@@ -414,7 +421,7 @@ namespace McMd
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                type = atomIter->typeId();
                charge = (*atomTypesPtr_)[type].charge();
-
+ 
                if( fabs(charge) > EPS) {
                   boundaryPtr_->transformCartToGen(atomIter->position(), gpos);
 
