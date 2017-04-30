@@ -59,6 +59,9 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
 
+      read<double>(in, "kSpaceCutoff", kSpaceCutoff_);
+      kSpaceCutoffSq_ = kSpaceCutoff_*kSpaceCutoff_;
+
       //Calculate prefactors frequently used in this class.
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
@@ -73,6 +76,9 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
 
+      loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
+      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_;
+
       // Calculate selfPrefactor_
       double pi = Constants::Pi;
       selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
@@ -84,6 +90,7 @@ namespace McMd
    void MdEwaldPotential::save(Serializable::OArchive &ar)
    {
       ewaldInteraction_.save(ar);
+      ar << kSpaceCutoff_;
    }
 
    /*
@@ -117,11 +124,10 @@ namespace McMd
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
       // Get max wave indices and reserve arrays
-      double kSpaceCutoff = ewaldInteraction_.kSpaceCutoff();
       double pi2 = 2.0*Constants::Pi;
       for (j=0; j < Dimension; ++j) {
          maxK[j] = 
-             ceil(kSpaceCutoff*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
+             ceil(kSpaceCutoff_*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
          UTIL_CHECK(maxK[j] > 0);
       }
 
@@ -148,7 +154,6 @@ namespace McMd
 
       double alpha = ewaldInteraction_.alpha();
       double prefactor = -0.25/(alpha*alpha);
-      double kCutoffSq = ewaldInteraction_.kSpaceCutoffSq();
 
       // Accumulate waves, and wave-related properties.
       base0_ = 0;
@@ -178,7 +183,7 @@ namespace McMd
                q += b2;
 
                ksq = double(q.square());
-               if (ksq <= kCutoffSq) {
+               if (ksq <= kSpaceCutoffSq_) {
 
                   if (k[0] > upper0_) upper0_ = k[0];
 

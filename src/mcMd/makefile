@@ -26,7 +26,7 @@ MCSIM=$(BLD_DIR)/mcMd/mcSim
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
 
-lib: $(mcMd_OBJS) $(mcMd_LIB) 
+lib: $(mcMd_OBJS) (mcMd_LIB)
 
 clean:
 	rm -f $(mcMd_OBJS) $(mcMd_OBJS:.o=.d) $(mcMd_LIB)

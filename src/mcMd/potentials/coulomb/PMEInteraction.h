@@ -1,5 +1,5 @@
-#ifndef MCMD_EWALD_INTERACTION_H
-#define MCMD_EWALD_INTERACTION_H
+#ifndef MCMD_PME_INTERACTION_H
+#define MCMD_PME_INTERACTION_H
 
 /*
  * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -25,34 +25,34 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class EwaldInteraction : public ParamComposite
+   class PMEInteraction : public ParamComposite
    {
    public:
 
       /**
       * Default constructor.
       */
-      EwaldInteraction();
+      PMEInteraction();
 
       /**
       * Copy constructor.
       *
-      * \param other EwaldInteraction to be copied.
+      * \param other PMEInteraction to be copied.
       */
-      EwaldInteraction(const EwaldInteraction& other);
+      PMEInteraction(const PMEInteraction& other);
 
       /**
       * Assignment.
       *
-      * \param other EwaldInteraction to be assigned.
+      * \param other PMEInteraction to be assigned.
       */
-      EwaldInteraction& operator = (const EwaldInteraction& other);
+      PMEInteraction& operator = (const PMEInteraction& other);
 
 
       /**
       * Default destructor.
       */
-      ~EwaldInteraction() {}
+      ~PMEInteraction() {}
 
       /// \name Mutators
       //@{ 
@@ -99,14 +99,6 @@ namespace McMd
       double rSpaceEnergy(double rSq, double qProduct) const;
 
       /**
-      * Returns interaction energy for a single pair of atoms. 
-      *
-      * \param rsq square of distance between atoms
-      * \return    pair interaction energy
-      */
-      double kSpacePotential(double rhoSq, double prefactor) const;
-
-      /**
       * Returns ratio of scalar pair interaction force to pair separation.
       *
       * Multiply this quantity by the components of the separation vector
@@ -130,13 +122,39 @@ namespace McMd
   
       /**
       * Get real space cutoff squared.
+      *
+      * \return    rSpaceCutoffSq_
       */
       double rSpaceCutoffSq() const;
 
       /**
       * Get real space cutoff.
+      *
+      * \return    rSpaceCutoff_
       */
       double rSpaceCutoff() const;
+
+      /**
+      * Get grid dimension in x direction.
+      *
+      * \return    xgridSize_ 
+      */
+      double xgridSize() const;
+
+      /**
+      * Get grid dimension in y direction.
+      *
+      * \return    ygridSize_
+      */
+      double ygridSize() const;
+
+      /**
+      * Get grid dimension in z direction.
+      *
+      * \return    zgridSize_
+      */
+      double zgridSize() const;
+
 
       /**
       * Get Ewald paramter alpha.
@@ -170,6 +188,9 @@ namespace McMd
       double alpha_;            ///< alpha = (1 / (sigma*sqrt(2)) ).
       double rSpaceCutoff_;     ///< Ewald potential real space cutoff.
       double rSpaceCutoffSq_;   ///< Real space cutoff squared.
+      int xgridSize_;           ///< grid Size in x direction.
+      int ygridSize_;           ///< grid Size in y direction.   
+      int zgridSize_;           ///< grid Size in z direction.   
 
       /// prefactors for real space potential
       double ce_;
@@ -187,31 +208,49 @@ namespace McMd
    /* 
    * Return medium dielectric permittivity.
    */
-   inline double EwaldInteraction::epsilon() const
+   inline double PMEInteraction::epsilon() const
    { return epsilon_; }
 
    /* 
    * Return Ewald mearing parameter alpha.
    */
-   inline double EwaldInteraction::alpha() const
+   inline double PMEInteraction::alpha() const
    { return alpha_; }
 
    /* 
    * Return real space cutoff distance in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoff() const
-   {  return rSpaceCutoff_; }
+   inline double PMEInteraction::rSpaceCutoff() const
+   { return rSpaceCutoff_; }
 
   /* 
    * Return real space cutoff distance squared in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoffSq() const
+   inline double PMEInteraction::rSpaceCutoffSq() const
    { return rSpaceCutoffSq_; }
+
+  /* 
+   * Return grid size in x direction for PME summation.
+   */
+   inline double PMEInteraction::xgridSize() const
+   { return xgridSize_; }
+
+  /* 
+   * Return grid size in y direction for PME summation.
+   */
+   inline double PMEInteraction::ygridSize() const
+   { return ygridSize_; }
+
+  /* 
+   * Return grid size in z direction for PME summation.
+   */
+   inline double PMEInteraction::zgridSize() const
+   { return zgridSize_; }
 
    /* 
    * Calculate r-space energy for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) const 
+   inline double PMEInteraction::rSpaceEnergy(double rsq, double qProduct) const 
    {
       double r = sqrt(rsq);
       return ce_*qProduct*erfc(alpha_*r)/r;
@@ -220,19 +259,11 @@ namespace McMd
    /*
    * Calculate r-space force/distance for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
+   inline double PMEInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
    {
       double r = sqrt(rSq);
       double x = alpha_*r;
       return ce_*qProduct*(erfc(x) + cf_*r*exp(-x*x))/(r*rSq); 
-   }
-
-   /* 
-   * Calculate k-space potential from wavenumber kSq.
-   */
-   inline double EwaldInteraction::kSpacePotential(double rhoSq, double prefactor) const
-   {
-      return rhoSq*prefactor;
    }
 
 }

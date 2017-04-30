@@ -35,6 +35,11 @@ INTER_BOND=1
 # Define INTER_EXTERNAL, enable external potentials
 #INTER_EXTERNAL=1
 
+# Enable use of FFTW library for particle mesh Ewald
+ifdef INTER_COULOMB
+#INTER_FFTW=1
+endif
+
 #-----------------------------------------------------------------------
 # The following code defines the variables INTER_DEFS and INTER_SUFFIX.
 #
@@ -103,6 +108,13 @@ endif
 ifdef INTER_COULOMB
 INTER_DEFS+= -DINTER_COULOMB
 INTER_SUFFIX:=$(INTER_SUFFIX)_c
+ifdef INTER_FFTW
+INTER_DEFS+= -DINTER_FFTW
+# Needed for Mac OS X with Homebrew, which puts files in opt/
+#INCLUDES+= -I/opt/local/include
+#LDFLAGS+= -L/opt/local/lib
+LDFLAGS+= -lfftw3
+endif
 endif
 
 # Enable external potential
