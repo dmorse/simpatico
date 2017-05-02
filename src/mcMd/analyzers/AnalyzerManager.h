@@ -65,17 +65,27 @@ namespace McMd
       * 
       * This method should be called just before the main
       * simulation loop, after an initial configuration is
-      * known.
+      * known. It calls the setup() functionfor each 
+      * analyzer, or does nothing if size() == 0.
       */
       void setup();
  
       /**
       * Call sample method of each Analyzer.
+      *
+      * \pre Analyzer::baseInterval > 0
+      * \pre iStep::baseInterval == 0
+      * 
+      * \param iStep step counter for main loop
       */
       void sample(long iStep);
  
       /**
       * Call output method of each analyzer.
+      * 
+      * This method should be called after the main
+      * simulation loop. It calls the output() function
+      * of each analyzer, or does nothing if size() == 0.
       */
       void output();
 
