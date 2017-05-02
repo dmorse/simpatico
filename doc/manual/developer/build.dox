@@ -119,11 +119,11 @@ Here, for simplicity, we have assumed that the simpatico/ root directory is a su
 
 \section make_config_namespace Namespace directory config.mk files
 
-The "config.mk" file in each of the namespace level subdirectories of each build directory contains definitions of makefile variables that control conditional compilation of specific features of the code. For example, the definition of a variable INTER_ANGLE in the file simp/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
+The "config.mk" file in each of the namespace level subdirectories of each build directory contains definitions of makefile variables that control conditional compilation of specific features of the code. For example, the definition of a variable SIMP_ANGLE in the file simp/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
 
-Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, simp/config.mk defines INTER_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable INTER_ANGLE in the file BLD_DIR/simp/config.mk, the variable INTER_DEFS will contain a string "-DINTER_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named INTER_ANGLE. 
+Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, simp/config.mk defines SIMP_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable SIMP_ANGLE in the file BLD_DIR/simp/config.mk, the variable SIMP_DEFS will contain a string "-DSIMP_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named SIMP_ANGLE. 
 
-Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Inter, McMd, DdMd, and Tools namespaces all depend upon the Util namespace.
+Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Simp, McMd, DdMd, and Tools namespaces all depend upon the Util namespace.
 
 \section make_config_script The configure script
 
@@ -296,19 +296,19 @@ The same values are used for the above variables in all five namespaces. Two add
 
 The DEFINES variable, if not empty, contains a series of preprocessor macro definitions, defined using the "-D" compiler option. Thus, for example, if debugging, bonds, and angles are enabled, and no other optional features, the value of DEFINES within the file src/simp/patterns.mk might expand to
 \code
-DEFINES=-DUTIL_DEBUG -DINTER_BOND -DINTER_ANGLE
+DEFINES=-DUTIL_DEBUG -DSIMP_BOND -DSIMP_ANGLE
 \endcode
 The definitions of DEFINES and MAKE_DEPS within the file src/simp/patterns.mk are shown below as an example:
 \code
 # C preprocessor macro definitions
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS)
 
 # Dependencies of source files in src/simp on makefile fragments
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/simp/config.mk
 \endcode
-The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, INTER_DEFS, etc.) for this namespace (i.e., INTER_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Simp namespace, this yields a concatenation of UTIL_DEFS and INTER_DEFS. The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
+The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, SIMP_DEFS, etc.) for this namespace (i.e., SIMP_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Simp namespace, this yields a concatenation of UTIL_DEFS and SIMP_DEFS. The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
 
 The MAKE_DEPS variable contains a list of build configuration files whose contents can effect compilation of source code in this namespace. This list always contains the main config.mk file from the parent build directory, the config.mk file for the namespace of interest, and config.mk files for any namespace(s) upon which this namespace depends. For the Simp namespace, MAKE_DEPS thus contains paths to the config.mk files in the simp/ and util/ subdirectories. These build configuration files are added to the list of dependencies for every object file in this namespace because changes to these config.mk files can change which preprocessor macros are defined or which compiler options are set, and thus can change the contents of the resulting object files.
 

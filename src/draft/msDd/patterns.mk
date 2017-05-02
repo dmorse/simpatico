@@ -6,7 +6,7 @@
 # contains the source code for the DdMd namespace. It is included by
 # all makefile files in this directory tree. 
 #
-# These patterns pass the compiler strings $(UTIL_DEFS) $(INTER_DEFS)
+# These patterns pass the compiler strings $(UTIL_DEFS) $(SIMP_DEFS)
 # and $(DDMD_DEFS) that are defined in the config.mk files in the 
 # util/, simp/, and mcMd/ directories, and in the src/config.mk
 # file, and should thus be included after these four files. 
@@ -25,20 +25,20 @@ MSDD_ALLDEPS+= -A$(SRC_DIR)/ddMd/config.mk
 # Rule to compile all class source (*.cpp) files.
 %.o:%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) \
-            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
+            $(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) \
-            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
+            $(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
             $(MSDD_ALLDEPS) $<
 endif
 
 # Rule to compile *.cc main programs for unit tests. 
 %.o:%.cc
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) \
-            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
+            $(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) \
-            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
+            $(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
             $(MSDD_ALLDEPS) $<
 endif
 

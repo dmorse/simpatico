@@ -20,41 +20,41 @@ namespace McMd
    */
    McSystemAccess::McSystemAccess(McSystem& mcSystem)
     : SubSystem(mcSystem)
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       , pairPotentialPtr_(0)
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondPotentialPtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , anglePotentialPtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralPotentialPtr_(0)
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       , externalPotentialPtr_(0)
       #endif
    {
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairPotentialPtr_ = &mcSystem.pairPotential();
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (hasBonds()) {
          bondPotentialPtr_ = &mcSystem.bondPotential();
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngles()) {
          anglePotentialPtr_ = &mcSystem.anglePotential();
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedrals()) {
          dihedralPotentialPtr_ = &mcSystem.dihedralPotential();
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (hasExternal()) {
          externalPotentialPtr_ = &mcSystem.externalPotential();
       }

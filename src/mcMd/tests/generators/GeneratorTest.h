@@ -8,7 +8,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
 #include <util/containers/DArray.h>

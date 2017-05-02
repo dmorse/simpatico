@@ -22,7 +22,7 @@ namespace McMd
    * Descriptor for a type of Atom.
    *
    * An AtomTypeType has a mass, a name string, and an integer id.
-   * If coulomb interactions are enabled (ifdef INTER_COULOMB), it
+   * If coulomb interactions are enabled (ifdef SIMP_COULOMB), it
    * also has a electrical charge.
    *
    * \ingroup McMd_Chemistry_Module
@@ -66,7 +66,7 @@ namespace McMd
       */
       void setMass(double mass);
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /**
       * Set the boolean "hasCharge" property.
       *
@@ -104,7 +104,7 @@ namespace McMd
       */
       double mass() const;
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /**
       * Does this type have a charge value?
       */
@@ -131,7 +131,7 @@ namespace McMd
       /// Mass of atom type.
       double  mass_;
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /// Electrical charge of atom type.
       double  charge_;
       #endif
@@ -179,7 +179,7 @@ namespace McMd
    inline double AtomType::mass() const
    {  return mass_; }
 
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    /*
    * Get the hasCharge bool flag.
    */
@@ -236,7 +236,7 @@ namespace McMd
    {
       ar & atomType.name_;
       ar & atomType.mass_;
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       ar & atomType.hasCharge_;
       if (atomType.hasCharge_) {
          ar & atomType.charge_;

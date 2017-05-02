@@ -43,7 +43,7 @@ namespace McMd
    #ifdef HOOMD_DEVEL
    class HoomdBondPotential;
    #endif
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    class HoomdExternalPotential;
    #endif
 
@@ -144,7 +144,7 @@ namespace McMd
       /// HOOMD pair potential
       boost::shared_ptr< ForceCompute > pairForceSPtr_;
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       bool implementExternalPotential_;
       /// HOOMD external potential
       boost::shared_ptr< ForceCompute > externalForceSPtr_;

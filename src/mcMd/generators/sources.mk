@@ -4,7 +4,7 @@ mcMd_generators_= \
     mcMd/generators/PointGenerator.cpp \
     mcMd/generators/generatorFactory.cpp 
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 mcMd_generators_+= \
     mcMd/generators/LinearGenerator.cpp 
 endif

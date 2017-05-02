@@ -1,5 +1,5 @@
-#ifndef INTER_SLIT_EXTERNAL_H
-#define INTER_SLIT_EXTERNAL_H
+#ifndef SIMP_SLIT_EXTERNAL_H
+#define SIMP_SLIT_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

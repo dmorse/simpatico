@@ -1,5 +1,5 @@
-#ifndef INTER_COSINE_SQ_ANGLE_H
-#define INTER_COSINE_SQ_ANGLE_H
+#ifndef SIMP_COSINE_SQ_ANGLE_H
+#define SIMP_COSINE_SQ_ANGLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

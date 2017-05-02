@@ -11,13 +11,13 @@
 #include <ddMd/communicate/Domain.h>   
 
 #include <ddMd/storage/AtomStorage.h>               
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>               
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 
@@ -56,13 +56,13 @@ namespace DdMd
       nAngleType_ = 0;
       nDihedralType_ = 0;
       nImproperType_ = 0;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       nBondType_ = simulation.nBondType();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       nAngleType_ = simulation.nAngleType();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       nDihedralType_ = simulation.nDihedralType();
       #endif
    }
@@ -153,17 +153,17 @@ namespace DdMd
          if (nAtomType > nAtomType_) {
             UTIL_THROW("nAtomType > simulation().nAtomType()");
          }
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (nBondType > nBondType_) {
             UTIL_THROW("nAtomType > simulation().nBondType()");
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (nAngleType > nAngleType_) {
             UTIL_THROW("nAngleype > simulation().nAngleType()");
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (nDihedralType > nDihedralType_) {
             UTIL_THROW("nDihedralType > simulation().nDihedralType()");
          }
@@ -255,7 +255,7 @@ namespace DdMd
       }
 
       bool hasGhosts = false;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -266,14 +266,14 @@ namespace DdMd
       }
       #endif
        
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "Angles", nAngle, angleDistributor());
          angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
       }
       #endif
        
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "Dihedrals", nDihedral, dihedralDistributor());
          dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -360,21 +360,21 @@ namespace DdMd
       atomStorage().computeNAtomTotal(domain().communicator());
 
       // Bonds
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBondType_) {
          if (bondStorage().capacity()) {
             bondStorage().computeNTotal(domain().communicator());
          }
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngleType_) {
          if (angleStorage().capacity()) {
             angleStorage().computeNTotal(domain().communicator());
          }
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedralType_) {
          if (dihedralStorage().capacity()) {
             dihedralStorage().computeNTotal(domain().communicator());
@@ -393,17 +393,17 @@ namespace DdMd
          int nAngle  = 0;
          int nDihedral= 0;
          int nImproper = 0;
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (nBondType_) {
             nBond = bondStorage().nTotal();
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (nAngleType_) {
             nAngle = angleStorage().nTotal();
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (nDihedralType_) {
             nDihedral = dihedralStorage().nTotal();
          }
@@ -509,21 +509,21 @@ namespace DdMd
       }
 
       // Write the groups
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBondType_) {
          if (bondStorage().capacity()) {
             writeGroups<2>(file, "Bonds", bondStorage(), bondCollector());
          }
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngleType_) {
          if (angleStorage().capacity()) {
             writeGroups<3>(file, "Angles", angleStorage(), angleCollector());
          }
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedralType_) {
          if (dihedralStorage().capacity()) {
             writeGroups<4>(file, "Dihedrals", dihedralStorage(), dihedralCollector());

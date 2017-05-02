@@ -8,7 +8,7 @@
 #include "RingOctaRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Ring.h>
@@ -128,13 +128,13 @@ namespace McMd
 
       //system().moveAtom(*mPtr, nPtr->position());
       mPtr->position() = nPtr->position();
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       system().pairPotential().updateAtomCell(*mPtr);
       #endif
 
       //system().moveAtom(*nPtr, swapV);
       nPtr->position() = swapV;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       system().pairPotential().updateAtomCell(*nPtr);
       #endif
 
@@ -153,13 +153,13 @@ namespace McMd
 
          //system().moveAtom(*mPtr, nPtr->position());
          mPtr->position() = nPtr->position();
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().updateAtomCell(*mPtr);
          #endif
 
          //system().moveAtom(*nPtr, swapV);
          nPtr->position() = swapV;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().updateAtomCell(*nPtr);
          #endif
       }
@@ -216,7 +216,7 @@ namespace McMd
       }
 
       // Get the neighbor list.
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       system().pairPotential().cellList().getNeighbors(mPos, neighbors_);
       nNeighbor = neighbors_.size();
       idList = new int[nNeighbor];

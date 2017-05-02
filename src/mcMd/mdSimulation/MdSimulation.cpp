@@ -14,13 +14,13 @@
 #include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #include <util/format/Int.h>
@@ -458,7 +458,7 @@ namespace McMd
 
             } else
             #ifndef UTIL_MPI
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             if (command == "SET_PAIR") {
                std::string paramName;
                int typeId1, typeId2; 
@@ -471,7 +471,7 @@ namespace McMd
                        .set(paramName, typeId1, typeId2, value);
             } else 
             #endif 
-            #ifdef INTER_BOND
+            #ifdef SIMP_BOND
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -482,7 +482,7 @@ namespace McMd
                system().bondPotential().set(paramName, typeId, value);
             } else 
             #endif
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             if (command == "SET_ANGLE") {
                std::string paramName;
                int typeId; 
@@ -493,7 +493,7 @@ namespace McMd
                system().anglePotential().set(paramName, typeId, value);
             } else 
             #endif 
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;
                int typeId; 
@@ -550,7 +550,7 @@ namespace McMd
       int beginStep = iStep_;
       int nStep = endStep - beginStep;
 
-      #ifdef INTER_NOPAIR
+      #ifdef SIMP_NOPAIR
       // When the pair potential is disabled, require that
       // Analyzer::baseInterval > 0 to guarantee periodic 
       // shifting of atomic positions into primary cell.
@@ -616,7 +616,7 @@ namespace McMd
       Log::file() << std::endl;
       Log::file() << std::endl;
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       Log::file() << "PairList Statistics" << std::endl;
       Log::file() << "maxNPair           " 
                   << system().pairPotential().pairList().maxNPair()
@@ -671,7 +671,7 @@ namespace McMd
          system().readConfig(configFile);
          configFile.close();
 
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Build the system CellList
          system().pairPotential().buildPairList();
          #endif
@@ -742,7 +742,7 @@ namespace McMd
       for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
          hasFrame = trajectoryReaderPtr->readFrame();
          if (hasFrame) {
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             // Build the system PairList
             system().pairPotential().buildPairList();
             #endif

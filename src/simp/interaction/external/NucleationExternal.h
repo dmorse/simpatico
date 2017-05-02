@@ -1,5 +1,5 @@
-#ifndef INTER_NUCLEATION_EXTERNAL_H
-#define INTER_NUCLEATION_EXTERNAL_H
+#ifndef SIMP_NUCLEATION_EXTERNAL_H
+#define SIMP_NUCLEATION_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

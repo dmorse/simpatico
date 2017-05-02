@@ -56,38 +56,38 @@ namespace McMd
    {
       if (isAtInterval(iStep)) {
 	 double potential = 0.0;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          double pair = system().pairPotential().energy();
          potential += pair;
          outputFile_ << Dbl(pair);
          #endif
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          double bond = system().bondPotential().energy();
          potential += bond;
          outputFile_ << Dbl(bond);
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
             double angle = system().anglePotential().energy();
             potential += angle;
             outputFile_ << Dbl(angle);
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (system().hasDihedralPotential()) {
             double dihedral = system().dihedralPotential().energy();
             potential += dihedral;
             outputFile_ << Dbl(dihedral);
          }
          #endif
-         #ifdef INTER_COULOMB
+         #ifdef SIMP_COULOMB
          if (system().hasCoulombPotential()) {
             double coulombk = system().coulombPotential().energy();
             potential += coulombk;
             outputFile_ << Dbl(coulombk);
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             double external = system().externalPotential().energy();
             potential += external;
@@ -101,7 +101,7 @@ namespace McMd
             outputFile_ << Dbl(link);
          }
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          if (system().hasTetherPotential()) {
             double tether = system().tetherPotential().energy();
             potential += tether;
@@ -130,24 +130,24 @@ namespace McMd
       outputFile_ << std::endl;
 
       outputFile_ << "File format:" << std::endl;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       outputFile_ << "  ";
       outputFile_ << "[pair]       ";
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       outputFile_ << "[bond]       ";
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (system().hasAnglePotential()) {
          outputFile_ << "[angle]      ";
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (system().hasDihedralPotential()) {
          outputFile_ << "[dihedral]   ";
       }
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (system().hasCoulombPotential()) {
          outputFile_ << "[coulomb]    ";
       }
@@ -158,12 +158,12 @@ namespace McMd
          outputFile_ << "[link]       ";
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (system().hasExternalPotential()) {
          outputFile_ << "[external]   ";
       }
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       if (system().hasTetherPotential()) {
          outputFile_ << "[tether]     ";
       }

@@ -15,13 +15,13 @@ namespace Tools
    */
    Configuration::Configuration()
     : atomCapacity_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondCapacity_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleCapacity_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralCapacity_(0)
       , improperCapacity_(0)
       #endif
@@ -54,7 +54,7 @@ namespace Tools
 
       atoms_.allocate(atomCapacity_);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondCapacity_ = 0; // default value
       readOptional<int>(in, "bondCapacity", bondCapacity_); 
       // If bondCapacity is absent, it is set to zero by default
@@ -63,7 +63,7 @@ namespace Tools
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleCapacity_ = 0; // default value
       readOptional<int>(in, "angleCapacity", angleCapacity_); 
       if (angleCapacity_ > 0) {
@@ -71,7 +71,7 @@ namespace Tools
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralCapacity_ = 0; // default value
       readOptional<int>(in, "dihedralCapacity", dihedralCapacity_); 
       if (dihedralCapacity_ > 0) {
@@ -104,17 +104,17 @@ namespace Tools
    void Configuration::clear()
    {
       atoms_.clear();
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (bondCapacity_ > 0) {
          bonds_.clear();
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (angleCapacity_ > 0) {
          angles_.clear();
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (dihedralCapacity_ > 0) {
          dihedrals_.clear();
       }

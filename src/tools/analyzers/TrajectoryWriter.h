@@ -137,21 +137,21 @@ namespace Tools
       */
       AtomStorage& atoms();
    
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get bond storage by reference.
       */
       GroupStorage<2>& bonds();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get angle storage by reference.
       */
       GroupStorage<3>& angles();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get dihedral storage by reference.
       */
@@ -177,13 +177,13 @@ namespace Tools
 
       // Pointers to storage objects.
       AtomStorage* atomStoragePtr_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       GroupStorage<2>* bondStoragePtr_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       GroupStorage<3>* angleStoragePtr_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       GroupStorage<4>* dihedralStoragePtr_;
       #endif
 
@@ -203,17 +203,17 @@ namespace Tools
    inline AtomStorage& TrajectoryWriter::atoms()
    {  return *atomStoragePtr_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline GroupStorage<2>& TrajectoryWriter::bonds()
    {  return *bondStoragePtr_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline GroupStorage<3>& TrajectoryWriter::angles()
    {  return *angleStoragePtr_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline GroupStorage<4>& TrajectoryWriter::dihedrals()
    {  return *dihedralStoragePtr_; }
    #endif

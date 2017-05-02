@@ -1,7 +1,7 @@
 ddMd_analyzers_misc_=\
      ddMd/analyzers/misc/OrderParamNucleation.cpp
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 ddMd_analyzers_misc_+=\
      ddMd/analyzers/misc/BondTensorAutoCorr.cpp
 endif

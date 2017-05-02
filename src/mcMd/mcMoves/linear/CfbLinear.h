@@ -154,15 +154,15 @@ namespace McMd
       /// Number of trial positions for regrown atom (<= MaxTrial_)
       int  nTrial_;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       bool hasAngles_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       bool hasDihedrals_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       bool hasExternal_;
       #endif
 

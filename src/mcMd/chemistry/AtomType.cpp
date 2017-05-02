@@ -16,12 +16,12 @@ namespace McMd
    // Constructor
    AtomType::AtomType()
     : mass_(1.0),
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       charge_(0.0),
       #endif
       name_(),
       id_(-1)
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       , hasCharge_(0)
       #endif
    {}
@@ -46,7 +46,7 @@ namespace McMd
    void AtomType::setMass(double mass)
    {  mass_ = mass; }
 
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    /*
    * Set the hasCharge property.
    */
@@ -70,7 +70,7 @@ namespace McMd
    {
       in >> atomType.name_;
       in >> atomType.mass_;
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (atomType.hasCharge_) {
          in >> atomType.charge_;
       }
@@ -89,7 +89,7 @@ namespace McMd
       out.width(Parameter::Width);
       out.precision(Parameter::Precision);
       out << atomType.mass_;
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (atomType.hasCharge_) {
          out.width(Parameter::Width);
          out << atomType.charge_;
@@ -113,7 +113,7 @@ namespace Util
       double  mass = data.mass();
       send<double>(comm, mass, dest, tag);
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       bool hasCharge = data.hasCharge();
       send<bool>(comm, hasCharge, dest, tag);
       if (hasCharge) {
@@ -134,8 +134,8 @@ namespace Util
       recv<double>(comm, mass, source, tag);
       data.setMass(mass);
 
-      #ifdef INTER_COULOMB
-      bool hasCharge
+      #ifdef SIMP_COULOMB
+      bool hasCharge;
       recv<bool>(comm, hasCharge, source, tag);
       data.setHasCharge(hasCharge);
       if (hasCharge) {
@@ -151,7 +151,7 @@ namespace Util
    {
       std::string  name;
       double  mass; 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       double  charge;
       bool hasCharge; 
       #endif
@@ -159,7 +159,7 @@ namespace Util
       if (rank == root) {
          name = data.name();
          mass = data.mass();
-         #ifdef INTER_COULOMB
+         #ifdef SIMP_COULOMB
          hasCharge = data.hasCharge();
          if (hasCharge) {
             charge = data.charge();
@@ -168,7 +168,7 @@ namespace Util
       }
       bcast<std::string>(comm, name, root);
       bcast<double>(comm, mass, root);
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       bcast<bool>(comm, hasCharge, root);
       if (hasCharge) {
          bcast<double>(comm, charge, root);
@@ -177,7 +177,7 @@ namespace Util
       if (rank != root) {
          data.setName(name);
          data.setMass(mass);
-         #ifdef INTER_COULOMB
+         #ifdef SIMP_COULOMB
          data.setHasCharge(hasCharge);
          if (hasCharge) {
             data.setCharge(charge);

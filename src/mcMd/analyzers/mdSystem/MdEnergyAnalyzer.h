@@ -104,19 +104,19 @@ namespace McMd
       Average* totalAveragePtr_;
       Average* kineticAveragePtr_;
       Average* potentialAveragePtr_;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       Average* pairAveragePtr_;
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       Average* bondAveragePtr_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Average* angleAveragePtr_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Average* dihedralAveragePtr_;
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       Average* coulombRSpaceAveragePtr_;
       Average* coulombKSpaceAveragePtr_;
       Average* coulombAveragePtr_;
@@ -124,7 +124,7 @@ namespace McMd
       /// Compute rSpace and kSpace coulomb component averages?
       bool coulombComponents_;
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       Average* externalAveragePtr_;
       #endif
 

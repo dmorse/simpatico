@@ -8,16 +8,16 @@
 #include "EnergyAnalyzer.h"
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/potentials/pair/PairPotential.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
 #include <util/accumulators/Average.h>
@@ -41,16 +41,16 @@ namespace DdMd
       totalAveragePtr_(0),
       kineticAveragePtr_(0),
       pairAveragePtr_(0),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondAveragePtr_(0),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleAveragePtr_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralAveragePtr_(0),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalAveragePtr_(0),
       #endif
       nSamplePerBlock_(0),
@@ -75,19 +75,19 @@ namespace DdMd
          kineticAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
          pairAveragePtr_ = new Average;
          pairAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sim.nBondType()) {
             bondAveragePtr_ = new Average;
             bondAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sim.nAngleType()) {
              angleAveragePtr_ = new Average;
              angleAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sim.hasExternal()) {
             externalAveragePtr_ = new Average;
             externalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -119,25 +119,25 @@ namespace DdMd
          ar >> *kineticAveragePtr_;
          pairAveragePtr_ = new Average;
          ar >> *pairAveragePtr_;
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sim.nBondType()) {
             bondAveragePtr_ = new Average;
             ar >> *bondAveragePtr_;
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sim.nAngleType()) {
             angleAveragePtr_ = new Average;
             ar >> *angleAveragePtr_;
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sim.nDihedralType()) {
             dihedralAveragePtr_ = new Average;
             ar >> *dihedralAveragePtr_;
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sim.hasExternal()) {
             externalAveragePtr_ = new Average;
             ar >> *externalAveragePtr_;
@@ -163,22 +163,22 @@ namespace DdMd
       ar << *totalAveragePtr_;
       ar << *kineticAveragePtr_;
       ar << *pairAveragePtr_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sim.nBondType()) {
          ar << *bondAveragePtr_;
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sim.nAngleType()) {
          ar << *angleAveragePtr_;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sim.nDihedralType()) {
          ar << *dihedralAveragePtr_;
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sim.hasExternal()) {
          ar << *externalAveragePtr_;
       }
@@ -195,22 +195,22 @@ namespace DdMd
          totalAveragePtr_->clear();
          kineticAveragePtr_->clear();
          pairAveragePtr_->clear();
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sim.nBondType()) {
             bondAveragePtr_->clear();
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sim.nAngleType()) {
             angleAveragePtr_->clear();
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sim.nDihedralType()) {
             dihedralAveragePtr_->clear();
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sim.hasExternal()) {
             externalAveragePtr_->clear();
          }
@@ -252,7 +252,7 @@ namespace DdMd
             potential += pair;
             pairAveragePtr_->sample(pair);
             //outputFile_ << Dbl(pair, 15);
-            #ifdef INTER_BOND
+            #ifdef SIMP_BOND
             if (sim.nBondType()) {
                double bond = sim.bondPotential().energy();
                potential += bond;
@@ -260,7 +260,7 @@ namespace DdMd
                //outputFile_ << Dbl(bond, 15);
             }
             #endif
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             if (sim.nAngleType()) {
                double angle = sim.anglePotential().energy();
                potential += angle;
@@ -268,7 +268,7 @@ namespace DdMd
                //outputFile_ << Dbl(angle, 15);
             }
             #endif
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             if (sim.nDihedralType()) {
                double dihedral  = sim.dihedralPotential().energy();
                potential += dihedral;
@@ -276,7 +276,7 @@ namespace DdMd
                // outputFile_ << Dbl(dihedral, 15);
             }
             #endif
-            #ifdef INTER_EXTERNAL
+            #ifdef SIMP_EXTERNAL
             if (sim.hasExternal()) {
                double external = sim.externalPotential().energy();
                potential += external;
@@ -295,22 +295,22 @@ namespace DdMd
                outputFile_ << Int(beginStep, 12);
                outputFile_ << Dbl(kineticAveragePtr_->blockAverage());
                outputFile_ << Dbl(pairAveragePtr_->blockAverage());
-               #ifdef INTER_BOND
+               #ifdef SIMP_BOND
                if (sim.nBondType()) {
                   outputFile_ << Dbl(bondAveragePtr_->blockAverage());
                }
                #endif
-               #ifdef INTER_ANGLE
+               #ifdef SIMP_ANGLE
                if (sim.nAngleType()) {
                   outputFile_ << Dbl(angleAveragePtr_->blockAverage());
                }
                #endif
-               #ifdef INTER_DIHEDRAL
+               #ifdef SIMP_DIHEDRAL
                if (sim.nDihedralType()) {
                   outputFile_ << Dbl(dihedralAveragePtr_->blockAverage());
                }
                #endif
-               #ifdef INTER_EXTERNAL
+               #ifdef SIMP_EXTERNAL
                if (sim.hasExternal()) {
                   outputFile_ << Dbl(externalAveragePtr_->blockAverage());
                }
@@ -350,28 +350,28 @@ namespace DdMd
          ave = pairAveragePtr_->average();
          err = pairAveragePtr_->blockingError();
          outputFile_ << "Pair      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sim.nBondType()) {
             ave = bondAveragePtr_->average();
             err = bondAveragePtr_->blockingError();
             outputFile_ << "Bond      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sim.nAngleType()) {
             ave = angleAveragePtr_->average();
             err = angleAveragePtr_->blockingError();
             outputFile_ << "Angle     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sim.nDihedralType()) {
             ave = dihedralAveragePtr_->average();
             err = dihedralAveragePtr_->blockingError();
             outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sim.hasExternal()) {
             ave = externalAveragePtr_->average();
             err = externalAveragePtr_->blockingError();
@@ -393,7 +393,7 @@ namespace DdMd
          "---------------------------------------------------------------------------------\n";
          outputFile_ << "Pair:\n\n";
          pairAveragePtr_->output(outputFile_);
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sim.nBondType()) {
             outputFile_ << 
             "---------------------------------------------------------------------------------\n";
@@ -401,7 +401,7 @@ namespace DdMd
             bondAveragePtr_->output(outputFile_);
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sim.nAngleType()) {
             outputFile_ << 
             "---------------------------------------------------------------------------------\n";
@@ -409,7 +409,7 @@ namespace DdMd
             angleAveragePtr_->output(outputFile_);
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sim.nDihedralType()) {
             outputFile_ << 
             "---------------------------------------------------------------------------------\n";
@@ -417,7 +417,7 @@ namespace DdMd
             dihedralAveragePtr_->output(outputFile_);
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sim.hasExternal()) {
             outputFile_ << 
             "---------------------------------------------------------------------------------\n";

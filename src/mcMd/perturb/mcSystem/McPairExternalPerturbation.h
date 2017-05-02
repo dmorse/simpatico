@@ -1,6 +1,6 @@
 #ifdef  MCMD_PERTURB
-#ifdef INTER_EXTERNAL
-#ifndef INTER_NOPAIR
+#ifdef SIMP_EXTERNAL
+#ifndef SIMP_NOPAIR
 #ifndef MCMD_MC_PAIR_EXTERNAL_PERTURBATION_H
 #define MCMD_MC_PAIR_EXTERNAL_PERTURBATION_H
 
@@ -313,6 +313,6 @@ namespace McMd
 }
 
 #endif  
-#endif  // #ifndef INTER_NOPAIR
-#endif  // #ifdef INTER_EXTERNAL
+#endif  // #ifndef SIMP_NOPAIR
+#endif  // #ifdef SIMP_EXTERNAL
 #endif  // ifdef MCMD_PERTURB

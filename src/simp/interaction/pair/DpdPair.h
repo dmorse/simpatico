@@ -1,5 +1,5 @@
-#ifndef INTER_DPD_PAIR_H
-#define INTER_DPD_PAIR_H
+#ifndef SIMP_DPD_PAIR_H
+#define SIMP_DPD_PAIR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

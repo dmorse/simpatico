@@ -1,5 +1,5 @@
 #ifdef  MCMD_PERTURB
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #ifndef MCMD_MC_EXTERNAL_PERTURBATION_H
 #define MCMD_MC_EXTERNAL_PERTURBATION_H
 
@@ -204,5 +204,5 @@ namespace McMd
 
 }
 #endif
-#endif  // #ifdef INTER_EXTERNAL
+#endif  // #ifdef SIMP_EXTERNAL
 #endif // #ifdef MCMD_PERTURB 

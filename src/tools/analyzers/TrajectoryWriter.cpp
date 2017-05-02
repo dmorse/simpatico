@@ -31,13 +31,13 @@ namespace Tools
       isBinary_(isBinary),
       boundaryPtr_(0),
       atomStoragePtr_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondStoragePtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleStoragePtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralStoragePtr_(0)
       #endif
    {
@@ -45,13 +45,13 @@ namespace Tools
       boundaryPtr_ = &processor.boundary();
 
       atomStoragePtr_ = &processor.atoms();
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStoragePtr_ = &processor.bonds();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStoragePtr_ = &processor.angles();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStoragePtr_ = &processor.dihedrals();
       #endif
    }
@@ -69,13 +69,13 @@ namespace Tools
       isBinary_(isBinary),
       boundaryPtr_(0),
       atomStoragePtr_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondStoragePtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleStoragePtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralStoragePtr_(0)
       #endif
    {
@@ -83,13 +83,13 @@ namespace Tools
       boundaryPtr_ = &configuration.boundary();
 
       atomStoragePtr_ = &configuration.atoms();
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStoragePtr_ = &configuration.bonds();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStoragePtr_ = &configuration.angles();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStoragePtr_ = &configuration.dihedrals();
       #endif
    }

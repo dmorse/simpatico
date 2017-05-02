@@ -1,5 +1,5 @@
-#ifndef INTER_MULTI_HARMONIC_DIHEDRAL_H
-#define INTER_MULTI_HARMONIC_DIHEDRAL_H
+#ifndef SIMP_MULTI_HARMONIC_DIHEDRAL_H
+#define SIMP_MULTI_HARMONIC_DIHEDRAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

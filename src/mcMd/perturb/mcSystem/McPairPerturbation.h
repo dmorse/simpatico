@@ -1,5 +1,5 @@
 #ifdef  MCMD_PERTURB
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #ifndef MCMD_MC_PAIR_PERTURBATION_H
 #define MCMD_MC_PAIR_PERTURBATION_H
 
@@ -266,5 +266,5 @@ namespace McMd
 }
 
 #endif  
-#endif  // #ifndef INTER_NOPAIR
+#endif  // #ifndef SIMP_NOPAIR
 #endif  // ifdef MCMD_PERTURB

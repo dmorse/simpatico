@@ -1,5 +1,5 @@
-#ifndef INTER_TORSION_H
-#define INTER_TORSION_H
+#ifndef SIMP_TORSION_H
+#define SIMP_TORSION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

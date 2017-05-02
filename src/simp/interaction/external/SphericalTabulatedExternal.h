@@ -1,5 +1,5 @@
-#ifndef INTER_SPHERICAL_TABULATED_EXTERNAL_H
-#define INTER_SPHERICAL_TABULATED_EXTERNAL_H
+#ifndef SIMP_SPHERICAL_TABULATED_EXTERNAL_H
+#define SIMP_SPHERICAL_TABULATED_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

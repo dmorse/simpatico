@@ -14,20 +14,20 @@
 * \brief Include this file to include all MC potential energy classes at once.
 */
 
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/potentials/bond/BondPotential.h>
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
-#ifdef INTER_TETHER
+#ifdef SIMP_TETHER
 #include <mcMd/potentials/tether/TetherPotential.h>
 #endif
 

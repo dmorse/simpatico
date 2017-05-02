@@ -55,7 +55,7 @@ namespace McMd
       if (name == "FeneBond") {
          ptr = new BondPotentialImpl<FeneBond>(*systemPtr_);
       }
-      #ifndef INTER_NOPAIR 
+      #ifndef SIMP_NOPAIR 
       else
       if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
          ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*systemPtr_);

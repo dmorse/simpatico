@@ -14,7 +14,7 @@
 #include "common/MdMove.h"
 #include "common/DpdMove.h"
 
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include "linear/EndSwapMove.h"
 #include "linear/CfbEndMove.h"
 #include "linear/CfbLinearEndMove.h"
@@ -64,7 +64,7 @@ namespace McMd
       if (className == "RigidDisplaceMove") {
          ptr = new RigidDisplaceMove(*systemPtr_);
       }
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else
       if (className == "EndSwapMove") {
          ptr = new EndSwapMove(*systemPtr_);

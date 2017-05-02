@@ -30,7 +30,7 @@ namespace McMd
       nTrial_(-1)
    {
       // Precondition
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (system.hasDihedralPotential()) {
          UTIL_THROW("CfbEndBase is unusable with dihedrals");
       }
@@ -70,13 +70,13 @@ namespace McMd
       length   = sqrt(lengthSq);
 
       // Calculate current nonbonded pair energy of end atom
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       energy = system().pairPotential().atomEnergy(*endPtr);
       #else
       energy = 0.0;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
@@ -112,7 +112,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (system().hasExternalPotential()) {
          energy += system().externalPotential().atomEnergy(*endPtr);
       }
@@ -133,13 +133,13 @@ namespace McMd
          endPtr->position().add(pvtPos, bondVec);  
          boundary().shift(endPtr->position());
 
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          trialEnergy = system().pairPotential().atomEnergy(*endPtr);
          #else
          trialEnergy = 0.0;
          #endif
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
 
             // Get the angle type and atom pointer at the angle.
@@ -168,7 +168,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy += 
                system().externalPotential().atomEnergy(*endPtr);
@@ -195,7 +195,7 @@ namespace McMd
       double beta, length;
       int    iTrial;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
@@ -218,13 +218,13 @@ namespace McMd
          trialPos[iTrial].add(pvtPos, bondVec); 
          boundary().shift(trialPos[iTrial]);
          endPtr->position() = trialPos[iTrial];
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          trialEnergy[iTrial] = system().pairPotential().atomEnergy(*endPtr);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
 
             getAtomAngles(*endPtr, angles);
@@ -252,7 +252,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy[iTrial] += 
                 system().externalPotential().atomEnergy(*endPtr);

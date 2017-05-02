@@ -113,7 +113,7 @@ namespace Tools
       }
 
       // Read Covalent Groups
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (configuration().bonds().capacity()) {
          readGroups(file, "BONDS", "nBond", configuration().bonds());
          //if (maskPolicy == MaskBonded) {
@@ -122,13 +122,13 @@ namespace Tools
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (configuration().angles().capacity()) {
          readGroups(file, "ANGLES", "nAngle", configuration().angles());
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (configuration().dihedrals().capacity()) {
          readGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
       }

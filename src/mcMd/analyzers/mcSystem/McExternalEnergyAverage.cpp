@@ -1,4 +1,4 @@
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *

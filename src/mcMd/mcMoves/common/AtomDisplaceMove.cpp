@@ -7,7 +7,7 @@
 
 #include "AtomDisplaceMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <util/boundary/Boundary.h>
@@ -93,7 +93,7 @@ namespace McMd
       bool accept = random().metropolis(boltzmann(newEnergy - oldEnergy));
 
       if (accept) {
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().updateAtomCell(*atomPtr);
          #endif
          incrementNAccept();

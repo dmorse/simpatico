@@ -36,7 +36,7 @@ namespace McMd
      sigma_(-1.0),
      temperature_(1.0),
      cutoffSq_(-1.0),
-     #ifndef INTER_NOPAIR
+     #ifndef SIMP_NOPAIR
      pairListPtr_(&system.pairPotential().pairList()),
      #endif
      boundaryPtr_(&system.boundary()),
@@ -75,7 +75,7 @@ namespace McMd
 
       read<double>(in, "dt", dt_);
       read<double>(in, "cutoff", cutoff_);
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (cutoff_ > system().pairPotential().maxPairCutoff()) {
          UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
       }
@@ -102,7 +102,7 @@ namespace McMd
 
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "cutoff", cutoff_);
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (cutoff_ > system().pairPotential().maxPairCutoff()) {
          UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
       }
@@ -157,7 +157,7 @@ namespace McMd
       sigma_ = sqrt(2.0*gamma_*temperature_/dt_);
       cutoffSq_ = cutoff_*cutoff_;
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       system().pairPotential().clearPairListStatistics();
       system().pairPotential().buildPairList();
       #endif
@@ -279,7 +279,7 @@ namespace McMd
       system().velocitySignal().notify();
 
       #if 0
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       }

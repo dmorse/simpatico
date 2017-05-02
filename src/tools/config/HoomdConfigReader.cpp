@@ -186,13 +186,13 @@ namespace Tools
                readGroups<2>(start, file, configuration().bonds(), 
                              bondTypeMap_);
             }
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             else if (name == "angle") {
                readGroups<3>(start, file, configuration().angles(), 
                              angleTypeMap_);
             } 
             #endif
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             else if (name == "dihedral") {
                readGroups<4>(start, file, configuration().dihedrals(), 
                              dihedralTypeMap_);

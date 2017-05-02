@@ -53,7 +53,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
          atomCapacity += speciesCapacity*speciesPtr->nAtom();
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          bondCapacity += speciesCapacity*speciesPtr->nBond();
          #endif
       }
@@ -119,26 +119,26 @@ namespace McMd
       Species  *speciesPtr;
       int iSpec, nMolecule;
       int nAtom = 0;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       int nBond = 0;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       int nAngle = 0;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       int nDihedral = 0;
       #endif
       for (iSpec = 0; iSpec < simulation().nSpecies(); ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          nBond += nMolecule*(speciesPtr->nBond());
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          nDihedral += nMolecule*(speciesPtr->nDihedral());
          #endif
       }
@@ -180,7 +180,7 @@ namespace McMd
       }
       out << std::endl;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       // Write Bonds
       out << "BONDS" << std::endl;
       out << "nBond  " << nBond << std::endl;
@@ -204,7 +204,7 @@ namespace McMd
       out << std::endl;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       // Write Angles
       out << "ANGLES" << std::endl;
       out << "nAngle  " << nAngle << std::endl;
@@ -229,7 +229,7 @@ namespace McMd
       out << std::endl;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       // Write Dihedral
       out << "DIHEDRALS" << std::endl;
       out << "nDihedral  " << nDihedral << std::endl;

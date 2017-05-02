@@ -8,7 +8,7 @@
 #include "CfbRingRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Ring.h>
@@ -197,7 +197,7 @@ namespace McMd
             thisPtr = tempPtr + modId(beginId + i*sign, nAtom) - beginId;
             //system().moveAtom(*thisPtr, oldPos_[i]);
             thisPtr->position() =  oldPos_[i];
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().updateAtomCell(*thisPtr);
             #endif
          }
@@ -239,7 +239,7 @@ namespace McMd
          // Orientation biased trimer rebridge move
          deleteMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_r, energy_r);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
          rosenbluth *= rosen_r;
@@ -253,7 +253,7 @@ namespace McMd
 
          prevBType = bonds[i+2];
          deleteEndAtom(thisPtr, prevPtr, prevBType, rosen_r, energy_r);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
 
@@ -289,7 +289,7 @@ namespace McMd
 
          prevBType = bonds[nRegrow_ - i];
          addEndAtom(thisPtr, prevPtr, prevBType, rosen_f, energy_f);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 
@@ -309,7 +309,7 @@ namespace McMd
          // Invoke the orientation biased trimer re-bridging move
          addMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_f, energy_f);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 

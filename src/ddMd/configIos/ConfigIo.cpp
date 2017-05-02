@@ -13,14 +13,14 @@
 #include <ddMd/communicate/GroupCollector.tpp>   
 
 #include <ddMd/storage/AtomStorage.h>               
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>               
 //#include <ddMd/chemistry/Bond.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 
@@ -47,13 +47,13 @@ namespace DdMd
     : domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondStoragePtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleStoragePtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralStoragePtr_(0)
       #endif
    {  setClassName("ConfigIo"); }
@@ -65,13 +65,13 @@ namespace DdMd
     : domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondStoragePtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleStoragePtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralStoragePtr_(0)
       #endif
    {
@@ -79,13 +79,13 @@ namespace DdMd
       associate(simulation.domain(),
                 simulation.boundary(),
                 simulation.atomStorage(),
-                #ifdef INTER_BOND
+                #ifdef SIMP_BOND
                 simulation.bondStorage(),
                 #endif
-                #ifdef INTER_ANGLE
+                #ifdef SIMP_ANGLE
                 simulation.angleStorage(),
                 #endif
-                #ifdef INTER_DIHEDRAL
+                #ifdef SIMP_DIHEDRAL
                 simulation.dihedralStorage(),
                 #endif
                 simulation.buffer()
@@ -103,13 +103,13 @@ namespace DdMd
    */
    void ConfigIo::associate(Domain& domain, Boundary& boundary,
                             AtomStorage& atomStorage,
-                            #ifdef INTER_BOND
+                            #ifdef SIMP_BOND
                             BondStorage& bondStorage,
                             #endif
-                            #ifdef INTER_ANGLE
+                            #ifdef SIMP_ANGLE
                             AngleStorage& angleStorage,
                             #endif
-                            #ifdef INTER_DIHEDRAL
+                            #ifdef SIMP_DIHEDRAL
                             DihedralStorage& dihedralStorage,
                             #endif
                             Buffer& buffer)
@@ -118,13 +118,13 @@ namespace DdMd
       boundaryPtr_ = &boundary;
 
       atomStoragePtr_ = &atomStorage;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStoragePtr_ = &bondStorage;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStoragePtr_ = &angleStorage;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStoragePtr_ = &dihedralStorage;
       #endif
 
@@ -206,7 +206,7 @@ namespace DdMd
          atomIter->mask().clear();
       }
   
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       int   atomId0, atomId1;
       Atom* atomPtr0;
       Atom* atomPtr1;

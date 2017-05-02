@@ -167,19 +167,19 @@ namespace Tools
       file << "</type>\n";
 
       // Write covalent groups, as needed
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (configuration().bonds().size()) {
          writeGroups(file, "bond", configuration().bonds(), 
                      bondTypeMap_);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (configuration().angles().size()) {
          writeGroups(file, "angle", configuration().angles(), 
                      angleTypeMap_);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (configuration().dihedrals().size()) {
          writeGroups(file, "dihedral", configuration().dihedrals(), 
                      dihedralTypeMap_);

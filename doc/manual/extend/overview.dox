@@ -10,7 +10,7 @@ namespace McMd
 Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined. 
 
 \section extend_overview_namespace Namespaces
-Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Inter, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
+Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Simp, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
 <table>
   <tr> 
     <td> <b>Namespace</b> </td>

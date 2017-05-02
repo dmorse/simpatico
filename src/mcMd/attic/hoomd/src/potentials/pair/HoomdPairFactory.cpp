@@ -1,4 +1,4 @@
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #ifndef PAIR_FACTORY_CPP
 #define PAIR_FACTORY_CPP
 

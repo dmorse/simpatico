@@ -1,5 +1,5 @@
-#ifndef INTER_WCA_PAIR_H
-#define INTER_WCA_PAIR_H
+#ifndef SIMP_WCA_PAIR_H
+#define SIMP_WCA_PAIR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

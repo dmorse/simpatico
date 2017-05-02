@@ -1,5 +1,5 @@
-#ifndef INTER_GENERAL_PERIODIC_EXTERNAL_H
-#define INTER_GENERAL_PERIODIC_EXTERNAL_H
+#ifndef SIMP_GENERAL_PERIODIC_EXTERNAL_H
+#define SIMP_GENERAL_PERIODIC_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

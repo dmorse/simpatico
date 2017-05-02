@@ -14,14 +14,14 @@ atom type id). All bonds must have the same bondType id,
 throughout both blocks, including the junction bond. 
 
 If the code is compiled with angle potentials enabled (i.e.,
-with INTER_ANGLE defined), a Diblock may optionally have a 
+with SIMP_ANGLE defined), a Diblock may optionally have a 
 bending potential between each sequence of three consecutive 
 atoms. All angle potentials, if present, are characterized by
 the same angle potential type id, and are thus described by 
 the same parameters.
 
 If the code is compiled with dihedral potentials enabled (i.e.,
-with INTER_DIHEDRAL defined), a Diblock may optionally have a 
+with SIMP_DIHEDRAL defined), a Diblock may optionally have a 
 dihedral potential between each sequence of four consecutive 
 atoms. All dihedral potentials, if present, are characterized 
 by the same angle potential type id, and are thus described by 

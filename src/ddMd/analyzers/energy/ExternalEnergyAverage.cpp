@@ -107,7 +107,7 @@ namespace DdMd
       if (isAtInterval(iStep))  {
          double external = 0.0;
          simulation().computePotentialEnergies();
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (simulation().hasExternal()) {
             external =  simulation().externalPotential().energy();
          }

@@ -1,4 +1,4 @@
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #ifndef HOOMD_DPD_PAIR_CPP
 #define HOOMD_DPD_PAIR_CPP
 

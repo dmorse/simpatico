@@ -30,7 +30,7 @@ namespace McMd
       #ifdef MCMD_NOMASKBONDED
       UTIL_THROW("CfbRebridgeBase is unusable ifdef MCMD_NOMASKBONDED");
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (system.hasDihedralPotential()) {
          UTIL_THROW("CfbRebrigeBase is unusable with dihedrals");
       }
@@ -180,19 +180,19 @@ namespace McMd
       energy    += bondEnergy;
    
       // Nonbonded pair energy of current position 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       trialEnergy = system().pairPotential().atomEnergy(*partPtr);
       #else
       trialEnergy = 0.0;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (system().hasAnglePotential()) {
          trialEnergy += system().anglePotential().atomEnergy(*partPtr);
       }
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (system().hasExternalPotential()) {
          trialEnergy += system().externalPotential().atomEnergy(*partPtr);
       }
@@ -235,19 +235,19 @@ namespace McMd
          lengthSq   = boundary().distanceSq(trialPos, nextPos);
          bondEnergy = system().bondPotential().energy(lengthSq, nextBType);
          partPtr->position() = trialPos;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          trialEnergy = system().pairPotential().atomEnergy(*partPtr);
          #else
          trialEnergy = 0.0;
          #endif
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
             trialEnergy += system().anglePotential().atomEnergy(*partPtr);
          }
          #endif
 
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy += system().externalPotential().atomEnergy(*partPtr);
          }
@@ -326,20 +326,20 @@ namespace McMd
             system().bondPotential().energy(lengthSq, nextBType);
          partPtr->position() = trialPos[iTrial];
 
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          trialEnergy[iTrial] = system().pairPotential().atomEnergy(*partPtr);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
             trialEnergy[iTrial] += 
                   system().anglePotential().atomEnergy(*partPtr);
          }
          #endif
 
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy[iTrial] += 
                   system().externalPotential().atomEnergy(*partPtr);
@@ -400,7 +400,7 @@ namespace McMd
          // Orientation biased trimer rebridge move
          deleteMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_r, energy_r);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
          rosenbluth *= rosen_r;
@@ -414,7 +414,7 @@ namespace McMd
 
          prevBType = bonds[i+2];
          deleteEndAtom(thisPtr, prevPtr, prevBType, rosen_r, energy_r);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
 
@@ -447,7 +447,7 @@ namespace McMd
       for (int i = 0; i < nActive - 1; ++i) {
          prevBType = bonds[nActive - i];
          addEndAtom(thisPtr, prevPtr, prevBType, rosen_f, energy_f);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 
@@ -468,7 +468,7 @@ namespace McMd
          // Invoke the orientation biased trimer re-bridging move
          addMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_f, energy_f);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 

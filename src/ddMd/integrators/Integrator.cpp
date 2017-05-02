@@ -13,16 +13,16 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/analyzers/AnalyzerManager.h>
 #include <ddMd/potentials/pair/PairPotential.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
 
@@ -151,25 +151,25 @@ namespace DdMd
       timer_.stamp(ZERO_FORCE);
       pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBondType()) {
          bondPotential().computeForces();
          timer_.stamp(BOND_FORCE);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngleType()) {
          anglePotential().computeForces();
          timer_.stamp(ANGLE_FORCE);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedralType()) {
          dihedralPotential().computeForces();
          timer_.stamp(DIHEDRAL_FORCE);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (hasExternal()) {
          externalPotential().computeForces();
          timer_.stamp(EXTERNAL_FORCE);
@@ -200,25 +200,25 @@ namespace DdMd
       timer_.stamp(ZERO_FORCE);
       pairPotential().computeForcesAndStress(domain().communicator());
       timer_.stamp(PAIR_FORCE);
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBondType()) {
          bondPotential().computeForcesAndStress(domain().communicator());
          timer_.stamp(BOND_FORCE);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngleType()) {
          anglePotential().computeForcesAndStress(domain().communicator());
          timer_.stamp(ANGLE_FORCE);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedralType()) {
          dihedralPotential().computeForcesAndStress(domain().communicator());
          timer_.stamp(DIHEDRAL_FORCE);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (hasExternal()) {
          externalPotential().computeForces();
          timer_.stamp(EXTERNAL_FORCE);
@@ -438,7 +438,7 @@ namespace DdMd
           << "   "
           << Dbl(pairForceT*factor2, 12, 6)
           << "   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBondType()) {
          double bondForceT = timer().time(BOND_FORCE);
          totalT += bondForceT;
@@ -449,7 +449,7 @@ namespace DdMd
              << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngleType()) {
          double angleForceT = timer().time(ANGLE_FORCE);
          totalT += angleForceT;
@@ -460,7 +460,7 @@ namespace DdMd
              << "   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedralType()) {
          double dihedralForceT = timer().time(DIHEDRAL_FORCE);
          totalT += dihedralForceT;
@@ -471,7 +471,7 @@ namespace DdMd
              << "   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (hasExternal()) {
          double externalForceT = timer().time(DIHEDRAL_FORCE);
          totalT += externalForceT;
@@ -541,13 +541,13 @@ namespace DdMd
       simulation().buffer().clearStatistics();
       atomStorage().clearStatistics();
       pairPotential().pairList().clearStatistics();
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStorage().clearStatistics();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage().clearStatistics();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStorage().clearStatistics();
       #endif
       simulation().analyzerManager().clear();

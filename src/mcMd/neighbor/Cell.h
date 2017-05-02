@@ -43,7 +43,7 @@ namespace McMd
    public:
 
       /// Maximum number of atoms per cell.
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       static const int MaxAtomCell = 253; 
       #else
       static const int MaxAtomCell = 61; 

@@ -35,7 +35,7 @@ namespace McMd
    Generator::~Generator()
    {}
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Set bond potential for molecules that have bonds.
    */

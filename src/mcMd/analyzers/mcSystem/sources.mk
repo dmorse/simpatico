@@ -7,12 +7,12 @@ mcMd_analyzers_mcSystem_=\
     mcMd/analyzers/mcSystem/McVirialStressTensorAverage.cpp \
     mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp 
 
-ifndef INTER_NOPAIR
+ifndef SIMP_NOPAIR
 mcMd_analyzers_mcSystem_+=\
     mcMd/analyzers/mcSystem/McMuExchange.cpp 
 endif
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 mcMd_analyzers_mcSystem_+=\
     mcMd/analyzers/mcSystem/McBondEnergyAverage.cpp \
     mcMd/analyzers/mcSystem/McIntraBondStressAutoCorr.cpp \
@@ -20,7 +20,7 @@ mcMd_analyzers_mcSystem_+=\
     mcMd/analyzers/mcSystem/McNVTChemicalPotential.cpp 
 endif
 
-ifdef INTER_EXTERNAL
+ifdef SIMP_EXTERNAL
 mcMd_analyzers_mcSystem_+=\
     mcMd/analyzers/mcSystem/McExternalEnergyAverage.cpp 
 endif

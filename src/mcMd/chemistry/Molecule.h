@@ -9,13 +9,13 @@
 */
 
 #include "Atom.h"
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include "Bond.h"
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include "Angle.h"
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include "Dihedral.h"
 #endif
 #include <util/containers/ArrayIterator.h>
@@ -48,7 +48,7 @@ namespace McMd
       /// Iterator for const Atoms within a Molecule.
       typedef ConstArrayIterator<Atom>  ConstAtomIterator;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Iterator for Bonds within a Molecule.
       typedef ArrayIterator<Bond>  BondIterator;
 
@@ -56,7 +56,7 @@ namespace McMd
       typedef ConstArrayIterator<Bond>  ConstBondIterator;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Iterator for Angles within a Molecule.
       typedef ArrayIterator<Angle>  AngleIterator;
 
@@ -64,7 +64,7 @@ namespace McMd
       typedef ConstArrayIterator<Angle>  ConstAngleIterator;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Iterator for Dihedrals within a Molecule.
       typedef ArrayIterator<Dihedral>  DihedralIterator;
 
@@ -127,7 +127,7 @@ namespace McMd
       */
       void setNAtom(int nAtom);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Set the first Bond.
       *
@@ -143,7 +143,7 @@ namespace McMd
       void setNBond(int nBond);
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Set the first Angle.
       *
@@ -159,7 +159,7 @@ namespace McMd
       void setNAngle(int nAngle);
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Set the first Dihedral.
       *
@@ -191,17 +191,17 @@ namespace McMd
       /// Get the number of Atoms in this Molecule.
       int nAtom() const;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Get the number of Bonds in this Molecule.
       int nBond() const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Get the number of Angles in this Molecule.
       int nAngle() const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Get the number of Dihedrals in this Molecule.
       int nDihedral() const;
       #endif
@@ -224,7 +224,7 @@ namespace McMd
       */
       Atom& atom(int localId);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get a specific Bond in this Molecule by non-const reference.
       *
@@ -244,7 +244,7 @@ namespace McMd
       const Bond& bond(int localId) const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get a specific Angle in this Molecule by non-const reference.
       *
@@ -264,7 +264,7 @@ namespace McMd
       const Angle& angle(int localId) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get a specific Dihedral in this Molecule by reference.
       *
@@ -302,7 +302,7 @@ namespace McMd
       */
       void begin(ConstAtomIterator &iterator) const;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Set a Molecule::BondIterator to first Bond in this Molecule.
       *
@@ -318,7 +318,7 @@ namespace McMd
       void begin(ConstBondIterator &iterator) const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Set a Molecule::AngleIterator to first Angle in this Molecule.
       *
@@ -334,7 +334,7 @@ namespace McMd
       void begin(ConstAngleIterator &iterator) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Set a Molecule::DihedralIterator to first Dihedral in this Molecule.
       *
@@ -364,17 +364,17 @@ namespace McMd
       /// Pointer to first atom in molecule.
       Atom* firstAtomPtr_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Pointer to first bond in molecule.
       Bond* firstBondPtr_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Pointer to first angle in molecule.
       Angle* firstAnglePtr_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Pointer to first dihedral in molecule.
       Dihedral* firstDihedralPtr_;
       #endif
@@ -382,17 +382,17 @@ namespace McMd
       /// Number of atoms in molecule.
       int nAtom_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Number of bonds in molecule.
       int nBond_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Number of angles in molecule.
       int nAngle_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Number of dihedrals in molecule.
       int nDihedral_;
       #endif
@@ -432,7 +432,7 @@ namespace McMd
    inline int Molecule::nAtom() const
    {  return nAtom_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Get number of bonds in this molecule.
    */
@@ -440,7 +440,7 @@ namespace McMd
    {  return nBond_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Get number of angles in this molecule.
    */
@@ -448,7 +448,7 @@ namespace McMd
    {  return nAngle_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Get number of dihedrals in this molecule.
    */
@@ -478,7 +478,7 @@ namespace McMd
       return *(firstAtomPtr_ + localIndex);
    }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Get a specific Bond by reference.
    */
@@ -502,7 +502,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Get a specific Angle, referenced by an index.
    */
@@ -526,7 +526,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Get a specific Dihedral, referenced by an index.
    */
@@ -578,7 +578,7 @@ namespace McMd
       iterator.setEnd(firstAtomPtr_ + nAtom_);
    }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Set BondIterator to first Bond in this molecule.
    */
@@ -602,7 +602,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Set AngleIterator to first Angle in this molecule.
    */
@@ -626,7 +626,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Set DihedralIterator to first Dihedral in this molecule.
    */
@@ -680,7 +680,7 @@ namespace McMd
    inline void Molecule::setNAtom(int nAtom)
    {  nAtom_ = nAtom; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Set pointer to first Bond in molecule.
    */
@@ -694,7 +694,7 @@ namespace McMd
    {  nBond_ = nBond; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Set pointer to first Angle in molecule.
    */
@@ -708,7 +708,7 @@ namespace McMd
    {  nAngle_ = nAngle; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Set pointer to first Dihedral in molecule.
    */

@@ -67,7 +67,7 @@ namespace McMd
       */
       virtual int calculateBondTypeId(int index) const = 0;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Return the angle type id for a specific angle.
       *
@@ -80,7 +80,7 @@ namespace McMd
       virtual int calculateAngleTypeId(int index) const = 0;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Return the dihedral type id for a specific dihedral.
       *

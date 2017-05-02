@@ -8,7 +8,7 @@
 #include "CfbLinearEndMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Linear.h>
@@ -135,7 +135,7 @@ namespace McMd
       atomId = endId;
       for (i = 0; i < nRegrow_; ++i) {
          deleteAtom(*molPtr, atomId, sign, rosenbluth, energy);
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Add end atom from cell list
          system().pairPotential().deleteAtom(molPtr->atom(atomId));
          #endif
@@ -156,7 +156,7 @@ namespace McMd
                  rosenbluth, energy);
          rosen_f *= rosenbluth;
          energy_f += energy;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Add end atom to cell list
          system().pairPotential().addAtom(*atom0Ptr);
          #endif
@@ -176,7 +176,7 @@ namespace McMd
          for (i = 0; i < nRegrow_; ++i) {
             atom0Ptr = &(molPtr->atom(atomId));
             atom0Ptr->position() = oldPos_[i];
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().updateAtomCell(*atom0Ptr);
             #endif
             atomId += sign;

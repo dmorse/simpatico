@@ -44,14 +44,14 @@ private:
 void SystemTest::setUp()
 {
 
-   #ifdef INTER_ANGLE
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_ANGLE
+   #ifdef SIMP_DIHEDRAL
    openFile("in/SimulationAngleDihedral"); 
    #else
    openFile("in/SimulationAngle"); 
    #endif
    #else
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    openFile("in/SimulationDihedral"); 
    #else
    openFile("in/Simulation"); 

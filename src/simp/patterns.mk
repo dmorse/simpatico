@@ -14,7 +14,7 @@
 LIBS= $(simp_LIB) $(util_LIB)
 
 # C preprocessor macro definitions needed in src/simp
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS)
 
 # Dependencies on build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk

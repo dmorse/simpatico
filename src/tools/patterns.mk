@@ -16,7 +16,7 @@
 LIBS=$(tools_LIB) $(simp_LIB) $(util_LIB)
 
 # All C preprocessor macro definitions needed in src/tools
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(TOOLS_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS) $(TOOLS_DEFS)
 
 # Dependencies of source files in src/tools on makefile fragments
 MAKE_DEPS= -A$(BLD_DIR)/config.mk

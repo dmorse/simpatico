@@ -16,7 +16,7 @@
 LIBS=$(mcMd_LIB) $(simp_LIB) $(util_LIB)
 
 # C preprocessor macro definitions needed by files in src/mcMd
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS)
 
 # Dependencies on config.mk build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk

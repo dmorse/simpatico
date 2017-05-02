@@ -47,7 +47,7 @@ TOOLS_SUFFIX:=
 # Path to tools library
 # Note: BLD_DIR is defined in src/config.mk.
 
-TOOLS_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(TOOLS_SUFFIX)
+TOOLS_ALL_SUFFIX=$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(TOOLS_SUFFIX)
 
 tools_LIBNAME=tools$(TOOLS_ALL_SUFFIX)
 tools_LIB=$(BLD_DIR)/tools/lib$(tools_LIBNAME).a

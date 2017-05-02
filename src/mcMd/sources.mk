@@ -41,7 +41,7 @@ include $(SRC_DIR)/mcMd/links/sources.mk
 mcMd_+=$(mcMd_links_)
 endif
 
-ifdef INTER_TETHER
+ifdef SIMP_TETHER
 include $(SRC_DIR)/mcMd/tethers/sources.mk
 mcMd_+=$(mcMd_tethers_)
 endif

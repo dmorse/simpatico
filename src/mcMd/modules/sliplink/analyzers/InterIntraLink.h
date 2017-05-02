@@ -1,5 +1,5 @@
-#ifndef INTER_INTRA_LINK_H
-#define INTER_INTRA_LINK_H
+#ifndef SIMP_INTRA_LINK_H
+#define SIMP_INTRA_LINK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

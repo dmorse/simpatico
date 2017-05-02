@@ -12,7 +12,7 @@ mcMd_analyzers_system_=\
     mcMd/analyzers/system/BoundaryAverage.cpp \
     mcMd/analyzers/system/ConfigWriter.cpp 
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 mcMd_analyzers_system_+=\
     mcMd/analyzers/system/BondLengthDist.cpp \
     mcMd/analyzers/system/BlockRadiusGyration.cpp \

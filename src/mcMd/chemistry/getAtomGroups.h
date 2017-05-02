@@ -10,13 +10,13 @@
 
 #include <util/containers/FSArray.h>      // used in typedefs
 #include <mcMd/species/Species.h>         // used in typedefs
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <mcMd/chemistry/Bond.h>          // typedef
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/chemistry/Angle.h>         // typedef
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>      // typedef
 #endif
 
@@ -29,7 +29,7 @@ namespace McMd
    class Molecule;
    class Species;
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /**
    * Array to hold pointers to bonds that contain a specific atom.
    */
@@ -45,7 +45,7 @@ namespace McMd
    void getAtomBonds(const Atom& atom, AtomBondArray& bonds);
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /**
    * Array to hold pointers to angles that contain a specific atom.
    */
@@ -61,7 +61,7 @@ namespace McMd
    void getAtomAngles(const Atom& atom, AtomAngleArray& angles);
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /**
    * Array to hold pointers to Dihedrals that contain a specific atom.
    */

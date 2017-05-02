@@ -69,7 +69,7 @@ namespace McMd
 
    public:
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Maximum number of bonds that can be connected to one atom.
       static const int MaxBondPerAtom = 4;
 
@@ -80,7 +80,7 @@ namespace McMd
       typedef FSArray<int, MaxBondPerAtom> AtomBondIdArray;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Maximum number of angles groups that can contain one atom.
       static const int MaxAnglePerAtom = 18;
 
@@ -91,7 +91,7 @@ namespace McMd
       typedef FSArray<int, MaxAnglePerAtom> AtomAngleIdArray;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Maximum number of dihedral groups that can contain one atom.
       static const int MaxDihedralPerAtom = 72;
 
@@ -164,7 +164,7 @@ namespace McMd
       */
       int atomTypeId(int iAtom) const;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get number of bonds per molecule for this Species.
       */
@@ -185,7 +185,7 @@ namespace McMd
       const AtomBondIdArray& atomBondIds(int atomId) const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get number of angles per molecule for this Species.
       */
@@ -206,7 +206,7 @@ namespace McMd
       const AtomAngleIdArray& atomAngleIds(int atomId) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get number of dihedrals per molecule for this Species.
       */
@@ -293,7 +293,7 @@ namespace McMd
       */ 
       DArray<int> atomTypeIds_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Number of bonds per molecule.
       */
@@ -308,7 +308,7 @@ namespace McMd
       DArray<SpeciesBond> speciesBonds_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Number of angles per molecule.
       */
@@ -323,7 +323,7 @@ namespace McMd
       DArray<SpeciesAngle> speciesAngles_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Number of dihedrals per molecule.
       */
@@ -390,7 +390,7 @@ namespace McMd
       */
       void setAtomType(int atomId, int atomType);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Add a bond to the chemical structure of a generic molecule.
       *
@@ -405,7 +405,7 @@ namespace McMd
       void makeBond(int bondId, int atomId1, int atomId2, int bondType);
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Add an angle to the chemical structure of a generic molecule.
       *
@@ -422,7 +422,7 @@ namespace McMd
                      int angleType);
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Add a dihedral to the chemical structure of a generic molecule.
       *
@@ -459,7 +459,7 @@ namespace McMd
 
    private:
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Array of AtomBondIdArray objects for all atoms.
       * 
@@ -470,7 +470,7 @@ namespace McMd
       DArray<AtomBondIdArray> atomBondIdArrays_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Array of AtomAngleIdArray objects for all atoms.
       * 
@@ -481,7 +481,7 @@ namespace McMd
       DArray<AtomAngleIdArray> atomAngleIdArrays_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Array of AtomDihedralIdArray objects for all atoms.
       * 
@@ -528,7 +528,7 @@ namespace McMd
    inline int Species::atomTypeId(int iAtom) const
    {  return atomTypeIds_[iAtom]; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Get number of Bonds per molecule
    */
@@ -550,7 +550,7 @@ namespace McMd
    {  return atomBondIdArrays_[atomId]; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Get number of angles per molecule.
    */
@@ -572,7 +572,7 @@ namespace McMd
    {  return atomAngleIdArrays_[atomId]; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Get number of dihedrals per molecule
    */

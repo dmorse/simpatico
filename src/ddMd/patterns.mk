@@ -16,7 +16,7 @@
 LIBS=$(ddMd_LIB) $(simp_LIB) $(util_LIB)
 
 # All C preprocessor macro definitions needed in src/ddMd
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS) $(DDMD_DEFS)
 
 # Dependencies of source files in src/ddMd on makefile fragments
 MAKE_DEPS= -A$(BLD_DIR)/config.mk

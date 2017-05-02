@@ -10,7 +10,7 @@
 #include <mcMd/chemistry/Activate.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
 
@@ -46,7 +46,7 @@ public:
    void testWriteRestartBond();
    void testReadRestart();
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    void testReadParamAngle();
    void testAngleEnergy();
    void testSimulateAngle();
@@ -124,7 +124,7 @@ void McSimulationTest::testReadConfigBond()
    }
 }
 
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 void McSimulationTest::testReadParamAngle()
 {
    printMethod(TEST_FUNC);
@@ -201,7 +201,7 @@ void McSimulationTest::testBondEnergy()
    TEST_ASSERT(eq(0.5*energy, total));
 }
 
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 void McSimulationTest::testAngleEnergy()
 { 
    printMethod(TEST_FUNC);
@@ -343,7 +343,7 @@ void McSimulationTest::testSimulateBond()
 
 }
 
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 void McSimulationTest::testSimulateAngle()
 {
    printMethod(TEST_FUNC);
@@ -405,7 +405,7 @@ TEST_ADD(McSimulationTest, testMdSystemCopy)
 TEST_ADD(McSimulationTest, testSimulateBond)
 TEST_ADD(McSimulationTest, testWriteRestartBond)
 //TEST_ADD(McSimulationTest, testReadRestart)
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 TEST_ADD(McSimulationTest, testReadParamAngle)
 TEST_ADD(McSimulationTest, testAngleEnergy)
 TEST_ADD(McSimulationTest, testSimulateAngle)

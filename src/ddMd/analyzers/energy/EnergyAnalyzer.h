@@ -105,16 +105,16 @@ namespace DdMd
       Average* totalAveragePtr_;
       Average* kineticAveragePtr_;
       Average* pairAveragePtr_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       Average* bondAveragePtr_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Average* angleAveragePtr_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Average* dihedralAveragePtr_;
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       Average* externalAveragePtr_;
       #endif
 

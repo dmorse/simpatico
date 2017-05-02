@@ -1,5 +1,5 @@
-#ifndef INTER_BEND_FORCE_H
-#define INTER_BEND_FORCE_H
+#ifndef SIMP_BEND_FORCE_H
+#define SIMP_BEND_FORCE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

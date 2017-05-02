@@ -22,23 +22,23 @@ namespace McMd
     : speciesPtr_(0),
       systemPtr_(0),
       firstAtomPtr_(0),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       firstBondPtr_(0),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       firstAnglePtr_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       firstDihedralPtr_(0),
       #endif
       nAtom_(0),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       nBond_(0),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       nAngle_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       nDihedral_(0),
       #endif
       id_(NullIndex)

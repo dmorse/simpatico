@@ -11,13 +11,13 @@
 #include <ddMd/communicate/Domain.h>   
 
 #include <ddMd/storage/AtomStorage.h>               
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>               
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 
@@ -199,7 +199,7 @@ namespace DdMd
 
       // Read covalent groups
       bool hasGhosts = false;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -209,14 +209,14 @@ namespace DdMd
          }
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
          angleStorage().isValid(atomStorage(), domain().communicator(), 
                                 hasGhosts);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
          dihedralStorage().isValid(atomStorage(), domain().communicator(), 
@@ -361,17 +361,17 @@ namespace DdMd
       }
 
       // Write the groups
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (bondStorage().capacity()) {
          writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (angleStorage().capacity()) {
          writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector());
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (dihedralStorage().capacity()) {
          writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector());
       }

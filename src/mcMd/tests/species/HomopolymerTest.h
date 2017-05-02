@@ -48,7 +48,7 @@ void HomopolymerTest::testReadParam()
    using std::cout;
 
    ifstream in;
-   #ifndef INTER_ANGLE
+   #ifndef SIMP_ANGLE
    openInputFile("in/Homopolymer", in);
    #else
    openInputFile("in/HomopolymerAngle", in);
@@ -96,7 +96,7 @@ void HomopolymerTest::testReadParam()
       }
    }
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(species.nAngle() == species.nAtom() - 2);
    const SpeciesGroup<3>* anglePtr;
    if (verbose() > 1) { std::cout << std::endl << "Angles:"; }

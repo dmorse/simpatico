@@ -19,10 +19,10 @@ namespace McMd
    Multiblock::Multiblock()
     : Linear(),
       nBlock_(2)
-    #ifdef INTER_ANGLE
+    #ifdef SIMP_ANGLE
     , angleType_(NullIndex)
     #endif
-    #ifdef INTER_DIHEDRAL
+    #ifdef SIMP_DIHEDRAL
     , dihedralType_(NullIndex)
     #endif
    {  setClassName("Multiblock");
@@ -65,7 +65,7 @@ namespace McMd
       nBond_ = nAtom_ - 1;
       read<int>(in, "bondType", bondType_);
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       hasAngles_ = 0; // default value
       readOptional<int>(in, "hasAngles", hasAngles_);
       if (hasAngles_) {
@@ -79,7 +79,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       hasDihedrals_ = 0; // default value
       readOptional<int>(in, "hasDihedrals", hasDihedrals_);
       if (hasDihedrals_) {
@@ -132,7 +132,7 @@ namespace McMd
       nBond_ = nAtom_ - 1;
       loadParameter<int>(ar, "bondType", bondType_);
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       hasAngles_ = 0; // default value
       loadParameter<int>(ar, "hasAngles", hasAngles_, false); // optional
       if (hasAngles_) {
@@ -146,7 +146,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       hasDihedrals_ = 0; // default value
       loadParameter<int>(ar, "hasDihedrals", hasDihedrals_, false); // optional
       if (hasDihedrals_) {
@@ -173,13 +173,13 @@ namespace McMd
       ar & atomTypes_;
       ar & blockBegin_;
       ar << bondType_;
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Parameter::saveOptional(ar, hasAngles_, true);
       if (hasAngles_ && nAngle_ > 0) {
          ar << angleType_;
       } 
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Parameter::saveOptional(ar, hasDihedrals_, true);
       if (hasDihedrals_ && nDihedral_ > 0) {
          ar << dihedralType_;
@@ -210,7 +210,7 @@ namespace McMd
    int Multiblock::calculateBondTypeId(int molBondId) const
    { return bondType_; }
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /* 
    * Return angleType_ for every angle.
    */
@@ -218,7 +218,7 @@ namespace McMd
    { return angleType_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /* 
    * Return dihedralType_ for every dihedral.
    */

@@ -19,10 +19,10 @@ namespace McMd
     : Linear(),
       atomType_(NullIndex),
       bondType_(NullIndex)
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleType_(NullIndex)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralType_(NullIndex)
       #endif
    { setClassName("Homopolymer"); } 
@@ -37,7 +37,7 @@ namespace McMd
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       hasAngles_ = 0; // default value
       readOptional<int>(in, "hasAngles", hasAngles_); 
       if (hasAngles_) {
@@ -51,7 +51,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       hasDihedrals_ = 0; // default value
       readOptional<int>(in, "hasDihedrals", hasDihedrals_); 
       if (hasDihedrals_) {
@@ -77,7 +77,7 @@ namespace McMd
       loadParameter<int>(ar,"atomType", atomType_);
       nBond_  = nAtom_ - 1;
       loadParameter<int>(ar,"bondType", bondType_);
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       hasAngles_ = 0;
       loadParameter<int>(ar,"hasAngles", hasAngles_, false);
       if (hasAngles_) {
@@ -89,7 +89,7 @@ namespace McMd
          nAngle_ = 0;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       hasDihedrals_ = 0;
       loadParameter<int>(ar,"hasDihedrals", hasDihedrals_, false);
       if (hasDihedrals_) {
@@ -118,13 +118,13 @@ namespace McMd
       ar << nAtom_;
       ar << atomType_;
       ar << bondType_;
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Parameter::saveOptional(ar, hasAngles_, hasAngles_);
       if (hasAngles_ && nAngle_ > 0) {
          ar << angleType_;
       } 
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Parameter::saveOptional(ar, hasDihedrals_, hasDihedrals_);
       if (hasDihedrals_ && nDihedral_ > 0) {
          ar << dihedralType_;
@@ -144,7 +144,7 @@ namespace McMd
    int Homopolymer::calculateBondTypeId(int index) const
    { return bondType_; }
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /* 
    * Return angleType_ for every angle.
    */
@@ -152,7 +152,7 @@ namespace McMd
    { return angleType_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /* 
    * Return dihedralType_ for every dihedral.
    */

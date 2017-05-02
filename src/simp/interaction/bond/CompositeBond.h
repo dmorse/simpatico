@@ -1,5 +1,5 @@
-#ifndef INTER_COMPOSITE_BOND_H
-#define INTER_COMPOSITE_BOND_H
+#ifndef SIMP_COMPOSITE_BOND_H
+#define SIMP_COMPOSITE_BOND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

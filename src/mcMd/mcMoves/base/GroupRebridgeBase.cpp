@@ -25,7 +25,7 @@ namespace McMd
       SystemMove(system)
    {
       // Precondition
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (system.hasDihedralPotential()) {
          UTIL_THROW("GroupEndBase is unusable with dihedrals");
       }
@@ -75,7 +75,7 @@ namespace McMd
       energy += system().bondPotential().energy(lac, bondType);
       energy += system().bondPotential().energy(lbd, bondType);
    
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       int    aId = aPtr->typeId();
       int    bId = bPtr->typeId();
       int    cId = cPtr->typeId();
@@ -90,7 +90,7 @@ namespace McMd
       energy += system().pairPotential().energy(lcd, cId, dId);
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (system().hasAnglePotential()) {
 
          // Implementation assumed linear or ring molecular topology
@@ -222,7 +222,7 @@ namespace McMd
       energy += system().bondPotential().energy(lcm, bondType);
       energy += system().bondPotential().energy(lmd, bondType);
   
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       int    aId = aPtr->typeId();
       int    bId = bPtr->typeId();
       int    cId = cPtr->typeId();

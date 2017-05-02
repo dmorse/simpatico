@@ -1,5 +1,5 @@
-#ifndef INTER_HARMONIC_ANGLE_H
-#define INTER_HARMONIC_ANGLE_H
+#ifndef SIMP_HARMONIC_ANGLE_H
+#define SIMP_HARMONIC_ANGLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

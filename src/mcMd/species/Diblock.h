@@ -53,11 +53,11 @@ namespace McMd
  
       int bondType_;
  
-      #ifdef INTER_ANGLE 
+      #ifdef SIMP_ANGLE 
       int angleType_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       int dihedralType_;
       #endif
 
@@ -91,7 +91,7 @@ namespace McMd
       */
       virtual int calculateBondTypeId(int index) const;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Return same angle type for any angle in any chain.
       *
@@ -101,7 +101,7 @@ namespace McMd
       virtual int calculateAngleTypeId(int index) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Return same dihedral type for any dihedral in any chain.
       *

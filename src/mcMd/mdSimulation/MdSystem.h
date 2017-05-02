@@ -24,25 +24,25 @@ namespace McMd
 
    // Forward declarations
 
-   #ifndef INTER_NOPAIR
+   #ifndef SIMP_NOPAIR
    class MdPairPotential;
    #endif
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    class BondPotential;
    #endif
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    class AnglePotential;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    class DihedralPotential;
    #endif
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    class MdCoulombPotential;
    #endif
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    class ExternalPotential;
    #endif
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    class TetherPotential;
    #endif
 
@@ -236,7 +236,7 @@ namespace McMd
       /// \name Potential energy accessors
       //@{
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       /**
       * Return MdPairPotential by reference.
       */
@@ -248,14 +248,14 @@ namespace McMd
       */
       bool hasBondPotential() const;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Return BondPotential by reference.
       */
       BondPotential& bondPotential() const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Does angle potential exist?.
       */
@@ -267,7 +267,7 @@ namespace McMd
       AnglePotential& anglePotential() const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Does a dihedral potential exist?.
       */
@@ -279,7 +279,7 @@ namespace McMd
       DihedralPotential& dihedralPotential() const;
       #endif
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /**
       * Does a Coulomb potential exist?.
       */
@@ -291,7 +291,7 @@ namespace McMd
       MdCoulombPotential& coulombPotential() const;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Does an external potential exist?.
       */
@@ -315,7 +315,7 @@ namespace McMd
       BondPotential& linkPotential() const;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /**
       * Return TetherPotential by reference.
       */
@@ -410,32 +410,32 @@ namespace McMd
       /// Signal to indicate change in atomic velocities.
       Signal<>  velocitySignal_;
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       /// Pointer to an MdPairPotential.
       MdPairPotential* pairPotentialPtr_;
       #endif
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Pointer to an BondPotential.
       BondPotential* bondPotentialPtr_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Pointer to an AnglePotential.
       AnglePotential* anglePotentialPtr_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Pointer to a DihedralPotential.
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /// Pointer to a CoulombPotential.
       MdCoulombPotential* coulombPotentialPtr_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Pointer to an ExternalPotential.
       ExternalPotential* externalPotentialPtr_;
       #endif
@@ -445,7 +445,7 @@ namespace McMd
       BondPotential* linkPotentialPtr_;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /// Pointer to an TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
@@ -479,7 +479,7 @@ namespace McMd
 
    // Inline functions
 
-   #ifndef INTER_NOPAIR
+   #ifndef SIMP_NOPAIR
    /*
    * Return PairPotential by reference.
    */
@@ -490,7 +490,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Does a bond potential exist?
    */
@@ -507,7 +507,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Does an angle potential exist?
    */
@@ -524,7 +524,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Does a dihedral potential exist?
    */
@@ -541,7 +541,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    /*
    * Does a Coulomb potential exist?
    */
@@ -558,7 +558,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    /*
    * Does an external potential exist?
    */
@@ -592,7 +592,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    /*
    * Return tether potential by reference.
    */

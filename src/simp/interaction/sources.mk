@@ -1,27 +1,27 @@
 
 simp_interaction_=
 
-ifndef INTER_NOPAIR
+ifndef SIMP_NOPAIR
 include $(SRC_DIR)/simp/interaction/pair/sources.mk
 simp_interaction_+=$(simp_interaction_pair_)
 endif
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 include $(SRC_DIR)/simp/interaction/bond/sources.mk
 simp_interaction_+=$(simp_interaction_bond_)
 endif
 
-ifdef INTER_ANGLE
+ifdef SIMP_ANGLE
 include $(SRC_DIR)/simp/interaction/angle/sources.mk
 simp_interaction_+=$(simp_interaction_angle_)
 endif
 
-ifdef INTER_DIHEDRAL
+ifdef SIMP_DIHEDRAL
 include $(SRC_DIR)/simp/interaction/dihedral/sources.mk
 simp_interaction_+=$(simp_interaction_dihedral_)
 endif
 
-ifdef INTER_EXTERNAL
+ifdef SIMP_EXTERNAL
 include $(SRC_DIR)/simp/interaction/external/sources.mk
 simp_interaction_+=$(simp_interaction_external_)
 endif

@@ -14,7 +14,7 @@ namespace McMd
 
    using namespace Util;
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Fill an array of pointers to Bonds that contain an Atom.
    */
@@ -35,7 +35,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Fill an array of pointers to Angle objects that contain an atom.
    */
@@ -56,7 +56,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Fill an array of pointers to Dihedrals that contain an Atom.
    */

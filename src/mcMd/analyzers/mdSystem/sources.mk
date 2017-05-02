@@ -9,7 +9,7 @@ mcMd_analyzers_mdSystem_=\
     mcMd/analyzers/mdSystem/MdStressAutoCorr.cpp \
     mcMd/analyzers/mdSystem/MdVirialStressTensorAverage.cpp 
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 mcMd_analyzers_mdSystem_+=\
     mcMd/analyzers/mdSystem/MdIntraBondStressAutoCorr.cpp \
     mcMd/analyzers/mdSystem/MdIntraBondTensorAutoCorr.cpp 

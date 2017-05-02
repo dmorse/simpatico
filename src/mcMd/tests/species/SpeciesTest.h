@@ -48,8 +48,8 @@ void SpeciesTest::testReadParam()
    printMethod(TEST_FUNC);
 
    std::ifstream in;
-   #ifdef INTER_ANGLE
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_ANGLE
+   #ifdef SIMP_DIHEDRAL
    openInputFile("in/SpeciesAngleDihedral", in);
    #else
    openInputFile("in/SpeciesAngle", in);

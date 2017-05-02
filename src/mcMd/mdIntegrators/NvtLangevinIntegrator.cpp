@@ -175,7 +175,7 @@ namespace McMd
       system().positionSignal().notify();
       system().velocitySignal().notify();
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       }

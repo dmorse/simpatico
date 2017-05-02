@@ -9,7 +9,7 @@ mcMd_mcMoves_=\
     $(mcMd_mcMoves_common_) \
     $(mcMd_mcMoves_semigrand_) 
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 include $(SRC_DIR)/mcMd/mcMoves/base/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/linear/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/ring/sources.mk

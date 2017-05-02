@@ -19,10 +19,10 @@ namespace McMd
    */
    Linear::Linear() 
    : Species()
-     #ifdef INTER_ANGLE
+     #ifdef SIMP_ANGLE
      , hasAngles_(0)
      #endif
-     #ifdef INTER_DIHEDRAL
+     #ifdef SIMP_DIHEDRAL
      , hasDihedrals_(0)
      #endif
    {}
@@ -46,14 +46,14 @@ namespace McMd
       if (nBond() != nAtom() - 1) {
          UTIL_THROW("nBond != nAtom - 1");
       }
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngles_) {
          if (nAngle() != nAtom() - 2) {
             UTIL_THROW("nAngle != nAtom - 2");
          }
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedrals_) {
          if (nAtom() > 3) {
             if (nDihedral() != nAtom() - 3) {
@@ -81,7 +81,7 @@ namespace McMd
          makeBond(i, i, i+1, calculateBondTypeId(i));
       }
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       // Build Angles 
       if (hasAngles_) {
          for (i = 0; i < nAngle(); ++i) {
@@ -90,7 +90,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       // Build Dihedrals.
       if (hasDihedrals_) {
          for (i = 0; i < nDihedral(); ++i) {

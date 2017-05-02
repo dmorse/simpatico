@@ -54,24 +54,24 @@ namespace McMd
    {
       if (isAtInterval(iStep)) {
          double energy = 0.0;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          double pair = system().pairPotential().energy();
          outputFile_ << Dbl(pair);
          energy += pair;
          #endif
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          double bond = system().bondPotential().energy();
          outputFile_ << Dbl(bond);
          energy += bond;
          #endif 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
             double angle = system().anglePotential().energy();
             outputFile_ << Dbl(angle);
             energy += angle;
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (system().hasDihedralPotential()) {
             double dihedral = system().dihedralPotential().energy();
             outputFile_ << Dbl(dihedral);
@@ -85,14 +85,14 @@ namespace McMd
             energy += link;
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (system().hasExternalPotential()) {
             double external = system().externalPotential().energy();
             outputFile_ << Dbl(external);
             energy += external;
          }
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          double tether = system().tetherPotential().energy();
          outputFile_ << Dbl(tether);
          energy += tether;
@@ -116,18 +116,18 @@ namespace McMd
       outputFile_ << std::endl;
 
       outputFile_ << "File format:" << std::endl;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       outputFile_    << "[pair]       ";
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       outputFile_    << "[bond]       ";
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (system().hasAnglePotential()) {
          outputFile_ << "[angle]      ";
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (system().hasDihedralPotential()) {
          outputFile_ << "[dihedral]   ";
       }
@@ -137,12 +137,12 @@ namespace McMd
          outputFile_ << "[link]       ";
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (system().hasExternalPotential()) {
          outputFile_ << "[external]   ";
       }
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       outputFile_   << "[tether]     ";
       #endif
       outputFile_    << "[potential]  ";
