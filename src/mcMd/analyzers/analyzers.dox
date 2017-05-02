@@ -42,6 +42,7 @@ simulations:
 
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McEnergyAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
@@ -60,6 +61,7 @@ simulations:
 The following analyzers can only be used in MD simulations:
 
 <ul style="list-style: none;">
+  <li> \subpage mcMd_analyzer_MdEnergyAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_MdEnergyOutput_page </li>
   <li> \subpage mcMd_analyzer_MdIntraBondStressAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>

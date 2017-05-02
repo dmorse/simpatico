@@ -1,0 +1,54 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_McEnergyAnalyzer_page  McEnergyAnalyzer
+
+\section mcMd_analyzer_McEnergyAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes the average of the total potential energy, and optionally outputs block averages during the simulation, if nSamplePerBlock > 0.
+
+\sa McMd::McEnergyAnalyzer
+
+\section mcMd_analyzer_McEnergyAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+  McEnergyAnalyzer{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_McEnergyAnalyzer_output_sec Output
+
+During the simulation, if nSamplePerBlock > 0, block averages are output to the 
+file {outputFileName}.dat. In this case a description of the format of this *.dat
+file, indicating a label for the data in each column, is output to the file 
+{outputFileName}.fmt. If nSamplePerBlock == 0, this file is not created.
+
+At the end of the simulation:
+
+ - parameters are echoed to file {outputFileName}.prm 
+
+ - average values and errors for each component of energy are output to {outputFileName}.ave.
+
+ - Information about heirarchical error analysis is output to {outputFileName}.aer 
+
+*/
+
+}
