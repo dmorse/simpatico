@@ -226,11 +226,13 @@ namespace McMd
 
       Simulation::readParameters(in); 
 
-      readParamComposite(in, system_); 
-      readParamComposite(in, analyzerManager());
+      readParamComposite(in, system_);
+      Analyzer::baseInterval = 0; 
+      readParamCompositeOptional(in, analyzerManager());
 
       // Parameters for writing restart files
-      read<int>(in, "saveInterval", saveInterval_);
+      saveInterval_ = 0;
+      readOptional<int>(in, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          read<std::string>(in, "saveFileName", saveFileName_);
       }
@@ -548,6 +550,13 @@ namespace McMd
       int beginStep = iStep_;
       int nStep = endStep - beginStep;
 
+      #ifdef INTER_NOPAIR
+      // When the pair potential is disabled, require that
+      // Analyzer::baseInterval > 0 to guarantee periodic 
+      // shifting of atomic positions into primary cell.
+      UTIL_CHECK(Analyzer::baseInterval > 0);
+      #endif
+
       // Main loop 
       Log::file() << std::endl;
       timer.start();
@@ -560,20 +569,12 @@ namespace McMd
                analyzerManager().sample(iStep_);
             }
          }
+
          if (saveInterval_ > 0) {
             if (iStep_ % saveInterval_ == 0) {
                save(saveFileName_);
             }
          }
-
-         #ifdef INTER_NOPAIR
-         else {
-            // When the pair potential is disabled, require that
-            // Analyzer::baseInterval != 0 to guarantee periodic 
-            // shifting of atomic positions into primary cell.
-            UTIL_THROW("Analyzer::baseInterval == 0 with no pair potential");
-         }
-         #endif
 
          // Take one MD step with the MdIntegrator
          system_.mdIntegrator().step();
@@ -642,8 +643,10 @@ namespace McMd
    MdSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
-      if (min < 0)    UTIL_THROW("min < 0");
-      if (max < min)  UTIL_THROW("max < min");
+      UTIL_CHECK(min >= 0);
+      UTIL_CHECK(max > min);
+      UTIL_CHECK(Analyzer::baseInterval);
+      UTIL_CHECK(analyzerManager().size() > 0);
 
       Timer             timer;
       std::string       filename;
@@ -712,9 +715,10 @@ namespace McMd
                                         std::string filename)
    {
       // Preconditions
-      if (min < 0) UTIL_THROW("min < 0");
-      if (max < 0) UTIL_THROW("max < 0");
-      if (max < min) UTIL_THROW("max < min!");
+      UTIL_CHECK(min >= 0);
+      UTIL_CHECK(max > min);
+      UTIL_CHECK(Analyzer::baseInterval);
+      UTIL_CHECK(analyzerManager().size() > 0);
 
       // Construct TrajectoryReader
       TrajectoryReader* trajectoryReaderPtr;

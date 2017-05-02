@@ -265,11 +265,13 @@ namespace McMd
       assert(mcMoveManagerPtr_);
       readParamComposite(in, *mcMoveManagerPtr_);
 
-      // Read Analyzers
-      readParamComposite(in, analyzerManager());
+      // Read Analyzers (optionally)
+      Analyzer::baseInterval = 0; // default value
+      readParamCompositeOptional(in, analyzerManager());
 
-      // Parameters for writing restart files
-      read<int>(in, "saveInterval", saveInterval_);
+      // Parameters for writing restart files (optionally)
+      saveInterval_ = 0; // default value
+      readOptional<int>(in, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          read<std::string>(in, "saveFileName", saveFileName_);
       }
@@ -378,15 +380,11 @@ namespace McMd
 
    void McSimulation::save(const std::string& filename)
    {
-      if (saveInterval_ > 0) {
-         if (iStep_ % saveInterval_ == 0) {
-            Serializable::OArchive ar;
-            std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
-            fileMaster().openRestartOFile(filename, ar.file(), mode);
-            save(ar);
-            ar.file().close();
-         }
-      }
+      Serializable::OArchive ar;
+      std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+      fileMaster().openRestartOFile(filename, ar.file(), mode);
+      save(ar);
+      ar.file().close();
    }
 
    /*
@@ -695,13 +693,21 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Call analyzers and restart output
-         if (Analyzer::baseInterval > 0) {
+         // Call analyzers 
+         if (Analyzer::baseInterval != 0) {
             if (iStep_ % Analyzer::baseInterval == 0) {
-               system().positionSignal().notify();
+               if (analyzerManager().size() > 0) {
+                  system().positionSignal().notify();
+                  analyzerManager().sample(iStep_);
+                  system().positionSignal().notify();
+               }
+            }
+         }
+
+         // Save restart file
+         if (saveInterval_ != 0) {
+            if (iStep_ % saveInterval_ == 0) {
                save(saveFileName_);
-               analyzerManager().sample(iStep_);
-               system().positionSignal().notify();
             }
          }
 
@@ -731,19 +737,29 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final analyzers / save
+      // Final analyzers 
       assert(iStep_ == endStep);
       if (Analyzer::baseInterval > 0) {
          if (iStep_ % Analyzer::baseInterval == 0) {
-            system().positionSignal().notify();
+            if (analyzerManager().size() != 0) {
+               system().positionSignal().notify();
+               analyzerManager().sample(iStep_);
+               system().positionSignal().notify();
+            }
+         }
+      }
+
+      // Final save to archive
+      if (saveInterval_ != 0) {
+         if (iStep_ % saveInterval_ == 0) {
             save(saveFileName_);
-            analyzerManager().sample(iStep_);
-            system().positionSignal().notify();
          }
       }
 
       // Output results of all analyzers to output files
-      analyzerManager().output();
+      if (Analyzer::baseInterval > 0) {
+         analyzerManager().output();
+      }
 
       // Output results of move statistics to files
       mcMoveManagerPtr_->output();
@@ -812,8 +828,11 @@ namespace McMd
    McSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
-      if (min < 0)    UTIL_THROW("min < 0");
-      if (max < min)  UTIL_THROW("max < min");
+      UTIL_CHECK(min > 0);
+      UTIL_CHECK(max > min);
+      UTIL_CHECK(Analyzer::baseInterval > 0);
+      UTIL_CHECK(analyzerManager().size() > 0);
+      
 
       Timer             timer;
       std::string       filename;

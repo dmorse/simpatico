@@ -16,10 +16,10 @@ namespace McMd
    using namespace Util;
 
    // Define and initialize static variable
-   long Analyzer::baseInterval = 1;
+   long Analyzer::baseInterval = 0;
 
    void Analyzer::initStatic()
-   {  Analyzer::baseInterval = 1; }
+   {  Analyzer::baseInterval = 0; }
 
    /* 
    * Default constructor.
@@ -91,7 +91,7 @@ namespace McMd
    */
    void Analyzer::loadInterval(Serializable::IArchive& ar)
    {
-      // Check that baseInterval has a nonzero, positive value
+      // Check that Analyzer::baseInterval has a nonzero, positive value
       if (baseInterval == 0) {
          UTIL_THROW("baseInterval == 0");
       }

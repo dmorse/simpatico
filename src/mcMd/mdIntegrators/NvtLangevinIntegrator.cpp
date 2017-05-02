@@ -175,6 +175,12 @@ namespace McMd
       system().positionSignal().notify();
       system().velocitySignal().notify();
 
+      #ifndef INTER_NOPAIR
+      if (!system().pairPotential().isPairListCurrent()) {
+         system().pairPotential().buildPairList();
+      }
+      #endif
+
       // Calculate conservative force
       system().calculateForces();
 
@@ -227,12 +233,6 @@ namespace McMd
       }
       #endif
       system().velocitySignal().notify();
-
-      #ifndef INTER_NOPAIR
-      if (!system().pairPotential().isPairListCurrent()) {
-         system().pairPotential().buildPairList();
-      }
-      #endif
 
    }
 

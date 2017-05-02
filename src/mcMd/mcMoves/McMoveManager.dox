@@ -46,7 +46,7 @@ of the specified class is created and the body of its parameter file block
 is read by calling the readParameters() member function of the new object. 
 If the name is not recognized, an Exception is thrown and execution halts.
 
-\section mcMd_mcMove_McMoveManager_param_sec Monte Carlo Moves
+\section mcMd_mcMove_McMoveManager_contents_sec Monte Carlo Moves
 
 Here is an incomplete list of available standard Monte Carlo moves.
 

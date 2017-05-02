@@ -53,10 +53,10 @@ namespace McMd
    */
    void AnalyzerManager::sample(long iStep) 
    {
-      if (iStep % Analyzer::baseInterval == 0) { 
-         for (int i=0; i < size(); ++i) {
-            (*this)[i].sample(iStep);
-         }
+      UTIL_CHECK(Analyzer::baseInterval > 0);
+      UTIL_CHECK(iStep % Analyzer::baseInterval == 0);
+      for (int i = 0; i < size(); ++i) {
+         (*this)[i].sample(iStep);
       }
    }
  
@@ -65,7 +65,7 @@ namespace McMd
    */
    void AnalyzerManager::output() 
    {
-      for (int i=0; i < size(); ++i) {
+      for (int i = 0; i < size(); ++i) {
          (*this)[i].output();
       }
    }
@@ -75,7 +75,7 @@ namespace McMd
    */
    void AnalyzerManager::loadParameters(Serializable::IArchive &ar)
    {
-      loadParameter<long>(ar,"baseInterval", Analyzer::baseInterval);
+      loadParameter<long>(ar, "baseInterval", Analyzer::baseInterval);
       Manager<Analyzer>::loadParameters(ar);
    }
 
