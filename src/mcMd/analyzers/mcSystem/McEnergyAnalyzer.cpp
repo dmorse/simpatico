@@ -247,14 +247,60 @@ namespace McMd
    */ 
    void McEnergyAnalyzer::setup()
    {
-      Simulation& sim = system().simulation();
 
       if (outputFile_.is_open()) {
          outputFile_.close();
       }
-      std::string filename;
-      filename  = outputFileName(".dat");
-      sim.fileMaster().openOutputFile(filename, outputFile_);
+
+      if (nSamplePerBlock_ > 0) {
+         McSystem& sys = system();
+         Simulation& sim = system().simulation();
+
+         // Open *.fmt file with format of *.dat data file
+         std::string filename;
+         filename  = outputFileName(".fmt");
+         sim.fileMaster().openOutputFile(filename, outputFile_);
+
+         outputFile_ << "       iStep";
+         #ifndef INTER_NOPAIR
+         outputFile_ << "           Pair";
+         #endif
+         #ifdef INTER_BOND
+         if (sys.hasBondPotential()) {
+            outputFile_ << "           Bond";
+         }
+         #endif
+         #ifdef INTER_ANGLE
+         if (sys.hasAnglePotential()) {
+            outputFile_ << "          Angle";
+         }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (sys.hasDihedralPotential()) {
+            outputFile_ << "       Dihedral";
+         }
+         #endif
+         #if 0
+         if (sys.hasCoulombPotential()) {
+            outputFile_ << "        Coulomb";
+         }
+         #endif
+         #ifdef INTER_EXTERNAL
+         if (sys.hasExternalPotential()) {
+            outputFile_ << "       External";
+         }
+         #endif
+         outputFile_ << "          Total";
+         outputFile_.close();
+
+         // Open *.dat data file, leave open for writing
+         filename  = outputFileName(".dat");
+         sim.fileMaster().openOutputFile(filename, outputFile_);
+      }
+
+      //std::string filename;
+      //filename  = outputFileName(".dat");
+      //sim.fileMaster().openOutputFile(filename, outputFile_);
    }
 
    /*

@@ -93,21 +93,22 @@ namespace McMd
       /**
       * Returns interaction energy for a single pair of atoms. 
       *
-      * \param rsq  square of distance between atoms
-      * \return  pair interaction energy
+      * \param rSq  square of distance between atoms
+      * \param qProduct product of charges
+      * \return short range part of pair energy
       */
       double rSpaceEnergy(double rSq, double qProduct) const;
 
       /**
-      * Returns interaction energy for a single pair of atoms. 
+      * Return one term in Fourier sum.
       *
-      * \param rsq square of distance between atoms
-      * \return    pair interaction energy
+      * \param rhoSq square of Fourier amplitudes
+      * \param prefactor prefactor in Fourier space expression
       */
       double kSpacePotential(double rhoSq, double prefactor) const;
 
       /**
-      * Returns ratio of scalar pair interaction force to pair separation.
+      * Return ratio of scalar pair interaction force to pair separation.
       *
       * Multiply this quantity by the components of the separation vector
       * to obtain the force vector. A positive value for the return value
@@ -123,8 +124,9 @@ namespace McMd
       * }
       * \endcode
       *
-      * \param rsq square of distance between atoms
-      * \return    force divided by distance 
+      * \param rSq square of distance between atoms
+      * \param qProduct product of charges
+      * \return force magnitude divided by distance 
       */
       double rSpaceForceOverR(double rSq, double qProduct) const;
   
