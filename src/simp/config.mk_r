@@ -116,6 +116,6 @@ endif
 
 INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
 
-simp_LIBNAME=inter$(INTER_ALL_SUFFIX)
+simp_LIBNAME=simp$(INTER_ALL_SUFFIX)
 simp_LIB=$(BLD_DIR)/simp/lib$(simp_LIBNAME).a
 #-----------------------------------------------------------------------

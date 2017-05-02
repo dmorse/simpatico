@@ -25,6 +25,7 @@ clean:
 	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f *.cfg log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
+	cd analyzers; $(MAKE) clean
 	cd chemistry; $(MAKE) clean
 	cd generators; $(MAKE) clean
 	cd mcSimulation; $(MAKE) clean
