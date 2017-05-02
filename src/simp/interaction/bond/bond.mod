@@ -1,11 +1,11 @@
-namespace Inter
+namespace Simp
 {
 
    /**
-   * \defgroup Inter_Bond_Module Bond Interactions
-   * \ingroup  Inter_Module
+   * \defgroup Simp_Interaction_Bond_Module Bond Interactions
+   * \ingroup  Simp_Interaction_Module
    *
-   * \brief    Potential energies for covalent bond interactions.
+   * \brief  Covalent bond interaction potential energy functions
    */
 
 }

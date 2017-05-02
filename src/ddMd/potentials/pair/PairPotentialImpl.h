@@ -32,8 +32,8 @@ namespace DdMd
    * for the pair potential (e.g., cutoff Lennard-Jones). The
    * template argument Interaction represents the specified pair
    * interaction class (e.g., LJPair for cutoff Lennard-Jones),
-   * which is normally a class in the Inter namespace from the
-   * src/inter/pair directory.
+   * which is normally a class in the Simp namespace from the
+   * src/simp/pair directory.
    *
    * \ingroup DdMd_Pair_Module
    */

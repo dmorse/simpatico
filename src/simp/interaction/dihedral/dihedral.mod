@@ -1,9 +1,9 @@
-namespace Inter
+namespace Simp
 {
 
    /**
-   * \defgroup Inter_Dihedral_Module Dihedral Interactions
-   * \ingroup  Inter_Module
+   * \defgroup Simp_Interaction_Dihedral_Module Dihedral Interactions
+   * \ingroup  Simp_Interaction_Module
    *
    * \brief    Potential functions for covalent dihedral interactions.
    *

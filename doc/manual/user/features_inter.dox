@@ -19,51 +19,51 @@ The choice of which functional form to use for specific type of potential energy
 User documentation for each interaction class documents the format of the block of potential energy parameters required for that interaction. This block must apppear in the parameter file within the parameter file block for the associated potential energy class. For example, in a ddSim simulation with bondStyle == "HarmonicBond", the BondPotential{ ... } parameter block must include the the block of potential energy parameters appropriate for a HarmonicBond interaction.
  
 <ul style="list-style: none;">
-  <li> \subpage inter_pair_page 
+  <li> \subpage simp_interaction_pair_page 
      <ul style="list-style: none;">
-       <li> \ref inter_pair_LJPair_page - truncated Lennard-Jones </li>
-       <li> \ref inter_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
-       <li> \ref inter_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
+       <li> \ref simp_interaction_pair_LJPair_page - truncated Lennard-Jones </li>
+       <li> \ref simp_interaction_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
+       <li> \ref simp_interaction_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
      </ul>
   </li>
 </ul>
 
 <ul style="list-style: none;">
-  <li> \subpage inter_bond_page 
+  <li> \subpage simp_interaction_bond_page 
      <ul style="list-style: none;">
-       <li> \ref inter_bond_HarmonicBond_page - harmonic bond </li>
-       <li> \ref inter_bond_HarmonicL0Bond_page - harmonic bond with zero rest length (i.e., a Gaussian spring)</li>
-       <li> \ref inter_bond_FeneBond_page - finitely extensible bond </li>
+       <li> \ref simp_interaction_bond_HarmonicBond_page - harmonic bond </li>
+       <li> \ref simp_interaction_bond_HarmonicL0Bond_page - harmonic bond with zero rest length (i.e., a Gaussian spring)</li>
+       <li> \ref simp_interaction_bond_FeneBond_page - finitely extensible bond </li>
      </ul>
   </li>
 </ul>
 
 <ul style="list-style: none;">
-  <li> \subpage inter_angle_page 
+  <li> \subpage simp_interaction_angle_page 
      <ul style="list-style: none;">
-       <li> \ref inter_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
-       <li> \ref inter_angle_CosineSqAngle_page - proportional to the square of cosine of bending angle</li>
-       <li> \ref inter_angle_HarmonicAngle_page - harmonic in bending angle </li>
+       <li> \ref simp_interaction_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
+       <li> \ref simp_interaction_angle_CosineSqAngle_page - proportional to the square of cosine of bending angle</li>
+       <li> \ref simp_interaction_angle_HarmonicAngle_page - harmonic in bending angle </li>
      </ul>
   </li>
 </ul>
 
 <ul style="list-style: none;">
-  <li> \subpage inter_dihedral_page 
+  <li> \subpage simp_interaction_dihedral_page 
      <ul style="list-style: none;">
-       <li> \ref inter_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
-       <li> \ref inter_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
+       <li> \ref simp_interaction_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
+       <li> \ref simp_interaction_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
      </ul>
   </li>
 </ul>
 
 <ul style="list-style: none;">
-  <li> \subpage inter_external_page 
+  <li> \subpage simp_interaction_external_page 
      <ul style="list-style: none;">
-       <li> \ref inter_external_LamellarOrderExternal_page - designed to induce layers </li>
-       <li> \ref inter_external_SlitExternal_page - 1D confinement to a slit</li>
-       <li> \ref inter_external_BoxExternal_page - 3D confinement to a box </li>
-       <li> \ref inter_external_OrthoBoxExternal_page - 3D confinement to a box (orthorhombic variant) </li>
+       <li> \ref simp_interaction_external_LamellarOrderExternal_page - designed to induce layers </li>
+       <li> \ref simp_interaction_external_SlitExternal_page - 1D confinement to a slit</li>
+       <li> \ref simp_interaction_external_BoxExternal_page - 3D confinement to a box </li>
+       <li> \ref simp_interaction_external_OrthoBoxExternal_page - 3D confinement to a box (orthorhombic variant) </li>
      </ul>
   </li>
 </ul>

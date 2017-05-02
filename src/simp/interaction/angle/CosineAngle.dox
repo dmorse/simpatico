@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_angle_CosineAngle_page CosineAngle 
+/*! \page simp_interaction_angle_CosineAngle_page CosineAngle 
 
 The CosineAngle interaction implements a potential that depends
 linearly on the cosine \f$\cos(\theta)\f$ of the bend angle. The

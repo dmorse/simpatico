@@ -25,9 +25,9 @@ namespace Simp
    *
    * This class implements an angle potential: kappa (1 - cos[theta]).
    *
-   * \sa \ref inter_angle_CosineAngle_page "parameter file format"
+   * \sa \ref simp_interaction_angle_CosineAngle_page "parameter file format"
    *
-   * \ingroup Inter_Angle_Module
+   * \ingroup Simp_Interaction_Angle_Module
    */
    class CosineAngle : public ParamComposite 
    {

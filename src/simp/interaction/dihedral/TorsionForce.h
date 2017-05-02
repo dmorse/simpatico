@@ -21,7 +21,7 @@ namespace Simp
    * Computes derivatives of dihedral angle with respect to bond vectors.
    *
    * Models the dihedral angle formed by three sequentil bond vectors b1, b2,
-   * and b3. See \ref Inter_Dihedral_Module in the file dihedral.mod for the 
+   * and b3. See \ref Simp_Interaction_Dihedral_Module in the file dihedral.mod for the 
    * definition of the dihedral angle phi and its relationship to these 
    * bond vectors
    *
@@ -39,7 +39,7 @@ namespace Simp
    * The function computeAngle(), which is inherited from the Torsion
    * base class, computes only cosPhi, but not the derivatives. 
    *
-   * \ingroup Inter_Dihedral_Module
+   * \ingroup Simp_Interaction_Dihedral_Module
    */
    struct TorsionForce : public Torsion
    {

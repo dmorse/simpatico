@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_angle_interface_page Angle Interaction Class Interface
+/*! \page simp_interaction_angle_interface_page Angle Interaction Class Interface
 
 Angle interaction classes are used in angle potential class templates to 
 implement angle potential classes both the McMd and DdMd namespaces, in

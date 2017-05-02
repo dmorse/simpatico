@@ -8,7 +8,7 @@
 
 #include "HarmonicTether.h"
 
-namespace Inter
+namespace Simp
 {
 
    using namespace Util;

@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_external_SlitExternal_page SlitExternal 
+/*! \page simp_interaction_external_SlitExternal_page SlitExternal 
 
 The SlitExternal interaction implements a repulsive 9-3 confining potential
 in which confining forces act only along the z/2 direction. In a boundary

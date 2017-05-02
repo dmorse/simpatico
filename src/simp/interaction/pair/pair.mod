@@ -1,12 +1,12 @@
-namespace Inter
+namespace Simp
 {
 
    /**
-   * \defgroup Inter_Pair_Module Pair Interactions
-   * \ingroup  Inter_Module
+   * \defgroup Simp_Interaction_Pair_Module Pair Interactions
+   * \ingroup  Simp_Interaction_Module
    * 
-   * \sa       \ref inter_pair_interface_page
-   * \sa       \ref inter_pair_page
+   * \sa       \ref simp_interaction_pair_interface_page
+   * \sa       \ref simp_interaction_pair_page
    *
    * \brief    Potential functions for non-bonded pair interactions.
    */

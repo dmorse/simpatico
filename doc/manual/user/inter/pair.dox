@@ -1,10 +1,10 @@
-/*! \page inter_pair_page Pair Interactions
+/*! \page simp_interaction_pair_page Pair Interactions
 
 Each of the pair potential interaction classes calculates the nonbonded interaction energy and force for pairs of particles. Each class defines a functional form for the potential function \f$V(r)\f$ of a particle pair as a function of the distance \f$r\f$ between the two particles, using parameters that depend upon the type ids of the two atoms.  This function is always set to zero for \f$r\f$ greater than some cutoff distance.
 
-The pair interaction classes are not derived from a common base class, but all implement a common interface that is described \subpage inter_pair_interface_page "here". 
+The pair interaction classes are not derived from a common base class, but all implement a common interface that is described \subpage simp_interaction_pair_interface_page "here". 
 
-\section inter_pair_parameters_section Parameter File Format
+\section simp_interaction_pair_parameters_section Parameter File Format
 
 The parameters used in the pair potential between atoms of atom type ids i and j depend on the atom types.  Values for each variable that appears in the mathematical description of a pair potential function are thus stored in matrix containers (i.e., 2D arrays) containing nAtomType rows and nAtomType columns, in which the i, j element gives the value of the parameter for interactions between atoms of type i and j.  
 
@@ -31,12 +31,12 @@ For example, the Lennard-Jones potential LJPair has three parameters \f$\epsilon
 \endcode
 In this example, a larger epsilon energy parameter and a larger van der Waals diameter sigma is used for interactions between unlike atoms of types 0 and 1 than between pairs of atoms of type 0 or type 1.  The cutoff for each pair of types has been chosen to be 2.5 times the sigma parameter for that pair (i.e., cutoff = 2.5 for 00 and 11 interactions, for which sigma = 1.0, and cutoff = 3.0 for 10 and 01 interactions, for which sigma = 1.2).
 
-\section inter_pair_interactions_section Pair Interaction Classes
+\section simp_interaction_pair_interactions_section Pair Interaction Classes
 
 <ul style="list-style: none;">
-    <li> \subpage inter_pair_LJPair_page - truncated Lennard-Jones </li>
-    <li> \subpage inter_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
-    <li> \subpage inter_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
+    <li> \subpage simp_interaction_pair_LJPair_page - truncated Lennard-Jones </li>
+    <li> \subpage simp_interaction_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
+    <li> \subpage simp_interaction_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
 </ul>
 
 */

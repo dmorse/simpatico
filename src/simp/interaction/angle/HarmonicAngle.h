@@ -27,9 +27,9 @@ namespace Simp
    *
    *    V(theta) = 0.5  kappa ( theta - theta0 )^2.
    *
-   * \sa \ref inter_angle_HarmonicAngle_page "parameter file format"
+   * \sa \ref simp_interaction_angle_HarmonicAngle_page "parameter file format"
    *
-   * \ingroup Inter_Angle_Module
+   * \ingroup Simp_Interaction_Angle_Module
    */
    class HarmonicAngle : public ParamComposite
    {

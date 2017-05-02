@@ -27,10 +27,10 @@ namespace Simp
    *
    * Implements a harmonic potential with a nonzero rest length.
    *
-   * \sa \ref inter_bond_HarmonicBond_page "Parameter file format"
-   * \sa \ref inter_bond_interface_page
+   * \sa \ref simp_interaction_bond_HarmonicBond_page "Parameter file format"
+   * \sa \ref simp_interaction_bond_interface_page
    *
-   * \ingroup Inter_Bond_Module
+   * \ingroup Simp_Interaction_Bond_Module
    */
    class HarmonicBond : public ParamComposite 
    {

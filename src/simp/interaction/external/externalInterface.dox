@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_external_interface_page External Interaction Class Interface
+/*! \page simp_interaction_external_interface_page External Interaction Class Interface
 
 External interaction classes are used in external potential class 
 templates to implement pair potential classes both the McMd and DdMd 

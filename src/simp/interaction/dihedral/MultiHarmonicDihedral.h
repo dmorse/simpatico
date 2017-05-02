@@ -27,11 +27,11 @@ namespace Simp
    * \f[
    *    V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m \phi)]
    * \f]
-   * where phi is the dihedral potential defined in \ref Inter_Dihedral_Module.
+   * where phi is the dihedral potential defined in \ref Simp_Interaction_Dihedral_Module.
    *
-   * \sa \ref inter_dihedral_MultiHarmonicDihedral_page "parameter file format"
+   * \sa \ref simp_interaction_dihedral_MultiHarmonicDihedral_page "parameter file format"
    *   
-   * \ingroup Inter_Dihedral_Module
+   * \ingroup Simp_Interaction_Dihedral_Module
    */
    class MultiHarmonicDihedral : public ParamComposite 
    {

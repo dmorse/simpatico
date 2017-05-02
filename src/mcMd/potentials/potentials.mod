@@ -22,7 +22,7 @@ namespace McMd
    * string in the parameter file, are instantiated by an associated 
    * Factory class.
    *
-   * \sa Inter_Module
+   * \sa Simp_Module
    */
 
    /**

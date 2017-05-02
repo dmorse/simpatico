@@ -22,11 +22,11 @@ namespace Simp
    * Soft pair potential used in dissipative particle dynamics (DPD) simulations 
    * of Groot, Warren et al. 
    *
-   * \sa \ref inter_pair_DpdPair_page "Parameter file format"
-   * \sa \ref inter_pair_interface_page
-   * \sa \ref inter_pair_page
+   * \sa \ref simp_interaction_pair_DpdPair_page "Parameter file format"
+   * \sa \ref simp_interaction_pair_interface_page
+   * \sa \ref simp_interaction_pair_page
    * 
-   * \ingroup Inter_Pair_Module
+   * \ingroup Simp_Interaction_Pair_Module
    */
    class DpdPair : public ParamComposite 
    {

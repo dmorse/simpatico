@@ -1,14 +1,14 @@
-/*! \page inter_bond_page Bond Interactions
+/*! \page simp_interaction_bond_page Bond Interactions
 
 Each of the bond interaction classes defines a potential \f$V(r)\f$ as a function of the separation \f$r\f$ between a pair of covalently bonded atoms. Each bond is assigned a bond type index, and different values of the parameters in the bond potential function are used for different bond types.
 
-All of the bond interaction classes implement a common interfaces, which is described \subpage inter_bond_interface_page "here". 
+All of the bond interaction classes implement a common interfaces, which is described \subpage simp_interaction_bond_interface_page "here". 
 
-\section inter_bond_interactions_section Bond Interaction Classes 
+\section simp_interaction_bond_interactions_section Bond Interaction Classes 
 <ul style="list-style: none;">
-  <li> \subpage inter_bond_HarmonicBond_page - harmonic bond </li>
-  <li> \subpage inter_bond_HarmonicL0Bond_page - harmonic bond with zero rest length (i.e., a Gaussian spring)</li>
-  <li> \subpage inter_bond_FeneBond_page - finitely extensible bond </li>
+  <li> \subpage simp_interaction_bond_HarmonicBond_page - harmonic bond </li>
+  <li> \subpage simp_interaction_bond_HarmonicL0Bond_page - harmonic bond with zero rest length (i.e., a Gaussian spring)</li>
+  <li> \subpage simp_interaction_bond_FeneBond_page - finitely extensible bond </li>
 </ul>
  
 */

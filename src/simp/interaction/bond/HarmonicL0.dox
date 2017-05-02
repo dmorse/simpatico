@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_bond_HarmonicL0Bond_page HarmonicL0Bond 
+/*! \page simp_interaction_bond_HarmonicL0Bond_page HarmonicL0Bond 
 
 The HarmonicL0Bond interaction implements a simple harmonic bond 
 potential with a zero rest length.  The potential energy 

@@ -26,6 +26,7 @@ clean:
 	rm -f *.cfg log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd chemistry; $(MAKE) clean
+	cd generators; $(MAKE) clean
 	cd mcSimulation; $(MAKE) clean
 	cd mdSimulation; $(MAKE) clean
 	cd mdIntegrators; $(MAKE) clean

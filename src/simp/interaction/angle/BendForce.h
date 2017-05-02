@@ -28,7 +28,7 @@ namespace Simp
    * The vectors d1 and d2 are vectors whose elements are the derivatives 
    * of cosTheta with respect to the elements of b1 and b2, respectively.
    * 
-   * \ingroup Inter_Angle_Module
+   * \ingroup Simp_Interaction_Angle_Module
    */
    struct BendForce : public Bend
    {

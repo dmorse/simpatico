@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_external_LamellarOrderExternal_page LamellarOrderExternal 
+/*! \page simp_interaction_external_LamellarOrderExternal_page LamellarOrderExternal 
 
 The LamellarOrderExternal interaction implements an external potential that 
 was designed to induced layering in block copolymer liquid. The potential

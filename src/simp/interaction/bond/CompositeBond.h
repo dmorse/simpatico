@@ -32,7 +32,7 @@ namespace Simp
    * interactions between bonded atoms are masked, to allow the pair
    * potential to be explicitly added back in.
    * 
-   * \ingroup Inter_Bond_Module
+   * \ingroup Simp_Interaction_Bond_Module
    */
    template <class BareBond, class BarePair>
    class CompositeBond : public ParamComposite 

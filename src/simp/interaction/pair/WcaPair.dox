@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_pair_WcaPair_page WcaPair 
+/*! \page simp_interaction_pair_WcaPair_page WcaPair 
 
 \section sec_potential Potential
 
@@ -42,7 +42,7 @@ For example, for a system with two types of monomer, we might have:
              1. 0     1.0
 \endcode
 
-\sa \ref inter_pair_LJPair_page
+\sa \ref simp_interaction_pair_LJPair_page
 
 */
 

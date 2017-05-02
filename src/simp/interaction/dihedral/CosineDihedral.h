@@ -29,11 +29,11 @@ namespace Simp
    * \f[
    *    V(\phi) = kappa [1 + cos(phi)]
    * \f]
-   * where phi is the dihedral potential, as defined in \ref Inter_Dihedral_Module.
+   * where phi is the dihedral potential, as defined in \ref Simp_Interaction_Dihedral_Module.
    *
-   * \sa \ref inter_dihedral_CosineDihedral_page "parameter file format"
+   * \sa \ref simp_interaction_dihedral_CosineDihedral_page "parameter file format"
    *
-   * \ingroup Inter_Dihedral_Module
+   * \ingroup Simp_Interaction_Dihedral_Module
    */
    class CosineDihedral : public ParamComposite 
    {

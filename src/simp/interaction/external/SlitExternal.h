@@ -35,7 +35,7 @@ namespace Simp
    *
    * The potential is independent on the type of atoms.
    * 
-   * \ingroup Inter_External_Module
+   * \ingroup Simp_Interaction_External_Module
    */
    class SlitExternal : public ParamComposite 
    {

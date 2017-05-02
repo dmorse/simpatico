@@ -24,11 +24,11 @@ namespace Simp
    * This class defines a Lennard-Jones potential that is cutoff and
    * shifted so that the potential is zero at the cutoff distance.
    *
-   * \sa \ref inter_pair_LJPair_page "Parameter file format"
-   * \sa \ref inter_pair_interface_page
-   * \sa \ref inter_pair_page
+   * \sa \ref simp_interaction_pair_LJPair_page "Parameter file format"
+   * \sa \ref simp_interaction_pair_interface_page
+   * \sa \ref simp_interaction_pair_page
    * 
-   * \ingroup Inter_Pair_Module
+   * \ingroup Simp_Interaction_Pair_Module
    */
    class LJPair : public ParamComposite 
    {

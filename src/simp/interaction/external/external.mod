@@ -1,9 +1,9 @@
-namespace Inter
+namespace Simp
 {
 
    /**
-   * \defgroup Inter_External_Module External Interactions
-   * \ingroup  Inter_Module
+   * \defgroup Simp_Interaction_External_Module External Interactions
+   * \ingroup  Simp_Interaction_Module
    *
    * \brief    Potential functions for external one-body interactions.
    */

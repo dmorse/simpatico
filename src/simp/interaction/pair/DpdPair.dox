@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_pair_DpdPair_page DpdPair 
+/*! \page simp_interaction_pair_DpdPair_page DpdPair 
 
 The DpdPair interaction implements the soft pair interaction that
 was first introduced by Groot and Warren for use in dissipative 

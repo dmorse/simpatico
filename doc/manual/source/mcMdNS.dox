@@ -5,7 +5,7 @@ namespace McMd
 
 /*! \page McMd_NS_page 3.5 McMd namespace
 
-\ref Inter_NS_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref Simp_NS_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref DdMd_NS_page  (Next) 
 <BR>
 
@@ -55,7 +55,7 @@ See also: \ref McMd_System_Module "System Module"
 
 The McMd "potential" classes in the mcMd/potentials/ directory are polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System, as well as for small groups (e.g., pairs) of interacting atoms.  The classes BondPotential, AnglePotential, DihedralPotential provide interfaces for bond, angle, and dihedral potentials, respectively, which are used in both MD and MC simulations. The classes McPairPotential and MdPairPotential provide slightly different interfaces for nonbonded pair interactions for use in MC and MD simulations, respectively. Every potential class provides an energy() method that returns the associated energy for the entire system. The covalent potential energy classes (BondPotential, AnglePotential, and DihedralPotential) and the MdPairPotential class all provide an addForces() method that adds the contribution of the associated type of interaction to the atomic forces for every atom in the system.  The covalent potential energy classes and McPairPotential all provide an atomEnergy() method that returns the value of a particular energy contribution (i.e., the nonbonded pair energy or covalent bond energy) for a specific atom, for use in MC algorithms. 
 
-The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Inter namespace as a template argument, and has an instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, MdPairPotentialImpl<LJPair> is a concrete subclass of MdPairPotential for Lennard-Jones pair interactions, which uses an instance of the Inter::LJPair interaction class to calculate pair energies and forces for individual nonbonded pairs of atoms. 
+The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Simp namespace as a template argument, and has an instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, MdPairPotentialImpl<LJPair> is a concrete subclass of MdPairPotential for Lennard-Jones pair interactions, which uses an instance of the Inter::LJPair interaction class to calculate pair energies and forces for individual nonbonded pairs of atoms. 
 
 This use of templates to implement potential energies was chosen in order to allow the user to choose a form of each potential energy at run time without sacrificing efficiency, and without redundant code.  Because the interaction class methods are not virtual, this design allows each template to implement an inner loop for force or energy calculations that is free of virtual function calls, and allows the compiler to inline many force and energy interaction functions. 
 
@@ -114,7 +114,7 @@ The conceptual distinction between a System and a Simulation is somewhat arbitra
 See also: \ref McMd_Simulation_Module "Simulation Module"
 
 <BR>
-\ref Inter_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref Simp_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref DdMd_NS_page (Next) 
 

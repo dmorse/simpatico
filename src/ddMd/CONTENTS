@@ -5,12 +5,12 @@ The ddSim parallel MD code uses a domain-decomposition parallelization
 strategy similiar to that used in LAMMPS and many other parallel MD codes. 
 
 Source files in the DdMd namespace (or src/ddMd/ directory) uses classes and 
-other names defined in the Util and Inter namespaces (or the src/util/ and 
-sr/inter/ directories), but do not use any names from the McMD namespace (or 
+other names defined in the Util and Simp namespaces (or the src/util/ and 
+sr/simp/ directories), but do not use any names from the McMD namespace (or 
 the src/mcMd/ subdirectory). Most files in the DdMd namespace contain a 
 "using namespace Util" directive that brings the entire Util namespace into 
-scope.  The few source files that use classes from the Inter namespace also 
-contain a "using namespace Inter" directive. 
+scope.  The few source files that use classes from the Simp namespace also 
+contain a "using namespace Simp" directive. 
 
 Subdirectories:
 

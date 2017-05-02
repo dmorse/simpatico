@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_bond_interface_page Bond Interaction Class Interface
+/*! \page simp_interaction_bond_interface_page Bond Interaction Class Interface
 
 Bond interaction classes are used in bond potential class templates to 
 implement bond potential classes both the McMd and DdMd namespaces, in

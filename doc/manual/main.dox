@@ -33,7 +33,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage source_directory_page </li>
    <li> \subpage source_namespace_page </li>
    <li> \subpage Util_NS_page  </li>
-   <li> \subpage Inter_NS_page </li>
+   <li> \subpage Simp_NS_page </li>
    <li> \subpage McMd_NS_page  </li>
    <li> \subpage DdMd_NS_page  </li>
    <li> \subpage Tools_NS_page  </li>

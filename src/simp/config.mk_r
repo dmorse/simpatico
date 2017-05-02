@@ -5,12 +5,12 @@
 #     preprocessor flags that effect the code in the mcMd/ directory. 
 #
 #   - A variable $(INTER_SUFFIX) which is added as a suffix to the name
-#     of the inter library.
+#     of the simp library.
 #
-#   - The name $(INTER_LIB) of the inter library file.
+#   - The name $(INTER_LIB) of the simp library file.
 #
-# This file is included by every makefile in the inter directory, and in 
-# directories containing source code that depends on the Inter namespace.
+# This file is included by every makefile in the simp directory, and in 
+# directories containing source code that depends on the Simp namespace.
 # It should be included after $(SRC_DIR)/config.mk and before
 # $(SRC_DIR)/simp/patterns.mk.
 #-----------------------------------------------------------------------
@@ -50,7 +50,7 @@ INTER_BOND=1
 # and to the executables mcSim, mdSim, and ddSim in the $(BIN_DIR). If no
 # other features were enabled, setting INTER_SUFFIX to "_a", to denote a 
 # version with angular potentials enabled, would lead to creation of a 
-# library file named inter_a.a in the directory $(SRC_DIR)/inter and 
+# library file named simp_a.a in the directory $(SRC_DIR)/simp and 
 # executables named mcSim_a and mdSim_a. 
  
 INTER_DEFS=
@@ -112,7 +112,7 @@ INTER_SUFFIX:=$(INTER_SUFFIX)_e
 endif
 
 #-----------------------------------------------------------------------
-# Name of static library for Inter namespace.
+# Name of static library for Simp namespace.
 
 INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
 

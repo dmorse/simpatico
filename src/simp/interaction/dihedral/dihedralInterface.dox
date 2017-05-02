@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_dihedral_interface_page Dihedral Interaction Class Interface
+/*! \page simp_interaction_dihedral_interface_page Dihedral Interaction Class Interface
 
 Dihedral interaction classes are used in dihedral potential class templates to 
 implement dihedral potential classes both the McMd and DdMd namespaces, in

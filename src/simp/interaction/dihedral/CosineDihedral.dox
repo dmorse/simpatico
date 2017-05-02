@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_dihedral_CosineDihedral_page CosineDihedral 
+/*! \page simp_interaction_dihedral_CosineDihedral_page CosineDihedral 
 
 The CosineDihedral interaction implements a potential that depends
 linearly on the cosine \f$\cos(\phi)\f$ of a dihedral and \f$\phi\f$. 

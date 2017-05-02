@@ -26,10 +26,10 @@ namespace Simp
    * the resulting dihedral angle, and stores it in the public 
    * member cosPhi.
    *
-   * See \ref Inter_Dihedral_Module in the file dihedral.mod for 
+   * See \ref Simp_Interaction_Dihedral_Module in the file dihedral.mod for 
    * the definition of cosPhi.
    *
-   * \ingroup Inter_Dihedral_Module
+   * \ingroup Simp_Interaction_Dihedral_Module
    */
    struct Torsion
    {

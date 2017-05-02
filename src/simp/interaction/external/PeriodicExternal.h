@@ -32,7 +32,7 @@ namespace Simp
    * are given as inputs in the parameter file. 
    * ClipParameter is the inverse of 2*pi*periodicity*interfaceWidth. 
    *
-   * \ingroup Inter_External_Module
+   * \ingroup Simp_Interaction_External_Module
    */
    class PeriodicExternal : public ParamComposite 
    {

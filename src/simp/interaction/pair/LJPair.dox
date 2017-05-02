@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_pair_LJPair_page LJPair 
+/*! \page simp_interaction_pair_LJPair_page LJPair 
 
 The LJPair interaction (pairstyle LJPair) implements a cutoff and 
 shifted Lennard-Jones interaction.  The potential energy \f$V(r)\f$ 

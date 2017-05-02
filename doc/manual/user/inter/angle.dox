@@ -1,10 +1,10 @@
-/*! \page inter_angle_page Angle Interactions
+/*! \page simp_interaction_angle_page Angle Interactions
 
 Each of the angle interaction classes defines a potential that depends upon the angle between two bonds that connect three atoms.  Each such group of atoms is assigned an angle type index, values of the parameters in the angle potential function are used for different angle types.
 
-All of the angle interaction classes implement a common interface, which is described \subpage inter_angle_interface_page "here". 
+All of the angle interaction classes implement a common interface, which is described \subpage simp_interaction_angle_interface_page "here". 
 
-\section inter_angle_Geometry_section Geometry
+\section simp_interaction_angle_Geometry_section Geometry
 
 Let the three atoms in an angle group be labelled 0, 1, 2, with bonds connecting 0-1 and 1-2.  Let \f${\bf r}_{i}\f$ be the position vector for atom i, with \f$0 \leq i < 3\f$. We define two bond vectors
 \f[
@@ -19,12 +19,12 @@ The energy is assumed to be a function of the central angle \f$\theta\f$, define
 \f]
 so that \f$\theta = 0\f$ corresponds to a three atoms placed sequentially along a line. 
 
-\section inter_angle_interactions_section Angle Interaction Classes 
+\section simp_interaction_angle_interactions_section Angle Interaction Classes 
 
 <ul style="list-style: none;">
-   <li> \subpage inter_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
-   <li> \subpage inter_angle_CosineSqAngle_page - proportional to the square of cosine of bending angle</li>
-   <li> \subpage inter_angle_HarmonicAngle_page - harmonic in bending angle </li>
+   <li> \subpage simp_interaction_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
+   <li> \subpage simp_interaction_angle_CosineSqAngle_page - proportional to the square of cosine of bending angle</li>
+   <li> \subpage simp_interaction_angle_HarmonicAngle_page - harmonic in bending angle </li>
 </ul>
  
 */

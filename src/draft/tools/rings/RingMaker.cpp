@@ -3,7 +3,7 @@
 #include  <util/space/Vector.h>              // template parameter
 #include  <util/containers/DArray.h>         // member template
 #include  <util/boundary/Boundary.h>
-#include  <inter/bond/HarmonicL0Bond.h>
+#include  <simp/bond/HarmonicL0Bond.h>
 
 #include <iostream>
 #include <string>

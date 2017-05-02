@@ -1,7 +1,7 @@
-namespace Inter 
+namespace Simp 
 {
 
-/*! \page inter_bond_FeneBond_page FeneBond 
+/*! \page simp_interaction_bond_FeneBond_page FeneBond 
 
 The FeneBond interaction implements a simple harmonic bond 
 potential with a nonzero rest length.  The potential energy 

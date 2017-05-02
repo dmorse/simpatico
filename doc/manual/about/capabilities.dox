@@ -8,15 +8,15 @@
 
 All simpatico programs use a potential energy that can contain:
 
-- nonbonded \ref inter_pair_page "pair" interactions
+- nonbonded \ref simp_interaction_pair_page "pair" interactions
 
-- covalent \ref inter_bond_page "bond" (2 body), \ref inter_angle_page "angle" (3 body) and \ref inter_dihedral_page "dihedral" (4 body) potentials
+- covalent \ref simp_interaction_bond_page "bond" (2 body), \ref simp_interaction_angle_page "angle" (3 body) and \ref simp_interaction_dihedral_page "dihedral" (4 body) potentials
 
-- \ref inter_external_page "external" one-particle potentials  
+- \ref simp_interaction_external_page "external" one-particle potentials  
 
 Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD algorithms, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.
 
-Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
+Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/simp directory, and all such classes are defined in the "Simp" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
 
 Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature.
 

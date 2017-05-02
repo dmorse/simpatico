@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_external_OrthoBoxExternal_page OrthoBoxExternal 
+/*! \page simp_interaction_external_OrthoBoxExternal_page OrthoBoxExternal 
 
 The OrthoBoxExternal interaction implements a repulsive 9-3 confining 
 potential that confines particles in one or more direction.  For each 

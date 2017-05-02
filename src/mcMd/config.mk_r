@@ -12,7 +12,7 @@
 #
 # This file is included by every makefile in the mcMd directory.  It
 # should be included after the file src/config.mk, after the files
-# src/util/config.mk and src/inter/config.mk, and before the file
+# src/util/config.mk and src/simp/config.mk, and before the file
 # src/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros

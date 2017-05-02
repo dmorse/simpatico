@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_pair_interface_page Pair Interaction Class Interface
+/*! \page simp_interaction_pair_interface_page Pair Interaction Class Interface
 
 Pair interaction classes are used in pair potential class templates to 
 implement pair potential classes both the McMd and DdMd namespaces, in

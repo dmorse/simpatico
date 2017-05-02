@@ -43,7 +43,7 @@ namespace Simp
    * along the direction perpendicular to lamellae) and periodicity are given as inputs in the parameter file. 
    * ClipParameter is the inverse of 2*pi*periodicity*interfaceWidth. 
    *
-   * \ingroup Inter_External_Module
+   * \ingroup Simp_Interaction_External_Module
    */
    class LocalLamellarOrderingExternal : public ParamComposite 
    {

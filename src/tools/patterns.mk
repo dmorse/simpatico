@@ -7,7 +7,7 @@
 # all makefile files in this directory tree. 
 #
 # This file should be included in other makefiles after inclusion of
-# the files src/config.mk, src/util/config.mk, src/inter/config.mk, 
+# the files src/config.mk, src/util/config.mk, src/simp/config.mk, 
 # and src/tools/config.mk, because this file uses makefile variables
 # defined in those files.
 #-----------------------------------------------------------------------

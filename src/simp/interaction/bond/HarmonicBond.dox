@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_bond_HarmonicBond_page HarmonicBond 
+/*! \page simp_interaction_bond_HarmonicBond_page HarmonicBond 
 
 The HarmonicBond interaction implements a simple harmonic bond 
 potential with a nonzero rest length.  The potential energy 

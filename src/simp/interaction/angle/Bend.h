@@ -25,7 +25,7 @@ namespace Simp
    *
    * The scalar cosTheta is the cosine of the angle between b1 and b2.
    * 
-   * \ingroup Inter_Angle_Module
+   * \ingroup Simp_Interaction_Angle_Module
    */
    struct Bend
    {

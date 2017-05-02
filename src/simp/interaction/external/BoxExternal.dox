@@ -1,7 +1,7 @@
-namespace Inter
+namespace Simp
 {
 
-/*! \page inter_external_BoxExternal_page BoxExternal 
+/*! \page simp_interaction_external_BoxExternal_page BoxExternal 
 
 The BoxExternal interaction implements a repulsive 9-3 confining potential
 along the walls of an orthorhombic box, in all three directions. For each
