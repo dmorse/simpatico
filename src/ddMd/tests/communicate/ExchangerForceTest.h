@@ -26,18 +26,18 @@
 #include <util/space/Vector.h>
 
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
-#include <inter/bond/HarmonicL0Bond.h>
+#include <simp/interaction/bond/HarmonicL0Bond.h>
 #ifdef INTER_ANGLE
 #include <ddMd/potentials/angle/AnglePotentialImpl.h>
-#include <inter/angle/HarmonicAngle.h>
+#include <simp/interaction/angle/HarmonicAngle.h>
 #endif
 #ifdef INTER_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
-#include <inter/dihedral/MultiHarmonicDihedral.h>
-#include <inter/dihedral/CosineDihedral.h>
+#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/CosineDihedral.h>
 #endif
 
 #ifdef UTIL_MPI
@@ -51,7 +51,7 @@
 #include <test/ParamFileTest.h>
 
 using namespace Util;
-using namespace Inter;
+using namespace Simp;
 using namespace DdMd;
 
 class ExchangerForceTest: public ParamFileTest

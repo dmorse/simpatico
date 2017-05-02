@@ -20,13 +20,13 @@
 #endif
 
 // Pair Potential interaction classes
-#include <inter/pair/LJPair.h>
-#include <inter/pair/WcaPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/WcaPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 
 #ifdef INTER_BOND
-#include <inter/pair/CompensatedPair.h>
-#include <inter/bond/FeneBond.h>
+#include <simp/interaction/pair/CompensatedPair.h>
+#include <simp/interaction/bond/FeneBond.h>
 #endif
 
 
@@ -34,7 +34,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

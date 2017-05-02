@@ -19,9 +19,9 @@
 #include <mcMd/potentials/bond/BondFactory.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
-#include <inter/bond/HarmonicBond.h>
-#include <inter/bond/HarmonicL0Bond.h>
-#include <inter/bond/FeneBond.h>
+#include <simp/interaction/bond/HarmonicBond.h>
+#include <simp/interaction/bond/HarmonicL0Bond.h>
+#include <simp/interaction/bond/FeneBond.h>
 
 #include <modules/hoomd/potentials/pair/HoomdPairFactory.h>
 #include <modules/hoomd/potentials/pair/HoomdPairPotential.h>
@@ -53,7 +53,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    /*
    * Constructor

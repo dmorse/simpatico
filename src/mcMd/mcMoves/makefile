@@ -1,11 +1,11 @@
 SRC_DIR_REL =../..
 
 include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR_REL)/util/config.mk
-include $(SRC_DIR_REL)/inter/config.mk
-include $(SRC_DIR_REL)/mcMd/config.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-#include $(SRC_DIR_REL)/mcMd/mcMoves/sources.mk
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/simp/config.mk
+include $(BLD_DIR)/mcMd/config.mk
+include $(SRC_DIR)/mcMd/patterns.mk
+#include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 
 include sources.mk
 

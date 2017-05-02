@@ -124,7 +124,7 @@ MPI_LIB=mpicxx
 # It is automatically appended to CXXFLAGS in the file util/config.mk if 
 # UTIL_DEBUG is not defined in this file.
 #
-# Pattern rules for compiling source files in the util/, inter, mcMd/ and 
+# Pattern rules for compiling source files in the util/, simp/, mcMd/ and 
 # ddMd/ directories are defined in the patterns.mk files in each of these 
 # namespace-level directories. In each of these, the basic pattern is
 #

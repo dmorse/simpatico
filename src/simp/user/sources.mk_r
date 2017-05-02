@@ -1,0 +1,10 @@
+
+simp_user_=\
+    #simp/user/Class1.cpp \
+    #simp/user/Class2.cpp 
+
+simp_user_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(simp_user_))
+simp_user_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(simp_user_:.cpp=.o))
+

@@ -1,7 +1,7 @@
 #ifndef TOOLS_CHAIN_MAKER_H
 #define TOOLS_CHAIN_MAKER_H
 
-#include   <inter/bond/HarmonicBond.h>
+#include   <simp/interaction/bond/HarmonicBond.h>
 #include   <util/param/ParamComposite.h>
 #include   <util/boundary/Boundary.h>
 #include   <util/random/Random.h>
@@ -12,7 +12,7 @@
 namespace Tools 
 {
 
-   using namespace Inter;
+   using namespace Simp;
    using namespace Util;
 
    /**

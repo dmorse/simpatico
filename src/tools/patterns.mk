@@ -13,7 +13,7 @@
 #-----------------------------------------------------------------------
 
 # All libraries needed by files in src/tools
-LIBS=$(tools_LIB) $(inter_LIB) $(util_LIB)
+LIBS=$(tools_LIB) $(simp_LIB) $(util_LIB)
 
 # All C preprocessor macro definitions needed in src/tools
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(TOOLS_DEFS)
@@ -21,7 +21,7 @@ DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(TOOLS_DEFS)
 # Dependencies of source files in src/tools on makefile fragments
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
-MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/simp/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/tools/config.mk
 
 # Pattern rule to compile all *.cpp class source files in src/tools

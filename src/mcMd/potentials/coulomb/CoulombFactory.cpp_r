@@ -21,7 +21,7 @@
 namespace McMd
 {
 
-   //using namespace Inter;
+   //using namespace Simp;
 
    /**
    * Default constructor.

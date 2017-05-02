@@ -7,13 +7,13 @@
 # all makefile files in this directory tree. 
 #
 # This file should be included in other makefiles after inclusion of
-# the files src/config.mk, src/util/config.mk, src/inter/config.mk, 
+# the files src/config.mk, src/util/config.mk, src/simp/config.mk, 
 # and src/mcMd/config.mk, because this file uses makefile variables
 # defined in those files. 
 #-----------------------------------------------------------------------
 
 # All libraries needed for files in src/mcMd
-LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
+LIBS=$(mcMd_LIB) $(simp_LIB) $(util_LIB)
 
 # C preprocessor macro definitions needed by files in src/mcMd
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)
@@ -21,7 +21,7 @@ DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)
 # Dependencies on config.mk build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
-MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/simp/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/mcMd/config.mk
 
 # Pattern rule to compile all *.cpp class source files in src/mcMd

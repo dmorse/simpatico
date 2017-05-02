@@ -18,8 +18,8 @@
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
 // External Potential evaluator classes
-#include <inter/external/PeriodicExternal.h>
-#include <inter/external/LocalLamellarOrderingExternal.h>
+#include <simp/interaction/external/PeriodicExternal.h>
+#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
 
 #include <modules/hoomd/potentials/external/HoomdPeriodicExternal.h>
 #include <modules/hoomd/potentials/external/HoomdLocalLamellarOrderingExternal.h>

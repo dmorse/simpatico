@@ -14,22 +14,22 @@
 #include "McPairPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <inter/pair/LJPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 #endif
 
 #ifdef INTER_EXTERNAL
 #include "McExternalPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
-#include <inter/external/LamellarOrderingExternal.h>
-#include <inter/external/LocalLamellarOrderingExternal.h>
-#include <inter/external/PeriodicExternal.h>
+#include <simp/interaction/external/LamellarOrderingExternal.h>
+#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
+#include <simp/interaction/external/PeriodicExternal.h>
 #ifndef INTER_NOPAIR
 #include "McPairExternalPerturbation.h"
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <inter/pair/LJPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 #endif
 #endif
 
@@ -37,7 +37,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    McPerturbationFactory::McPerturbationFactory(McSystem& system)
     : systemPtr_(&system)

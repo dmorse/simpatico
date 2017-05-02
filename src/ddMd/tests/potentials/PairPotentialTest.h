@@ -8,7 +8,7 @@
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/chemistry/Atom.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 #include <util/boundary/Boundary.h>
 #include <util/random/Random.h>
 
@@ -23,7 +23,7 @@
 #include <test/ParamFileTest.h>
 
 using namespace Util;
-using namespace Inter;
+using namespace Simp;
 using namespace DdMd;
 
 class PairPotentialTest: public ParamFileTest

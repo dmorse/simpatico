@@ -9,11 +9,11 @@
 SRC_DIR_REL =..
 include $(SRC_DIR_REL)/config.mk
 include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/simp/config.mk
 include $(BLD_DIR)/ddMd/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/ddMd/sources.mk
 
 #-----------------------------------------------------------------------
@@ -58,7 +58,7 @@ endif
 # Include dependency files
  
 -include $(util_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
+-include $(simp_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)
 -include $(DDSIM).d
 

@@ -1,0 +1,121 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(INTER_DEFS) that is passed to the processor to define 
+#     preprocessor flags that effect the code in the mcMd/ directory. 
+#
+#   - A variable $(INTER_SUFFIX) which is added as a suffix to the name
+#     of the inter library.
+#
+#   - The name $(INTER_LIB) of the inter library file.
+#
+# This file is included by every makefile in the inter directory, and in 
+# directories containing source code that depends on the Inter namespace.
+# It should be included after $(SRC_DIR)/config.mk and before
+# $(SRC_DIR)/simp/patterns.mk.
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros that enable/disable
+# potential energy contributions.
+
+# Define INTER_NOPAIR, disable non-bonded pair potentials 
+#INTER_NOPAIR=1
+
+# Define INTER_BOND, enable 2-body bond potentials
+INTER_BOND=1
+
+# Define INTER_ANGLE, enable 3-body angle potentials
+#INTER_ANGLE=1
+
+# Define INTER_DIHEDRAL, enable 4-body dihedral torsion potentials
+#INTER_DIHEDRAL=1
+
+# Define INTER_COULOMB, enable Coulomb potentials
+#INTER_COULOMB=1
+
+# Define INTER_EXTERNAL, enable external potentials
+#INTER_EXTERNAL=1
+
+#-----------------------------------------------------------------------
+# The following code defines the variables INTER_DEFS and INTER_SUFFIX.
+#
+# The variable INTER_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option. If not empty, it must 
+# consist of a list of zero or more preprocessor macro names, each 
+# preceded by the compiler flag "-D".  For example, setting INTER_DEFS 
+# to "-DINTER_ANGLE -DINTER_DIHEDRAL" will cause compilation of a version 
+# of the code with angle and dihedral potentials enabled.
+#
+# The variable INTER_SUFFIX is appended to the base names of the library 
+# mcMd.a in the $(LIB_DIR) directory. It is also added to the mcMd library
+# and to the executables mcSim, mdSim, and ddSim in the $(BIN_DIR). If no
+# other features were enabled, setting INTER_SUFFIX to "_a", to denote a 
+# version with angular potentials enabled, would lead to creation of a 
+# library file named inter_a.a in the directory $(SRC_DIR)/inter and 
+# executables named mcSim_a and mdSim_a. 
+ 
+INTER_DEFS=
+INTER_SUFFIX:=
+
+# The variable INTER_DEFS is a recursive (normal) makefile variable, and
+# may be extended using the += operator, e.g., INTER_DEFS+=-DINTER_ANGLE.
+# The INTER_SUFFIX is a non-recursive makefile variable, which may be 
+# extended using the := operator, as INTER_SUFFIX:=$(INTER_SUFFIX)_a. 
+# They are defined differently because the += operator adds a white space
+# before an added string, which is appropriate for INTER_DEFS, but not for 
+# INTER_SUFFIX. 
+#
+# Each if block in what follows contains two lines: The first adds a 
+# string containing a preprocessor macro to INTER_DEFS. The second adds
+# an underscore and a string of one or two identifying letters to 
+# INTER_SUFFIX. The addition of suffixes to the library and executable
+# names is optional, and may be suppressed by commenting out the relevant 
+# lines.
+#
+# See the file src/mcMd/dox/preprocessor.dox for an explanation of all
+# of preprocessor macros listed below.
+
+# Disable non-bonded pair potentials 
+ifdef INTER_NOPAIR
+INTER_DEFS+= -DINTER_NOPAIR
+INTER_SUFFIX:=$(INTER_SUFFIX)_np
+endif
+
+# Enable bond potential
+ifdef INTER_BOND
+INTER_DEFS+= -DINTER_BOND
+else
+INTER_SUFFIX:=$(INTER_SUFFIX)_nb
+endif
+
+# Enable angle potential
+ifdef INTER_ANGLE
+INTER_DEFS+= -DINTER_ANGLE
+INTER_SUFFIX:=$(INTER_SUFFIX)_a
+endif
+
+# Enable dihedral potential
+ifdef INTER_DIHEDRAL
+INTER_DEFS+= -DINTER_DIHEDRAL
+INTER_SUFFIX:=$(INTER_SUFFIX)_d
+endif
+
+# Enable Coulomb potential
+ifdef INTER_COULOMB
+INTER_DEFS+= -DINTER_COULOMB
+INTER_SUFFIX:=$(INTER_SUFFIX)_c
+endif
+
+# Enable external potential
+ifdef INTER_EXTERNAL
+INTER_DEFS+= -DINTER_EXTERNAL
+INTER_SUFFIX:=$(INTER_SUFFIX)_e
+endif
+
+#-----------------------------------------------------------------------
+# Name of static library for Inter namespace.
+
+INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
+
+simp_LIBNAME=inter$(INTER_ALL_SUFFIX)
+simp_LIB=$(BLD_DIR)/simp/lib$(simp_LIBNAME).a
+#-----------------------------------------------------------------------
