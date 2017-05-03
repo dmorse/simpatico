@@ -161,8 +161,22 @@ namespace McMd
       //@}
 
    private:
-  
+ 
+      /**
+      * Pair interaction object (e.g., Interaction == LJPair)
+      */ 
       Interaction interaction_;
+
+      /**
+      * Generalized stress computation, for variable type T.
+      *
+      * Allowed types: T =, double, Vector or Tensor 
+      * For T == Tensor, computes stress tensor
+      * For T == Vector, computes xx, yy, zz components
+      * For T == double, computes pressure
+      */
+      template <typename T>
+      void computeStressImpl(T& stress);
 
    };
 
@@ -417,8 +431,73 @@ namespace McMd
    * Compute nonbonded pair stress.
    */
    template <class Interaction>
+   template <typename T>
+   void McPairPotentialImpl<Interaction>::computeStressImpl(T& stress)
+   {
+      Vector dr;
+      Vector force;
+      double rsq;
+      const Atom *atom0Ptr, *atom1Ptr;
+      int nNeighbor, nInCell, ia, ja, type0, type1;
+
+      setToZero(stress);
+
+      // Loop over cells
+      for (int ic=0; ic < cellList_.totCells(); ++ic) {
+
+         // Get array of neighbors
+         cellList_.getCellNeighbors(ic, neighbors_, nInCell);
+         nNeighbor = neighbors_.size();
+  
+         // Loop over primary atoms in this cell.
+         for (ia = 0; ia < nInCell; ++ia) {
+            atom0Ptr = neighbors_[ia];
+            type0 = atom0Ptr->typeId();
+          
+            // Loop over secondary atoms in the neighboring cells.
+            for (ja = 0; ja < nNeighbor; ++ja) {
+               atom1Ptr = neighbors_[ja];
+               type1 = atom1Ptr->typeId();
+     
+               // Count each pair only once.
+               if (atom1Ptr->id() > atom0Ptr->id()) {
+
+                  // Exclude masked pairs.
+                  if (!atom0Ptr->mask().isMasked(*atom1Ptr)) {
+                     rsq = boundary().distanceSq(atom0Ptr->position(),
+                                                 atom1Ptr->position(), dr);
+                     if (rsq < interaction().cutoffSq(type0, type1)) {
+                        force = dr;
+                        force *= interaction().forceOverR(rsq, type0, type1);
+                        incrementPairStress(force, dr, stress);
+                     }
+
+                  }
+
+               }
+
+            } // secondary atoms
+
+         } // primary atoms
+
+      } // cells
+
+      // Normalize by volume.
+      stress /= boundary().volume();
+      normalizeStress(stress);
+   }
+
+   /*
+   * Compute nonbonded pair stress.
+   */
+   template <class Interaction>
    void McPairPotentialImpl<Interaction>::computeStress()
    {
+      Tensor stress;
+      computeStressImpl(stress);
+      stress_.set(stress);
+
+      #if 0
       Tensor stress;
       Vector force, dr;
       double rsq;
@@ -470,9 +549,8 @@ namespace McMd
       // Normalize by volume.
       stress /= boundary().volume();
       normalizeStress(stress);
+      #endif
 
-      // Store local Tensor variable stress in Setable<Tensor> class member stress_.
-      stress_.set(stress);
    }
 
    template <class Interaction>

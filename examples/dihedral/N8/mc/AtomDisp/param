@@ -27,10 +27,10 @@ McSimulation{
     seed                          13451892
   }
   McSystem{
-    pairStyle       LJPair
-    bondStyle       HarmonicBond
-    angleStyle      CosineAngle
-    dihedralStyle   CosineDihedral
+    pairStyle                       LJPair
+    bondStyle                 HarmonicBond
+    angleStyle               HarmonicAngle
+    dihedralStyle           CosineDihedral
     McPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -41,10 +41,11 @@ McSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             4.000000000000e+00
+      kappa             20.00000000000e+00
+      theta0            60.00000000000e+00
     }
     DihedralPotential{
-      kappa             4.000000000000e+00
+      kappa             1.000000000000e+00
     }
     EnergyEnsemble{
       type                      isothermal
@@ -64,40 +65,38 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                    100000
+    baseInterval                     10000
 
     LogProgress{
       interval                      200000
     }
 
-    McEnergyAverage{
-      interval                      200000
+    McEnergyAnalyzer{
+      interval                       50000
       outputFileName                energy
       nSamplePerBlock                   10
     }
     
     McPairEnergyAverage{
-      interval                      200000
-      outputFileName               pairEnergy
+      interval                       50000
+      outputFileName            pairEnergy
       nSamplePerBlock                   10
-      selector                    inter -1 -1
+      selector                 inter -1 -1
+    }
+    
+    McPressureAverage{
+      interval                       50000
+      outputFileName              pressure
+      nSamplePerBlock                   20
     }
     
     RadiusGyration{
-      interval                      200000
-      outputFileName              RgSq
-      nSamplePerBlock               10
-      speciesId                     0
+      interval                       50000
+      outputFileName                  RgSq
+      nSamplePerBlock                   10
+      speciesId                          0
     }
 
-    IntraPairAutoCorr{
-      interval                        4000000
-      outputFileName        IntraPairAutoCorr
-      speciesId                             0
-      atom1Id                               0
-      atom2Id                               7
-      capacity                            500
-    }
   }
   saveInterval         1000000
   saveFileName         restart
@@ -152,3 +151,11 @@ McSimulation{
       }
     }
     
+    IntraPairAutoCorr{
+      interval                        4000000
+      outputFileName        IntraPairAutoCorr
+      speciesId                             0
+      atom1Id                               0
+      atom2Id                               7
+      capacity                            500
+    }

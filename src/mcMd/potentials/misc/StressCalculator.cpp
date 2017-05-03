@@ -1,4 +1,11 @@
-#include "PairPotential.h"
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "StressCalculator.h"
 #include <util/space/Vector.h>
 
 namespace McMd 
@@ -7,64 +14,47 @@ namespace McMd
    using namespace Util;   
 
    /*
-   * Mark the energy as unknown.
-   */
-   void PairPotential::unsetEnergy()
-   {  energy_.unset(); }
-
-   /**
-   * Return the precalculated total pair energy for this System.
-   */
-   double PairPotential::energy()
-   {
-      if (!energy_.isSet()) {
-         computeEnergy();
-      }
-      return energy_.value();
-   }
-
-   /*
    * Mark the stress as unknown.
    */
-   void PairPotential::unsetStress()
+   void StressCalculator::unsetStress()
    {  stress_.unset(); }
 
    /*
    * Get the nonbonded stress tensor.
    */
-   void PairPotential::computeStress(Tensor& stress)
+   void StressCalculator::computeStress(Tensor& stress)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }
 
-      // Get pair stress tensor
+      // Get full stress tensor
       stress = stress_.value();
    }
 
    /*
    * Get the nonbonded x, y, z pressures
    */
-   void PairPotential::computeStress(Vector& pressures)
+   void StressCalculator::computeStress(Vector& pressures)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }
 
-      // Get diagonal components of pair stress.
+      // Get diagonal components of stress tensor (pressures)
       for (int i=0; i < Dimension; ++i) {
          pressures[i] = stress_.value()(i, i);
       }
    }
 
    /*
-   * Get the nonbonded pressure
+   * Get the isotropic pressure = Tr(stress)/3
    */
-   void PairPotential::computeStress(double& pressure)
+   void StressCalculator::computeStress(double& pressure)
    {
-      // If necessary, compute stress 
+      // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
       }

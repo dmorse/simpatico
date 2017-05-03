@@ -195,7 +195,8 @@ namespace McMd
          UTIL_THROW("nAtomType must be > 0");
       }
       #ifdef INTER_BOND
-      read<int>(in, "nBondType", nBondType_);
+      nBondType_ = 0; // Default value
+      readOptional<int>(in, "nBondType", nBondType_);
       if (nBondType_ < 0) {
          UTIL_THROW("nBondType must be >= 0");
       }

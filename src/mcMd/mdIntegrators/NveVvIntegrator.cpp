@@ -145,6 +145,12 @@ namespace McMd
       system().positionSignal().notify();
       system().velocitySignal().notify();
 
+      #ifndef INTER_NOPAIR
+      if (!system().pairPotential().isPairListCurrent()) {
+         system().pairPotential().buildPairList();
+      }
+      #endif
+
       system().calculateForces();
 
       // 2nd half velocity Verlet, loop over atoms
@@ -174,12 +180,6 @@ namespace McMd
       }
       #endif
       system().velocitySignal().notify();
-
-      #ifndef INTER_NOPAIR
-      if (!system().pairPotential().isPairListCurrent()) {
-         system().pairPotential().buildPairList();
-      }
-      #endif
 
    }
 

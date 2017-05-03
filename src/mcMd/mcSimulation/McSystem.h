@@ -60,6 +60,9 @@ namespace McMd
       /// Destructor.
       virtual ~McSystem();
 
+      /// \name Parameter IO
+      //@{
+
       /**
       * Read parameters from input file.
       *
@@ -88,6 +91,10 @@ namespace McMd
       */
       virtual void saveParameters(Serializable::OArchive &ar);
 
+      //@}
+      /// \name Initial Configurations
+      //@{
+
       /**
       * Read system configuration from file.
       *
@@ -104,6 +111,25 @@ namespace McMd
       */
       virtual void loadConfig(Serializable::IArchive& ar);
 
+      /**
+      * Generate molecules for all species.
+      *
+      * The array capacities contains at least nSpecies
+      * elements, in which element i contains the number 
+      * of molecules to generate for species i.
+      * 
+      * The array capacities contains at least nAtomType
+      * elements, in which element i contains the steric 
+      * diameter used for atom i in the packing algorithm.
+      *
+      * \param capacities number of molecules in each species
+      * \param diameters  diameter of each atom type
+      */
+      virtual 
+      void generateMolecules(Array<int> const & capacities,
+                             Array<double> const & diameters);
+
+      //@}
       /// \name Energy and Stress calculators
       //@{
 
@@ -165,7 +191,6 @@ namespace McMd
       /// \name Potential Energy Accessors
       //@{
 
-
       #ifndef INTER_NOPAIR
       /**
       * Return the McPairPotential by reference.
@@ -173,12 +198,12 @@ namespace McMd
       McPairPotential& pairPotential() const;
       #endif
 
+      #ifdef INTER_BOND
       /**
       * Does a bond potential exist?.
       */
       bool hasBondPotential() const;
 
-      #ifdef INTER_BOND
       /**
       * Return the BondPotential by reference.
       */
@@ -196,7 +221,6 @@ namespace McMd
       */
       AnglePotential& anglePotential() const;
       #endif
-
 
       #ifdef INTER_DIHEDRAL
       /**
@@ -332,9 +356,6 @@ namespace McMd
 
       /// Signal to indicate change in atomic positions.
       Signal<>  positionSignal_;
-
-      /// Signal to indicate change in atomic velocities.
-      Signal<>  velocitySignal_;
 
       /*
       * Implementations of the explicit specializations of the public

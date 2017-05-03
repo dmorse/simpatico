@@ -144,21 +144,13 @@ namespace McMd
       /// \name Global force and energy calculators
       //@{
 
-
        // Force evaluation, which adds both types of pair force.
       virtual void addForces();
-
-      /** 
-      * Functions computeEnergy() and computeStress compute both
-      * non-Coulombic pair and short-range coulombic pair energy
-      * or stress contributions, respectively, but stores them in
-      * in different accumulator variables.
-      */
 
       /**
       * Unset both energy accumulators.
       */
-      void unsetEnergy();
+      virtual void unsetEnergy();
 
       /**
       * Compute and store all short-range pair energies.
@@ -168,7 +160,7 @@ namespace McMd
       /**
       * Unset both stress accumulators.
       */
-      void unsetStress();
+      virtual void unsetStress();
 
       /**
       * Compute and store all short-range pair stress contributions.
@@ -177,36 +169,27 @@ namespace McMd
 
       //@}
 
-      double rSpaceEnergy() const
-      { return rSpaceAccumulatorPtr_->rSpaceEnergy_.value(); }
-
-      // Get non-coulombic pair stress.
-      Tensor stress()
-      { return pairStress_.value(); }
-
-      // Get non-coulombic pair pressure.
-      double pressure();
-
    private:
 
       // Pointer to non-Coulombic pair interaction
       Interaction* pairPtr_;
 
-      // Pointers to Ewald Coulomb interaction (owned by Coulomb potential)
+      // Pointer to Ewald Coulomb interaction (owned by MdCoulombPotential)
       EwaldInteraction* ewaldInteractionPtr_;
 
-      // Pointer to EwaldRSpaceAccumulator (owned by Coulomb potential)
+      // Pointer to EwaldRSpaceAccumulator (owned by MdCoulombPotential)
       EwaldRSpaceAccumulator* rSpaceAccumulatorPtr_;
 
+      // Pointer to array of AtomType objects (contain mass and charge)
       const Array<AtomType>* atomTypesPtr_;
 
-      // Non-Coulomb pair accumulators
-      Setable<Tensor> pairStress_; 
+      // True iff this is a copy of an MC pair potential (for hybrid MC).
+      bool isCopy_;
 
-      // Prefactor for coulomb part.
-      double fourpiepsi_;
+      // Get an AtomType
+      const AtomType& atomType(int i)
+      {  return (*atomTypesPtr_)[i]; }
 
-      bool            isCopy_;
    };
 }
 
@@ -249,8 +232,9 @@ namespace McMd
          MdEwaldPotential* ewaldPtr; 
          ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
  
-         ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
+         ewaldInteractionPtr_ = &ewaldPtr->ewaldInteraction();
          rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
+         rSpaceAccumulatorPtr_->setPairPotential(*this); 
  
          pairPtr_ = new Interaction;
          // Pass address of MdEwaldPotential to EwaldPair interaction.
@@ -297,8 +281,6 @@ namespace McMd
       // Initialize the PairList 
       pairList_.initialize(simulation().atomCapacity(), cutoff);
 
-      //Initialize prefactor for coulomb part.
-      fourpiepsi_ = 1.0 / (4.0*Constants::Pi*ewaldInteractionPtr_->epsilon()) ; 
    }
 
    /*
@@ -319,8 +301,6 @@ namespace McMd
                  pairPtr_->maxPairCutoff())
       loadParamComposite(ar, pairList_);
 
-      //Initialize prefactor for coulomb part.
-      fourpiepsi_ = 1.0 / (4.0*Constants::Pi*ewaldInteractionPtr_->epsilon()) ; 
    }
 
    /*
@@ -479,7 +459,7 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::unsetStress()
    { 
-      pairStress_.unset(); 
+      stress_.unset(); 
       rSpaceAccumulatorPtr_->rSpaceStress_.unset(); 
    }
 
@@ -522,7 +502,7 @@ namespace McMd
 
             // Non-Coulomb stress
             if (rsq < pairPtr_->cutoffSq(type0, type1)) {
-               force  = dr;
+               force = dr;
                force *= pairPtr_->forceOverR(rsq, type0, type1);
                incrementPairStress(force, dr, pStress);
             }
@@ -542,7 +522,7 @@ namespace McMd
       normalizeStress(pStress);
       normalizeStress(cStress);
 
-      pairStress_.set(cStress);
+      stress_.set(pStress);
       rSpaceAccumulatorPtr_->rSpaceStress_.set(cStress);
    }
 

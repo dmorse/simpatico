@@ -416,6 +416,8 @@ namespace McMd
       //add a new method in Tensor.h for acquiring unit matrix.
       qv.zero();
 
+      double alpha = ewaldInteraction_.alpha();
+      double ca = 0.25/(alpha*alpha);
       for (i = 0; i < waves_.size(); ++i) {
          q = waves_[i];
          q0.multiply(b0, q[0]);
@@ -426,19 +428,21 @@ namespace McMd
          qv += q2;
 
          K.dyad(qv,qv);
-         K *= (2 * ( ( 0.25 / (ewaldInteraction_.alpha()*ewaldInteraction_.alpha())
-                     + (1.0 / ksq_[i]) ) ) );
-         K.subtract(unitTensor_, K);
+         K *=  -2.0 * (ca + (1.0 / ksq_[i]));
+         K.add(unitTensor_, K);
          x = rho_[i].real();
          y = rho_[i].imag();
-         K *= (g_[i] * ( x*x + y*y));
+         K *= g_[i]*( x*x + y*y);
          stressTensor += K;  
       }
-       
-      stressTensor /= (2 * ewaldInteraction_.epsilon() * boundaryPtr_->volume());   
+
+      double epsilon = ewaldInteraction_.epsilon();
+      double volume = boundaryPtr_->volume(); 
+      stressTensor /= (2.0 * epsilon * volume);   
 
       // Correct for conjugate wave contribution in k-part then set.
-      stressTensor *= 2; 
+      stressTensor *= 2.0; 
+
       kSpaceStress_.set(stressTensor);
    }
 

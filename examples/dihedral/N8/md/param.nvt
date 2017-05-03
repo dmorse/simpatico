@@ -71,34 +71,23 @@ MdSimulation{
       interval                       10000
     }
 
-    RadiusGyration{
+    MdEnergyAnalyzer{
       interval                        1000
-      outputFileName                  RgSq
-      nSamplePerBlock                    1
-      speciesId                          0
-    }
-
-    MdEnergyOutput{
-      interval                       10000
       outputFileName                energy
-    }
-
-    MdPotentialEnergyAverage{
-      interval                        1000
-      outputFileName             potential
-      nSamplePerBlock                   10
-    }
-
-    MdKineticEnergyAverage{
-      interval                        1000
-      outputFileName         kineticEnergy
-      nSamplePerBlock                   10
+      nSamplePerBlock                  100
     }
 
     MdPressureAverage{
       interval                         100
       outputFileName              pressure
       nSamplePerBlock                   10
+    }
+
+    RadiusGyration{
+      interval                        1000
+      outputFileName                  RgSq
+      nSamplePerBlock                    1
+      speciesId                          0
     }
 
     IntraPairAutoCorr{
@@ -117,6 +106,18 @@ MdSimulation{
     CosineSqAngle{
       kappa             1.500000000000e+02
       theta0            60.00000000000e+00
+    }
+
+    MdPotentialEnergyAverage{
+      interval                        1000
+      outputFileName             potential
+      nSamplePerBlock                   10
+    }
+
+    MdKineticEnergyAverage{
+      interval                        1000
+      outputFileName         kineticEnergy
+      nSamplePerBlock                   10
     }
 
     MdPressureAverage{

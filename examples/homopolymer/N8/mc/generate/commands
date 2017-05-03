@@ -1,0 +1,11 @@
+WRITE_PARAM      param
+GENERATE_MOLECULES
+   cubic 10.5
+   Capacities:  100
+   Diameters:   0.9
+WRITE_CONFIG     config
+SIMULATE         1000000
+SET_CONFIG_IO    McConfigIo
+WRITE_CONFIG     config2
+FINISH
+

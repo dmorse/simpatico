@@ -1,4 +1,4 @@
-RESTART                 1000
+RESTART                 6000
 SET_CONFIG_IO   DdMdConfigIo
 WRITE_CONFIG          config
 FINISH

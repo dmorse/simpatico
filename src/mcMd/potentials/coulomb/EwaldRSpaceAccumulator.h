@@ -8,6 +8,8 @@
 namespace McMd
 {
 
+  class PairPotential;
+
   using namespace Util;
 
   /**
@@ -24,11 +26,15 @@ namespace McMd
      */
      EwaldRSpaceAccumulator()
         :rSpaceEnergy_(),
-         rSpaceStress_()
+         rSpaceStress_(),
+         pairPotentialPtr_(0)
      {
         rSpaceEnergy_.unset();
         rSpaceStress_.unset();
      }
+
+     void setPairPotential(PairPotential& potential)
+     {  pairPotentialPtr_ = &potential; }
 
      /**
      * Is the r-space energy set?
@@ -43,23 +49,22 @@ namespace McMd
      { return rSpaceStress_.isSet(); }
 
      /**
-     * Return the r-space energy.
+     * Return the r-space energy (compute if necessary).
      */
-     double rSpaceEnergy() const
-     { return rSpaceEnergy_.value(); }
+     double rSpaceEnergy();
 
      /**
-     * Return the r-space stress.
+     * Return the r-space stress (compute if necessary).
      */
-     Tensor rSpaceStress() const
-     { return rSpaceStress_.value(); }
+     Tensor rSpaceStress();
      
-     //Tensor rSpacePressure() const;
-
   private:
 
      Setable<double> rSpaceEnergy_;
+
      Setable<Tensor> rSpaceStress_;
+
+     PairPotential* pairPotentialPtr_;
 
   // friend:
 

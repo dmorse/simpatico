@@ -26,7 +26,7 @@ namespace McMd
    */
    bool 
    PointGenerator::attemptPlaceMolecule(Molecule& molecule,
-                                        const DArray<double>& diameters,
+                                        Array<double> const & diameters,
                                         CellList& cellList)
    {
       Atom& atom = molecule.atom(0);

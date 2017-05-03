@@ -1,4 +1,7 @@
-mcMd_potentials_=
+mcMd_potentials_= 
+
+include $(SRC_DIR)/mcMd/potentials/misc/sources.mk
+mcMd_potentials_+=$(mcMd_potentials_misc_) 
 
 ifndef INTER_NOPAIR
 include $(SRC_DIR)/mcMd/potentials/pair/sources.mk

@@ -10,6 +10,7 @@
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
+#include <mcMd/simulation/stress.h>
 #include <util/space/Tensor.h>
 #include <util/misc/Setable.h>
 #include <util/global.h>
@@ -166,6 +167,12 @@ namespace McMd
 
       Interaction& interaction() const
       {  return *interactionPtr_; }
+
+      /*
+      * Generalized stress computation.
+      */
+      template <typename T>
+      void computeStressImpl(T& stress);
 
    private:
 
@@ -378,14 +385,14 @@ namespace McMd
    * Compute all short-range pair contributions to stress.
    */
    template <class Interaction>
-   void MdPairPotentialImpl<Interaction>::computeStress()
+   template <typename T>
+   void MdPairPotentialImpl<Interaction>::computeStressImpl(T& stress)
    {
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
       }
 
-      Tensor stress;
       Vector dr;
       Vector force;
       double rsq;
@@ -414,7 +421,18 @@ namespace McMd
       // Normalize by volume
       stress /= boundary().volume();
       normalizeStress(stress);
+   }
 
+   /*
+   * Compute all short-range pair contributions to stress.
+   */
+   template <class Interaction>
+   void MdPairPotentialImpl<Interaction>::computeStress()
+   {
+      Tensor stress;
+      computeStressImpl(stress);
+
+      // Set value of Setable<double> stress_
       stress_.set(stress);
    }
 

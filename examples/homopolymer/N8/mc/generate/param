@@ -1,0 +1,75 @@
+McSimulation{
+  FileMaster{
+    inputPrefix                       ../in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                    A       2.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    pairStyle               LJPair
+    bondStyle               HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00
+      sigma                 1.000000000000e+00
+      cutoff                1.122460000000e+00
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+  }
+  McMoveManager{
+
+    AtomDisplaceMove{
+      probability           1.000000000000e+00
+      speciesId                              0
+      delta                               0.04
+    }
+
+  }
+  AnalyzerManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                        100000
+    }
+
+    McEnergyAnalyzer{
+      interval                          1000
+      outputFileName                  energy
+      nSamplePerBlock                     10
+    }
+
+    McPressureAverage{
+      interval                          1000
+      outputFileName                pressure
+      nSamplePerBlock                     10
+    }
+
+  }
+  saveInterval             0
+}
+
+

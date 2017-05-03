@@ -7,20 +7,35 @@
 
 Simpatico is a C++ package for Molecular Dynamics (MD), Monte Carlo 
 (MC), and hybrid MC simulations of classical mechanical models of 
-polymeric and molecular liquids. It has thus far been used
-primarily for simulating course-grained models of polymer liquids. 
-The package contains:
+polymeric and molecular liquids. It has thus far been used primarily 
+for simulating course-grained models of polymer liquids. 
 
-- An efficient program for parallel MD simulations, named ddSim.
+The simpatico package contains:
+
+- A program for parallel MD simulations, named ddSim.
 
 - Programs for Monte Carlo (MC) and molecular dynamics (MD) 
   simulations on a single processor, named mcSim and mdSim.
 
-The parallel MD program ddSim uses a spatial domain decomposition 
-for parallelization.
+The ddSim parallel MD program uses a spatial domain decomposition 
+strategy to allow efficientl simulation of very large systems. 
+The mcSim and mdSim simulation are convenient for simulations on
+a personal computer. The single-processor simulations also provide 
+convenient ways to submit embarassingly parallel simulations of 
+many similar systems with one system per CPU core, which can be
+used to improve statistics in MC sampling or to explore a parameter
+space. 
+
+All three simulation programs (ddSim, mdSim and mcSim) provide 
+very flexible, extensible facilities for on-the-fly output and 
+analysis of selected physical variables during a simulation. 
+The single-processor mcSim and mdSim can also be used for
+postprocess analysis of trajectories, by applying the same 
+analysis algorithms to a sequence of configuration snapshots 
+read from file.
    
-Simpatico is distributed only in source code form, and so must be 
-compiled from source.
+Simpatico is distributed only in source code form, and so must 
+be compiled from source.
 
 Getting the Source Code:
 ------------------------
@@ -109,4 +124,3 @@ instructions for compiling multi-processor programs.
 
 Instructions for enabling or disabling a variety of optional 
 compile-time features are also given in the html documentation. 
-

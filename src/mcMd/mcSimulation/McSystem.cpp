@@ -11,6 +11,8 @@
 #include <mcMd/species/Species.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/ensembles/EnergyEnsemble.h>
+#include <mcMd/generators/Generator.h>
+#include <mcMd/generators/generatorFactory.h>
 
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
@@ -399,6 +401,47 @@ namespace McMd
       #endif
    }
 
+   /*
+   * Generate molecules for all species.
+   */
+   void McSystem::generateMolecules(
+                       Array<int> const & capacities,
+                       Array<double> const & diameters)
+   {
+
+      // Setup a local cell list
+      CellList cellList;
+      Generator::setupCellList(simulation().atomCapacity(), 
+                               boundary(), diameters, cellList);
+
+      // Generate molecules for each species
+      Generator* ptr = 0;
+      int nSpecies = simulation().nSpecies();
+      bool success = false;
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         if (capacities[iSpecies] > 0) {
+            ptr = generatorFactory(simulation().species(iSpecies), *this);
+            UTIL_CHECK(ptr);
+            success = ptr->generate(capacities[iSpecies], 
+                                    diameters, cellList);
+            delete ptr;
+            if (!success) {
+               Log::file() << "Failed to complete species " 
+                           << iSpecies << "\n";
+            }
+            UTIL_CHECK(success);
+         }
+      }
+
+      #ifndef INTER_NOPAIR
+      pairPotential().buildCellList();
+      #endif
+
+      #ifdef UTIL_DEBUG
+      isValid();
+      #endif
+   }
+
    // -------------------------------------------------------------
    // Energy Evaluators (including all components)
 
@@ -495,6 +538,21 @@ namespace McMd
    {
       #ifndef INTER_NOPAIR
       pairPotential().unsetEnergy();
+      #endif
+      #ifdef INTER_BOND
+      if (hasBondPotential()) {
+          bondPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential()) {
+          anglePotential().unsetEnergy();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential()) {
+          dihedralPotential().unsetEnergy();
+      }
       #endif
    }
 
@@ -615,6 +673,21 @@ namespace McMd
    {
       #ifndef INTER_NOPAIR
       pairPotential().unsetStress();
+      #endif
+      #ifdef INTER_BOND
+      if (hasBondPotential()) {
+          bondPotential().unsetStress();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential()) {
+          anglePotential().unsetStress();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential()) {
+          dihedralPotential().unsetStress();
+      }
       #endif
    }
 

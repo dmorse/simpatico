@@ -4,7 +4,6 @@ MdSimulation{
     outputPrefix                        out/ 
   }
   nAtomType                              1
-  nBondType                              1
   atomTypes                              A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -20,7 +19,6 @@ MdSimulation{
   }
   MdSystem{
     pairStyle                        LJPair
-    bondStyle                  HarmonicBond
     MdPairPotential{
       epsilon               1.000000000000e+00 
       sigma                 1.000000000000e+00 
@@ -30,10 +28,6 @@ MdSimulation{
         pairCapacity                        5000
         skin                  2.500000000000e-01
       }
-    }
-    BondPotential{
-      kappa                 2.000000000000e+03
-      length                1.000000000000e+00
     }
     EnergyEnsemble{
       type                          isothermal
@@ -54,15 +48,9 @@ MdSimulation{
       interval                          2000
     }
 
-    MdPotentialEnergyAverage{
+    MdEnergyAnalyzer{
       interval                           100
-      outputFileName      potentialEnergyAve
-      nSamplePerBlock                     10
-    }
-
-    MdKineticEnergyAverage{
-      interval                           100
-      outputFileName        kineticEnergyAve
+      outputFileName                  energy
       nSamplePerBlock                     10
     }
 
@@ -93,7 +81,27 @@ MdSimulation{
   saveFileName               restart
 }
 
+  nBondType                              1
+    bondStyle                  HarmonicBond
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+
     ConfigWriter{
       interval                           4000
       outputFileName              dump/config.
     }
+
+    MdPotentialEnergyAverage{
+      interval                           100
+      outputFileName      potentialEnergyAve
+      nSamplePerBlock                     10
+    }
+
+    MdKineticEnergyAverage{
+      interval                           100
+      outputFileName        kineticEnergyAve
+      nSamplePerBlock                     10
+    }
+

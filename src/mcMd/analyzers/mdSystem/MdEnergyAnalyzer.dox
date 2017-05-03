@@ -1,0 +1,61 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdEnergyAnalyzer_page  MdEnergyAnalyzer
+
+\section mcMd_analyzer_MdEnergyAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes the average of each component of the total energy, and optionally outputs block averages of all components during the simulation, if nSamplePerBlock > 0.
+
+\sa McMd::MdEnergyAnalyzer
+
+\section mcMd_analyzer_MdEnergyAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+  MdEnergyAnalyzer{
+    interval            int
+    outputFileName      string
+    [nSamplePerBlock    int]
+    [coulombComponents  bool]
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average (optional: default = 0)</td>
+  </tr>
+  <tr> 
+     <td> coulombComponents </td>
+     <td> true iff r-space and k-space recorded separately (optional: default = false) </td>
+  </tr>
+</table>
+The parameter nSamplePerBlock is optional, and defaults to nSamplePerBlock == 0 if absent, denoting
+no output of block averages.
+
+\section mcMd_analyzer_MdEnergyAnalyzer_output_sec Output
+
+During the simulation, if nSamplePerBlock > 0, block averages are output to the 
+file {outputFileName}.dat. In this case a description of the format of this *.dat
+file, indicating a label for the data in each column, is output to the file 
+{outputFileName}.fmt. If nSamplePerBlock == 0, this file is not created.
+
+At the end of the simulation:
+
+ - parameters are echoed to file {outputFileName}.prm 
+
+ - average values and errors for each component of energy are output to {outputFileName}.ave.
+
+ - Information about heirarchical error analysis is output to {outputFileName}.aer 
+
+*/
+
+}

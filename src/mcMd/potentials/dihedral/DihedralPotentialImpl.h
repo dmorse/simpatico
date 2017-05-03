@@ -161,35 +161,19 @@ namespace McMd
       virtual double atomEnergy(const Atom& atom) const;
 
       /**
-      * Compute and return total dihedral potential energy of this System.
-      */
-      virtual double energy() const;
-
-      /**
       * Add dihedral forces to all atomic forces.
       */
       virtual void addForces();
 
       /**
-      * Compute total dihedral pressure
-      *
-      * \param stress (output) pressure.
+      * Calculate and store dihedral energy for this System.
       */
-      virtual void computeStress(double& stress) const;
+      virtual void computeEnergy();
 
       /**
-      * Compute x, y, z dihedral pressures.
-      *
-      * \param stress (output) pressures.
+      * Compute and store the total dihedral pressure
       */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute dihedral stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
+      virtual void computeStress();
 
       //@}
 
@@ -199,6 +183,9 @@ namespace McMd
 
       bool isCopy_;
  
+      /**
+      * Generic stress calculation, T=Tensor, Vector or double.
+      */  
       template <typename T>
       void computeStressImpl(T& stress) const;
 
@@ -347,7 +334,7 @@ namespace McMd
    * Compute total dihedral energy for a System.
    */
    template <class Interaction>
-   double DihedralPotentialImpl<Interaction>::energy() const
+   void DihedralPotentialImpl<Interaction>::computeEnergy() 
    {
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
@@ -374,7 +361,8 @@ namespace McMd
          }
       }
 
-      return energy;
+      energy_.set(energy);
+      // return energy;
    }
 
    /* 
@@ -422,11 +410,17 @@ namespace McMd
    }
 
    /* 
-   * Add dihedral contribution to stress.
+   * Generic stress / pressure computation.
+   *
+   * Allowed types: 
+   *    T == Tensor -> compute stress tensor
+   *    T == Vector -> compute xx, yy, zz diagonal components
+   *    T == double -> compute pressure (P_xx + P_yy + P_zz)/3
    */
    template <class Interaction>
    template <typename T>
-   void DihedralPotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   void DihedralPotentialImpl<Interaction>::computeStressImpl(T& stress) 
+      const
    {
       Vector dr1, dr2, dr3, force1, force2, force3;
 
@@ -465,19 +459,20 @@ namespace McMd
       stress /= boundary().volume();
       normalizeStress(stress);
    }
-   template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(double& stress) const
-   {  computeStressImpl(stress); }
 
+   /*
+   * Compute dihedral stress.
+   */
    template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
-        const
-   {  computeStressImpl(stress); }
+   void DihedralPotentialImpl<Interaction>::computeStress()
+   {
+      // Compute stress tensor
+      Tensor stress;
+      computeStressImpl(stress);
 
-   template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
-        const
-   {  computeStressImpl(stress); }
+      // Set value of Setable<double> energy_ 
+      stress_.set(stress);
+   }
 
    template <class Interaction>
    inline Interaction& DihedralPotentialImpl<Interaction>::interaction()

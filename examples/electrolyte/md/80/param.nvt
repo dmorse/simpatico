@@ -4,7 +4,6 @@ MdSimulation{
     outputPrefix                        out/ 
   }
   nAtomType                              2
-  nBondType                              1
   hasCoulomb                             1
   atomTypes                              A       1.0        1.0
                                          B       1.0       -1.0  
@@ -27,7 +26,6 @@ MdSimulation{
   }
   MdSystem{
     pairStyle                        LJPair
-    bondStyle                  HarmonicBond
     coulombStyle                      Ewald
     CoulombPotential{
       epsilon               0.200000000000e+00
@@ -48,10 +46,6 @@ MdSimulation{
         skin                  2.500000000000e-01
       }
     }
-    BondPotential{
-      kappa                 2.000000000000e+03
-      length                1.000000000000e+00
-    }
     EnergyEnsemble{
       type                           isothermal
       temperature                           1.0
@@ -68,17 +62,21 @@ MdSimulation{
     baseInterval                          100
 
     LogProgress{
-      interval                            100
+      interval                            500
     }
 
-    MdEnergyOutput{
+    MdEnergyAnalyzer{
       interval                            100
       outputFileName                   energy
+      nSamplePerBlock                      10
+      coulombComponents                     1
     }
+
     ConfigWriter{
       interval                          10000
       outputFileName              config.
     }
+
   }
   saveInterval                   200
   saveFileName               restart
@@ -89,3 +87,9 @@ MdSimulation{
       interval                           4000
       outputFileName              dump/config.
     }
+
+    MdEnergyOutput{
+      interval                            100
+      outputFileName                   energy
+    }
+

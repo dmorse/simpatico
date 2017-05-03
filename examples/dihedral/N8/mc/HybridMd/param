@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                        in/
+    inputPrefix                     ../in/
     outputPrefix                      out/
   }
   nAtomType                              1
@@ -56,7 +56,7 @@ McSimulation{
     }
   }
   McMoveManager{
-    
+
     HybridMdMove{
       probability         1.000000000000e+00
       nStep                              200
@@ -82,17 +82,23 @@ McSimulation{
       interval                         50
     }
 
-    McEnergyAverage{
+    McEnergyAnalyzer{
       interval                         10
       outputFileName               energy
       nSamplePerBlock                  10
     }
-    
+
     McPairEnergyAverage{
       interval                       10
       outputFileName         pairEnergy
       nSamplePerBlock               10
       selector             inter -1 -1
+    }
+    
+    McPressureAverage{
+      interval                         10
+      outputFileName             pressure
+      nSamplePerBlock                  10
     }
     
     RadiusGyration{
@@ -126,10 +132,10 @@ McSimulation{
       nTrial                         20
     }
 
-    McPressureAverage{
-      interval                       10000
-      outputFileName           pressureAve
-      nSamplePerBlock                    1
+    McEnergyAverage{
+      interval                         10
+      outputFileName               energy
+      nSamplePerBlock                  10
     }
 
     RadiusGyration{
@@ -148,7 +154,7 @@ McSimulation{
       }
       selector                  inter   -1   -1
     }
-    
+
     BondLengthDist{
       interval                     20000
       outputFileName          BondLengthDist
@@ -159,4 +165,4 @@ McSimulation{
          nBin                      400
       }
     }
-    
+

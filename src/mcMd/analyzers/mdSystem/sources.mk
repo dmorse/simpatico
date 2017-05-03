@@ -1,5 +1,6 @@
 mcMd_analyzers_mdSystem_=\
     mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp \
+    mcMd/analyzers/mdSystem/MdEnergyAnalyzer.cpp \
     mcMd/analyzers/mdSystem/MdEnergyOutput.cpp \
     mcMd/analyzers/mdSystem/MdKineticEnergyAverage.cpp \
     mcMd/analyzers/mdSystem/MdPairEnergyCoefficients.cpp \

@@ -1,11 +1,14 @@
 System:
 
-    melt of 100 chains of 8 atoms.
+    melt of 100 chains of 8 atoms, with angle and dihedral potentials.
 
     Requires a version of mcSim compiled with angles (option -a) 
     and dihedrals (-d) enabled.
 
-Usage - cd to an example subdirectory, then enter:
+Usage
+----- 
+
+Change directory (cd) to an example subdirectory, then enter:
 
 MC simulation:
 

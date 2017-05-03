@@ -8,8 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/space/Tensor.h>
-#include <util/misc/Setable.h>
+#include <mcMd/potentials/misc/EnergyCalculator.h>
+#include <mcMd/potentials/misc/StressCalculator.h>
+
+// #include <util/space/Tensor.h>
+// #include <util/misc/Setable.h>
+
 #include <util/global.h>
 #include <string>
 
@@ -28,7 +32,7 @@ namespace McMd
    *
    * \ingroup McMd_Pair_Module
    */
-   class PairPotential
+   class PairPotential : public EnergyCalculator, public StressCalculator
    {
 
    public:
@@ -38,6 +42,8 @@ namespace McMd
       */
       virtual ~PairPotential()
       {}
+
+      using EnergyCalculator::energy;
 
       /// \name Pair Interaction Interface
       //@{ 
@@ -84,90 +90,6 @@ namespace McMd
       virtual std::string interactionClassName() const = 0;
 
       //@}
-      /// \name Global Energy and Stress Evaluators
-      //@{ 
-
-      /**
-      * Mark the energy as unknown.
-      */
-      virtual void unsetEnergy();
-
-      /**
-      * Calculate the total nonBonded pair energy for the associated System.
-      *
-      * If energy is already known (set), this function does nothign and returns.
-      *
-      * In a charged system, this function computes and separately stores the 
-      * non-Coulomb pair energy and the short-range Ewald part of the Coulomb 
-      * energy.
-      */
-      virtual void computeEnergy() = 0;
-
-      /**
-      * Return the total pair energy for this System.
-      *
-      * This function calls computeEnergy() and returns the stored value.
-      * of the non-Coulombic pair energy.
-      */
-      double energy();
-
-      /**
-      * Mark the stress as unknown.
-      */
-      virtual void unsetStress();
-
-      /**
-      * Compute all short range pair-wise stress components.
-      *
-      * This function computes and stores the stress arising from the
-      * non-Coulomb pair interaction. 
-      *
-      * In a charged system, this function also computes and separately
-      * stores stress contributions arising from the short-range part 
-      * of the Coulomb potential. The resulting stress is shared with
-      * the associated CoulombPotential object.
-      */
-      virtual void computeStress() = 0;
-
-      /**
-      * Get pair stress tensor.
-      *
-      * If necessary, this function calls computeStress() before
-      * accessing value.
-      *
-      * \param stress (output) pair stress tensor
-      */
-      virtual void computeStress(Tensor& stress);
-
-      /**
-      * Compute and return xx, yy, zz non-Coulomb pair pressures.
-      *
-      * If necessary, this function calls computeStress() before
-      * accessing values.
-      *
-      * \param pressures (output) diagonal pair stress components
-      */
-      virtual void computeStress(Vector& pressures);
-
-      /**
-      * Compute and return scalar (non-Coulomb) pair pressure.
-      *
-      * If necessary, this function calls computeStress() before
-      * accessing values.
-      *
-      * \param pressure (output) scalar pair pressure.
-      */
-      virtual void computeStress(double& pressure);
-
-      //@}
-
-   protected:
-
-      // Setable value of energy for entire system.
-      Setable<double> energy_;
-
-      // Setable value of stress tensor for entire system.
-      Setable<Tensor> stress_;
 
    };
 
