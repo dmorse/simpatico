@@ -5,9 +5,9 @@ mcMd_potentials_coulomb_=\
    mcMd/potentials/coulomb/MdEwaldPotential.cpp \
    mcMd/potentials/coulomb/EwaldRSpaceAccumulator.cpp 
 
-ifdef INTER_FFTW
+ifdef SIMP_FFTW
 mcMd_potentials_coulomb_+=\
-   mcMd/potentials/coulomb/PMEInteraction.cpp \
+   mcMd/potentials/coulomb/MdPMEPotential.cpp 
 endif
 
 mcMd_potentials_coulomb_SRCS=\
