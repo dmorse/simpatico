@@ -92,7 +92,10 @@ namespace McMd
       * \param value  new value of parameter
       */
       void set(std::string name, double value)
-      {  ewaldInteraction_.set(name, value); }
+      {  
+         ewaldInteraction_.set(name, value); 
+         unsetWaves();
+      }
 
       /**
       * Get a parameter value, identified by a string.

@@ -42,6 +42,8 @@ namespace McMd
    * to the stress are shared with the associated CoulombPotential
    * object, and are publically accessible through functions of that 
    * object.
+   *
+   * \ingroup McMd_Pair_Module
    */
    template <class Interaction>
    class MdEwaldPairPotentialImpl : public MdPairPotential
@@ -402,19 +404,20 @@ namespace McMd
    */
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::unsetEnergy()
-   { 
+   {
+      // Unset non-coulomb pair energy (inherited from EnergyCalculator). 
       energy_.unset(); 
+      // Unset coulomb r-space energy.
       rSpaceAccumulatorPtr_->rSpaceEnergy_.unset(); 
    }
 
    /*
    * Compute and store pair interaction energy.
-   * Does nothing if energy is already set.
    */
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeEnergy()
    {
-      // Update PairList if necessary
+      // Update PairList iff necessary
       if (!isPairListCurrent()) {
          buildPairList();
       }

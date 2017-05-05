@@ -146,9 +146,12 @@ namespace McMd
          fexp2_.clear();
       }
 
-      double alpha = ewaldInteraction_.alpha();
-      double prefactor = -0.25/(alpha*alpha);
       double kCutoffSq = ewaldInteraction_.kSpaceCutoffSq();
+      double pi = Constants::Pi;
+      double alpha = ewaldInteraction_.alpha();
+      double epsilon = ewaldInteraction_.epsilon();
+      double prefactor = -0.25/(alpha*alpha);
+      selfPrefactor_ = alpha/(4*sqrt(pi)*pi*epsilon);
 
       // Accumulate waves, and wave-related properties.
       base0_ = 0;
@@ -161,7 +164,9 @@ namespace McMd
       upper2_ = -base2_;
 
       q0.multiply(b0, -1);
-      for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { // First index always non-negative.
+      for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { 
+
+         // Note: First index always non-negative.
          q0 += b0;
 
          mink1 = (k[0] == 0 ? 0 : -maxK[1]);
@@ -206,6 +211,9 @@ namespace McMd
       fexp0_.resize(upper0_ - base0_ + 1);
       fexp1_.resize(upper1_ - base1_ + 1);
       fexp2_.resize(upper2_ - base2_ + 1);
+
+      // Mark waves as updated
+      hasWaves_ = true;
    }
 
    /*
@@ -213,6 +221,11 @@ namespace McMd
    */
    void MdEwaldPotential::computeKSpaceCharge()
    {
+      // Compute waves if necessary
+      if (!hasWaves()) {
+         makeWaves();
+      }
+
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       Vector  rg;     // scaled atom position vector
@@ -276,18 +289,19 @@ namespace McMd
       double  forcePrefactor; // 
  
       DCMPLX  TwoPiIm;       // 2.0*pi*I
+      DCMPLX  de, expfactor;
       double  EPS(1.0E-10);  // Tiny number to check if is charge
+      double  epsilon = ewaldInteraction_.epsilon();
+      double  volume = boundaryPtr_->volume();
       int  nSpecies(simulationPtr_->nSpecies());
       int  type;
       int  i, j;
-      DCMPLX  de, expfactor;
-
 
       // Constants
       TwoPi   = 2.0*Constants::Pi;
       TwoPiIm = TwoPi * Constants::Im;
-      forcePrefactor = -2.0 /(ewaldInteraction_.epsilon()*boundaryPtr_->volume());
-
+      // forcePrefactor = -2.0 /(ewaldInteraction_.epsilon()*boundaryPtr_->volume());
+      forcePrefactor = -2.0 /(epsilon*volume);
 
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
@@ -365,6 +379,7 @@ namespace McMd
       double x, y,rhoSq;
       int nSpecies(simulationPtr_->nSpecies());
 
+
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
 
@@ -402,19 +417,22 @@ namespace McMd
    */
    void MdEwaldPotential::computeStress()
    {
+      // Compute Fourier components of charge density.
+      computeKSpaceCharge();
+    
       int i;
       double x, y; //real and image part of rho[i].
       Tensor K,stressTensor;// temp stress tensor.
       IntVector q;//vector indices.
       Vector qv,q0,q1,q2; //reciprocalVector.
       Vector b0, b1, b2; // reciprocalBasisVector.
-
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
       //add a new method in Tensor.h for acquiring unit matrix.
       qv.zero();
+      stressTensor.zero();
 
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);

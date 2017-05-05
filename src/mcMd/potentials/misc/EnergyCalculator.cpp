@@ -13,7 +13,7 @@ namespace McMd
    using namespace Util;   
 
    /*
-   * Mark the energy as unknown.
+   * Mark the energy as unknown (default implementation).
    */
    void EnergyCalculator::unsetEnergy()
    {  energy_.unset(); }

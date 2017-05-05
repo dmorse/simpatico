@@ -28,12 +28,10 @@ namespace McMd
       /**
       * Mark the energy as unknown.
       */
-      void unsetEnergy();
+      virtual void unsetEnergy();
 
       /**
       * Calculate the total nonBonded pair energy for the associated System.
-      *
-      * If energy is already known (set), this function does nothing and returns.
       */
       virtual void computeEnergy() = 0;
 

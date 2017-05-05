@@ -21,7 +21,8 @@ namespace McMd
    * Constructor.
    */
    MdCoulombPotential::MdCoulombPotential()
-    : isInitialized_(false)
+    : isInitialized_(false),
+      hasWaves_(false)
    {  setClassName("CoulombPotential"); }
 
    /*
@@ -55,12 +56,21 @@ namespace McMd
       return 0.0; 
    };
 
+   /*
+   * Unset precomputed wavevectors and k-space potential.
+   */
+   void MdCoulombPotential::unsetWaves()
+   {  hasWaves_ = false; }
+
+   /*
+   * Unset k-space energy (does not unset rSpace).
+   */
    void MdCoulombPotential::unsetEnergy()
    {  kSpaceEnergy_.unset(); }
 
-   void MdCoulombPotential::unsetStress()
-   {  kSpaceStress_.unset(); }
-
+   /*
+   * Get kspace energy (compute iff necessary).
+   */
    double MdCoulombPotential::kSpaceEnergy()
    {
       if (!kSpaceEnergy_.isSet()) {
@@ -69,9 +79,15 @@ namespace McMd
       return kSpaceEnergy_.value();
    }
 
+   /*
+   * Get rspace energy (compute iff necessary).
+   */
    double MdCoulombPotential::rSpaceEnergy()
    {  return rSpaceAccumulator_.rSpaceEnergy(); }
 
+   /*
+   * Get total Coulomb energy (recompute as needed). 
+   */
    double MdCoulombPotential::energy()
    {
       double temp;
@@ -80,6 +96,15 @@ namespace McMd
       return temp;
    }
 
+   /*
+   * Unset k-space stress contribution (does not unset rSpace).
+   */
+   void MdCoulombPotential::unsetStress()
+   {  kSpaceStress_.unset(); }
+
+   /*
+   * Get k-space stress contribution.
+   */
    Tensor MdCoulombPotential::kSpaceStress() 
    {
       if (!kSpaceStress_.isSet()) {
@@ -88,9 +113,15 @@ namespace McMd
       return kSpaceStress_.value();
    }
 
+   /*
+   * Get r-space stress contribution (recompute as needed).
+   */
    Tensor MdCoulombPotential::rSpaceStress()
    {  return rSpaceAccumulator_.rSpaceStress(); }
 
+   /*
+   * Get total Coulomb stress (recompute as needed).
+   */
    Tensor MdCoulombPotential::stress()
    {
       Tensor temp;

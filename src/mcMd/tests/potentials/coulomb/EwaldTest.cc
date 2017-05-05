@@ -3,6 +3,8 @@
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/species/Species.h>
+#include <util/format/Int.h>
+#include <util/format/Dbl.h>
 
 using namespace McMd;
 using namespace Util;
@@ -49,15 +51,15 @@ public:
       MdPairPotential& pair = sim.system().pairPotential();
       for (int i = 0; i < 20; ++i) {
          alpha = alphaMin + dAlpha*i;
+         coulomb.set("alpha", alpha);
          coulomb.unsetEnergy();
          pair.unsetEnergy();
-         coulomb.set("alpha", alpha);
          kEnergy = coulomb.kSpaceEnergy();
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
-         std::cout << coulomb.get("alpha")
-                   << "  " << kEnergy 
-                   << "  " << rEnergy 
+         std::cout << Dbl(coulomb.get("alpha"),15)
+                   << "  " << Dbl(kEnergy, 15)
+                   << "  " << Dbl(rEnergy, 15)
                    << "  " << energy
                    << std::endl;
       }
