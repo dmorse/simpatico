@@ -1,5 +1,5 @@
-#ifndef MD_EWALD_INTERACTION_CPP
-#define MD_EWALD_INTERACTION_CPP
+#ifndef MD_PME_INTERACTION_CPP
+#define MD_PME_INTERACTION_CPP
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -7,7 +7,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "EwaldInteraction.h"
+#include "PMEInteraction.h"
 #ifdef UTIL_MPI
 #include <util/mpi/MpiLoader.h>
 #endif
@@ -25,20 +25,26 @@ namespace McMd
    /* 
    * Constructor.
    */
-   EwaldInteraction::EwaldInteraction() 
+   PMEInteraction::PMEInteraction() 
     : epsilon_(0.0),
       alpha_(0.0),
       rSpaceCutoff_(0.0),
+      xgridSize_(0),
+      ygridSize_(0),
+      zgridSize_(0),
       isInitialized(false)
-   { setClassName("EwaldInteraction");}
+   { setClassName("PMEInteraction");}
    
    /* 
    * Copy constructor.
    */
-   EwaldInteraction::EwaldInteraction(const EwaldInteraction& other)
+   PMEInteraction::PMEInteraction(const PMEInteraction& other)
     : epsilon_(other.epsilon_),
       alpha_(other.alpha_),
       rSpaceCutoff_(other.rSpaceCutoff_),
+      xgridSize_(other.xgridSize_),
+      ygridSize_(other.ygridSize_),
+      zgridSize_(other.zgridSize_),
       isInitialized(other.isInitialized)
    {
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
@@ -51,10 +57,13 @@ namespace McMd
    /* 
    * Assignment operator.
    */
-   EwaldInteraction& EwaldInteraction::operator = (const EwaldInteraction& other)
+   PMEInteraction& PMEInteraction::operator = (const PMEInteraction& other)
    {
       epsilon_ = other.epsilon_;
       alpha_ = other.alpha_;
+      xgridSize_ = other.xgridSize_;
+      ygridSize_ = other.ygridSize_;
+      zgridSize_ = other.zgridSize_;
       rSpaceCutoff_ = other.rSpaceCutoff_;
       isInitialized = other.isInitialized;
 
@@ -70,11 +79,14 @@ namespace McMd
    /* 
    * Read potential parameters from file.
    */
-   void EwaldInteraction::readParameters(std::istream &in) 
+   void PMEInteraction::readParameters(std::istream &in) 
    {
       read<double>(in, "epsilon",      epsilon_);
       read<double>(in, "alpha",        alpha_);
       read<double>(in, "rSpaceCutoff", rSpaceCutoff_);
+      read<int>(   in, "xgridSize", xgridSize_);
+      read<int>(   in, "ygridSize", ygridSize_);
+      read<int>(   in, "zgridSize", zgridSize_);
 
       // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
@@ -87,12 +99,15 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void EwaldInteraction::loadParameters(Serializable::IArchive &ar)
+   void PMEInteraction::loadParameters(Serializable::IArchive &ar)
    {
       // Load all parameters that appear in parameter file
       loadParameter<double>(ar, "epsilon", epsilon_);
       loadParameter<double>(ar, "alpha", alpha_);
       loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
+      loadParameter<int>(   ar, "xgridSize", xgridSize_);
+      loadParameter<int>(   ar, "ygridSize", ygridSize_);
+      loadParameter<int>(   ar, "zgridSize", zgridSize_);
 
       // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
@@ -105,17 +120,20 @@ namespace McMd
    /*
    * Save internal state to an archive.
    */
-   void EwaldInteraction::save(Serializable::OArchive &ar)
+   void PMEInteraction::save(Serializable::OArchive &ar)
    {
       ar << epsilon_;
       ar << alpha_;
       ar << rSpaceCutoff_;
+      ar << xgridSize_;
+      ar << ygridSize_;
+      ar << zgridSize_;
    }
 
    /*
    * Modify a parameter, identified by a string.
    */
-   void EwaldInteraction::set(std::string name, double value)
+   void PMEInteraction::set(std::string name, double value)
    {
       if (name == "epsilon") {
          epsilon_ = value;
@@ -125,8 +143,17 @@ namespace McMd
       } else 
       if (name == "rSpaceCutoff") {
          rSpaceCutoff_ = value;
+      } else 
+      if (name == "xgridSize") {
+         xgridSize_ = value;
+      } else  
+      if (name == "ygridSize") {
+         ygridSize_ = value;
+      } else  
+      if (name == "zgridSize") {
+         zgridSize_ = value;
       } else { 
-         UTIL_THROW("Unrecognized parameter name");
+        UTIL_THROW("Unrecognized parameter name");
       }
 
       // Recalculate parameter squared.
@@ -140,7 +167,7 @@ namespace McMd
    /*
    * Get a parameter value, identified by a string.
    */
-   double EwaldInteraction::get(std::string name) const
+   double PMEInteraction::get(std::string name) const
    {
       double value = 0.0;
       if (name == "epsilon") {
@@ -151,6 +178,15 @@ namespace McMd
       } else
       if (name == "rSpaceCutoff") {
          value = rSpaceCutoff_;
+      } else
+      if (name == "xgridSize") {
+         value = xgridSize_;
+      } else 
+      if (name == "ygridSize") {
+         value = ygridSize_;
+      } else 
+      if (name == "zgridSize") {
+         value = zgridSize_;
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
