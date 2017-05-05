@@ -1,5 +1,7 @@
 
 #include <mcMd/mdSimulation/MdSimulation.h>
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/species/Species.h>
 
 using namespace McMd;
@@ -34,11 +36,31 @@ public:
          capacities[i] = sim.species(i).capacity();
       }
       for (int i = 0; i < nAtomType; ++i) {
-         diameters[i] = 1.0;
+         diameters[i] = 0.2;
       }
       std::cout << "Begin generating molecules" << std::endl;
       sim.system().generateMolecules(capacities, diameters);
       std::cout << "Finished generating molecules" << std::endl;
+
+      double alphaMin = 0.5;
+      double dAlpha   = 0.05;
+      double alpha, kEnergy, rEnergy, energy;
+      MdCoulombPotential& coulomb = sim.system().coulombPotential();
+      MdPairPotential& pair = sim.system().pairPotential();
+      for (int i = 0; i < 20; ++i) {
+         alpha = alphaMin + dAlpha*i;
+         coulomb.unsetEnergy();
+         pair.unsetEnergy();
+         coulomb.set("alpha", alpha);
+         kEnergy = coulomb.kSpaceEnergy();
+         rEnergy = coulomb.rSpaceEnergy();
+         energy = kEnergy + rEnergy;
+         std::cout << coulomb.get("alpha")
+                   << "  " << kEnergy 
+                   << "  " << rEnergy 
+                   << "  " << energy
+                   << std::endl;
+      }
    }
 
 };
@@ -49,5 +71,6 @@ int main(int argc, char* argv[])
    EwaldTest test;
 
    test.setup();
+   
 
 }

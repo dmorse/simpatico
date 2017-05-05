@@ -45,6 +45,22 @@ namespace McMd
       */
       virtual ~MdCoulombPotential();
 
+      /**
+      * Modify an interaction parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param value new value of parameter
+      */
+      virtual void set(std::string name, double value);
+   
+
+      /**
+      * Get an interaction parameter value, identified by a string.
+      *
+      * \param name parameter name
+      */
+      virtual double get(std::string name) const;
+
       /// \name System energy and stress.
       //@{
 

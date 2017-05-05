@@ -30,6 +30,31 @@ namespace McMd
    MdCoulombPotential::~MdCoulombPotential()
    {}
 
+   /*
+   * Modify an interaction parameter, identified by a string.
+   *
+   * This default implementation throw an Exception, but is 
+   * called only if virtual function is not re-implemented by 
+   * derived class.
+   */
+   void MdCoulombPotential::set(std::string name, double value)
+   {
+      UTIL_THROW("Unimplemented virtual set method");  
+   };
+
+   /*
+   * Get an interaction parameter value, identified by a string.
+   *
+   * This default implementation throw an Exception, but is 
+   * called only if virtual function is not re-implemented by 
+   * derived class.
+   */
+   double MdCoulombPotential::get(std::string name) const 
+   {
+      UTIL_THROW("Unimplemented virtual get method");  
+      return 0.0; 
+   };
+
    void MdCoulombPotential::unsetEnergy()
    {  kSpaceEnergy_.unset(); }
 

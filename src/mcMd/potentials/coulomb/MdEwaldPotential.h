@@ -67,7 +67,6 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
-
       /**
       * Load internal state from an archive.
       *
@@ -81,6 +80,27 @@ namespace McMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
+
+      //@}
+      /// \name Interaction Parameters (get/set)
+      //@{
+
+      /**
+      * Set a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param value  new value of parameter
+      */
+      void set(std::string name, double value)
+      {  ewaldInteraction_.set(name, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      */
+      double get(std::string name) const
+      {  return ewaldInteraction_.get(name); }
 
       //@}
       /// \name System energy and stress.
