@@ -1,9 +1,12 @@
-/*
-* Simpatico - Simulation Package for Polymeric and Molecular Liquids
-*
-* Copyright 2010 - 2017 The Regents of the University of Minnesota
-* Distributed under the terms of the GNU General Public License.
-*/
+
+# Simpatico 
+
+Simpatico - Simulation Package for Polymeric and Molecular Liquids
+
+Copyright 2010 - 2017 The Regents of the University of Minnesota
+Distributed under the terms of the GNU General Public License.
+
+## Overview
 
 Simpatico is a C++ package for Molecular Dynamics (MD), Monte Carlo 
 (MC), and hybrid MC simulations of classical mechanical models of 
@@ -37,8 +40,7 @@ read from file.
 Simpatico is distributed only in source code form, and so must 
 be compiled from source.
 
-Getting the Source Code:
-------------------------
+## Getting the Source Code
 
 The simpatico source code is maintained in the github repository
                                                                              
@@ -53,8 +55,7 @@ Note the use of the --recursive option to the git clone command:
 This is necessary to clone some git submodules that are maintained 
 in separate repositories. 
 
-Documentation:
---------------
+## Documentation
 
 A recent copy of the web manual for simpatico is available online, 
 at
@@ -90,8 +91,7 @@ directory. To begin reading the documentation, point a browser at
 the file simpatico/doc/html/index.html, which is the main page of
 the manual.
 
-Compiling:
-----------
+## Compiling
 
 The simpatico source code is ansi standard C++, and must be 
 compiled from source. The single-processor versions of the

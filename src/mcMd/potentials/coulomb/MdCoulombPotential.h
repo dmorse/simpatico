@@ -45,8 +45,29 @@ namespace McMd
       */
       virtual ~MdCoulombPotential();
 
-      /// \name System energy and stress.
+      /**
+      * Modify an interaction parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param value new value of parameter
+      */
+      virtual void set(std::string name, double value);
+   
+
+      /**
+      * Get an interaction parameter value, identified by a string.
+      *
+      * \param name parameter name
+      */
+      virtual double get(std::string name) const;
+
+      /// \name Waves (data that depends on Boundary).
       //@{
+
+      /**
+      * Are wavevectors and k-space potential up to date?
+      */
+      bool hasWaves();
 
       /**
       * Generate wavevectors for the current boundary.
@@ -54,9 +75,18 @@ namespace McMd
       virtual void makeWaves() = 0;
 
       /**
+      * Mark waves for regeneration.
+      */
+      void unsetWaves();
+
+      /**
       * Current number of wavevectors.
       */
       virtual int nWave() const = 0;
+
+      //@}
+      /// \name Forces and Energy
+      //@{
 
       /**
       * Add k-space Coulomb forces for all atoms.
@@ -64,25 +94,14 @@ namespace McMd
       virtual void addForces() = 0;
 
       /**
-      * Compute kspace part of Coulomb stress.
-      *
-      * \param stress (output) pressure
+      * Calculate the long range kspace part of Coulomb energy.
       */
-      virtual void computeStress() = 0;
-   
-      //@}
-      /// \name Energy
-      //@{
+      virtual void computeEnergy() = 0;
 
       /**
       * Unset k-space energy.
       */
       virtual void unsetEnergy();
-
-      /**
-      * Calculate the long range kspace part of Coulomb energy.
-      */
-      virtual void computeEnergy() = 0;
 
       /**
       * Get long-range k-space part of Coulomb energy.
@@ -103,6 +122,13 @@ namespace McMd
       /// \name Stress
       //@{
 
+      /**
+      * Compute kspace part of Coulomb stress.
+      *
+      * \param stress (output) pressure
+      */
+      virtual void computeStress() = 0;
+   
       /**
       * Unset k-space stress.
       */
@@ -139,7 +165,17 @@ namespace McMd
       /// Have parameters been set?
       bool isInitialized_;
 
+      /// Are waves and k-space potential up to date?
+      bool hasWaves_;
+
    };
+
+   /*
+   * Are wavevectors and k-space potential up to date?
+   */
+   inline
+   bool MdCoulombPotential::hasWaves()
+   {  return hasWaves_; }
 
 } 
 #endif

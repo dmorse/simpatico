@@ -82,6 +82,30 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       //@}
+      /// \name Interaction Parameters (get/set)
+      //@{
+
+      /**
+      * Set a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param value  new value of parameter
+      */
+      void set(std::string name, double value)
+      {  
+         ewaldInteraction_.set(name, value); 
+         unsetWaves();
+      }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      */
+      double get(std::string name) const
+      {  return ewaldInteraction_.get(name); }
+
+      //@}
       /// \name System energy and stress.
       //@{
 
