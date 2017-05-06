@@ -8,11 +8,11 @@ The classes used in simpatico are divided into five namespaces. The source code 
 
  - namespace Util (directory src/util) contains general utilities for C++ programming and scientific computation. 
 
- - namespace Simp (directory src/simp) contains classes that define specific potential energy functions, such as the Lennard-Jones pair potential. 
+ - namespace Simp (directory src/simp) contains general classes for all simpatico simulation and analysis programs. 
 
- - namespace McMd (directory src/mcMd) contains classes required to construct single-processor Monte Carlo and molecular dynamics simulations, and the main programs for mcSim and mdSim.  
+ - namespace McMd (directory src/mcMd) contains classes for single-processor Monte Carlo and molecular dynamics simulations, for the mcSim and mdSim programs.
 
- - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and the main program for the ddSim executable. 
+ - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and for the ddSim program.
 
  - namespace Tools (in directory src/tools) contains classes for pre- and postprocessing of molecular dynamics trajectories, and the main program for the mdPp executable. 
 
