@@ -1,6 +1,3 @@
-#ifndef MD_PME_POTENTIAL_CPP
-#define MD_PME_POTENTIAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -8,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdPMEPotential.h" 
+#include "MdSpmePotential.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <util/space/Vector.h>
@@ -29,7 +26,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   MdPMEPotential::MdPMEPotential(System& system)
+   MdSpmePotential::MdSpmePotential(System& system)
     : MdCoulombPotential(),
       ewaldInteraction_(),
       simulationPtr_(&system.simulation()),
@@ -55,7 +52,7 @@ namespace McMd
    /*
    * Destructor 
    */
-   MdPMEPotential::~MdPMEPotential()
+   MdSpmePotential::~MdSpmePotential()
    {
       fftw_destroy_plan(forward_plan);
       fftw_destroy_plan(xfield_backward_plan);
@@ -66,7 +63,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void MdPMEPotential::readParameters(std::istream& in)
+   void MdSpmePotential::readParameters(std::istream& in)
    {
       // Read EwaldInteraction block containing parameters
       bool nextIndent = false;
@@ -83,7 +80,7 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void MdPMEPotential::loadParameters(Serializable::IArchive &ar)
+   void MdSpmePotential::loadParameters(Serializable::IArchive &ar)
    {
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
@@ -98,7 +95,7 @@ namespace McMd
    /*
    * Save internal state to an archive.
    */
-   void MdPMEPotential::save(Serializable::OArchive &ar)
+   void MdSpmePotential::save(Serializable::OArchive &ar)
    {
       ewaldInteraction_.save(ar);
       ar << gridDimensions_;
@@ -107,13 +104,13 @@ namespace McMd
    /*
    * place holder 
    */
-   inline int MdPMEPotential::nWave() const
+   inline int MdSpmePotential::nWave() const
    {  return 0; }
 
    /*
    * place holder
    */
-   void MdPMEPotential::makeWaves()
+   void MdSpmePotential::makeWaves()
    { 
       if (BCgrid_.size() == 0) {
          // allocate memory for grid
@@ -158,7 +155,7 @@ namespace McMd
    * set elements of grid to all zero.
    */
    template<class T>
-   void MdPMEPotential::initializeGrid(GridArray<T>& grid) 
+   void MdSpmePotential::initializeGrid(GridArray<T>& grid) 
    {
       IntVector temp;
 
@@ -177,7 +174,7 @@ namespace McMd
    /*
    * BCgrid_ --- BC(g1,g2,g3).
    */
-   void MdPMEPotential::influence_function()
+   void MdSpmePotential::influence_function()
    {
       double m0, m1, m2; //temp parameter for C grid.
       double msqr;
@@ -234,7 +231,7 @@ namespace McMd
     /*
    * component of B grid
    */
-   double MdPMEPotential::bfactor(double m, int dim)
+   double MdSpmePotential::bfactor(double m, int dim)
    {
       double pi(Constants::Pi);
       double gridDimensions(gridDimensions_[dim]);
@@ -257,7 +254,7 @@ namespace McMd
    /*
    * Qgrid_ --- Q(g1,g2,g3).
    */
-   void MdPMEPotential::spreadCharge()
+   void MdSpmePotential::spreadCharge()
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
@@ -330,7 +327,7 @@ namespace McMd
    /*
    * basisSpline function.
    */
-   double MdPMEPotential::basisSpline(double x)
+   double MdSpmePotential::basisSpline(double x)
    {
       if (0.0 < x && x < 1.0)
          return 1.0 / 24.0 * x * x * x *x;
@@ -349,7 +346,7 @@ namespace McMd
    /*
    *  n-level rather than k level ie. missing the prefactor 2.0 * Pi * I / L. 
    */
-   void MdPMEPotential::ik_differential_operator()
+   void MdSpmePotential::ik_differential_operator()
    {
       for (int i = 0 ; i < 3 ; ++i){
          ikop_[0][i] = 0.0;
@@ -364,7 +361,7 @@ namespace McMd
    /*
    * Add k-space Coulomb forces for all atoms. standard Ewald Summation.
    */
-   void MdPMEPotential::addForces()
+   void MdSpmePotential::addForces()
    {
       System::MoleculeIterator molIter, imolIter, jmolIter;
       Molecule::AtomIterator atomIter, iatomIter, jatomIter;
@@ -485,7 +482,7 @@ namespace McMd
    /*
    * Calculate the k-space contribution to the Coulomb energy.
    */
-   void MdPMEPotential::computeEnergy()
+   void MdSpmePotential::computeEnergy()
    {
       // unset energy accumulator.
       //unsetEnergy();
@@ -535,7 +532,6 @@ namespace McMd
    /*
    * place holder 
    */
-   void MdPMEPotential::computeStress()
+   void MdSpmePotential::computeStress()
    { ;}
 } 
-#endif

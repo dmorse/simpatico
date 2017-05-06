@@ -91,19 +91,14 @@ namespace McMd
       * \param name   parameter name
       * \param value  new value of parameter
       */
-      void set(std::string name, double value)
-      {  
-         ewaldInteraction_.set(name, value); 
-         unsetWaves();
-      }
+      void set(std::string name, double value);
 
       /**
       * Get a parameter value, identified by a string.
       *
       * \param name   parameter name
       */
-      double get(std::string name) const
-      {  return ewaldInteraction_.get(name); }
+      double get(std::string name) const;
 
       //@}
       /// \name System energy and stress.
@@ -188,12 +183,8 @@ namespace McMd
       /// Unit Matrix (constant).
       Tensor unitTensor_;
 
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
-
       /// cutoff distance in k space
       double kSpaceCutoff_;
-      double kSpaceCutoffSq_;
 
       /**
       * Calculate Fourier coefficients of charge density.

@@ -17,7 +17,7 @@
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
 #ifdef SIMP_FFTW
-#include <mcMd/potentials/coulomb/MdPMEPotential.h>
+#include <mcMd/potentials/coulomb/MdSpmePotential.h>
 #endif
 
 
@@ -50,8 +50,8 @@ namespace McMd
          ptr = new MdEwaldPotential(*systemPtr_);
       } 
       #ifdef SIMP_FFTW
-      else if (name == "PME") {
-         ptr = new MdPMEPotential(*systemPtr_);
+      else if (name == "SPME") {
+         ptr = new MdSpmePotential(*systemPtr_);
       } 
       #endif
       return ptr;

@@ -7,7 +7,7 @@ mcMd_potentials_coulomb_=\
 
 ifdef SIMP_FFTW
 mcMd_potentials_coulomb_+=\
-   mcMd/potentials/coulomb/MdPMEPotential.cpp 
+   mcMd/potentials/coulomb/MdSpmePotential.cpp 
 endif
 
 mcMd_potentials_coulomb_SRCS=\

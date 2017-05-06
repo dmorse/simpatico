@@ -60,11 +60,6 @@ namespace McMd
       ewaldInteraction_.readParameters(in);
 
       read<double>(in, "kSpaceCutoff", kSpaceCutoff_);
-      kSpaceCutoffSq_ = kSpaceCutoff_*kSpaceCutoff_;
-
-      //Calculate prefactors frequently used in this class.
-      double pi = Constants::Pi;
-      selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
    }
 
    /*
@@ -77,11 +72,6 @@ namespace McMd
       ewaldInteraction_.loadParameters(ar);
 
       loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
-      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_;
-
-      // Calculate selfPrefactor_
-      double pi = Constants::Pi;
-      selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
    }
 
    /*
@@ -91,6 +81,33 @@ namespace McMd
    {
       ewaldInteraction_.save(ar);
       ar << kSpaceCutoff_;
+   }
+
+   /**
+   * Set a parameter value, identified by a string.
+   */
+   void MdEwaldPotential::set(std::string name, double value)
+   {
+      if (name == "kSpaceCutoff") {
+         kSpaceCutoff_ = value;
+      } else {
+         ewaldInteraction_.set(name, value); 
+      }
+      unsetWaves();
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double MdEwaldPotential::get(std::string name) const
+   {
+      double value;
+      if (name == "kSpaceCutoff") {
+         value = kSpaceCutoff_;
+      } else {
+         value = ewaldInteraction_.get(name); 
+      }
+      return value;
    }
 
    /*
@@ -112,8 +129,6 @@ namespace McMd
       Vector    b0, b1, b2;    // Recprocal basis vectors.
       Vector    q0, q1, q2, q; // Partial and complete wavevectors.
       Vector    kv;            // Wavevector (as real vector)
-      // double    prefactor(-0.25/ewaldInteraction_.alpha()/ewaldInteraction_.alpha());
-      // double    kCutoffSq(ewaldInteraction_.kSpaceCutoffSq());
       double    ksq;
       IntVector maxK, k;       // Max and running wave indices.
       int       mink1, mink2;  // Minimum k-indices
@@ -152,12 +167,9 @@ namespace McMd
          fexp2_.clear();
       }
 
-      double kCutoffSq = ewaldInteraction_.kSpaceCutoffSq();
-      double pi = Constants::Pi;
       double alpha = ewaldInteraction_.alpha();
-      double epsilon = ewaldInteraction_.epsilon();
       double prefactor = -0.25/(alpha*alpha);
-      selfPrefactor_ = alpha/(4*sqrt(pi)*pi*epsilon);
+      double kSpaceCutoffSq = kSpaceCutoff_*kSpaceCutoff_;
 
       // Accumulate waves, and wave-related properties.
       base0_ = 0;
@@ -189,7 +201,7 @@ namespace McMd
                q += b2;
 
                ksq = double(q.square());
-               if (ksq <= kSpaceCutoffSq_) {
+               if (ksq <= kSpaceCutoffSq) {
 
                   if (k[0] > upper0_) upper0_ = k[0];
 
@@ -395,10 +407,14 @@ namespace McMd
          rhoSq = x*x + y*y;
          kPart += ewaldInteraction_.kSpacePotential(rhoSq, g_[i]);
       }
-      kPart *= 0.5 / (ewaldInteraction_.epsilon()*boundaryPtr_->volume());
+      double epsilon = ewaldInteraction_.epsilon();
+      double volume = boundaryPtr_->volume();
+      kPart /= epsilon*volume;
+      // Note: A factor of 0.5 in the expression for the kspace energy 
+      // kpart is cancelled our use of only half the wavevectors
 
       // calculate selfnergy part in ewald summation.
-      double selfenergy(0.0); //store the self part energy
+      double selfEnergy(0.0); //store the self part energy
       double icharge;
       int iAtomType;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
@@ -407,14 +423,17 @@ namespace McMd
             for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
                iAtomType = iatomIter->typeId();
                icharge = (*atomTypesPtr_)[iAtomType].charge();
-               selfenergy += icharge * icharge;
+               selfEnergy += icharge * icharge;
             }
          }
       } 
-      selfenergy *= selfPrefactor_;
+      double pi = Constants::Pi;
+      double alpha = ewaldInteraction_.alpha();
+      double selfPrefactor = alpha/(4*sqrt(pi)*pi*epsilon);
+      selfEnergy *= selfPrefactor;
 
       // Correct for conjugate wave contribution in k-part.
-      kSpaceEnergy_.set(2.0 * kPart - selfenergy);
+      kSpaceEnergy_.set(kPart - selfEnergy);
    }
 
    /*

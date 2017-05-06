@@ -26,11 +26,6 @@ namespace McMd
    class MdSystem;
    class EwaldRSpaceAccumulator;
    class EwaldInteraction;
-   class MdEwaldPotential;
-
-   #ifdef SIMP_FFTW
-   class MdPMEPotential;
-   #endif
 
    /**
    * Implementation of a pair potential for a charged system.
@@ -212,7 +207,7 @@ namespace McMd
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
 #ifdef SIMP_FFTW
-#include <mcMd/potentials/coulomb/MdPMEPotential.h>
+#include <mcMd/potentials/coulomb/MdSpmePotential.h>
 #endif
 #include <fstream>
 
@@ -237,7 +232,7 @@ namespace McMd
          MdCoulombPotential* kspacePtr;
          kspacePtr = &system.coulombPotential();
  
-         // Dynamic cast to a pointer to MdEwaldPotential or MdPMEPotential.
+         // Dynamic cast to a pointer to MdEwaldPotential or MdSpmePotential.
          if (system.coulombStyle() == "Ewald"){
             MdEwaldPotential* ewaldPtr;
             ewaldPtr = dynamic_cast<MdEwaldPotential*>(kspacePtr);
@@ -246,9 +241,9 @@ namespace McMd
          }
          #ifdef SIMP_FFTW 
          else  
-         if (system.coulombStyle() == "PME"){
-            MdPMEPotential* ewaldPtr; 
-            ewaldPtr = dynamic_cast<MdPMEPotential*>(kspacePtr);
+         if (system.coulombStyle() == "SPME"){
+            MdSpmePotential* ewaldPtr; 
+            ewaldPtr = dynamic_cast<MdSpmePotential*>(kspacePtr);
             ewaldInteractionPtr_  = &ewaldPtr->ewaldInteraction();
             rSpaceAccumulatorPtr_ = &ewaldPtr->rSpaceAccumulator();
          }
@@ -256,6 +251,8 @@ namespace McMd
          else {
             UTIL_THROW("Unrecognized coulomb style"); 
          }
+         UTIL_CHECK(rSpaceAccumulatorPtr_);
+         rSpaceAccumulatorPtr_->setPairPotential(*this);
  
          pairPtr_ = new Interaction;
          // Pass address of MdEwaldPotential to EwaldPair interaction.

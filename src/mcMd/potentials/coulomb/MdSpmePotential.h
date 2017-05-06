@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_PME_POTENTIAL_H
-#define MCMD_MD_PME_POTENTIAL_H
+#ifndef MCMD_MD_SPME_POTENTIAL_H
+#define MCMD_MD_SPME_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -44,7 +44,7 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdPMEPotential : public MdCoulombPotential
+   class MdSpmePotential : public MdCoulombPotential
    {
 
    public:
@@ -52,12 +52,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      MdPMEPotential(System& system);
+      MdSpmePotential(System& system);
 
       /**
       * Destructor (destroy fftw plan).
       */
-      virtual ~MdPMEPotential();
+      virtual ~MdSpmePotential();
 
       /// \name Initialization
       //@{
@@ -212,4 +212,3 @@ namespace McMd
 
 }
 #endif
-
