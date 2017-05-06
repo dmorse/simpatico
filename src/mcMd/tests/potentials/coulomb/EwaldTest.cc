@@ -71,20 +71,48 @@ public:
       std::cout << "Finished generating molecules" << std::endl;
    };
 
-   void storeForces(DArray<Vector> forces) 
+   void storeForces(DArray<Vector>& forces) 
    {
+      UTIL_CHECK(nAtom_ == forces.capacity());
       MdSystem& system = sim.system();
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       int iAtom = 0;
       for (int iSpecies = 0; iSpecies < sim.nSpecies(); ++iSpecies) {
          for (system.begin(iSpecies, molIter); molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                forces[iAtom] = atomIter->force();
+               // std::cout << "Atom " << iAtom << "  " << forces[iAtom] << std::endl;
                ++iAtom;
             }
          }
       }
+      UTIL_CHECK(iAtom == nAtom_);
+   }
+
+   double computeForceError(DArray<Vector> const & refForces) 
+   {
+      MdSystem& system = sim.system();
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      Vector dF;
+      int iAtom = 0;
+      double error = 0;
+      for (int iSpecies = 0; iSpecies < sim.nSpecies(); ++iSpecies) {
+         for (system.begin(iSpecies, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               dF = atomIter->force();
+               // std::cout << "atom " << iAtom << " " 
+               //           << dF << "  " << refForces[iAtom] << std::endl;
+               dF -= refForces[iAtom];
+               error += dF.square();
+               ++iAtom;
+            }
+         }
+      }
+      UTIL_CHECK(iAtom == nAtom_);
+      error /= double(nAtom_);
+      return sqrt(error);
    }
 
    void varyAlpha(double alphaMin, double alphaMax, int n)
@@ -92,27 +120,39 @@ public:
       MdCoulombPotential& coulomb = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
 
-      // Compute well converged reference energy
+      // Compute well converged system
       coulomb.unsetEnergy();
       pair.unsetEnergy();
       double energyRef = coulomb.energy();
+      sim.system().setZeroForces();
+      coulomb.addForces();
+      pair.addForces();
+      storeForces(forces_);
 
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
-      double alpha, kEnergy, rEnergy, energy;
+      double alpha, kEnergy, rEnergy, energy, fError;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
+
          coulomb.set("alpha", alpha);
          coulomb.unsetEnergy();
          pair.unsetEnergy();
          kEnergy = coulomb.kSpaceEnergy();
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
+
+         sim.system().setZeroForces();
+         coulomb.addForces();
+         pair.addForces();
+         fError = computeForceError(forces_);
+
          std::cout << Dbl(coulomb.get("alpha"), 10)
-                   << "  " << Dbl(kEnergy, 20, 13)
-                   << "  " << Dbl(rEnergy, 20, 13)
-                   << "  " << Dbl(energy, 20, 13) 
-                   << "  " << Dbl(energy - energyRef, 20, 13) 
+                   << "  " << Dbl(kEnergy, 15)
+                   << "  " << Dbl(rEnergy, 15)
+                   //<< "  " << Dbl(energy, 20, 13) 
+                   << "  " << Dbl(energy - energyRef, 15) 
+                   << "  " << Dbl(fError, 15) 
                    << std::endl;
       }
 
@@ -170,7 +210,7 @@ int main(int argc, char* argv[])
 
    test.readParam("in/param");
    test.generateConfig();
-   test.varyAlpha(0.2, 3.0, 28);
+   test.varyAlpha(0.4, 3.0, 26);
    //std::cout << "alpha = " 
    //          << test.simulation().system().coulombPotential().get("alpha")
    //          << std::endl;

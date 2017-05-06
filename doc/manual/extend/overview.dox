@@ -18,17 +18,17 @@ Every class and function in the simpatico source code is defined within one of f
     <td> <b>purpose </b> </td>
   </tr>
   <tr> 
-    <td> Util</td>
+    <td> Util </td>
     <td> src/util </td>
     <td> General scientific computing utilities </td>
   </tr>
   <tr> 
-    <td> Inter</td>
+    <td> Simp </td>
     <td> src/simp </td>
-    <td> Classes that define potential energy functions (Lennard-Jones, harmonic bond, etc. </td>
+    <td> General classes for simpatico simulation and analysis programs. </td>
   </tr>
   <tr> 
-    <td> McMd</td>
+    <td> McMd </td>
     <td> src/mcMd </td>
     <td> Classes used in mcSim and/or mdSim single-processor simulation programs. </td>
   </tr>

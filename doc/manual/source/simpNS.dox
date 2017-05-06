@@ -9,13 +9,26 @@ namespace Simp
 \ref McMd_NS_page (Next) 
 <BR>
 
-The Simp namespace contains "interaction" classes that define various types of potential energy functions. All of the code for the Simp namespace is in the directory src/simp. Various subdirectories of src/simp contain classes that define nonbonded pair interactions, covalent 2-body bond potentials, covalent 3- and 4- body angle and dihedral interactions, and external one-body potentials. The same set of interaction classes are used in both the McMd namespace, to implement mcSim and mdSim, and in the DdMd namespace, to implement ddSim. 
+The Simp namespace contains general classes for molecular simulations that are accessible to all simpatico simulation and analysis programs, but that are two domain specific to be included in the Util namespace. A distinction is made between Util and Simp namespaces because the src/util directory that contains code in the Util namespace is maintained as a separate git repository that is available for use in scientific computing projects.  All of the code in the Simp namespace is in the directory src/simp.  
 
 See also: \ref Simp_Module "Simp Module"
 
-Interaction classes are simple, nonpolymorphic classes that provides methods to calculate the energy and forces for small groups of interacting atoms, such as individual pairs, or groups of 3 or 4 for the angle and dihedral interactions.  Each interaction class implements a specific functional form for the interaction, and has member variables that store parameters required by that functional form. Thus, for example the "LJPair" class provides methods to calculate the Lennard-Jones nonbonded pair energy and force for a single pair of non-bonded atoms. The "HarmonicBond" class provides analogous methods for a harmonic covalent bond potential. The interaction classes are non-polymorphic (they have no virtual methods and are not descended from a common base class), but all Interaction classes of the same type (e.g. all pair interactions) have the same interface for energy and force methods.  
+\section Simp_interaction_sec Interactions
 
-The McMd and DdMd namespaces each also contain a separate set of "potential" classes. A "potential" class provides methods to calculate energies and atomic forces for an entire system as well as (in most cases) for individual atoms or molecules within a system.  The implementation of each potential class uses an instance of an interaction class for the core calculation of the energies and forces of individual pairs or covalent groups.
+Thus far, all of the classes in the Simp namespace are "interaction" classes that define various types of potential energy functions. These classes are all in subdirectory src/simp/interaction. Different subdirectories of src/simp/interaction contain classes that define, respectively:  
+
+  - nonbonded pair interactions ( pair/ )
+  - covalent 2-body bond potentials (bond/ )
+  - covalent 3- body angle interactions ( angle/ )
+  - covalent 4- body dihedral interactions ( dihedral/ )
+  - external one-body potentials ( external/ )
+  - coulomb interactions (coulomb/ )
+
+The same set of interaction classes are used in both the McMd namespace, to implement mcSim and mdSim, and in the DdMd namespace, to implement ddSim. 
+
+Interaction classes are simple, nonpolymorphic classes that generally provide methods to calculate the energy and forces for small groups of interacting atoms, such as individual pairs, or groups of 3 or 4 for the angle and dihedral interactions.  Each interaction class implements a specific functional form for the interaction, and has member variables that store parameters required by that functional form. Thus, for example the "LJPair" class provides methods to calculate the Lennard-Jones nonbonded pair energy and force for a single pair of non-bonded atoms. The "HarmonicBond" class provides analogous methods for a harmonic covalent bond potential. The interaction classes are non-polymorphic: they have no virtual methods and are not descended from a common base class. All interaction classes of the same type (e.g. all pair interaction classes) must, however, have the same interface for energy and force methods, to allow different interaction classes of the same type to be used interchangeably in C++ templates.
+
+The McMd and DdMd namespaces each also contain a separate set of "potential" classes. The purpose of the "potential" classes is distnct from that of the "interaction" classes in the Simp namespace. A "potential" class provides methods to calculate energies and atomic forces for an entire system as well as (in some cases) for individual atoms or molecules within a system. A potential class that is intended for use in a molecular dynamics simulation will provide a function to calculate the contribution to the forces on all the atoms in a system arising from a particular potential energy contribution, such as pair or bond energies. The implementation this function will involve a loop over groups of interacting atoms (nonbonded or bonded pairs). A similar loop is used to compute total energy or total stress arising from a particular potential energy contribution. The code to loop over interacting groups is implemented by a "potential" class defined in the McMd or DdMd namespace, while functions of an associated interaction class is used to evaluate the relevant forces or energies for a single group (e.g., pair)  within such a loop.
 
 See also:
 

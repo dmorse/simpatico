@@ -131,8 +131,6 @@ namespace McMd
 
       /**
       * Compute kspace part of Coulomb pressure.
-      *
-      * \param stress (output) pressure
       */
       virtual void computeStress();
 
