@@ -85,7 +85,6 @@ public:
          for (system.begin(iSpecies, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                forces[iAtom] = atomIter->force();
-               // std::cout << "Atom " << iAtom << "  " << forces[iAtom] << std::endl;
                ++iAtom;
             }
          }
@@ -105,8 +104,6 @@ public:
          for (system.begin(iSpecies, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                dF = atomIter->force();
-               // std::cout << "atom " << iAtom << " " 
-               //           << dF << "  " << refForces[iAtom] << std::endl;
                dF -= refForces[iAtom];
                error += dF.square();
                ++iAtom;
@@ -116,6 +113,37 @@ public:
       UTIL_CHECK(iAtom == nAtom_);
       error /= double(nAtom_);
       return sqrt(error);
+   }
+
+   void compareKSpace()
+   {
+      MdCoulombPotential& ewald = sim.system().coulombPotential();
+      MdPairPotential& pair = sim.system().pairPotential();
+
+      // Compute well converged system
+      ewald.unsetEnergy();
+      pair.unsetEnergy();
+      double kEnergyRef = ewald.kSpaceEnergy();
+
+      sim.system().setZeroForces();
+      ewald.addForces();
+      storeForces(forces_);
+
+      spme.unsetEnergy();
+      pair.unsetEnergy();
+      spme.makeWaves();
+      spme.computeEnergy();
+      double kEnergy = spme.kSpaceEnergy();
+
+      std::cout << "  " << Dbl(kEnergyRef, 20, 13) 
+                << "  " << Dbl(kEnergy, 20, 13) 
+                << "  " << Dbl(kEnergy - kEnergyRef, 20, 13) 
+                << std::endl;
+
+      sim.system().setZeroForces();
+      spme.addForces();
+      double fError = computeForceError(forces_);
+      std::cout << "  " << Dbl(fError, 20, 13) << std::endl;
    }
 
    void varyAlpha(double alphaMin, double alphaMax, int n)
@@ -130,11 +158,10 @@ public:
       // double rEnergyRef = ewald.kSpaceEnergy();
       // double energyRef = kEnergyRef + rEnergyRef;
 
-      //sim.system().setZeroForces();
-      //ewald.addForces();
+      sim.system().setZeroForces();
+      ewald.addForces();
       //pair.addForces();
-      //storeForces(forces_);
-      //sim.system().setZeroForces();
+      storeForces(forces_);
 
       spme.unsetEnergy();
       pair.unsetEnergy();
@@ -144,6 +171,11 @@ public:
 
       std::cout << "  " << Dbl(kEnergyRef, 20, 13) 
                 << "  " << Dbl(kEnergy, 20, 13) << std::endl;
+
+      sim.system().setZeroForces();
+      spme.addForces();
+      double fError = computeForceError(forces_);
+      std::cout << "  " << Dbl(fError, 20, 13) << std::endl;
 
       #if 0
       // Loop over values of alpha
@@ -228,6 +260,6 @@ int main(int argc, char* argv[])
 
    test.readParam("in/param.spme");
    test.generateConfig();
-   test.varyAlpha(0.4, 3.0, 26);
+   test.compareKSpace();
 
 }
