@@ -1,6 +1,6 @@
-
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
+#include <mcMd/potentials/coulomb/MdSpmePotential.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/species/Species.h>
 #include <util/format/Int.h>
@@ -9,7 +9,7 @@
 using namespace McMd;
 using namespace Util;
 
-class EwaldTest 
+class SpmeTest 
 {
 
 public:
@@ -17,9 +17,11 @@ public:
    /**
    * Default constructor.
    */
-   EwaldTest()
-    : nAtom_(0)
-   {}
+   SpmeTest()
+    : spme(sim.system()),
+      nAtom_(0)
+   {
+   }
 
    /**
    * Read parameter file and initialize
@@ -30,11 +32,12 @@ public:
       std::ifstream in;
       sim.fileMaster().openInputFile(paramFileName, in);
       sim.readParam(in);
-      // double diameter;
-      // in >> diameter;
+      spme.readParam(in);
+      spme.rSpaceAccumulator().setPairPotential(sim.system().pairPotential());
       in >> sim.system().boundary();
       in.close();
       std::cout << "Finished reading param file" << std::endl;
+
 
       // Allocate and initialize diameters_ array
       int nAtomType = sim.nAtomType();
@@ -117,65 +120,80 @@ public:
 
    void varyAlpha(double alphaMin, double alphaMax, int n)
    {
-      MdCoulombPotential& coulomb = sim.system().coulombPotential();
+      MdCoulombPotential& ewald = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
 
       // Compute well converged system
-      coulomb.unsetEnergy();
+      ewald.unsetEnergy();
       pair.unsetEnergy();
-      double energyRef = coulomb.energy();
-      sim.system().setZeroForces();
-      coulomb.addForces();
-      pair.addForces();
-      storeForces(forces_);
+      double kEnergyRef = ewald.kSpaceEnergy();
+      // double rEnergyRef = ewald.kSpaceEnergy();
+      // double energyRef = kEnergyRef + rEnergyRef;
 
+      //sim.system().setZeroForces();
+      //ewald.addForces();
+      //pair.addForces();
+      //storeForces(forces_);
+      //sim.system().setZeroForces();
+
+      spme.unsetEnergy();
+      pair.unsetEnergy();
+      spme.makeWaves();
+      spme.computeEnergy();
+      double kEnergy = spme.kSpaceEnergy();
+
+      std::cout << "  " << Dbl(kEnergyRef, 20, 13) 
+                << "  " << Dbl(kEnergy, 20, 13) << std::endl;
+
+      #if 0
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
       double alpha, kEnergy, rEnergy, energy, fError;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
 
-         coulomb.set("alpha", alpha);
-         coulomb.unsetEnergy();
+         spme.set("alpha", alpha);
+         spme.unsetEnergy();
          pair.unsetEnergy();
-         kEnergy = coulomb.kSpaceEnergy();
-         rEnergy = coulomb.rSpaceEnergy();
+         kEnergy = spme.kSpaceEnergy();
+         rEnergy = spme.rSpaceEnergy();
          energy = kEnergy + rEnergy;
 
-         sim.system().setZeroForces();
-         coulomb.addForces();
-         pair.addForces();
-         fError = computeForceError(forces_);
+         // sim.system().setZeroForces();
+         // coulomb.addForces();
+         // pair.addForces();
+         // fError = computeForceError(forces_);
 
-         std::cout << Dbl(coulomb.get("alpha"), 10)
+         std::cout << Dbl(spme.get("alpha"), 10)
                    << "  " << Dbl(kEnergy, 15)
                    << "  " << Dbl(rEnergy, 15)
                    //<< "  " << Dbl(energy, 20, 13) 
                    << "  " << Dbl(energy - energyRef, 15) 
-                   << "  " << Dbl(fError, 15) 
+                   // << "  " << Dbl(fError, 15) 
                    << std::endl;
       }
 
       // Reset to default
-      coulomb.set("alpha", alpha_);
+      // spme.set("alpha", alpha_);
+      #endif
    }
-
-   void varyRSpaceCutoff(double rSpaceCutoffMin, double rSpaceCutoffMax, int n)
+ 
+   void varyKSpaceCutoff(double kSpaceCutoffMin, double kSpaceCutoffMax, int n)
    {
       MdCoulombPotential& coulomb = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
 
-      double dRSpaceCutoff = (rSpaceCutoffMax - rSpaceCutoffMin)/double(n);
-      double rSpaceCutoff, kEnergy, rEnergy, energy;
+      double dKSpaceCutoff = (kSpaceCutoffMax - kSpaceCutoffMin)/double(n);
+      double kSpaceCutoff, kEnergy, rEnergy, energy;
       for (int i = 0; i <= n; ++i) {
-         rSpaceCutoff = rSpaceCutoffMin + dRSpaceCutoff*i;
-         coulomb.set("rSpaceCutoff", rSpaceCutoff);
+         kSpaceCutoff = kSpaceCutoffMin + dKSpaceCutoff*i;
+         coulomb.set("kSpaceCutoff", kSpaceCutoff);
          coulomb.unsetEnergy();
          pair.unsetEnergy();
          kEnergy = coulomb.kSpaceEnergy();
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
-         std::cout << Dbl(coulomb.get("rSpaceCutoff"), 10)
+         std::cout << Dbl(coulomb.get("kSpaceCutoff"), 10)
                    << "  " << Dbl(kEnergy, 20)
                    << "  " << Dbl(rEnergy, 20)
                    << "  " << Dbl(energy, 20)
@@ -183,7 +201,7 @@ public:
       }
 
       // Reset to default
-      coulomb.set("rSpaceCutoff", rSpaceCutoff_);
+      coulomb.set("kSpaceCutoff", kSpaceCutoff_);
    }
 
    MdSimulation& simulation()
@@ -192,6 +210,7 @@ public:
 private:
 
    MdSimulation sim;
+   MdSpmePotential spme;
 
    DArray<int> capacities_; 
    DArray<double> diameters_; 
@@ -205,14 +224,10 @@ private:
 
 int main(int argc, char* argv[]) 
 {
+   SpmeTest test;
 
-   EwaldTest test;
-
-   test.readParam("in/param.ewald");
+   test.readParam("in/param.spme");
    test.generateConfig();
    test.varyAlpha(0.4, 3.0, 26);
-   //std::cout << "alpha = " 
-   //          << test.simulation().system().coulombPotential().get("alpha")
-   //          << std::endl;
 
 }
