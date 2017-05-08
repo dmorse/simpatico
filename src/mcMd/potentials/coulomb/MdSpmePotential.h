@@ -37,10 +37,10 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Ewald Coulomb potential class for MD simulations.
+   * Smooth Particle-Mesh Ewald Coulomb potential for MD simulations.
    *
-   * This class implements the particle mesh ewald sum
-   * of the Coulomb energy and forces.
+   * This class implements the smooth particle mesh ewald k-space
+   * computations for the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
@@ -84,11 +84,30 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       //@}
+      /// \name Interaction Parameters (get/set)
+      //@{
+
+      /**
+      * Set a parameter value, identified by a string.
+      *
+      * \param name  parameter name
+      * \param value  new value of parameter
+      */
+      void set(std::string name, double value);
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      */
+      double get(std::string name) const;
+
+      //@}
       /// \name System energy and stress.
       //@{
 
       /**
-      * place holder.
+      * Precompute waves and influence function.
       */
       virtual void makeWaves();
 

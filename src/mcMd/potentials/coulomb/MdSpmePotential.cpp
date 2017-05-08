@@ -102,57 +102,95 @@ namespace McMd
    }
 
    /*
+   * Set a parameter value, identified by a string.
+   */
+   void MdSpmePotential::set(std::string name, double value)
+   {
+      ewaldInteraction_.set(name, value); 
+      unsetWaves();
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double MdSpmePotential::get(std::string name) const
+   {
+      double value;
+      value = ewaldInteraction_.get(name); 
+      return value;
+   }
+
+   /*
    * place holder 
    */
    inline int MdSpmePotential::nWave() const
    {  return 0; }
 
    /*
-   * place holder
+   * Precompute waves and influence function.
    */
    void MdSpmePotential::makeWaves()
    { 
       if (BCgrid_.size() == 0) {
-         // allocate memory for grid
+
+         // Allocate memory for grid
          Qgrid_.allocate(gridDimensions_);
          Qhatgrid_.allocate(gridDimensions_);
          BCgrid_.allocate(gridDimensions_);
-         ikop_.allocate(std::max(std::max(gridDimensions_[1],gridDimensions_[2]),gridDimensions_[0]));
-
+         int maxDim = std::max(gridDimensions_[1],gridDimensions_[2]);
+         maxDim = std::max(maxDim, gridDimensions_[0]);
+         ikop_.allocate(maxDim);
          xfield_.allocate(gridDimensions_);
          yfield_.allocate(gridDimensions_);
          zfield_.allocate(gridDimensions_);
 
          // initialize fft plan for Q grid.
-         fftw_complex* inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
-         fftw_complex* outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
-         forward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
-                                         inf, outf, FFTW_FORWARD,FFTW_MEASURE);
+         fftw_complex* inf;
+         fftw_complex* outf;
+         inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
+         outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
+         forward_plan = fftw_plan_dft_3d(gridDimensions_[0],
+                                         gridDimensions_[1],
+                                         gridDimensions_[2],
+                                         inf, outf, 
+                                         FFTW_FORWARD,FFTW_MEASURE);
 
-         // initialize fft plan for electric field grid.
-         fftw_complex* inxf  = reinterpret_cast<fftw_complex*>(xfield_.data());
-         fftw_complex* outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
-         xfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
-                                         inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
- 
-         fftw_complex* inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
-         fftw_complex* outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
-         yfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
-                                         inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
-       
-         fftw_complex* inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
-         fftw_complex* outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
-         zfield_backward_plan = fftw_plan_dft_3d(gridDimensions_[0],gridDimensions_[1],gridDimensions_[2],
-                                         inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
+         // Initialize fft plans for electric field component grids.
+         fftw_complex* inxf; 
+         fftw_complex* outxf;
+         inxf = reinterpret_cast<fftw_complex*>(xfield_.data());
+         outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
+         xfield_backward_plan = 
+                  fftw_plan_dft_3d(gridDimensions_[0],
+                                   gridDimensions_[1],
+                                   gridDimensions_[2],
+                                   inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
+         fftw_complex* inyf; 
+         fftw_complex* outyf;
+         inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
+         outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
+         yfield_backward_plan = 
+                  fftw_plan_dft_3d(gridDimensions_[0],
+                                   gridDimensions_[1],
+                                   gridDimensions_[2],
+                                   inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
+         fftw_complex* inzf; 
+         fftw_complex* outzf;
+         inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
+         outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
+         zfield_backward_plan = 
+                  fftw_plan_dft_3d(gridDimensions_[0],
+                                   gridDimensions_[1],
+                                   gridDimensions_[2],
+                                   inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
       }
 
       influence_function();
       ik_differential_operator();
- 
    }
 
    /*
-   * set elements of grid to all zero.
+   * Set elements of grid to all zero.
    */
    template<class T>
    void MdSpmePotential::initializeGrid(GridArray<T>& grid) 
@@ -228,7 +266,7 @@ namespace McMd
       BCgrid_[0] = 0;
    }
 
-    /*
+   /*
    * component of B grid
    */
    double MdSpmePotential::bfactor(double m, int dim)
