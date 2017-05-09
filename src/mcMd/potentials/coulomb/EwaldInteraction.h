@@ -100,12 +100,12 @@ namespace McMd
       double rSpaceEnergy(double rSq, double qProduct) const;
 
       /**
-      * Return one term in Fourier sum.
+      * Return regularized Fourier-space potential.
       *
-      * \param rhoSq square of Fourier amplitudes
-      * \param prefactor prefactor in Fourier space expression
+      * \param kSq square of wavenumber
+      * \return exp(-kSq/(4*alpha*alpha))/(epsilon*ksq)
       */
-      double kSpacePotential(double rhoSq, double prefactor) const;
+      double kSpacePotential(double kSq) const;
 
       /**
       * Return ratio of scalar pair interaction force to pair separation.
@@ -190,6 +190,7 @@ namespace McMd
       /// prefactors for real space potential
       double ce_;
       double cf_;
+      double cg_;
 
       /**
       * Was this object initialized by calling (read|load)Parameters ?
@@ -258,9 +259,10 @@ namespace McMd
    /* 
    * Calculate k-space potential from wavenumber kSq.
    */
-   inline double EwaldInteraction::kSpacePotential(double rhoSq, double prefactor) const
+   inline double EwaldInteraction::kSpacePotential(double kSq) const
    {
-      return rhoSq*prefactor;
+      // Note: cg_ = -0.25/(alpha*alpha)
+      return exp(cg_*kSq)/(kSq*epsilon_);
    }
 
 }

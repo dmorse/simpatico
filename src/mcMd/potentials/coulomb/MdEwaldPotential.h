@@ -185,12 +185,6 @@ namespace McMd
       /// Fourier modes of charge density.
       GArray<DCMPLX> rho_;
 
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
-
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
-
       /**
       * Calculate Fourier coefficients of charge density.
       */
