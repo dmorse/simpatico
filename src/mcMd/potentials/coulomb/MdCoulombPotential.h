@@ -147,6 +147,11 @@ namespace McMd
       */
       Tensor stress();
 
+      /**
+      * Get total Coulomb pressure.
+      */
+      double pressure();
+
       //@}
 
    protected:

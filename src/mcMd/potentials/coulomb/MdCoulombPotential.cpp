@@ -130,5 +130,18 @@ namespace McMd
       return temp;
    }
  
+   /*
+   * Get total Coulomb stress (recompute as needed).
+   */
+   double MdCoulombPotential::pressure()
+   {
+      Tensor temp = stress();
+      double value = 0.0;
+      for (int i = 0; i < Dimension; ++i) {
+         value += temp(i, i); 
+      }
+      return value/3.0;
+   }
+ 
 } 
 #endif

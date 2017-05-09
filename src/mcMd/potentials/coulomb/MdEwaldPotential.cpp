@@ -397,27 +397,25 @@ namespace McMd
       computeKSpaceCharge();
     
       int i;
-      double x, y; //real and image part of rho[i].
-      Tensor K,stressTensor;// temp stress tensor.
-      IntVector q;//vector indices.
-      Vector qv,q0,q1,q2; //reciprocalVector.
-      Vector b0, b1, b2; // reciprocalBasisVector.
+      double x, y;         // real and imag part of rho[i].
+      Tensor stressTensor; // stress tensor
+      Tensor K;            // stress tensor contribution
+      IntVector q;         // wavevector indices.
+      Vector qv,q0,q1,q2;  // reciprocalVector.
+      Vector b0, b1, b2;   // reciprocalBasisVector.
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-      //add a new method in Tensor.h for acquiring unit matrix.
-      qv.zero();
-      stressTensor.zero();
-
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
+      stressTensor.zero();
       for (i = 0; i < waves_.size(); ++i) {
          q = waves_[i];
          q0.multiply(b0, q[0]);
          q1.multiply(b1, q[1]);
          q2.multiply(b2, q[2]); 
-         qv += q0;
+         qv = q0;
          qv += q1;
          qv += q2;
 
@@ -429,12 +427,13 @@ namespace McMd
          K *= g_[i]*( x*x + y*y);
          stressTensor += K;  
       }
-
       double volume = boundaryPtr_->volume(); 
-      stressTensor /= (2.0 * volume);   
+      stressTensor /= volume; 
+      // Note: Factor of 0.5 in Ewald expression for k-space stress
+      // is cancelled by the use of only half the wavevectors. 
 
-      // Correct for conjugate wave contribution in k-part then set.
-      stressTensor *= 2.0; 
+      // Question: Shouldn't there be a self-interaction correction
+      // analogous to that used for the energy.
 
       kSpaceStress_.set(stressTensor);
    }

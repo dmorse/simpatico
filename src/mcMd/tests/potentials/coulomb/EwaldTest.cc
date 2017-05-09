@@ -124,6 +124,13 @@ public:
       coulomb.unsetEnergy();
       pair.unsetEnergy();
       double energyRef = coulomb.energy();
+
+      coulomb.unsetStress();
+      pair.unsetStress();
+      coulomb.computeStress();
+      pair.computeStress();
+      double pressureRef = coulomb.pressure();
+
       sim.system().setZeroForces();
       coulomb.addForces();
       pair.addForces();
@@ -131,7 +138,7 @@ public:
 
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
-      double alpha, kEnergy, rEnergy, energy, fError;
+      double alpha, kEnergy, rEnergy, energy, pressure, fError;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
 
@@ -142,16 +149,24 @@ public:
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
 
+         coulomb.unsetStress();
+         pair.unsetStress();
+         coulomb.computeStress();
+         pair.computeStress();
+         pressure = coulomb.pressure();
+         
          sim.system().setZeroForces();
          coulomb.addForces();
          pair.addForces();
          fError = computeForceError(forces_);
 
          std::cout << Dbl(coulomb.get("alpha"), 10)
-                   << "  " << Dbl(kEnergy, 15)
-                   << "  " << Dbl(rEnergy, 15)
-                   //<< "  " << Dbl(energy, 20, 13) 
+                   // << "  " << Dbl(kEnergy, 15)
+                   // << "  " << Dbl(rEnergy, 15)
+                   << "  " << Dbl(energy, 20, 13) 
                    << "  " << Dbl(energy - energyRef, 15) 
+                   << "  " << Dbl(pressure, 15) 
+                   << "  " << Dbl(pressure - pressureRef, 15) 
                    << "  " << Dbl(fError, 15) 
                    << std::endl;
       }

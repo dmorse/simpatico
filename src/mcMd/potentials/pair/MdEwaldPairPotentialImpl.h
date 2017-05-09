@@ -361,6 +361,8 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::addForces()
    {
+      UTIL_CHECK(ewaldInteractionPtr_);
+
       // Update PairList if necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -405,6 +407,7 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::unsetEnergy()
    {
+      UTIL_CHECK(rSpaceAccumulatorPtr_);
       // Unset non-coulomb pair energy (inherited from EnergyCalculator). 
       energy_.unset(); 
       // Unset coulomb r-space energy.
@@ -417,6 +420,9 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeEnergy()
    {
+      UTIL_CHECK(ewaldInteractionPtr_);
+      UTIL_CHECK(rSpaceAccumulatorPtr_);
+
       // Update PairList iff necessary
       if (!isPairListCurrent()) {
          buildPairList();
@@ -462,6 +468,7 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::unsetStress()
    { 
+      UTIL_CHECK(rSpaceAccumulatorPtr_);
       stress_.unset(); 
       rSpaceAccumulatorPtr_->rSpaceStress_.unset(); 
    }
@@ -472,7 +479,10 @@ namespace McMd
    template <class Interaction>
    void MdEwaldPairPotentialImpl<Interaction>::computeStress()
    {
-      Tensor pStress;  // Non-Coulomb pair stress
+      UTIL_CHECK(ewaldInteractionPtr_);
+      UTIL_CHECK(rSpaceAccumulatorPtr_);
+
+      Tensor pStress;  // Non-Coulombic (e.g., LJ) pair stress
       Tensor cStress;  // Short-range Coulomb pair stress
       Vector dr;
       Vector force;
@@ -489,9 +499,9 @@ namespace McMd
          buildPairList();
       }
 
-      // Set all stress accumulator tensors to zero.
-      setToZero(pStress);
-      setToZero(cStress);
+      // Set stress accumulator tensors to zero.
+      pStress.zero();
+      cStress.zero();
 
       // Loop over nonbonded neighbor pairs
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
