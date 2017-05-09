@@ -37,8 +37,8 @@ namespace McMd
    /**
    * Ewald Coulomb potential class for MD simulations.
    *
-   * This class implements the k-space sums for an Ewald
-   * summation of the Coulomb energy and forces.
+   * This class implements the k-space sums in the Ewald
+   * method for computing the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
@@ -49,6 +49,8 @@ namespace McMd
 
       /**
       * Constructor.
+      *
+      * \param system  parent system.
       */
       MdEwaldPotential(System& system);
 
@@ -82,7 +84,7 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       //@}
-      /// \name Interaction Parameters (get/set)
+      /// \name Parameters (get/set)
       //@{
 
       /**
@@ -180,13 +182,10 @@ namespace McMd
       /// Fourier modes of charge density.
       GArray<DCMPLX> rho_;
 
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
-
       /// cutoff distance in k space
       double kSpaceCutoff_;
 
-      /**
+      /*
       * Calculate Fourier coefficients of charge density.
       */
       void computeKSpaceCharge();

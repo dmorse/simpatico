@@ -43,9 +43,10 @@ namespace McMd
    {
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
 
-      /// Prefactors for real space energy.
+      /// Derived constants
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
+      cg_ = -0.25/(alpha_*alpha_);
    }
    
    /* 
@@ -63,6 +64,7 @@ namespace McMd
       // Derived constants
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
+      cg_ = -0.25/(alpha_*alpha_);
  
       return *this;
    }
@@ -80,6 +82,7 @@ namespace McMd
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
+      cg_ = -0.25/(alpha_*alpha_);
  
       isInitialized = true;
    }
@@ -98,6 +101,7 @@ namespace McMd
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
+      cg_ = -0.25/(alpha_*alpha_);
  
       isInitialized = true;
    }
@@ -129,12 +133,11 @@ namespace McMd
          UTIL_THROW("Unrecognized parameter name");
       }
 
-      // Recalculate parameter squared.
+      // Recalculate all derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_;
-
-      /// Compute prefactors for real space energy and force
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
+      cg_ = -0.25/(alpha_*alpha_);
    }
 
    /*

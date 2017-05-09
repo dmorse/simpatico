@@ -100,12 +100,12 @@ namespace McMd
       double rSpaceEnergy(double rSq, double qProduct) const;
 
       /**
-      * Return one term in Fourier sum.
+      * Return regularized Fourier-space potential.
       *
-      * \param rhoSq square of Fourier amplitudes
-      * \param prefactor prefactor in Fourier space expression
+      * \param kSq square of wavenumber
+      * \return exp(-kSq/(4*alpha*alpha))/(epsilon*ksq)
       */
-      double kSpacePotential(double rhoSq, double prefactor) const;
+      double kSpacePotential(double kSq) const;
 
       /**
       * Return ratio of scalar pair interaction force to pair separation.
@@ -176,6 +176,7 @@ namespace McMd
       /// prefactors for real space potential
       double ce_;
       double cf_;
+      double cg_;
 
       /**
       * Was this object initialized by calling (read|load)Parameters ?
@@ -190,30 +191,34 @@ namespace McMd
    * Return medium dielectric permittivity.
    */
    inline double EwaldInteraction::epsilon() const
-   { return epsilon_; }
+   {  return epsilon_; }
 
    /* 
    * Return Ewald mearing parameter alpha.
    */
    inline double EwaldInteraction::alpha() const
-   { return alpha_; }
+   {  return alpha_; }
 
    /* 
    * Return real space cutoff distance in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoff() const
+   inline 
+   double EwaldInteraction::rSpaceCutoff() const
    {  return rSpaceCutoff_; }
 
   /* 
    * Return real space cutoff distance squared in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoffSq() const
-   { return rSpaceCutoffSq_; }
+   inline 
+   double EwaldInteraction::rSpaceCutoffSq() const
+   {  return rSpaceCutoffSq_; }
 
    /* 
    * Calculate r-space energy for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) const 
+   inline 
+   double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) 
+   const 
    {
       double r = sqrt(rsq);
       return ce_*qProduct*erfc(alpha_*r)/r;
@@ -222,7 +227,9 @@ namespace McMd
    /*
    * Calculate r-space force/distance for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
+   inline 
+   double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) 
+   const 
    {
       double r = sqrt(rSq);
       double x = alpha_*r;
@@ -232,10 +239,8 @@ namespace McMd
    /* 
    * Calculate k-space potential from wavenumber kSq.
    */
-   inline double EwaldInteraction::kSpacePotential(double rhoSq, double prefactor) const
-   {
-      return rhoSq*prefactor;
-   }
+   inline double EwaldInteraction::kSpacePotential(double kSq) const
+   {  return exp(cg_*kSq)/(kSq*epsilon_); }
 
 }
 #endif

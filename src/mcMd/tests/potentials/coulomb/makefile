@@ -16,6 +16,8 @@ clean:
 	rm -f $(mcMd_tests_potentials_coulomb_OBJS)
 	rm -f $(mcMd_tests_potentials_coulomb_OBJS:.o=.d)
 	rm -f $(mcMd_tests_potentials_coulomb_OBJS:.o=)
+	rm -f *.o
+	rm -f *.d
 
 echo:
 	echo $(INCLUDES)

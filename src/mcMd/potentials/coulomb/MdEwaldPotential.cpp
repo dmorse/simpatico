@@ -37,9 +37,6 @@ namespace McMd
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes())
    {
-      //initialize unit tensor.
-      const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
-      Tensor unitTensor_(unitMatrix_);
       // Note: Don't setClassName - using "CoulombPotential" base class name
    }
 
@@ -167,19 +164,14 @@ namespace McMd
          fexp2_.clear();
       }
 
-      double alpha = ewaldInteraction_.alpha();
-      double prefactor = -0.25/(alpha*alpha);
-      double kSpaceCutoffSq = kSpaceCutoff_*kSpaceCutoff_;
-
       // Accumulate waves, and wave-related properties.
       base0_ = 0;
       upper0_ = -maxK[0];
-
       base1_ = maxK[1];
       upper1_ = -base1_;
-
       base2_ = maxK[2];
       upper2_ = -base2_;
+      double kSpaceCutoffSq = kSpaceCutoff_*kSpaceCutoff_;
 
       q0.multiply(b0, -1);
       for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { 
@@ -213,7 +205,7 @@ namespace McMd
 
                   waves_.append(k);
                   ksq_.append(ksq);
-                  g_.append(exp(prefactor*ksq)/ksq);
+                  g_.append(ewaldInteraction_.kSpacePotential(ksq));
                }
 
             } // for k[2]
@@ -303,23 +295,16 @@ namespace McMd
       IntVector q;            // wave index
       double  charge;         // atom charge
       double  x, y;           // Real and imaginary parts of phasor
-      double  TwoPi;          // 2.0*pi
-      double  forcePrefactor; // 
  
-      DCMPLX  TwoPiIm;       // 2.0*pi*I
-      DCMPLX  de, expfactor;
-      double  EPS(1.0E-10);  // Tiny number to check if is charge
-      double  epsilon = ewaldInteraction_.epsilon();
-      double  volume = boundaryPtr_->volume();
-      int  nSpecies(simulationPtr_->nSpecies());
+      DCMPLX TwoPiIm;       // 2.0*pi*I
+      DCMPLX de, expfactor;
+      double EPS(1.0E-10);  // Tiny number to check if is charge
+      double volume = boundaryPtr_->volume();
+      double TwoPi = 2.0*Constants::Pi;
+      TwoPiIm = TwoPi * Constants::Im;
+      int  nSpecies = simulationPtr_->nSpecies();
       int  type;
       int  i, j;
-
-      // Constants
-      TwoPi   = 2.0*Constants::Pi;
-      TwoPiIm = TwoPi * Constants::Im;
-      // forcePrefactor = -2.0 /(ewaldInteraction_.epsilon()*boundaryPtr_->volume());
-      forcePrefactor = -2.0 /(epsilon*volume);
 
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
@@ -372,7 +357,7 @@ namespace McMd
                      df *= g_[i]*( x*rho_[i].imag() - y*rho_[i].real() );
                      fg += df;
                   }
-                  fg *= charge*forcePrefactor;
+                  fg *= -2.0*charge/volume;
  
                   // Transform to Cartesian coordinates
                   for (j = 0; j < Dimension; ++j) {
@@ -391,46 +376,45 @@ namespace McMd
    */
    void MdEwaldPotential::computeEnergy()
    {
-      System::MoleculeIterator imolIter, jmolIter;
-      Molecule::AtomIterator iatomIter, jatomIter;
-      double kPart = 0.0;
-      double x, y,rhoSq;
-      int nSpecies(simulationPtr_->nSpecies());
-
 
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
 
+      // Main loop over wavevectors
+      double x, y,rhoSq;
+      double kPart = 0.0;
       for (int i = 0; i < waves_.size(); ++i) {
          x = rho_[i].real();
          y = rho_[i].imag();
          rhoSq = x*x + y*y;
-         kPart += ewaldInteraction_.kSpacePotential(rhoSq, g_[i]);
+         kPart += rhoSq*g_[i];
       }
-      double epsilon = ewaldInteraction_.epsilon();
       double volume = boundaryPtr_->volume();
-      kPart /= epsilon*volume;
+      kPart /= volume;
       // Note: A factor of 0.5 in the expression for the kspace energy 
       // kpart is cancelled our use of only half the wavevectors
 
-      // calculate selfnergy part in ewald summation.
-      double selfEnergy(0.0); //store the self part energy
-      double icharge;
+      // Calculate self-energy correction to Ewald summation.
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomiter;
+      double charge;
+      double selfEnergy = 0.0; 
+      int nSpecies = simulationPtr_->nSpecies();
       int iAtomType;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, imolIter);
-         for ( ; imolIter.notEnd(); ++imolIter) {
-            for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
-               iAtomType = iatomIter->typeId();
-               icharge = (*atomTypesPtr_)[iAtomType].charge();
-               selfEnergy += icharge * icharge;
+         systemPtr_->begin(iSpecies, molIter);
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomiter); atomiter.notEnd(); ++atomiter) {
+               iAtomType = atomiter->typeId();
+               charge = (*atomTypesPtr_)[iAtomType].charge();
+               selfEnergy += charge*charge;
             }
          }
-      } 
+      }
       double pi = Constants::Pi;
       double alpha = ewaldInteraction_.alpha();
-      double selfPrefactor = alpha/(4*sqrt(pi)*pi*epsilon);
-      selfEnergy *= selfPrefactor;
+      double epsilon = ewaldInteraction_.epsilon();
+      selfEnergy *= alpha/(4*sqrt(pi)*pi*epsilon);
 
       // Correct for conjugate wave contribution in k-part.
       kSpaceEnergy_.set(kPart - selfEnergy);
@@ -455,36 +439,29 @@ namespace McMd
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-      //add a new method in Tensor.h for acquiring unit matrix.
-      qv.zero();
       stressTensor.zero();
-
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
       for (i = 0; i < waves_.size(); ++i) {
          q = waves_[i];
          q0.multiply(b0, q[0]);
          q1.multiply(b1, q[1]);
-         q2.multiply(b2, q[2]); 
-         qv += q0;
+         q2.multiply(b2, q[2]);
+         qv = q0;
          qv += q1;
          qv += q2;
 
          K.dyad(qv,qv);
-         K *=  -2.0 * (ca + (1.0 / ksq_[i]));
-         K.add(unitTensor_, K);
+         K *=  -2.0 * (ca + (1.0/ksq_[i]));
+         K.add(Tensor::Identity, K);
          x = rho_[i].real();
          y = rho_[i].imag();
-         K *= g_[i]*( x*x + y*y);
+         K *= g_[i]*(x*x + y*y);
          stressTensor += K;  
       }
-
-      double epsilon = ewaldInteraction_.epsilon();
-      double volume = boundaryPtr_->volume(); 
-      stressTensor /= (2.0 * epsilon * volume);   
-
-      // Correct for conjugate wave contribution in k-part then set.
-      stressTensor *= 2.0; 
+      stressTensor /= boundaryPtr_->volume();
+      // Note: A factor of 0.5 in usual expression for stress is 
+      // cancelled by our use of only half of the wavevectors.   
 
       kSpaceStress_.set(stressTensor);
    }
