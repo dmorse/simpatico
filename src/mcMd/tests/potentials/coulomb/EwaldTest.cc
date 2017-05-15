@@ -125,11 +125,11 @@ public:
       pair.unsetEnergy();
       double energyRef = coulomb.energy();
 
-      coulomb.unsetStress();
-      pair.unsetStress();
-      coulomb.computeStress();
-      pair.computeStress();
-      double pressureRef = coulomb.pressure();
+      // coulomb.unsetStress();
+      // pair.unsetStress();
+      // coulomb.computeStress();
+      // pair.computeStress();
+      // double pressureRef = coulomb.pressure();
 
       sim.system().setZeroForces();
       coulomb.addForces();
@@ -165,9 +165,9 @@ public:
                    // << "  " << Dbl(rEnergy, 15)
                    << "  " << Dbl(energy, 20, 13) 
                    << "  " << Dbl(energy - energyRef, 15) 
-                   << "  " << Dbl(pressure, 15) 
-                   << "  " << Dbl(pressure - pressureRef, 15) 
-                   << "  " << Dbl(fError, 15) 
+                   //<< "  " << Dbl(pressure, 15) 
+                   //<< "  " << Dbl(pressure - pressureRef, 15) 
+                     << "  " << Dbl(fError, 15) 
                    << std::endl;
       }
 
@@ -225,7 +225,7 @@ int main(int argc, char* argv[])
 
    test.readParam("in/param");
    test.generateConfig();
-   test.varyAlpha(0.4, 3.0, 26);
+   test.varyAlpha(1.0, 3.0, 20);
    //std::cout << "alpha = " 
    //          << test.simulation().system().coulombPotential().get("alpha")
    //          << std::endl;

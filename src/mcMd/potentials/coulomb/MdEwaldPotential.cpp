@@ -350,45 +350,46 @@ namespace McMd
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
 
-      // Main loop over wavevectors
+      // Loop over wavevectors
       double x, y,rhoSq;
-      double kPart = 0.0;
+      double energy = 0.0;
       for (int i = 0; i < waves_.size(); ++i) {
          x = rho_[i].real();
          y = rho_[i].imag();
          rhoSq = x*x + y*y;
-         kPart += rhoSq*g_[i];
+         energy += rhoSq*g_[i];
       }
-      kPart *= 0.5 / boundaryPtr_->volume();
+      energy /= boundaryPtr_->volume();
 
-      // Calculate self-energy correction to Ewald summation.
-      System::MoleculeIterator imolIter;
-      Molecule::AtomIterator iatomIter;
-      double selfenergy = 0.0; //store the self part energy
-      double icharge;
+      // Compute sum over atoms of charge squared
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      double sumChargeSq = 0.0; 
+      double charge;
       int nSpecies = simulationPtr_->nSpecies();
-      int iAtomType;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, imolIter);
-         for ( ; imolIter.notEnd(); ++imolIter) {
-            for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
-               iAtomType = iatomIter->typeId();
-               icharge = (*atomTypesPtr_)[iAtomType].charge();
-               selfenergy += icharge * icharge;
+         systemPtr_->begin(iSpecies, molIter);
+         for ( ; molIter.notEnd(); ++molIter) {
+            molIter->begin(atomIter); 
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
+               sumChargeSq += charge * charge;
             }
          }
       }
+
+      // Compute self-energy correction
       double pi = Constants::Pi;
       double alpha = ewaldInteraction_.alpha();
       double epsilon = ewaldInteraction_.epsilon();
-      selfenergy *= alpha/(4*sqrt(pi)*pi*epsilon);
+      double selfEnergy = sumChargeSq*alpha/(4.0*sqrt(pi)*pi*epsilon);
 
-      // Correct for conjugate wave contribution in k-part.
-      kSpaceEnergy_.set(2.0 * kPart - selfenergy);
+      energy -= selfEnergy;
+      kSpaceEnergy_.set(energy);
    }
 
    /*
-   * Compute the k contribution to stress.
+   * Compute the k-space contribution to stress.
    * computeStress() for coulomb part in MdSystem.cpp is off.
    */
    void MdEwaldPotential::computeStress()
@@ -396,13 +397,32 @@ namespace McMd
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
     
+      // Calculate sum of charge squared over all atoms
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      double sumChargeSq = 0.0; 
+      double charge;
+      int nSpecies = simulationPtr_->nSpecies();
+      int atomType;
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         systemPtr_->begin(iSpecies, molIter);
+         for ( ; molIter.notEnd(); ++molIter) {
+            molIter->begin(atomIter); 
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               atomType = atomIter->typeId();
+               charge = (*atomTypesPtr_)[atomType].charge();
+               sumChargeSq += charge * charge;
+            }
+         }
+      }
+
       int i;
-      double x, y;         // real and imag part of rho[i].
-      Tensor stressTensor; // stress tensor
-      Tensor K;            // stress tensor contribution
-      IntVector q;         // wavevector indices.
-      Vector qv,q0,q1,q2;  // reciprocalVector.
-      Vector b0, b1, b2;   // reciprocalBasisVector.
+      double x, y;            // real and imag part of rho[i].
+      Tensor stressTensor;    // stress tensor
+      Tensor K;               // stress tensor contribution
+      IntVector q;            // wavevector indices.
+      Vector qv, q0, q1, q2;  // reciprocalVector.
+      Vector b0, b1, b2;      // reciprocalBasisVector.
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
