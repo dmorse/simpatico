@@ -382,15 +382,15 @@ namespace McMd
 
       // Main loop over wavevectors
       double x, y,rhoSq;
-      double kPart = 0.0;
+      double energy = 0.0;
       for (int i = 0; i < waves_.size(); ++i) {
          x = rho_[i].real();
          y = rho_[i].imag();
          rhoSq = x*x + y*y;
-         kPart += rhoSq*g_[i];
+         energy += rhoSq*g_[i];
       }
       double volume = boundaryPtr_->volume();
-      kPart /= volume;
+      energy /= volume;
       // Note: A factor of 0.5 in the expression for the kspace energy 
       // kpart is cancelled our use of only half the wavevectors
 
@@ -414,10 +414,10 @@ namespace McMd
       double pi = Constants::Pi;
       double alpha = ewaldInteraction_.alpha();
       double epsilon = ewaldInteraction_.epsilon();
-      selfEnergy *= alpha/(4*sqrt(pi)*pi*epsilon);
+      selfEnergy *= alpha/(4.0*sqrt(pi)*pi*epsilon);
 
       // Correct for conjugate wave contribution in k-part.
-      kSpaceEnergy_.set(kPart - selfEnergy);
+      kSpaceEnergy_.set(energy - selfEnergy);
    }
 
    /*
