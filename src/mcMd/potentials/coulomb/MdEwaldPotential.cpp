@@ -55,6 +55,8 @@ namespace McMd
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
+
+      read<double>(in, "kSpaceCutoff", kSpaceCutoff_);
    }
 
    /*
@@ -65,6 +67,8 @@ namespace McMd
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
+
+      loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
    }
 
    /*
@@ -73,6 +77,34 @@ namespace McMd
    void MdEwaldPotential::save(Serializable::OArchive &ar)
    {
       ewaldInteraction_.save(ar);
+      ar << kSpaceCutoff_;
+   }
+
+   /**
+   * Set a parameter value, identified by a string.
+   */
+   void MdEwaldPotential::set(std::string name, double value)
+   {
+      if (name == "kSpaceCutoff") {
+         kSpaceCutoff_ = value;
+      } else {
+         ewaldInteraction_.set(name, value); 
+      }
+      unsetWaves();
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double MdEwaldPotential::get(std::string name) const
+   {
+      double value;
+      if (name == "kSpaceCutoff") {
+         value = kSpaceCutoff_;
+      } else {
+         value = ewaldInteraction_.get(name); 
+      }
+      return value;
    }
 
    /*
@@ -104,11 +136,10 @@ namespace McMd
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
       // Get max wave indices and reserve arrays
-      double kSpaceCutoff = ewaldInteraction_.kSpaceCutoff();
       double pi2 = 2.0*Constants::Pi;
       for (j=0; j < Dimension; ++j) {
          maxK[j] = 
-             ceil(kSpaceCutoff*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
+             ceil(kSpaceCutoff_*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
          UTIL_CHECK(maxK[j] > 0);
       }
 
@@ -133,7 +164,6 @@ namespace McMd
          fexp2_.clear();
       }
 
-
       // Accumulate waves, and wave-related properties.
       base0_ = 0;
       upper0_ = -maxK[0];
@@ -141,7 +171,7 @@ namespace McMd
       upper1_ = -base1_;
       base2_ = maxK[2];
       upper2_ = -base2_;
-      double kCutoffSq = ewaldInteraction_.kSpaceCutoffSq();
+      double kSpaceCutoffSq = kSpaceCutoff_*kSpaceCutoff_;
 
       q0.multiply(b0, -1);
       for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { 
@@ -163,7 +193,7 @@ namespace McMd
                q += b2;
 
                ksq = double(q.square());
-               if (ksq <= kCutoffSq) {
+               if (ksq <= kSpaceCutoffSq) {
 
                   if (k[0] > upper0_) upper0_ = k[0];
 
@@ -350,7 +380,7 @@ namespace McMd
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
 
-      // Loop over wavevectors
+      // Main loop over wavevectors
       double x, y,rhoSq;
       double energy = 0.0;
       for (int i = 0; i < waves_.size(); ++i) {
@@ -359,39 +389,39 @@ namespace McMd
          rhoSq = x*x + y*y;
          energy += rhoSq*g_[i];
       }
-      energy /= boundaryPtr_->volume();
-      // Note: Missing factor of 0.5 from Ewald expression for k-space 
-      // energy is cancelled here by the use of only half the wavevectors. 
+      double volume = boundaryPtr_->volume();
+      energy /= volume;
+      // Note: A factor of 0.5 in the expression for the kspace energy 
+      // kpart is cancelled our use of only half the wavevectors
 
-      // Compute sum over atoms of charge squared
+      // Calculate self-energy correction to Ewald summation.
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator atomIter;
-      double sumChargeSq = 0.0; 
+      Molecule::AtomIterator atomiter;
       double charge;
+      double selfEnergy = 0.0; 
       int nSpecies = simulationPtr_->nSpecies();
+      int iAtomType;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          systemPtr_->begin(iSpecies, molIter);
          for ( ; molIter.notEnd(); ++molIter) {
-            molIter->begin(atomIter); 
-            for ( ; atomIter.notEnd(); ++atomIter) {
-               charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
-               sumChargeSq += charge * charge;
+            for (molIter->begin(atomiter); atomiter.notEnd(); ++atomiter) {
+               iAtomType = atomiter->typeId();
+               charge = (*atomTypesPtr_)[iAtomType].charge();
+               selfEnergy += charge*charge;
             }
          }
       }
-
-      // Compute self-energy correction
       double pi = Constants::Pi;
       double alpha = ewaldInteraction_.alpha();
       double epsilon = ewaldInteraction_.epsilon();
-      double selfEnergy = sumChargeSq*alpha/(4.0*sqrt(pi)*pi*epsilon);
-      energy -= selfEnergy;
+      selfEnergy *= alpha/(4.0*sqrt(pi)*pi*epsilon);
 
-      kSpaceEnergy_.set(energy);
+      // Correct for conjugate wave contribution in k-part.
+      kSpaceEnergy_.set(energy - selfEnergy);
    }
 
    /*
-   * Compute the k-space contribution to stress.
+   * Compute the k contribution to stress.
    * computeStress() for coulomb part in MdSystem.cpp is off.
    */
    void MdEwaldPotential::computeStress()
@@ -399,21 +429,20 @@ namespace McMd
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
     
-      double x, y;            // real and imag part of rho[i].
-      Tensor stressTensor;    // stress tensor
-      Tensor K;               // stress tensor contribution
-      IntVector q;            // wavevector indices
-      Vector b0, b1, b2;      // reciprocal basis vectors
-      Vector q0, q1, q2;      // partial wavevectors
-      Vector qv;              // wavevector
+      int i;
+      double x, y; //real and image part of rho[i].
+      Tensor K,stressTensor;// temp stress tensor.
+      IntVector q;//vector indices.
+      Vector qv,q0,q1,q2; //reciprocalVector.
+      Vector b0, b1, b2; // reciprocalBasisVector.
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
+      stressTensor.zero();
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
-      stressTensor.zero();
-      for (int i = 0; i < waves_.size(); ++i) {
+      for (i = 0; i < waves_.size(); ++i) {
          q = waves_[i];
          q0.multiply(b0, q[0]);
          q1.multiply(b1, q[1]);
@@ -423,19 +452,19 @@ namespace McMd
          qv += q2;
 
          K.dyad(qv,qv);
-         K *=  -2.0 * (ca + (1.0 / ksq_[i]));
+         K *=  -2.0 * (ca + (1.0/ksq_[i]));
          K.add(Tensor::Identity, K);
          x = rho_[i].real();
          y = rho_[i].imag();
          K *= g_[i]*(x*x + y*y);
          stressTensor += K;  
       }
-      stressTensor /= boundaryPtr_->volume(); 
-      // Note: Missing factor of 0.5 from Ewald expression for k-space 
-      // stress is cancelled here by the use of only half the wavevectors. 
+      stressTensor /= boundaryPtr_->volume();
+      // Note: A factor of 0.5 in usual expression for stress is 
+      // cancelled by our use of only half of the wavevectors.   
 
       kSpaceStress_.set(stressTensor);
    }
 
-}
+} 
 #endif

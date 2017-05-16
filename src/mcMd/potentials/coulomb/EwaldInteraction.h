@@ -141,18 +141,6 @@ namespace McMd
       double rSpaceCutoff() const;
 
       /**
-      * Get reciprocal space cutoff.
-      */
-      double kSpaceCutoff() const;
-
-      /**
-      * Get reciprocal space cutoff squared.
-      *
-      * \return    kCutoffSq_
-      */
-      double kSpaceCutoffSq() const;
- 
-      /**
       * Get Ewald paramter alpha.
       *
       * \return    alpha_
@@ -184,10 +172,8 @@ namespace McMd
       double alpha_;            ///< alpha = (1 / (sigma*sqrt(2)) ).
       double rSpaceCutoff_;     ///< Ewald potential real space cutoff.
       double rSpaceCutoffSq_;   ///< Real space cutoff squared.
-      double kSpaceCutoff_;     ///< Ewald potential reciprocal space cutoff.
-      double kSpaceCutoffSq_;   ///< Reciprocal space cutoff.
 
-      /// prefactors for real space potential
+      /// Prefactors
       double ce_;
       double cf_;
       double cg_;
@@ -205,42 +191,34 @@ namespace McMd
    * Return medium dielectric permittivity.
    */
    inline double EwaldInteraction::epsilon() const
-   { return epsilon_; }
+   {  return epsilon_; }
 
    /* 
    * Return Ewald mearing parameter alpha.
    */
    inline double EwaldInteraction::alpha() const
-   { return alpha_; }
+   {  return alpha_; }
 
    /* 
    * Return real space cutoff distance in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoff() const
-   { return rSpaceCutoff_; }
+   inline 
+   double EwaldInteraction::rSpaceCutoff() const
+   {  return rSpaceCutoff_; }
 
   /* 
    * Return real space cutoff distance squared in Ewald method.
    */
-   inline double EwaldInteraction::rSpaceCutoffSq() const
-   { return rSpaceCutoffSq_; }
-
-  /* 
-   * Return reciprocal space cutoff distance in Ewald method.
-   */
-   inline double EwaldInteraction::kSpaceCutoff() const
-   { return kSpaceCutoff_; }
-
-   /* 
-   * Return reciprocal space cutoff distance squared in Ewald method.
-   */
-   inline double EwaldInteraction::kSpaceCutoffSq() const
-   { return kSpaceCutoffSq_; }
+   inline 
+   double EwaldInteraction::rSpaceCutoffSq() const
+   {  return rSpaceCutoffSq_; }
 
    /* 
    * Calculate r-space energy for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) const 
+   inline 
+   double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) 
+   const 
    {
       double r = sqrt(rsq);
       return ce_*qProduct*erfc(alpha_*r)/r;
@@ -249,7 +227,9 @@ namespace McMd
    /*
    * Calculate r-space force/distance for a pair of charges.
    */
-   inline double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) const 
+   inline 
+   double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) 
+   const 
    {
       double r = sqrt(rSq);
       double x = alpha_*r;
@@ -260,10 +240,7 @@ namespace McMd
    * Calculate k-space potential from wavenumber kSq.
    */
    inline double EwaldInteraction::kSpacePotential(double kSq) const
-   {
-      // Note: cg_ = -0.25/(alpha*alpha)
-      return exp(cg_*kSq)/(kSq*epsilon_);
-   }
+   {  return exp(cg_*kSq)/(kSq*epsilon_); }
 
 }
 #endif

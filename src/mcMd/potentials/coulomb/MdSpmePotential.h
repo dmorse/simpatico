@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_EWALD_POTENTIAL_H
-#define MCMD_MD_EWALD_POTENTIAL_H
+#ifndef MCMD_MD_SPME_POTENTIAL_H
+#define MCMD_MD_SPME_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -17,12 +17,14 @@
 #include <util/space/Tensor.h>           // member template parameter
 #include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
+#include <util/containers/GridArray.h>   // member template
 #include <util/misc/Setable.h>           // member template
 #include <mcMd/chemistry/AtomType.h>     // member template parameter
 #include <util/containers/Array.h>       // member class template
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
+#include <fftw3.h>
 
 namespace McMd
 {
@@ -35,29 +37,27 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Ewald Coulomb potential class for MD simulations.
+   * Smooth Particle-Mesh Ewald Coulomb potential for MD simulations.
    *
-   * This class implements the k-space sums in the Ewald
-   * method for computing the Coulomb energy and forces.
+   * This class implements the smooth particle mesh ewald k-space
+   * computations for the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdEwaldPotential : public MdCoulombPotential
+   class MdSpmePotential : public MdCoulombPotential
    {
 
    public:
 
       /**
       * Constructor.
-      *
-      * \param system  parent system.
       */
-      MdEwaldPotential(System& system);
+      MdSpmePotential(System& system);
 
       /**
-      * Destructor (does nothing).
+      * Destructor (destroy fftw plan).
       */
-      virtual ~MdEwaldPotential();
+      virtual ~MdSpmePotential();
 
       /// \name Initialization
       //@{
@@ -84,13 +84,13 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       //@}
-      /// \name Parameters (get/set)
+      /// \name Interaction Parameters (get/set)
       //@{
 
       /**
       * Set a parameter value, identified by a string.
       *
-      * \param name   parameter name
+      * \param name  parameter name
       * \param value  new value of parameter
       */
       void set(std::string name, double value);
@@ -107,12 +107,12 @@ namespace McMd
       //@{
 
       /**
-      * Generate wavevectors for the current boundary and kCutoff.
+      * Precompute waves and influence function.
       */
       virtual void makeWaves();
 
       /**
-      * Current number of wavevectors with |k| < kCutoff.
+      * place holder.
       */
       int nWave() const;
 
@@ -127,7 +127,7 @@ namespace McMd
       virtual void computeEnergy();
 
       /**
-      * Compute kspace part of Coulomb pressure.
+      * place holder.
       */
       virtual void computeStress();
 
@@ -160,38 +160,74 @@ namespace McMd
       // Pointer to array of atom types
       const Array<AtomType>* atomTypesPtr_;
 
-      /// Exponential factor accessors.
-      double  base0_, base1_, base2_;
-      double  upper0_, upper1_, upper2_;
-      GArray<DCMPLX> fexp0_;
-      GArray<DCMPLX> fexp1_;
-      GArray<DCMPLX> fexp2_;
+      /// Grid Size.
+      IntVector gridDimensions_;
 
-      /// Wave vector indices.
-      GArray<IntVector> waves_;
+      /// QGrid
+      GridArray<DCMPLX> Qgrid_;
 
-      //real space vector indices.
-      GArray<Vector> reals_;
+      /// Qhatgrid
+      GridArray<DCMPLX> Qhatgrid_;
 
-      /// Values of square of Fourier wavevector.
-      GArray<double> ksq_;
+      /// BCGrid
+      GridArray<double> BCgrid_;
+      
+      /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
+      DArray<Vector> ikop_;
 
-      /// Regularized Green's function (Gaussian/ksq)
-      GArray<double> g_;
+      /// force grid x component
+      GridArray<DCMPLX> xfield_;
 
-      /// Fourier modes of charge density.
-      GArray<DCMPLX> rho_;
+      /// force grid y component
+      GridArray<DCMPLX> yfield_;
 
-      /// cutoff distance in k space
-      double kSpaceCutoff_;
+      /// force grid z component 
+      GridArray<DCMPLX> zfield_;
 
-      /*
-      * Calculate Fourier coefficients of charge density.
-      */
-      void computeKSpaceCharge();
+      /// order of basis spline
+      int order_;
+      
+      /// FFT plan.
+      fftw_plan forward_plan;
+
+      /// FFT plan for electric field.
+      fftw_plan xfield_backward_plan, yfield_backward_plan, zfield_backward_plan;
+
+      /**
+       * set all elements to 0 for grid.
+       */
+      template<class T> 
+      void initializeGrid(GridArray<T>& grid);
+
+      /**
+       * influence function, ie. BCgrid.
+       */
+      void influence_function();
+
+      /**
+       * compute components of B in BCgrid_.
+       */
+      double bfactor(double m , int dim);
+
+      /**
+       * ik operator.
+       */
+      void ik_differential_operator();
+      
+      /**
+       * charge assignment function, ie. Qgrid_.
+       */
+      void spreadCharge();
+
+      /**
+       * expression for basis spline with order-5.
+       */
+      double basisSpline(double x);
+
+      /// Prefactor for self-interaction correction.
+      double selfPrefactor_;
 
    };
 
 }
 #endif
-

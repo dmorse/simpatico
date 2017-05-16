@@ -29,7 +29,6 @@ namespace McMd
     : epsilon_(0.0),
       alpha_(0.0),
       rSpaceCutoff_(0.0),
-      kSpaceCutoff_(0.0),
       isInitialized(false)
    { setClassName("EwaldInteraction");}
    
@@ -40,11 +39,9 @@ namespace McMd
     : epsilon_(other.epsilon_),
       alpha_(other.alpha_),
       rSpaceCutoff_(other.rSpaceCutoff_),
-      kSpaceCutoff_(other.kSpaceCutoff_),
       isInitialized(other.isInitialized)
    {
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
-      kSpaceCutoffSq_ = other.kSpaceCutoffSq_;
 
       /// Derived constants
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
@@ -60,11 +57,9 @@ namespace McMd
       epsilon_ = other.epsilon_;
       alpha_ = other.alpha_;
       rSpaceCutoff_ = other.rSpaceCutoff_;
-      kSpaceCutoff_ = other.kSpaceCutoff_;
       isInitialized = other.isInitialized;
 
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
-      kSpaceCutoffSq_ = other.kSpaceCutoffSq_;
 
       // Derived constants
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
@@ -82,11 +77,9 @@ namespace McMd
       read<double>(in, "epsilon",      epsilon_);
       read<double>(in, "alpha",        alpha_);
       read<double>(in, "rSpaceCutoff", rSpaceCutoff_);
-      read<double>(in, "kSpaceCutoff", kSpaceCutoff_);
 
       // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
-      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
       cg_ = -0.25/(alpha_*alpha_);
@@ -103,11 +96,9 @@ namespace McMd
       loadParameter<double>(ar, "epsilon", epsilon_);
       loadParameter<double>(ar, "alpha", alpha_);
       loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
-      loadParameter<double>(ar, "kSpaceCutoff", kSpaceCutoff_);
 
       // Derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
-      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_; 
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
       cg_ = -0.25/(alpha_*alpha_);
@@ -123,7 +114,6 @@ namespace McMd
       ar << epsilon_;
       ar << alpha_;
       ar << rSpaceCutoff_;
-      ar << kSpaceCutoff_;
    }
 
    /*
@@ -139,16 +129,12 @@ namespace McMd
       } else 
       if (name == "rSpaceCutoff") {
          rSpaceCutoff_ = value;
-      } else 
-      if (name == "kSpaceCutoff") {
-         kSpaceCutoff_ = value;
       } else { 
          UTIL_THROW("Unrecognized parameter name");
       }
 
       // Recalculate all derived constants
       rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_;
-      kSpaceCutoffSq_ = kSpaceCutoff_ * kSpaceCutoff_;
       ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
       cf_ = 2.0*alpha_/sqrt(Constants::Pi);
       cg_ = -0.25/(alpha_*alpha_);
@@ -168,9 +154,6 @@ namespace McMd
       } else
       if (name == "rSpaceCutoff") {
          value = rSpaceCutoff_;
-      } else
-      if (name == "kSpaceCutoff") {
-         value = kSpaceCutoff_;
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }

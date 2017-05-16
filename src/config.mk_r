@@ -142,6 +142,7 @@ MPI_LIB=mpicxx
 
 # Global default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
+
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
 else

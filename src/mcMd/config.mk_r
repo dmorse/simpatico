@@ -50,7 +50,6 @@ MCMD_SUFFIX:=
 # is extended using the += operator, e.g., MCMD_DEFS+=-DMCMD_PERTURB.
 # The MCMD_SUFFIX is a non-recursive makefile variable, which may be
 # extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
- 
 
 # Enable free energy perturbation 
 ifdef UTIL_MPI

@@ -16,6 +16,9 @@
 // Coulomb Potential interaction classes
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/coulomb/MdEwaldPotential.h>
+#ifdef SIMP_FFTW
+#include <mcMd/potentials/coulomb/MdSpmePotential.h>
+#endif
 
 
 namespace McMd
@@ -44,11 +47,13 @@ namespace McMd
       if (ptr) return ptr;
 
       if (name == "Ewald") {
-         //ptr = new FineEwaldCoulombPotential(*systemPtr_);
-         //ptr = new RefinedEwaldCoulombPotential(*systemPtr_);
-         //ptr = new EwaldCoulombPotential(*systemPtr_);
          ptr = new MdEwaldPotential(*systemPtr_);
       } 
+      #ifdef SIMP_FFTW
+      else if (name == "SPME") {
+         ptr = new MdSpmePotential(*systemPtr_);
+      } 
+      #endif
       return ptr;
    }
 

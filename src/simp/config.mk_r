@@ -35,6 +35,11 @@ SIMP_BOND=1
 # Define SIMP_EXTERNAL, enable external potentials
 #SIMP_EXTERNAL=1
 
+# Enable use of FFTW library for particle mesh Ewald
+ifdef SIMP_COULOMB
+#SIMP_FFTW=1
+endif
+
 #-----------------------------------------------------------------------
 # The following code defines the variables SIMP_DEFS and SIMP_SUFFIX.
 #
@@ -103,6 +108,13 @@ endif
 ifdef SIMP_COULOMB
 SIMP_DEFS+= -DSIMP_COULOMB
 SIMP_SUFFIX:=$(SIMP_SUFFIX)_c
+ifdef SIMP_FFTW
+SIMP_DEFS+= -DSIMP_FFTW
+# Needed for Mac OS X with MacPort, which puts files in opt/
+#INCLUDES+= -I/opt/local/include
+#LDFLAGS+= -L/opt/local/lib
+LDFLAGS+= -lfftw3
+endif
 endif
 
 # Enable external potential
