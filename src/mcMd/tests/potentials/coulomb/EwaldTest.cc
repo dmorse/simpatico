@@ -138,7 +138,8 @@ public:
 
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
-      double alpha, kEnergy, rEnergy, energy, pressure, fError;
+      double alpha, kEnergy, rEnergy, energy, fError;
+      // double pressure;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
 
@@ -149,11 +150,11 @@ public:
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
 
-         coulomb.unsetStress();
-         pair.unsetStress();
-         coulomb.computeStress();
-         pair.computeStress();
-         pressure = coulomb.pressure();
+         // coulomb.unsetStress();
+         // pair.unsetStress();
+         // coulomb.computeStress();
+         // pair.computeStress();
+         // pressure = coulomb.pressure();
          
          sim.system().setZeroForces();
          coulomb.addForces();
