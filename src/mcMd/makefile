@@ -49,6 +49,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f perturb/mcSystem/McPerturbationFactory.cpp
 	rm -f potentials/angle/AngleFactory.cpp
 	rm -f potentials/bond/BondFactory.cpp
+	rm -f potentials/coulomb/CoulombFactory.cpp
 	rm -f potentials/dihedral/DihedralFactory.cpp
 	rm -f potentials/external/ExternalFactory.cpp
 	rm -f potentials/link/LinkFactory.cpp
@@ -61,10 +62,10 @@ endif
 # Executable targets
 
 $(MCSIM_EXE): $(MCSIM).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(LIBS)
+	$(CXX) -o $(MCSIM_EXE) $(MCSIM).o $(LIBS) $(LDFLAGS)
  
 $(MDSIM_EXE): $(MDSIM).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(LIBS)
+	$(CXX) -o $(MDSIM_EXE) $(MDSIM).o $(LIBS) $(LDFLAGS)
 
 # Short names for executable targets (for convenience)
  

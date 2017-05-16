@@ -19,7 +19,7 @@ include $(SRC_DIR)/ddMd/sources.mk
 #-----------------------------------------------------------------------
 # Variable definition
 
-# Main program location
+# Main program *.o and *.d location
 DDSIM=$(BLD_DIR)/ddMd/ddSim
 
 #-----------------------------------------------------------------------
@@ -28,7 +28,7 @@ DDSIM=$(BLD_DIR)/ddMd/ddSim
 all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
 $(DDSIM_EXE): $(DDSIM).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
+	$(CXX) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS) $(LDFLAGS)
 
 ddSim:
 	$(MAKE) $(DDSIM_EXE)
