@@ -360,6 +360,8 @@ namespace McMd
          energy += rhoSq*g_[i];
       }
       energy /= boundaryPtr_->volume();
+      // Note: Missing factor of 0.5 from Ewald expression for k-space 
+      // energy is cancelled here by the use of only half the wavevectors. 
 
       // Compute sum over atoms of charge squared
       System::MoleculeIterator molIter;
@@ -383,8 +385,8 @@ namespace McMd
       double alpha = ewaldInteraction_.alpha();
       double epsilon = ewaldInteraction_.epsilon();
       double selfEnergy = sumChargeSq*alpha/(4.0*sqrt(pi)*pi*epsilon);
-
       energy -= selfEnergy;
+
       kSpaceEnergy_.set(energy);
    }
 
@@ -397,32 +399,13 @@ namespace McMd
       // Compute Fourier components of charge density.
       computeKSpaceCharge();
     
-      // Calculate sum of charge squared over all atoms
-      System::MoleculeIterator molIter;
-      Molecule::AtomIterator atomIter;
-      double sumChargeSq = 0.0; 
-      double charge;
-      int nSpecies = simulationPtr_->nSpecies();
-      int atomType;
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, molIter);
-         for ( ; molIter.notEnd(); ++molIter) {
-            molIter->begin(atomIter); 
-            for ( ; atomIter.notEnd(); ++atomIter) {
-               atomType = atomIter->typeId();
-               charge = (*atomTypesPtr_)[atomType].charge();
-               sumChargeSq += charge * charge;
-            }
-         }
-      }
-
-      int i;
       double x, y;            // real and imag part of rho[i].
       Tensor stressTensor;    // stress tensor
       Tensor K;               // stress tensor contribution
-      IntVector q;            // wavevector indices.
-      Vector qv, q0, q1, q2;  // reciprocalVector.
-      Vector b0, b1, b2;      // reciprocalBasisVector.
+      IntVector q;            // wavevector indices
+      Vector b0, b1, b2;      // reciprocal basis vectors
+      Vector q0, q1, q2;      // partial wavevectors
+      Vector qv;              // wavevector
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
@@ -430,11 +413,11 @@ namespace McMd
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
       stressTensor.zero();
-      for (i = 0; i < waves_.size(); ++i) {
+      for (int i = 0; i < waves_.size(); ++i) {
          q = waves_[i];
          q0.multiply(b0, q[0]);
          q1.multiply(b1, q[1]);
-         q2.multiply(b2, q[2]); 
+         q2.multiply(b2, q[2]);
          qv = q0;
          qv += q1;
          qv += q2;
@@ -444,19 +427,15 @@ namespace McMd
          K.add(Tensor::Identity, K);
          x = rho_[i].real();
          y = rho_[i].imag();
-         K *= g_[i]*( x*x + y*y);
+         K *= g_[i]*(x*x + y*y);
          stressTensor += K;  
       }
-      double volume = boundaryPtr_->volume(); 
-      stressTensor /= volume; 
-      // Note: Factor of 0.5 in Ewald expression for k-space stress
-      // is cancelled by the use of only half the wavevectors. 
-
-      // Question: Shouldn't there be a self-interaction correction
-      // analogous to that used for the energy.
+      stressTensor /= boundaryPtr_->volume(); 
+      // Note: Missing factor of 0.5 from Ewald expression for k-space 
+      // stress is cancelled here by the use of only half the wavevectors. 
 
       kSpaceStress_.set(stressTensor);
    }
 
-} 
+}
 #endif
