@@ -459,7 +459,8 @@ namespace McMd
          K *= g_[i]*(x*x + y*y);
          stressTensor += K;  
       }
-      stressTensor /= boundaryPtr_->volume();
+      double volume = boundaryPtr_->volume();
+      stressTensor /= volume*volume;
       // Note: A factor of 0.5 in usual expression for stress is 
       // cancelled by our use of only half of the wavevectors.   
 

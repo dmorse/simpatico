@@ -3,6 +3,7 @@
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
+#include <mcMd/simulation/stress.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/chemistry/AtomType.h>
 #include <util/containers/Array.h>
@@ -497,6 +498,7 @@ namespace McMd
    {
       UTIL_CHECK(ewaldInteractionPtr_);
       UTIL_CHECK(rSpaceAccumulatorPtr_);
+      UTIL_CHECK(atomTypesPtr_);
 
       Tensor pStress;  // Non-Coulombic (e.g., LJ) pair stress
       Tensor cStress;  // Short-range Coulomb pair stress
@@ -504,6 +506,7 @@ namespace McMd
       Vector force;
       double rsq;
       double qProduct;
+      double forceOverR;
       double ewaldCutoffSq = ewaldInteractionPtr_->rSpaceCutoffSq();
       PairIterator iter;
       Atom* atom1Ptr;
@@ -525,6 +528,7 @@ namespace McMd
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
 
+
          if (rsq < ewaldCutoffSq) {
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
@@ -537,10 +541,11 @@ namespace McMd
             }
 
             // Short-range Coulomb stress 
-            qProduct =  (*atomTypesPtr_)[type0].charge();
+            qProduct  = (*atomTypesPtr_)[type0].charge();
             qProduct *= (*atomTypesPtr_)[type1].charge();
             force = dr;
-            force *= ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
+            forceOverR = ewaldInteractionPtr_->rSpaceForceOverR(rsq, qProduct);
+            force *= forceOverR;
             incrementPairStress(force, dr, cStress);
          }
       }

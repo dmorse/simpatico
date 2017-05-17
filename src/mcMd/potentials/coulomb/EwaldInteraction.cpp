@@ -29,7 +29,7 @@ namespace McMd
     : epsilon_(0.0),
       alpha_(0.0),
       rSpaceCutoff_(0.0),
-      isInitialized(false)
+      isInitialized_(false)
    { setClassName("EwaldInteraction");}
    
    /* 
@@ -39,15 +39,12 @@ namespace McMd
     : epsilon_(other.epsilon_),
       alpha_(other.alpha_),
       rSpaceCutoff_(other.rSpaceCutoff_),
-      isInitialized(other.isInitialized)
-   {
-      rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
-
-      /// Derived constants
-      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
-      cg_ = -0.25/(alpha_*alpha_);
-   }
+      rSpaceCutoffSq_(other.rSpaceCutoffSq_),
+      ce_(other.ce_),
+      cf_(other.cf_),
+      cg_(other.cg_),
+      isInitialized_(other.isInitialized_)
+   {}
    
    /* 
    * Assignment operator.
@@ -57,15 +54,11 @@ namespace McMd
       epsilon_ = other.epsilon_;
       alpha_ = other.alpha_;
       rSpaceCutoff_ = other.rSpaceCutoff_;
-      isInitialized = other.isInitialized;
-
       rSpaceCutoffSq_ = other.rSpaceCutoffSq_;
-
-      // Derived constants
-      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
-      cg_ = -0.25/(alpha_*alpha_);
- 
+      ce_ = other.ce_;
+      cf_ = other.cf_;
+      cg_ = other.cg_;
+      isInitialized_ = other.isInitialized_;
       return *this;
    }
 
@@ -77,14 +70,8 @@ namespace McMd
       read<double>(in, "epsilon",      epsilon_);
       read<double>(in, "alpha",        alpha_);
       read<double>(in, "rSpaceCutoff", rSpaceCutoff_);
-
-      // Derived constants
-      rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
-      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
-      cg_ = -0.25/(alpha_*alpha_);
- 
-      isInitialized = true;
+      setDerivedConstants();
+      isInitialized_ = true;
    }
 
    /*
@@ -96,14 +83,8 @@ namespace McMd
       loadParameter<double>(ar, "epsilon", epsilon_);
       loadParameter<double>(ar, "alpha", alpha_);
       loadParameter<double>(ar, "rSpaceCutoff", rSpaceCutoff_);
-
-      // Derived constants
-      rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_; 
-      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
-      cg_ = -0.25/(alpha_*alpha_);
- 
-      isInitialized = true;
+      setDerivedConstants();
+      isInitialized_ = true;
    }
 
    /*
@@ -132,12 +113,7 @@ namespace McMd
       } else { 
          UTIL_THROW("Unrecognized parameter name");
       }
-
-      // Recalculate all derived constants
-      rSpaceCutoffSq_ = rSpaceCutoff_ * rSpaceCutoff_;
-      ce_ = 1.0/(epsilon_*4.0*Constants::Pi); 
-      cf_ = 2.0*alpha_/sqrt(Constants::Pi);
-      cg_ = -0.25/(alpha_*alpha_);
+      setDerivedConstants();
    }
 
    /*
@@ -160,5 +136,14 @@ namespace McMd
       return value;
    }
 
+   void EwaldInteraction::setDerivedConstants()
+   {
+      rSpaceCutoffSq_ = rSpaceCutoff_*rSpaceCutoff_; 
+      double pi = Constants::Pi;
+      ce_ = 1.0/(4.0*pi*epsilon_); 
+      cf_ = 2.0*alpha_/sqrt(pi);
+      cg_ = -0.25/(alpha_*alpha_);
+   }
+ 
 } 
 #endif

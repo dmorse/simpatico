@@ -119,43 +119,62 @@ public:
    {
       MdCoulombPotential& coulomb = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
+      double volume = sim.system().boundary().volume();
 
-      // Compute well converged system
+      // Compute properties for well converged system
       coulomb.unsetEnergy();
       pair.unsetEnergy();
       double energyRef = coulomb.energy();
 
-      // coulomb.unsetStress();
-      // pair.unsetStress();
-      // coulomb.computeStress();
-      // pair.computeStress();
-      // double pressureRef = coulomb.pressure();
 
       sim.system().setZeroForces();
       coulomb.addForces();
       pair.addForces();
       storeForces(forces_);
 
+      coulomb.unsetStress();
+      pair.unsetStress();
+
+      // Document format
+      std::cout << "        alpha"
+             // << "          kEnergy" 
+             // << "          rEnergy" 
+                << "                energy" 
+                << "       Del Energy" 
+                << "        Del Force" 
+             // << "       rPresssure" 
+             // << "       kPresssure" 
+                << "        presssure" 
+                << "   Del  presssure" 
+                << std::endl;
+
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
       double alpha, kEnergy, rEnergy, energy, fError;
-      // double pressure;
+      double kPressure, rPressure, dPressure, pressure;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
-
          coulomb.set("alpha", alpha);
+
+         // Energy
          coulomb.unsetEnergy();
          pair.unsetEnergy();
          kEnergy = coulomb.kSpaceEnergy();
          rEnergy = coulomb.rSpaceEnergy();
          energy = kEnergy + rEnergy;
 
-         // coulomb.unsetStress();
-         // pair.unsetStress();
-         // coulomb.computeStress();
-         // pair.computeStress();
-         // pressure = coulomb.pressure();
+         // Pressure
+         coulomb.unsetStress();
+         pair.unsetStress();
+         coulomb.computeStress();
+         pair.computeStress();
+         kPressure = coulomb.kSpaceStress().trace()/3.0;
+         rPressure = coulomb.rSpaceStress().trace()/3.0;
+         pressure = kPressure + rPressure;
+         //pressure = coulomb.pressure();
+         dPressure = pressure - energyRef/(3.0*volume);
          
+         // Force
          sim.system().setZeroForces();
          coulomb.addForces();
          pair.addForces();
@@ -166,40 +185,16 @@ public:
                    // << "  " << Dbl(rEnergy, 15)
                    << "  " << Dbl(energy, 20, 13) 
                    << "  " << Dbl(energy - energyRef, 15) 
-                   //<< "  " << Dbl(pressure, 15) 
-                   //<< "  " << Dbl(pressure - pressureRef, 15) 
-                     << "  " << Dbl(fError, 15) 
+                   << "  " << Dbl(fError, 15) 
+                   //<< "  " << Dbl(rPressure, 15) 
+                   //<< "  " << Dbl(kPressure, 15) 
+                   << "  " << Dbl(pressure, 15) 
+                   << "  " << Dbl(dPressure, 15) 
                    << std::endl;
       }
 
       // Reset to default
       coulomb.set("alpha", alpha_);
-   }
-
-   void varyRSpaceCutoff(double rSpaceCutoffMin, double rSpaceCutoffMax, int n)
-   {
-      MdCoulombPotential& coulomb = sim.system().coulombPotential();
-      MdPairPotential& pair = sim.system().pairPotential();
-
-      double dRSpaceCutoff = (rSpaceCutoffMax - rSpaceCutoffMin)/double(n);
-      double rSpaceCutoff, kEnergy, rEnergy, energy;
-      for (int i = 0; i <= n; ++i) {
-         rSpaceCutoff = rSpaceCutoffMin + dRSpaceCutoff*i;
-         coulomb.set("rSpaceCutoff", rSpaceCutoff);
-         coulomb.unsetEnergy();
-         pair.unsetEnergy();
-         kEnergy = coulomb.kSpaceEnergy();
-         rEnergy = coulomb.rSpaceEnergy();
-         energy = kEnergy + rEnergy;
-         std::cout << Dbl(coulomb.get("rSpaceCutoff"), 10)
-                   << "  " << Dbl(kEnergy, 20)
-                   << "  " << Dbl(rEnergy, 20)
-                   << "  " << Dbl(energy, 20)
-                   << std::endl;
-      }
-
-      // Reset to default
-      coulomb.set("rSpaceCutoff", rSpaceCutoff_);
    }
 
    MdSimulation& simulation()
@@ -227,8 +222,5 @@ int main(int argc, char* argv[])
    test.readParam("in/param.ewald");
    test.generateConfig();
    test.varyAlpha(1.0, 2.4, 14);
-   //std::cout << "alpha = " 
-   //          << test.simulation().system().coulombPotential().get("alpha")
-   //          << std::endl;
 
 }

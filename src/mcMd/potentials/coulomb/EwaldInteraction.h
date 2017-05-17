@@ -2,11 +2,11 @@
 #define MCMD_EWALD_INTERACTION_H
 
 /*
- * Simpatico - Simulation Package for Polymeric and Molecular Liquids
- *
- * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
- * Distributed under the terms of the GNU General Public License.
- */
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
 
 #include <util/param/ParamComposite.h>
 #include <util/global.h>
@@ -91,11 +91,13 @@ namespace McMd
       //@{ 
 
       /**
-      * Returns interaction energy for a single pair of atoms. 
+      * Returns r-space interaction energy for a single pair of atoms. 
+      *
+      * rSpaceEnergy = qProduct*erfc(r*alpha)/(4*pi*epsilon*r)
       *
       * \param rSq  square of distance between atoms
-      * \param qProduct product of charges
-      * \return short range part of pair energy
+      * \param qProduct  product of charges
+      * \return  short range part of pair energy 
       */
       double rSpaceEnergy(double rSq, double qProduct) const;
 
@@ -114,12 +116,12 @@ namespace McMd
       * to obtain the force vector. A positive value for the return value
       * represents a repulsive force between a pair of atoms.
       *
-      * Precondition: The distance squared rsq must be less than cutoffSq.
-      * If rsq > cutoffSq, the return value is undefined (i.e., invalid).
-      * Usage: Test for rsq < cutoffSq before calling this function
+      * Precondition: The distance squared rSq must be less than cutoffSq.
+      * If rSq > cutoffSq, the return value is undefined (i.e., invalid).
+      * Usage: Test for rSq < cutoffSq before calling this function
       * \code
-      * if (rsq < interaction.cutoffSq(i, j)) {
-      *    f = forceOverR(rsq, i, j);
+      * if (rSq < interaction.rSpaceCutoffSq()) {
+      *    forceOverR = rSpaceForceOverR(rsq, i, j);
       *    .....
       * }
       * \endcode
@@ -141,39 +143,39 @@ namespace McMd
       double rSpaceCutoff() const;
 
       /**
-      * Get Ewald paramter alpha.
+      * Get Ewald parameter alpha (inverse length).
       *
-      * \return    alpha_
+      * \return alpha
       */
       double alpha() const;
  
       /**
       * Get dielectric permittivity.
       *
-      * \return    epsilon_
+      * \return epsilon
       */
       double epsilon() const;
  
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name   parameter name
+      * \param name parameter name
       */
       double get(std::string name) const;
 
       //@}
 
-   protected:
+   private:
 
       /// Physical Parameters.
       double epsilon_;          ///< Dielectric permittivity.
 
-      /// Algorithmic parameters for Ewald potential.
+      // Algorithmic parameters for Ewald potential.
       double alpha_;            ///< alpha = (1 / (sigma*sqrt(2)) ).
       double rSpaceCutoff_;     ///< Ewald potential real space cutoff.
-      double rSpaceCutoffSq_;   ///< Real space cutoff squared.
 
-      /// Prefactors
+      // Derived constants
+      double rSpaceCutoffSq_;   ///< Real space cutoff squared.
       double ce_;
       double cf_;
       double cg_;
@@ -181,7 +183,10 @@ namespace McMd
       /**
       * Was this object initialized by calling (read|load)Parameters ?
       */
-      bool  isInitialized;
+      bool isInitialized_;
+
+      /// Compute and set values of derived constants
+      void setDerivedConstants();
 
    };
 
@@ -217,10 +222,10 @@ namespace McMd
    * Calculate r-space energy for a pair of charges.
    */
    inline 
-   double EwaldInteraction::rSpaceEnergy(double rsq, double qProduct) 
+   double EwaldInteraction::rSpaceEnergy(double rSq, double qProduct) 
    const 
    {
-      double r = sqrt(rsq);
+      double r = sqrt(rSq);
       return ce_*qProduct*erfc(alpha_*r)/r;
    }
 
