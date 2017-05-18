@@ -69,15 +69,12 @@ MdSimulation{
       interval                            100
     }
 
-    MdEnergyOutput{
+    MdEnergyAnalyzer{
       interval                            100
-      outputFileName                    energy
+      outputFileName                   energy
+      nSamplePerBlock                       1
     }
  
-    ConfigWriter{
-      interval                            4000
-      outputFileName                   config. 
-    }
   }
   saveInterval                             100
   saveFileName                         restart

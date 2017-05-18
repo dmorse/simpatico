@@ -57,13 +57,17 @@ namespace McMd
    };
 
    /*
-   * Unset precomputed wavevectors and k-space potential.
+   * Unset precomputed wavevectors, influence function, energy and stress.
    */
    void MdCoulombPotential::unsetWaves()
-   {  hasWaves_ = false; }
+   {  
+      hasWaves_ = false; 
+      unsetEnergy();
+      unsetStress();
+   }
 
    /*
-   * Unset k-space energy (does not unset rSpace).
+   * Unset k-space energy (does not unset rSpace or waves).
    */
    void MdCoulombPotential::unsetEnergy()
    {  kSpaceEnergy_.unset(); }
@@ -92,7 +96,7 @@ namespace McMd
    {
       double temp;
       temp  = kSpaceEnergy();
-      temp += rSpaceAccumulator_.rSpaceEnergy();
+      temp += rSpaceEnergy();
       return temp;
    }
 

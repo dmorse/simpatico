@@ -62,7 +62,6 @@ public:
       }
 
       alpha_ = sim.system().coulombPotential().get("alpha");
-      //rSpaceCutoff_ = spme.get("rSpaceCutoff");
    }
 
    void generateConfig() 
@@ -147,13 +146,15 @@ public:
       MdCoulombPotential& spme = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
 
+      // Set Ewald and SPME to same parameters
+      ewald.set("alpha", 1.4);
+      spme.set("alpha", 1.4);
+      //std::cout << "Ewald reference alpha   = " << ewald.get("alpha") << std::endl;
+      //std::cout << "Ewald reference epsilon = " << ewald.get("epsilon") << std::endl;
+      //std::cout << "SPME  reference alpha   = " << spme.get("alpha")  << std::endl;
+      //std::cout << "SPME  reference epsilon = " << spme.get("epsilon") << std::endl;
 
       // Compute properties of a well converged system
-      spme.set("alpha", ewald.get("alpha"));
-      std::cout << "Ewald reference alpha   = " << ewald.get("alpha") << std::endl;
-      std::cout << "Ewald reference epsilon = " << ewald.get("epsilon") << std::endl;
-      std::cout << "SPME  reference alpha   = " << spme.get("alpha")  << std::endl;
-      std::cout << "SPME  reference epsilon = " << spme.get("epsilon") << std::endl;
       ewald.unsetEnergy();
       ewald.computeEnergy();
       double kEnergyRef = ewald.kSpaceEnergy();
@@ -174,6 +175,7 @@ public:
          alpha = alphaMin + dAlpha*i;
          spme.set("alpha", alpha);
 
+         spme.unsetWaves();
          spme.unsetEnergy();
          spme.computeEnergy();
          kEnergy = spme.kSpaceEnergy();
@@ -194,7 +196,7 @@ public:
                    << std::endl;
       }
 
-      //Reset to default
+      // Reset to default
       spme.set("alpha", alpha_);
    }
  
@@ -210,7 +212,6 @@ private:
    DArray<double> diameters_; 
    DArray<Vector> forces_;
    double alpha_;
-   double rSpaceCutoff_;
    int nAtom_;
 
 };
@@ -222,6 +223,6 @@ int main(int argc, char* argv[])
    test.readParam("in/param.spme");
    test.generateConfig();
    test.compareKSpace();
-   test.varyAlpha(0.5, 1.0, 5);
+   test.varyAlpha(0.6, 1.0, 20);
 
 }

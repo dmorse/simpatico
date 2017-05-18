@@ -112,9 +112,9 @@ namespace McMd
       virtual void makeWaves();
 
       /**
-      * place holder.
+      * Total number of waves or grid points.
       */
-      int nWave() const;
+      virtual int nWave() const;
 
       /**
       * Add k-space Coulomb forces for all atoms.
@@ -175,13 +175,13 @@ namespace McMd
       /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
       DArray<Vector> ikop_;
 
-      /// force grid x component
+      /// Force grid x component
       GridArray<DCMPLX> xfield_;
 
-      /// force grid y component
+      /// Force grid y component
       GridArray<DCMPLX> yfield_;
 
-      /// force grid z component 
+      /// Force grid z component 
       GridArray<DCMPLX> zfield_;
 
       /// order of basis spline
@@ -194,38 +194,35 @@ namespace McMd
       fftw_plan xfield_backward_plan, yfield_backward_plan, zfield_backward_plan;
 
       /**
-       * set all elements to 0 for grid.
-       */
+      * Set all elements of grid to 0.
+      */
       template<class T> 
-      void initializeGrid(GridArray<T>& grid);
+      void setGridToZero(GridArray<T>& grid);
 
       /**
-       * influence function, ie. BCgrid.
-       */
+      * Compute influence function, ie. BCgrid.
+      */
       void influence_function();
 
       /**
-       * compute components of B in BCgrid_.
-       */
+      * Compute components of B in BCgrid_.
+      */
       double bfactor(double m , int dim);
 
       /**
-       * ik operator.
-       */
+      * ik operator.
+      */
       void ik_differential_operator();
       
       /**
-       * charge assignment function, ie. Qgrid_.
-       */
+      * Charge assignment function, ie. Qgrid_.
+      */
       void spreadCharge();
 
       /**
-       * expression for basis spline with order-5.
-       */
+      * Expression for basis spline with order-5.
+      */
       double basisSpline(double x);
-
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
 
    };
 

@@ -70,11 +70,6 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
       read<IntVector>(in, "gridDimensions",gridDimensions_);
-
-
-      //Calculate prefactors frequently used in this class.
-      double pi = Constants::Pi;
-      selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
    }
 
    /*
@@ -86,10 +81,6 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
       loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
-
-      // Calculate selfPrefactor_
-      double pi = Constants::Pi;
-      selfPrefactor_ = ewaldInteraction_.alpha()/(4*sqrt(pi)*pi*ewaldInteraction_.epsilon());
    }
 
    /*
@@ -124,7 +115,7 @@ namespace McMd
    * place holder 
    */
    inline int MdSpmePotential::nWave() const
-   {  return 0; }
+   {  return gridDimensions_[0]*gridDimensions_[1]*gridDimensions_[2]; }
 
    /*
    * Precompute waves and influence function.
@@ -144,7 +135,7 @@ namespace McMd
          yfield_.allocate(gridDimensions_);
          zfield_.allocate(gridDimensions_);
 
-         // initialize fft plan for Q grid.
+         // Initialize fft plan for Q grid
          fftw_complex* inf;
          fftw_complex* outf;
          inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
@@ -155,7 +146,7 @@ namespace McMd
                                          inf, outf, 
                                          FFTW_FORWARD,FFTW_MEASURE);
 
-         // Initialize fft plans for electric field component grids.
+         // Initialize fft plans for electric field component grids
          fftw_complex* inxf; 
          fftw_complex* outxf;
          inxf = reinterpret_cast<fftw_complex*>(xfield_.data());
@@ -187,13 +178,16 @@ namespace McMd
 
       influence_function();
       ik_differential_operator();
+  
+      // Mark wave data as up to date.
+      hasWaves_ = true;
    }
 
    /*
    * Set elements of grid to all zero.
    */
    template<class T>
-   void MdSpmePotential::initializeGrid(GridArray<T>& grid) 
+   void MdSpmePotential::setGridToZero(GridArray<T>& grid) 
    {
       IntVector temp;
 
@@ -224,7 +218,7 @@ namespace McMd
       double alpha(ewaldInteraction_.alpha());
       double alpha2(alpha*alpha);
 
-      initializeGrid(BCgrid_);
+      setGridToZero(BCgrid_);
 
       b0 = boundaryPtr_->reciprocalBasisVector(0) ;
       b1 = boundaryPtr_->reciprocalBasisVector(1) ;
@@ -255,9 +249,10 @@ namespace McMd
 
                msqr   = b0.dot(b0);
 
-               b = bfactor(i,0) * bfactor(j,1) *bfactor(k,2);
-               c = 1.0 / (4*pi2* ewaldInteraction_.epsilon() * boundaryPtr_->volume() * msqr)
-                 * exp( -pi2*msqr/alpha2);
+               b = bfactor(i, 0) * bfactor(j, 1) *bfactor(k, 2);
+               c = 1.0 / (4.0*pi2* ewaldInteraction_.epsilon()*msqr)
+                   * exp( -pi2*msqr/alpha2);
+               c /= boundaryPtr_->volume();
 
                BCgrid_(gridPoint) = b * c;
             }
@@ -277,7 +272,7 @@ namespace McMd
 
       DCMPLX denom(0.0, 0.0);
       
-      // if oder of spline is odd, this interpolation result fails,
+      // If order of spline is odd, this interpolation result fails,
       // when 2*m = gridDimensions[dim], since 1 / 0 in this function.
       if( order_ % 2 == 1 && m == gridDimensions_[dim] / 2.0) {
          m = m-1 ;
@@ -294,6 +289,10 @@ namespace McMd
    */
    void MdSpmePotential::spreadCharge()
    {
+      if (!hasWaves()) {
+         makeWaves();
+      }
+
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       double  charge;
@@ -304,7 +303,7 @@ namespace McMd
       IntVector knot;
       IntVector floorGridIdx;
 
-      initializeGrid(Qgrid_);
+      setGridToZero(Qgrid_);
 
       // Loop over atoms.
       int  nSpecies = simulationPtr_->nSpecies();
@@ -313,25 +312,19 @@ namespace McMd
          for ( ; molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
+
+               // Compute generalized position with components in [0,1]
                boundaryPtr_->transformCartToGen(atomIter->position(), gpos);
-
-               // gpos should be (0,1), but simpatico keeps atom outside box for a while for the                  reason unknown. At least, it won't be too far away the primary cell.
-               
-               gpos[0] = gpos[0]<0 ? gpos[0]=gpos[0]+1: gpos[0];
-               gpos[1] = gpos[1]<0 ? gpos[1]=gpos[1]+1: gpos[1];
-               gpos[2] = gpos[2]<0 ? gpos[2]=gpos[2]+1: gpos[2];
-
-               gpos[0] = gpos[0]>1 ? gpos[0]=gpos[0]-1: gpos[0];
-               gpos[1] = gpos[1]>1 ? gpos[1]=gpos[1]-1: gpos[1];
-               gpos[2] = gpos[2]>1 ? gpos[2]=gpos[2]-1: gpos[2];
+               boundaryPtr_->shiftGen(gpos);
 
                // Find the floor grid point.
                floorGridIdx[0]=floor(gpos[0]*gridDimensions_[0]);
                floorGridIdx[1]=floor(gpos[1]*gridDimensions_[1]);
                floorGridIdx[2]=floor(gpos[2]*gridDimensions_[2]);
 
-               // haven't incoorporate reciprocal vector * lattice vector in other kind lattice.
-               // need to modify the expression of  distance.
+               // Have not incorporated reciprocal vector * lattice vector 
+               // for other lattice. Need to modify the expression of  distance.
+
                for (int x = 0 ; x < order_ ; ++x) {
                   ximg = floorGridIdx[0] + x - (order_ - 1);
                   xdistance = (gpos[0]*gridDimensions_[0]-ximg);
@@ -354,12 +347,12 @@ namespace McMd
                                       * basisSpline(xdistance)
                                       * basisSpline(ydistance)
                                       * basisSpline(zdistance);
-                     }//loop z
-                  }//loop y
-               }//loop x
-            }//loop atom
-         }//loop molecule
-      }//loop over species
+                     } //loop z
+                  } //loop y
+               } //loop x
+            } //loop atom
+         } //loop molecule
+      } //loop over species
    } 
  
    /*
@@ -401,35 +394,15 @@ namespace McMd
    */
    void MdSpmePotential::addForces()
    {
-      System::MoleculeIterator molIter, imolIter, jmolIter;
-      Molecule::AtomIterator atomIter, iatomIter, jatomIter;
-      Vector fatom(0.0);
-      Vector floorGridIdx, gpos;
-      IntVector m;
-      IntVector knot;
-      double xdistance, ydistance, zdistance; //b-spline 
-      int ximg, yimg, zimg;
-      int xknot, yknot, zknot;
-      double  charge;         // atom charge
-      double  TwoPi;          // 2.0*pi
-      double  forcePrefactor; // 
-      DCMPLX  TwoPiIm;       // 2.0*pi*I
-      double  EPS(1.0E-10);  // Tiny number to check if is charge
-      int  nSpecies(simulationPtr_->nSpecies());
-      int  type;
-      int  pos; //rank in GridArray
-
-
-      // Constants
-      TwoPi   = 2.0*Constants::Pi;
-      TwoPiIm = TwoPi * Constants::Im;
-      forcePrefactor = -2.0 /(ewaldInteraction_.epsilon()*boundaryPtr_->volume());
-
       spreadCharge();
  
-      initializeGrid(Qhatgrid_);
- 
+      setGridToZero(Qhatgrid_);
       fftw_execute(forward_plan);
+
+      double TwoPi   = 2.0*Constants::Pi;      // 2*Pi
+      DCMPLX TwoPiIm = TwoPi * Constants::Im;  // 2*Pi*I
+      int  pos;                                //rank in GridArray
+
       for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
          for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
             for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
@@ -442,39 +415,49 @@ namespace McMd
                             * double(ikop_[j][1]) * Qhatgrid_[pos] * BCgrid_[pos];
                zfield_[pos] = TwoPiIm / boundaryPtr_->length(2) 
                             * double(ikop_[k][2]) * Qhatgrid_[pos] * BCgrid_[pos];
-            }//loop over z
-         }//loop over y
-      }//loop over x
+            } // loop over z
+         } // loop over y
+      } // loop over x
 
       fftw_execute(xfield_backward_plan);
       fftw_execute(yfield_backward_plan);
       fftw_execute(zfield_backward_plan);
+
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      Vector fatom(0.0);
+      Vector floorGridIdx, gpos;
+      IntVector m;
+      IntVector knot;
+      double xdistance, ydistance, zdistance; // b-spline 
+      double  EPS = 1.0E-10;  // Tiny number to check if is charged
+      double charge;  
+      int type;
+      int ximg, yimg, zimg;
+      int xknot, yknot, zknot;
+
       // Loop over species, molecules atoms
+      int  nSpecies(simulationPtr_->nSpecies());
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          systemPtr_->begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                type = atomIter->typeId();
                charge = (*atomTypesPtr_)[type].charge();
- 
+
+               // If atom has nonzero charge 
                if( fabs(charge) > EPS) {
+
+                  // Compute generalized position with components in [0,1]
                   boundaryPtr_->transformCartToGen(atomIter->position(), gpos);
-
-                  // gpos should be (0,1), but simpatico keeps atom outside box for a while for                    some reason unknown. However, it won't be too far away from the primary cell.
-                  gpos[0] = gpos[0]<0 ? gpos[0]=gpos[0]+1: gpos[0];
-                  gpos[1] = gpos[1]<0 ? gpos[1]=gpos[1]+1: gpos[1];
-                  gpos[2] = gpos[2]<0 ? gpos[2]=gpos[2]+1: gpos[2];
-   
-                  gpos[0] = gpos[0]>1 ? gpos[0]=gpos[0]-1: gpos[0];
-                  gpos[1] = gpos[1]>1 ? gpos[1]=gpos[1]-1: gpos[1];
-                  gpos[2] = gpos[2]>1 ? gpos[2]=gpos[2]-1: gpos[2];
-
+                  boundaryPtr_->shiftGen(gpos);
 
                   // Find the floor grid point.
                   floorGridIdx[0]=floor(gpos[0]*gridDimensions_[0]);
                   floorGridIdx[1]=floor(gpos[1]*gridDimensions_[1]);
                   floorGridIdx[2]=floor(gpos[2]*gridDimensions_[2]);
-    
+   
+                  // Compute the force on the atom by interpolation 
                   fatom.zero();
                   for (int x = 0 ; x < order_ ; ++x) {
                      ximg = floorGridIdx[0] + x - (order_ - 1);
@@ -511,10 +494,10 @@ namespace McMd
                   }
                   fatom *= -1.0*charge;
                   atomIter->force() += fatom;
-               }// if charged
-            }// loop over atom
-         }// loop over mol 
-      }// loop over species
+               } // if charged
+            } // loop over atom
+         } // loop over mol 
+      } // loop over species
    }
 
    /*
@@ -522,54 +505,55 @@ namespace McMd
    */
    void MdSpmePotential::computeEnergy()
    {
-      // unset energy accumulator.
-      //unsetEnergy();
-
-      System::MoleculeIterator imolIter, jmolIter;
-      Molecule::AtomIterator iatomIter, jatomIter;
-      double fft_k_energy = 0.0;
-      int nSpecies(simulationPtr_->nSpecies());
-      IntVector pos;
-
       spreadCharge();
  
-      initializeGrid(Qhatgrid_);
+      setGridToZero(Qhatgrid_);
       fftw_execute(forward_plan);
 
-      for (int i = 0; i < gridDimensions_[0]; ++i) {
-         for (int j = 0; j < gridDimensions_[1]; ++j) {
-            for (int k = 0; k < gridDimensions_[2]; ++k) {
-               pos[0] = i;
-               pos[1] = j;
+      IntVector pos;
+      double energy = 0.0;
+      int i, j, k;
+      for (i = 0; i < gridDimensions_[0]; ++i) {
+         pos[0] = i;
+         for (j = 0; j < gridDimensions_[1]; ++j) {
+            pos[1] = j;
+            for (k = 0; k < gridDimensions_[2]; ++k) {
                pos[2] = k;
-
-               fft_k_energy += BCgrid_(pos) * std::norm(Qhatgrid_(pos));
+               energy += BCgrid_(pos) * std::norm(Qhatgrid_(pos));
             }
          }
       }
+      energy /= 2.0;
 
-      // calculate selfnergy part in ewald summation.
-      double selfenergy(0.0); //store the self part energy
-      double icharge;
-      int iAtomType;
+      // Calculate self-energy correction to Ewald summation.
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      double charge;
+      double selfEnergy = 0.0; 
+      int nSpecies = simulationPtr_->nSpecies();
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, imolIter);
-         for ( ; imolIter.notEnd(); ++imolIter) {
-            for (imolIter->begin(iatomIter); iatomIter.notEnd(); ++iatomIter) {
-               iAtomType = iatomIter->typeId();
-               icharge = (*atomTypesPtr_)[iAtomType].charge();
-               selfenergy += icharge * icharge;
+         systemPtr_->begin(iSpecies, molIter);
+         for ( ; molIter.notEnd(); ++molIter) {
+            molIter->begin(atomIter); 
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
+               selfEnergy += charge*charge;
             }
          }
-      } 
-      selfenergy *= selfPrefactor_;
+      }
+      double pi = Constants::Pi;
+      double alpha = ewaldInteraction_.alpha();
+      double epsilon = ewaldInteraction_.epsilon();
+      selfEnergy *= alpha/(4.0*sqrt(pi)*pi*epsilon);
+      energy -= selfEnergy;
 
-      kSpaceEnergy_.set(0.5*fft_k_energy - selfenergy);
-  }
+      kSpaceEnergy_.set(energy);
+   }
 
    /*
    * place holder 
    */
    void MdSpmePotential::computeStress()
    { ;}
+
 } 

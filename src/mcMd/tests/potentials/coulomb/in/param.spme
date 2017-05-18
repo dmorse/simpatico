@@ -30,9 +30,9 @@ MdSimulation{
     coulombStyle                       SPME
     CoulombPotential{
       epsilon               0.100000000000e+00
-      alpha                 0.600000000000e+00
+      alpha                 0.750000000000e+00
       rSpaceCutoff          4.500000000000e+00
-      gridDimensions        64      64      64
+      gridDimensions        128    128     128
     }
     MdPairPotential{
       epsilon               0.000000000000e+00 0.000000000000e+00
@@ -69,7 +69,7 @@ MdSimulation{
 }
 CoulombPotential{
   epsilon               0.100000000000e+00
-  alpha                 0.600000000000e+00
+  alpha                 0.750000000000e+00
   rSpaceCutoff          4.500000000000e+00
   kSpaceCutoff         20.000000000000e+00
 }

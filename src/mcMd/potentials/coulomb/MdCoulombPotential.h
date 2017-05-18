@@ -65,17 +65,19 @@ namespace McMd
       //@{
 
       /**
-      * Are wavevectors and k-space potential up to date?
+      * Are wavevectors and k-space influence function up to date?
       */
       bool hasWaves();
 
       /**
-      * Generate wavevectors for the current boundary.
+      * Generate wavevectors and influence function for this boundary.
       */
       virtual void makeWaves() = 0;
 
       /**
-      * Mark waves for regeneration.
+      * Unset all data that depends on the Boundary.
+      *
+      * Unsets stored values of waves, influence function, energy and stress.
       */
       void unsetWaves();
 
@@ -89,7 +91,7 @@ namespace McMd
       //@{
 
       /**
-      * Add k-space Coulomb forces for all atoms.
+      * Add k-space Coulomb forces to forces on all atoms.
       */
       virtual void addForces() = 0;
 
@@ -105,16 +107,23 @@ namespace McMd
 
       /**
       * Get long-range k-space part of Coulomb energy.
+      * 
+      * Recomputes iff necessary (i.e., if not set).
       */
       double kSpaceEnergy();
 
       /**
       * Return short-range r-space part of Coulomb energy.
+      *
+      * Uses associated pair potential to recompute iff necessary.
       */
       double rSpaceEnergy();
 
       /**
       * Get total Coulomb energy.
+      *
+      * Invokes kSpaceEnergy() and rSpaceEnergy() internally, and
+      * thus recomputes k-space and r-space components as needed.
       */
       double energy();
 
@@ -134,16 +143,23 @@ namespace McMd
 
       /**
       * Get long-range k-space part of Coulomb stress.
+      *
+      * Recomputes iff necessary.
       */
       Tensor kSpaceStress();
 
       /**
       * Return short-range r-space part of Coulomb stress.
+      * 
+      * Directs associated pair potential to recompute if necessary.
       */
       Tensor rSpaceStress();
 
       /**
-      * Get total Coulomb stress.
+      * Get total Coulomb stress.  
+      * 
+      * Calls kSpaceStress() and rSpaceStress() internally, and thus
+      * recomputes k-space and r-space components as needed.
       */
       Tensor stress();
 
@@ -156,7 +172,7 @@ namespace McMd
 
    protected:
 
-      /// R-space energy and stress contributions
+      /// Short-range real space energy and stress contributions
       EwaldRSpaceAccumulator rSpaceAccumulator_;
 
       /// K-space part of Coulomb energy
@@ -169,6 +185,7 @@ namespace McMd
       bool isInitialized_;
 
       /// Are waves and k-space potential up to date?
+      /// Unset if boundary or parameters change
       bool hasWaves_;
 
    };
