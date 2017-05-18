@@ -120,6 +120,7 @@ public:
       ewald.unsetEnergy();
       ewald.computeEnergy();
       double kEnergyRef = ewald.kSpaceEnergy();
+      kEnergyRef /= double(nAtom_);
 
       sim.system().setZeroForces();
       ewald.addForces();
@@ -129,6 +130,7 @@ public:
       spme.makeWaves();
       spme.computeEnergy();
       double kEnergy = spme.kSpaceEnergy();
+      kEnergy /= double(nAtom_);
 
       std::cout << "kEnergy= " << Dbl(kEnergy, 15) 
                 << std::endl;
@@ -157,42 +159,39 @@ public:
       // Compute properties of a well converged system
       ewald.unsetEnergy();
       ewald.computeEnergy();
-      double kEnergyRef = ewald.kSpaceEnergy();
+      double kEnergyRef = ewald.kSpaceEnergy()/double(nAtom_);
       pair.unsetEnergy();
       pair.computeEnergy();
-      double rEnergyRef = spme.rSpaceEnergy();
+      double rEnergyRef = spme.rSpaceEnergy()/double(nAtom_);
       double energyRef = kEnergyRef + rEnergyRef;
 
-      //sim.system().setZeroForces();
-      //ewald.addForces();
-      //storeForces(forces_);
+      sim.system().setZeroForces();
+      ewald.addForces();
+      pair.addForces();
+      storeForces(forces_);
 
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
-      double alpha, kEnergy, rEnergy, energy;
-      // double fError;
+      double alpha, kEnergy, rEnergy, energy, fError;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
          spme.set("alpha", alpha);
 
-         spme.unsetWaves();
-         spme.unsetEnergy();
-         spme.computeEnergy();
-         kEnergy = spme.kSpaceEnergy();
+         //spme.unsetEnergy();
+         kEnergy = spme.kSpaceEnergy()/double(nAtom_);
 
          pair.unsetEnergy();
-         pair.computeEnergy();
-         rEnergy = spme.rSpaceEnergy();
+         rEnergy = spme.rSpaceEnergy()/double(nAtom_);
          energy = kEnergy + rEnergy;
 
-         // sim.system().setZeroForces();
-         // coulomb.addForces();
-         // pair.addForces();
-         // fError = computeForceError(forces_);
+         sim.system().setZeroForces();
+         spme.addForces();
+         pair.addForces();
+         fError = computeForceError(forces_);
 
          std::cout << Dbl(spme.get("alpha"), 10)
                    << "  " << Dbl(energy - energyRef, 15) 
-                   //<< "  " << Dbl(fError, 15) 
+                   << "  " << Dbl(fError, 15) 
                    << std::endl;
       }
 
@@ -223,6 +222,6 @@ int main(int argc, char* argv[])
    test.readParam("in/param.spme");
    test.generateConfig();
    test.compareKSpace();
-   test.varyAlpha(0.6, 1.0, 20);
+   test.varyAlpha(0.6, 1.2, 12);
 
 }

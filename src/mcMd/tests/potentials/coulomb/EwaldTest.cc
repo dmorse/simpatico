@@ -124,8 +124,7 @@ public:
       // Compute properties for well converged system
       coulomb.unsetEnergy();
       pair.unsetEnergy();
-      double energyRef = coulomb.energy();
-
+      double energyRef = coulomb.energy()/double(nAtom_);
 
       sim.system().setZeroForces();
       coulomb.addForces();
@@ -139,12 +138,12 @@ public:
       std::cout << "        alpha"
              // << "          kEnergy" 
              // << "          rEnergy" 
-                << "                energy" 
+                << "           energy" 
                 << "       Del Energy" 
                 << "        Del Force" 
              // << "       rPresssure" 
              // << "       kPresssure" 
-                << "        presssure" 
+             // << "        presssure" 
                 << "   Del  presssure" 
                 << std::endl;
 
@@ -159,8 +158,8 @@ public:
          // Energy
          coulomb.unsetEnergy();
          pair.unsetEnergy();
-         kEnergy = coulomb.kSpaceEnergy();
-         rEnergy = coulomb.rSpaceEnergy();
+         kEnergy = coulomb.kSpaceEnergy()/double(nAtom_);
+         rEnergy = coulomb.rSpaceEnergy()/double(nAtom_);
          energy = kEnergy + rEnergy;
 
          // Pressure
@@ -168,11 +167,10 @@ public:
          pair.unsetStress();
          coulomb.computeStress();
          pair.computeStress();
-         kPressure = coulomb.kSpaceStress().trace()/3.0;
-         rPressure = coulomb.rSpaceStress().trace()/3.0;
+         kPressure = coulomb.kSpaceStress().trace()*volume/(3.0*double(nAtom_));
+         rPressure = coulomb.rSpaceStress().trace()*volume/(3.0*double(nAtom_));
          pressure = kPressure + rPressure;
-         //pressure = coulomb.pressure();
-         dPressure = pressure - energyRef/(3.0*volume);
+         dPressure = pressure - energyRef/3.0;
          
          // Force
          sim.system().setZeroForces();
@@ -183,12 +181,12 @@ public:
          std::cout << Dbl(coulomb.get("alpha"), 10)
                    // << "  " << Dbl(kEnergy, 15)
                    // << "  " << Dbl(rEnergy, 15)
-                   << "  " << Dbl(energy, 20, 13) 
+                   << "  " << Dbl(energy, 15) 
                    << "  " << Dbl(energy - energyRef, 15) 
                    << "  " << Dbl(fError, 15) 
                    //<< "  " << Dbl(rPressure, 15) 
                    //<< "  " << Dbl(kPressure, 15) 
-                   << "  " << Dbl(pressure, 15) 
+                   //<< "  " << Dbl(pressure, 15) 
                    << "  " << Dbl(dPressure, 15) 
                    << std::endl;
       }
