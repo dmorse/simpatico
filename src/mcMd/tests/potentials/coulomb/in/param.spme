@@ -27,12 +27,12 @@ MdSimulation{
   }
   MdSystem{
     pairStyle                        LJPair
-    coulombStyle                      Ewald
+    coulombStyle                       SPME
     CoulombPotential{
       epsilon               0.100000000000e+00
       alpha                 0.600000000000e+00
       rSpaceCutoff          4.500000000000e+00
-      kSpaceCutoff         20.000000000000e+00
+      gridDimensions        64      64      64
     }
     MdPairPotential{
       epsilon               0.000000000000e+00 0.000000000000e+00
@@ -71,7 +71,7 @@ CoulombPotential{
   epsilon               0.100000000000e+00
   alpha                 0.600000000000e+00
   rSpaceCutoff          4.500000000000e+00
-  gridDimensions        64      64      64
+  kSpaceCutoff         20.000000000000e+00
 }
 cubic 10.5
 
