@@ -163,14 +163,20 @@ namespace McMd
       /// Grid Size.
       IntVector gridDimensions_;
 
-      /// QGrid
-      GridArray<DCMPLX> Qgrid_;
+      /// Charge density assigned to grid
+      GridArray<DCMPLX> rho_;
 
-      /// Qhatgrid
-      GridArray<DCMPLX> Qhatgrid_;
+      /// DFT of charge density 
+      GridArray<DCMPLX> rhoHat_;
 
-      /// BCGrid
-      GridArray<double> BCgrid_;
+      /// Influence function
+      GridArray<double> g_;
+      
+      /// Square magnitude of wavevectors
+      GridArray<double> sqWaves_;
+      
+      /// Wavevectors
+      GridArray<Vector> vecWaves_;
       
       /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
       DArray<Vector> ikop_;
@@ -205,7 +211,7 @@ namespace McMd
       void influence_function();
 
       /**
-      * Compute components of B in BCgrid_.
+      * Compute components of B in g_.
       */
       double bfactor(double m , int dim);
 
@@ -215,7 +221,7 @@ namespace McMd
       void ik_differential_operator();
       
       /**
-      * Charge assignment function, ie. Qgrid_.
+      * Charge assignment function, ie. rho_.
       */
       void spreadCharge();
 

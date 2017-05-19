@@ -34,9 +34,11 @@ namespace McMd
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes()),
       gridDimensions_(),
-      Qgrid_(),
-      Qhatgrid_(),
-      BCgrid_(),
+      rho_(),
+      rhoHat_(),
+      g_(),
+      sqWaves_(),
+      vecWaves_(),
       ikop_(),
       xfield_(),
       yfield_(),
@@ -122,12 +124,14 @@ namespace McMd
    */
    void MdSpmePotential::makeWaves()
    { 
-      if (BCgrid_.size() == 0) {
+      if (g_.size() == 0) {
 
          // Allocate memory for grid
-         Qgrid_.allocate(gridDimensions_);
-         Qhatgrid_.allocate(gridDimensions_);
-         BCgrid_.allocate(gridDimensions_);
+         rho_.allocate(gridDimensions_);
+         rhoHat_.allocate(gridDimensions_);
+         g_.allocate(gridDimensions_);
+         sqWaves_.allocate(gridDimensions_);
+         vecWaves_.allocate(gridDimensions_);
          int maxDim = std::max(gridDimensions_[1],gridDimensions_[2]);
          maxDim = std::max(maxDim, gridDimensions_[0]);
          ikop_.allocate(maxDim);
@@ -138,8 +142,8 @@ namespace McMd
          // Initialize fft plan for Q grid
          fftw_complex* inf;
          fftw_complex* outf;
-         inf  = reinterpret_cast<fftw_complex*>(Qgrid_.data());
-         outf = reinterpret_cast<fftw_complex*>(Qhatgrid_.data());
+         inf  = reinterpret_cast<fftw_complex*>(rho_.data());
+         outf = reinterpret_cast<fftw_complex*>(rhoHat_.data());
          forward_plan = fftw_plan_dft_3d(gridDimensions_[0],
                                          gridDimensions_[1],
                                          gridDimensions_[2],
@@ -204,61 +208,57 @@ namespace McMd
    }
 
    /*
-   * BCgrid_ --- BC(g1,g2,g3).
+   * g_ --- BC(g1,g2,g3).
    */
    void MdSpmePotential::influence_function()
    {
-      double m0, m1, m2; //temp parameter for C grid.
-      double msqr;
       Vector b0, b1, b2;
-      double b,c;
-      IntVector gridPoint; //grid point coordination.
-      double pi(Constants::Pi);
-      double pi2(pi*pi);
-      double alpha(ewaldInteraction_.alpha());
-      double alpha2(alpha*alpha);
+      Vector q0, q1, q;
+      double qSq, b, c;
+      double alpha = ewaldInteraction_.alpha();
+      double epsilon = ewaldInteraction_.epsilon();
+      double f = -0.25/(alpha*alpha);
+      IntVector pos;
+      int i, j, k;
+      int m0, m1, m2;
 
-      setGridToZero(BCgrid_);
+      setGridToZero(g_);
 
-      b0 = boundaryPtr_->reciprocalBasisVector(0) ;
-      b1 = boundaryPtr_->reciprocalBasisVector(1) ;
-      b2 = boundaryPtr_->reciprocalBasisVector(2) ;
+      b0 = boundaryPtr_->reciprocalBasisVector(0);
+      b1 = boundaryPtr_->reciprocalBasisVector(1);
+      b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-
-      // Loop over i, j, k grid point.
-      for ( double i = 0.0; i < gridDimensions_[0]; ++i) {
-         gridPoint[0] = i;
+      // Loop over grid points
+      for (i = 0; i < gridDimensions_[0]; ++i) {
+         pos[0] = i;
          m0 = (i <= gridDimensions_[0] / 2.0) ? i : i - gridDimensions_[0];
-         for ( double j = 0.0; j < gridDimensions_[1]; ++j) {
-            gridPoint[1] = j;
+         q0.multiply(b0, m0);
+
+         for (j = 0; j < gridDimensions_[1]; ++j) {
+            pos[1] = j;
             m1 = (j <= gridDimensions_[1] / 2.0) ? j : j - gridDimensions_[1];
-            for ( double k = 0.0; k < gridDimensions_[2]; ++k) {
-               gridPoint[2] = k;
+            q1.multiply(b1, m1);
+            q1 += q0;
+
+            for (k = 0; k < gridDimensions_[2]; ++k) {
+               pos[2] = k;
                m2 = (k <= gridDimensions_[2] / 2.0) ? k : k - gridDimensions_[2];
-
-               b0 = boundaryPtr_->reciprocalBasisVector(0) ;
-               b1 = boundaryPtr_->reciprocalBasisVector(1) ;
-               b2 = boundaryPtr_->reciprocalBasisVector(2) ;
-
-               b0 *= m0/(2.0*pi);
-               b1 *= m1/(2.0*pi);
-               b2 *= m2/(2.0*pi);
-
-               b0 += b1;
-               b0 += b2;
-
-               msqr   = b0.dot(b0);
+               q.multiply(b2, m2);
+               q += q1;
+               qSq = q.square();
+               sqWaves_(pos) = qSq;
+               vecWaves_(pos) = q;
 
                b = bfactor(i, 0) * bfactor(j, 1) *bfactor(k, 2);
-               c = 1.0 / (4.0*pi2* ewaldInteraction_.epsilon()*msqr)
-                   * exp( -pi2*msqr/alpha2);
+               c = 1.0 / (epsilon*qSq);
+               c *= exp(f*qSq);
                c /= boundaryPtr_->volume();
 
-               BCgrid_(gridPoint) = b * c;
+               g_(pos) = b * c;
             }
          }
       }
-      BCgrid_[0] = 0;
+      g_[0] = 0;
    }
 
    /*
@@ -285,7 +285,7 @@ namespace McMd
    }
  
    /*
-   * Qgrid_ --- Q(g1,g2,g3).
+   * rho_ --- Q(g1,g2,g3).
    */
    void MdSpmePotential::spreadCharge()
    {
@@ -303,7 +303,7 @@ namespace McMd
       IntVector knot;
       IntVector floorGridIdx;
 
-      setGridToZero(Qgrid_);
+      setGridToZero(rho_);
 
       // Loop over atoms.
       int  nSpecies = simulationPtr_->nSpecies();
@@ -343,7 +343,7 @@ namespace McMd
                         zknot =  zimg < 0 ? zimg + gridDimensions_[2] : zimg;
                         knot[2] = zknot;
 
-                        Qgrid_(knot) += charge 
+                        rho_(knot) += charge 
                                       * basisSpline(xdistance)
                                       * basisSpline(ydistance)
                                       * basisSpline(zdistance);
@@ -379,13 +379,17 @@ namespace McMd
    */
    void MdSpmePotential::ik_differential_operator()
    {
-      for (int i = 0 ; i < 3 ; ++i){
+      int i, j;
+      for (i = 0 ; i < 3 ; ++i){
          ikop_[0][i] = 0.0;
-         ikop_[gridDimensions_[i]/2][i] = 0.0;
-         for (int j = 1; j < ikop_.capacity()/2; ++j) {
+         for (j = 1; j < gridDimensions_[i]/2; ++j) {
             ikop_[j][i] = j;
             ikop_[gridDimensions_[i] - j][i] = -j;
          }
+         j = gridDimensions_[i]/2;
+         ikop_[j][i] = 0.0;
+         // For non-cubic grids, ikop_ contains unused elements:
+         // ikop_[j][i] with j >= gridDimensions_[i] are undefined
       }
    }
 
@@ -396,7 +400,7 @@ namespace McMd
    {
       spreadCharge();
  
-      setGridToZero(Qhatgrid_);
+      setGridToZero(rhoHat_);
       fftw_execute(forward_plan);
 
       double TwoPi   = 2.0*Constants::Pi;      // 2*Pi
@@ -406,15 +410,14 @@ namespace McMd
       for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
          for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
             for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
-
                pos = i * gridDimensions_[1]*gridDimensions_[2] + j * gridDimensions_[2] + k;
 
                xfield_[pos] = TwoPiIm / boundaryPtr_->length(0) 
-                            * double(ikop_[i][0]) * Qhatgrid_[pos] * BCgrid_[pos];
+                            * double(ikop_[i][0]) * rhoHat_[pos] * g_[pos];
                yfield_[pos] = TwoPiIm / boundaryPtr_->length(1) 
-                            * double(ikop_[j][1]) * Qhatgrid_[pos] * BCgrid_[pos];
+                            * double(ikop_[j][1]) * rhoHat_[pos] * g_[pos];
                zfield_[pos] = TwoPiIm / boundaryPtr_->length(2) 
-                            * double(ikop_[k][2]) * Qhatgrid_[pos] * BCgrid_[pos];
+                            * double(ikop_[k][2]) * rhoHat_[pos] * g_[pos];
             } // loop over z
          } // loop over y
       } // loop over x
@@ -507,7 +510,7 @@ namespace McMd
    {
       spreadCharge();
  
-      setGridToZero(Qhatgrid_);
+      setGridToZero(rhoHat_);
       fftw_execute(forward_plan);
 
       IntVector pos;
@@ -519,7 +522,7 @@ namespace McMd
             pos[1] = j;
             for (k = 0; k < gridDimensions_[2]; ++k) {
                pos[2] = k;
-               energy += BCgrid_(pos) * std::norm(Qhatgrid_(pos));
+               energy += g_(pos) * std::norm(rhoHat_(pos));
             }
          }
       }
@@ -551,9 +554,41 @@ namespace McMd
    }
 
    /*
-   * place holder 
+   * Compute the k contribution to stress.
    */
    void MdSpmePotential::computeStress()
-   { ;}
+   {
+      Tensor K, stress;
+      Vector qv;
+      double alpha = ewaldInteraction_.alpha();
+      double ca = 0.25/(alpha*alpha);
+      double qSq;
+      IntVector pos;
+      int i, j, k; 
 
+      stress.zero();
+      for (i = 0; i < gridDimensions_[0]; ++i) {
+         pos[0] = i;
+         for (j = 0; j < gridDimensions_[1]; ++j) {
+            pos[1] = j;
+            for (k = 0; k < gridDimensions_[2]; ++k) {
+               pos[2] = k;
+
+               qv = vecWaves_(pos);
+               K.dyad(qv, qv);
+               qSq = 1.0/sqWaves_(pos);
+               K *=  -2.0 * (ca + (1.0/qSq));
+               K.add(Tensor::Identity, K);
+               K *= g_(pos) * std::norm(rhoHat_(pos));
+               stress += K;  
+            }
+         }
+      }
+      double volume = boundaryPtr_->volume();
+      stress /= volume;
+      // Note: A factor of 0.5 in usual expression for stress is 
+      // cancelled by our use of only half of the wavevectors.   
+
+      kSpaceStress_.set(stress);
+   }
 } 

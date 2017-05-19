@@ -111,7 +111,7 @@ namespace McMd
    * Get cutfoff wavenumber for long range interaction.
    */
    inline int MdEwaldPotential::nWave() const
-   {  return waves_.size(); }
+   {  return intWaves_.size(); }
 
    /*
    * Generate waves using kCutoff; allocate memories for associated variables.
@@ -143,11 +143,11 @@ namespace McMd
          UTIL_CHECK(maxK[j] > 0);
       }
 
-      if (waves_.capacity() == 0) {
+      if (intWaves_.capacity() == 0) {
          int capacity; 
          capacity = ((2*maxK[0] + 1)*(2*maxK[1] + 1)*(2*maxK[2] + 1) - 1)/2;
          UTIL_CHECK(capacity > 0);
-         waves_.reserve(capacity);
+         intWaves_.reserve(capacity);
          ksq_.reserve(capacity);
          g_.reserve(capacity);
          rho_.reserve(capacity);
@@ -155,7 +155,7 @@ namespace McMd
          fexp1_.reserve(2*maxK[1] + 1);
          fexp2_.reserve(2*maxK[2] + 1);
       } else {
-         waves_.clear();
+         intWaves_.clear();
          ksq_.clear();
          g_.clear();
          rho_.clear();
@@ -203,7 +203,7 @@ namespace McMd
                   if (k[2] < base2_ ) base2_  = k[2];
                   if (k[2] > upper2_) upper2_ = k[2];
 
-                  waves_.append(k);
+                  intWaves_.append(k);
                   ksq_.append(ksq);
                   g_.append(ewaldInteraction_.kSpacePotential(ksq));
                }
@@ -213,11 +213,11 @@ namespace McMd
       } // for k[0]
 
       // Resize work arrays
-      UTIL_CHECK(waves_.size() > 0);
+      UTIL_CHECK(intWaves_.size() > 0);
       UTIL_CHECK(upper0_ - base0_ + 1 > 0);
       UTIL_CHECK(upper1_ - base1_ + 1 > 0);
       UTIL_CHECK(upper2_ - base2_ + 1 > 0);
-      rho_.resize(waves_.size());
+      rho_.resize(intWaves_.size());
       fexp0_.resize(upper0_ - base0_ + 1);
       fexp1_.resize(upper1_ - base1_ + 1);
       fexp2_.resize(upper2_ - base2_ + 1);
@@ -264,8 +264,8 @@ namespace McMd
                charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
 
                // Loop over waves
-               for (i = 0; i < waves_.size(); ++i) {
-                  q = waves_[i];
+               for (i = 0; i < intWaves_.size(); ++i) {
+                  q = intWaves_[i];
                   for (j = 0; j < Dimension; ++j) {
                      qv[j] = double(q[j]);
                   }
@@ -346,8 +346,8 @@ namespace McMd
 
                   // Accumulating forces.
                   fg.zero();
-                  for (i = 0; i < waves_.size(); ++i) {
-                     q = waves_[i];
+                  for (i = 0; i < intWaves_.size(); ++i) {
+                     q = intWaves_[i];
                      for (j = 0; j < Dimension; ++j) {
                         df[j] = double(q[j]);
                      }
@@ -383,7 +383,7 @@ namespace McMd
       // Main loop over wavevectors
       double x, y,rhoSq;
       double energy = 0.0;
-      for (int i = 0; i < waves_.size(); ++i) {
+      for (int i = 0; i < intWaves_.size(); ++i) {
          x = rho_[i].real();
          y = rho_[i].imag();
          rhoSq = x*x + y*y;
@@ -442,8 +442,8 @@ namespace McMd
       stressTensor.zero();
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
-      for (i = 0; i < waves_.size(); ++i) {
-         q = waves_[i];
+      for (i = 0; i < intWaves_.size(); ++i) {
+         q = intWaves_[i];
          q0.multiply(b0, q[0]);
          q1.multiply(b1, q[1]);
          q2.multiply(b2, q[2]);

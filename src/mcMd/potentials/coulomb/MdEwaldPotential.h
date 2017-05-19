@@ -168,7 +168,7 @@ namespace McMd
       GArray<DCMPLX> fexp2_;
 
       /// Wave vector indices.
-      GArray<IntVector> waves_;
+      GArray<IntVector> intWaves_;
 
       //real space vector indices.
       GArray<Vector> reals_;
