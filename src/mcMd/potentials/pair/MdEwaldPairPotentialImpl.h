@@ -256,9 +256,6 @@ namespace McMd
          rSpaceAccumulatorPtr_->setPairPotential(*this);
  
          pairPtr_ = new Interaction;
-         // Pass address of MdEwaldPotential to EwaldPair interaction.
-         // Note: Uses implicit cast of MdEwaldPotential to its
-         // EwaldParameters base class.
    }
 
    /*

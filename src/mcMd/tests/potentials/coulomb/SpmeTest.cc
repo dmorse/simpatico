@@ -151,12 +151,8 @@ public:
       // Set Ewald and SPME to same parameters
       ewald.set("alpha", 1.4);
       spme.set("alpha", 1.4);
-      //std::cout << "Ewald reference alpha   = " << ewald.get("alpha") << std::endl;
-      //std::cout << "Ewald reference epsilon = " << ewald.get("epsilon") << std::endl;
-      //std::cout << "SPME  reference alpha   = " << spme.get("alpha")  << std::endl;
-      //std::cout << "SPME  reference epsilon = " << spme.get("epsilon") << std::endl;
 
-      // Compute properties of a well converged system
+      // Compute reference energy, well converged system
       ewald.unsetEnergy();
       ewald.computeEnergy();
       double kEnergyRef = ewald.kSpaceEnergy()/double(nAtom_);
@@ -165,6 +161,7 @@ public:
       double rEnergyRef = spme.rSpaceEnergy()/double(nAtom_);
       double energyRef = kEnergyRef + rEnergyRef;
 
+      // Compute reference force, well converged system
       sim.system().setZeroForces();
       ewald.addForces();
       pair.addForces();
@@ -173,16 +170,30 @@ public:
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
       double alpha, kEnergy, rEnergy, energy, fError;
+      // double rPressure, kPressure, pressure, dPressure;
+      // double volume = sim.system().boundary().volume();
+      double nAtom = double(nAtom_);
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
          spme.set("alpha", alpha);
 
-         //spme.unsetEnergy();
-         kEnergy = spme.kSpaceEnergy()/double(nAtom_);
-
+         // Energy
+         spme.unsetEnergy();
+         kEnergy = spme.kSpaceEnergy()/nAtom;
          pair.unsetEnergy();
-         rEnergy = spme.rSpaceEnergy()/double(nAtom_);
+         rEnergy = spme.rSpaceEnergy()/nAtom;
          energy = kEnergy + rEnergy;
+
+         #if 0
+         spme.unsetStress();
+         spme.computeStress();
+         kPressure = spme.kSpaceStress().trace()*volume/(3.0*nAtom);
+         pair.unsetStress();
+         pair.computeStress();
+         rPressure = spme.rSpaceStress().trace()*volume/(3.0*nAtom);
+         pressure = kPressure + rPressure;
+         dPressure = pressure - energy/3.0;
+         #endif
 
          sim.system().setZeroForces();
          spme.addForces();
@@ -192,6 +203,7 @@ public:
          std::cout << Dbl(spme.get("alpha"), 10)
                    << "  " << Dbl(energy - energyRef, 15) 
                    << "  " << Dbl(fError, 15) 
+                   // << "  " << Dbl(dPressure, 15) 
                    << std::endl;
       }
 
