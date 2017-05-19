@@ -177,10 +177,7 @@ namespace McMd
       
       /// Wavevectors
       GridArray<Vector> vecWaves_;
-      
-      /// ik operator array. n-level rather than k-level ie. without prefactor 2Pi*I/L
-      DArray<Vector> ikop_;
-
+     
       /// Force grid x component
       GridArray<DCMPLX> xfield_;
 
@@ -215,11 +212,6 @@ namespace McMd
       */
       double bfactor(double m , int dim);
 
-      /**
-      * ik operator.
-      */
-      void ik_differential_operator();
-      
       /**
       * Charge assignment function, ie. rho_.
       */

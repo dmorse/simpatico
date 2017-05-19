@@ -39,7 +39,6 @@ namespace McMd
       g_(),
       sqWaves_(),
       vecWaves_(),
-      ikop_(),
       xfield_(),
       yfield_(),
       zfield_(),
@@ -134,7 +133,6 @@ namespace McMd
          vecWaves_.allocate(gridDimensions_);
          int maxDim = std::max(gridDimensions_[1],gridDimensions_[2]);
          maxDim = std::max(maxDim, gridDimensions_[0]);
-         ikop_.allocate(maxDim);
          xfield_.allocate(gridDimensions_);
          yfield_.allocate(gridDimensions_);
          zfield_.allocate(gridDimensions_);
@@ -181,7 +179,7 @@ namespace McMd
       }
 
       influence_function();
-      ik_differential_operator();
+      // ik_differential_operator();
   
       // Mark wave data as up to date.
       hasWaves_ = true;
@@ -373,27 +371,6 @@ namespace McMd
    }
 
    /*
-   *  n-level rather than k level ie. missing the prefactor 2.0 * Pi * I / L. 
-   */
-   void MdSpmePotential::ik_differential_operator()
-   {
-      int i, j;
-      int gridDimension;
-      for (i = 0 ; i < 3 ; ++i){
-         gridDimension = gridDimensions_[i];
-         ikop_[0][i] = 0.0;
-         for (j = 1; j < gridDimension / 2; ++j) {
-            ikop_[j][i] = j;
-            ikop_[gridDimension - j][i] = -j;
-         }
-         j = gridDimension/2;
-         ikop_[j][i] = 0.0;
-         // For non-cubic grids, ikop_ contains unused elements:
-         // ikop_[j][i] with j >= gridDimensions_[i] are undefined
-      }
-   }
-
-   /*
    * Add k-space Coulomb forces for all atoms. standard Ewald Summation.
    */
    void MdSpmePotential::addForces()
@@ -403,8 +380,9 @@ namespace McMd
       setGridToZero(rhoHat_);
       fftw_execute(forward_plan);
 
-      double TwoPi   = 2.0*Constants::Pi;      // 2*Pi
-      DCMPLX TwoPiIm = TwoPi * Constants::Im;  // 2*Pi*I
+      Vector qv;
+      //double TwoPi   = 2.0*Constants::Pi;      // 2*Pi
+      //DCMPLX TwoPiIm = TwoPi * Constants::Im;  // 2*Pi*I
       int  pos;                                //rank in GridArray
 
       // Derivative in k-space
@@ -413,12 +391,11 @@ namespace McMd
             for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
                pos = i * gridDimensions_[1]*gridDimensions_[2] + j * gridDimensions_[2] + k;
 
-               xfield_[pos] = TwoPiIm / boundaryPtr_->length(0) 
-                            * double(ikop_[i][0]) * rhoHat_[pos] * g_[pos];
-               yfield_[pos] = TwoPiIm / boundaryPtr_->length(1) 
-                            * double(ikop_[j][1]) * rhoHat_[pos] * g_[pos];
-               zfield_[pos] = TwoPiIm / boundaryPtr_->length(2) 
-                            * double(ikop_[k][2]) * rhoHat_[pos] * g_[pos];
+               qv = vecWaves_[pos];
+               xfield_[pos] = Constants::Im*qv[0]*rhoHat_[pos]*g_[pos];
+               yfield_[pos] = Constants::Im*qv[1]*rhoHat_[pos]*g_[pos];
+               zfield_[pos] = Constants::Im*qv[2]*rhoHat_[pos]*g_[pos];
+
             } // loop over z
          } // loop over y
       } // loop over x
