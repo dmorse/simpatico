@@ -147,6 +147,8 @@ public:
    {
       MdCoulombPotential& spme = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
+      double volume = sim.system().boundary().volume();
+      double nAtom = double(nAtom_);
 
       // Set Ewald and SPME to same parameters
       ewald.set("alpha", 1.4);
@@ -155,10 +157,10 @@ public:
       // Compute reference energy, well converged system
       ewald.unsetEnergy();
       ewald.computeEnergy();
-      double kEnergyRef = ewald.kSpaceEnergy()/double(nAtom_);
+      double kEnergyRef = ewald.kSpaceEnergy()/nAtom;
       pair.unsetEnergy();
       pair.computeEnergy();
-      double rEnergyRef = spme.rSpaceEnergy()/double(nAtom_);
+      double rEnergyRef = spme.rSpaceEnergy()/nAtom;
       double energyRef = kEnergyRef + rEnergyRef;
 
       // Compute reference force, well converged system
@@ -170,9 +172,7 @@ public:
       // Loop over values of alpha
       double dAlpha = (alphaMax - alphaMin)/double(n);
       double alpha, kEnergy, rEnergy, energy, fError;
-      // double rPressure, kPressure, pressure, dPressure;
-      // double volume = sim.system().boundary().volume();
-      double nAtom = double(nAtom_);
+      double rPressure, kPressure, pressure, dPressure;
       for (int i = 0; i <= n; ++i) {
          alpha = alphaMin + dAlpha*i;
          spme.set("alpha", alpha);
@@ -184,7 +184,6 @@ public:
          rEnergy = spme.rSpaceEnergy()/nAtom;
          energy = kEnergy + rEnergy;
 
-         #if 0
          spme.unsetStress();
          spme.computeStress();
          kPressure = spme.kSpaceStress().trace()*volume/(3.0*nAtom);
@@ -192,8 +191,7 @@ public:
          pair.computeStress();
          rPressure = spme.rSpaceStress().trace()*volume/(3.0*nAtom);
          pressure = kPressure + rPressure;
-         dPressure = pressure - energy/3.0;
-         #endif
+         dPressure = pressure - energyRef/3.0;
 
          sim.system().setZeroForces();
          spme.addForces();
@@ -203,7 +201,7 @@ public:
          std::cout << Dbl(spme.get("alpha"), 10)
                    << "  " << Dbl(energy - energyRef, 15) 
                    << "  " << Dbl(fError, 15) 
-                   // << "  " << Dbl(dPressure, 15) 
+                   << "  " << Dbl(dPressure, 15) 
                    << std::endl;
       }
 
@@ -234,6 +232,6 @@ int main(int argc, char* argv[])
    test.readParam("in/param.spme");
    test.generateConfig();
    test.compareKSpace();
-   test.varyAlpha(0.6, 1.2, 12);
+   test.varyAlpha(0.5, 1.2, 14);
 
 }

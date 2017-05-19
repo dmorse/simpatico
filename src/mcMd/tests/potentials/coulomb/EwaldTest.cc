@@ -120,11 +120,12 @@ public:
       MdCoulombPotential& coulomb = sim.system().coulombPotential();
       MdPairPotential& pair = sim.system().pairPotential();
       double volume = sim.system().boundary().volume();
+      double nAtom = double(nAtom_);
 
       // Compute properties for well converged system
       coulomb.unsetEnergy();
       pair.unsetEnergy();
-      double energyRef = coulomb.energy()/double(nAtom_);
+      double energyRef = coulomb.energy()/nAtom;
 
       sim.system().setZeroForces();
       coulomb.addForces();
@@ -158,8 +159,8 @@ public:
          // Energy
          coulomb.unsetEnergy();
          pair.unsetEnergy();
-         kEnergy = coulomb.kSpaceEnergy()/double(nAtom_);
-         rEnergy = coulomb.rSpaceEnergy()/double(nAtom_);
+         kEnergy = coulomb.kSpaceEnergy()/nAtom;
+         rEnergy = coulomb.rSpaceEnergy()/nAtom;
          energy = kEnergy + rEnergy;
 
          // Pressure
@@ -167,8 +168,8 @@ public:
          pair.unsetStress();
          coulomb.computeStress();
          pair.computeStress();
-         kPressure = coulomb.kSpaceStress().trace()*volume/(3.0*double(nAtom_));
-         rPressure = coulomb.rSpaceStress().trace()*volume/(3.0*double(nAtom_));
+         kPressure = coulomb.kSpaceStress().trace()*volume/(3.0*nAtom);
+         rPressure = coulomb.rSpaceStress().trace()*volume/(3.0*nAtom);
          pressure = kPressure + rPressure;
          dPressure = pressure - energyRef/3.0;
          

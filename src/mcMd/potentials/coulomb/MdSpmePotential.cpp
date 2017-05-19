@@ -208,7 +208,7 @@ namespace McMd
    }
 
    /*
-   * g_ --- BC(g1,g2,g3).
+   * Compute influence function g_
    */
    void MdSpmePotential::influence_function()
    {
@@ -262,7 +262,7 @@ namespace McMd
    }
 
    /*
-   * component of B grid
+   * Compute bfactor associated with one direction.
    */
    double MdSpmePotential::bfactor(double m, int dim)
    {
@@ -285,7 +285,7 @@ namespace McMd
    }
  
    /*
-   * rho_ --- Q(g1,g2,g3).
+   * Assign charges to grid points.
    */
    void MdSpmePotential::spreadCharge()
    {
@@ -558,6 +558,10 @@ namespace McMd
    */
    void MdSpmePotential::computeStress()
    {
+      spreadCharge();
+      setGridToZero(rhoHat_);
+      fftw_execute(forward_plan);
+
       Tensor K, stress;
       Vector qv;
       double alpha = ewaldInteraction_.alpha();
@@ -574,20 +578,21 @@ namespace McMd
             for (k = 0; k < gridDimensions_[2]; ++k) {
                pos[2] = k;
 
-               qv = vecWaves_(pos);
-               K.dyad(qv, qv);
-               qSq = 1.0/sqWaves_(pos);
-               K *=  -2.0 * (ca + (1.0/qSq));
-               K.add(Tensor::Identity, K);
-               K *= g_(pos) * std::norm(rhoHat_(pos));
-               stress += K;  
+               qSq = sqWaves_(pos);
+               if (qSq > 1.0E-10) {
+                  qv = vecWaves_(pos);
+                  K.dyad(qv, qv);
+                  K *=  -2.0 * (ca + (1.0/qSq));
+                  K.add(Tensor::Identity, K);
+                  K *= g_(pos)*std::norm(rhoHat_(pos));
+                  stress += K;
+               }
             }
          }
       }
       double volume = boundaryPtr_->volume();
-      stress /= volume;
-      // Note: A factor of 0.5 in usual expression for stress is 
-      // cancelled by our use of only half of the wavevectors.   
+      stress /= 2.0*volume;
+
 
       kSpaceStress_.set(stress);
    }
