@@ -215,9 +215,6 @@ namespace McMd
       Vector b0, b1, b2;
       Vector q0, q1, q;
       double qSq, b, c;
-      double alpha = ewaldInteraction_.alpha();
-      double epsilon = ewaldInteraction_.epsilon();
-      double f = -0.25/(alpha*alpha);
       IntVector pos;
       int i, j, k;
       int m0, m1, m2;
@@ -231,34 +228,35 @@ namespace McMd
       // Loop over grid points
       for (i = 0; i < gridDimensions_[0]; ++i) {
          pos[0] = i;
-         m0 = (i <= gridDimensions_[0] / 2.0) ? i : i - gridDimensions_[0];
+         m0 = (i <= gridDimensions_[0]/2) ? i : i - gridDimensions_[0];
          q0.multiply(b0, m0);
 
          for (j = 0; j < gridDimensions_[1]; ++j) {
             pos[1] = j;
-            m1 = (j <= gridDimensions_[1] / 2.0) ? j : j - gridDimensions_[1];
+            m1 = (j <= gridDimensions_[1]/2) ? j : j - gridDimensions_[1];
             q1.multiply(b1, m1);
             q1 += q0;
 
             for (k = 0; k < gridDimensions_[2]; ++k) {
                pos[2] = k;
-               m2 = (k <= gridDimensions_[2] / 2.0) ? k : k - gridDimensions_[2];
+               m2 = (k <= gridDimensions_[2]/2) ? k : k - gridDimensions_[2];
                q.multiply(b2, m2);
                q += q1;
                qSq = q.square();
                sqWaves_(pos) = qSq;
                vecWaves_(pos) = q;
 
-               b = bfactor(i, 0) * bfactor(j, 1) *bfactor(k, 2);
-               c = 1.0 / (epsilon*qSq);
-               c *= exp(f*qSq);
-               c /= boundaryPtr_->volume();
-
-               g_(pos) = b * c;
+               if (qSq > 1.0E-10) {
+                  b = bfactor(i, 0) * bfactor(j, 1) *bfactor(k, 2);
+                  c = ewaldInteraction_.kSpacePotential(qSq);
+                  c /= boundaryPtr_->volume();
+                  g_(pos) = b * c;
+               } else {
+                  g_(pos) = 0.0;
+               }
             }
          }
       }
-      g_[0] = 0;
    }
 
    /*
@@ -380,13 +378,15 @@ namespace McMd
    void MdSpmePotential::ik_differential_operator()
    {
       int i, j;
+      int gridDimension;
       for (i = 0 ; i < 3 ; ++i){
+         gridDimension = gridDimensions_[i];
          ikop_[0][i] = 0.0;
-         for (j = 1; j < gridDimensions_[i]/2; ++j) {
+         for (j = 1; j < gridDimension / 2; ++j) {
             ikop_[j][i] = j;
-            ikop_[gridDimensions_[i] - j][i] = -j;
+            ikop_[gridDimension - j][i] = -j;
          }
-         j = gridDimensions_[i]/2;
+         j = gridDimension/2;
          ikop_[j][i] = 0.0;
          // For non-cubic grids, ikop_ contains unused elements:
          // ikop_[j][i] with j >= gridDimensions_[i] are undefined
@@ -407,6 +407,7 @@ namespace McMd
       DCMPLX TwoPiIm = TwoPi * Constants::Im;  // 2*Pi*I
       int  pos;                                //rank in GridArray
 
+      // Derivative in k-space
       for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
          for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
             for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
