@@ -13,7 +13,7 @@
 #include <mcMd/chemistry/Group.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#ifdef INTER_TETHER
+#ifdef SIMP_TETHER
 #include <mcMd/tethers/TetherMaster.h>
 #endif
 #ifdef MCMD_LINK
@@ -53,7 +53,7 @@ namespace McMd
 
       // Molecular species
       in >> Label("SPECIES");
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bool hasBonds = (bool)simulation().nBondType();
       if (hasBonds) {
          Label label("hasBonds", false);
@@ -61,7 +61,7 @@ namespace McMd
          hasBonds = label.isClear();
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       bool hasAngles = (bool)simulation().nAngleType();
       if (hasAngles) {
          Label label("hasAngles", false);
@@ -69,7 +69,7 @@ namespace McMd
          hasAngles = label.isClear();
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       bool hasDihedrals = (bool)simulation().nDihedralType();
       if (hasDihedrals) {
          Label label("hasDihedrals", false);
@@ -94,21 +94,21 @@ namespace McMd
          in >> nAtomIn;
          UTIL_CHECK(nAtomIn == speciesPtr->nAtom())
          nAtomTot += nMolecule*nAtomIn;
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (hasBonds) {
             int nBondIn;
             in >> nBondIn;
             UTIL_CHECK(nBondIn == speciesPtr->nBond());
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (hasAngles) {
             int nAngleIn;
             in >> nAngleIn;
             UTIL_CHECK(nAngleIn == speciesPtr->nAngle());
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (hasDihedrals) {
             int nDihedralIn;
             in >> nDihedralIn;
@@ -177,7 +177,7 @@ namespace McMd
          }
       }
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       {  // Scope block for variables 
 
          // Read Tethers
@@ -275,21 +275,21 @@ namespace McMd
 
       // Write species information
       out << endl << "SPECIES\n";
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bool hasBonds = (bool)simulation().nBondType();
       int  nBondTot = 0;
       if (hasBonds) {
          out << "hasBonds\n";
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       bool hasAngles = (bool)simulation().nAngleType();
       int  nAngleTot = 0;
       if (hasAngles) {
          out << "hasAngles\n";
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       bool hasDihedrals = (bool)simulation().nDihedralType();
       int  nDihedralTot = 0;
       if (hasDihedrals) {
@@ -309,19 +309,19 @@ namespace McMd
          out << "  " << nAtomSpecies;
          nMolecule = system().nMolecule(iSpecies);
          nAtomTot += nAtomSpecies*nMolecule;
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (hasBonds) {
             out << "  " << speciesPtr->nBond();
             nBondTot += nMolecule*(speciesPtr->nBond());
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (hasAngles) {
             out << "  " << speciesPtr->nAngle();
             nAngleTot += nMolecule*(speciesPtr->nAngle());
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (hasDihedrals) {
             out << "  " << speciesPtr->nDihedral();
             nDihedralTot += nMolecule*(speciesPtr->nDihedral());
@@ -365,21 +365,21 @@ namespace McMd
       }
       out << "\n";
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (hasBonds) {
          out << "BONDS\n";
          out << "nBond  " << nBondTot << "\n";
          writeGroups<2>(out);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngles) {
          out << "ANGLES\n";
          out << "nAngle  " << nAngleTot << "\n";
          writeGroups<3>(out);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedrals) {
          out << "nDihedral  " << nDihedralTot << "\n";
          out << "DIHEDRALS\n";
@@ -388,7 +388,7 @@ namespace McMd
       #endif
 
       #if 0
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       { // Scope for local variables
 
          // Write Tethers

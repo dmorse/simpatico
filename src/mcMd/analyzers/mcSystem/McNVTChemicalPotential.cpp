@@ -121,7 +121,7 @@ namespace McMd
          Molecule* molPtr;
          Atom* endPtr, *pvt1Ptr;
          Vector trialPos[MaxTrial_], bondVec, pvt1Pos;
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          double angle;
          Atom* pvt2Ptr;
          Vector pvt2Pos;
@@ -148,14 +148,14 @@ namespace McMd
                boundary().randomPosition(random(), trialPos[iTrial]);
                boundary().shift(trialPos[iTrial]);
 
-               #ifndef INTER_NOPAIR
+               #ifndef SIMP_NOPAIR
                trialEnergy[iTrial] = 
                   system().pairPotential().atomEnergy(*endPtr);
                #else
                trialEnergy[iTrial] = 0.0;
                #endif
 
-               #ifdef INTER_EXTERNAL
+               #ifdef SIMP_EXTERNAL
                trialEnergy[iTrial] += 
                   system().externalPotential().atomEnergy(*endPtr);
                #endif
@@ -178,7 +178,7 @@ namespace McMd
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
 
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().addAtom(*endPtr);
             #endif
 
@@ -208,14 +208,14 @@ namespace McMd
                boundary().shift(trialPos[iTrial]);
                endPtr->position() = trialPos[iTrial];
 
-               #ifndef INTER_NOPAIR
+               #ifndef SIMP_NOPAIR
                trialEnergy[iTrial] =
                   system().pairPotential().atomEnergy(*endPtr);
                #else
                trialEnergy[iTrial] = 0.0;
                #endif
 
-               #ifdef INTER_EXTERNAL
+               #ifdef SIMP_EXTERNAL
                trialEnergy[iTrial] += 
                   system().externalPotential().atomEnergy(*endPtr);
                #endif
@@ -241,7 +241,7 @@ namespace McMd
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
 
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().addAtom(*endPtr);
             #endif
 
@@ -254,7 +254,7 @@ namespace McMd
                system().bondPotential().randomBondLength(&random(), 
                                                          beta, bondTypeId);
 
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             int angleTypeId = molPtr->angle(0).typeId();
             angle = 
                system().anglePotential().randomAngle(&random(), 
@@ -273,7 +273,7 @@ namespace McMd
 
             for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
                // trialPos = pvtPos + bondVec
-               #ifdef INTER_ANGLE
+               #ifdef SIMP_ANGLE
                if (system().hasAnglePotential()) {
                   uniformCone(length, angle, n, bondVec);
                } else {
@@ -290,14 +290,14 @@ namespace McMd
                boundary().shift(trialPos[iTrial]);
                endPtr->position() = trialPos[iTrial];
 
-               #ifndef INTER_NOPAIR
+               #ifndef SIMP_NOPAIR
                trialEnergy[iTrial] = 
                   system().pairPotential().atomEnergy(*endPtr);
                #else
                trialEnergy[iTrial] = 0.0;
                #endif
 
-               #ifdef INTER_EXTERNAL
+               #ifdef SIMP_EXTERNAL
                trialEnergy[iTrial] += 
                   system().externalPotential().atomEnergy(*endPtr);
                #endif
@@ -318,14 +318,14 @@ namespace McMd
 
             // Add bonded energies
             de += system().bondPotential().energy(length*length, bondTypeId);
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             de += system().anglePotential().energy(cos(angle), angleTypeId);
             #endif
 
             // Set position of new end atom to chosen trialPos Vector
             endPtr->position() = trialPos[iTrial];
 
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().addAtom(*endPtr);
             #endif
 
@@ -336,7 +336,7 @@ namespace McMd
                 addEndAtom(molPtr, atomId, w, de);
                 rosenbluth *= w;
                 energy += de;
-                #ifndef INTER_NOPAIR
+                #ifndef SIMP_NOPAIR
                 system().pairPotential().addAtom(molPtr->atom(atomId));
                 #endif
             }
@@ -344,7 +344,7 @@ namespace McMd
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom());
             accumulator_.sample(rosenbluth, outputFile_);
 
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             for (int atomId = 0; atomId < molPtr->nAtom(); ++atomId) {
                 system().pairPotential().deleteAtom(molPtr->atom(atomId));
             }
@@ -418,11 +418,11 @@ namespace McMd
       Vector bondVec;
       Vector pvt1Pos = molPtr->atom(atomId-1).position();
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Vector pvt2Pos = molPtr->atom(atomId-2).position();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Vector pvt3Pos = molPtr->atom(atomId-3).position();
       #endif
 
@@ -430,7 +430,7 @@ namespace McMd
       double beta, length;
       int bondTypeId = molPtr->bond(atomId - 1).typeId();
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       double angle;
       int angleTypeId = molPtr->angle(atomId - 2).typeId();
       #endif
@@ -442,13 +442,13 @@ namespace McMd
       beta   = energyEnsemble().beta();
       length = system().bondPotential().randomBondLength(&random(), beta, 
                                         molPtr->bond(atomId-1).typeId());
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       Vector n = pvt1Pos;
       n -= pvt2Pos;
       angle = system().anglePotential().randomAngle(&random(), beta, 
                                         molPtr->angle(atomId-2).typeId());
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       Vector dR1 = pvt3Pos;
       Vector dR2 = pvt2Pos;
       Vector dR3 = pvt1Pos;
@@ -461,7 +461,7 @@ namespace McMd
       rosenbluth = 0.0;
       for (iTrial=0; iTrial < nTrial_; ++iTrial) {
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (system().hasAnglePotential()) {
             uniformCone(length, angle, n, bondVec);
          } else {
@@ -477,13 +477,13 @@ namespace McMd
          boundary().shift(trialPos[iTrial]);
          endPtr->position() = trialPos[iTrial];
 
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          trialEnergy[iTrial] = system().pairPotential().atomEnergy(*endPtr);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
 
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (system().hasDihedralPotential()) {
             trialEnergy[iTrial] += 
                system().dihedralPotential().energy(dR1, dR2, dR3, 
@@ -491,7 +491,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          trialEnergy[iTrial] += 
             system().externalPotential().atomEnergy(*endPtr);
          #endif
@@ -517,7 +517,7 @@ namespace McMd
 
       // Calculate total energy for chosen trial.
       energy = system().bondPotential().energy(length*length, bondTypeId);
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       energy += system().anglePotential().energy(cos(angle), angleTypeId);
       #endif
 

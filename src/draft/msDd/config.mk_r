@@ -41,5 +41,5 @@ msDd_LIBNAME=msDd$(MSDD_SUFFIX)
 msDd_LIBDIR=$(ROOT_DIR)/lib
 msDd_LIB=$(msDd_LIBDIR)/lib$(msDd_LIBNAME).a
 
-DDSIM_EXE=$(BIN_DIR)/msDdSim$(INTER_SUFFIX)$(MCMD_SUFFIX)
+DDSIM_EXE=$(BIN_DIR)/msDdSim$(SIMP_SUFFIX)$(MCMD_SUFFIX)
 #-----------------------------------------------------------------------

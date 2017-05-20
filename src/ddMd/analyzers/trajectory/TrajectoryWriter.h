@@ -10,13 +10,13 @@
 
 #include <ddMd/analyzers/Analyzer.h>         // base class
 #include <ddMd/storage/AtomStorage.h>       
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>               
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 #include <util/boundary/Boundary.h>         // typedef
@@ -143,7 +143,7 @@ namespace DdMd
       */
       AtomCollector& atomCollector();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get BondStorage by reference.
       */
@@ -155,7 +155,7 @@ namespace DdMd
       GroupCollector<2>& bondCollector();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get AngleStorage by reference.
       */
@@ -167,7 +167,7 @@ namespace DdMd
       GroupCollector<3>& angleCollector();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get DihedralStorage by reference.
       */
@@ -198,13 +198,13 @@ namespace DdMd
 
       // Pointers to storage objects.
       AtomStorage* atomStoragePtr_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       BondStorage* bondStoragePtr_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AngleStorage* angleStoragePtr_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       DihedralStorage* dihedralStoragePtr_;
       #endif
 
@@ -230,7 +230,7 @@ namespace DdMd
    inline AtomCollector& TrajectoryWriter::atomCollector()
    {  return atomStoragePtr_->collector(); }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline BondStorage& TrajectoryWriter::bondStorage()
    {  return *bondStoragePtr_; }
 
@@ -238,7 +238,7 @@ namespace DdMd
    {  return bondStoragePtr_->collector(); }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline AngleStorage& TrajectoryWriter::angleStorage()
    {  return *angleStoragePtr_; }
 
@@ -246,7 +246,7 @@ namespace DdMd
    {  return angleStoragePtr_->collector(); }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline DihedralStorage& TrajectoryWriter::dihedralStorage()
    {  return *dihedralStoragePtr_; }
 

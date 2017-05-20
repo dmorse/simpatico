@@ -1,6 +1,3 @@
-#ifndef INTER_INTRA_LINK_CPP
-#define INTER_INTRA_LINK_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -113,4 +110,3 @@ namespace McMd
    }
 
 }
-#endif 

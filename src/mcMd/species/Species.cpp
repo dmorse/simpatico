@@ -27,15 +27,15 @@ namespace McMd
       moleculeCapacity_(0),
       nAtom_(0),
       atomTypeIds_(),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       nBond_(0),
       speciesBonds_(),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       nAngle_(0),
       speciesAngles_(),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       nDihedral_(0),
       speciesDihedrals_(),
       #endif
@@ -82,20 +82,20 @@ namespace McMd
    void Species::readSpeciesParam(std::istream &in)
    {
       read<int>(in, "nAtom", nAtom_);
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       read<int>(in, "nBond", nBond_);
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       read<int>(in, "nAngle", nAngle_);
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       read<int>(in, "nDihedral", nDihedral_);
       #endif
       allocate();
 
       readDArray<int>(in, "atomTypeIds", atomTypeIds_, nAtom_);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBond_ > 0) {
          readDArray<SpeciesBond>(in, "speciesBonds", speciesBonds_, 
                                  nBond_);
@@ -110,7 +110,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngle_ > 0) {
          readDArray<SpeciesAngle>(in, "speciesAngles", speciesAngles_,
                                   nAngle_);
@@ -127,7 +127,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       // Make atomDihedralIdArrays
       if (nDihedral_ > 0) {
          readDArray<SpeciesDihedral>(in, "speciesDihedrals", speciesDihedrals_,
@@ -155,20 +155,20 @@ namespace McMd
    void Species::loadSpeciesParam(Serializable::IArchive &ar)
    {
       loadParameter<int>(ar, "nAtom", nAtom_);
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       loadParameter<int>(ar, "nBond", nBond_);
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       loadParameter<int>(ar, "nAngle", nAngle_);
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       loadParameter<int>(ar, "nDihedral", nDihedral_);
       #endif
       allocate();
 
       loadDArray<int>(ar, "atomTypeIds", atomTypeIds_, nAtom_);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBond_ > 0) {
          loadDArray<SpeciesBond>(ar, "speciesBonds", speciesBonds_, 
                                  nBond_);
@@ -184,7 +184,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngle_ > 0) {
          loadDArray<SpeciesAngle>(ar, "speciesAngles", speciesAngles_,
                                   nAngle_);
@@ -201,7 +201,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       // Make atomDihedralIdArrays
       if (nDihedral_ > 0) {
          loadDArray<SpeciesDihedral>(ar, "speciesDihedrals", speciesDihedrals_,
@@ -230,23 +230,23 @@ namespace McMd
       ar << id_;
       ar << moleculeCapacity_;
       ar << nAtom_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       ar << nBond_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       ar << nAngle_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       ar << nDihedral_;
       #endif
       ar << atomTypeIds_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       ar << speciesBonds_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       ar << speciesAngles_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       ar << speciesDihedrals_;
       #endif
    }
@@ -279,21 +279,21 @@ namespace McMd
       assert(nAtom_ >  0);
       atomTypeIds_.allocate(nAtom_);
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       atomBondIdArrays_.allocate(nAtom_);
       assert(nBond_ >= 0);
       if (nBond_ > 0) {
          speciesBonds_.allocate(nBond_);
       } 
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       atomAngleIdArrays_.allocate(nAtom_);
       assert(nAngle_ >= 0);
       if (nAngle_ > 0) {
          speciesAngles_.allocate(nAngle_);
       } 
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       atomDihedralIdArrays_.allocate(nAtom_);
       assert(nDihedral_ >= 0);
       if (nDihedral_ > 0) {
@@ -315,7 +315,7 @@ namespace McMd
       atomTypeIds_[atomId] = atomType;
    }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Add a bond to the species chemical structure.
    */
@@ -341,7 +341,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Add an angle to the species chemical structure.
    */
@@ -371,7 +371,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Add a dihedral to the species chemical structure.
    */
@@ -422,7 +422,7 @@ namespace McMd
             }
          }
 
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          {
             // Loop over all bonds (if any) in speciesBonds_ array
             int  atomId, bondId, atomId0, atomId1, j;
@@ -492,7 +492,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          {
             // Loop over all angles (if any) in speciesAngles_ array
             int  angleId, id, id2, atomId, atomId2(-1), j;
@@ -557,7 +557,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          {
             // Loop over all dihedrals (if any) in speciesDihedrals_ array
             int  dihedralId, tId, tId2, tAtomId, tAtomId2, j;

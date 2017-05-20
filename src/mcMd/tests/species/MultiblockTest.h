@@ -48,7 +48,7 @@ void MultiblockTest::testReadParam()
    using std::cout;
 
    ifstream in;
-   #ifndef INTER_ANGLE
+   #ifndef SIMP_ANGLE
    openInputFile("in/Multiblock", in);
    #else
    openInputFile("in/MultiblockAngle", in);
@@ -119,7 +119,7 @@ void MultiblockTest::testReadParam()
       }
    }
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(species.nAngle() == species.nAtom() - 2);
    const SpeciesGroup<3>* anglePtr;
    if (verbose() > 1) { std::cout << std::endl << "Angles:"; }

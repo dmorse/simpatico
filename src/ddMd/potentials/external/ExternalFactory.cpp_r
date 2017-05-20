@@ -13,21 +13,21 @@
 #include <ddMd/potentials/external/ExternalPotentialImpl.h>
 
 // External interaction classes
-#include <inter/external/BoxExternal.h>
-#include <inter/external/OrthoBoxExternal.h>
-#include <inter/external/OrthoBoxExternal.h>
-#include <inter/external/SlitExternal.h>
-#include <inter/external/LamellarOrderingExternal.h>
-#include <inter/external/LocalLamellarOrderingExternal.h>
-#include <inter/external/SimplePeriodicExternal.h>
-#include <inter/external/PeriodicExternal.h>
-#include <inter/external/GeneralPeriodicExternal.h>
-#include <inter/external/NucleationExternal.h>
+#include <simp/interaction/external/BoxExternal.h>
+#include <simp/interaction/external/OrthoBoxExternal.h>
+#include <simp/interaction/external/OrthoBoxExternal.h>
+#include <simp/interaction/external/SlitExternal.h>
+#include <simp/interaction/external/LamellarOrderingExternal.h>
+#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
+#include <simp/interaction/external/SimplePeriodicExternal.h>
+#include <simp/interaction/external/PeriodicExternal.h>
+#include <simp/interaction/external/GeneralPeriodicExternal.h>
+#include <simp/interaction/external/NucleationExternal.h>
 
 namespace DdMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

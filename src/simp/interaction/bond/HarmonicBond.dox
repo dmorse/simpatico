@@ -1,0 +1,37 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_bond_HarmonicBond_page HarmonicBond 
+
+The HarmonicBond interaction implements a simple harmonic bond 
+potential with a nonzero rest length.  The potential energy 
+\f$V(r)\f$ for two covalently bonded particles separated by a 
+distance \f$r\f$ is given by
+\f[
+   V(r) = \frac{\kappa}{2} ( r - l )^{2}
+\f]
+Different values are defined for the parameters \f$\epsilon\f$
+and \f$l\f$ for each bond type.
+
+Values of the parameters \f$\kappa\f$, \f$l\f$ are denoted in 
+the parameter file and source code by array-valued variables
+named "kappa", and "length", respectively.  The parameter file 
+format is:
+\code
+   kappa  Array<float>
+   length Array<float>
+\endcode
+Both arrays are entered in column form, with one entry per
+line, with the first entry after the label. The parameter 
+block a system with two bond types (nBondType=2) might thus 
+look like this:
+\code
+   kappa     100.0
+             150.0
+   sigma     1.00
+             0.90
+\endcode
+
+*/
+
+}

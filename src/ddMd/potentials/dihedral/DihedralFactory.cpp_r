@@ -13,13 +13,13 @@
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
 
 // Dihedral interaction classes
-#include <inter/dihedral/CosineDihedral.h>
-#include <inter/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/CosineDihedral.h>
+#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
 
 namespace DdMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

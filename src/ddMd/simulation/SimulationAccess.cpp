@@ -20,26 +20,26 @@ namespace DdMd
       simulationPtr_(&simulation),
       boundaryPtr_(&simulation.boundary_),
       atomStoragePtr_(&simulation.atomStorage_),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStoragePtr_(&simulation.bondStorage_),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStoragePtr_(&simulation.angleStorage_),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStoragePtr_(&simulation.dihedralStorage_),
       #endif
       pairPotentialPtr_(simulation.pairPotentialPtr_),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondPotentialPtr_(simulation.bondPotentialPtr_),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       anglePotentialPtr_(simulation.anglePotentialPtr_),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralPotentialPtr_(simulation.dihedralPotentialPtr_),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalPotentialPtr_(simulation.externalPotentialPtr_),
       #endif
       energyEnsemblePtr_(simulation.energyEnsemblePtr_),
@@ -49,16 +49,16 @@ namespace DdMd
       exchangerPtr_(&simulation.exchanger_),
       fileMasterPtr_(simulation.fileMasterPtr_),
       nAtomType_(simulation.nAtomType_),
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       nBondType_(simulation.nBondType_),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       nAngleType_(simulation.nAngleType_),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       nDihedralType_(simulation.nDihedralType_),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       hasExternal_(simulation.hasExternal_),
       #endif
       maskedPairPolicy_(simulation.maskedPairPolicy_),

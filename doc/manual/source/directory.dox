@@ -10,7 +10,7 @@ The following list explains the contents of the subdirectories of the root simpa
 \code
   src/        - contains all C++ header (*.h) and source (*.cpp) files
      util/    - Util namespace
-     inter/   - Inter namespace
+     simp/   - Simp namespace
      mcMd/    - McMd namespace
      ddMd/    - DdMd namespace
      tools/   - Tools namespace

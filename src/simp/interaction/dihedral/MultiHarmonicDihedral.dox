@@ -1,0 +1,24 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_dihedral_MultiHarmonicDihedral_page MultiHarmonicDihedral 
+
+The MultiHarmonicDihedral interaction implements a potential that can be
+expressed as a Fourier expansion of the dihedral angle \f$\phi\f$ defined 
+in \ref Simp_Interaction_Dihedral_Module. The energy is given by
+\f[
+   V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m\phi) 
+\f]
+The parameter file format is a set of rows, in which each row contains a
+dihedral type index followed by values of K0, ..., K4 for a particular
+dihedral type. The format is thus
+\code
+   0    K0   K1   K2  K3   K4
+   1    K0   K1   K2  K3   K4 
+   ....
+\endcode
+The first integer in each line is a type index. Different dihedral types 
+must appear in order sequential order 0, 1, 2, etc. 
+*/
+
+}

@@ -18,29 +18,29 @@
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/trajectory/TrajectoryReaderFactory.h>
 
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <mcMd/potentials/bond/BondFactory.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AngleFactory.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralFactory.h>
 #endif
-#ifdef INTER_COULOMB
+#ifdef SIMP_COULOMB
 #include <mcMd/potentials/coulomb/CoulombFactory.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
 #endif
-#ifdef INTER_TETHER
+#ifdef SIMP_TETHER
 #include <mcMd/potentials/tether/tetherFactory.h>
 #include <mcMd/tethers/TetherMaster.h>
 #endif
@@ -75,34 +75,34 @@ namespace McMd
       #ifdef MCMD_LINK
       linkMasterPtr_(0),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherMasterPtr_(0),
       #endif
       simulationPtr_(0),
       energyEnsemblePtr_(0),
       boundaryEnsemblePtr_(0),
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairFactoryPtr_(0),
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondFactoryPtr_(0),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleFactoryPtr_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       coulombFactoryPtr_(0),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(0),
       #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(0),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherFactoryPtr_(0),
       #endif
       configIoPtr_(0),
@@ -117,28 +117,28 @@ namespace McMd
       hasReplicaMove_(false),
       #endif // UTIL_MPI
       #endif // MCMD_PERTURB
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairStyle_(),
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStyle_(),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStyle_(),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStyle_(),
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       coulombStyle_(),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalStyle_(),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherStyle_(),
       #endif
       id_(0),
@@ -168,34 +168,34 @@ namespace McMd
       #ifdef MCMD_LINK
       linkMasterPtr_(other.linkMasterPtr_),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherMasterPtr_(other.tetherMasterPtr_),
       #endif
       simulationPtr_(other.simulationPtr_),
       energyEnsemblePtr_(other.energyEnsemblePtr_),
       boundaryEnsemblePtr_(other.boundaryEnsemblePtr_),
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairFactoryPtr_(other.pairFactoryPtr_),
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondFactoryPtr_(other.bondFactoryPtr_),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleFactoryPtr_(other.angleFactoryPtr_),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralFactoryPtr_(other.dihedralFactoryPtr_),
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       coulombFactoryPtr_(other.coulombFactoryPtr_),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
       #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherFactoryPtr_(other.tetherFactoryPtr_),
       #endif
       configIoPtr_(other.configIoPtr_),
@@ -210,28 +210,28 @@ namespace McMd
       hasReplicaMove_(other.hasReplicaMove_),
       #endif // ifdef UTIL_MPI
       #endif // ifdef MCMD_PERTURB
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairStyle_(other.pairStyle_),
       #endif 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStyle_(other.bondStyle_),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStyle_(other.angleStyle_),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStyle_(other.dihedralStyle_),
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       coulombStyle_(other.coulombStyle_),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalStyle_(other.externalStyle_),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(other.linkStyle_),
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       tetherStyle_(other.tetherStyle_),
       #endif
       id_(other.id_),
@@ -258,32 +258,32 @@ namespace McMd
          if (boundaryPtr_) {
             delete boundaryPtr_;
          }
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          if (pairFactoryPtr_) {
             delete pairFactoryPtr_;
          }
          #endif
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (bondFactoryPtr_) {
             delete bondFactoryPtr_;
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (angleFactoryPtr_) {
             delete angleFactoryPtr_;
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (dihedralFactoryPtr_) {
             delete dihedralFactoryPtr_;
          }
          #endif
-         #ifdef INTER_COULOMB
+         #ifdef SIMP_COULOMB
          if (coulombFactoryPtr_) {
             delete coulombFactoryPtr_;
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
          }
@@ -293,7 +293,7 @@ namespace McMd
             delete linkFactoryPtr_;
          }
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          if (tetherMasterPtr_) {
             delete tetherMasterPtr_;
          }
@@ -351,7 +351,7 @@ namespace McMd
          #ifdef MCMD_LINK
          readLinkMaster(in);
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          readTetherMaster(in);
          #endif
          readEnsembles(in);
@@ -371,7 +371,7 @@ namespace McMd
          #ifdef MCMD_LINK
          loadLinkMaster(ar);
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          loadTetherMaster(ar);
          #endif
          loadEnsembles(ar);
@@ -389,7 +389,7 @@ namespace McMd
          #ifdef MCMD_LINK
          saveLinkMaster(ar);
          #endif
-         #ifdef INTER_TETHER
+         #ifdef SIMP_TETHER
          saveTetherMaster(ar);
          #endif
          saveEnsembles(ar);
@@ -447,30 +447,30 @@ namespace McMd
    */
    void System::readPotentialStyles(std::istream &in)
    {
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (simulation().nBondType() > 0) {
          read<std::string>(in, "bondStyle", bondStyle_);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (simulation().hasCoulomb() > 0) {
          read<std::string>(in, "coulombStyle", coulombStyle_);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
@@ -480,7 +480,7 @@ namespace McMd
          read<std::string>(in, "linkStyle", linkStyle_);
       }
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       if (simulation().hasTether()) {
          read<std::string>(in, "tetherStyle", tetherStyle_);
       }
@@ -492,30 +492,30 @@ namespace McMd
    */
    void System::loadPotentialStyles(Serializable::IArchive& ar)
    {
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (simulation().nBondType() > 0) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (simulation().nAngleType() > 0) {
          loadParameter<std::string>(ar, "angleStyle", angleStyle_);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (simulation().hasCoulomb() > 0) {
          loadParameter<std::string>(ar, "coulombStyle", coulombStyle_);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (simulation().hasExternal()) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
@@ -525,7 +525,7 @@ namespace McMd
          loadParameter<std::string>(ar, "linkStyle", linkStyle_);
       }
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       if (simulation().hasTether()) {
          loadParameter<std::string>(ar, "tetherStyle", tetherStyle_);
       }
@@ -537,30 +537,30 @@ namespace McMd
    */
    void System::savePotentialStyles(Serializable::OArchive& ar)
    {
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       ar << pairStyle_;
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (simulation().nBondType() > 0) {
          ar << bondStyle_;
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (simulation().nAngleType() > 0) {
          ar << angleStyle_;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          ar << dihedralStyle_;
       }
       #endif
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (simulation().hasCoulomb() > 0) {
          ar << coulombStyle_;
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (simulation().hasExternal()) {
          ar << externalStyle_;
       }
@@ -570,7 +570,7 @@ namespace McMd
          ar << linkStyle_;
       }
       #endif
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       if (simulation().hasTether()) {
          ar << tetherStyle_;
       }
@@ -629,7 +629,7 @@ namespace McMd
    }
    #endif 
 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    void System::readTetherMaster(std::istream &in)
    {
       if (simulation().hasTether()) {
@@ -1124,7 +1124,7 @@ namespace McMd
       return sum;
    }
 
-   #ifndef INTER_NOPAIR
+   #ifndef SIMP_NOPAIR
    /*
    * Return the PairFactory by reference.
    */
@@ -1144,7 +1144,7 @@ namespace McMd
    {  return pairStyle_;  }
    #endif
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Return the BondFactory by reference.
    */
@@ -1164,7 +1164,7 @@ namespace McMd
    {  return bondStyle_;  }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Return the AngleFactory by reference.
    */
@@ -1184,7 +1184,7 @@ namespace McMd
    {  return angleStyle_;  }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Return the DihedralFactory by reference.
    */
@@ -1204,7 +1204,7 @@ namespace McMd
    {  return dihedralStyle_;  }
    #endif
 
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    /*
    * Return the CoulombFactory by reference.
    */
@@ -1224,7 +1224,7 @@ namespace McMd
    {  return coulombStyle_;  }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
    */
@@ -1264,7 +1264,7 @@ namespace McMd
    {  return linkStyle_;  }
    #endif
 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    /*
    * Return the TetherFactory by reference.
    */
@@ -1316,7 +1316,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       if (simulation().hasTether() > 0) {
          if (!tetherMasterPtr_) {
             UTIL_THROW("Null tetherMasterPtr_");

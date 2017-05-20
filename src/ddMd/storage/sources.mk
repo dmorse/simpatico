@@ -4,11 +4,11 @@ ddMd_storage_=\
    ddMd/storage/GroupExchanger.cpp \
    ddMd/storage/BondStorage.cpp \
 
-ifdef INTER_ANGLE
+ifdef SIMP_ANGLE
 ddMd_storage_+=ddMd/storage/AngleStorage.cpp
 endif
 
-ifdef INTER_DIHEDRAL
+ifdef SIMP_DIHEDRAL
 ddMd_storage_+=ddMd/storage/DihedralStorage.cpp
 endif
 

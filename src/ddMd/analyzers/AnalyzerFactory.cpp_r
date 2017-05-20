@@ -24,7 +24,7 @@
 #include "energy/PairEnergyAnalyzer.h"
 #include "energy/OutputPairEnergies.h"
 #include "energy/PairEnergyAverage.h"
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include "energy/ExternalEnergyAnalyzer.h"
 #include "energy/ExternalEnergyAverage.h"
 #endif
@@ -47,7 +47,7 @@
 
 // Miscellaneous analyzers
 #include "misc/OrderParamNucleation.h"
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include "misc/BondTensorAutoCorr.h"
 #endif
 
@@ -99,7 +99,7 @@ namespace DdMd
       if (className == "OutputPairEnergies") {
          ptr = new OutputPairEnergies(simulation());
       } else
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (className == "ExternalEnergyAnalyzer") {
          ptr = new ExternalEnergyAnalyzer(simulation());
       } else
@@ -159,7 +159,7 @@ namespace DdMd
          ptr = new LammpsDumpWriter(simulation());
       } else
       // Miscellaneous
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (className == "BondTensorAutoCorr") {
          ptr = new BondTensorAutoCorr(simulation());
       } else

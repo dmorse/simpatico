@@ -292,7 +292,7 @@ namespace Tools
          configFile.close();
 
          #if 0
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Build the configuration CellList
          pairPotential().buildCellList();
          #endif

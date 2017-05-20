@@ -2,7 +2,7 @@ SRC_DIR_REL =../..
 
 include $(SRC_DIR_REL)/config.mk
 include $(SRC_DIR_REL)/util/config.mk
-include $(SRC_DIR_REL)/inter/config.mk
+include $(SRC_DIR_REL)/simp/config.mk
 include $(SRC_DIR_REL)/tools/config.mk
 include $(SRC_DIR_REL)/tools/patterns.mk
 include $(SRC_DIR_REL)/tools/sources.mk

@@ -1,0 +1,133 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(SIMP_DEFS) that is passed to the processor to define 
+#     preprocessor flags that effect the code in the mcMd/ directory. 
+#
+#   - A variable $(SIMP_SUFFIX) which is added as a suffix to the name
+#     of the simp library.
+#
+#   - The name $(SIMP_LIB) of the simp library file.
+#
+# This file is included by every makefile in the simp directory, and in 
+# directories containing source code that depends on the Simp namespace.
+# It should be included after $(SRC_DIR)/config.mk and before
+# $(SRC_DIR)/simp/patterns.mk.
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros that enable/disable
+# potential energy contributions.
+
+# Define SIMP_NOPAIR, disable non-bonded pair potentials 
+#SIMP_NOPAIR=1
+
+# Define SIMP_BOND, enable 2-body bond potentials
+SIMP_BOND=1
+
+# Define SIMP_ANGLE, enable 3-body angle potentials
+#SIMP_ANGLE=1
+
+# Define SIMP_DIHEDRAL, enable 4-body dihedral torsion potentials
+#SIMP_DIHEDRAL=1
+
+# Define SIMP_COULOMB, enable Coulomb potentials
+#SIMP_COULOMB=1
+
+# Define SIMP_EXTERNAL, enable external potentials
+#SIMP_EXTERNAL=1
+
+# Enable use of FFTW library for particle mesh Ewald
+ifdef SIMP_COULOMB
+#SIMP_FFTW=1
+endif
+
+#-----------------------------------------------------------------------
+# The following code defines the variables SIMP_DEFS and SIMP_SUFFIX.
+#
+# The variable SIMP_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option. If not empty, it must 
+# consist of a list of zero or more preprocessor macro names, each 
+# preceded by the compiler flag "-D".  For example, setting SIMP_DEFS 
+# to "-DSIMP_ANGLE -DSIMP_DIHEDRAL" will cause compilation of a version 
+# of the code with angle and dihedral potentials enabled.
+#
+# The variable SIMP_SUFFIX is appended to the base names of the library 
+# mcMd.a in the $(LIB_DIR) directory. It is also added to the mcMd library
+# and to the executables mcSim, mdSim, and ddSim in the $(BIN_DIR). If no
+# other features were enabled, setting SIMP_SUFFIX to "_a", to denote a 
+# version with angular potentials enabled, would lead to creation of a 
+# library file named simp_a.a in the directory $(SRC_DIR)/simp and 
+# executables named mcSim_a and mdSim_a. 
+ 
+SIMP_DEFS=
+SIMP_SUFFIX:=
+
+# The variable SIMP_DEFS is a recursive (normal) makefile variable, and
+# may be extended using the += operator, e.g., SIMP_DEFS+=-DSIMP_ANGLE.
+# The SIMP_SUFFIX is a non-recursive makefile variable, which may be 
+# extended using the := operator, as SIMP_SUFFIX:=$(SIMP_SUFFIX)_a. 
+# They are defined differently because the += operator adds a white space
+# before an added string, which is appropriate for SIMP_DEFS, but not for 
+# SIMP_SUFFIX. 
+#
+# Each if block in what follows contains two lines: The first adds a 
+# string containing a preprocessor macro to SIMP_DEFS. The second adds
+# an underscore and a string of one or two identifying letters to 
+# SIMP_SUFFIX. The addition of suffixes to the library and executable
+# names is optional, and may be suppressed by commenting out the relevant 
+# lines.
+#
+# See the file src/mcMd/dox/preprocessor.dox for an explanation of all
+# of preprocessor macros listed below.
+
+# Disable non-bonded pair potentials 
+ifdef SIMP_NOPAIR
+SIMP_DEFS+= -DSIMP_NOPAIR
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_np
+endif
+
+# Enable bond potential
+ifdef SIMP_BOND
+SIMP_DEFS+= -DSIMP_BOND
+else
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_nb
+endif
+
+# Enable angle potential
+ifdef SIMP_ANGLE
+SIMP_DEFS+= -DSIMP_ANGLE
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_a
+endif
+
+# Enable dihedral potential
+ifdef SIMP_DIHEDRAL
+SIMP_DEFS+= -DSIMP_DIHEDRAL
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_d
+endif
+
+# Enable Coulomb potential
+ifdef SIMP_COULOMB
+SIMP_DEFS+= -DSIMP_COULOMB
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_c
+ifdef SIMP_FFTW
+SIMP_DEFS+= -DSIMP_FFTW
+# Needed for Mac OS X with MacPort, which puts files in opt/
+#INCLUDES+= -I/opt/local/include
+#LDFLAGS+= -L/opt/local/lib
+LDFLAGS+= -lfftw3
+endif
+endif
+
+# Enable external potential
+ifdef SIMP_EXTERNAL
+SIMP_DEFS+= -DSIMP_EXTERNAL
+SIMP_SUFFIX:=$(SIMP_SUFFIX)_e
+endif
+
+#-----------------------------------------------------------------------
+# Name of static library for Simp namespace.
+
+SIMP_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(SIMP_SUFFIX)
+
+simp_LIBNAME=simp$(SIMP_ALL_SUFFIX)
+simp_LIB=$(BLD_DIR)/simp/lib$(simp_LIBNAME).a
+#-----------------------------------------------------------------------

@@ -10,26 +10,26 @@
 
 // Subclasses of Perturbation
 #include "McEnergyPerturbation.h"
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include "McPairPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <inter/pair/LJPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 #endif
 
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include "McExternalPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
-#include <inter/external/LamellarOrderingExternal.h>
-#include <inter/external/LocalLamellarOrderingExternal.h>
-#include <inter/external/PeriodicExternal.h>
-#ifndef INTER_NOPAIR
+#include <simp/interaction/external/LamellarOrderingExternal.h>
+#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
+#include <simp/interaction/external/PeriodicExternal.h>
+#ifndef SIMP_NOPAIR
 #include "McPairExternalPerturbation.h"
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <inter/pair/LJPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 #endif
 #endif
 
@@ -37,7 +37,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    McPerturbationFactory::McPerturbationFactory(McSystem& system)
     : systemPtr_(&system)
@@ -60,7 +60,7 @@ namespace McMd
       if (className == "McEnergyPerturbation") {
          ptr = new McEnergyPerturbation(*systemPtr_, size, rank);
       }
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       else if (className == "McPairPerturbation") {
          const std::string& interactionClassName 
                         = systemPtr_->pairPotential().interactionClassName();
@@ -73,8 +73,8 @@ namespace McMd
          }
       } 
       #endif
-      #ifdef INTER_EXTERNAL
-      #ifndef INTER_NOPAIR
+      #ifdef SIMP_EXTERNAL
+      #ifndef SIMP_NOPAIR
       else if (className == "McPairExternalPerturbation") {
          const std::string& pairInteractionClassName 
                      = systemPtr_->pairPotential().interactionClassName();
@@ -106,7 +106,7 @@ namespace McMd
       }
       #endif 
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       else if (className == "McExternalPerturbation") {
          const std::string& interactionClassName
                             = systemPtr_->externalPotential().interactionClassName();

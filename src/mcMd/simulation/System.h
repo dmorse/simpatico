@@ -56,26 +56,26 @@ namespace McMd
    class ConfigIo;
    class TrajectoryReader;
    class PairFactory;
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    class BondPotential;
    #endif
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    class AnglePotential;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    class DihedralPotential;
    #endif
-   #ifdef INTER_COULOMB
+   #ifdef SIMP_COULOMB
    class CoulombFactory;
    #endif
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    class ExternalPotential;
    #endif
    #ifdef MCMD_LINK
    class LinkPotential;
    class LinkMaster;
    #endif 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    class TetherFactory;
    class TetherMaster;
    #endif 
@@ -397,7 +397,7 @@ namespace McMd
       /// \name Potential Energy Factories and Styles
       //@{
     
-      #ifndef INTER_NOPAIR 
+      #ifndef SIMP_NOPAIR 
       /**
       * Get the PairFactory by reference.
       */
@@ -409,7 +409,7 @@ namespace McMd
       std::string pairStyle() const;
       #endif
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get the associated Factory<BondPotential> by reference.
       */
@@ -421,7 +421,7 @@ namespace McMd
       std::string bondStyle() const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get the associated AngleFactory by reference.
       */
@@ -433,7 +433,7 @@ namespace McMd
       std::string angleStyle() const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get the associated Dihedral Factory by reference.
       */
@@ -445,7 +445,7 @@ namespace McMd
       std::string dihedralStyle() const;
       #endif
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /**
       * Get the associated Coulomb Factory by reference.
       */
@@ -457,7 +457,7 @@ namespace McMd
       std::string coulombStyle() const;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Get the associated ExternalPotential factory by reference.
       */
@@ -486,7 +486,7 @@ namespace McMd
       LinkMaster& linkMaster() const;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /**
       * Get the associated TetherFactory by reference.
       */
@@ -772,7 +772,7 @@ namespace McMd
       void saveLinkMaster(Serializable::OArchive& ar);
       #endif 
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /**
       * Read the TetherMaster.
       *
@@ -793,7 +793,7 @@ namespace McMd
       * \param ar output/saving archive
       */
       void saveTetherMaster(Serializable::OArchive& ar);
-      #endif // INTER_TETHER
+      #endif // SIMP_TETHER
 
    private:
 
@@ -813,7 +813,7 @@ namespace McMd
       LinkMaster* linkMasterPtr_;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /// TetherMaster object to manage Tethers.
       TetherMaster* tetherMasterPtr_;
       #endif
@@ -827,32 +827,32 @@ namespace McMd
       /// Pointer to the BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
   
-      #ifndef INTER_NOPAIR 
+      #ifndef SIMP_NOPAIR 
       /// Pointer to the PairPotential factory.
       PairFactory* pairFactoryPtr_;
       #endif
    
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Pointer to the Factory<BondPotential>.
       Factory<BondPotential>* bondFactoryPtr_;
       #endif
   
-      #ifdef INTER_ANGLE 
+      #ifdef SIMP_ANGLE 
       /// Pointer to the AnglePotential Factory.
       Factory<AnglePotential>* angleFactoryPtr_;
       #endif
    
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>* dihedralFactoryPtr_;
       #endif
   
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /// Pointer to CoulombPotential Factory
       CoulombFactory*  coulombFactoryPtr_;
       #endif
   
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Pointer to ExternalPotential factory
       Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
@@ -862,7 +862,7 @@ namespace McMd
       Factory<BondPotential>* linkFactoryPtr_;
       #endif
    
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /// Pointer to TetherFactory.
       TetherFactory* tetherFactoryPtr_;
       #endif
@@ -895,32 +895,32 @@ namespace McMd
 
       #endif  // UTIL_MPI
       #endif  // MCMD_PERTURB
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
       #endif
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Name of bond potential style.
       std::string bondStyle_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Name of angle potential style.
       std::string angleStyle_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
       #endif
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       /// Name of coulomb potential style.
       std::string coulombStyle_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Name of external potential style.
       std::string externalStyle_;
       #endif
@@ -930,7 +930,7 @@ namespace McMd
       std::string linkStyle_;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /// Name of tether potential style.
       std::string tetherStyle_;
       #endif
@@ -1011,7 +1011,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    /* 
    * Get the TetherMaster by reference.
    */

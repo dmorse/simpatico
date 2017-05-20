@@ -13,18 +13,18 @@
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
 
 // Bond Potential interaction classes
-#include <inter/bond/HarmonicBond.h>
-#include <inter/bond/HarmonicL0Bond.h>
-#include <inter/bond/FeneBond.h>
-#include <inter/bond/CompositeBond.h>
+#include <simp/interaction/bond/HarmonicBond.h>
+#include <simp/interaction/bond/HarmonicL0Bond.h>
+#include <simp/interaction/bond/FeneBond.h>
+#include <simp/interaction/bond/CompositeBond.h>
 
-#include <inter/pair/DpdPair.h>
-#include <inter/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
 
 namespace McMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.
@@ -55,7 +55,7 @@ namespace McMd
       if (name == "FeneBond") {
          ptr = new BondPotentialImpl<FeneBond>(*systemPtr_);
       }
-      #ifndef INTER_NOPAIR 
+      #ifndef SIMP_NOPAIR 
       else
       if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
          ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*systemPtr_);

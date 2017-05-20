@@ -50,7 +50,7 @@ MdSimulation{
       theta0            60.00000000000e+00
     }
     DihedralPotential{
-      kappa             0.000000000000e+00
+      kappa             1.000000000000e+00
     }
     EnergyEnsemble{
       type                       adiabatic
@@ -69,14 +69,9 @@ MdSimulation{
       interval                       10000
     }
 
-    MdEnergyOutput{
-      interval                         200
+    MdEnergyAnalyzer{
+      interval                         100
       outputFileName                energy
-    }
-
-    MdPotentialEnergyAverage{
-      interval                         200
-      outputFileName             potential
       nSamplePerBlock                   10
     }
 

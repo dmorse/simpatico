@@ -22,7 +22,7 @@ namespace McMd
    class Atom;
    class Molecule;
    class CellList;
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    class BondPotential;
    #endif
 
@@ -50,7 +50,7 @@ namespace McMd
       */
       virtual ~Generator();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Create an association with a BondPotential.
       *
@@ -144,7 +144,7 @@ namespace McMd
       */
       const Boundary& boundary() const;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get the associated BondPotential by reference.
       */
@@ -166,7 +166,7 @@ namespace McMd
       Boundary* boundaryPtr_;
 
       /// Pointer to associated BondPotential
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       const BondPotential* bondPotentialPtr_;
       #endif
 
@@ -198,7 +198,7 @@ namespace McMd
    inline const Boundary& Generator::boundary() const
    {  return *boundaryPtr_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Get the associated BondPotential by reference.
    */

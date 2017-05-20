@@ -1,0 +1,118 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_pair_interface_page Pair Interaction Class Interface
+
+Pair interaction classes are used in pair potential class templates to 
+implement pair potential classes both the McMd and DdMd namespaces, in
+the templates McMd::MdPairPotentialImpl, McMd::McPairPotentialImpl, and
+DdMd::PairPotentialImpl.  These templates call specific functions by 
+name, and thus define an implicit interface that must be implemented by 
+all pair interaction classes.  
+
+Here is a prototype class definition that shows the signatures for all
+of the required functions, for a hypothetical interaction class called
+Pair:
+\code
+
+   class Pair : public ParamComposite 
+   {
+   
+   public:
+
+      // Mutators
+   
+      // Set nAtomType value.
+      // 
+      // \param nAtomType number of atom types.
+      //
+      void setNAtomType(int nAtomType);
+
+      // Read parameters for this pair interaction function.
+      //
+      // \pre nAtomType must have been set, by calling setNAtomType().
+      //
+      // \param in  input stream 
+      //
+      virtual void readParameters(std::istream &in);
+
+      // Load internal state from an archive.
+      //
+      // \param ar input/loading archive
+      //
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      // Save internal state to an archive.
+      //
+      // \param ar output/saving archive
+      //
+      virtual void save(Serializable::OArchive &ar);
+
+      // Modify a parameter, identified by a name string.
+      //
+      // \param name   parameter name
+      // \param i      atom type index 1
+      // \param j      atom type index 2
+      // \param value  new value of parameter
+      //
+      void set(std::string name, int i, int j, double value);
+
+      // Accessors
+
+      // Return interaction energy for a single pair of particles. 
+      //
+      // Postcondition: Returns zero if rsq > cutoffSq.
+      //
+      // \param rsq square of distance between particles
+      // \param i   type of particle 1
+      // \param j   type of particle 2
+      // \return    pair interaction energy
+      //
+      double energy(double rsq, int i, int j) const;
+  
+      // Returns ratio of scalar pair interaction force to pair separation.
+      //
+      // Multiply this quantity by the components of the separation vector
+      // to obtain the force vector. A positive value for the return value
+      // represents a repulsive force between a pair of particles.
+      //
+      // Precondition: The parameter rsq must be less than cutoffSq for the
+      // atom type pair. Otherwise, the return value is undefined. This function 
+      // should check this precondition only in debugging mode. The function 
+      // should thus always be called within an if block of the form
+      //
+      // if (rsq < interaction.cutoffSq(i, j)) {
+      //    f = interaction.forceOverR(rsq, i, j);
+      //    ....
+      // }
+      //
+      // \param rsq square of distance between particles
+      // \param i   type of particle 1
+      // \param j   type of particle 2
+      // \return    force divided by distance 
+      //
+      double forceOverR(double rsq, int i, int j) const;
+  
+      // Get square of cutoff distance, for a specific pair of types.
+      //
+      // \param i   type of particle 1
+      // \param j   type of particle 2
+      //
+      double cutoffSq(int i, int j) const;
+
+      // Get maximum of pair cutoff distance, for all atom type pairs.
+      double maxPairCutoff() const;
+ 
+      // Get a parameter value, identified by a string.
+      //
+      // \param name   parameter name
+      // \param i      atom type index 1
+      // \param j      atom type index 2
+      //
+      double get(std::string name, int i, int j) const;
+
+   };
+\endcode
+
+*/
+}

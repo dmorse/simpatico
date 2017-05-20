@@ -1,10 +1,10 @@
-/*! \page inter_dihedral_page Dihedral Interactions
+/*! \page simp_interaction_dihedral_page Dihedral Interactions
 
 Each of the dihedral interaction classes defines a potential that depends upon the dihedral angle involving two bonds that connect four atoms. Each such group of atoms is assigned an dihedral type index, and different values of the parameters in the dihedral potential function are used for different dihedral types.
 
-All of the dihedral interaction classes implement a common interface, which is described \subpage inter_dihedral_interface_page "here". 
+All of the dihedral interaction classes implement a common interface, which is described \subpage simp_interaction_dihedral_interface_page "here". 
 
-\section inter_dihedral_Geometry_section Geometry
+\section simp_interaction_dihedral_Geometry_section Geometry
 
 Let the three atoms in an dihedral group be labelled 0, 1, 2, 3, with bonds connecting 0-1 and 1-2.  Let \f${\bf r}_{i}\f$ be the position vector for atom i, with \f$0 \leq i < 3\f$. We define three bond vectors
 \f[
@@ -14,13 +14,13 @@ Let the three atoms in an dihedral group be labelled 0, 1, 2, 3, with bonds conn
    \quad\quad\quad
    {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2}
 \f]
-The dihedral potentials are all function of the dihedral angle \f$\phi\f$.  This angle \f$\phi\f$ is the angle between the plane spanned by \f${\bf b}_{1}\f$ and \f${\bf b}_{2}\f$ the plane spanned by \f${\bf b}_{2}\f$ and \f${\bf b}_{3}\f$.  It is defined so that a planar cis configuration corresponds to \f$\phi = 0\f$, and a trans zigzag configuration corresponds to \f$\phi = \pi \f$. A more explicit expression for \f$\cos(\phi)\f$ is given in \ref Inter_Dihedral_Module.
+The dihedral potentials are all function of the dihedral angle \f$\phi\f$.  This angle \f$\phi\f$ is the angle between the plane spanned by \f${\bf b}_{1}\f$ and \f${\bf b}_{2}\f$ the plane spanned by \f${\bf b}_{2}\f$ and \f${\bf b}_{3}\f$.  It is defined so that a planar cis configuration corresponds to \f$\phi = 0\f$, and a trans zigzag configuration corresponds to \f$\phi = \pi \f$. A more explicit expression for \f$\cos(\phi)\f$ is given in \ref Simp_Interaction_Dihedral_Module.
 
-\section inter_dihedral_interactions_section Dihedral Interaction Classes 
+\section simp_interaction_dihedral_interactions_section Dihedral Interaction Classes 
 
 <ul style="list-style: none;">
-  <li> \subpage inter_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
-  <li> \subpage inter_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
+  <li> \subpage simp_interaction_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
+  <li> \subpage simp_interaction_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
 </ul>
  
 */

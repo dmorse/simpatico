@@ -28,7 +28,7 @@ namespace McMd
       if (dynamic_cast<Point*>(&species)) {
          ptr = new PointGenerator(species, system);
       }
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else 
       if (dynamic_cast<Linear*>(&species)) {
          ptr = new LinearGenerator(species, system);
@@ -44,7 +44,7 @@ namespace McMd
       if (dynamic_cast<Point*>(&species)) {
          ptr = new PointGenerator(species, system);
       }
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else 
       if (dynamic_cast<Linear*>(&species)) {
          ptr = new LinearGenerator(species, system);

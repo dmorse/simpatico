@@ -6,7 +6,7 @@ mcMd_species_= \
     mcMd/species/SpeciesManager.cpp \
     mcMd/species/Point.cpp 
 
-ifdef INTER_BOND
+ifdef SIMP_BOND
 mcMd_species_+= \
     mcMd/species/Linear.cpp \
     mcMd/species/Homopolymer.cpp \

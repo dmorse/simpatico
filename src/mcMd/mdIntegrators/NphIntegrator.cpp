@@ -253,7 +253,7 @@ namespace McMd
       system().positionSignal().notify();
       system().velocitySignal().notify();
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       } 
@@ -300,7 +300,7 @@ namespace McMd
          eta_[0] += 1.0/2.0*dt_*(1.0/3.0*(currP_[0]+currP_[1]+currP_[2]) - extP);
       }
  
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       }

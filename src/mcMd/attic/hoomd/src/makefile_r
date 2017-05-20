@@ -7,14 +7,14 @@ BLD_DIR_REL=../..
 # Include configuration files (build directory)
 include $(BLD_DIR_REL)/config.mk
 include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/simp/config.mk
 include $(BLD_DIR)/mcMd/config.mk
 include $(BLD_DIR)/modules/hoomd/config.mk
 
 # Include patterns and sources files (src directory)
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/modules/hoomd/sources.mk
 
@@ -30,7 +30,7 @@ $(BLD_DIR)/%.cu.o: $(SRC_DIR)/%.cu
 
 MCSIM=$(BLD_DIR)/modules/hoomd/mcSim
 
-BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
+BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(MCMD_SUFFIX)_h
 
 MCSIM_EXE=$(BIN_DIR)/mcSim$(BIN_SUFFIX)
 
@@ -54,10 +54,10 @@ veryclean:
 	-rm -f defines.mk makefile
 
 $(MCSIM_EXE): mcSim.o $(modules_hoomd_NVCC_OBJS) $(modules_hoomd_OBJS) \
-                 $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
+                 $(util_LIB) $(simp_LIB) $(mcMd_LIB) $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
                  $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) \
-                 $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBPATH) $(LIBS)
+                 $(mcMd_LIB) $(util_LIB) $(simp_LIB) $(LIBPATH) $(LIBS)
 
 -include $(modules_hoomd_OBJS:.o=.d)
 -include mcSim.d

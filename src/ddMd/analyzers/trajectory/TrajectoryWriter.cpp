@@ -27,13 +27,13 @@ namespace DdMd
       domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0)
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       , bondStoragePtr_(0)
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       , angleStoragePtr_(0)
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       , dihedralStoragePtr_(0)
       #endif
    {
@@ -42,13 +42,13 @@ namespace DdMd
       boundaryPtr_ = &simulation.boundary();
 
       atomStoragePtr_ = &simulation.atomStorage();
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStoragePtr_ = &simulation.bondStorage();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStoragePtr_ = &simulation.angleStorage();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStoragePtr_ = &simulation.dihedralStorage();
       #endif
    }

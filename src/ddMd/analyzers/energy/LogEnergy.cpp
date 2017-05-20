@@ -7,13 +7,13 @@
 
 #include "LogEnergy.h"
 #include <ddMd/potentials/pair/PairPotential.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #include <util/format/Int.h>
@@ -89,21 +89,21 @@ namespace DdMd
             double pair = sim.pairPotential().energy();
             potential += pair;
             Log::file() << Dbl(pair, 15);
-            #ifdef INTER_BOND
+            #ifdef SIMP_BOND
             if (sim.nBondType()) {
                double bond = sim.bondPotential().energy();
                potential += bond;
                Log::file() << Dbl(bond, 15);
             }
             #endif
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             if (sim.nAngleType()) {
                double angle = sim.anglePotential().energy();
                potential += angle;
                Log::file() << Dbl(angle, 15);
             }
             #endif
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             if (sim.nDihedralType()) {
                double dihedral = sim.dihedralPotential().energy();
                potential += dihedral;

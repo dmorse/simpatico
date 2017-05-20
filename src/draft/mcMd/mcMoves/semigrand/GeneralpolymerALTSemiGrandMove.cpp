@@ -8,7 +8,7 @@
 #include "GeneralpolymerALTSemiGrandMove.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/GeneralpolymerSG.h>
@@ -100,7 +100,7 @@ namespace McMd
       oldStateCount = mutatorPtr->stateOccupancy(flipSubtype_);
       Molecule& molecule = randomSGMolecule(speciesId_, oldStateCount, flipSubtype_);
       //SpeciesMutator* mutatorPtr = &speciesPtr_->mutator();
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       // Calculate pair energy for the chosen molecule
       double oldEnergy = system().pairPotential().moleculeEnergy(molecule);
       #endif
@@ -109,9 +109,9 @@ namespace McMd
       int oldStateId = speciesPtr_->mutator().moleculeStateId(molecule);
       int newStateId = (oldStateId == 0) ? 1 : 0;
       speciesPtr_->mutator().setMoleculeState(molecule, newStateId);
-      #ifdef INTER_NOPAIR 
+      #ifdef SIMP_NOPAIR 
       bool   accept = true;
-      #else // ifndef INTER_NOPAIR
+      #else // ifndef SIMP_NOPAIR
       int newStateTotal = mutatorPtr->stateOccupancy(0);
       // Recalculate pair energy for the molecule
       double newEnergy = system().pairPotential().moleculeEnergy(molecule);

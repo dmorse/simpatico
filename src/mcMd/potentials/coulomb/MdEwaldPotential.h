@@ -37,8 +37,8 @@ namespace McMd
    /**
    * Ewald Coulomb potential class for MD simulations.
    *
-   * This class implements the k-space sums for an Ewald
-   * summation of the Coulomb energy and forces.
+   * This class implements the k-space sums in the Ewald
+   * method for computing the Coulomb energy and forces.
    *
    * \ingroup McMd_Coulomb_Module
    */
@@ -49,6 +49,8 @@ namespace McMd
 
       /**
       * Constructor.
+      *
+      * \param system  parent system.
       */
       MdEwaldPotential(System& system);
 
@@ -67,7 +69,6 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
-
       /**
       * Load internal state from an archive.
       *
@@ -81,6 +82,25 @@ namespace McMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
+
+      //@}
+      /// \name Parameters (get/set)
+      //@{
+
+      /**
+      * Set a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param value  new value of parameter
+      */
+      void set(std::string name, double value);
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      */
+      double get(std::string name) const;
 
       //@}
       /// \name System energy and stress.
@@ -108,8 +128,6 @@ namespace McMd
 
       /**
       * Compute kspace part of Coulomb pressure.
-      *
-      * \param stress (output) pressure
       */
       virtual void computeStress();
 
@@ -150,7 +168,7 @@ namespace McMd
       GArray<DCMPLX> fexp2_;
 
       /// Wave vector indices.
-      GArray<IntVector> waves_;
+      GArray<IntVector> intWaves_;
 
       //real space vector indices.
       GArray<Vector> reals_;
@@ -164,13 +182,10 @@ namespace McMd
       /// Fourier modes of charge density.
       GArray<DCMPLX> rho_;
 
-      /// Unit Matrix (constant).
-      Tensor unitTensor_;
+      /// cutoff distance in k space
+      double kSpaceCutoff_;
 
-      /// Prefactor for self-interaction correction.
-      double selfPrefactor_;
-
-      /**
+      /*
       * Calculate Fourier coefficients of charge density.
       */
       void computeKSpaceCharge();

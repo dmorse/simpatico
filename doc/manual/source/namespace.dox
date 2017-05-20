@@ -8,21 +8,21 @@ The classes used in simpatico are divided into five namespaces. The source code 
 
  - namespace Util (directory src/util) contains general utilities for C++ programming and scientific computation. 
 
- - namespace Inter (directory src/inter) contains classes that define specific potential energy functions, such as the Lennard-Jones pair potential. 
+ - namespace Simp (directory src/simp) contains general classes for all simpatico simulation and analysis programs. 
 
- - namespace McMd (directory src/mcMd) contains classes required to construct single-processor Monte Carlo and molecular dynamics simulations, and the main programs for mcSim and mdSim.  
+ - namespace McMd (directory src/mcMd) contains classes for single-processor Monte Carlo and molecular dynamics simulations, for the mcSim and mdSim programs.
 
- - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and the main program for the ddSim executable. 
+ - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and for the ddSim program.
 
  - namespace Tools (in directory src/tools) contains classes for pre- and postprocessing of molecular dynamics trajectories, and the main program for the mdPp executable. 
 
-The code in some namespaces depends on symbols defined in others. A namespace named B is said to "depend" on another namespace A if any class in namespace B uses any classes or other symbols defined in A. The Inter, McMd, DdMd, and Tools namespaces all depend on the Util namespace, in this sense. The dependencies are:
+The code in some namespaces depends on symbols defined in others. A namespace named B is said to "depend" on another namespace A if any class in namespace B uses any classes or other symbols defined in A. The Simp, McMd, DdMd, and Tools namespaces all depend on the Util namespace, in this sense. The dependencies are:
 
  - Util does not depend on any other namespace
 
- - Inter depends only on Util
+ - Simp depends only on Util
 
- - McMd, DdMd, and Tools each depends on Util and Inter, but not on each other.
+ - McMd, DdMd, and Tools each depends on Util and Simp, but not on each other.
 
 A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module within a namespace contain a sets of functionally related classes.
 

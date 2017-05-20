@@ -1,0 +1,116 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_dihedral_interface_page Dihedral Interaction Class Interface
+
+Dihedral interaction classes are used in dihedral potential class templates to 
+implement dihedral potential classes both the McMd and DdMd namespaces, in
+the templates McMd::DihedralPotentialImpl and DdMd::DihedralPotentialImpl.  
+These templates call specific functions by name, and thus define an 
+implicit interface that must be implemented by all dihedral interaction 
+classes.  
+
+An dihedral is an interaction between two four atoms numbered 0,1, 2, and 3.
+Let \f${\bf r}_{i}\f$ be the position vector for atom i, with 
+\f$0 \leq i < 4\f$. 
+
+
+Here is a prototype class definition that shows the signatures for all
+of the required functions, for a hypothetical interaction class called
+Dihedral:
+\code
+
+   class Dihedral : public ParamComposite 
+   {
+   
+   public:
+
+      // Mutators
+   
+      // Set the number of dihedral types.
+      //
+      // \param nDihedralType number of dihedral types
+      //
+      void setNDihedralType(int nDihedralType);
+
+      // Read parameters for this dihedral interaction function.
+      //
+      // \pre nDihedralType must have been set, by calling setNDihedralType().
+      //
+      // \param in  input stream 
+      //
+      virtual void readParameters(std::istream &in);
+
+      // Load internal state from an archive.
+      //
+      // \param ar input/loading archive
+      //
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      // Save internal state to an archive.
+      //
+      // \param ar output/saving archive
+      //
+      virtual void save(Serializable::OArchive &ar);
+
+      // Modify a parameter, identified by a name string.
+      //
+      // \param name    parameter name
+      // \param typeId  integer dihedral type id
+      // \param value  new value of parameter
+      //
+      void set(std::string name, int typeId, double value);
+
+      // Accessors
+
+  
+      // Returns potential energy for one dihedral.
+      //
+      // \param b1     bond vector r1 - r0 from atom 0 to 1
+      // \param b2     bond vector r2 - r1 from atom 1 to 2
+      // \param b3     bond vector r3 - r2 from atom 2 to 3
+      // \param type   integer index for type of dihedral
+      //
+      double energy(const Vector& b1, const Vector& b2, 
+                    const Vector& b3, int type) const;
+ 
+      // Returns dihedral forces.
+      //
+      // Upon return, elements of the vectors f1, f2, and
+      // f3 contain derivatives of the energy with respect 
+      // to corresponding elements of b1 and b2:
+      //
+      //   f1[i] = d(energy)/d(b1[i])
+      //   f2[i] = d(energy)/d(b2[i])
+      //   f3[i] = d(energy)/d(b3[i])
+      //
+      // for each 0 <= i < 3.
+      //
+      // \param b1     bond vector r1 - r0 from atom 0 to 1
+      // \param b2     bond vector r2 - r1 from atom 1 to 2
+      // \param b3     bond vector r3 - r2 from atom 2 to 3
+      // \param f1     return d(energy)/d(b1) (output)
+      // \param f2     return d(energy)/d(b2) (output)
+      // \param f3     return d(energy)/d(b3) (output)
+      // \param type   integer index for type of dihedral
+      //
+      void force(const Vector& b1, const Vector& b2, const Vector& b3,
+                 Vector& f1, Vector& f2, Vector& b3, int type) const;
+
+
+      // Return class name of this interaction class.
+      //
+      std::string className() const;
+ 
+      // Get a parameter value, identified by a string.
+      //
+      // \param name   parameter name
+      // \param typeId integer dihedral type id
+      //
+      double get(std::string name, int typeId) const;
+
+   };
+\endcode
+
+*/
+}

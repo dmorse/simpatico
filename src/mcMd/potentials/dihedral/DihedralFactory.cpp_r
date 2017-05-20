@@ -11,13 +11,13 @@
 #include <mcMd/potentials/dihedral/DihedralPotentialImpl.h>
 
 // Dihedral interaction classes
-#include <inter/dihedral/CosineDihedral.h>
-#include <inter/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/CosineDihedral.h>
+#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
 
 namespace McMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

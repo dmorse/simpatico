@@ -1,0 +1,791 @@
+\documentclass[12pt,letter]{article}
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage[DIV=15]{typearea}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+\title{Flexible cell NPT integration with an upper triangular cell parameter matrix}
+\author{Jens Glaser}
+
+\begin{document}
+\maketitle
+
+\abstract{We discuss the equations of motion for performing molecular
+  dynamics (MD) in the isothermal-isobaric (NPT) ensemble using
+  a fully flexible simulatin cell, derive an explicitly time-reversible and
+  measure preserving integrator and analyze the stability of its
+  implementation in HOOMD-blue.}
+
+\section{Introduction}
+\subsection{Trotter expansion}
+Modern MD integrators are based on the Trotter expansion of the
+Liouville propagator \cite{Tuckerman1992}, which yields
+integration schemes that are explicitly time-reversal symmetric.
+
+If $i L = i L_1 + iL_2$ is a decomposition of the Liouville operator $L$ into
+two parts and $U(t) = e^{iL t}$ is the classical propagtor, the Trotter
+theorem yields
+\begin{align}
+U(t)& = e^{i (L_1 + L_2) t}\\
+&= \left[ e^{i (L_1+L_2) t/P} \right]^P\\
+&=\left[ e^{i L_2 \Delta t/2} e^{i L_1 \Delta t} e^{i L_2 \Delta t/2} \right]^P
++\mathcal{O}(\Delta t^3 P),
+\label{eq:trotter}
+\end{align}
+where $\Delta t\equiv t/P$.
+This implies, that, for a single time step ($P=1$), the factorization
+is exact up to and including terms of $\mathcal{O}(\Delta t^2)$.
+
+\subsection{Trotter expansion for the constant-energy ensemble}
+Let us apply the Trotter expansion to the Liouvillian $i L =
+\sum_i\left[\dot{\vec{p}}_i \nabla_{\vec{p}_i} + \dot{\vec{r}}_i
+  \nabla_{\vec r_i}\right]$ that corresponds to the classical
+Hamiltonian $H=H[\{\vec r_i, \vec p_i\}]$ of a mechanical system.
+In other words, we are considering the constant-energy (NVE) ensemble.
+We split the Liouville operator $i L$ into 
+\begin{align}
+i L_{\mathrm{NVE}} &= i L_{1,\mathrm{NVE}} + i L_{2,\mathrm{NVE}}\label{eq:liouville_nve}\\
+iL_{1,\mathrm{NVE}} & =\sum_i \dot{\vec{r}}_i \nabla_{\vec{r}_i}=\sum_i \frac{\vec p_i}{m} \nabla_{\vec{r}_i} \\
+iL_{2,\mathrm{NVE}} &= \sum_i \dot{\vec{p}}_i \nabla_{\vec{p}_i}=- \sum_i \vec F_i \nabla_{\vec{p}_i}.
+\end{align}
+
+Then the Trotter expansion for the single-timestep propagator becomes
+\begin{equation}
+U(\Delta t) \approx G(t) \equiv e^{-(\Delta t/2) \sum_i \vec F_i \nabla_{\vec{p}_i}} e^{\Delta t \sum_i \frac{\vec p_i}{m} \nabla_{\vec{r}_i}} e^{-(\Delta t/2) \sum_i \vec F_i \nabla_{\vec{p}_i}}.
+\label{eq:trotter_nve}
+\end{equation}
+
+This propagator determines the time evolution of all dynamical variables $X$
+via
+\begin{equation}
+X(t+\Delta t) \approx G(\Delta t) X(t).
+\end{equation}
+To understand how this translates into update equations for the dynamical
+variables, consider an operator
+$A = e^{c \frac{\partial}{\partial X}}$,
+where $c$ does not depend on $X$. Its action on any function of the variable
+$X$ is given by
+\begin{equation}
+A f(X) = f(X+c).
+\label{eq:direct_translation}
+\end{equation}
+This implies for the factors constituting the Trotter expansion of the 
+Liouville propagator, Eq.~\eqref{eq:trotter_nve},
+\begin{align}
+e^{i (\Delta t) L_{1,\mathrm{NVE}}} \vec r_i &= \vec r_i + \Delta t \vec p_i/m \\
+e^{i (\Delta t/2) L_{2,\mathrm{NVE}}} \vec p_i &= \vec p_i + (\Delta t/2) \vec F_i. \\
+\label{eq:trotter_nve_factors}
+\end{align}
+
+From Eqs.~\eqref{eq:trotter_nve} and
+\eqref{eq:trotter_nve_factors} we thus easily obtain the time-reversible
+single-timestep update equations in the NVE ensemble,
+\begin{align}
+\vec p_i(t) &\to \vec p_i(t+\Delta t/2) = \vec p_i(t) + (\Delta t/2m)\, \vec F_i(t)\\
+\vec r_i(t) &\to \vec r_i(t+\Delta t) = \vec r_i(t) + \Delta t\, \vec p_i(t+\Delta t/2)/m\\
+\vec p_i(t+\Delta t/2) &\to \vec p_i(t+\Delta t) = \vec p_i(t) + (\Delta t/2m)\, \vec F(t+\Delta t).
+\end{align}
+This set of quations is known as the {\em Velocity-Verlet} integration scheme.
+We note that since the underlying equations of motion are derived from
+a Hamiltonian, the integration scheme is also symplectic (measure-preserving).
+
+\section{Simulations in the NPT ensemble}
+Martyna, Tobias and Klein \cite{Martyna1994} (MTK) proposed a set of equations
+that is designed to rigorously sample the NPT ensemble. Here, we recapitulate their equations of motion and derive a measure-preserving integration scheme from them. In the next section we present the most general case of a fully flexible simulation cell, and then specialize to the case of more symmetric simulation boxes, i.e. cubic, orthorhombic and tetragonal shapes.
+
+\subsection{Fully flexible simulation cell}
+Let $\mathbf{h} = (h_{\alpha\beta})$ be the cell parameter matrix, i.e. the matrix whose columns are the vectors
+representing the edges of the triclinic simulation box. 
+
+\subsubsection{Equations of motion}
+The equations of motion proposed by Martyna et al. \cite{Martyna1994, Yu2010} for a flexible simulation cell take the following
+form.
+
+\begin{align}
+\dot{r}_{i,\alpha} &= v_{i,\alpha} + \nu_{\alpha,\beta} r_{i,\beta} \label{eq:eom_flex_1}\\
+\dot{v}_{i,\alpha} &= \frac{F_{i,\alpha}}{m_i} - \left[\xi \delta_{\alpha\beta}+ \nu_{\alpha\beta} + \delta_{\alpha\beta}\frac{1}{N_f} \mathrm{Tr}\,\nu \right] v_{i,\beta}\\
+\dot{h}_{\alpha\beta} &= \nu_{\alpha\gamma} h_{\gamma\beta}\label{eq:heom}\\
+\dot{\nu}_{\alpha\beta} &= \frac{\det \vec h}{W} (P_{\alpha\beta} - P \delta_{\alpha\beta}) + \delta_{\alpha\beta} \frac{1}{W N_f} \sum_i m_i \vec v_i^2\\
+\dot \eta &= \xi\\
+\dot \xi &= \frac{1}{\tau_T^2} \left(\frac{\sum_i m_i \vec v_i^2}{N_f k_B T} - 1\right)\label{eq:eom_flex_2}
+\end{align}
+Here, $\nu$ is the barostat matrix and
+\begin{equation}
+P_{\alpha\beta} = \frac{1}{\det \vec h} \sum_i m_i \left[ v_{i,\alpha} v_{i,\beta} + F_{i,\alpha} r_{i,\beta}\right].
+\label{eq:pint}
+\end{equation}
+denotes the internal pressure tensor. These equations conserve the quantity
+\begin{equation}
+H_{\mathrm{NPT,flex}} = H_0 +  \frac{W}{2} \mathrm{Tr}\, \nu^T \nu + P \det \vec h+ N_f k_B T \left(\tau_T^2 \frac{\xi^2}{2} + \eta\right),
+\label{eq:NPT_conserved_q}
+\end{equation}
+where $H_0=\sum_i \frac12 m_i \vec v_i^2 + V(\{\vec r_i\})$ is the Hamiltonian from classical mechanics.
+This is easily confirmed by plugging in the equations of motion \eqref{eq:eom_flex_1}-\eqref{eq:eom_flex_2}.
+
+We note that despite the existence of a conserved quantity the equations
+of motion Eqs.~(\ref{eq:eom_flex_1}-\ref{eq:eom_flex_2})
+are not Hamiltonian, i.e. they do not conserve phase space volume.
+
+\subsubsection{Phase-space measure}
+\label{sec:measure}
+According to the principle of non-Hamiltonian statistical mechanics
+\cite{Tuckerman2000} we find a time-dependent measure of phase-space
+volume as follows. If $\kappa = \nabla_X \cdot \dot X$ is the phase space
+compressibility, where $X$ denotes the phase space vector, and if $\kappa$
+ can be written as a total derivative $\kappa = \mathrm{d}w/\mathrm{d}t$,
+then the phase space measure is given by $\sqrt{g(X)}=e^{-w(X)}$.
+We now apply these ideas to find the metric of the above integrator.
+\begin{align}
+\kappa(\{\vec v_i,\vec r_i\}, h_{\alpha\beta},\nu,\xi,\eta) = \sum_i \left[\nabla_{\vec r_i} \cdot \dot{\vec r}_i +
+\nabla_{\vec vt_i} \cdot \dot{\vec v}_i\right]
++ \sum_{\alpha\beta} \left[\frac{\partial{\dot{h}_{\alpha\beta}}}{\partial h_{\alpha\beta}} +
+\frac{\partial \dot{\nu}_{\alpha\beta}}{\partial \nu_{\alpha\beta}} \right]
++ \frac{\partial \dot{\xi}}{\partial \xi} +
+\frac{\partial \dot{\eta}}{\partial \eta}\label{eq:measure}
+\end{align}
+Since $\partial \dot\nu_{\alpha\beta}/\partial \nu_{\alpha\beta} = 0$ and $\partial
+\dot\eta/\partial\eta =\partial \dot \xi/\partial\xi=0$, we have
+\begin{align}
+\kappa =&  \sum_{i, \alpha}\sum_{\alpha\beta}\nu_{\alpha\beta} + \sum_i \left[-\sum_{\alpha\beta} \nu_{\alpha\beta} - \frac{d}{N_f} \sum_{\alpha\beta} \nu_{\alpha	\beta} - d \xi\right] + \sum_{\alpha\beta} \nu_{\alpha\beta}\\
+=&-N_f \xi - (1-d) \mathrm{Tr}\,\nu_{\alpha \beta}= -N_f \dot \eta - (1-d)\frac{\mathrm{d}}{\mathrm{d}t}\ln(\det\vec h)
+\end{align}
+Hence, $w=N_f \eta+(1-d) (\det\vec h)$ and
+\begin{equation}
+\sqrt{g(t)}=(\det \vec h)^{1-d} e^{N_f \eta(t)}
+\label{eq:measure_npt}
+\end{equation}
+ is the phase space measure.
+
+\subsubsection{NPT ensemble}
+It remains to be shown that the equations of motion actually generate the desired ensemble. The
+partition sum of the NPT ensemble generalized to full cell shape fluctuations can be written as
+\begin{equation}
+\Omega_{\mathrm{NPT,flex}} = \int d\vec r^N d\vec p^N dV d\vec h_0\,
+e^{-\left[F(N,V,T,\vec h_0)+PV\right]/k_B T} \delta(\det \vec h_0 - 1),
+\label{eq:Omega_NPT_flex}
+\end{equation}
+where the cell parameter matrix is expressed as $h_{\alpha\beta} = V^{1/d}
+h_{0,\alpha\beta}$.  This form of the partition function guarantees that
+for a free energy that does not depend on shape (i.e., that only depends on
+on $V$) the usual NPT ensemble for isotropic box shape fluctuations is reproduced.  The integral in
+Eq.~\eqref{eq:Omega_NPT_flex} can be transformed by changing
+variables $\vec h_0 \to \vec h$ ($\mathrm d\vec h_0 =V^{-d} \mathrm d\vec h$), giving
+\begin{align}
+\Omega_{\mathrm{NPT,flex}} =&  \int d\vec r^N d\vec p^N dV d\vec h
+V^{-d}\, e^{-\left[F(N,V,T,V^{-1/d} \vec h)+PV\right]/k_B T} \delta\left(\frac{\det\vec h}{V}-1\right)\\
+=&\int d\vec r^N d\vec p^N dV d\vec h
+\, V^{1-d}e^{-\left[F(N,V,T,V^{-1/d} \vec h)+PV\right]/k_B T} \delta(\det \vec h- V)\\
+=&\int d\vec r^N d\vec p^N d\vec h\, (\det \vec h)^{1-d}e^{-\left[F(N,\vec h,T)+P \det\vec h\right]/k_B T}.
+\label{eq:Omega_NPT_flex_2}
+\end{align}
+
+The factor of $(\det\vec h)^{1-d}$ multiplying the Boltzmann weight is exactly produced by the MTK
+equations of motion, as shown in the following. Since $H$ is the conserved quantity and $\sqrt{g}$ the phase space metric, they sample the distribution
+\begin{align}
+\Omega = \int d\vec r^N d\vec v^N d\vec L \prod_\alpha \nu_\alpha d\eta
+d\xi\, \sqrt{g}\, \delta(H - H'),
+\end{align}
+where $H'$ is the initial value of the quantity $H$.
+We can rewrite this as
+\begin{align}
+\Omega =& \int d\vec r^N d\vec v^N d\vec h \prod_{\alpha\beta} d\nu_{\alpha\beta} d\eta
+d\xi\, (\det\vec h)^{1-d} e^{N_f \eta}\\
+& \delta\left[H_0 +  W \sum_\alpha \frac{\nu_\alpha^2}{2} + P\det \vec h + N_f k_B T \left(\tau_T^2 \frac{\xi^2}{2} + \eta\right)\right]
+\label{eq:Omega_eom_ortho_1}\\
+=&\int d\vec r^N d\vec v^N d\vec h \prod_\alpha d\nu_\alpha d\eta
+d\xi\, (\det \vec h)^{1-d} e^{N_f \eta} (N_f k_B T)^{-1}\\
+& \delta\left[\eta + \frac{1}{N_f k_B T}\left(H_0 +  W \sum_\alpha \frac{\nu_\alpha^2}{2} + P \det \vec h + N_f k_B T \tau_T^2 \frac{\xi^2}{2}\right)-H'\right]\\
+=&\int d\vec r^N d\vec v^N d\vec L \prod_\alpha \nu_\alpha
+d\xi\, (\det\vec h)^{1-d} e^{-\left(H_0 +  W \sum_\alpha \frac{\nu_\alpha^2}{2} + P \det\vec h+ N_f k_B T \tau_T^2 \frac{\xi^2}{2} - H'\right)/k_B T}\label{eq:Omega_NPT_flex_3}
+\end{align}
+After the second equal sign we have rearranged the argument of the $\delta$ function and pulled
+out a factor of $(N_f k_b T)^{-1}$. The third equation follows from integrating out the $\delta$ function
+using the integral over $\eta$. Finally, integrating out the Gaussian degrees of freedom $\nu_\alpha$ and $\xi$, we find that $\Omega \propto \Omega_{\mathrm{NPT,flex}}$, and thus the equations
+of motion Eqs.~(\ref{eq:eom_flex_1}-\ref{eq:eom_flex_2}) 
+produce the NPT ensemble Eq.~\eqref{eq:Omega_NPT_flex_2}.
+
+\subsubsection{Elimination of cell rotations}
+When allowing for generic values of the pressure tensor elements, fluctuations of the overall cell orientation are possible. These result from internal torques are generated by an asymmetric pressure tensor, i.e. by off-diagonal elements for which $P_{\alpha\beta} \ne P_{\beta \alpha}$. They make
+analysis of trajectories difficult. Recognizing that usually the Hamiltonian $\vec H_0$ is invariant under rotations, we can eliminate cell rotations by ignoring the antisymmetric part of the pressure tensor. There are two possible ways for achieving this \cite{Martyna1994}, either by symmetrizing the pressure tensor or by simply discarding all pressure tensor elements below the diagonal. In the latter case, because upper triangular matrices form a closed algebra, this amounts to working with the upper triangular part of the equations of motions only. Though the update equations have hithero only been worked out for a symmetrized pressure tensor \cite{Martyna1994}, here we show how an upper triangular version can be implemented.
+
+The reason why we choose this form of the equations of motion is that an upper triangular cell parameter matrix only has six non-zero matrix elements and thus involves the least amount of arithmetic operations to implement to periodic boundary conditions compared to a full cell parameter matrix.
+
+We begin by adding a Lagrange multiplier to the equations of motion to constrain the lower half of the cell parameter matrix
+$h_{\alpha\beta}$ ($\alpha > \beta$) to zero. A Lagrange multiplier term in the Lagrange functional
+used Parrinello and Rahman \cite{Parrinello1981} would produce a constraint force in the
+Euler-Lagrange equation for the cell parameter matrix $\vec h$. Assuming this still holds for our set of equations, which however are not directly derived from a Lagrangian, we introduce a corresponding
+force in the equation of motion Eq.~\eqref{eq:heom}, giving
+\begin{equation}
+\dot{\nu}_{\alpha\beta} = (\det \vec h) (P_{\alpha\beta} - \delta_{\alpha\beta}) + \delta_{\alpha\beta} \frac{1}{N_f} \sum \frac{\vec p_i^2}{m} + \lambda_{\alpha\beta}\label{eq:heom_lagrange},
+\end{equation}
+where $\lambda_{\alpha\beta}$ is the Lagrange multiplier matrix (a torque), and $\lambda_{\alpha\beta} = 0$ for $\alpha \le \beta$. We now need to solve for that multiplier using the constraints. Employing Einstein's
+summation convention,
+\begin{align}
+0 &= h_{\alpha \beta}\qquad(\alpha > \beta)\\
+0 &= \dot{h}_{\alpha\beta} \equiv \nu_{\alpha \gamma} h_{\gamma \beta}\qquad(\alpha> \beta)\\
+0 &= \ddot{h}_{\alpha\beta}=\dot{\nu}_{\alpha\gamma} h_{\gamma\beta}
++\nu_{\alpha\gamma}\dot{h}_{\gamma\beta}\qquad(\alpha>\beta)\nonumber\\
+&=(\det \vec h) P_{\alpha\gamma} h_{\gamma\beta}+ \lambda_{\alpha\gamma}h_{\gamma\beta}+\nu_{\alpha\gamma}\nu_{\gamma\delta} h_{\delta\beta} \qquad(\alpha>\beta)\label{eq:constraint2}
+\end{align}
+Rearranging Eq.~\eqref{eq:constraint2},
+\begin{equation}
+\lambda_{\alpha\gamma}h_{\gamma\beta} =-(\det \vec h) P_{\alpha\gamma} h_{\gamma\beta}-\nu_{\alpha\gamma}\nu_{\gamma\delta} h_{\delta\beta}\qquad(\alpha>\beta),
+\end{equation}
+and assuming $h_{\alpha\beta}$ is invertible, we can right-multiply by $\vec h^{-1}$ and obtain
+\begin{equation}
+\lambda_{\alpha\beta} = - \nu_{\alpha\gamma}\nu_{\gamma\beta} - (\det\vec h) P_{\alpha\beta} \qquad(\alpha > \beta)
+\end{equation}
+where the first term on the right hand side is only non-zero for $\gamma \ge \alpha$.
+
+We recalculate the phase-space measure arising from the constrained equations of motion.
+The term involving $\partial \dot{\nu}_{\alpha\beta}/\partial \nu_{\alpha\beta}$ is now finite and gives
+and additional contribution to the phase-space measure. Using Eq.~\eqref{eq:heom_lagrange},
+\begin{align}
+\sum_{\alpha\beta} \frac{\partial \dot{\nu}_{\alpha\beta}}{\partial\nu_{\alpha\beta}} &= \sum_{\alpha>\beta} \frac{\partial \lambda_{\alpha\beta}}{\partial \nu_{\alpha\beta}}\\
+&= - \sum_{\alpha > \beta} \sum_{\gamma \ge \alpha} \frac{\partial}{\partial\nu_{\alpha\beta}} \nu_{\alpha\gamma}\nu_{\gamma\beta}\label{eq:measure_term_1}\\
+&=- \sum_{\alpha>\beta} \nu_{\alpha\alpha}
+= -\sum_{\alpha>\beta} \dot{h}_{\alpha\delta}h^{-1}_{\delta\alpha} 
+=-\sum_{\alpha>\beta} \dot{h}_{\alpha\alpha}h^{-1}_{\alpha\alpha} \label{eq:measure_term_2}\\
+&= - \sum_{i=1}^d (i -1) \frac{\mathrm{d}}{\mathrm{d}t} \mathrm{ln}\, h_{ii}.
+\end{align}
+To arrive at Eq.~\eqref{eq:measure_term_2} from Eq.~\eqref{eq:measure_term_1}, we have
+exploited that $\nu_{\alpha\beta}$ is upper triangular. In the subsequent steps, we also used that
+the diagonal elements of the inverse of an upper triangular matrix are the inverse diagonal elements
+of the original matrix. Taken together, we find that 
+\begin{equation}
+\exp\left(\sum_{i=1}^d (i-1) \ln h_{ii}\right) = \prod_{i=1}^d h_{ii}^{i-1}
+\label{eq:measure_fac_extra}
+\end{equation}
+is an extra factor multiplying the phase space measure for the upper triangular equations
+of motion, Eq.~\eqref{eq:measure_npt}. It thus appears also in the NPT ensemble, Eq.~\eqref{eq:Omega_NPT_flex_3}. It is possible in two dimensions to show that this extra factor
+is the Jacobian of a transformation to a set of cell parameters to which a
+rotation matrix has been applied, so as to align the first column of the cell parameter matrix
+with the x-axis. In three dimensions this calculation would be more tedious, but an analogous
+result is expected. In other words, the factor arises from separating out cell rotations in the NPT ensemble.
+
+\subsection{Reversible and measure-preserving integrator}
+\subsubsection{Operator splitting}
+Following Refs. \cite{Martyna1994,Martyna1996, Tuckerman2006,Yu2010}
+we introduce a splitting of the Liouville operator associated with the
+orthorhombic NPT equations of motion to obtain a Trotter expansion
+of the propagator.
+
+The overall Liouville operator is
+\begin{equation}
+iL = i L_1 + i L_2 + iL_{g,1} + i L_{g,2} + i L_{T}
+\end{equation}
+where
+\begin{align}
+i L_1 \equiv& \sum_i \sum_{\alpha\beta} \left[v_{i,\alpha} + \nu_{\alpha\beta} r_{i,\beta}\right] \frac{\partial}{\partial r_{i,\alpha}}\\
+i L_2 \equiv& \sum_i \sum_{\alpha\beta} \left[\frac{F_{i,\alpha}}{m_i} - \left (\nu_{\alpha\beta} +\delta_{\alpha\beta}  \frac{1}{N_f} \mathrm{Tr}\, \nu \right) p_{i,\beta}\right] \frac{\partial}{\partial p_{i,\alpha}}\\
+i L_{g,1} =& \sum_{\alpha\beta\gamma} \nu_{\alpha\gamma} h_{\gamma \beta} \frac{\partial}{\partial h_{\alpha\beta}}\\
+i L_{g,2} =& W^{-1} \left[(\det\vec h) \left( P_{\alpha \beta} - P\delta_{\alpha\beta}\right) +
+\delta_{\alpha\beta} \frac{1}{N_f} \sum_i m_i \vec v_i^2\right] \frac{\partial}{\partial \nu_{\alpha\beta}},\label{eq:NPT_iL_g2}
+\end{align}
+is the splitting into particle ($L_{\{1,2\}}$), barostat ($L_{g,\{1,2\}}$)
+and thermostat ($L_T$) operators, and where
+\begin{equation}
+i L_{T} = i L_{T,1} + i L_{T,2} + i L_{T,3},
+\end{equation}
+is the splitting of the thermostat operator,
+\begin{align}
+i L_{T,1} =& - \sum_i \xi \vec v_i \cdot \nabla_{\vec v_i}\\
+i L_{T,2} =& \frac{1}{\tau_T^2}\left(\frac{\sum_i m_i \vec v_i^2}{N_f k_B T} -1 \right) \frac{\partial}{\delta \xi}\\
+i L_{T,3} =& \xi \frac{\partial}{\partial \eta}.
+\end{align}
+
+We then use the following Trotter expansion of the propagator,
+\begin{equation}
+e^{i L \Delta t} \approx e^{i L_{g,2} \Delta t/2} e^{i L_T \Delta t/2} 
+e^{i L_2 \Delta t/2} e^{i L_{1} \Delta t} e^{i L_{g,1} \Delta t}
+e^{i L_2 \Delta t/2} e^{i L_T \Delta t/2} e^{i L_{g,2} \Delta t/2},
+\label{eq:trotter_NPT_1}
+\end{equation}
+additionally decomposing the thermostat propagator into
+\begin{equation}
+e^{i L_T \Delta t/2} \approx e^{i L_{T,2} \Delta t/4} e^{i L_{T,1} \Delta t/2}
+e^{i L_{T,3} \Delta t/2} e^{i L_{T,2} \Delta t/4}.
+\label{eq:trotter_NPT_2}
+\end{equation}
+
+\subsubsection{Action of individual factors}
+In the following, we examine the action of the individual factors in
+Eqs.~\eqref{eq:trotter_NPT_1} and \eqref{eq:trotter_NPT_2} in detail.
+
+\paragraph{$i L_1$:} The factor $U=e^{i L_1 \Delta t}$ acts on $\vec r_i(t)$ by
+transporting it to $\vec r_i(t+\Delta t) \equiv U \vec r_i$.  This quantity obeys the matrix ODE
+\begin{equation}
+\dot{r}_{i,\alpha} = v_{i,\alpha} + \nu_{\alpha\beta} r_{i,\beta} \label{eq:ode_r}
+\end{equation}
+
+The approach taken in Ref.~\cite{Yu2010} was to solve this ODE by transforming coordinates onto the principal axes of the pressure tensor. This required, however, that  $P_{\alpha\beta}$ was diagonalizable which is not generally the case for an upper triangular matrix. Only in the case
+where $P_{\alpha\beta}$ was symmetric, this property was guaranteed and a numerically stable scheme was to solve for the eigenvalues and -vectors using Jacobi rotations. The appropriate generalization to an upper triangular pressure tensor would be to work with its Jordan normal form, which is numerically inpracticable. Hence, we choose a different approach.
+
+We observe that Eq.~\eqref{eq:ode_r} is {\em formally} solved in terms of the initial conditions by
+\begin{equation}
+r_{i,\alpha}(\Delta t) =  [\exp(\nu_{\alpha\beta} \Delta t)]_{\alpha\beta} r_{i,\beta}(0) + \int_0^{\Delta t} dt'\,\exp(\nu_{\alpha\beta}\, t')v_{i,\alpha},\label{eq:r_ode_sol}
+\end{equation}
+and $\exp(\dots)$ is the matrix exponential. In general, the matrix exponential is an infinite
+power series. However, since  $\nu_{\alpha\beta}$ is an upper triangular
+matrix, it can be written as a sum of a diagonal and a nilpotent matrix, i.e.
+\begin{equation}
+\vec\nu=\left(\begin{matrix}
+\nu_{xx}&\nu_{xy}&\nu_{xz}\\
+0&\nu_{yy}&\nu_{yz}\\
+0&0&\nu_{zz}\end{matrix}\right) = \mathrm{diag}(\nu_{xx},\nu_{yy},\nu_{zz}) 
++ \left(\begin{matrix}
+0 & \nu_{xy} & \nu_{xz}\\
+0 & 0 &\nu_{yz} \\
+0 & 0 & 0\end{matrix}\right) \equiv \vec D + \vec N.
+\end{equation}
+
+All powers higher than square of the matrix $\vec N$ are zero. Obviously, this can be exploited
+for the calculation of the matrix exponential of the individual terms. However, in general
+the matrix exponential $\exp[(\vec D + \vec N)\Delta t]$ is not equal the product of matrix exponentials
+of the individual terms. This is only true if the matrices commute. Here, the commutator is non-zero in general. We are therefore forced to {\em approximate} the matrix exponential by the product 
+of matrix exponentials. Luckily, the Trotter expansion provides a way to do this without loosing
+the unitarian property of the operator, i.e. so that the resulting update equations will still be fully
+time-reversible. In fact,
+\begin{equation}
+\exp[(\vec D + \vec N)\Delta t] \approx \exp[(\vec N/2 + \vec D + \vec N/2) \Delta t]
+= e^{\vec N \Delta t/2} e^{\vec D \Delta t} e^{\vec N \Delta t/2} + O(\Delta t^3)
+\label{eq:factorization_exp}
+\end{equation}
+As in the original Trotter expansion, the factorization is exact up to and including terms of $\Delta t^2$.
+Since $\vec{D}$ is diagonal, the exponential acts directly on the components as
+\begin{equation}
+e^{\vec D\Delta t} = \left(\begin{matrix}
+e^{\nu_{xx} \Delta t} & &\\
+&e^{\nu_{yy} \Delta t} &\\
+&&e^{\nu_{zz} \Delta t}\end{matrix}\right),
+\end{equation}
+and since $\vec N$ is nilpotent $3\times3$, we have
+\begin{align}
+e^{\vec N \Delta t/2} &= 1 + \frac{\Delta t}{2} \vec N + \frac{\Delta t^2}{8} \vec N^2\\
+&=\left(\begin{matrix}
+1 & \frac{\Delta}2 t\, \nu_{xy} & \frac{\Delta t}2\, \nu_{xz} + \frac{\Delta t^2}{8} \nu_{xy} \nu_{yz}\\
+&1&\frac{\Delta t}2\, \nu_{yz} \\
+&&1\end{matrix}\right).
+\end{align}
+We can now calculate the product of matrix exponentials on the right hand side of Eq.~\eqref{eq:factorization_exp}. It is
+\begin{equation}
+e^{\vec N \Delta t/2} e^{\vec D \Delta t} e^{\vec N \Delta t/2} = \vec A(\nu_{\alpha\beta}\Delta t) \equiv
+\left(
+\begin{matrix}
+a_{xx} & a_{xy} & a_{xz} \\
+0 & a_{yy} & a_{yz} \\
+0 & 0 & a_{zz},\label{eq:matrix_exp_1}
+\end{matrix}\right)
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+a_{xx} &= e^{\nu_{xx} \Delta t}\\
+a_{xy} &= \nu_{xy} \frac{\Delta t}2 (e^{\nu_{xx} \Delta t} + e^{\nu_{yy} \Delta t})\\
+a_{xz} &= \nu_{xz} \frac{\Delta t}2 (e^{\nu_{xx} \Delta t} + e^{\nu_{zz} \Delta t})
++ \frac{\Delta t^2}{8} \nu_{xy}\nu_{yz} (e^{\nu_{xx} \Delta t} +2 e^{\nu_{yy} \Delta t}+ e^{\nu_{zz} \Delta t} )\\
+a_{yy} &= e^{\nu_{yy} \Delta t}\\
+a_{yz} &= \nu_{yz} \frac{\Delta t}2 (e^{\nu_{yy} \Delta t} + e^{\nu_{zz} \Delta t})\\
+a_{zz} &= e^{\nu_{zz} \Delta t}. \end{aligned}\label{eq:matrix_exp_2}
+\end{equation}
+In Eq.~\eqref{eq:r_ode_sol} also the integrated matrix exponential appears. The calculation
+of the latter is now straight forward with the help of Eqs.~\eqref{eq:matrix_exp_1} \& \eqref{eq:matrix_exp_2}. With the help of the integrals
+\begin{equation}\begin{aligned}
+\int_0^{\Delta t} d t'\, e^{\alpha t'} &= \Delta t\, e^{\alpha \Delta t/2} \frac{\sinh(\alpha \Delta t/2)}{\alpha
+\Delta t/2}\\
+&\equiv \Delta t\, e^{\alpha \Delta t/2} f(\alpha \Delta t/2)\qquad f(x)=\sinh(x)/x
+\end{aligned}
+\end{equation}
+
+\begin{equation}\begin{aligned}
+\int_0^{\Delta t} d t'\, t' e^{\alpha t'} &= \frac{\mathrm{d}}{\mathrm{d}\alpha} \int_0^{\Delta t}dt'\,
+e^{\alpha t'} = \frac{\mathrm{d}}{\mathrm{d}\alpha}\left[ \Delta t\, e^{\alpha \Delta t/2} \frac{\sinh(\alpha \Delta t/2)}{\alpha \Delta t/2}\right]\\
+&= \frac{\Delta t^2}{2} e^{\alpha \Delta t/2} \frac{\sinh(\alpha \Delta t/2)}{\alpha \Delta t/2}
+\left[1 + \coth \alpha \Delta t/2 - \frac{1}{\alpha \Delta t/2}\right]\\
+&\equiv \frac{\Delta t^2}{2} e^{\alpha \Delta t/2} f(\alpha \Delta t/2)\,[1+g(\alpha \Delta t/2)]
+\qquad g(x) = f'/f = \coth x - 1/x
+\end{aligned}\end{equation}
+and
+\begin{equation}\begin{aligned}
+\int_0^{\Delta t} d t'\, t'^2 e^{\alpha t'} &=\frac{\mathrm{d}}{\mathrm{d}\alpha} \int_0^{\Delta t}dt'\,
+t' e^{\alpha t'}=\frac{\Delta t^3}{4} e^{\alpha \Delta t/2} [f (1+g) + f g' + f' (1+g)]\\
+&=\frac{\Delta t^3}{4} e^{\alpha \Delta t/2} f(\alpha \Delta/2) \left\{g'(\alpha \Delta/2) + [1+g(\alpha \Delta/2)]^2\right\},
+\end{aligned}\end{equation}
+where
+\begin{equation}
+g'(x) = \frac{\mathrm{d}}{\mathrm{d}x}(\coth x - 1/x) = \frac{1}{x^2} - \frac{1}{\sinh^2 x} \equiv h(x).
+\end{equation}
+Note that the functions $f$, $g$ and $h$ have no singularity at the origin (singularities of individual
+terms cancel), i.e. they can be expanded as power series for small arguments for convenient evaluation in the numerical algorithm.
+
+With the help of the above set of integrals, we can rewrite the time-integrated Eq.~\eqref{eq:matrix_exp_1} as
+
+\begin{equation}
+\int_0^\Delta d t'\, \, e^{\vec N \Delta t/2} e^{\vec D \Delta t} e^{\vec N \Delta t/2} = \vec B(\nu_{\alpha \beta}\Delta t) \equiv
+\left(
+\begin{matrix}
+b_{xx} & b_{xy} &b_{xz} \\
+0 & b_{yy} & b_{yz} \\
+0 & 0 & b_{zz},\label{eq:int_matrix_exp_1}
+\end{matrix}\right)
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+b_{xx} =& \Delta t\, e^{\nu_{xx} \Delta t/2} f(\nu_{xx}\Delta t/2)\\
+b_{xy} =&\frac{\Delta t^2}4\nu_{xy} B^{(1)}_{xy}\\
+b_{xz} =& \frac{\Delta t^2}4\nu_{xz} B^{(1)}_{xz} + B_{xz} + \frac{\Delta t^2}{32} \nu_{xy}\nu_{yz} (B^{(2)}_{xx} +2 B^{(2)}_{yy} + B^{(2)}_{zz})\\
+b_{yy} =&\Delta t\, e^{\nu_{yy} \Delta t/2} f(\nu_{yy}\Delta t/2)\\
+b_{yz} =& \frac{\Delta t^2}4 \nu_{yz} B^{(1)}_{yz}\\
+b_{zz} =& \Delta t\,e^{\nu_{zz} \Delta t/2} f(\nu_{zz}\Delta t/2).
+\end{aligned}\label{eq:matrix_exp_2}
+\end{equation}
+and where
+\begin{equation}\begin{aligned}
+B^{(1)}_{\alpha\beta}\equiv& \Big(e^{\nu_{\alpha\alpha} \Delta t/2} f(\nu_{\alpha\alpha}\Delta t/2)[1+g(\nu_{\alpha\alpha}\Delta t/2)]\\
+& + e^{\nu_{\beta\beta} \Delta t/2} f(\nu_{\beta\beta}\Delta t/2)[1+ g(\nu_{\beta\beta}\Delta t/2)]\Big)\\
+B^{(2)}_{\alpha} =& e^{\nu_{\alpha\alpha} \Delta t/2} f(\nu_{\alpha\alpha}\Delta t/2) \left\{h(\nu_{\alpha\alpha}\Delta t/2) + [1+g(\nu_{\alpha\alpha}\Delta t/2)]^2\right\}
+\end{aligned}\end{equation}
+
+Together, Eqs.~\eqref{eq:matrix_exp_1} \& \eqref{eq:int_matrix_exp_1} determine the full solution
+of the position update equation Eq.~\eqref{eq:ode_r}.
+
+\paragraph{$iL_2$:} The action of $e^{i L_2 \Delta t/2}$ on $\vec v_i(t)$
+is described by the ODE
+\begin{equation}
+\dot v_{i,\alpha} = \frac{F_{i,\alpha}}{m_i} - \nu'_{\alpha\beta} v_{i,\beta},
+\label{eq:odev}
+\end{equation}
+where $\nu'_{\alpha\beta} \equiv \nu_{\alpha\beta} + \delta_{\alpha\beta}
+(1/N_f) \mathrm{Tr} \nu_{\alpha\beta}$.
+The solution is again expressed in terms of matrix exponential, and the same solution
+as for the position update can be employed, when making the replacements $\nu \to -\nu'$
+and $\Delta t \to \Delta t/2$.
+
+\paragraph{$i L_{g,1}$:} The action of this operator is described by
+\begin{equation}
+\dot h_{\alpha\beta} = \nu_{\alpha\gamma} h_{\gamma\beta}  
+\end{equation}
+with matrix exponential solution
+\begin{equation}
+h_{\alpha\beta}(\Delta t) = \left[e^{\nu_{\alpha\beta}\Delta t}\right]_{\alpha\gamma} h_{\gamma\beta}(0).
+\end{equation}
+Since its effect amounts to a rescaling of the initial value, this operator 
+is also called a scaling operator. The same matrix for the exponential can be used as for rescaling
+the positions in Eq.~\eqref{eq:matrix_exp_1}.
+
+\paragraph{$iL_{g,2}$:} The RHS of Eq.~\eqref{eq:NPT_iL_g2} does not depend
+on $\nu_\alpha$, so this operator amounts to a translation [Eq.~\eqref{eq:direct_translation}],
+\begin{equation}
+\nu_{\alpha\beta}(\Delta t/2) = \nu_{\alpha\beta}(0) + \frac{\Delta t}{2 W} \left[(\det \vec h) \left( P_{\alpha \beta} - \delta_{\alpha\beta} P\right) +\delta_{\alpha\beta}
+\frac{1}{N_f} \sum_i m_i \vec v_i^2\right] 
+\end{equation}
+
+\paragraph{$i L_{T,1}$:} The operator $e^{iL_{T,1} \Delta t/2}$ again acts
+on $\vec{v_i}$ as a scaling operator,
+\begin{equation}
+\vec v_i(\Delta t/2) = e^{\xi \Delta t/2} \vec v_i(0)
+\end{equation}
+
+\paragraph{$i L_{T,2}$:} The operator $e^{i L_{T,2} \Delta t/4}$ is a translation,
+\begin{equation}
+\xi(\Delta t/4) = \xi(0) + \frac{\Delta t}{4\tau_T^2} \left(\frac{\sum_i m_i \vec v_i^2}{N_f k_B T} -1 \right)
+\end{equation}
+
+\paragraph{$i L_{T,3}:$} Finally, the same holds for $e^{i L_{T,3} \Delta t/2}$:
+\begin{equation}
+\eta(\Delta t/2) = \eta(0) + \frac{\Delta t}{2} \xi
+\end{equation}
+
+For reference, we now compile all above steps into the final update equations,
+using Eqs.~\eqref{eq:trotter_NPT_1} \&
+\eqref{eq:trotter_NPT_2}:
+\begin{equation*}
+\begin{aligned}
+\text{step 1:}&\quad&\nu_{\alpha\beta}(t) \to \nu_{\alpha\beta}(t+\Delta t/2) =& \nu_{\alpha\beta}(t) \\
+&&&+
+\frac{\Delta t}{2 W} \left[(\det\vec h) \left( P_{\alpha \beta}(t) - \delta_{\alpha\beta}P\right) +
+\delta_{\alpha\beta}\frac{1}{N_f} \sum_i m_i \vec v^2_i(t)\right]\\
+%
+\text{step 2a:}&\quad&\xi(t) \to \xi(t+\Delta t/4) =& \xi(t) + \frac{\Delta t}{4\tau_T^2} \left(\frac{\sum_i m_i \vec v^2_i(t)}{N_f k_B T} -1 \right)\\
+%
+\text{step 2b:}&\quad&\eta(t) \to \eta(t+\Delta t/2) =& \eta(t) + \frac{\Delta t}{2} \xi(t+\Delta t/4)\\
+%
+\text{step 2c:}&\quad&\vec v_i(t) \to \vec v_i' =& \vec v_i(0)\, e^{-\xi(t+\Delta t/4) \Delta t/2}\\
+%
+\text{step 2d:}&\quad&\xi(t+\Delta t/4) \to \xi(t+\Delta t/2) =& \xi(t+\Delta t/4) + \frac{\Delta t}{4\tau_T^2} \left(\frac{\sum_i m_i \vec v_i'^2}{N_f k_B T} -1 \right) \\
+%
+\text{step 3:}&\quad&v_{i,\alpha}' \to v_{i,\alpha}(t+\Delta t/2) =& A_{\alpha\beta}[-\nu'(t+\Delta t/2)_{\alpha\beta}\Delta t/2]\, v_{i,\beta}' \\
+&&&+ B_{\alpha\beta}(-\nu'(t+\Delta t/2)_{\alpha\beta} \Delta t/2]\frac{  F_{i,\beta}(t)}{2 m_i}\\
+%
+\text{step 4:}&\quad&r_{i,\alpha}(t) \to r_{i,\alpha}(t+\Delta t) =& A_{\alpha\beta}[\nu(t+\Delta t/2)_{\alpha\beta}\Delta t] r_{i,\beta}\\
+&&&+ B_{\alpha\beta}[\nu(t+\Delta t/2)_{\alpha\beta} \Delta t] v_{i,\beta}(t+\Delta t/2)\\
+%
+\text{step 5:}&\quad&h_{\alpha\beta}(t) \to h_{\alpha\beta}(t+\Delta t) =&
+A_{\alpha\gamma}[\nu_{\alpha\beta}(t+\Delta t/2) \Delta t]  h_{\gamma\beta}(t)\\
+%
+\text{step 6:}&\quad&v_{i,\alpha}(t+\Delta t/2)  \to v_{i,\alpha}'' =& A_{\alpha\beta}[-\nu'(t+\Delta t/2)_{\alpha\beta}\Delta t/2]\, v_{i,\beta}(t+\Delta t/2) \\
+&&&+ B_{\alpha\beta}(-\nu'(t+\Delta t/2)_{\alpha\beta} \Delta t/2]\frac{  F_{i,\beta}(t+\Delta t)}{2 m_i}\\
+%
+\text{step 7a:}&\quad&\xi(t+\Delta t/2) \to \xi(t+3\Delta t/4) =& \xi(t+\Delta t/2) + \frac{\Delta t}{4\tau_T^2} \left(\frac{\sum_i m_i \vec v_i''^2}{N_f k_B T} -1 \right)\\
+%
+\text{step 7b:}&\quad&\eta(t+\Delta t/2) \to \eta(t+\Delta t) =& \eta(t+\Delta t/2) + \frac{\Delta t}{2} \xi(t+3 \Delta t/4)\\
+%
+\text{step 7c:}&\quad&\vec v_i'' \to \vec v_i(t+\Delta t) =& \vec v_i''\, e^{-\xi(t+3\Delta t/4) \Delta t/2}\\
+%
+\text{step 7d:}&\quad&\xi(t+3\Delta t/4) \to \xi(t+\Delta t) =& \xi(t+3\Delta t/4) + \frac{\Delta t}{4\tau_T^2} 
+\left(\frac{\sum_i m_i \vec v_i^2(t+\Delta t)}{N_f k_B T} -1 \right)\\
+%
+\text{step 8:}&\quad&\nu_{\alpha\beta}(t+\Delta t/2) \to \nu_{\alpha\beta}(t+\Delta t) =& \nu_{\alpha\beta}(t+\Delta t/2) \\
+&&&+
+\frac{\Delta t}{2 W} \Big[(\det\vec h) \Big( P_{\alpha \beta}(t+\Delta t) - \delta_{\alpha\beta}P\Big) \\
+&&&+\delta_{\alpha\beta}\frac{1}{N_f} \sum_i m_i \vec v^2_i(t+\Delta t)\Big]\\
+%
+\end{aligned}
+\end{equation*}
+
+The functions $f, g$ and $h$ which occur in the matrices $\vec A$ and $\vec B$ are approximated
+using the Taylor series,
+\begin{equation}
+f(x) = \frac{\mathrm{sinh}(x)}{x} \approx \sum_{n=0}^5 a_{2n} x^{2n}
+\end{equation}
+with $a_0=1$, $a_2 = 1/6$, $a_4 = 1/120$, $a_6 = 1/5040$, $a_8 = 1/362880$,
+and $a_{10} = 319916800$,
+\begin{equation}
+g(x) = \coth x - 1/x \approx \sum_{n=0}^4 b_{2n+1} x^{2n+1}
+\end{equation}
+with $b_1 = 1/3$, $b_3 = -1/45$, $b_5 = 1/945$, $b_7=-1/4725$ and $b_9 = -1/93555$,
+and
+\begin{equation}
+h(x) = \frac{1}{x^2}-\frac{1}{sinh^2 x} \approx \sum_{n=0}^5 c_{2n} x^{2n},
+\end{equation}
+with $c_0 = 1/3$, $c_2 = -1/15$, $c_4 = 2/189$, $c_6 = - 1/675$, $c_8 = 2/10395$ and
+$c_10 = -1382/58046625$. 
+
+
+\subsubsection{Verification of the geometric property of the integrator}
+The above update scheme is explictly reversible. We show in the following that it also strictly preserves the phase-space measure of Sec.~\ref{sec:measure}.
+
+For every of the above update steps, the change in phase space volume
+is given by the Jacobian of the mapping. In steps $i=1,2, 7$ and $8$,
+only one quantity $X_{j,i} \to X_{j,i+1}$ is updated (uncoupled update) and all the other
+quantities stay the same, this implies that the Jacobian is of the
+form
+\begin{equation}
+J_{i} = \left|\frac{\partial X_{j,i+1}}{\partial X_{,i}}\right|=\left|\det\begin{pmatrix}
+1 &        &   &        &        &    \\
+  & \ddots &   &        &        &    \\
+  &        & 1 &        &        &    \\
+* & \cdots & * & a & *  & \cdots & *  \\
+  &        &   &   & 1  &        &    \\ 
+  &        &   &   &    & \ddots &    \\
+  &        &   &   &    &        & 1  \\
+\end{pmatrix}\right|,
+\end{equation}
+where only non-zero matrix elements are explictly shown. The above
+determinant can be shown to evaluate to $J_{i,j}=|a|$, where $a$ is the 
+diagonal element. If the update equation is of the form $X_{j,i+1} = a
+X_{j,i} + b$, the diagonal element is the prefactor of the quantity
+$x_i$. E.g. for step 1, we have $J_{i,1} = 1$.
+
+These are the Jacobians $J_i$ for the uncoupled update steps $i=1,2, 7$ and $8$
+\begin{align}
+J_1&= 1 &
+J_2& = e^{-N_f \xi(t+\Delta t/4)\Delta t/2} \\
+J_7 &= e^{-N_f \xi(t+3 \Delta t/4) \Delta t/2}&
+J_8 &= 1,
+\end{align}
+where $J_2$ results from step 2c and $J_7$ results from step 7c.The product of these Jacobians is
+\begin{equation}
+J_1 J_2 J_7 J_8 = e^{-N_f \left[\xi(t+\Delta t/4) - \xi(t+3 \Delta t/4)\right]\Delta t/2}
+\end{equation}
+Substituting steps 2b \& 7b, we arrive at
+\begin{equation}
+J_1 J_2 J_7 J_8 = e^{-N_f \left[\eta (t + \Delta t) - \eta (t)\right]} \label{eq:jacobi_eta}
+\end{equation}
+
+In steps $3,4,5$ and $6$ several variables are updated simultaneously.
+The above theorem about the determinant of the Jacobian generalizes to this case. Only
+the diagonal element $a$ has to be replaced by a matrix $A$, which is the Jacobian sub-matrix
+of the variables that are actually updated simultaneously. Consequently, for step 5 we need to evaluate a determinant of the $6\times6$ matrix with rows and columns labeled by
+$xx$, $xy$, $xz$, $yy$, $yz$ and $zz$, with explicit form
+\begin{equation}
+\vec C= \left(\begin{matrix}
+a_{xx} &0 &0 &0 &0 &0 \\
+0& a_{xx} &0 & a_{xy} &0 &0 \\
+0& 0 & a_{xx} & 0 & a_{xy} & a_{xz}  \\
+0 & 0 & 0 & a_{yy} & 0 & 0 \\
+0 & 0 & 0 & 0 & a_{yy} & a_{yz} \\
+0 & 0 & 0 & 0 & 0 & a_{zz} \\
+\end{matrix}\right)
+\end{equation}
+with $a_{\alpha\beta}$ defined in Eq.~\eqref{eq:matrix_exp_1}. Due to the upper triangular form
+of this matrix, only the diagonal elements are relevant and the determinant is given by their product.
+Hence,
+\begin{align}
+J_5 =& a_{xx}^3(\nu \Delta t) a_{yy}^2(\nu' \Delta t) a_{zz}(\nu'\Delta t)\\
+=& e^{\Delta t \mathrm{Tr}\,\nu +\Delta t \sum_{i=1}^3 (d-i) \nu_{ii}}.
+\end{align}
+For steps $3, 4$ and $6$ similar calculations (with a $3\times3$ Jacobian) yield
+\begin{align}
+J_3 &= J_6 =  |\det \vec A(-\nu' \Delta t/2)|^N = e^{-N\Delta t\, \mathrm{Tr}\, \nu'/2}=e^{-N \Delta t\, \mathrm{Tr}\,\nu/2 - \Delta t \mathrm{Tr}\,\nu/2}\\
+J_4 &= |\det \vec A(\nu \Delta t)|^N = e^{N \Delta t \mathrm{Tr}\, \nu}.
+\end{align}
+Together,
+\begin{equation}
+J_3 J_4 J_5 J_6 = e^{\Delta t\,\sum_{i=1}^3 (d-i) \nu_{ii} } =
+\frac{h^2_{xx}(t+\Delta t) h_{yy}(t+\Delta t)}{h^2_{xx}(t) h_{yy}(t)}\label{eq:jacobi_nu}
+\end{equation}
+where we used
+\begin{equation}
+e^{\nu_{ii} \Delta t} = \frac{h_{ii}(t+\Delta t)}{h_{ii}(t)}.
+\end{equation}
+
+Combining Eqs.~\eqref{eq:jacobi_eta} and Eq.~\eqref{eq:jacobi_nu} we find the total
+Jacobian of the transformation $X(t)\to X(t+\Delta t)$,
+\begin{equation}
+J = \left[e^{N_f \left[\eta (t + \Delta t) - \eta (t)\right]} \frac{h^2_{xx}(t) h_{yy}(t)}{h^2_{xx}(t+\Delta t) h_{yy}(t+\Delta t)}\right]^{-1}
+\end{equation}
+which, for $d=3$ is precisely is the per time-step Jacobian that cancels the measure given
+by Eqs.~\eqref{eq:measure_npt} and \eqref{eq:measure_fac_extra}, as required by the Liouville equation. Thus, the integrator is measure-preserving. We remark that it is easy
+to 'destroy' the latter property be reordering the equations, e.g. by
+combining the velocity updates in steps 2c and 3, and 6 and 7c (though
+the integrator would still be time-reversible).
+
+\section{Stability analysis}
+In this section, we perform some tests of effectiveness and stability
+of the integrator. We simulate a system of $N=20,000$ particles at a
+volume fraction of $\phi=0.2$ with a Lennard-Jones (LJ) potential, cut
+off at $r_c = 2.5$, with $\epsilon=\sigma=1$. The pressure and
+temperature set points are $P=2$ and $T=1$, with barostat and
+thermostat time constants $\tau_T = \tau_P =0.5$. We use cubic box
+symmetry. To avoid numerical problems related to the discontinuity of
+the potential and the force at the cut-off, we employ XPLOR smoothing
+of the potential between $r_{\mathrm{on}} = 1.5\sigma$ and $r_c$. The
+simulations were performed using single floating-point precision on
+Tesla M2090 GPUs with a modified version of HOOMD-blue implementing
+the above update scheme (class {\tt TwoStepNPTMTK}).
+
+\begin{figure}
+\centering\includegraphics[height=1.9in]{TP}
+\includegraphics[height=1.9in]{VH}
+\caption{{\em Left:} Plot of the trajectories of temperature $T$
+(blue curve) and pressure $T$ as a function of the number simulation steps.
+{\em Right:} Plot of the initial trajectories for the volume $V$ (blue curve)
+and the conserved quantity $H$ as a function of the number of simulation
+steps. }
+\label{fig:equilibration}
+\end{figure}
+
+We first show a basic verification of the effectiveness of the
+integrator in equilibrating towards the target values of the
+temperature and the pressure. Fig.~\ref{fig:equilibration} (left)
+demonstrates that the system quickly equilibrates within 10,000 time
+steps, and that the temperature $T$ (blue curve) and pressure $P$ (red
+curve) fluctuate around their target values thereafter.  The right
+panel of Fig.~\ref{fig:equilibration} shows the initial evolution of
+the conserved quantity $H$ and the volume $V$ for the first 10,000
+time steps. It is evident that while the volume exhibits large initial
+flucutations of about $50\%$ of its equilibrium value until the system
+reaches its equilibrium density, the conserved quantity stays
+essentially constant on the scale of the plot.
+
+\begin{figure}
+\centering\includegraphics[width=0.7\textwidth]{trajectories}
+\caption{Example trajectories of the conserved quantity $H/\langle
+  H(t)\rangle$ normalized by the time-average, for two NPT-simulation
+  runs of a $N$=20,000 LJ particle system in cubic symmetry for two
+  different time steps $\Delta t = 10^{-4}$ (blue curve) and $\Delta t=
+  10^{-2}$ (red curve).  The trajectory corresponding to the smaller
+  time step exhibits larger fluctuations, due to numerical
+  instabilities.}
+\label{fig:trajectories}
+\end{figure}
+
+
+We now analyze the stability of the integrator in more detail by means
+of actual trajectories of the conserved quantity
+$H$. Fig.~\ref{fig:trajectories} shows two different example
+trajectories of the normalized conserved quantity $H(t)$
+[Eq.~\eqref{eq:NPT_conserved_q}] for two values of the time step
+$\Delta t$. Remarkably, the trajcectory corresponding two the larger
+time step exhibits less `motion', and the fluctuations occur within a
+band that explores a narrower range of values of of $H$. Since the
+ideal discretization error in the reversible update scheme scales as
+$\Delta t^3$ [cf. Eq.~\eqref{eq:trotter}], we suspect that the
+apparently increased error at the smaller time step must be due to
+numerical instabilities. This is plausible, given that the simulations
+were run at single floating-point precision.
+
+\begin{figure}
+\centering\includegraphics[width=0.9\textwidth]{standarddeviation}
+\caption{Standard deviation $\sigma$ of the conserved quantity $H(t)$
+  vs. time step $\Delta t$ in double-logarithmic representation,
+  determined over the length of a simulation run of $N=10^6$ time
+  steps after subtraction of a linear drift term from the trajectories
+  $H(t)$. The fluctuations are minimal for $\Delta t=0.004$.}
+\label{fig:standarddeviation}
+\end{figure}
+
+The trajectories exhibit non-negligible drift, even over a comparatively
+short run of $10^6$ time steps (see below). We therefore subtracted a drift term
+from the trajectory, which we determined by fitting the latter to a
+linear function. Then we calculated the standard deviation of the
+fluctuations of the conserved quantity.  The results are shown in
+Fig.~\ref{fig:standarddeviation}. We observe that the dependence of
+the magnitude $\sigma$ of the fluctuations on the time step $\Delta t$
+is clearly non-monotonic. If the fluctuations were explained solely by
+discretization error, we would expect them to increase as $\Delta t$
+increases.  This, however, is only the case for $\Delta t \gtrsim
+0.004 = \Delta t_0$. Below this threshold, the fluctuations increase
+even as $\Delta t$ decreases.  This is consistent with our earlier
+finding of larger errors for small $\Delta t$ and we conclude that the
+algorithm is unstable at $\Delta t \lesssim \Delta
+t_0$. Conversely, the simulation will ultimately blow up at too large
+values of $\Delta t$, so that $\Delta t=\Delta t_0$ appears to
+constitute an optimal choice if one is interested in long-term
+stability.
+
+\begin{figure}
+\centering\includegraphics[width=0.7\textwidth]{drift}
+\caption{Evolution of the conserved quantity for a simulation with
+$\Delta t=0.005$, showing the drift over $10^7$ time steps.}
+\label{fig:drift}
+\end{figure}
+
+\begin{figure}
+\centering\includegraphics[width=0.7\textwidth]{drift_dt}
+\caption{Value of the relative drift $\Delta H_{\mathrm{rel}}/t$ of
+  the conserved quantity $H$ per Lennard-Jones time, as a function of
+  the simulation time step $\Delta t$ (double-logarithmic representation).}
+\label{fig:drift_dt}
+\end{figure}
+
+Fig.~\ref{fig:drift} shows the trajectory of the conserved quantity in
+one simulation with $\Delta t=0.005$ over an interval of $10^7$ time
+steps. It can be seen that the sign of the drift is negative in this
+case, and that the relative magnitude of the drift is about $0.1\%$
+over this length of the simulation. We suspect that the drift is a
+consequence of round-off errors incurred by single-precision floating
+point arithmetics.  Short simulations of $10^6$ time steps corroborate
+this hypothesis. Fig.~\ref{fig:drift_dt} shows the relative magnitude
+of the drift per unit Lennard-Jones time as a function of the time
+step. For increasing time step $\Delta t$ the drift velocity
+decreases. This is consistent with the expectation that the importance
+of round-off errors vs. discretization errors decreases with
+increasing time step.
+
+\section{Conclusion}
+We have derived the equations of motion of integration in the
+anisotropic NPT ensemble. We presented an explicitly reversible and
+measure-preserving update scheme. We analyzed the stability of the
+integrator as implemented on the GPU in HOOMD-blue and found that the
+$NPT$-integrator behaves as expected, but that too small time steps
+can cause numerical problems at single-precision. It would be
+interesting to see whether the stability at small time steps improves
+with double-precision arithmetics.
+
+\bibliography{library}
+\bibliographystyle{unsrt}
+
+\end{document}

@@ -13,7 +13,7 @@
 #include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #ifdef MCMD_PERTURB
@@ -278,7 +278,7 @@ namespace McMd
                      &system().bondPotential(),
                      boundary);   
                }
-               #ifndef INTER_NOPAIR 
+               #ifndef SIMP_NOPAIR 
                // Generate cell list
                system().pairPotential().buildCellList();
                #endif
@@ -339,7 +339,7 @@ namespace McMd
             if (system().hasReplicaMove()) {
                if (system().replicaMove().isAtInterval(iStep_)) {
                   bool success = system().replicaMove().move();
-                  #ifndef INTER_NOPAIR
+                  #ifndef SIMP_NOPAIR
                   if (success) {
                      system().pairPotential().buildCellList();
                   }
@@ -457,7 +457,7 @@ namespace McMd
          system().readConfig(configFile);
          configFile.close();
 
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Build the system CellList
          system().pairPotential().buildCellList();
          #endif

@@ -1,0 +1,71 @@
+MdSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  hasCoulomb                             1
+  atomTypes                              A       1.0        1.0
+                                         B       1.0       -1.0  
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Point{
+      moleculeCapacity                      50 
+      type                                   0
+    }
+
+    Point{
+      moleculeCapacity                      50 
+      type                                   1
+    }
+
+  }
+  Random{
+    seed                              10732192
+  }
+  MdSystem{
+    pairStyle                        LJPair
+    coulombStyle                      Ewald
+    CoulombPotential{
+      epsilon               0.100000000000e+00
+      alpha                 1.500000000000e+00
+      rSpaceCutoff          4.500000000000e+00
+      kSpaceCutoff         20.000000000000e+00
+    }
+    MdPairPotential{
+      epsilon               0.000000000000e+00 0.000000000000e+00
+                            0.000000000000e+00 0.000000000000e+00
+      sigma                 0.100000000000e+00 0.100000000000e+00
+                            0.100000000000e+00 0.100000000000e+00
+      cutoff                0.010000000000e+00 0.010000000000e+00
+                            0.010000000000e+00 0.010000000000e+00 
+      PairList{
+        atomCapacity                        1000
+        pairCapacity                        5000
+        skin                  2.500000000000e-01
+      }
+    }
+    EnergyEnsemble{
+      type                           adiabatic
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    NveVvIntegrator{
+       dt                   1.000000000000e-03
+    }
+  }
+  AnalyzerManager{
+    baseInterval                           1
+
+    LogProgress{
+      interval                            10
+    }
+
+  }
+  saveInterval                     0
+}
+cubic 10.5
+

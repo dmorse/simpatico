@@ -8,7 +8,7 @@
 #include "CfbRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Linear.h>
@@ -185,7 +185,7 @@ namespace McMd
          for (i = 0; i < nRegrow_; ++i) {
             //system().moveAtom(*thisPtr, oldPos_[i]);
             thisPtr->position() = oldPos_[i];
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             system().pairPotential().updateAtomCell(*thisPtr);
             #endif
             thisPtr += sign;

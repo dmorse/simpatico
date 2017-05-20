@@ -1,4 +1,4 @@
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #ifndef HOOMD_EXTERNAL_H
 #define HOOMD_EXTERNAL_H
 

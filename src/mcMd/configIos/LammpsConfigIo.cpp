@@ -52,7 +52,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
          atomCapacity += speciesCapacity*speciesPtr->nAtom();
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          bondCapacity += speciesCapacity*speciesPtr->nBond();
          #endif
       }
@@ -178,13 +178,13 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          nBond += nMolecule*(speciesPtr->nBond());
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          nDihedral += nMolecule*(speciesPtr->nDihedral());
          #endif
       }
@@ -204,13 +204,13 @@ namespace McMd
       int nBondType = 0;
       int nAngleType = 0;
       int nDihedralType = 0;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       nBondType = simulation().nBondType();
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       nAngleType = simulation().nAngleType();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       nDihedralType = simulation().nDihedralType();
       #endif
       out << Int(nBondType) << " bond types" << "\n";
@@ -261,7 +261,7 @@ namespace McMd
       }
       out << "\n";
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (nBond > 0) {
          out << "Bonds" << "\n";
          out << "\n";
@@ -282,7 +282,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (nAngle > 0) {
          out << "Angles" << "\n";
          out << "\n";
@@ -304,7 +304,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (nDihedral > 0) {
          out << "Dihedrals" << "\n";
          out << "\n";

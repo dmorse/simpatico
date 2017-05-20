@@ -9,17 +9,17 @@
 SRC_DIR_REL =..
 include $(SRC_DIR_REL)/config.mk
 include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/simp/config.mk
 include $(BLD_DIR)/ddMd/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/ddMd/sources.mk
 
 #-----------------------------------------------------------------------
 # Variable definition
 
-# Main program location
+# Main program *.o and *.d location
 DDSIM=$(BLD_DIR)/ddMd/ddSim
 
 #-----------------------------------------------------------------------
@@ -28,7 +28,7 @@ DDSIM=$(BLD_DIR)/ddMd/ddSim
 all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
 $(DDSIM_EXE): $(DDSIM).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
+	$(CXX) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS) $(LDFLAGS)
 
 ddSim:
 	$(MAKE) $(DDSIM_EXE)
@@ -58,7 +58,7 @@ endif
 # Include dependency files
  
 -include $(util_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
+-include $(simp_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)
 -include $(DDSIM).d
 

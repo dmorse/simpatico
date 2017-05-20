@@ -7,16 +7,16 @@
 
 #include "OutputEnergy.h"
 #include <ddMd/potentials/pair/PairPotential.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
 #include <util/format/Int.h>
@@ -115,28 +115,28 @@ namespace DdMd
             double pair = sim.pairPotential().energy();
             potential += pair;
             outputFile_ << Dbl(pair, 15);
-            #ifdef INTER_BOND
+            #ifdef SIMP_BOND
             if (sim.nBondType()) {
                double bond = sim.bondPotential().energy();
                potential += bond;
                outputFile_ << Dbl(bond, 15);
             }
             #endif
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             if (sim.nAngleType()) {
                double angle = sim.anglePotential().energy();
                potential += angle;
                outputFile_ << Dbl(angle, 15);
             }
             #endif
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             if (sim.nDihedralType()) {
                double dihedral  = sim.dihedralPotential().energy();
                potential += dihedral;
                outputFile_ << Dbl(dihedral, 15);
             }
             #endif
-            #ifdef INTER_EXTERNAL
+            #ifdef SIMP_EXTERNAL
             if (sim.hasExternal()) {
                double external = sim.externalPotential().energy();
                potential += external;

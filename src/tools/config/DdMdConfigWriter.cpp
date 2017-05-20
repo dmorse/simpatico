@@ -85,19 +85,19 @@ namespace Tools
       }
 
       // Write the groups
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (configuration().bonds().capacity()) {
          writeGroups(file, "BONDS", "nBond", configuration().bonds());
       }
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (configuration().angles().capacity()) {
          writeGroups(file, "ANGLES", "nAngle", configuration().angles());
       }
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (configuration().dihedrals().capacity()) {
          writeGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
       }

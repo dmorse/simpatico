@@ -9,19 +9,19 @@
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
 
@@ -44,19 +44,19 @@ namespace McMd
    McEnergyAnalyzer::McEnergyAnalyzer(McSystem& system) 
     : SystemAnalyzer<McSystem>(system),
       totalAveragePtr_(0),
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairAveragePtr_(0),
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondAveragePtr_(0),
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleAveragePtr_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralAveragePtr_(0),
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalAveragePtr_(0),
       #endif
       nSamplePerBlock_(0),
@@ -77,29 +77,29 @@ namespace McMd
 
       totalAveragePtr_ = new Average;
       totalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairAveragePtr_ = new Average;
       pairAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          bondAveragePtr_ = new Average;
          bondAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
           angleAveragePtr_ = new Average;
           angleAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
           dihedralAveragePtr_ = new Average;
           dihedralAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          externalAveragePtr_ = new Average;
          externalAveragePtr_->setNSamplePerBlock(nSamplePerBlock_);
@@ -126,29 +126,29 @@ namespace McMd
       // Load Average accumulators
       totalAveragePtr_ = new Average;
       ar >> *totalAveragePtr_;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairAveragePtr_ = new Average;
       ar >> *pairAveragePtr_;
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          bondAveragePtr_ = new Average;
          ar >> *bondAveragePtr_;
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          angleAveragePtr_ = new Average;
          ar >> *angleAveragePtr_;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          dihedralAveragePtr_ = new Average;
          ar >> *dihedralAveragePtr_;
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          externalAveragePtr_ = new Average;
          ar >> *externalAveragePtr_;
@@ -178,27 +178,27 @@ namespace McMd
 
       // Save average accumulators
       ar << *totalAveragePtr_;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       ar << *pairAveragePtr_;
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          ar << *bondAveragePtr_;
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          assert(angleAveragePtr_);
          ar << *angleAveragePtr_;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          assert(dihedralAveragePtr_);
          ar << *dihedralAveragePtr_;
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
          ar << *externalAveragePtr_;
@@ -214,27 +214,27 @@ namespace McMd
       McSystem& sys = system();
 
       totalAveragePtr_->clear();
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairAveragePtr_->clear();
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          bondAveragePtr_->clear();
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          assert(angleAveragePtr_);
          angleAveragePtr_->clear();
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          assert(dihedralAveragePtr_);
          dihedralAveragePtr_->clear();
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
          externalAveragePtr_->clear();
@@ -262,20 +262,20 @@ namespace McMd
          sim.fileMaster().openOutputFile(filename, outputFile_);
 
          outputFile_ << "       iStep";
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          outputFile_ << "           Pair";
          #endif
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sys.hasBondPotential()) {
             outputFile_ << "           Bond";
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sys.hasAnglePotential()) {
             outputFile_ << "          Angle";
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sys.hasDihedralPotential()) {
             outputFile_ << "       Dihedral";
          }
@@ -285,7 +285,7 @@ namespace McMd
             outputFile_ << "        Coulomb";
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sys.hasExternalPotential()) {
             outputFile_ << "       External";
          }
@@ -314,13 +314,13 @@ namespace McMd
          //outputFile_ << Int(iStep, 10);
 
          double potential = 0.0;
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          double pair = sys.pairPotential().energy();
          potential += pair;
          pairAveragePtr_->sample(pair);
          //outputFile_ << Dbl(pair, 15);
          #endif
-         #ifdef INTER_BOND
+         #ifdef SIMP_BOND
          if (sys.hasBondPotential()) {
             double bond = sys.bondPotential().energy();
             potential += bond;
@@ -328,7 +328,7 @@ namespace McMd
             //outputFile_ << Dbl(bond, 15);
          }
          #endif
-         #ifdef INTER_ANGLE
+         #ifdef SIMP_ANGLE
          if (sys.hasAnglePotential()) {
             double angle = sys.anglePotential().energy();
             potential += angle;
@@ -337,7 +337,7 @@ namespace McMd
             //outputFile_ << Dbl(angle, 15);
          }
          #endif
-         #ifdef INTER_DIHEDRAL
+         #ifdef SIMP_DIHEDRAL
          if (sys.hasDihedralPotential()) {
             double dihedral  = sys.dihedralPotential().energy();
             potential += dihedral;
@@ -346,7 +346,7 @@ namespace McMd
             // outputFile_ << Dbl(dihedral, 15);
          }
          #endif
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          if (sys.hasExternalPotential()) {
             double external = sys.externalPotential().energy();
             potential += external;
@@ -364,27 +364,27 @@ namespace McMd
          if (nSamplePerBlock_ > 0 && totalAveragePtr_->isBlockComplete()) {
             int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
             outputFile_ << Int(beginStep, 12);
-            #ifndef INTER_NOPAIR
+            #ifndef SIMP_NOPAIR
             outputFile_ << Dbl(pairAveragePtr_->blockAverage());
             #endif
-            #ifdef INTER_BOND
+            #ifdef SIMP_BOND
             if (sys.hasBondPotential()) {
                outputFile_ << Dbl(bondAveragePtr_->blockAverage());
             }
             #endif
-            #ifdef INTER_ANGLE
+            #ifdef SIMP_ANGLE
             if (sys.hasAnglePotential()) {
                assert(angleAveragePtr_);
                outputFile_ << Dbl(angleAveragePtr_->blockAverage());
             }
             #endif
-            #ifdef INTER_DIHEDRAL
+            #ifdef SIMP_DIHEDRAL
             if (sys.hasDihedralPotential()) {
                assert(dihedralAveragePtr_);
                outputFile_ << Dbl(dihedralAveragePtr_->blockAverage());
             }
             #endif
-            #ifdef INTER_EXTERNAL
+            #ifdef SIMP_EXTERNAL
             if (sys.hasExternalPotential()) {
                assert(externalAveragePtr_);
                outputFile_ << Dbl(externalAveragePtr_->blockAverage());
@@ -418,19 +418,19 @@ namespace McMd
       // Write average (*.ave) file
       sim.fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
       double ave, err;
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       ave = pairAveragePtr_->average();
       err = pairAveragePtr_->blockingError();
       outputFile_ << "Pair      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          ave = bondAveragePtr_->average();
          err = bondAveragePtr_->blockingError();
          outputFile_ << "Bond      " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          assert(angleAveragePtr_);
          ave = angleAveragePtr_->average();
@@ -438,7 +438,7 @@ namespace McMd
          outputFile_ << "Angle     " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          assert(dihedralAveragePtr_);
          ave = dihedralAveragePtr_->average();
@@ -446,7 +446,7 @@ namespace McMd
          outputFile_ << "Dihedral  " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          assert(externalAveragePtr_);
          ave = externalAveragePtr_->average();
@@ -464,10 +464,10 @@ namespace McMd
       outputFile_ << 
       "---------------------------------------------------------------------------------\n";
       outputFile_ << "Pair:\n\n";
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       pairAveragePtr_->output(outputFile_);
       #endif
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
@@ -475,7 +475,7 @@ namespace McMd
          bondAveragePtr_->output(outputFile_);
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
@@ -484,7 +484,7 @@ namespace McMd
          angleAveragePtr_->output(outputFile_);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";
@@ -493,7 +493,7 @@ namespace McMd
          dihedralAveragePtr_->output(outputFile_);
       }
       #endif
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          outputFile_ << 
          "---------------------------------------------------------------------------------\n";

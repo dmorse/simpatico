@@ -114,17 +114,17 @@ namespace McMd
       /// \name Potential Energy Queries
       //@{
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Does a bond potential exist?
       bool hasBonds() const;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Does an angle potential exist?
       bool hasAngles() const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Does a dihedral potential exist?
       bool hasDihedrals() const;
       #endif
@@ -134,12 +134,12 @@ namespace McMd
       bool hasLinks() const;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Does an external potential exist?
       bool hasExternal() const;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       /// Does a tether potential exist?
       bool hasTethers() const;
       #endif
@@ -165,17 +165,17 @@ namespace McMd
       /// Pointer to Boundary object for actual boundary.
       Boundary*   boundaryPtr_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       // Does a bond potential exist?
       bool hasBonds_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       // Does an angle potential exist?
       bool hasAngles_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       // Does a dihedral potential exist?
       bool hasDihedrals_;
       #endif
@@ -185,12 +185,12 @@ namespace McMd
       bool hasLinks_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       // Does an external potential exist?
       bool hasExternal_;
       #endif
 
-      #ifdef INTER_TETHER
+      #ifdef SIMP_TETHER
       // Does a tether potential exist?
       bool hasTethers_;
       #endif
@@ -255,7 +255,7 @@ namespace McMd
       (*moleculeSetsPtr_)[speciesId].begin(iterator);
    }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Does a bond potential exist?
    */
@@ -263,7 +263,7 @@ namespace McMd
    {  return hasBonds_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Does an angle potential exist?
    */
@@ -271,7 +271,7 @@ namespace McMd
    {  return hasAngles_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /// Does a dihedral potential exist?
    inline bool SubSystem::hasDihedrals() const
    {  return hasDihedrals_; }
@@ -283,13 +283,13 @@ namespace McMd
    { return hasLinks_; }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    /// Does an external potential exist?
    inline bool SubSystem::hasExternal() const
    { return hasExternal_; }
    #endif
 
-   #ifdef INTER_TETHER
+   #ifdef SIMP_TETHER
    /// Does a tether potential exist?
    inline bool SubSystem::hasTethers() const
    { return hasTethers_; }

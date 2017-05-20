@@ -1,0 +1,111 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_external_interface_page External Interaction Class Interface
+
+External interaction classes are used in external potential class 
+templates to implement pair potential classes both the McMd and DdMd 
+namespaces, in the templates McMd::ExternalPotentialImpl and
+DdMd::ExternalPotentialImpl, respectively. These templates call 
+specific functions by name, and thus define an implicit interface 
+that must be implemented by all pair interaction classes.  
+
+Here is a prototype class definition that shows the signatures for all
+of the required functions, for a hypothetical interaction class called
+External:
+\code
+
+   class External : public ParamComposite 
+   {
+   
+   public:
+
+      // Mutators
+   
+      // Set nAtomType value.
+      // 
+      // \param nAtomType number of atom types.
+      //
+      void setNAtomType(int nAtomType);
+
+      // Set pointer to Boundary.
+      //
+      // \param boundary Boundary object (used to calculate distances).
+      //
+      void setBoundary(Boundary &boundary);
+
+      // Read parameters for this pair interaction function.
+      //
+      // \pre nAtomType must have been set, by calling setNAtomType().
+      //
+      // \param in  input stream 
+      //
+      virtual void readParameters(std::istream &in);
+
+      // Load internal state from an archive.
+      //
+      // \param ar input/loading archive
+      //
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      // Save internal state to an archive.
+      //
+      // \param ar output/saving archive
+      //
+      virtual void save(Serializable::OArchive &ar);
+
+      // Modify a parameter, identified by a name string.
+      //
+      // \param name   parameter name
+      // \param i      atom type index 1
+      // \param j      atom type index 2
+      // \param value  new value of parameter
+      //
+      void set(std::string name, int i, int j, double value);
+
+      // Accessors
+
+      // Returns external potential energy of a particle of type i.
+      //
+      // \param d  distance to the nearest boundary
+      // \param i  type of particle (not used)
+      // \return   external potential energy
+      //
+      double energy(double d, int i) const;
+ 
+      // Returns external potential energy of a single particle. 
+      //
+      // \param position atomic position Vector
+      // \param i        atom type.
+      // \return     external potential energy
+      //
+      double energy(const Vector& position, int i) const;
+
+      // Returns magnitude of the repulsive force.
+      //
+      // \param d   distance from the nearest wall.
+      // \param i   atom type id (not used)
+      // \return    force scalar
+      //
+      double forceScalar(double d, int i) const;
+ 
+      // Returns force caused by the external potential.
+      //
+      // \param position  atom position
+      // \param type      atom type id
+      // \param force     force on the atom (on output)
+      //
+      void getForce(const Vector& position, int type, Vector& force) const;
+      // Get a parameter value, identified by a string.
+      //
+      // \param name   parameter name
+      // \param i      atom type index 1
+      // \param j      atom type index 2
+      //
+      double get(std::string name, int i, int j) const;
+
+   };
+\endcode
+
+*/
+}

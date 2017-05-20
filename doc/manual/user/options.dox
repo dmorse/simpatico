@@ -70,32 +70,32 @@ The optional features are:
     <td> -b </td>
     <td> ON </td>
     <td> _nb </td>
-    <td> INTER_BOND </td>
-    <td> inter/config.mk </td>
+    <td> SIMP_BOND </td>
+    <td> simp/config.mk </td>
   </tr>
   <tr> 
     <td> Angle potentials </td>
     <td> -a </td>
     <td> OFF </td>
     <td> _a </td>
-    <td> INTER_ANGLE </td>
-    <td> inter/config.mk </td>
+    <td> SIMP_ANGLE </td>
+    <td> simp/config.mk </td>
   </tr>
   <tr> 
     <td> Dihedral potentials </td>
     <td> -d </td>
     <td> OFF </td>
     <td> _d </td>
-    <td> INTER_DIHEDRAL </td>
-    <td> inter/config.mk </td>
+    <td> SIMP_DIHEDRAL </td>
+    <td> simp/config.mk </td>
   </tr>
   <tr> 
     <td> External potentials </td>
     <td> -e </td>
     <td> OFF </td>
     <td> _e </td>
-    <td> INTER_EXTERNAL </td>
-    <td> inter/config.mk </td>
+    <td> SIMP_EXTERNAL </td>
+    <td> simp/config.mk </td>
   </tr>
   <tr> 
     <td> Links (mutable bonds) </td>
@@ -131,13 +131,13 @@ We now discuss each option in a bit more detail:
 
 - Message Passing Interface (UTIL_MPI): The MPI feature must be enabled in order to build any parallel program. Specifically, it must be enabled to build either the ddSim MD program, which uses a domain-decomposition algorithm, or the multi-processor versions of mcSim and mdSim, which allow "embarrassingly parallel" MC and MD simulations with one system on each processor. MPI is disabled by default in the bld/parallel directory, which is intended to be used to build parallel programs, and disabled by default in the bld/serial directory, which is intended to be used to build the single processor mcSim and mdSim programs. It is also disabled by the default in the src/ directory (i.e., in in-source builds). The makefile system is designed to make it unnecessary for users to explicitly enable or disable MPI when code is built using the makefile targets mcMd, mcMd-mpi, and ddMd in the makefiles in each of these build directories (i.e., in bld/parallel, bld/serial, and src/ directories), because these targets all explicitly enable or disable MPI, as appropriate, before compiling any code. Specifically "make mcMd" explicitly disables MPI and the other two targets enable MPI in bld/parallel before compiling any source files or building libraries. The only time that users should have to invoke configure with the -m option is if they want to compile MPI-enabled or MPI-disabled versions of specific source files or namespace level libraries in the src/ directory (which can be used to compile either parallel or serial code) by invoking make from a namespace or lower-level subdirectory. When MPI is enabled, a suffix _m is added to the names of MPI-enabled versions of the libraries libutil.a, libinter.a and libmcMd.a, and to the names of the mcSim and mdSim executables. No such suffix is added to the name of the libDdMd.a library or ddSim executable, because MPI is not an optional feature of the domain-decomposition code, but is required for this code to compile and function. 
 
-- Bond potentials (INTER_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.
+- Bond potentials (SIMP_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.
 
-- Angle potentials (INTER_ANGLE): This option enables the inclusion of covalent three-body bending potentials in all programs. This is currently disabled by default.
+- Angle potentials (SIMP_ANGLE): This option enables the inclusion of covalent three-body bending potentials in all programs. This is currently disabled by default.
 
-- Dihedral potentials (INTER_DIHEDRAL): This option enables the inclusion of covalent four-body dihedral potentials in all programs. This is disabled by default.
+- Dihedral potentials (SIMP_DIHEDRAL): This option enables the inclusion of covalent four-body dihedral potentials in all programs. This is disabled by default.
 
-- External potentials (INTER_EXTERNAL): This option enables the inclusion of one-particle external potentials in all programs. These are potential energies that depend on the position and type of an atom. This is disabled by default.
+- External potentials (SIMP_EXTERNAL): This option enables the inclusion of one-particle external potentials in all programs. These are potential energies that depend on the position and type of an atom. This is disabled by default.
 
 - Links (MCMD_LINK): This feature enables the inclusion of mutable bonds, that can be created or destroyed during the course of a simulation, within mcSim and mdSim programs. Mutable links can use the same set of interaction potentials as covalent bonds, but require a different set of data structures to keep track of their creation and destruction. They were introduced to allow simulation of transient network models with reactions that create or destroy bonds. There is no analogous run-time feature in the DdMd namespace, but it would relatively easy to create one as a Modifier (see below). Links are disabled by default.
 
@@ -149,9 +149,9 @@ We now discuss each option in a bit more detail:
 
 \section user_option_scope Scope conventions
 
-The names of the makefile variables associated with different compile time options, such as UTIL_DEBUG, contain suffixes that identify which namespaces they may appear in or affect. The source code for simpatico simulation programs is divided into four namespaces named Util, Inter, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/inter, src/mcMd, and src/ddMd, respectively. Some of these namespaces depend on others: A namespace A is said to depend upon a second namespace B if some code in the namespace A uses classes or other names defined in the namespace B. There is a strict hierarchy of dependencies among namespaces: The Util namespace does not depend on any other namespace. The Inter namespace depends only upon Util. The McMd and DdMd namespaces each depend on Util and Inter, but not on each other. 
+The names of the makefile variables associated with different compile time options, such as UTIL_DEBUG, contain suffixes that identify which namespaces they may appear in or affect. The source code for simpatico simulation programs is divided into four namespaces named Util, Simp, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/simp, src/mcMd, and src/ddMd, respectively. Some of these namespaces depend on others: A namespace A is said to depend upon a second namespace B if some code in the namespace A uses classes or other names defined in the namespace B. There is a strict hierarchy of dependencies among namespaces: The Util namespace does not depend on any other namespace. The Simp namespace depends only upon Util. The McMd and DdMd namespaces each depend on Util and Simp, but not on each other. 
 
-The names of makefile variables that are used to enable optional features all have prefixes UTIL_, INTER_, MCMD_ or DDMD_ that reflect their scope, using the same conventions as those used for dependencies among source code files in different namespaces. Preprocessor macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, only appear in the DdMd namespace (the src/ddMd directory).  Preprocessor macros whose names begin with MCMD_, which are defined in /src/mcMd/config.mk, only appear in the source code of the McMd namespace. Macros with names that begin with INTER_ are defined in inter/config.mk, and may appear or be included in the source code of the Inter, McMd and DdMd namespaces (the src/inter/, src/mcMd/, and src/dMd/ directories), but not in the Util namespace (the src/util directory). Macros with names that begin with UTIL_ are global: They can appear or be included in the source code in any namespace.
+The names of makefile variables that are used to enable optional features all have prefixes UTIL_, SIMP_, MCMD_ or DDMD_ that reflect their scope, using the same conventions as those used for dependencies among source code files in different namespaces. Preprocessor macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, only appear in the DdMd namespace (the src/ddMd directory).  Preprocessor macros whose names begin with MCMD_, which are defined in /src/mcMd/config.mk, only appear in the source code of the McMd namespace. Macros with names that begin with SIMP_ are defined in simp/config.mk, and may appear or be included in the source code of the Simp, McMd and DdMd namespaces (the src/simp/, src/mcMd/, and src/dMd/ directories), but not in the Util namespace (the src/util directory). Macros with names that begin with UTIL_ are global: They can appear or be included in the source code in any namespace.
 
 \section user_option_suffix File name suffixes 
 

@@ -1,16 +1,16 @@
-/*! \page inter_external_page External Interactions
+/*! \page simp_interaction_external_page External Interactions
 
 An external potential is a potential that acts on each atom, whose value depends only on the atomic position and atom type index. 
 
-All of the angle interaction classes implement a common interface, which is described \subpage inter_external_interface_page "here". 
+All of the angle interaction classes implement a common interface, which is described \subpage simp_interaction_external_interface_page "here". 
 
-\section inter_external_interactions_section External Interaction Classes 
+\section simp_interaction_external_interactions_section External Interaction Classes 
 
 <ul style="list-style: none;">
-  <li> \subpage inter_external_LamellarOrderExternal_page - designed to induce layers </li>
-  <li> \subpage inter_external_SlitExternal_page - 1D confinement to a slit</li>
-  <li> \subpage inter_external_BoxExternal_page - 3D confinement to a box </li>
-  <li> \subpage inter_external_OrthoBoxExternal_page - Generalized confinement to a box, channel or slit </li>
+  <li> \subpage simp_interaction_external_LamellarOrderExternal_page - designed to induce layers </li>
+  <li> \subpage simp_interaction_external_SlitExternal_page - 1D confinement to a slit</li>
+  <li> \subpage simp_interaction_external_BoxExternal_page - 3D confinement to a box </li>
+  <li> \subpage simp_interaction_external_OrthoBoxExternal_page - Generalized confinement to a box, channel or slit </li>
 </ul>
  
 */

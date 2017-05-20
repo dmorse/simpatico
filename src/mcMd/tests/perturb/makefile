@@ -1,11 +1,11 @@
 SRC_DIR_REL =../../..
 include $(SRC_DIR_REL)/config.mk
 include $(SRC_DIR)/util/config.mk
-include $(SRC_DIR)/inter/config.mk
+include $(SRC_DIR)/simp/config.mk
 include $(SRC_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include sources.mk
 
@@ -17,9 +17,9 @@ clean:
 clean-deps:
 	rm -f $(mcMd_tests_perturb_OBJS:.o=.d)
 
-Test: Test.o $(mcMd_LIB) $(inter_LIB) $(util_LIB)
+Test: Test.o $(mcMd_LIB) $(simp_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(mcMd_LIB) $(inter_LIB) $(util_LIB)
+	       $(mcMd_LIB) $(simp_LIB) $(util_LIB)
 
 -include $(tests_mcMd_perturb_OBJS:.o=.d)
 

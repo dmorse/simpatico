@@ -13,14 +13,14 @@
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
 
 // Pair interaction classes
-#include <inter/pair/LJPair.h>
-#include <inter/pair/WcaPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/WcaPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 
 namespace DdMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

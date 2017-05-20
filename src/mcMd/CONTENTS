@@ -4,7 +4,7 @@ well as main programs mcSim.cpp and mdSim.cpp.
 
 Source files in this directory tree, and in the McMd namespace, can use
 classes and other names defined in the Util namespace (src/util directory) 
-and the Inter namespace (src/inter directory), but may not use any names
+and the Simp namespace (src/simp directory), but may not use any names
 defined in the DdMd namespace (src/ddMd directory). 
 
 Subdirectories:

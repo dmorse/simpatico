@@ -47,16 +47,16 @@ namespace DdMd
    #endif
    class AnalyzerManager;
    class PairPotential;
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    class BondPotential;
    #endif
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    class AnglePotential;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    class DihedralPotential;
    #endif
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    class ExternalPotential;
    #endif
 
@@ -412,7 +412,7 @@ namespace DdMd
       */
       DMatrix<double> pairEnergies() const;
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Compute pair energies for each pair of atom types.
       *
@@ -521,7 +521,7 @@ namespace DdMd
       */
       Factory<PairPotential>& pairFactory();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get the PairPotential by const reference.
       */
@@ -543,7 +543,7 @@ namespace DdMd
       Factory<BondPotential>& bondFactory();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get the AnglePotential by const reference.
       */
@@ -565,7 +565,7 @@ namespace DdMd
       Factory<AnglePotential>& angleFactory();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get the DihedralPotential by const reference.
       */
@@ -587,7 +587,7 @@ namespace DdMd
       Factory<DihedralPotential>& dihedralFactory();
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Get the ExternalPotential by reference.
       */
@@ -618,21 +618,21 @@ namespace DdMd
       */
       AtomStorage& atomStorage();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get the BondStorage by reference.
       */
       BondStorage& bondStorage();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get the AngleStorage by reference.
       */
       AngleStorage& angleStorage();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get the DihedralStorage by reference.
       */
@@ -721,28 +721,28 @@ namespace DdMd
       */
       int nAtomType();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get maximum number of bond types.
       */
       int nBondType();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get maximum number of angle types.
       */
       int nAngleType();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get maximum number of dihedral types.
       */
       int nDihedralType();
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Does this simulation have an external potential?
       */
@@ -860,17 +860,17 @@ namespace DdMd
       /// Container for all atoms and ghosts.
       AtomStorage atomStorage_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Container for bonds.
       BondStorage bondStorage_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Container for angles.
       AngleStorage angleStorage_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Container for dihedrals.
       DihedralStorage dihedralStorage_;
       #endif
@@ -905,22 +905,22 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Pointer to covalent bond potential.
       BondPotential* bondPotentialPtr_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Pointer to covalent 3-body angle potential.
       AnglePotential* anglePotentialPtr_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Pointer to covalent 4-body dihedral potential.
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Pointer to external 1-body potential.
       ExternalPotential* externalPotentialPtr_;
       #endif
@@ -954,22 +954,22 @@ namespace DdMd
       /// Pointer to a PairPotential factory.
       Factory<PairPotential>* pairFactoryPtr_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Pointer to a Factory<BondPotential>.
       Factory<BondPotential>* bondFactoryPtr_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Pointer to the AnglePotential Factory.
       Factory<AnglePotential>* angleFactoryPtr_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>* dihedralFactoryPtr_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Pointer to ExternalPotential Factory
       Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
@@ -983,22 +983,22 @@ namespace DdMd
       /// Name of pair potential style.
       std::string pairStyle_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Name of bond potential style.
       std::string bondStyle_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Name of angle potential style.
       std::string angleStyle_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Name of external potential style.
       std::string externalStyle_;
       #endif
@@ -1006,22 +1006,22 @@ namespace DdMd
       /// Number of distinct atom types.
       int nAtomType_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Number of distinct bond types.
       int nBondType_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Number of distinct angle types.
       int nAngleType_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Number of distinct dihedral types.
       int nDihedralType_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /// Does this simulation have an external potential?
       bool hasExternal_;
       #endif
@@ -1093,17 +1093,17 @@ namespace DdMd
    inline AtomStorage& Simulation::atomStorage()
    { return atomStorage_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline BondStorage& Simulation::bondStorage()
    { return bondStorage_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline AngleStorage& Simulation::angleStorage()
    { return angleStorage_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline DihedralStorage& Simulation::dihedralStorage()
    { return dihedralStorage_; }
    #endif
@@ -1126,7 +1126,7 @@ namespace DdMd
       return *pairPotentialPtr_;
    }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline const BondPotential& Simulation::bondPotential() const
    {
       assert(bondPotentialPtr_);
@@ -1140,7 +1140,7 @@ namespace DdMd
    }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline const AnglePotential& Simulation::anglePotential() const
    {
       assert(anglePotentialPtr_);
@@ -1154,7 +1154,7 @@ namespace DdMd
    }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline const DihedralPotential& Simulation::dihedralPotential() const
    {
       assert(dihedralPotentialPtr_);
@@ -1168,7 +1168,7 @@ namespace DdMd
    }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    inline const ExternalPotential& Simulation::externalPotential() const
    {
       assert(externalPotentialPtr_);
@@ -1234,25 +1234,25 @@ namespace DdMd
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /// Get maximum number of bond types.
    inline int Simulation::nBondType()
    {  return nBondType_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /// Get maximum number of angle types.
    inline int Simulation::nAngleType()
    {  return nAngleType_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /// Get the maximum number of dihedral types.
    inline int Simulation::nDihedralType()
    {  return nDihedralType_; }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    /// Does this simulation have an external potential?
    inline bool Simulation::hasExternal()
    {  return hasExternal_; }

@@ -183,34 +183,6 @@ namespace McMd
       */
       virtual void computeStress();
 
-      #if 0
-      /**
-      * Return total angle potential energy of this System.
-      */
-      virtual double energy() const;
-
-      /**
-      * Compute total angle pressure
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z angle pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute angle stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-      #endif
-
       //@}
 
    private:
@@ -513,22 +485,6 @@ namespace McMd
       // Set value of Setable<double> energy_ 
       stress_.set(stress);
    }
-
-   #if 0
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(double& stress) const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
-        const
-   {  computeStressImpl(stress); }
-   #endif
 
    template <class Interaction>
    inline Interaction& AnglePotentialImpl<Interaction>::interaction()

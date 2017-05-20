@@ -179,7 +179,7 @@ namespace McMd
       // First half of update of xi_
       xi_ += xiDot_*dtHalf;
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       // Rebuild the pair list if necessary
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();

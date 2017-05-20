@@ -8,7 +8,7 @@
 #include "WangLandauAdaptiveStepMove.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/GeneralpolymerSG.h>
@@ -244,7 +244,7 @@ namespace McMd
       }
 
       Molecule& molecule = randomSGMolecule(speciesId_, oldState, flipType_);
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       // Calculate pair energy for the chosen molecule
       double oldEnergy = system().pairPotential().moleculeEnergy(molecule);
       #endif
@@ -257,12 +257,12 @@ namespace McMd
           stateChange = 1;
       }
 
-      #ifdef INTER_NOPAIR 
+      #ifdef SIMP_NOPAIR 
 
       bool   accept = true;
       bool   inAllowedRange = true;
       
-      #else // ifndef INTER_NOPAIR
+      #else // ifndef SIMP_NOPAIR
 
       // Recalculate pair energy for the molecule
       double newEnergy = system().pairPotential().moleculeEnergy(molecule);

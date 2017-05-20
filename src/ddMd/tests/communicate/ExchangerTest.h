@@ -13,10 +13,10 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/BondStorage.h>
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>
 #endif
 #include <util/boundary/Boundary.h>
@@ -49,10 +49,10 @@ private:
    Random random;
    AtomStorage atomStorage;
    BondStorage bondStorage;
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    AngleStorage angleStorage;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
    int atomCount;
@@ -86,23 +86,23 @@ void ExchangerTest::setUp()
    bondStorage.associate(domain, atomStorage, buffer);
    exchanger.associate(domain, boundary, atomStorage, buffer);
    exchanger.addGroupExchanger(bondStorage);
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    angleStorage.associate(domain, atomStorage, buffer);
    if (hasAngle) {
       exchanger.addGroupExchanger(angleStorage);
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    dihedralStorage.associate(domain, atomStorage, buffer);
    if (hasDihedral) {
       exchanger.addGroupExchanger(dihedralStorage);
    }
    #endif
    configIo.associate(domain, boundary, atomStorage, bondStorage, 
-                      #ifdef INTER_ANGLE
+                      #ifdef SIMP_ANGLE
                       angleStorage,
                       #endif
-                      #ifdef INTER_DIHEDRAL
+                      #ifdef SIMP_DIHEDRAL
                       dihedralStorage,
                       #endif
                       buffer);
@@ -116,10 +116,10 @@ void ExchangerTest::setUp()
    random.setIoCommunicator(communicator());
    atomStorage.setIoCommunicator(communicator());
    bondStorage.setIoCommunicator(communicator());
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    angleStorage.setIoCommunicator(communicator());
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    dihedralStorage.setIoCommunicator(communicator());
    #endif
    #else
@@ -127,8 +127,8 @@ void ExchangerTest::setUp()
    #endif
 
    // Open parameter file
-   #ifdef INTER_ANGLE
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_ANGLE
+   #ifdef SIMP_DIHEDRAL
    openFile("in/Exchanger_a_d");
    #else // dihedral
    openFile("in/Exchanger_a");
@@ -142,15 +142,15 @@ void ExchangerTest::setUp()
    random.readParam(file());
 
    atomStorage.readParam(file());
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    bondStorage.readParam(file());
    #endif
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngle) {
       angleStorage.readParam(file());
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedral) {
       dihedralStorage.readParam(file());
    }
@@ -204,10 +204,10 @@ void ExchangerTest::displaceAtoms(double range)
 void ExchangerTest::exchangeNotify() 
 {
    bondStorage.unsetNTotal();
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    angleStorage.unsetNTotal();
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    dihedralStorage.unsetNTotal();
    #endif
 }
@@ -237,11 +237,11 @@ void ExchangerTest::testExchange()
    TEST_ASSERT(!atomStorage.isCartesian());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                false));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(angleStorage.isValid(atomStorage, domain.communicator(), 
                false));
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    TEST_ASSERT(dihedralStorage.isValid(atomStorage, domain.communicator(), 
                false));
    #endif
@@ -282,11 +282,11 @@ void ExchangerTest::testExchange()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(angleStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
@@ -356,11 +356,11 @@ void ExchangerTest::testGhostUpdate()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(angleStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
@@ -440,11 +440,11 @@ void ExchangerTest::testGhostUpdateCycle()
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
                                       true)); 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       TEST_ASSERT(angleStorage.isValid(atomStorage, 
                   domain.communicator(), true));
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
       #endif
@@ -496,11 +496,11 @@ void ExchangerTest::testExchangeUpdateCycle()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    TEST_ASSERT(angleStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                domain.communicator(), true));
    #endif
@@ -584,11 +584,11 @@ void ExchangerTest::testExchangeUpdateCycle()
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
                                       true)); 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       TEST_ASSERT(angleStorage.isValid(atomStorage, 
                   domain.communicator(), true));
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
       #endif

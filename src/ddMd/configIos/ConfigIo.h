@@ -11,13 +11,13 @@
 #include <util/param/ParamComposite.h>           // base class
 #include <util/boundary/Boundary.h>              // typedef
 #include <ddMd/storage/AtomStorage.h>            // member
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>            // inline function
 #endif 
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>           // inline function
 #endif 
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>        // inline function
 #endif 
 #include <util/containers/DArray.h>              // member
@@ -73,13 +73,13 @@ namespace DdMd
       */
       void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& atomStorage,
-                     #ifdef INTER_BOND
+                     #ifdef SIMP_BOND
                      BondStorage& bondStorage,
                      #endif
-                     #ifdef INTER_ANGLE
+                     #ifdef SIMP_ANGLE
                      AngleStorage& angleStorage,
                      #endif
-                     #ifdef INTER_DIHEDRAL
+                     #ifdef SIMP_DIHEDRAL
                      DihedralStorage& dihedralStorage,
                      #endif
                      Buffer& buffer);
@@ -189,7 +189,7 @@ namespace DdMd
       */
       AtomCollector& atomCollector();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get BondStorage by reference.
       */
@@ -206,7 +206,7 @@ namespace DdMd
       GroupCollector<2>& bondCollector();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get AngleStorage by reference.
       */
@@ -223,7 +223,7 @@ namespace DdMd
       GroupCollector<3>& angleCollector();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get DihedralStorage by reference.
       */
@@ -246,13 +246,13 @@ namespace DdMd
       Domain* domainPtr_;
       Boundary* boundaryPtr_;
       AtomStorage* atomStoragePtr_;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       BondStorage* bondStoragePtr_;
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AngleStorage* angleStoragePtr_;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       DihedralStorage* dihedralStoragePtr_;
       #endif
 
@@ -291,7 +291,7 @@ namespace DdMd
    inline AtomCollector& ConfigIo::atomCollector()
    {  return atomStoragePtr_->collector(); }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline BondStorage& ConfigIo::bondStorage()
    {  
       assert(bondStoragePtr_);
@@ -305,7 +305,7 @@ namespace DdMd
    {  return bondStorage().collector(); }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline AngleStorage& ConfigIo::angleStorage()
    {
       assert(angleStoragePtr_);  
@@ -319,7 +319,7 @@ namespace DdMd
    {  return angleStorage().collector(); }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline DihedralStorage& ConfigIo::dihedralStorage()
    {
       assert(dihedralStoragePtr_);  

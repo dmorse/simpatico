@@ -35,11 +35,11 @@ tools:
 
 test-serial:
 	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/simp/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/tools/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/serial/util/tests/count > count
-	@cat bld/serial/inter/tests/count >> count
+	@cat bld/serial/simp/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
 	@cat bld/serial/tools/tests/count >> count
 	@echo " "
@@ -82,14 +82,14 @@ clean-bin:
  
 veryclean:
 	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
-	cd bld/serial; rm -f util/makefile inter/makefile 
+	cd bld/serial; rm -f util/makefile simp/makefile 
 	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
-	cd bld/serial; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/serial; rm -f util/tests/makefile simp/tests/makefile 
 	cd bld/serial; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
 	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
-	cd bld/parallel; rm -f util/makefile inter/makefile 
+	cd bld/parallel; rm -f util/makefile simp/makefile 
 	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile tools/makefile
-	cd bld/parallel; rm -f util/tests/makefile inter/tests/makefile 
+	cd bld/parallel; rm -f util/tests/makefile simp/tests/makefile 
 	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
 	$(MAKE) clean-bin
 	-rm -f $(BIN_DIR)/makeDep

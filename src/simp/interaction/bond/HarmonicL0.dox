@@ -1,0 +1,31 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_bond_HarmonicL0Bond_page HarmonicL0Bond 
+
+The HarmonicL0Bond interaction implements a simple harmonic bond 
+potential with a zero rest length.  The potential energy 
+\f$V(r)\f$ for two covalently bonded atoms separated by a distance 
+\f$r\f$ is given by
+\f[
+   V(r) = \frac{\kappa}{2} r^{2}
+\f]
+Different values are defined for the spring constant \f$\epsilon\f$
+for each bond type.
+
+The values of \f$\kappa\f$ are given in the parameter file and 
+source code by an array-valued variable named "kappa".  The 
+parameter file format is:
+\code
+   kappa  Array<float>
+\endcode
+The parameter block a system with two bond types (nBondType=2) 
+might thus look like this:
+\code
+   kappa     100.0
+             150.0
+\endcode
+
+*/
+
+}

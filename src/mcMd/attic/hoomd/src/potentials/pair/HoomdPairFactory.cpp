@@ -1,4 +1,4 @@
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #ifndef PAIR_FACTORY_CPP
 #define PAIR_FACTORY_CPP
 
@@ -20,15 +20,15 @@
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 
 // Pair Potential evaluator classes
-#include <inter/pair/LJPair.h>
-#include <inter/pair/DpdPair.h>
-#include <inter/pair/CompensatedPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/DpdPair.h>
+#include <simp/interaction/pair/CompensatedPair.h>
 
 #include <modules/hoomd/potentials/pair/HoomdLJPair.h>
 #include <modules/hoomd/potentials/pair/HoomdLJShiftedForcePair.h>
 #include <modules/hoomd/potentials/pair/HoomdDpdPair.h>
 
-#include <inter/bond/FeneBond.h>
+#include <simp/interaction/bond/FeneBond.h>
 
 #include <hoomd/HOOMDMath.h>
 #include <hoomd/EvaluatorPairLJ.h>

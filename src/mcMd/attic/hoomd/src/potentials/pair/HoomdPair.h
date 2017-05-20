@@ -1,4 +1,4 @@
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #ifndef HOOMD_PAIR_H
 #define HOOMD_PAIR_H
 

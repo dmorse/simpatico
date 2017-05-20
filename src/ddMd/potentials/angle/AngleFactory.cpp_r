@@ -13,14 +13,14 @@
 #include <ddMd/potentials/angle/AnglePotentialImpl.h>
 
 // Angle interaction classes
-#include <inter/angle/CosineSqAngle.h>
-#include <inter/angle/CosineAngle.h>
-#include <inter/angle/HarmonicAngle.h>
+#include <simp/interaction/angle/CosineSqAngle.h>
+#include <simp/interaction/angle/CosineAngle.h>
+#include <simp/interaction/angle/HarmonicAngle.h>
 
 namespace DdMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.

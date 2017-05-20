@@ -2,13 +2,15 @@ Subdirectories:
 ---------------
 
 util       utility classes for scientific computation (namespace Util)
-inter      classes defining potential energy functions (namespace Inter)
+simp       general classes for simpatico simulations (namespace Simp)
 mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
 ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
 tools      pre- and postprocessing tools (namespace Tools)
-modules    add-on components for particular applications
 test       unit test framework
 draft      unfinished or proposed classes
+
+Note: The contents of directories util/ and test/ are maintained in separate 
+git repositories on github.com, and are included in simpatico as git submodules.
 
 Files (before running the setup script):
 ----------------------------------------

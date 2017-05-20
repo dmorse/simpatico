@@ -13,7 +13,7 @@
 #include <util/boundary/OrthorhombicBoundary.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/chemistry/Atom.h>
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -122,7 +122,7 @@ namespace McMd
       }
 
       // Initialize MdSystem
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       mdSystemPtr_->pairPotential().buildPairList();
       #endif
       mdSystemPtr_->calculateForces();
@@ -182,7 +182,7 @@ namespace McMd
       // Accept move
       if (accept) {
          
-         #ifndef INTER_NOPAIR
+         #ifndef SIMP_NOPAIR
          // Rebuild the McSystem cellList using the new positions.
          system().pairPotential().buildCellList();
          #endif

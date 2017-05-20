@@ -7,6 +7,7 @@
 #include <util/format/Dbl.h>
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdSystem.h>
+#include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/mdIntegrators/NveVvIntegrator.h>
 
@@ -69,7 +70,7 @@ void MdIntegratorTest::testIntegrator()
 
    /// BUG:: A configurition needs to be read or generated at this point.
 
-   systemPtr_->buildPairList();
+   systemPtr_->pairPotential().buildPairList();
    systemPtr_->calculateForces();
    systemPtr_->setBoltzmannVelocities(1.0);
 

@@ -1,0 +1,30 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_external_OrthoBoxExternal_page OrthoBoxExternal 
+
+The OrthoBoxExternal interaction implements a repulsive 9-3 confining 
+potential that confines particles in one or more direction.  For each 
+Cartesian direction i=0, 1, or 2 for which i is greater than or equal 
+to a user provided integer indexConfinement, the interaction creates 
+a repulsive potential centered around x[i] = 0 or x = L[i], thus 
+confining x[i] to the domain 0 < x[i] < L[i].  
+Setting indexConfinement = 0 thus confines the particles in all three 
+directions, indexConfinement = 1 confines the particles in the y and z 
+direction, and indexConfinement = 2 confines the particles only in the z
+direction. The form of the potential in each direction is the same as 
+that used in the one-dimensional SlitExternal potential, which confines 
+particles only in the z (i=2) direction. 
+
+The parameter file format is:
+\code
+   indexConfinement   integer
+   epsilon            float
+   sigma              float
+   cutoff             float
+\endcode
+As in SlitExternal, the parameter \f$\rho\f$ has a hard-coded default 
+value of \f$\rho \equiv 0.7\f$.
+
+*/
+}

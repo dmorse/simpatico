@@ -19,15 +19,15 @@
 #include <mcMd/potentials/bond/BondFactory.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
-#include <inter/bond/HarmonicBond.h>
-#include <inter/bond/HarmonicL0Bond.h>
-#include <inter/bond/FeneBond.h>
+#include <simp/interaction/bond/HarmonicBond.h>
+#include <simp/interaction/bond/HarmonicL0Bond.h>
+#include <simp/interaction/bond/FeneBond.h>
 
 #include <modules/hoomd/potentials/pair/HoomdPairFactory.h>
 #include <modules/hoomd/potentials/pair/HoomdPairPotential.h>
 #include <modules/hoomd/potentials/pair/HoomdPair.h>
 #include <modules/hoomd/potentials/bond/HoomdBond.h>
-#ifdef INTER_EXTERNAL
+#ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <modules/hoomd/potentials/external/HoomdExternalFactory.h>
 #include <modules/hoomd/potentials/external/HoomdExternal.h>
@@ -53,7 +53,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    /*
    * Constructor
@@ -330,7 +330,7 @@ namespace McMd
       pairForceSPtr_ = HoomdPairFactory::hoomdFactory(system().pairPotential(),
          system(), systemDefinitionSPtr_,nListSPtr_,skin_);
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       externalForceSPtr_ = HoomdExternalFactory::hoomdFactory(system().externalPotential(),system(),
          systemDefinitionSPtr_);
       implementExternalPotential_ = system().implementExternalPotential();
@@ -396,7 +396,7 @@ namespace McMd
       // register pair and bond forces in Integrator
       integratorSPtr_->addForceCompute(pairForceSPtr_);
       integratorSPtr_->addForceCompute(bondForceSPtr_);
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       if (implementExternalPotential_)
          integratorSPtr_->addForceCompute(externalForceSPtr_);
       #endif

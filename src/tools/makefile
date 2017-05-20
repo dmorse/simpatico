@@ -9,11 +9,11 @@
 SRC_DIR_REL =..
 include $(SRC_DIR_REL)/config.mk
 include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/simp/config.mk
 include $(BLD_DIR)/tools/config.mk
 include $(SRC_DIR)/tools/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/tools/sources.mk
 
 #-----------------------------------------------------------------------
@@ -67,6 +67,6 @@ endif
 # Include class dependency files
  
 -include $(util_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
+-include $(simp_OBJS:.o=.d)
 -include $(tools_OBJS:.o=.d)
 

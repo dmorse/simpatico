@@ -13,10 +13,10 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/BondStorage.h>
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <ddMd/storage/AngleStorage.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>
 #endif
 #include <ddMd/chemistry/MaskPolicy.h>
@@ -26,18 +26,18 @@
 #include <util/space/Vector.h>
 
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
-#include <inter/bond/HarmonicL0Bond.h>
-#ifdef INTER_ANGLE
+#include <simp/interaction/bond/HarmonicL0Bond.h>
+#ifdef SIMP_ANGLE
 #include <ddMd/potentials/angle/AnglePotentialImpl.h>
-#include <inter/angle/HarmonicAngle.h>
+#include <simp/interaction/angle/HarmonicAngle.h>
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
-#include <inter/dihedral/MultiHarmonicDihedral.h>
-#include <inter/dihedral/CosineDihedral.h>
+#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/CosineDihedral.h>
 #endif
 
 #ifdef UTIL_MPI
@@ -51,7 +51,7 @@
 #include <test/ParamFileTest.h>
 
 using namespace Util;
-using namespace Inter;
+using namespace Simp;
 using namespace DdMd;
 
 class ExchangerForceTest: public ParamFileTest
@@ -65,10 +65,10 @@ private:
    Exchanger exchanger;
    AtomStorage atomStorage;
    BondStorage bondStorage;
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    AngleStorage angleStorage;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
    DdMdConfigIo configIo;
@@ -82,10 +82,10 @@ private:
 
    PairPotentialImpl<DpdPair> pairPotential;
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    AnglePotentialImpl<HarmonicAngle> anglePotential;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    DihedralPotentialImpl<CosineDihedral> dihedralPotential;
    #endif
 
@@ -131,23 +131,23 @@ void ExchangerForceTest::initialize()
    bondStorage.associate(domain, atomStorage, buffer);
    exchanger.associate(domain, boundary, atomStorage, buffer);
    exchanger.addGroupExchanger(bondStorage);
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    angleStorage.associate(domain, atomStorage, buffer);
    if (hasAngle) {
       exchanger.addGroupExchanger(angleStorage);
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    dihedralStorage.associate(domain, atomStorage, buffer);
    if (hasDihedral) {
       exchanger.addGroupExchanger(dihedralStorage);
    }
    #endif
    configIo.associate(domain, boundary, atomStorage, bondStorage, 
-                      #ifdef INTER_ANGLE
+                      #ifdef SIMP_ANGLE
                       angleStorage,
                       #endif
-                      #ifdef INTER_DIHEDRAL
+                      #ifdef SIMP_DIHEDRAL
                       dihedralStorage,
                       #endif
                       buffer);
@@ -161,10 +161,10 @@ void ExchangerForceTest::initialize()
    random.setIoCommunicator(communicator());
    atomStorage.setIoCommunicator(communicator());
    bondStorage.setIoCommunicator(communicator());
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    angleStorage.setIoCommunicator(communicator());
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    dihedralStorage.setIoCommunicator(communicator());
    #endif
    #else // ifdef UTIL_MPI
@@ -187,15 +187,15 @@ void ExchangerForceTest::initialize()
    random.readParam(file());
 
    atomStorage.readParam(file());
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    bondStorage.readParam(file());
    #endif
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngle) {
       angleStorage.readParam(file());
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedral) {
       dihedralStorage.readParam(file());
    }
@@ -212,7 +212,7 @@ void ExchangerForceTest::initialize()
    bondPotential.setNBondType(1);
    bondPotential.readParam(file());
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       anglePotential.setIoCommunicator(communicator());
       anglePotential.associate(boundary, angleStorage);
@@ -220,7 +220,7 @@ void ExchangerForceTest::initialize()
       anglePotential.readParam(file());
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       dihedralPotential.associate(boundary, dihedralStorage);
       dihedralPotential.setIoCommunicator(communicator());
@@ -327,12 +327,12 @@ void ExchangerForceTest::computeForces() {
    zeroForces();
    pairPotential.computeForces();
    bondPotential.computeForces();
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       anglePotential.computeForces();
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       dihedralPotential.computeForces();
    }
@@ -365,12 +365,12 @@ void ExchangerForceTest::saveForces()
 
 void ExchangerForceTest::exchangeNotify() {
    bondStorage.unsetNTotal();
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       angleStorage.unsetNTotal();
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       dihedralStorage.unsetNTotal();
    }
@@ -449,13 +449,13 @@ void ExchangerForceTest::testGhostUpdate()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       TEST_ASSERT(angleStorage.isValid(atomStorage, 
                   domain.communicator(), true));
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
@@ -552,13 +552,13 @@ void ExchangerForceTest::testGhostUpdateCycle()
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
                                       true)); 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngles) {
          TEST_ASSERT(angleStorage.isValid(atomStorage, 
                      domain.communicator(), true));
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedrals) {
          TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                      domain.communicator(), true));
@@ -641,13 +641,13 @@ void ExchangerForceTest::testInitialForces()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       TEST_ASSERT(angleStorage.isValid(atomStorage, 
                   domain.communicator(), true));
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
@@ -703,7 +703,7 @@ void ExchangerForceTest::testInitialForces()
    if (domain.communicator().Get_rank() == 0) {
       bondStress = bondPotential.stress();
    }
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    Tensor angleStress;
    if (hasDihedrals) {
       anglePotential.unsetStress();
@@ -713,7 +713,7 @@ void ExchangerForceTest::testInitialForces()
       }
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    Tensor dihedralStress;
    if (hasDihedrals) {
       dihedralPotential.unsetStress();
@@ -767,13 +767,13 @@ void ExchangerForceTest::testInitialForces()
    pairPotential.computeForcesAndStress(domain.communicator());
    bondPotential.unsetStress();
    bondPotential.computeForcesAndStress(domain.communicator());
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    if (hasAngles) {
       anglePotential.unsetStress();
       anglePotential.computeForcesAndStress(domain.communicator());
    }
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    if (hasDihedrals) {
       dihedralPotential.unsetStress();
       dihedralPotential.computeForcesAndStress(domain.communicator());
@@ -934,13 +934,13 @@ void ExchangerForceTest::testForceCycle()
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
                                       true)); 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngles) {
          TEST_ASSERT(angleStorage.isValid(atomStorage, 
                      domain.communicator(), true));
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedrals) {
          TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                      domain.communicator(), true));

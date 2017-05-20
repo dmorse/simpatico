@@ -13,7 +13,7 @@
 
 #include <cmath>
 
-namespace Inter
+namespace Simp
 {
 
    using namespace Util;
@@ -23,7 +23,7 @@ namespace Inter
    *
    * This class implements a harmonic potential with a zero rest length.
    *
-   * \ingroup Inter_Tether_Module
+   * \ingroup Simp_Interaction_Tether_Module
    */
    class HarmonicTether : public ParamComposite 
    {

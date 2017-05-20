@@ -35,10 +35,10 @@ class SerializeConfigIoTest: public ParamFileTest
    Buffer   buffer;
    AtomStorage  atomStorage;
    BondStorage  bondStorage;
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    AngleStorage  angleStorage;
    #endif
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    DihedralStorage  dihedralStorage;
    #endif
    bool hasAngle;
@@ -55,10 +55,10 @@ public:
       // Set connections between objects
       domain.setBoundary(boundary);
       configIo.associate(domain, boundary, atomStorage, bondStorage, 
-                         #ifdef INTER_ANGLE
+                         #ifdef SIMP_ANGLE
                          angleStorage,
                          #endif
-                         #ifdef INTER_DIHEDRAL
+                         #ifdef SIMP_DIHEDRAL
                          dihedralStorage,
                          #endif
                          buffer);
@@ -69,11 +69,11 @@ public:
       domain.setIoCommunicator(communicator());
       atomStorage.setIoCommunicator(communicator());
       bondStorage.setIoCommunicator(communicator());
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.setIoCommunicator(communicator());
       #else
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStorage.setIoCommunicator(communicator());
       #endif
       buffer.setIoCommunicator(communicator());
@@ -83,11 +83,11 @@ public:
       #endif
 
       hasAngle = false;
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       hasAngle = true;
       #endif
       hasDihedral = false;
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       hasDihedral = true;
       #endif
    }
@@ -97,10 +97,10 @@ public:
       // Set connections between objects
       domain.setBoundary(boundary);
       configIo.associate(domain, boundary, atomStorage, bondStorage, 
-                         #ifdef INTER_ANGLE
+                         #ifdef SIMP_ANGLE
                          angleStorage,
                          #endif
-                         #ifdef INTER_DIHEDRAL
+                         #ifdef SIMP_DIHEDRAL
                          dihedralStorage,
                          #endif
                          buffer);
@@ -111,10 +111,10 @@ public:
       domain.setIoCommunicator(communicator());
       atomStorage.setIoCommunicator(communicator());
       bondStorage.setIoCommunicator(communicator());
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.setIoCommunicator(communicator());
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStorage.setIoCommunicator(communicator());
       #endif
       buffer.setIoCommunicator(communicator());
@@ -141,18 +141,18 @@ public:
       atomStorage.associate(domain, boundary, buffer);
       atomStorage.readParam(file);
    
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       bondStorage.associate(domain, atomStorage, buffer);
       bondStorage.readParam(file);
       #endif
    
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (hasAngle) {
          angleStorage.associate(domain, atomStorage, buffer);
          angleStorage.readParam(file);
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (hasDihedral) {
          dihedralStorage.associate(domain, atomStorage, buffer);
          dihedralStorage.readParam(file);
@@ -169,10 +169,10 @@ public:
       atomStorage.clearAtoms();
       atomStorage.clearGhosts();
       bondStorage.clearGroups();
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.clearGroups();
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       dihedralStorage.clearGroups();
       #endif
    }

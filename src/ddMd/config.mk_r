@@ -12,11 +12,11 @@
 #
 # This file is included by every makefile in the ddMd directory. 
 # It should be included after $(SRC_DIR)/config.mk and after the
-# $(SRC_DIR)/util/config.mk and $(SRC_DIR)/inter/config.mk files,
+# $(SRC_DIR)/util/config.mk and $(SRC_DIR)/simp/config.mk files,
 # but before $(SRC_DIR)/mcmd/patterns.mk.
 # 
 # Note: The structure of this file is the same as that of config.mk
-# files in the src/util, src/inter and src/mcMd directories, but this
+# files in the src/util, src/simp and src/mcMd directories, but this
 # one does not yet define any preprocessor macros. The DDMD_DEFS and
 # DDMD_SUFFIX strings are thus left empty. 
 #
@@ -56,7 +56,7 @@ endif
 # Path to ddMd library
 # Note: BLD_DIR is defined in src/config.mk.
 
-DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
+DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
 ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a

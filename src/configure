@@ -52,34 +52,34 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       FILE=util/config.mk
       ;;
     p)
-      MACRO_OFF=INTER_NOPAIR
+      MACRO_OFF=SIMP_NOPAIR
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     b)
-      MACRO_ON=INTER_BOND
+      MACRO_ON=SIMP_BOND
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     a)
-      MACRO_ON=INTER_ANGLE
+      MACRO_ON=SIMP_ANGLE
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     d)
-      MACRO_ON=INTER_DIHEDRAL
+      MACRO_ON=SIMP_DIHEDRAL
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     c)
-      MACRO_ON=INTER_COULOMB
+      MACRO_ON=SIMP_COULOMB
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     e)
-      MACRO_ON=INTER_EXTERNAL
+      MACRO_ON=SIMP_EXTERNAL
       VALUE=1
-      FILE=inter/config.mk
+      FILE=simp/config.mk
       ;;
     l)
       MACRO_ON=MCMD_LINK
@@ -145,32 +145,32 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       else
          echo "-g OFF - debugging" >&2
       fi
-      if [ `grep "^ *INTER_NOPAIR *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_NOPAIR *= *1" simp/config.mk` ]; then
          echo "-b OFF - pair potential" >&2
       else
          echo "-b ON  - pair potential" >&2
       fi
-      if [ `grep "^ *INTER_BOND *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_BOND *= *1" simp/config.mk` ]; then
          echo "-b ON  - bond potential" >&2
       else
          echo "-b OFF - bond potential" >&2
       fi
-      if [ `grep "^ *INTER_ANGLE *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_ANGLE *= *1" simp/config.mk` ]; then
          echo "-a ON  - angle potential" >&2
       else
          echo "-a OFF - angle potential" >&2
       fi
-      if [ `grep "^ *INTER_DIHEDRAL *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_DIHEDRAL *= *1" simp/config.mk` ]; then
          echo "-d ON  - dihedral potential" >&2
       else
          echo "-d OFF - dihedral potential" >&2
       fi
-      if [ `grep "^ *INTER_COULOMB *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_COULOMB *= *1" simp/config.mk` ]; then
          echo "-c ON  - coulomb potential" >&2
       else
          echo "-c OFF - coulomb potential" >&2
       fi
-      if [ `grep "^ *INTER_EXTERNAL *= *1" inter/config.mk` ]; then
+      if [ `grep "^ *SIMP_EXTERNAL *= *1" simp/config.mk` ]; then
          echo "-e ON  - external potential" >&2
       else
          echo "-e OFF - external potential" >&2
@@ -223,12 +223,12 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       echo " "
       echo "-m (0|1)   mpi parallelization         (undefines/defines UTIL_MPI)"
       echo "-g (0|1)   debugging                   (undefines/defines UTIL_DEBUG)"
-      echo "-p (0|1)   pair potentials             (defines/undefines INTER_NOPAIR)"
-      echo "-b (0|1)   bond potentials             (undefines/defines INTER_BOND)"
-      echo "-a (0|1)   angle potentials            (undefines/defines INTER_ANGLE)"
-      echo "-d (0|1)   dihedral potentials         (undefines/defines INTER_DIHEDRAL)"
-      echo "-c (0|1)   coulomb potentials          (undefines/defines INTER_COULOMB)"
-      echo "-e (0|1)   external potentials         (undefines/defines INTER_EXTERNAL)"
+      echo "-p (0|1)   pair potentials             (defines/undefines SIMP_NOPAIR)"
+      echo "-b (0|1)   bond potentials             (undefines/defines SIMP_BOND)"
+      echo "-a (0|1)   angle potentials            (undefines/defines SIMP_ANGLE)"
+      echo "-d (0|1)   dihedral potentials         (undefines/defines SIMP_DIHEDRAL)"
+      echo "-c (0|1)   coulomb potentials          (undefines/defines SIMP_COULOMB)"
+      echo "-e (0|1)   external potentials         (undefines/defines SIMP_EXTERNAL)"
       echo "-l (0|1)   McMd links (mutable bonds)  (undefines/defines MCMD_LINK)"
       echo "-s (0|1)   McMd shift                  (undefines/defines MCMD_SHIFT)"
       echo "-f (0|1)   McMd perturbation           (undefines/defines MCMD_PERTURB)"

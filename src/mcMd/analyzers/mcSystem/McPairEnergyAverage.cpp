@@ -1,4 +1,4 @@
-#ifndef INTER_NOPAIR
+#ifndef SIMP_NOPAIR
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *

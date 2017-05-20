@@ -82,7 +82,7 @@ namespace McMd
       */
       virtual int calculateBondTypeId(int index) const;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Return same angle type for any homogeneous ring.
       *
@@ -95,7 +95,7 @@ namespace McMd
       virtual int calculateAngleTypeId(int index) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Return same dihedral type for any homogeneous ring.
       *

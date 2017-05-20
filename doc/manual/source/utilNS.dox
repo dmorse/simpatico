@@ -4,7 +4,7 @@ namespace Util
 /*! \page Util_NS_page 3.3 Util namespace
 
 \ref source_namespace_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref Inter_NS_page (Next)  
+\ref Simp_NS_page (Next)  
 <BR>
 
 The Util namespace contains a varity of general utility classes for scientific computation. Here we list only a few of the most important classes. 
@@ -139,7 +139,7 @@ See also: \ref Random_Module "Random Module"
 <BR>
 \ref source_namespace_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref source_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref Inter_NS_page (Next)  
+\ref Simp_NS_page (Next)  
 
 */
 }

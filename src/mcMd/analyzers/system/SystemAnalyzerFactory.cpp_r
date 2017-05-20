@@ -21,7 +21,7 @@
 #include "BoundaryAverage.h"
 #include "ClusterHistogram.h"
 
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include "RadiusGyration.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
@@ -98,7 +98,7 @@ namespace McMd
          ptr = new ClusterHistogram(system());
       } 
 
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else
       if (className == "IntraStructureFactor") {
          ptr = new IntraStructureFactor(system());

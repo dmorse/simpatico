@@ -1,0 +1,28 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_angle_CosineAngle_page CosineAngle 
+
+The CosineAngle interaction implements a potential that depends
+linearly on the cosine \f$\cos(\theta)\f$ of the bend angle. The
+energy is given by
+\f[
+   V(\theta) = \kappa [ 1 - \cos(\theta) ]
+\f]
+Different values are defined for the parameters \f$\kappa\f$ and 
+\f$\theta_{0}\f$ for each angle type.
+
+The parameter file format is:
+\code
+   kappa  Array<float>
+\endcode
+The kappa array is entered in column form, with one entry per line, 
+The angle interaction parameter block for a system with two angle 
+types (nAngleType=2) might thus look like:
+\code
+   kappa     50.0
+             40.0
+\endcode
+*/
+
+}

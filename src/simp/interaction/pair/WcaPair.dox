@@ -1,0 +1,49 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_pair_WcaPair_page WcaPair 
+
+\section sec_potential Potential
+
+The WcaPair interaction implements a Weeks-Chandler-Anderson (WCA)
+potential. This is a cutoff and shifted Lennard-Jones (LJ) interaction 
+that is cutoff at the minimum of the LJ potential, which occurs at
+\f$ r = \sigma 2^{1/6}\f$. The WcaPair class is thus equivalent to
+a LJPair potential with a cutoff \f$r_{c}\f$ given by
+\f[
+  r_{c} \equiv 2^{1/6} \sigma
+\f]
+This yields a potential energy for each pair of atom types
+\f[
+   V(r) = 4 \epsilon \left [ 
+          \left ( \frac{\sigma}{r} \right )^{12}
+          - \left ( \frac{\sigma}{r} \right )^{6}
+          + \frac{1}{4} \right ] 
+\f]
+for all \f$ r < r_{c} \f$, and \f$V(r) = 0\f$ for \f$r > r_{c}\f$.  
+
+\section sec_param Parameters
+
+The parameter file format is similar as that for an LJPair,
+except that no input value is required for the cutoff variable.
+Values of the parameters \f$\epsilon\f$ and \f$\sigma\f$ are 
+denoted in the parameter file and source code by matrix-valued 
+variables named "epsilon" and "sigma". The parameter file format 
+is:
+\code
+   epsilon  Matrix<float>
+   sigma    Matrix<float>
+\endcode
+For example, for a system with two types of monomer, we might have:
+\code
+   epsilon   1.0      1.5
+             1.5      1.0
+   sigma     1.0      1.0
+             1. 0     1.0
+\endcode
+
+\sa \ref simp_interaction_pair_LJPair_page
+
+*/
+
+}

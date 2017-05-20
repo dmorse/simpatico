@@ -38,7 +38,7 @@ namespace McMd
          ptr = new Point();
       }
 
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else
       if (className == "Homopolymer") {
          ptr = new Homopolymer();

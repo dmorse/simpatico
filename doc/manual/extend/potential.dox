@@ -11,14 +11,14 @@ namespace McMd
 
 Subclass of potential energy classes are implemented somewhat differently than other polymorphic classes.  Each subclass of a potential energy class is implemented by a class template that takes a simpler "interaction" class as an argument. Each "interaction" class defines a specific potential energy function (e.g., a harmonic bond potential) and provides functions that implement the core calculations of forces and energies for a small group of atoms (e.g., a single bonded pair). The class templates that are used to define potential energy subclasses implement algorithms that require looping over such groups (e.g., over all bonds or all nonbonded pairs) in order to calculate contributions to the system energy or forces on all atoms. 
 
-For example, the subclass of DdMd::BondPotential that implements a harmonic bond potential is given by a template instantiation DdMd::BondPotentialImpl<Inter::HarmonicBond>. In this example, Inter::HarmonicBond is an interaction class that implements the calculation of harmonic bond energy and forces for a single pair of bonded atoms. DdMd::BondPotentialImpl is a class template that implements the loops over bonds required calculate total bond energy for a system, or to calculate bond forces on all atoms. Analogous sets of potential energy abstract base classes and implementation templates are defined in the McMd and DdMd namespaces for different types of potential energy (pair, angle, etc.), as discussed below in more detail.
+For example, the subclass of DdMd::BondPotential that implements a harmonic bond potential is given by a template instantiation DdMd::BondPotentialImpl<Simp::HarmonicBond>. In this example, Simp::HarmonicBond is an interaction class that implements the calculation of harmonic bond energy and forces for a single pair of bonded atoms. DdMd::BondPotentialImpl is a class template that implements the loops over bonds required calculate total bond energy for a system, or to calculate bond forces on all atoms. Analogous sets of potential energy abstract base classes and implementation templates are defined in the McMd and DdMd namespaces for different types of potential energy (pair, angle, etc.), as discussed below in more detail.
 
 Because of this use of templates, the procedure required to add a new potential energy class is slightly different than the procedure required for other abstract base classes. Briefly, one must:
 <ul>
 
-<li> Implement a new interaction class to calculate forces and energies for a new functional form of one of the potential energy contributions (e.g., for the bond potential).  This class should be defined in the Inter namespace, and should be placed in a subdirectory of the src/inter directory. The header and source files for a class that is intended only for personal use should be placed in the directory src/inter/user. If you decide to contribute the new interaction class to the project, these files should be moved to the subdirectory of src/inter that contains interactions of the same type (e.g., inter/bond) before proposing the new class for inclusion. </li>
+<li> Implement a new interaction class to calculate forces and energies for a new functional form of one of the potential energy contributions (e.g., for the bond potential).  This class should be defined in the Simp namespace, and should be placed in a subdirectory of the src/simp directory. The header and source files for a class that is intended only for personal use should be placed in the directory src/simp/user. If you decide to contribute the new interaction class to the project, these files should be moved to the subdirectory of src/simp that contains interactions of the same type (e.g., simp/bond) before proposing the new class for inclusion. </li>
 
-<li> Add the name of the *.cpp source file for the new interaction class to the sources.mk file in the subdirectory of src/inter that contains the header and source files. This will automatically cause the new interaction class to be compiled and added to the appropriate library by the build system. </li>
+<li> Add the name of the *.cpp source file for the new interaction class to the sources.mk file in the subdirectory of src/simp that contains the header and source files. This will automatically cause the new interaction class to be compiled and added to the appropriate library by the build system. </li>
 
 <li> Modify the factory class for the associated potential energy class in the McMd and/or DdMd namespace so as to recognize a "style" string value that identifies the new interaction, and to construct the appropriate template instantiation when this string is passed to the factory function. The value of this string identifier should normally be the same as the name of the new interaction class.</li>
 
@@ -69,7 +69,7 @@ Every class that is intended for use in MD simulation (i.e., all the DdMd potent
 
 \section potentials_interaction_sec Interaction classes
 
-Concrete subclasses of these abstract potential energy classes are implemented using a set of "interaction" classes. The interaction classes are defined in the Inter namespace. Each interaction class represents a specific functional form for a specific type of potential energy contribution that involves a small group of 1, 2, 3, or 4 atoms. For example, Inter::LJPair is a pair interaction class the implements a Lennard-Jones part potential, while Inter::HarmonicBond is a covalent bond interaction that implements a harmonic bond potential. The interaction classes provide non-virtual functions to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms. Different interaction classes of the same type are not descended from a common base class, and are thus not polymorphic, but must implement the same interface in order to be used in the same potential energy templates. Unlike potential energy classes, interaction classes do not provide system-wide calculations that involve, e.g., looping over nonbonded-pairs or covalent groups of an associated system.
+Concrete subclasses of these abstract potential energy classes are implemented using a set of "interaction" classes. The interaction classes are defined in the Simp namespace. Each interaction class represents a specific functional form for a specific type of potential energy contribution that involves a small group of 1, 2, 3, or 4 atoms. For example, Simp::LJPair is a pair interaction class the implements a Lennard-Jones part potential, while Simp::HarmonicBond is a covalent bond interaction that implements a harmonic bond potential. The interaction classes provide non-virtual functions to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms. Different interaction classes of the same type are not descended from a common base class, and are thus not polymorphic, but must implement the same interface in order to be used in the same potential energy templates. Unlike potential energy classes, interaction classes do not provide system-wide calculations that involve, e.g., looping over nonbonded-pairs or covalent groups of an associated system.
 
 Interaction classes should be derived from ParamComposite. Each such class must invoke ParamComposite::setClassName(std::string& ) in its constructor.
 
@@ -77,7 +77,7 @@ Interaction classes should be derived from ParamComposite. Each such class must 
 
 Subclasses of the potential energy base classes are implemented by templates. The name of each such class template ends with the suffix "Impl", for "implementation". Each such class template takes an interaction class as a template argument, and is defined as a subclass of the associated potential energy base class. The McMd and DdMd namespaces contain separate but analogous sets of potential energy implementation templates. 
 
-For example, the template that implements the DdMd::BondPotential interface is called DdMd::BondPotentialImpl. The template instantiation DdMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of DdMd::BondPotential that can calculate forces, energies, and stress contributions arising from a harmonic bond potential for use in ddSim simulations.  This template implements functions that can loop over all bonds in a system, as required to calculate the total bond energy of a system or to calculate bond forces for all atoms. These functions call member functions of the associated interaction class to calculate forces and/or energies for individual bonds.  Analogous templates are provided in the McMd and DdMd namespaces for pair, bond, angle, dihedral, and external forces. 
+For example, the template that implements the DdMd::BondPotential interface is called DdMd::BondPotentialImpl. The template instantiation DdMd::BondPotentialImpl<Simp::HarmonicBond> is a subclass of DdMd::BondPotential that can calculate forces, energies, and stress contributions arising from a harmonic bond potential for use in ddSim simulations.  This template implements functions that can loop over all bonds in a system, as required to calculate the total bond energy of a system or to calculate bond forces for all atoms. These functions call member functions of the associated interaction class to calculate forces and/or energies for individual bonds.  Analogous templates are provided in the McMd and DdMd namespaces for pair, bond, angle, dihedral, and external forces. 
 
 For the special case of non-bonded pair potentials, the McMd namespace contains two different class templates, named McMd::McPairPotentialImpl and McMd::MdPairPotentialImpl, that are designed for use in MC and MD simulations, respectively. These use different data structures and algorithms to do the energy and force calculations required in MC and MD simulations. The McPairPotentialImpl template uses a cell list that is optimized for use in MC simulations, while MdPairPotentialImpl uses a Verlet pair list. 
 
@@ -96,13 +96,13 @@ As an example, here is the relevant part of the source code for the DdMd::BondFa
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
 
 // Bond interaction classes
-#include <inter/bond/HarmonicBond.h>
-#include <inter/bond/HarmonicL0Bond.h>
+#include <simp/bond/HarmonicBond.h>
+#include <simp/bond/HarmonicL0Bond.h>
 
 namespace DdMd
 {
 
-   using namespace Inter;
+   using namespace Simp;
 
    // Return a pointer to a new BondPotential, if possible.
    BondPotential* BondFactory::factory(const std::string& name) const

@@ -8,11 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <tools/analyzers/Analyzer.h>   // base class 
-#include <tools/neighbor/CellList.h>    // member
-#include <inter/pair/LJPair.h>          // member
-#include <tools/neighbor/CellList.h>    // member
-#include <util/containers/GArray.h>     // member
+#include <tools/analyzers/Analyzer.h>       // base class 
+#include <tools/neighbor/CellList.h>        // member
+#include <simp/interaction/pair/LJPair.h>   // member
+#include <tools/neighbor/CellList.h>        // member
+#include <util/containers/GArray.h>         // member
 
 namespace Tools
 {
@@ -73,7 +73,7 @@ namespace Tools
    private:
 
       /// Pair interaction type (hard-coded for now).
-      typedef Inter::LJPair Interaction;
+      typedef Simp::LJPair Interaction;
 
       // TODO: Generalize to other interaction types
 

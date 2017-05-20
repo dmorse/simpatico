@@ -108,7 +108,7 @@ namespace DdMd
          double lrf = 0.0;
          double ext = 0.0;
          simulation().computePotentialEnergies();
-         #ifdef INTER_EXTERNAL
+         #ifdef SIMP_EXTERNAL
          ext = simulation().externalPotential().get("externalParameter");
          simulation().externalPotential().set("externalParameter",1.0);
          if (simulation().hasExternal()) {

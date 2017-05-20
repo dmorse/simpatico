@@ -47,11 +47,11 @@ public:
       AtomDistributor  atomDistributor;
       BondStorage  bondStorage;
       GroupDistributor<2>  bondDistributor;
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AngleStorage angleStorage;
       GroupDistributor<3>  angleDistributor;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //DihedralStorage  dihedralStorage;
       //GroupDistributor<4>  dihedralDistributor;
       #endif
@@ -61,10 +61,10 @@ public:
       domain.setBoundary(boundary);
       atomDistributor.associate(domain, boundary, atomStorage, buffer);
       bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleDistributor.associate(domain, atomStorage, angleStorage, buffer);
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralDistributor.associate(domain, atomStorage, dihedralStorage, 
       //                              buffer);
       #endif
@@ -78,11 +78,11 @@ public:
       atomDistributor.setIoCommunicator(communicator());
       bondStorage.setIoCommunicator(communicator());
       bondDistributor.setIoCommunicator(communicator());
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.setIoCommunicator(communicator());
       angleDistributor.setIoCommunicator(communicator());
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralStorage.setIoCommunicator(communicator());
       //dihedralDistributor.setIoCommunicator(communicator());
       #endif
@@ -110,13 +110,13 @@ public:
       bondDistributor.readParam(file());
       int bondCount = 0;  // Number of bonds be distributed by master
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.readParam(file());
       angleDistributor.readParam(file());
       int angleCount = 0; // Number of angles be distributed by master
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralStorage.readParam(file());
       //dihedralDistributor.readParam(file());
       //int dihedralCount = 0; // Number of dihedrals be distributed by master
@@ -229,7 +229,7 @@ public:
       }
       // Note: Validation is done inside send and receive methods
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       // Read angles
       if (myRank == 0) {
 
@@ -279,11 +279,11 @@ public:
       AtomDistributor  atomDistributor;
       BondStorage  bondStorage;
       GroupDistributor<2>  bondDistributor;
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AngleStorage angleStorage;
       GroupDistributor<3>  angleDistributor;
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //DihedralStorage  dihedralStorage;
       //GroupDistributor<4>  dihedralDistributor;
       #endif
@@ -293,10 +293,10 @@ public:
       domain.setBoundary(boundary);
       atomDistributor.associate(domain, boundary, atomStorage, buffer);
       bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleDistributor.associate(domain, atomStorage, angleStorage, buffer);
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralDistributor.associate(domain, atomStorage, dihedralStorage, 
       //                              buffer);
       #endif
@@ -310,11 +310,11 @@ public:
       atomDistributor.setIoCommunicator(communicator());
       bondStorage.setIoCommunicator(communicator());
       bondDistributor.setIoCommunicator(communicator());
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.setIoCommunicator(communicator());
       angleDistributor.setIoCommunicator(communicator());
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralStorage.setIoCommunicator(communicator());
       //dihedralDistributor.setIoCommunicator(communicator());
       #endif
@@ -342,13 +342,13 @@ public:
       bondDistributor.readParam(file());
       int bondCount = 0;  // Number of bonds be distributed by master
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       angleStorage.readParam(file());
       angleDistributor.readParam(file());
       int angleCount = 0; // Number of angles be distributed by master
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       //dihedralStorage.readParam(file());
       //dihedralDistributor.readParam(file());
       //int dihedralCount = 0; // Number of dihedrals be distributed by master
@@ -462,7 +462,7 @@ public:
       }
       // Note: Validation is done inside send and receive methods
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       // Read angles
       if (myRank == 0) {
 

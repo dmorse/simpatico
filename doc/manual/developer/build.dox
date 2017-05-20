@@ -12,11 +12,11 @@ Simpatico is compiled using a system of unix makefiles.  All development was don
 
 All C++ files for simpatico, including both header (*.h) and source (*.cpp) files, are in the simpatico/src/ directory tree.  The header and source file for each class are in the same directory. The name of each C++ file is the same as the class name, followed by the extension .h or .cpp.  All class names and corresponding file names are upper space camel (like Util::Vector or McMd::Species).  
 
-The src/util, src/inter, src/mcMd, src/ddMd, and src/tools directories each contain all the source and header files for a particular C++ namespace: 
+The src/util, src/simp, src/mcMd, src/ddMd, and src/tools directories each contain all the source and header files for a particular C++ namespace: 
 
  - src/util/ contains the Util namespace
 
- - src/inter/ contains the Inter namespace 
+ - src/simp/ contains the Simp namespace 
 
  - src/mcMd/ contains the McMd namespace
 
@@ -30,9 +30,9 @@ When the implementation of one or more classes in one namespace use class names 
 
   - namespace Util does not depend on any other namespace
 
-  - namespace Inter depends only on namespace Util
+  - namespace Simp depends only on namespace Util
 
-  - namespace McMd, DdMd and Tools depend on Inter and Util, but not on each other.
+  - namespace McMd, DdMd and Tools depend on Simp and Util, but not on each other.
 
 The build system assumes that these are the only inter-namespace dependencies. These conventions must thus be respected by any new code added to the system.
 
@@ -61,7 +61,7 @@ After the setup script has been run, but before any code has has been compiled, 
       config.mk
       configure
       util/
-      inter/
+      simp/
       mcMd/
       ddMd/
       tools/
@@ -74,7 +74,7 @@ Here, we use the BLD_DIR to represent the path to a specific build directory. Th
 
    - configure is a bash script that can be used to enable or disable specific features before compilation.
 
-After setup but before compilation, each of the five namespace level subdirectories (util/, inter/, mcMd/, ddMd/, and tools/) of each build directory also contains a few makefile fragments with similar names, of the form:
+After setup but before compilation, each of the five namespace level subdirectories (util/, simp/, mcMd/, ddMd/, and tools/) of each build directory also contains a few makefile fragments with similar names, of the form:
 \code
    namespace/
       makefile
@@ -82,7 +82,7 @@ After setup but before compilation, each of the five namespace level subdirector
       \tests
          makefile
 \endcode
-Here, we use "namespace/" to denote a namespace level directory name util/, inter/, mcMd/, ddMd/, or tools/. The purposes of these files are:
+Here, we use "namespace/" to denote a namespace level directory name util/, simp/, mcMd/, ddMd/, or tools/. The purposes of these files are:
 
    - namespace/makefile is the main makefile for a single namespace. 
 
@@ -119,11 +119,11 @@ Here, for simplicity, we have assumed that the simpatico/ root directory is a su
 
 \section make_config_namespace Namespace directory config.mk files
 
-The "config.mk" file in each of the namespace level subdirectories of each build directory contains definitions of makefile variables that control conditional compilation of specific features of the code. For example, the definition of a variable INTER_ANGLE in the file inter/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
+The "config.mk" file in each of the namespace level subdirectories of each build directory contains definitions of makefile variables that control conditional compilation of specific features of the code. For example, the definition of a variable SIMP_ANGLE in the file simp/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
 
-Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, inter/config.mk defines INTER_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable INTER_ANGLE in the file BLD_DIR/inter/config.mk, the variable INTER_DEFS will contain a string "-DINTER_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named INTER_ANGLE. 
+Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, simp/config.mk defines SIMP_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable SIMP_ANGLE in the file BLD_DIR/simp/config.mk, the variable SIMP_DEFS will contain a string "-DSIMP_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named SIMP_ANGLE. 
 
-Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Inter, McMd, DdMd, and Tools namespaces all depend upon the Util namespace.
+Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Simp, McMd, DdMd, and Tools namespaces all depend upon the Util namespace.
 
 \section make_config_script The configure script
 
@@ -294,23 +294,23 @@ The same values are used for the above variables in all five namespaces. Two add
    - DEFINES: String of all relevant C++ preprocessor macro definitions, defined using the compiler "-D" option
    - MAKE_DEPS: List of build configuration files that should  be listed as dependencies for all object files in this namespace
 
-The DEFINES variable, if not empty, contains a series of preprocessor macro definitions, defined using the "-D" compiler option. Thus, for example, if debugging, bonds, and angles are enabled, and no other optional features, the value of DEFINES within the file src/inter/patterns.mk might expand to
+The DEFINES variable, if not empty, contains a series of preprocessor macro definitions, defined using the "-D" compiler option. Thus, for example, if debugging, bonds, and angles are enabled, and no other optional features, the value of DEFINES within the file src/simp/patterns.mk might expand to
 \code
-DEFINES=-DUTIL_DEBUG -DINTER_BOND -DINTER_ANGLE
+DEFINES=-DUTIL_DEBUG -DSIMP_BOND -DSIMP_ANGLE
 \endcode
-The definitions of DEFINES and MAKE_DEPS within the file src/inter/patterns.mk are shown below as an example:
+The definitions of DEFINES and MAKE_DEPS within the file src/simp/patterns.mk are shown below as an example:
 \code
 # C preprocessor macro definitions
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
+DEFINES=$(UTIL_DEFS) $(SIMP_DEFS)
 
-# Dependencies of source files in src/inter on makefile fragments
+# Dependencies of source files in src/simp on makefile fragments
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
-MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/simp/config.mk
 \endcode
-The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, INTER_DEFS, etc.) for this namespace (i.e., INTER_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Inter namespace, this yields a concatenation of UTIL_DEFS and INTER_DEFS. The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
+The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, SIMP_DEFS, etc.) for this namespace (i.e., SIMP_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Simp namespace, this yields a concatenation of UTIL_DEFS and SIMP_DEFS. The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
 
-The MAKE_DEPS variable contains a list of build configuration files whose contents can effect compilation of source code in this namespace. This list always contains the main config.mk file from the parent build directory, the config.mk file for the namespace of interest, and config.mk files for any namespace(s) upon which this namespace depends. For the Inter namespace, MAKE_DEPS thus contains paths to the config.mk files in the inter/ and util/ subdirectories. These build configuration files are added to the list of dependencies for every object file in this namespace because changes to these config.mk files can change which preprocessor macros are defined or which compiler options are set, and thus can change the contents of the resulting object files.
+The MAKE_DEPS variable contains a list of build configuration files whose contents can effect compilation of source code in this namespace. This list always contains the main config.mk file from the parent build directory, the config.mk file for the namespace of interest, and config.mk files for any namespace(s) upon which this namespace depends. For the Simp namespace, MAKE_DEPS thus contains paths to the config.mk files in the simp/ and util/ subdirectories. These build configuration files are added to the list of dependencies for every object file in this namespace because changes to these config.mk files can change which preprocessor macros are defined or which compiler options are set, and thus can change the contents of the resulting object files.
 
 \section make_dependency Dependency Files (*.d Files)
 
@@ -342,36 +342,36 @@ This command attempts to include a *.d dependency file for each *.o object file 
 
 \section make_makefile Example: A Namespace Directory makefile
 
-As an example of how the system works, here are the essential parts of the namespace level makefile from the directory bld/serial/inter. The actual makefile also includes "clean" and "veryclean" targets" that have been excluded for clarity. Corresponding makefiles in bld/parallel/inter and src/inter are identical:
+As an example of how the system works, here are the essential parts of the namespace level makefile from the directory bld/serial/simp. The actual makefile also includes "clean" and "veryclean" targets" that have been excluded for clarity. Corresponding makefiles in bld/parallel/simp and src/simp are identical:
 \code
 
 BLD_DIR_REL =..
 include $(BLD_DIR_REL)/config.mk
 include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/inter/config.mk
-include $(SRC_DIR)/inter/patterns.mk
-include $(SRC_DIR)/inter/sources.mk
+include $(BLD_DIR)/simp/config.mk
+include $(SRC_DIR)/simp/patterns.mk
+include $(SRC_DIR)/simp/sources.mk
 
-all: $(inter_OBJS) $(inter_LIB)
+all: $(simp_OBJS) $(simp_LIB)
 
--include $(inter_OBJS:.o=.d)
+-include $(simp_OBJS:.o=.d)
 
 \endcode
 This simplified makefile contains three blocks:
 
-(1) The block of include statements at the top of this file include all of the relevant build configuration files, the appropriate patterns.mk file, and the appropriate source file lists. The main config.mk file must be included using a relative path BLD_DIR_REL_=.. to the parent build directory. The main config.mk file defines variables BLD_DIR and SRC_DIR that contain absolute paths to the object and source directories, which can be used in the remainder of this makefile, and in makefile fragments that it includes. Next, the makefile includes the namespace level config.mk files for this namespace and any namespaces that it depends on. In this example, it thus includes the inter/config.mk and util/config.mk files from the build directory, because the Inter namespace depends upon the Util namespace. Finally, the makefile includes the patterns.mk file and sources.mk file list from the associated namespace level source directory src/inter.
+(1) The block of include statements at the top of this file include all of the relevant build configuration files, the appropriate patterns.mk file, and the appropriate source file lists. The main config.mk file must be included using a relative path BLD_DIR_REL_=.. to the parent build directory. The main config.mk file defines variables BLD_DIR and SRC_DIR that contain absolute paths to the object and source directories, which can be used in the remainder of this makefile, and in makefile fragments that it includes. Next, the makefile includes the namespace level config.mk files for this namespace and any namespaces that it depends on. In this example, it thus includes the simp/config.mk and util/config.mk files from the build directory, because the Simp namespace depends upon the Util namespace. Finally, the makefile includes the patterns.mk file and sources.mk file list from the associated namespace level source directory src/simp.
 
-(2) The "all" target builds all of the object files in the Inter namespace, which are listed in the variable inter_OBJS, and builds the associated library, whose name given by the variable inter_LIB.  The file inter/sources.mk defines both the object file list inter_OBJS and a target rule for building the library inter_LIB. The library name inter_LIB is defined in the namespace level configuration file inter/config.mk.
+(2) The "all" target builds all of the object files in the Simp namespace, which are listed in the variable simp_OBJS, and builds the associated library, whose name given by the variable simp_LIB.  The file simp/sources.mk defines both the object file list simp_OBJS and a target rule for building the library simp_LIB. The library name simp_LIB is defined in the namespace level configuration file simp/config.mk.
 
-(3) The last line of the above makefile fragment instructs make to include all of the dependency files for all of the source files in this namespace. The syntax $(inter_OBJS:.o=.d) creates a list of vfiles in which the .o extension of each object file is replaced by a .d extension. The dash in front of the -include command tells make to continue quietly if any dependency file does not exist.
+(3) The last line of the above makefile fragment instructs make to include all of the dependency files for all of the source files in this namespace. The syntax $(simp_OBJS:.o=.d) creates a list of vfiles in which the .o extension of each object file is replaced by a .d extension. The dash in front of the -include command tells make to continue quietly if any dependency file does not exist.
 
-The first time "make all" is invoked in this directory, neither the object file nor the associated dependency files exist. In this case, since each object target file is absent, make knows that it must be built, and uses the pattern rule defined in inter/patterns.mk to create each object file listed in inter_OBJS.  If "make all" is a called again from the same directory, however, make can use the information in the dependency files to determine which object files needs to be rebuilt as a result in changes in C++ or configuration files. 
+The first time "make all" is invoked in this directory, neither the object file nor the associated dependency files exist. In this case, since each object target file is absent, make knows that it must be built, and uses the pattern rule defined in simp/patterns.mk to create each object file listed in simp_OBJS.  If "make all" is a called again from the same directory, however, make can use the information in the dependency files to determine which object files needs to be rebuilt as a result in changes in C++ or configuration files. 
 
-The target rule for library inter_LIB lists all of the object files in inter_OBJS as dependencies. The library will thus be built only after the object files are all built, and will automatically be rebuilt if any object file in the Inter namespace is rebuilt.
+The target rule for library simp_LIB lists all of the object files in simp_OBJS as dependencies. The library will thus be built only after the object files are all built, and will automatically be rebuilt if any object file in the Simp namespace is rebuilt.
 
 \section make_makefile_executable Namespace Directory makefiles with Executable Targets
 
-The makefile for the inter/ namespace level directory, which we used above as an example, does not build any executable files. Corresponding makefiles for the mcMd/, ddMd/, and tools/ subdirectories of each build directory, however, also contain targets that that build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the main program source files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and then linking the resulting object files to static libraries from the mcMd/, inter/ and util/ build directories. The target rules for the final executables list the required static libraries as dependencies.
+The makefile for the simp/ namespace level directory, which we used above as an example, does not build any executable files. Corresponding makefiles for the mcMd/, ddMd/, and tools/ subdirectories of each build directory, however, also contain targets that that build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the main program source files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and then linking the resulting object files to static libraries from the mcMd/, simp/ and util/ build directories. The target rules for the final executables list the required static libraries as dependencies.
 
 The fact that executable targets depend on libraries that are defined in other namespaces requires the following further changes to the structure of makefiles that contain executable targets:
 
@@ -379,7 +379,7 @@ The fact that executable targets depend on libraries that are defined in other n
 
  - Each such makefile must include all *.d dependency files from every namespace that contributes objects to the target executables. 
 
-Thus, for example, the mcMd/makefile in each build directory must include the sources.mk files from the inter/ and util/ subdirectories of the src/ directory, and must include all dependency files from corresponding subdirectories of BLD_DIR, in addition to files from the mcMd/ subdirectory. Inclusion of these additional files from other namespace level directories allows make to decide when any required library needs to be rebuilt, and provides instructions how to rebuild any required source file or library if necessary.
+Thus, for example, the mcMd/makefile in each build directory must include the sources.mk files from the simp/ and util/ subdirectories of the src/ directory, and must include all dependency files from corresponding subdirectories of BLD_DIR, in addition to files from the mcMd/ subdirectory. Inclusion of these additional files from other namespace level directories allows make to decide when any required library needs to be rebuilt, and provides instructions how to rebuild any required source file or library if necessary.
 
 \section make_subdirectory Subdirectory Makefiles
 

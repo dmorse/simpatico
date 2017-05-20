@@ -15,18 +15,18 @@
 #include <mcMd/potentials/pair/MdPairPotentialImpl.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
-#ifdef INTER_COULOMB
+#ifdef SIMP_COULOMB
 #include <mcMd/potentials/pair/MdEwaldPairPotentialImpl.h>
 #endif
 
 // Pair Potential interaction classes
-#include <inter/pair/LJPair.h>
-#include <inter/pair/WcaPair.h>
-#include <inter/pair/DpdPair.h>
+#include <simp/interaction/pair/LJPair.h>
+#include <simp/interaction/pair/WcaPair.h>
+#include <simp/interaction/pair/DpdPair.h>
 
-#ifdef INTER_BOND
-#include <inter/pair/CompensatedPair.h>
-#include <inter/bond/FeneBond.h>
+#ifdef SIMP_BOND
+#include <simp/interaction/pair/CompensatedPair.h>
+#include <simp/interaction/bond/FeneBond.h>
 #endif
 
 
@@ -34,7 +34,7 @@ namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    /**
    * Default constructor.
@@ -69,7 +69,7 @@ namespace McMd
       if (name == "DpdPair") {
          ptr = new McPairPotentialImpl<DpdPair>(system);
       }
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          ptr = new McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
@@ -91,7 +91,7 @@ namespace McMd
       ptr = tryMdSubfactories(name, system);
       if (ptr) return ptr;
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       if (!mdsystem.simulation().hasCoulomb()) {
       #endif
 
@@ -106,7 +106,7 @@ namespace McMd
          if (name == "DpdPair") {
             ptr = new MdPairPotentialImpl<DpdPair>(mdsystem);
          } 
-         #ifdef INTER_BOND 
+         #ifdef SIMP_BOND 
          else
          if (name == "CompensatedPair<DpdPair,FeneBond>") {
             ptr = new 
@@ -114,7 +114,7 @@ namespace McMd
          }
          #endif
 
-      #ifdef INTER_COULOMB
+      #ifdef SIMP_COULOMB
       } else {
          // std::cout << "Attempting to construct MdEwaldPairPotentialImpl instance - charged system" 
          //           << std::endl;
@@ -127,7 +127,7 @@ namespace McMd
          if (name == "DpdPair") {
             ptr = new MdEwaldPairPotentialImpl<DpdPair>(mdsystem);
          } 
-         #ifdef INTER_BOND 
+         #ifdef SIMP_BOND 
          else
          if (name == "CompensatedPair<DpdPair,FeneBond>") {
             ptr = new 
@@ -168,7 +168,7 @@ namespace McMd
              = dynamic_cast< McPairPotentialImpl<DpdPair>* >(&potential);
          ptr = new MdPairPotentialImpl<DpdPair>(*mcPtr);
       } 
-      #ifdef INTER_BOND 
+      #ifdef SIMP_BOND 
       else 
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* mcPtr 

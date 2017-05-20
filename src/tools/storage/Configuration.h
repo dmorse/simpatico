@@ -85,17 +85,17 @@ namespace Tools
       /// Get the AtomStorage.
       AtomStorage& atoms();
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Get the Bond storage.
       GroupStorage<2>& bonds();
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Get the Angle storage.
       GroupStorage<3>& angles();
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Get the Dihedral storage.
       GroupStorage<4>& dihedrals();
 
@@ -125,17 +125,17 @@ namespace Tools
       /// AtomStorage object.
       AtomStorage atoms_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Array of bond objects, added in order read from file.
       GroupStorage<2> bonds_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Array of angle objects, added in order read from file.
       GroupStorage<3> angles_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Array of dihedral objects, added in order read from file.
       GroupStorage<4> dihedrals_;
 
@@ -149,17 +149,17 @@ namespace Tools
       /// Maximum number of atoms = max id + 1 (used to allocate arrays).
       int atomCapacity_;
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /// Maximum number of bonds (used to allocate array).
       int bondCapacity_;
       #endif
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /// Maximum number of angles (used to allocate array).
       int angleCapacity_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /// Maximum number of dihedrals (used to allocate array).
       int dihedralCapacity_;
 
@@ -183,17 +183,17 @@ namespace Tools
    inline AtomStorage& Configuration::atoms()
    {  return atoms_; }
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    inline GroupStorage<2>& Configuration::bonds()
    {  return bonds_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    inline GroupStorage<3>& Configuration::angles()
    {  return angles_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    inline GroupStorage<4>& Configuration::dihedrals()
    {  return dihedrals_; }
 

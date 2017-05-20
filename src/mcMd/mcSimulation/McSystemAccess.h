@@ -46,35 +46,35 @@ namespace McMd
    
    protected:
 
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       /**
       * Get the McPairPotential.
       */
       McPairPotential& pairPotential() const;
       #endif
    
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       /**
       * Get the BondPotential.
       */
       BondPotential& bondPotential() const;
       #endif
    
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Get the AnglePotential. 
       */
       AnglePotential& anglePotential() const;
       #endif
    
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Get the DihedralPotential.
       */
       DihedralPotential& dihedralPotential() const;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       /**
       * Get the ExternalPotential.
       */
@@ -83,23 +83,23 @@ namespace McMd
 
    private:
  
-      #ifndef INTER_NOPAIR
+      #ifndef SIMP_NOPAIR
       McPairPotential* pairPotentialPtr_;
       #endif
 
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       BondPotential* bondPotentialPtr_;
       #endif
  
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       AnglePotential* anglePotentialPtr_;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
-      #ifdef INTER_EXTERNAL
+      #ifdef SIMP_EXTERNAL
       ExternalPotential* externalPotentialPtr_;
       #endif
 
@@ -107,7 +107,7 @@ namespace McMd
 
    // Inline methods
 
-   #ifndef INTER_NOPAIR
+   #ifndef SIMP_NOPAIR
    /*
    * Get McPairPotential of McSystem.
    */
@@ -115,7 +115,7 @@ namespace McMd
    {  return *pairPotentialPtr_; }
    #endif
 
-   #ifdef INTER_BOND
+   #ifdef SIMP_BOND
    /*
    * Get the BondPotential.
    */
@@ -123,7 +123,7 @@ namespace McMd
    {  return *bondPotentialPtr_; }
    #endif
 
-   #ifdef INTER_ANGLE
+   #ifdef SIMP_ANGLE
    /*
    * Get AnglePotential. 
    */
@@ -131,7 +131,7 @@ namespace McMd
    {  return *anglePotentialPtr_; }
    #endif
 
-   #ifdef INTER_DIHEDRAL
+   #ifdef SIMP_DIHEDRAL
    /*
    * Get DihedralPotential.
    */
@@ -139,7 +139,7 @@ namespace McMd
    {  return *dihedralPotentialPtr_; }
    #endif
 
-   #ifdef INTER_EXTERNAL
+   #ifdef SIMP_EXTERNAL
    /*
    * Get ExternalPotential.
    */

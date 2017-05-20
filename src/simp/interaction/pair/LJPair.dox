@@ -1,0 +1,50 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_pair_LJPair_page LJPair 
+
+The LJPair interaction (pairstyle LJPair) implements a cutoff and 
+shifted Lennard-Jones interaction.  The potential energy \f$V(r)\f$ 
+for a pair of nonbonded particles separated by a distance \f$r\f$ 
+is given for each pair of atoms types by a function 
+\f[
+   V(r) = 4 \epsilon \left [ 
+          \left ( \frac{\sigma}{r} \right )^{12}
+          - \left ( \frac{\sigma}{r} \right )^{6}
+          \right ] + s
+\f]
+for all \f$ r < r_{c} \f$, and vanishes (\f$V(r) = 0\f$) for 
+all \f$r\f$ greater than the cutoff distance \f$r_{c}\f$.  The 
+constant shift \f$s\f$ is chosen for each pair of atom types 
+such that \f$V(r_c) = 0\f$.  Different values are defined for 
+the parameters \f$\epsilon\f$, \f$\sigma\f$ and \f$r_{c}\f$ 
+for each distinct pair of monomer types \f$i\f$ and \f$j\f$.  
+
+Values of the parameters \f$\epsilon\f$, \f$\sigma\f$, and \f$r_{c}\f$ 
+are denoted in the parameter file and source code by matrix-valued 
+variables named "epsilon", "sigma", and "cutoff", respectively. 
+
+The parameter file format is:
+\code
+   epsilon  Matrix<float>
+   sigma    Matrix<float>
+   cutoff   Matrix<float>
+\endcode
+All three parameter matrices are symmetric, and are entered in lower 
+diagonal form. For example, for a system with two types of monomer, 
+we might have:
+\code
+   epsilon   1.0      1.5
+             1.5      1.0
+   sigma     1.0      1.0
+             1. 0     1.0
+   cutoff    1.122    1.122
+             1.122    1.122
+\endcode
+The value of \f$r_{c}/\sigma = 1.122 = 2^{1/6}\f$ used in the above
+yields a so-called Weeks-Chandler-Anderson potential, which is the
+potential that is obtained by cutting off and shifting the LJ potential 
+at its minimimum.
+*/
+
+}

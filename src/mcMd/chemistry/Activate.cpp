@@ -9,13 +9,13 @@
 #include <mcMd/species/Species.h>     
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Molecule.h>
-#ifdef INTER_BOND
+#ifdef SIMP_BOND
 #include <mcMd/chemistry/Bond.h>    
 #endif
-#ifdef INTER_ANGLE
+#ifdef SIMP_ANGLE
 #include <mcMd/chemistry/Angle.h>   
 #endif
-#ifdef INTER_DIHEDRAL
+#ifdef SIMP_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>  
 #endif
 
@@ -42,7 +42,7 @@ namespace McMd
       const Species& species = molecule.species();
       const int atomId = int( &atom - &molecule.atom(0) );
       int i;
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
@@ -51,7 +51,7 @@ namespace McMd
          }
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (species.nAngle()) {
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
@@ -60,7 +60,7 @@ namespace McMd
          }
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (species.nDihedral()) {
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
@@ -90,7 +90,7 @@ namespace McMd
       const int atomId = int( &atom - &molecule.atom(0) );
       assert(atomId >= 0);
       assert(atomId < molecule.nAtom());
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
@@ -99,7 +99,7 @@ namespace McMd
          }
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       if (species.nAngle()) {
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
@@ -108,7 +108,7 @@ namespace McMd
          }
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       if (species.nDihedral()) {
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
@@ -129,17 +129,17 @@ namespace McMd
       for (i = 0; i < molecule.nAtom(); ++i) {
          molecule.atom(i).setIsActive(true);
       }
-      #ifdef INTER_BOND
+      #ifdef SIMP_BOND
       for (i = 0; i < molecule.nBond(); ++i) {
          molecule.bond(i).activate();
       }
       #endif
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       for (i = 0; i < molecule.nAngle(); ++i) {
          molecule.angle(i).activate();
       }
       #endif
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       for (i = 0; i < molecule.nDihedral(); ++i) {
         molecule.dihedral(i).activate();
       }
