@@ -8,15 +8,16 @@
 #include "MdSpmePotential.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
+#include <mcMd/chemistry/AtomType.h>
+
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 #include <util/math/Constants.h>
-#include <stdlib.h>
-
 #include <util/boundary/Boundary.h>
-#include <cmath>
 #include <util/containers/Array.h>
-#include <mcMd/chemistry/AtomType.h>
+
+#include <stdlib.h>
+#include <cmath>
 
 namespace McMd
 {
@@ -34,8 +35,8 @@ namespace McMd
       boundaryPtr_(&system.boundary()),
       atomTypesPtr_(&system.simulation().atomTypes()),
       gridDimensions_(),
-      rho_(),
-      rhoHat_(),
+      rhoR_(),
+      rhoK_(),
       g_(),
       sqWaves_(),
       vecWaves_(),
@@ -44,9 +45,6 @@ namespace McMd
       zfield_(),
       order_(5)
    {
-      //initialize unit tensor.
-      const double unitMatrix_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1}};
-      Tensor unitTensor_(unitMatrix_);
       // Note: Don't setClassName - using "CoulombPotential" base class name
    }
 
@@ -70,7 +68,7 @@ namespace McMd
       bool nextIndent = false;
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
-      read<IntVector>(in, "gridDimensions",gridDimensions_);
+      read<IntVector>(in, "gridDimensions", gridDimensions_);
    }
 
    /*
@@ -113,9 +111,10 @@ namespace McMd
    }
 
    /*
-   * place holder 
+   * Number of grid points, or waves.
    */
-   inline int MdSpmePotential::nWave() const
+   inline 
+   int MdSpmePotential::nWave() const
    {  return gridDimensions_[0]*gridDimensions_[1]*gridDimensions_[2]; }
 
    /*
@@ -126,13 +125,11 @@ namespace McMd
       if (g_.size() == 0) {
 
          // Allocate memory for grid
-         rho_.allocate(gridDimensions_);
-         rhoHat_.allocate(gridDimensions_);
+         rhoR_.allocate(gridDimensions_);
+         rhoK_.allocate(gridDimensions_);
          g_.allocate(gridDimensions_);
          sqWaves_.allocate(gridDimensions_);
          vecWaves_.allocate(gridDimensions_);
-         int maxDim = std::max(gridDimensions_[1],gridDimensions_[2]);
-         maxDim = std::max(maxDim, gridDimensions_[0]);
          xfield_.allocate(gridDimensions_);
          yfield_.allocate(gridDimensions_);
          zfield_.allocate(gridDimensions_);
@@ -140,8 +137,8 @@ namespace McMd
          // Initialize fft plan for Q grid
          fftw_complex* inf;
          fftw_complex* outf;
-         inf  = reinterpret_cast<fftw_complex*>(rho_.data());
-         outf = reinterpret_cast<fftw_complex*>(rhoHat_.data());
+         inf  = reinterpret_cast<fftw_complex*>(rhoR_.data());
+         outf = reinterpret_cast<fftw_complex*>(rhoK_.data());
          forward_plan = fftw_plan_dft_3d(gridDimensions_[0],
                                          gridDimensions_[1],
                                          gridDimensions_[2],
@@ -179,7 +176,6 @@ namespace McMd
       }
 
       influence_function();
-      // ik_differential_operator();
   
       // Mark wave data as up to date.
       hasWaves_ = true;
@@ -240,18 +236,18 @@ namespace McMd
                m2 = (k <= gridDimensions_[2]/2) ? k : k - gridDimensions_[2];
                q.multiply(b2, m2);
                q += q1;
+
+               vecWaves_(pos) = q;
                qSq = q.square();
                sqWaves_(pos) = qSq;
-               vecWaves_(pos) = q;
-
                if (qSq > 1.0E-10) {
                   b = bfactor(i, 0) * bfactor(j, 1) *bfactor(k, 2);
                   c = ewaldInteraction_.kSpacePotential(qSq);
-                  c /= boundaryPtr_->volume();
                   g_(pos) = b * c;
                } else {
                   g_(pos) = 0.0;
                }
+
             }
          }
       }
@@ -262,18 +258,16 @@ namespace McMd
    */
    double MdSpmePotential::bfactor(double m, int dim)
    {
-      double pi(Constants::Pi);
-      double gridDimensions(gridDimensions_[dim]);
-      DCMPLX I(0.0,1.0);
-
-      DCMPLX denom(0.0, 0.0);
-      
       // If order of spline is odd, this interpolation result fails,
       // when 2*m = gridDimensions[dim], since 1 / 0 in this function.
-      if( order_ % 2 == 1 && m == gridDimensions_[dim] / 2.0) {
-         m = m-1 ;
+      if (order_%2 == 1 && m == gridDimensions_[dim]/2) {
+         return 0.0;
       }
 
+      double pi = Constants::Pi;
+      double gridDimensions(gridDimensions_[dim]);
+      DCMPLX I(0.0,1.0);
+      DCMPLX denom(0.0, 0.0);
       for (double k = 0.0; k <= order_ - 2.0; k++) {
          denom += basisSpline(k + 1.0)*exp(2.0 * pi * I * m * k / gridDimensions) ;
       }
@@ -283,7 +277,7 @@ namespace McMd
    /*
    * Assign charges to grid points.
    */
-   void MdSpmePotential::spreadCharge()
+   void MdSpmePotential::assignCharges()
    {
       if (!hasWaves()) {
          makeWaves();
@@ -291,15 +285,15 @@ namespace McMd
 
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      double  charge;
       Vector  gpos; //general coordination of atom
-      int ximg, yimg, zimg; // grid point coordination
-      double xdistance, ydistance, zdistance;//distance between atom and grid point.
-      int xknot, yknot, zknot;
+      double xdistance, ydistance, zdistance;  // distance from atom to node
+      double  charge;
       IntVector knot;
       IntVector floorGridIdx;
+      int ximg, yimg, zimg; // grid point coordinates
+      int xknot, yknot, zknot;
 
-      setGridToZero(rho_);
+      setGridToZero(rhoR_);
 
       // Loop over atoms.
       int  nSpecies = simulationPtr_->nSpecies();
@@ -339,7 +333,7 @@ namespace McMd
                         zknot =  zimg < 0 ? zimg + gridDimensions_[2] : zimg;
                         knot[2] = zknot;
 
-                        rho_(knot) += charge 
+                        rhoR_(knot) += charge 
                                       * basisSpline(xdistance)
                                       * basisSpline(ydistance)
                                       * basisSpline(zdistance);
@@ -375,27 +369,24 @@ namespace McMd
    */
    void MdSpmePotential::addForces()
    {
-      spreadCharge();
- 
-      setGridToZero(rhoHat_);
+      assignCharges();
+      setGridToZero(rhoK_);
       fftw_execute(forward_plan);
 
-      Vector qv;
-      //double TwoPi   = 2.0*Constants::Pi;      // 2*Pi
-      //DCMPLX TwoPiIm = TwoPi * Constants::Im;  // 2*Pi*I
-      int  pos;                                //rank in GridArray
+      DCMPLX ci = Constants::Im / boundaryPtr_->volume();
+      Vector qv; // Wavevector
+      int rank;  //rank in GridArray
 
-      // Derivative in k-space
+      // Derivatives in k-space
+      rank = 0;
       for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
          for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
             for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
-               pos = i * gridDimensions_[1]*gridDimensions_[2] + j * gridDimensions_[2] + k;
-
-               qv = vecWaves_[pos];
-               xfield_[pos] = Constants::Im*qv[0]*rhoHat_[pos]*g_[pos];
-               yfield_[pos] = Constants::Im*qv[1]*rhoHat_[pos]*g_[pos];
-               zfield_[pos] = Constants::Im*qv[2]*rhoHat_[pos]*g_[pos];
-
+               qv = vecWaves_[rank];
+               xfield_[rank] = ci*qv[0]*rhoK_[rank]*g_[rank];
+               yfield_[rank] = ci*qv[1]*rhoK_[rank]*g_[rank];
+               zfield_[rank] = ci*qv[2]*rhoK_[rank]*g_[rank];
+               ++rank;
             } // loop over z
          } // loop over y
       } // loop over x
@@ -486,25 +477,23 @@ namespace McMd
    */
    void MdSpmePotential::computeEnergy()
    {
-      spreadCharge();
- 
-      setGridToZero(rhoHat_);
+      assignCharges();
+      setGridToZero(rhoK_);
       fftw_execute(forward_plan);
 
-      IntVector pos;
       double energy = 0.0;
       int i, j, k;
+      int rank = 0;
       for (i = 0; i < gridDimensions_[0]; ++i) {
-         pos[0] = i;
          for (j = 0; j < gridDimensions_[1]; ++j) {
-            pos[1] = j;
             for (k = 0; k < gridDimensions_[2]; ++k) {
-               pos[2] = k;
-               energy += g_(pos) * std::norm(rhoHat_(pos));
+               energy += g_[rank] * std::norm(rhoK_[rank]);
+               ++rank;
             }
          }
       }
-      energy /= 2.0;
+      double volume = boundaryPtr_->volume();
+      energy /= 2.0*volume;
 
       // Calculate self-energy correction to Ewald summation.
       System::MoleculeIterator molIter;
@@ -532,12 +521,12 @@ namespace McMd
    }
 
    /*
-   * Compute the k contribution to stress.
+   * Compute the k-space contribution to Coulomb stress.
    */
    void MdSpmePotential::computeStress()
    {
-      spreadCharge();
-      setGridToZero(rhoHat_);
+      assignCharges();
+      setGridToZero(rhoK_);
       fftw_execute(forward_plan);
 
       Tensor K, stress;
@@ -545,31 +534,28 @@ namespace McMd
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
       double qSq;
-      IntVector pos;
-      int i, j, k; 
+      int i, j, k, rank;
 
       stress.zero();
+      rank = 0;
       for (i = 0; i < gridDimensions_[0]; ++i) {
-         pos[0] = i;
          for (j = 0; j < gridDimensions_[1]; ++j) {
-            pos[1] = j;
             for (k = 0; k < gridDimensions_[2]; ++k) {
-               pos[2] = k;
-
-               qSq = sqWaves_(pos);
+               qSq = sqWaves_[rank];
                if (qSq > 1.0E-10) {
-                  qv = vecWaves_(pos);
+                  qv = vecWaves_[rank];
                   K.dyad(qv, qv);
                   K *=  -2.0 * (ca + (1.0/qSq));
                   K.add(Tensor::Identity, K);
-                  K *= g_(pos)*std::norm(rhoHat_(pos));
+                  K *= g_[rank]*std::norm(rhoK_[rank]);
                   stress += K;
                }
+               ++rank;
             }
          }
       }
       double volume = boundaryPtr_->volume();
-      stress /= 2.0*volume;
+      stress /= 2.0*volume*volume;
 
 
       kSpaceStress_.set(stress);

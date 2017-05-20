@@ -139,7 +139,7 @@ namespace McMd
       {  return rSpaceAccumulator_; }
 
       EwaldInteraction& ewaldInteraction()
-      { return ewaldInteraction_; }
+      {  return ewaldInteraction_; }
 
       //@}
 
@@ -160,14 +160,14 @@ namespace McMd
       // Pointer to array of atom types
       const Array<AtomType>* atomTypesPtr_;
 
-      /// Grid Size.
+      /// Grid dimensions - number of points in each direction
       IntVector gridDimensions_;
 
-      /// Charge density assigned to grid
-      GridArray<DCMPLX> rho_;
+      /// Charge density assigned to r-space grid
+      GridArray<DCMPLX> rhoR_;
 
-      /// DFT of charge density 
-      GridArray<DCMPLX> rhoHat_;
+      /// DFT of charge density on k-space grid
+      GridArray<DCMPLX> rhoK_;
 
       /// Influence function
       GridArray<double> g_;
@@ -190,10 +190,10 @@ namespace McMd
       /// order of basis spline
       int order_;
       
-      /// FFT plan.
+      /// FFT plan
       fftw_plan forward_plan;
 
-      /// FFT plan for electric field.
+      /// FFT plan for electric field
       fftw_plan xfield_backward_plan, yfield_backward_plan, zfield_backward_plan;
 
       /**
@@ -203,19 +203,19 @@ namespace McMd
       void setGridToZero(GridArray<T>& grid);
 
       /**
-      * Compute influence function, ie. BCgrid.
+      * Compute influence function g_.
       */
       void influence_function();
 
       /**
-      * Compute components of B in g_.
+      * Compute components of b-factor in spme influence function.
       */
       double bfactor(double m , int dim);
 
       /**
-      * Charge assignment function, ie. rho_.
+      * Assign charges to grid points to compute rhoR_.
       */
-      void spreadCharge();
+      void assignCharges();
 
       /**
       * Expression for basis spline with order-5.
