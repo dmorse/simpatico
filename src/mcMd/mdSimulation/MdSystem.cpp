@@ -986,46 +986,40 @@ namespace McMd
    void MdSystem::computeVirialStressImpl(T& stress) const
    {
       setToZero(stress);
+      T dStress;
 
       #ifndef SIMP_NOPAIR
-      T pairStress;
-      pairPotential().computeStress(pairStress);
-      stress += pairStress;
+      pairPotential().computeStress(dStress);
+      stress += dStress;
       #endif
-
       #ifdef SIMP_BOND
       if (hasBondPotential()) {
-         T bondStress;
-         bondPotential().computeStress(bondStress);
-         stress += bondStress;
+         bondPotential().computeStress(dStress);
+         stress += dStress;
       }
       #endif
       #ifdef SIMP_ANGLE
       if (hasAnglePotential()) {
-         T angleStress;
-         anglePotential().computeStress(angleStress);
-         stress += angleStress;
+         anglePotential().computeStress(dStress);
+         stress += dStress;
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (hasDihedralPotential()) {
-         T dihedralStress;
-         dihedralPotential().computeStress(dihedralStress);
-         stress += dihedralStress;
+         dihedralPotential().computeStress(dStress);
+         stress += dStress;
       }
       #endif
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
-         //T coulombStress;
-         //coulombPotential().computeStress(coulombStress);
-         //stress += coulombStress;
+         coulombPotential().computeStress(dStress);
+         stress += dStress;
       }
       #endif
       #ifdef MCMD_LINK
       if (hasLinkPotential()) {
-         T linkStress;
-         linkPotential().computeStress(linkStress);
-         stress += linkStress;
+         linkPotential().computeStress(dStress);
+         stress += dStress;
       }
       #endif
 

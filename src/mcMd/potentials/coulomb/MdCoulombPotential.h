@@ -164,9 +164,28 @@ namespace McMd
       Tensor stress();
 
       /**
+      * Get total Coulomb stress.
+      *
+      * Equivalent to Tensor stress().
+      */
+      void computeStress(Tensor& stress);
+
+      /**
+      * Get diagonal components of Coulomb stress.
+      */
+      void computeStress(Vector& pressures);
+
+      /**
       * Get total Coulomb pressure.
       */
       double pressure();
+
+      /**
+      * Get the total Coulomb pressure.
+      * 
+      * Equivalent to double pressure().
+      */
+      void computeStress(double& pressure);
 
       //@}
 

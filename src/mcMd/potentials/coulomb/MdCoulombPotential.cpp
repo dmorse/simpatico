@@ -147,5 +147,40 @@ namespace McMd
       return value/3.0;
    }
  
+   /*
+   * Get total Coulomb stress.
+   */
+   void MdCoulombPotential::computeStress(Tensor& stress)
+   {  
+      stress = kSpaceStress();
+      stress+= rSpaceAccumulator_.rSpaceStress();
+   }
+
+   /**
+   * Get diagonal components of Coulomb stress.
+   */
+   void MdCoulombPotential::computeStress(Vector& pressures)
+   {
+      Tensor temp = stress();
+      for (int i = 0; i < Dimension; ++i) {
+         pressures[i] = temp(i,i);
+      }
+   }
+
+   /**
+   * Get Coulomb pressure.
+   * 
+   * Equivalent to double pressure().
+   */
+   void MdCoulombPotential::computeStress(double& pressure)
+   {
+      Tensor temp = stress();
+      pressure = 0.0;
+      for (int i = 0; i < Dimension; ++i) {
+         pressure += temp(i, i); 
+      }
+      pressure /= 3.0;
+   }
+
 } 
 #endif

@@ -162,34 +162,6 @@ namespace McMd
       virtual void addForces()
       {  UTIL_THROW("Unimplemented method"); }
 
-      #if 0
-      /**
-      * Calculate the total angle potential energy for the System.
-      */
-      virtual double energy() const = 0;
-
-      /**
-      * Compute total angle potential isotropic pressure contribution.
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const = 0;
-
-      /**
-      * Compute x, y, z angle potential pressure components.
-      *
-      * \param stress (output) pressure components.
-      */
-      virtual void computeStress(Util::Vector& stress) const = 0;
-
-      /**
-      * Compute angle potential stress tensor contribution.
-      *
-      * \param stress (output) stress tensor contribution.
-      */
-      virtual void computeStress(Util::Tensor& stress) const = 0;
-      #endif
-    
       //@}
    };
 
