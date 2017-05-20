@@ -1,5 +1,5 @@
 /**
-* Potential energy interaction functions.
+* Classes used by all simpatico molecular simulations.
 */
 namespace Simp {}
 
@@ -11,7 +11,7 @@ namespace Simp
    *
    * \brief Simp namespace
    *
-   * The Simpl namespace contains classes that are more specific
+   * The Simp namespace contains classes that are more specific
    * to molecular simulation than those in the Util namespace 
    * but that (like those in Util) are avaialable for use in any
    * of (1) the McMd namespace for use in the single-processor 

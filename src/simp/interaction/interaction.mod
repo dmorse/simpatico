@@ -1,8 +1,3 @@
-/**
-* Potential energy interaction functions.
-*/
-namespace Simp {}
-
 namespace Simp
 {
 
