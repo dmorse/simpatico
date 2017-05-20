@@ -382,24 +382,17 @@ namespace McMd
       setGridToZero(rhoK_);
       fftw_execute(forward_plan);
 
-      DCMPLX ci = Constants::Im / boundaryPtr_->volume();
+      // Compute field components in k-space, multiplying by i*q
       Vector qv; // Wavevector
-      int rank;  //rank in GridArray
+      DCMPLX ci = Constants::Im / boundaryPtr_->volume();
+      for (int rank = 0 ; rank < g_.size() ; ++rank) {
+         qv = vecWaves_[rank];
+         xfield_[rank] = ci*qv[0]*rhoK_[rank]*g_[rank];
+         yfield_[rank] = ci*qv[1]*rhoK_[rank]*g_[rank];
+         zfield_[rank] = ci*qv[2]*rhoK_[rank]*g_[rank];
+      }
 
-      // Derivatives in k-space
-      rank = 0;
-      for (int i = 0 ; i < gridDimensions_[0] ; ++i) {
-         for (int j = 0 ; j < gridDimensions_[1] ; ++j) {
-            for (int k = 0 ; k < gridDimensions_[2] ; ++k) {
-               qv = vecWaves_[rank];
-               xfield_[rank] = ci*qv[0]*rhoK_[rank]*g_[rank];
-               yfield_[rank] = ci*qv[1]*rhoK_[rank]*g_[rank];
-               zfield_[rank] = ci*qv[2]*rhoK_[rank]*g_[rank];
-               ++rank;
-            } // loop over z
-         } // loop over y
-      } // loop over x
-
+      // Inverse transform to obtain fields on r-space grid
       fftw_execute(xfield_backward_plan);
       fftw_execute(yfield_backward_plan);
       fftw_execute(zfield_backward_plan);
