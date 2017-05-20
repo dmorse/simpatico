@@ -203,9 +203,14 @@ namespace McMd
       void setGridToZero(GridArray<T>& grid);
 
       /**
-      * Compute influence function g_.
+      * Allocate and set all quantities that depend on grid dimensions.
       */
-      void influence_function();
+      void setGridDimensions();
+
+      /**
+      * Compute waves and influence function.
+      */
+      void computeWaves();
 
       /**
       * Compute components of b-factor in spme influence function.

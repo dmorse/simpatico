@@ -69,6 +69,7 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.readParameters(in);
       read<IntVector>(in, "gridDimensions", gridDimensions_);
+      setGridDimensions();
    }
 
    /*
@@ -80,6 +81,7 @@ namespace McMd
       addParamComposite(ewaldInteraction_, nextIndent);
       ewaldInteraction_.loadParameters(ar);
       loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
+      setGridDimensions();
    }
 
    /*
@@ -122,63 +124,70 @@ namespace McMd
    */
    void MdSpmePotential::makeWaves()
    { 
+      // Allocate memory if not done previously
       if (g_.size() == 0) {
-
-         // Allocate memory for grid
-         rhoR_.allocate(gridDimensions_);
-         rhoK_.allocate(gridDimensions_);
-         g_.allocate(gridDimensions_);
-         sqWaves_.allocate(gridDimensions_);
-         vecWaves_.allocate(gridDimensions_);
-         xfield_.allocate(gridDimensions_);
-         yfield_.allocate(gridDimensions_);
-         zfield_.allocate(gridDimensions_);
-
-         // Initialize fft plan for Q grid
-         fftw_complex* inf;
-         fftw_complex* outf;
-         inf  = reinterpret_cast<fftw_complex*>(rhoR_.data());
-         outf = reinterpret_cast<fftw_complex*>(rhoK_.data());
-         forward_plan = fftw_plan_dft_3d(gridDimensions_[0],
-                                         gridDimensions_[1],
-                                         gridDimensions_[2],
-                                         inf, outf, 
-                                         FFTW_FORWARD,FFTW_MEASURE);
-
-         // Initialize fft plans for electric field component grids
-         fftw_complex* inxf; 
-         fftw_complex* outxf;
-         inxf = reinterpret_cast<fftw_complex*>(xfield_.data());
-         outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
-         xfield_backward_plan = 
-                  fftw_plan_dft_3d(gridDimensions_[0],
-                                   gridDimensions_[1],
-                                   gridDimensions_[2],
-                                   inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
-         fftw_complex* inyf; 
-         fftw_complex* outyf;
-         inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
-         outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
-         yfield_backward_plan = 
-                  fftw_plan_dft_3d(gridDimensions_[0],
-                                   gridDimensions_[1],
-                                   gridDimensions_[2],
-                                   inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
-         fftw_complex* inzf; 
-         fftw_complex* outzf;
-         inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
-         outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
-         zfield_backward_plan = 
-                  fftw_plan_dft_3d(gridDimensions_[0],
-                                   gridDimensions_[1],
-                                   gridDimensions_[2],
-                                   inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
+         setGridDimensions();
       }
 
-      influence_function();
+      // Compute waves and influence function.
+      computeWaves();
   
       // Mark wave data as up to date.
       hasWaves_ = true;
+   }
+
+   void MdSpmePotential::setGridDimensions()
+   {
+      // Allocate memory 
+      rhoR_.allocate(gridDimensions_);
+      rhoK_.allocate(gridDimensions_);
+      g_.allocate(gridDimensions_);
+      sqWaves_.allocate(gridDimensions_);
+      vecWaves_.allocate(gridDimensions_);
+      xfield_.allocate(gridDimensions_);
+      yfield_.allocate(gridDimensions_);
+      zfield_.allocate(gridDimensions_);
+
+      // Initialize fft plan for charge grid
+      fftw_complex* inf;
+      fftw_complex* outf;
+      inf  = reinterpret_cast<fftw_complex*>(rhoR_.data());
+      outf = reinterpret_cast<fftw_complex*>(rhoK_.data());
+      forward_plan = fftw_plan_dft_3d(gridDimensions_[0],
+                                      gridDimensions_[1],
+                                      gridDimensions_[2],
+                                      inf, outf, 
+                                      FFTW_FORWARD,FFTW_MEASURE);
+
+      // Initialize fft plans for electric field component grids
+      fftw_complex* inxf; 
+      fftw_complex* outxf;
+      inxf = reinterpret_cast<fftw_complex*>(xfield_.data());
+      outxf = reinterpret_cast<fftw_complex*>(xfield_.data());
+      xfield_backward_plan = 
+               fftw_plan_dft_3d(gridDimensions_[0],
+                                gridDimensions_[1],
+                                gridDimensions_[2],
+                                inxf, outxf,FFTW_BACKWARD, FFTW_MEASURE);
+      fftw_complex* inyf; 
+      fftw_complex* outyf;
+      inyf  = reinterpret_cast<fftw_complex*>(yfield_.data());
+      outyf = reinterpret_cast<fftw_complex*>(yfield_.data());
+      yfield_backward_plan = 
+               fftw_plan_dft_3d(gridDimensions_[0],
+                                gridDimensions_[1],
+                                gridDimensions_[2],
+                                inyf, outyf,FFTW_BACKWARD, FFTW_MEASURE);
+      fftw_complex* inzf; 
+      fftw_complex* outzf;
+      inzf  = reinterpret_cast<fftw_complex*>(zfield_.data());
+      outzf = reinterpret_cast<fftw_complex*>(zfield_.data());
+      zfield_backward_plan = 
+               fftw_plan_dft_3d(gridDimensions_[0],
+                                gridDimensions_[1],
+                                gridDimensions_[2],
+                                inzf, outzf,FFTW_BACKWARD, FFTW_MEASURE);
+
    }
 
    /*
@@ -202,9 +211,9 @@ namespace McMd
    }
 
    /*
-   * Compute influence function g_
+   * Compute waves and influence function.
    */
-   void MdSpmePotential::influence_function()
+   void MdSpmePotential::computeWaves()
    {
       Vector b0, b1, b2;
       Vector q0, q1, q;
@@ -481,16 +490,10 @@ namespace McMd
       setGridToZero(rhoK_);
       fftw_execute(forward_plan);
 
+      // Loop over all waves in Fourier grid
       double energy = 0.0;
-      int i, j, k;
-      int rank = 0;
-      for (i = 0; i < gridDimensions_[0]; ++i) {
-         for (j = 0; j < gridDimensions_[1]; ++j) {
-            for (k = 0; k < gridDimensions_[2]; ++k) {
-               energy += g_[rank] * std::norm(rhoK_[rank]);
-               ++rank;
-            }
-         }
+      for (int i = 0; i < g_.size(); ++i) {
+         energy += g_[i] * std::norm(rhoK_[i]);
       }
       double volume = boundaryPtr_->volume();
       energy /= 2.0*volume;
@@ -534,29 +537,22 @@ namespace McMd
       double alpha = ewaldInteraction_.alpha();
       double ca = 0.25/(alpha*alpha);
       double qSq;
-      int i, j, k, rank;
 
+      // Loop over all waves in Fourier grid
       stress.zero();
-      rank = 0;
-      for (i = 0; i < gridDimensions_[0]; ++i) {
-         for (j = 0; j < gridDimensions_[1]; ++j) {
-            for (k = 0; k < gridDimensions_[2]; ++k) {
-               qSq = sqWaves_[rank];
-               if (qSq > 1.0E-10) {
-                  qv = vecWaves_[rank];
-                  K.dyad(qv, qv);
-                  K *=  -2.0 * (ca + (1.0/qSq));
-                  K.add(Tensor::Identity, K);
-                  K *= g_[rank]*std::norm(rhoK_[rank]);
-                  stress += K;
-               }
-               ++rank;
-            }
+      for (int i = 0; i < g_.size(); ++i) {
+         qSq = sqWaves_[i];
+         if (qSq > 1.0E-10) {
+            qv = vecWaves_[i];
+            K.dyad(qv, qv);
+            K *=  -2.0 * (ca + (1.0/qSq));
+            K.add(Tensor::Identity, K);
+            K *= g_[i]*std::norm(rhoK_[i]);
+            stress += K;
          }
       }
       double volume = boundaryPtr_->volume();
       stress /= 2.0*volume*volume;
-
 
       kSpaceStress_.set(stress);
    }
