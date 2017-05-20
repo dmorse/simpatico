@@ -16,7 +16,7 @@
 namespace Tools
 {
 
-   class Atom;
+   struct Atom;
    using namespace Util;
 
    /**
