@@ -98,7 +98,8 @@ namespace DdMd
          if (simulation().domain().isMaster()) {
             Tensor virial  = simulation().virialStress();
             Tensor kinetic = simulation().kineticStress();
-            Tensor total = total.add(virial, kinetic); 
+            Tensor total;
+            total.add(virial, kinetic); 
             outputFile_ << virial(0,0) << "\t" << virial(1,1) << "\t" << virial(2,2)
             << total(0,0) << "\t" << total(1,1) << "\t" << total(2,2) << "\n"; 
          }

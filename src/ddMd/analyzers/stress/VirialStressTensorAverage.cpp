@@ -147,7 +147,8 @@ namespace DdMd
          if (sys.domain().isMaster()) {
             Tensor virial  = sys.virialStress();
             Tensor kinetic = sys.kineticStress();
-            Tensor total = total.add(virial, kinetic); 
+            Tensor total; 
+            total.add(virial, kinetic); 
             sxxAccumulator_.sample(virial(0,0));
             sxyAccumulator_.sample(virial(0,1));
             sxzAccumulator_.sample(virial(0,2));

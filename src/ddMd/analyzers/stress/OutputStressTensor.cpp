@@ -105,7 +105,8 @@ namespace DdMd
          if (sys.domain().isMaster()) {
             Tensor virial  = sys.virialStress();
             Tensor kinetic = sys.kineticStress();
-            Tensor total = total.add(virial, kinetic);
+            Tensor total;
+            total.add(virial, kinetic);
             outputFile_ << Int(iStep, 10)
                         << Dbl(virial(0,0), 20)
                         << Dbl(virial(0,1), 20)

@@ -123,7 +123,8 @@ namespace DdMd
 
             Tensor virial  = sim.virialStress();
             Tensor kinetic = sim.kineticStress();
-            Tensor total = total.add(virial, kinetic);
+            Tensor total;
+            total.add(virial, kinetic);
 
             // Remove trace
             double pressure = 0.0;
