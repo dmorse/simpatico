@@ -13,13 +13,13 @@
 #include <simp/species/Diblock.h>
 #include <simp/species/Multiblock.h>
 #include <simp/species/HomoRing.h>
-#include <simp/species/HomopolymerSG.h>
+#include <mcMd/species/HomopolymerSG.h>
 
 namespace McMd
 {
 
    using namespace Util;
-   using namespace Inter;
+   using namespace Simp;
 
    /* 
    * Return a pointer to a instance of Species subclass speciesName.
