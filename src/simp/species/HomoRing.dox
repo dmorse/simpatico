@@ -1,9 +1,9 @@
 namespace Simp
 {
 
-/*! \page mcMd_species_HomoRing_page  HomoRing
+/*! \page simp_species_HomoRing_page  HomoRing
 
-\section mcMd_species_HomoRing_synopsis_sec Synopsis
+\section simp_species_HomoRing_synopsis_sec Synopsis
 
 Ring polymer in which all atoms are of the same type.
 
@@ -26,7 +26,7 @@ types.
 
 \sa Simp::HomoRing
 
-\section mcMd_species_HomoRing_param_sec Parameters
+\section simp_species_HomoRing_param_sec Parameters
 
 The HomoRing parameter file format is:
 \code

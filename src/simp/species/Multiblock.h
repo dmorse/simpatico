@@ -1,5 +1,5 @@
-#ifndef MCMD_MULTIBLOCK_H
-#define MCMD_MULTIBLOCK_H
+#ifndef SIMP_MULTIBLOCK_H
+#define SIMP_MULTIBLOCK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,7 +20,7 @@ namespace Simp
    *
    * In this implementation, all of the bonds have the same type Id.
    *
-   * \sa \ref mcMd_species_Multiblock_page "parameter file format"
+   * \sa \ref simp_species_Multiblock_page "parameter file format"
    * \ingroup Simp_Species_Module
    */
    class Multiblock : public Linear

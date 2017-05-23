@@ -1,5 +1,5 @@
-#ifndef MCMD_DIBLOCK_H
-#define MCMD_DIBLOCK_H
+#ifndef SIMP_DIBLOCK_H
+#define SIMP_DIBLOCK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,7 +20,7 @@ namespace Simp
    *
    * In this implementation, all of the bonds have the same type Id.
    *
-   * \sa \ref mcMd_species_Diblock_page "parmameter file format"
+   * \sa \ref simp_species_Diblock_page "parmameter file format"
    *
    * \ingroup Simp_Species_Module
    */

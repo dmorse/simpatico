@@ -1,9 +1,9 @@
 namespace Simp
 {
 
-/*! \page mcMd_species_Multiblock_page  Multiblock
+/*! \page simp_species_Multiblock_page  Multiblock
 
-\section mcMd_species_Multiblock_synopsis_sec Synopsis
+\section simp_species_Multiblock_synopsis_sec Synopsis
 
 Linear multi-block copolymer molecular species.
 
@@ -31,7 +31,7 @@ the same parameters.
 
 \sa Simp::Multiblock
 
-\section mcMd_species_Multiblock_param_sec Parameters
+\section simp_species_Multiblock_param_sec Parameters
 Multiblock parameter file format is:
 \code
   Multiblock{

@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_FACTORY_H
-#define MCMD_SPECIES_FACTORY_H
+#ifndef SIMP_SPECIES_FACTORY_H
+#define SIMP_SPECIES_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

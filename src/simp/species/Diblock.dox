@@ -1,9 +1,9 @@
 namespace Simp
 {
 
-/*! \page mcMd_species_Diblock_page  Diblock
+/*! \page simp_species_Diblock_page  Diblock
 
-\section mcMd_species_Diblock_synopsis_sec Synopsis
+\section simp_species_Diblock_synopsis_sec Synopsis
 
 Linear diblock copolymer molecular species.
 
@@ -29,7 +29,7 @@ the same parameters.
 
 \sa Simp::Diblock
 
-\section mcMd_species_Diblock_param_sec Parameters
+\section simp_species_Diblock_param_sec Parameters
 Diblockhe parameter file format is:
 \code
   Diblock{

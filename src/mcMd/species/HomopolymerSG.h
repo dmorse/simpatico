@@ -8,14 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Linear.h"                 // base class
 #include "SpeciesMutator.h"         // base class
+#include <simp/species/Linear.h>    // base class
 #include <util/containers/Pair.h>   // member
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * A Homopolymer with a mutable type, for semigrand ensemble.
@@ -28,22 +29,22 @@ namespace Simp
    */
    class HomopolymerSG : public Linear, public SpeciesMutator
    {
-   
+
    public:
-  
+
       /**
       * Constructor.
       */
       HomopolymerSG();
-   
-      /** 
+
+      /**
       * Destructor.
       */
       virtual ~HomopolymerSG();
-  
+
       /**
       * Read parameters and initialize.
-      */ 
+      */
       virtual void readParameters(std::istream& in);
 
       /**
@@ -55,14 +56,14 @@ namespace Simp
       virtual void setMoleculeState(Molecule& molecule, int stateId);
 
    protected:
-   
+
       /**
       * Read nAtom, a pair of atom type ids and weightRatio.
       *
       * \param in input stream
       */
       virtual void readSpeciesParam(std::istream &in);
-   
+
       /**
       * Return the same type for any particle in any chain.
       *
@@ -70,7 +71,7 @@ namespace Simp
       * \return atom type index
       */
       virtual int calculateAtomTypeId(int index) const;
-   
+
       /**
       * Return same bond type for any bond in any chain.
       *
@@ -99,7 +100,6 @@ namespace Simp
       virtual int calculateDihedralTypeId(int index) const;
       #endif
 
-
    private:
 
       // A Pair of atom type indexes.
@@ -108,8 +108,8 @@ namespace Simp
 
       /// Ratio of statistical weights for typeId[0]/typeId[1]
       double weightRatio_;
-   
+
    };
-   
-} 
+
+}
 #endif

@@ -8,7 +8,7 @@
 #include "SpeciesMutator.h"
 #include <iostream>
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;

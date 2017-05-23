@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_H
-#define MCMD_SPECIES_H
+#ifndef SIMP_SPECIES_H
+#define SIMP_SPECIES_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -61,7 +61,7 @@ namespace Simp
    * A subclass that represents a mutable species must have an associated
    * SpeciesMutator. See documentation for Species::setMutatorPtr().
    *
-   * \sa \ref mcMd_species_Species_page "parameter file format"
+   * \sa \ref simp_species_Species_page "parameter file format"
    * \ingroup Simp_Species_Module
    */
    class Species : public ParamComposite

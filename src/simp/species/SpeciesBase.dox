@@ -1,9 +1,9 @@
 namespace Simp
 {
 
-/*! \page mcMd_species_Species_page  Species
+/*! \page simp_species_Species_page  Species
 
-\section mcMd_species_Species_synopsis_sec Synopsis
+\section simp_species_Species_synopsis_sec Synopsis
 
 A species of molecule.
 
@@ -17,7 +17,7 @@ or Diblock) describe more specific types of molecule.
 
 \sa Simp::Species
 
-\section mcMd_species_Species_param_sec Parameters
+\section simp_species_Species_param_sec Parameters
 Specieshe parameter file format is:
 \code
   Species{
@@ -131,7 +131,7 @@ if the number of groups of the specified type (i.e,. the value of
 nBond, nAngle, or nDihedral) is greater than zero.
 
 The text representation for a single SpeciesGroup<N> object is also 
-described \ref mcMd_species_SpeciesGroup_page "here".
+described \ref simp_species_SpeciesGroup_page "here".
 
 */
 

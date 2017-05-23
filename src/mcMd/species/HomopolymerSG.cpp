@@ -7,13 +7,14 @@
 
 #include "HomopolymerSG.h"
 #ifdef UTIL_MPI
-#include <mcMd/simulation/Simp_mpi.h>
+#include <mcMd/simulation/mcMd_mpi.h>
 #endif
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor.

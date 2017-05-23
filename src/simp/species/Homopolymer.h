@@ -1,5 +1,5 @@
-#ifndef MCMD_HOMOPOLYMER_H
-#define MCMD_HOMOPOLYMER_H
+#ifndef SIMP_HOMOPOLYMER_H
+#define SIMP_HOMOPOLYMER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -27,7 +27,7 @@ namespace Simp
    * all sequences of four subsequent atoms, which (if present) must 
    * all be of the same dihedral type.
    *
-   * \sa \ref mcMd_species_Homopolymer_page "parameter file format"
+   * \sa \ref simp_species_Homopolymer_page "parameter file format"
    * 
    * \ingroup Simp_Species_Module
    */

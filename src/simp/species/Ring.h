@@ -1,5 +1,5 @@
-#ifndef MCMD_RING_H
-#define MCMD_RING_H
+#ifndef SIMP_RING_H
+#define SIMP_RING_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

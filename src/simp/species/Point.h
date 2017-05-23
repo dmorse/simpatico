@@ -1,5 +1,5 @@
-#ifndef MCMD_POINT_H
-#define MCMD_POINT_H
+#ifndef SIMP_POINT_H
+#define SIMP_POINT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,7 +1,6 @@
 
 simp_species_= \
     simp/species/Species.cpp \
-    simp/species/SpeciesMutator.cpp \
     simp/species/SpeciesFactory.cpp \
     simp/species/SpeciesManager.cpp \
     simp/species/Point.cpp 
@@ -12,9 +11,12 @@ simp_species_+= \
     simp/species/Homopolymer.cpp \
     simp/species/Diblock.cpp \
     simp/species/Multiblock.cpp \
-    simp/species/HomopolymerSG.cpp \
     simp/species/Ring.cpp \
     simp/species/HomoRing.cpp 
+endif
+
+ifdef UTIL_MPI
+simp_species_+= SpeciesGroup.cpp
 endif
 
 simp_species_SRCS=\

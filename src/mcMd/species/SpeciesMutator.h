@@ -12,7 +12,7 @@
 #include <util/param/Label.h>          // member
 #include <mcMd/chemistry/Molecule.h>   // inline function
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
