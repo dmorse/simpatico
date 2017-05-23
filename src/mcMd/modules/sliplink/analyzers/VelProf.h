@@ -17,12 +17,15 @@
 #include <cstdio> 
 #include <cstring> 
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
+   using namespace Simp;
 
    /**
    *

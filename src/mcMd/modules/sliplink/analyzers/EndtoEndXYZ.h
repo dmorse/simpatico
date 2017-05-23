@@ -17,12 +17,16 @@
 #include <cstdio> 
 #include <cstring> 
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
-   class Species;
 
    /**
    * Mean square end to end distance of a molecule.
