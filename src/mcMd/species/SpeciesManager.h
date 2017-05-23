@@ -1,5 +1,5 @@
-#ifndef SIMP_SPECIES_MANAGER_H
-#define SIMP_SPECIES_MANAGER_H
+#ifndef MCMD_SPECIES_MANAGER_H
+#define MCMD_SPECIES_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,12 +10,13 @@
 
 #include <util/param/Factory.h>
 #include <util/param/Manager.h>
-#include "Species.h"
+#include <simp/species/Species.h>
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
+   using namespace McMd;
 
    /**
    * A Manager for a set of Species objects.
@@ -23,7 +24,7 @@ namespace Simp
    * \ingroup Simp_Manager_Module
    * \ingroup Simp_Species_Module
    */
-   class SpeciesManager : public Manager<Species>
+   class SpeciesManager : public Manager<Simp::Species>
    {
 
    public:
@@ -35,7 +36,7 @@ namespace Simp
 
    protected:
 
-      virtual Factory<Species>* newDefaultFactory() const;
+      virtual Factory<Simp::Species>* newDefaultFactory() const;
 
    };
 

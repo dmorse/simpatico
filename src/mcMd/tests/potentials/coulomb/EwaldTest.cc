@@ -2,7 +2,7 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 

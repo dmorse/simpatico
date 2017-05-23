@@ -1,6 +1,7 @@
 mcMd_species_= \
     mcMd/species/SpeciesMutator.cpp \
-    mcMd/species/SpeciesFactory.cpp 
+    mcMd/species/SpeciesFactory.cpp \
+    mcMd/species/SpeciesManager.cpp 
 
 ifdef SIMP_BOND
 mcMd_species_+= \

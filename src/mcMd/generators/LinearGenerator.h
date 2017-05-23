@@ -10,14 +10,20 @@
 
 #include "Generator.h"
 
+namespace Simp
+{
+   class Species;
+}
+
 namespace McMd
 {
 
-   class Species;
    class System;
    class Molecule;
    class CellList;
+
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Generates random configurations for linear molecules.

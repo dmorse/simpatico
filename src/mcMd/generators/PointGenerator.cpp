@@ -8,7 +8,6 @@
 #include "PointGenerator.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-//#include <mcMd/neighbor/CellList.h>
 #include <util/boundary/Boundary.h>
 
 namespace McMd
@@ -16,6 +15,7 @@ namespace McMd
 
    class CellList;
    using namespace Util;
+   using namespace Simp;
 
    PointGenerator::PointGenerator(Species& species, System& system)
     : Generator(species, system)

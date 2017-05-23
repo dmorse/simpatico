@@ -16,12 +16,17 @@
 #include <util/containers/GArray.h>              // member template
 #include <util/containers/GStack.h>              // member template
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
-   using namespace Util;
 
    class System;
-   class Species;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Identifies clusters of molecules, such as micelles.

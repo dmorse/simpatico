@@ -10,16 +10,19 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/species/Species.h>
-#include <mcMd/species/Linear.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/species/Species.h>
+#include <simp/species/Linear.h>
+
 #include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor

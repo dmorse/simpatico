@@ -8,7 +8,6 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdAnalyzerManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
 #include <mcMd/analyzers/Analyzer.h>
@@ -23,6 +22,7 @@
 #ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
+#include <simp/species/Species.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
@@ -39,6 +39,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    #ifdef UTIL_MPI
    /* 

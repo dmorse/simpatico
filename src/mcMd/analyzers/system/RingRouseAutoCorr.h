@@ -8,19 +8,21 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
-#include <mcMd/simulation/System.h>             // base class template parameter
-#include <util/accumulators/AutoCorrArray.h>    // member template 
-#include <util/space/Vector.h>                   // member template parameter
-#include <util/containers/DArray.h>             // member template
+#include <mcMd/analyzers/SystemAnalyzer.h>   // base class template
+#include <mcMd/simulation/System.h>          // base class template param
+#include <util/accumulators/AutoCorrArray.h> // member template 
+#include <util/space/Vector.h>               // member template parameter
+#include <util/containers/DArray.h>          // member template
+
+namespace Simp {
+   class Species;
+}
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
-
+   using namespace Simp;
 
    /**
    * Autocorrelation for Rouse mode coefficients of a ring molecule.

@@ -8,7 +8,7 @@
 // namespace McMd
 #include "SubSystem.h"
 #include "Simulation.h"
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 
 #include <fstream>
 
@@ -16,6 +16,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

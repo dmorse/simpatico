@@ -268,7 +268,7 @@ namespace Simp
    /*
    * Set a pointer to an associated SpeciesMutator object.
    */
-   void Species::setMutatorPtr(SpeciesMutator* mutatorPtr)
+   void Species::setMutatorPtr(McMd::SpeciesMutator* mutatorPtr)
    {  mutatorPtr_ = mutatorPtr; }
 
    /*

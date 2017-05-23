@@ -1,7 +1,6 @@
 
 simp_species_= \
     simp/species/Species.cpp \
-    simp/species/SpeciesManager.cpp \
     simp/species/Point.cpp 
 
 ifdef SIMP_BOND

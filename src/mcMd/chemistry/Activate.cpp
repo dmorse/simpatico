@@ -6,9 +6,9 @@
 */
 
 #include "Activate.h"
-#include <mcMd/species/Species.h>     
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Molecule.h>
+#include <simp/species/Species.h>     
 #ifdef SIMP_BOND
 #include <mcMd/chemistry/Bond.h>    
 #endif
@@ -23,6 +23,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * De-activate an atom and update associated groups.

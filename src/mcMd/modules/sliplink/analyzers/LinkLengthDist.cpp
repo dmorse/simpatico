@@ -11,7 +11,7 @@
 #include "LinkLengthDist.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
