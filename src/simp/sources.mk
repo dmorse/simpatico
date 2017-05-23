@@ -1,7 +1,9 @@
 include $(SRC_DIR)/simp/interaction/sources.mk
+include $(SRC_DIR)/simp/species/sources.mk
 
 simp_=\
-    $(simp_interaction_)
+    $(simp_interaction_) \
+    $(simp_species_)
 
 simp_SRCS=\
      $(addprefix $(SRC_DIR)/, $(simp_))
