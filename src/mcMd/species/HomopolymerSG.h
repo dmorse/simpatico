@@ -27,7 +27,7 @@ namespace McMd
    *
    * \ingroup Simp_Species_Module
    */
-   class HomopolymerSG : public Linear, public SpeciesMutator
+   class HomopolymerSG : public Simp::Linear, public McMd::SpeciesMutator
    {
 
    public:

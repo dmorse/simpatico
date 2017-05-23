@@ -8,17 +8,18 @@
 #include "SpeciesFactory.h"  
 
 // Subclasses of Species 
-#include "Point.h"
-#include "Homopolymer.h"
-#include "Diblock.h"
-#include "Multiblock.h"
-#include "HomoRing.h"
-#include "HomopolymerSG.h"
+#include <simp/species/Point.h>
+#include <simp/species/Homopolymer.h>
+#include <simp/species/Diblock.h>
+#include <simp/species/Multiblock.h>
+#include <simp/species/HomoRing.h>
+#include <simp/species/HomopolymerSG.h>
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
+   using namespace Inter;
 
    /* 
    * Return a pointer to a instance of Species subclass speciesName.

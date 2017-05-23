@@ -1,5 +1,5 @@
-#ifndef SIMP_SPECIES_FACTORY_H
-#define SIMP_SPECIES_FACTORY_H
+#ifndef MCMD_SPECIES_FACTORY_H
+#define MCMD_SPECIES_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,19 +9,20 @@
 */
 
 #include <util/param/Factory.h>  
-#include "Species.h"
+#include <simp/species/Species.h>
 
 #include <string>
 
-namespace Simp
+namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Default Factory for subclasses of Species.
    */
-   class SpeciesFactory : public Factory<Species> 
+   class SpeciesFactory : public Factory<Simp::Species> 
    {
 
    public:
@@ -32,7 +33,7 @@ namespace Simp
       * \param speciesName name of the Species subclass
       * \return Species* pointer to new instance of speciesName
       */
-      Species* factory(const std::string &speciesName) const;
+      Simp::Species* factory(const std::string &speciesName) const;
 
    };
 
