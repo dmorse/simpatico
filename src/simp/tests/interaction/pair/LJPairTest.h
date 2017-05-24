@@ -2,7 +2,7 @@
 #define LJ_PAIR_TEST_H
 
 #include <simp/interaction/pair/LJPair.h>
-#include <simp/tests/pair/PairTestTemplate.h>
+#include <simp/tests/interaction/pair/PairTestTemplate.h>
 
 #include <iostream>
 #include <fstream>
