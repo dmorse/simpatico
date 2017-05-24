@@ -27,6 +27,7 @@
 # Specifically, it makes copies of the factory implementation files 
 # and Boundary typedef.
 #------------------------------------------------------------------------
+# Main src/ and bld/ directory files
 
 # Create main config.mk files and set the value of $(ROOT_DIR) and $(BLD_DIR)
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
@@ -36,70 +37,30 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/
 # Copy the makeDep dependency-maker script
 cp scripts/python/makeDep bin/
 
-# Copy repository versions of main programs to user copies
-cp src/mcMd/mdSim.cpp_r src/mcMd/mdSim.cpp
-cp src/mcMd/mcSim.cpp_r src/mcMd/mcSim.cpp
+# ------------------------------------------------------------------------
+# Setup src/util/ directory
 
 # Namespace config.mk in src/ directory (for in-source builds)
 cp src/util/config.mk_r src/util/config.mk
-cp src/simp/config.mk_r src/simp/config.mk
-cp src/mcMd/config.mk_r src/mcMd/config.mk
-cp src/ddMd/config.mk_r src/ddMd/config.mk
-cp src/tools/config.mk_r src/tools/config.mk
 
-# Namespace config.mk in bld/serial (for out-of-source builds with no MPI)
-cp src/util/config.mk_r bld/serial/util/config.mk
-cp src/simp/config.mk_r bld/serial/simp/config.mk
-cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
-cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
-cp src/tools/config.mk_r bld/serial/tools/config.mk
-
-# Namespace config.mk in bld/parallel (for out-of-source builds with MPI)
-cp src/util/config.mk_r bld/parallel/util/config.mk
-cp src/simp/config.mk_r bld/parallel/simp/config.mk
-cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
-cp src/tools/config.mk_r bld/parallel/tools/config.mk
-cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
-
-# Copy makefiles from src/ to bld/serial
-cp src/makefile bld/serial/makefile
-cp src/util/makefile bld/serial/util/makefile
-cp src/simp/makefile bld/serial/simp/makefile
-cp src/mcMd/makefile bld/serial/mcMd/makefile
-cp src/tools/makefile bld/serial/tools/makefile
-cp src/ddMd/makefile bld/serial/ddMd/makefile
-cp src/util/tests/makefile bld/serial/util/tests/makefile
-cp src/simp/tests/makefile bld/serial/simp/tests/makefile
-cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/serial/tools/tests/makefile
-cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
-
-# Copy makefiles from src/ to bld/parallel
-cp src/makefile bld/parallel/makefile
-cp src/util/makefile bld/parallel/util/makefile
-cp src/simp/makefile bld/parallel/simp/makefile
-cp src/mcMd/makefile bld/parallel/mcMd/makefile
-cp src/ddMd/makefile bld/parallel/ddMd/makefile
-cp src/tools/makefile bld/parallel/tools/makefile
-cp src/util/tests/makefile bld/parallel/util/tests/makefile
-cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
-cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
-cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
-
-# Copy repository versions of sources.mk files in user directories.
-# These list user-contributed classes.
-cp src/simp/user/sources.mk_r src/simp/user/sources.mk
-cp src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
-cp src/tools/user/sources.mk_r src/tools/user/sources.mk
-cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
-
-# Copy repository versions of sources.mk files in modules directories.
-cp src/mcMd/modules/sources.mk_r src/mcMd/modules/sources.mk
+# Copy typedef for the class that defines boundary conditions
+cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 
 # ------------------------------------------------------------------------
-# Copy repository version of Factory implementation files to user versions.
+# Setup src/simp/ directory
 
+# Namepspace level config file
+cp src/simp/config.mk_r src/simp/config.mk
+
+# Source file in user directory (user-contributed files)
+cp src/simp/user/sources.mk_r src/simp/user/sources.mk
+# ------------------------------------------------------------------------
+# Setup src/mcMd/ directory
+
+# Namespace level config file
+cp src/mcMd/config.mk_r src/mcMd/config.mk
+
+# Factory classes
 cp src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
 cp src/mcMd/trajectory/TrajectoryReaderFactory.cpp_r src/mcMd/trajectory/TrajectoryReaderFactory.cpp
 cp src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
@@ -118,6 +79,21 @@ cp src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSyst
 cp src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
 cp src/mcMd/generators/generatorFactory.cpp_r src/mcMd/generators/generatorFactory.cpp
 
+# Source file lists in user and modules directories (user-contributed classes)
+cp src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
+cp src/mcMd/modules/sources.mk_r src/mcMd/modules/sources.mk
+
+# Main programs
+cp src/mcMd/mdSim.cpp_r src/mcMd/mdSim.cpp
+cp src/mcMd/mcSim.cpp_r src/mcMd/mcSim.cpp
+
+# ------------------------------------------------------------------------
+# Setup src/ddMd/ directory
+
+# Namespace level config file
+cp src/ddMd/config.mk_r src/ddMd/config.mk
+
+# Factory classes
 cp src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
 cp src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
 cp src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
@@ -128,19 +104,75 @@ cp src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorF
 cp src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
 
+# Source file list in user subdirectory
+cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
+# ------------------------------------------------------------------------
+# Setup src/tools/ directory
+
+# Namespace level config file
+cp src/tools/config.mk_r src/tools/config.mk
+
+# Factory classes
 cp src/tools/config/ConfigReaderFactory.cpp_r src/tools/config/ConfigReaderFactory.cpp
 cp src/tools/config/ConfigWriterFactory.cpp_r src/tools/config/ConfigWriterFactory.cpp
 cp src/tools/trajectory/TrajectoryReaderFactory.cpp_r src/tools/trajectory/TrajectoryReaderFactory.cpp
 cp src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/ProcessorAnalyzerFactory.cpp
 
-# Copy typedef for the class that defines boundary conditions
-cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
+# Source file list in user sub-directory
+cp src/tools/user/sources.mk_r src/tools/user/sources.mk
 
 # ---------------------------------------------------------------------
-# Create copies of the configure script.
+# Setup bld/serial (out-of-source builds with no MPI)
 
+# Namespace level config.mk files 
+cp src/util/config.mk_r bld/serial/util/config.mk
+cp src/simp/config.mk_r bld/serial/simp/config.mk
+cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
+cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
+cp src/tools/config.mk_r bld/serial/tools/config.mk
+
+# Makefiles
+cp src/makefile bld/serial/makefile
+cp src/util/makefile bld/serial/util/makefile
+cp src/simp/makefile bld/serial/simp/makefile
+cp src/mcMd/makefile bld/serial/mcMd/makefile
+cp src/tools/makefile bld/serial/tools/makefile
+cp src/ddMd/makefile bld/serial/ddMd/makefile
+cp src/util/tests/makefile bld/serial/util/tests/makefile
+cp src/simp/tests/makefile bld/serial/simp/tests/makefile
+cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
+cp src/tools/tests/makefile bld/serial/tools/tests/makefile
+cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
+
+# Configure script
 cp src/configure bld/serial/configure
+
+# ---------------------------------------------------------------------
+# Setup bld/parallel (out-of-source builds with MPI)
+
+# Namespace config.mk files
+cp src/util/config.mk_r bld/parallel/util/config.mk
+cp src/simp/config.mk_r bld/parallel/simp/config.mk
+cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
+cp src/tools/config.mk_r bld/parallel/tools/config.mk
+cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+
+# Copy makefiles from src/ to bld/parallel
+cp src/makefile bld/parallel/makefile
+cp src/util/makefile bld/parallel/util/makefile
+cp src/simp/makefile bld/parallel/simp/makefile
+cp src/mcMd/makefile bld/parallel/mcMd/makefile
+cp src/ddMd/makefile bld/parallel/ddMd/makefile
+cp src/tools/makefile bld/parallel/tools/makefile
+cp src/util/tests/makefile bld/parallel/util/tests/makefile
+cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
+cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
+cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
+cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
+
+# Configure script
 cp src/configure bld/parallel/configure
 
 # Enable UTIL_MPI by default in bld/parallel (silently).
 cd bld/parallel; ./configure -m1 &> /dev/null
+
