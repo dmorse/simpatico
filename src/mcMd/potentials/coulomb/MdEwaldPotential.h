@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
-#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
+#include <mcMd/potentials/coulomb/MdCoulombPotential.h>       // base class
+#include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>   // member
+#include <simp/interaction/coulomb/EwaldInteraction.h>        // member
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Vector.h>           // member template parameter
@@ -33,6 +33,7 @@ namespace McMd
    typedef std::complex<double> DCMPLX;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Ewald Coulomb potential class for MD simulations.

@@ -1,5 +1,5 @@
-#ifndef MCMD_EWALD_INTERACTION_H
-#define MCMD_EWALD_INTERACTION_H
+#ifndef SIMP_EWALD_INTERACTION_H
+#define SIMP_EWALD_INTERACTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -13,7 +13,7 @@
 
 #include <math.h>
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -23,7 +23,7 @@ namespace McMd
    *
    * This class defines the standard Ewald potential.
    *
-   * \ingroup McMd_Coulomb_Module
+   * \ingroup Simp_Coulomb_Module
    */
    class EwaldInteraction : public ParamComposite
    {
