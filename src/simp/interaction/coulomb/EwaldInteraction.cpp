@@ -1,5 +1,3 @@
-#ifndef MD_EWALD_INTERACTION_CPP
-#define MD_EWALD_INTERACTION_CPP
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -8,16 +6,16 @@
 */
 
 #include "EwaldInteraction.h"
+#include <util/math/Constants.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiLoader.h>
 #endif
 
 #include <iostream>
 #include <cstring>
-#include <util/math/Constants.h>
 #include <cmath>
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -146,4 +144,3 @@ namespace McMd
    }
  
 } 
-#endif

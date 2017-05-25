@@ -11,8 +11,8 @@
 #include <util/misc/Setable.h>
 #include <util/global.h>
 
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>
+#include <simp/interaction/coulomb/EwaldInteraction.h>
 
 namespace Util
 {
@@ -22,11 +22,10 @@ namespace Util
 namespace McMd
 {
 
-   using namespace Util;
-
    class MdSystem;
-   class EwaldRSpaceAccumulator;
-   class EwaldInteraction;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Implementation of a pair potential for a charged system.

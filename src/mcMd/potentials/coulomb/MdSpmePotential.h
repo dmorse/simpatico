@@ -10,7 +10,7 @@
 
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>      // base class
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>  // member
-#include <mcMd/potentials/coulomb/EwaldInteraction.h>        // member
+#include <simp/interaction/coulomb/EwaldInteraction.h>       // member
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Vector.h>           // member template parameter
@@ -35,6 +35,7 @@ namespace McMd
    typedef std::complex<double> DCMPLX;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Smooth Particle-Mesh Ewald Coulomb potential for MD simulations.

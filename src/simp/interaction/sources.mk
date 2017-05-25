@@ -21,6 +21,11 @@ include $(SRC_DIR)/simp/interaction/dihedral/sources.mk
 simp_interaction_+=$(simp_interaction_dihedral_)
 endif
 
+ifdef SIMP_COULOMB
+include $(SRC_DIR)/simp/interaction/coulomb/sources.mk
+simp_interaction_+=$(simp_interaction_coulomb_)
+endif
+
 ifdef SIMP_EXTERNAL
 include $(SRC_DIR)/simp/interaction/external/sources.mk
 simp_interaction_+=$(simp_interaction_external_)
