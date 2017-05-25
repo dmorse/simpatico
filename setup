@@ -4,8 +4,8 @@
 # Setup script:
 #
 # This script should be run once before the first time the program is
-# compiled. It must be run from the root simpatico/ directory, in which
-# this script is located.
+# compiled. It MUST be invoked from the root simpatico/ directory in 
+# which this script is located.
 # 
 # This script:
 #
@@ -13,29 +13,42 @@
 # files, named config.mk_r, to modifiable user versions, named config.mk. 
 # A separate set of build configuration files is created in the src/
 # directory (for in-source build) and in the bld/serial and bld/parallel
-# object directories. 
+# object directories. The makefile variables $(ROOT_DIR) and $(BLD_DIR)
+# are defined in the main config.mk file each build directory (i.e., in 
+# the src/, bld/serial and bld/parallel) are set to the absolute paths
+# of the simpatico root directory and of the specific build directory.
 #
-# 2) Sets the makefile variables $(ROOT_DIR) and $(BLD_DIR) in the main
-# config.mk file in each object directory to the absolute paths of the 
-# current working directory of the object directory, respectively. 
+# 2) Installs all required makefiles in the bld/serial and bld/parallel 
+# directories, by copying corresponding makefiles from the src/ directory.
 #
-# 3) Creates user-modifiable copies of the sources.mk files in the user/
-# subdirectory of each namespace level subdirectory of src/. 
+# 3) Installs copies of the config configuration script in the bld/serial
+# and bld/parallel directories, by copying the file scr/config.
 #
-# 4) Creates user modifiable copies of repository versions of some C++ 
-# source files that users often need to modify to add new features. 
-# Specifically, it makes copies of the factory implementation files 
-# and Boundary typedef.
-#------------------------------------------------------------------------
-# Main src/ and bld/ directory files
+# 4) In the src/ file tree, the script installs user modifiable copies of 
+# default versions of some C++ source files and makefile fragments that 
+# users need to be able to edit to add new features. These files include:
+#
+#      - C++ source (*.cpp) files for factory classes
+#      - C++ source files for some main programs
+#      - the C++ header file that defines the Boundary typedef
+#      - sources.mk source file lists in user/ subdirectories
+#
+# In each case, the name of the default repository version of the file
+# ends in a suffix _r, while the user-modifiable file is a file with 
+# the same name without the _r suffix that is created by copying the
+# default version.
+#
+# 5) Install the makeDep dependency-maker script in the bin/ directory
+#
+#========================================================================
+# Setup src/ source file directory tree
 
-# Create main config.mk files and set the value of $(ROOT_DIR) and $(BLD_DIR)
+# Install main configuration file src/config.mk, by copying src/config.mk_r
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
 
-# Copy the makeDep dependency-maker script
-cp scripts/python/makeDep bin/
+# Note: Stream editor (sed) is used here to:
+#   - Set $(ROOT_DIR) to absolute path of directory from which script invoked
+#   - Set $(BLD_DIR) to absolute path to src/ directory (in-source-build)
 
 # ------------------------------------------------------------------------
 # Setup src/util/ directory
@@ -54,6 +67,7 @@ cp src/simp/config.mk_r src/simp/config.mk
 
 # Source file in user directory (user-contributed files)
 cp src/simp/user/sources.mk_r src/simp/user/sources.mk
+
 # ------------------------------------------------------------------------
 # Setup src/mcMd/ directory
 
@@ -121,8 +135,13 @@ cp src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/Proces
 # Source file list in user sub-directory
 cp src/tools/user/sources.mk_r src/tools/user/sources.mk
 
-# ---------------------------------------------------------------------
-# Setup bld/serial (out-of-source builds with no MPI)
+#========================================================================
+# Setup bld/serial directory tree (out-of-source builds with MPI disabled)
+
+# Copy and edit config file in bld/serial
+# Set $(ROOT_DIR) to absolute path of directory from which script is invoked
+# Set $(BLD_DIR) to absolute path to bld/serial directory
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
 
 # Namespace level config.mk files 
 cp src/util/config.mk_r bld/serial/util/config.mk
@@ -147,23 +166,30 @@ cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
 # Configure script
 cp src/configure bld/serial/configure
 
-# ---------------------------------------------------------------------
-# Setup bld/parallel (out-of-source builds with MPI)
+#========================================================================
+# Setup bld/parallel (out-of-source builds with MPI enabled)
 
-# Namespace config.mk files
+# Copy and edit config file in bld/parallel
+# Set $(ROOT_DIR) to absolute path of directory from which script is invoked
+# Set $(BLD_DIR) to absolute path to bld/parallel directory
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
+
+# Namespace level config.mk files
 cp src/util/config.mk_r bld/parallel/util/config.mk
 cp src/simp/config.mk_r bld/parallel/simp/config.mk
 cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
 cp src/tools/config.mk_r bld/parallel/tools/config.mk
 cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
 
-# Copy makefiles from src/ to bld/parallel
+# Makefiles 
 cp src/makefile bld/parallel/makefile
 cp src/util/makefile bld/parallel/util/makefile
 cp src/simp/makefile bld/parallel/simp/makefile
 cp src/mcMd/makefile bld/parallel/mcMd/makefile
 cp src/ddMd/makefile bld/parallel/ddMd/makefile
 cp src/tools/makefile bld/parallel/tools/makefile
+
+# Makefiles in test directories
 cp src/util/tests/makefile bld/parallel/util/tests/makefile
 cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
@@ -175,4 +201,10 @@ cp src/configure bld/parallel/configure
 
 # Enable UTIL_MPI by default in bld/parallel (silently).
 cd bld/parallel; ./configure -m1 &> /dev/null
+
+#========================================================================
+# Install scripts
+
+# Install a copy of the makeDep dependency-maker script in bin/
+cp scripts/python/makeDep bin/
 
