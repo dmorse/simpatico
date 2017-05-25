@@ -1,3 +1,15 @@
+Housekeeping:
+------------
+
+- Move DdMd::Simulation::computePairEnergies() and pairEnergies()
+  to PairPotential class, modify PairEnergy(ies) analyzer classes.
+
+- Remove DdMd::Simulation computeExternalEnergy() and externalEnergy()
+  functions to ExternalEnergy (if not already there).
+
+- Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
+  accumulator_ used as name for pointer, not derived from AverageAnalyzer).
+
 Atom Sorting:
 -------------
 

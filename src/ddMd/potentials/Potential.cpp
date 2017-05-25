@@ -58,7 +58,7 @@ namespace DdMd
    {  return energy_.isSet(); }
 
    /*
-   * Set a value for the total stress.
+   * Get the value for the total stress.
    */
    Tensor Potential::stress() const
    {  return stress_.value(); }

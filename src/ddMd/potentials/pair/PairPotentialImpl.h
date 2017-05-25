@@ -14,6 +14,7 @@
 
 #include <algorithm>
 
+// Block size used in cache-optimized algorithm
 #define PAIR_BLOCK_SIZE 16
 
 namespace DdMd
@@ -241,12 +242,17 @@ namespace DdMd
 
    private:
 
+      #ifdef PAIR_BLOCK_SIZE
+      /*
+      * Struct used in inner-loop of cache-optimized algorithm.
+      */
       struct PairForce {
          Vector f;
          double rsq;
          Atom*  ptr0;
          Atom*  ptr1;
       };
+      #endif
 
       /**
       * Pointer to pair interaction object.
@@ -635,7 +641,8 @@ namespace DdMd
          }
          #endif // ifdef UTIL_DEBUG
 
-         #else  // ifdef PAIR_BLOCK_SIZE
+         #else  // ifndef PAIR_BLOCK_SIZE
+
          Vector f;
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);

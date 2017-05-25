@@ -432,11 +432,15 @@ namespace DdMd
       }
 
       /*
-      * Note that if isRestarting_, this function returns immediately.
-      * All information in the parameter file is also contained in
-      * a restart file. During a restart, the restart file is read
-      * and isRestarting_ is set true within setOptions(), which the
-      * main program ddSim.cpp calls before readParam().
+      * Note that if isRestarting_ is set to true, this function does 
+      * nothing and returns immediately. If the ddSim program is 
+      * invoked with a -r option, the setOptions() function sets 
+      * isRestarting_ to true and then reads the restart file whose
+      * name is specified as a command line argument. Because the 
+      * main ddSim program calls setOptions() before readParam(), 
+      * and because the restart file contains all the information 
+      * that would otherwise be given in a parameter file, there 
+      * is thus no need to read a parameter file during a restart. 
       */
    }
 
@@ -1794,8 +1798,6 @@ namespace DdMd
    */
    double Simulation::potentialEnergy() const
    {
-      // Note: Pointers used here because ...Potential() accessors
-      // return non-const references, which violate the method const.
       double energy = 0.0;
       energy += pairPotential().energy();
       #ifdef SIMP_BOND
@@ -1904,8 +1906,6 @@ namespace DdMd
    */
    Tensor Simulation::virialStress() const
    {
-      // Note: Pointers used here because ...Potential() accessors
-      // return non-const references, which violate the method const.
       Tensor stress;
       stress.zero();
       stress += pairPotential().stress();
