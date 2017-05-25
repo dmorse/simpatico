@@ -344,7 +344,7 @@ namespace Simp
    double CompensatedPair<BarePair, LinkPotential>
           ::get(std::string name, int i, int j) const
    {
-      double value;
+      double value = 0.0;
       if (name == "epsilon") {
          value = pair_.epsilon(i, j);
       } else {
