@@ -7,7 +7,7 @@
 
 #include "Homopolymer.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

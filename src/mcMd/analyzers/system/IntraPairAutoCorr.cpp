@@ -7,7 +7,7 @@
 
 #include "IntraPairAutoCorr.h"
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>

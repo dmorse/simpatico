@@ -36,7 +36,7 @@ namespace McMd
    * that store these state variables and statistical weights, and methods
    * to access them.
    *
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Species_Module
    */
    class SpeciesMutator 
    {
@@ -61,7 +61,7 @@ namespace McMd
       /**
       * Read the state id for one molecule from a configuration file stream
       * 
-      * \param in       input stream
+      * \param in input stream
       * \param molecule molecule of interest
       */
       virtual void readMoleculeState(std::istream& in, Molecule& molecule);

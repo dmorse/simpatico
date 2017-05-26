@@ -9,7 +9,7 @@
 
 #include <sstream>
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

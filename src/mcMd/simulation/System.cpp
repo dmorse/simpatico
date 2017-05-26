@@ -8,10 +8,6 @@
 // namespace McMd
 #include "System.h"
 #include "Simulation.h"
-
-#include <mcMd/species/Species.h>
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/configIos/ConfigIo.h>
 #include <mcMd/configIos/McConfigIo.h>
 #include <mcMd/configIos/ConfigIoFactory.h>
@@ -52,7 +48,12 @@
 #endif // UTIL_MPI
 #endif // MCMD_PERTURB
 
+// namespace Simp
+#include <simp/species/Species.h>
+
 // namespace Util
+#include <util/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
@@ -65,6 +66,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Default constructor.

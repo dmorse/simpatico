@@ -23,7 +23,7 @@ namespace McMd
    /*
    * Return a pointer to a new SpeciesFactory object.
    */
-   Factory<Species>* SpeciesManager::newDefaultFactory() const
+   Factory<Simp::Species>* SpeciesManager::newDefaultFactory() const
    { return new SpeciesFactory(); }
 
 }

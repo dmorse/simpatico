@@ -6,7 +6,7 @@
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 

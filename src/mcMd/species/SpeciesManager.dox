@@ -1,18 +1,18 @@
-namespace McMd
+namespace Simp
 {
 
-/*! \page mcMd_species_SpeciesManager_page  SpeciesManager
+/*! \page simp_species_SpeciesManager_page  SpeciesManager
 
-\section mcMd_species_SpeciesManager_synopsis_sec Synopsis
+\section simp_species_SpeciesManager_synopsis_sec Synopsis
 
 An SpeciesManager is a container for any number of species objects 
-(i.e., of instances of subclasses of McMd::Species), each of which
+(i.e., of instances of subclasses of Simp::Species), each of which
 represents a species within a mixture. 
 
-\sa McMd::SpeciesManager   "Class Reference for McMd::SpeciesManager"
-\sa \ref mcMd_species_page "User documenation for Species subclasses"
+\sa Simp::SpeciesManager   "Class Reference for Simp::SpeciesManager"
+\sa \ref simp_species_page "User documenation for Species subclasses"
 
-\section mcMd_species_SpeciesManager_param_sec Parameter File Format
+\section simp_species_SpeciesManager_param_sec Parameter File Format
 
 The parameter file format for an SpeciesManager contains a series of any 
 number of parameter file blocks for species objects, with one space
@@ -48,7 +48,7 @@ the new object. If the name is not recognized, an Exception is thrown
 and execution halts. 
 
 User documention for available species classes, including parameter file
-formats, is available \ref mcMd_species_page "here"
+formats, is available \ref simp_species_page "here"
 */
 
 }

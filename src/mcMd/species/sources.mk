@@ -1,20 +1,11 @@
-
 mcMd_species_= \
-    mcMd/species/Species.cpp \
     mcMd/species/SpeciesMutator.cpp \
     mcMd/species/SpeciesFactory.cpp \
-    mcMd/species/SpeciesManager.cpp \
-    mcMd/species/Point.cpp 
+    mcMd/species/SpeciesManager.cpp 
 
 ifdef SIMP_BOND
 mcMd_species_+= \
-    mcMd/species/Linear.cpp \
-    mcMd/species/Homopolymer.cpp \
-    mcMd/species/Diblock.cpp \
-    mcMd/species/Multiblock.cpp \
-    mcMd/species/HomopolymerSG.cpp \
-    mcMd/species/Ring.cpp \
-    mcMd/species/HomoRing.cpp 
+    mcMd/species/HomopolymerSG.cpp 
 endif
 
 mcMd_species_SRCS=\

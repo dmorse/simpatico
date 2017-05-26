@@ -4,7 +4,7 @@
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 
 #include <iostream>
 #include <fstream>

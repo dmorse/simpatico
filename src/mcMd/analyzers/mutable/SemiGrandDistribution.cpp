@@ -8,8 +8,8 @@
 #include "SemiGrandDistribution.h"
 
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/species/SpeciesMutator.h>
+#include <simp/species/Species.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/misc/FileMaster.h>
@@ -18,6 +18,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

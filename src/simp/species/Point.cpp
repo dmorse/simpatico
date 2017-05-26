@@ -7,7 +7,7 @@
 
 #include "Point.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

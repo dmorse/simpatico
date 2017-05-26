@@ -8,7 +8,7 @@
 #include "Diblock.h"
 #include <util/global.h>
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

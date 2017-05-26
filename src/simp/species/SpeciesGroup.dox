@@ -1,9 +1,9 @@
-namespace McMd
+namespace Simp
 {
 
-/*! \page mcMd_species_SpeciesGroup_page  SpeciesGroup
+/*! \page simp_species_SpeciesGroup_page  SpeciesGroup
 
-\section mcMd_species_SpeciesGroup_synopsis_sec Synopsis
+\section simp_species_SpeciesGroup_synopsis_sec Synopsis
 
 SpeciesGroup is a class template for classes that describes covalent 
 groups within a Species of molecule. 
@@ -15,9 +15,9 @@ indices that identify the position of each atom within a molecule by an
 integer greater than or equal to 0 and less than the number of atoms in 
 a molecule of that species. 
 
-\sa McMd::SpeciesGroup
+\sa Simp::SpeciesGroup
 
-\section mcMd_species_SpeciesGroup_format_sec Text Representation
+\section simp_species_SpeciesGroup_format_sec Text Representation
 The text representation of a species SpeciesGroup<N> is as follows
 \code
   atomId1 atomId2 ... atomIdN groupTypeId

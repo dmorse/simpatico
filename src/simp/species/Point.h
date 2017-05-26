@@ -1,5 +1,5 @@
-#ifndef MCMD_POINT_H
-#define MCMD_POINT_H
+#ifndef SIMP_POINT_H
+#define SIMP_POINT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,10 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <util/global.h>
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -19,7 +19,7 @@ namespace McMd
    /**
    * A Species in which each Molecule contains only one Atom.
    *
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Species_Module
    */
    class Point : public Species
    {

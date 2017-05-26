@@ -13,7 +13,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/bond/BondFactory.h>

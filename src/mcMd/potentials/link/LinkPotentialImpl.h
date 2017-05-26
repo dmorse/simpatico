@@ -170,10 +170,11 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
-#include <mcMd/species/Species.h>
-#include <util/boundary/Boundary.h> 
 #include <mcMd/links/Link.h>
 
+#include <simp/species/Species.h>
+
+#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -185,6 +186,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.

@@ -8,7 +8,6 @@
 #include "McMdConfigIo.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
@@ -18,6 +17,7 @@
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>
 #endif
+#include <simp/species/Species.h>
 #include <util/param/Label.h>
 #include <util/format/Int.h>
 
@@ -25,6 +25,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor. 

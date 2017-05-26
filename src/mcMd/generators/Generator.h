@@ -11,12 +11,16 @@
 #include <util/containers/Array.h>   // function argument, template
 #include <util/boundary/Boundary.h>  // typedef
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
-   class Species;
    class Simulation;
    class System;
    class Atom;

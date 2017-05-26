@@ -12,13 +12,16 @@
 #include <util/containers/DArray.h>            // member template
 #include <util/space/Vector.h>                 // member template parameter
 
+namespace Simp {
+   class Linear;
+}
 namespace McMd
 {
 
-   using namespace Util;
-
    class McSystem;
-   class Linear;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * configuration bias trimer double rebridge moves, to reconnect two chains.

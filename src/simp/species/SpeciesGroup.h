@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_GROUP_H
-#define MCMD_SPECIES_GROUP_H
+#ifndef SIMP_SPECIES_GROUP_H
+#define SIMP_SPECIES_GROUP_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-namespace McMd
+namespace Simp
 {
 
    // Forward declarations of templates required for friend declarations.
@@ -67,9 +67,9 @@ namespace McMd
    * text representation contains a sequence of atom ids followed by the group
    * type id, as described in a separate file.
    *
-   * \sa \ref mcMd_species_SpeciesGroup_page "text representation"
+   * \sa \ref simp_species_SpeciesGroup_page "text representation"
    *
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Species_Module
    */
    template <int NAtom>
    class SpeciesGroup
@@ -251,4 +251,57 @@ namespace McMd
    }
 
 }
+
+#ifdef UTIL_MPI
+#include <util/mpi/MpiTraits.h>
+
+namespace Util
+{
+
+   /**
+   * Explicit specialization MpiTraits< SpeciesGroup<4> >.
+   */
+   template <>
+   class MpiTraits< Simp::SpeciesGroup<4> >
+   {  
+   public:  
+      static MPI::Datatype type;   ///< MPI Datatype
+      static bool hasType;         ///< Is the MPI type initialized?
+   };
+
+   /**
+   * Explicit specialization MpiTraits< SpeciesGroup<3> >.
+   */
+   template <>
+   class MpiTraits< Simp::SpeciesGroup<3> >
+   {  
+   public:  
+      static MPI::Datatype type;   ///< MPI Datatype
+      static bool hasType;         ///< Is the MPI type initialized?
+   };
+
+   /**
+   * Explicit specialization MpiTraits< SpeciesGroup<2> >.
+   */
+   template <>
+   class MpiTraits< Simp::SpeciesGroup<2> >
+   {  
+   public:  
+      static MPI::Datatype type;   ///< MPI Datatype
+      static bool hasType;         ///< Is the MPI type initialized?
+   };
+
+} 
+
+namespace Simp
+{
+
+   /**
+   * Commit all MPI SpeciesGroup data types.
+   */  
+   void commitSpeciesGroupTypes(); 
+
+}
+#endif  // ifdef UTIL_MPI
+
 #endif

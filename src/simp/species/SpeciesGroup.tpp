@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_GROUP_TPP
-#define MCMD_SPECIES_GROUP_TPP
+#ifndef SIMP_SPECIES_GROUP_TPP
+#define SIMP_SPECIES_GROUP_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -15,7 +15,7 @@
 #include <util/mpi/MpiStructBuilder.h>   
 #endif
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_H
-#define MCMD_SPECIES_H
+#ifndef SIMP_SPECIES_H
+#define SIMP_SPECIES_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -11,14 +11,17 @@
 #include <util/param/ParamComposite.h>   // base class
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/FSArray.h>     // member template
-#include <mcMd/species/SpeciesGroup.h>   // member template parameter
+#include <simp/species/SpeciesGroup.h>   // member template parameter
 
-namespace McMd
+namespace McMd {
+   class SpeciesMutator;
+}
+
+namespace Simp
 {
 
    using namespace Util;
 
-   class SpeciesMutator;
 
    /**
    * A Species represents a set of chemically similar molecules.
@@ -52,17 +55,18 @@ namespace McMd
    * specific chemical structure (e.g., a water molecule) might not require
    * any data from the parameter file.
    *
-   * A subclasses of Species may also represent a "mutable" species. A 
-   * mutable species is one in which each molecule can be in any of a 
-   * finite number of different internal states, in which the chemical
-   * structure is slightly different in different states. A mutable species
-   * could, for example, be used implement a semi-grand ensemble for a
-   * polymer mixture, in which each polymer can be of either of two types.
-   * A subclass that represents a mutable species must have an associated
-   * SpeciesMutator. See documentation for Species::setMutatorPtr().
+   * A subclass of Species that is defined in the McMd namespace may also 
+   * represent a "mutable" species. A mutable species is one in which each 
+   * molecule can be in any of a finite number of different internal states, 
+   * in which the chemical structure is slightly different in different states. 
+   * A mutable species could, for example, be used implement a semi-grand 
+   * ensemble for a polymer mixture, in which each polymer can be of either 
+   * of two types.  A subclass that represents a mutable species must have 
+   * an associated McMd::SpeciesMutator object. See documentation for the
+   * Species::setMutatorPtr() function.
    *
-   * \sa \ref mcMd_species_Species_page "parameter file format"
-   * \ingroup McMd_Species_Module
+   * \sa \ref simp_species_Species_page "parameter file format"
+   * \ingroup Simp_Species_Module
    */
    class Species : public ParamComposite
    {
@@ -239,7 +243,7 @@ namespace McMd
       /**
       * Return the species mutator object by reference.
       */
-      SpeciesMutator& mutator();
+      McMd::SpeciesMutator& mutator();
 
       //@}
       /// \name Miscellaneous Accessors
@@ -441,7 +445,7 @@ namespace McMd
       #endif
 
       /**
-      * Set a pointer to an associated SpeciesMutator for a mutable species.
+      * Set a pointer to an associated McMd::SpeciesMutator for a mutable species.
       *
       * A mutable subclass of Species must have an associated SpeciesMutator 
       * object. The constructor of each such subclass should pass a pointer
@@ -455,7 +459,7 @@ namespace McMd
       *
       * \param mutatorPtr pointer to an associated SpeciesMutator object
       */
-      void setMutatorPtr(SpeciesMutator* mutatorPtr);
+      void setMutatorPtr(McMd::SpeciesMutator* mutatorPtr);
 
    private:
 
@@ -498,7 +502,7 @@ namespace McMd
       * This pointer is initialized to null (0). The function isMutator()
       * returns false iff mutatorPtr_ is null. 
       */
-      SpeciesMutator* mutatorPtr_;
+      McMd::SpeciesMutator* mutatorPtr_;
 
    };
 
@@ -603,7 +607,7 @@ namespace McMd
    /*
    * Get associated mutator object.
    */
-   inline SpeciesMutator& Species::mutator()
+   inline McMd::SpeciesMutator& Species::mutator()
    {
       assert(mutatorPtr_);  
       return *mutatorPtr_; 

@@ -9,11 +9,13 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Linear.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Bond.h>
+
+#include <simp/species/Linear.h>
+
+#include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 

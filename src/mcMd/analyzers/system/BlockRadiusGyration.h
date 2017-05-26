@@ -8,21 +8,24 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
-#include <mcMd/simulation/System.h>             // class template parameter
-#include <util/accumulators/Average.h>          // member
-#include <util/containers/DArray.h>             // member template
-#include <util/space/Vector.h>                   // member template parameter
+#include <mcMd/analyzers/SystemAnalyzer.h> // base class template
+#include <mcMd/simulation/System.h>        // class template parameter
+#include <util/accumulators/Average.h>     // member
+#include <util/containers/DArray.h>        // member template
+#include <util/space/Vector.h>             // member template parameter
 
 #include <cstdio> 
 #include <cstring> 
+
+namespace Simp {
+   class Species;
+}
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
+   using namespace Simp;
 
    /**
    * Radius of gyration of different blocks in a molecule.

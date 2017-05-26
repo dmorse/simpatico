@@ -8,9 +8,11 @@
 #include "LammpsConfigIo.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/species/Species.h>
+
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/param/Label.h>
@@ -25,6 +27,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor.   

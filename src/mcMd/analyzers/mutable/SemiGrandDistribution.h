@@ -12,12 +12,17 @@
 #include <mcMd/mcSimulation/McSystem.h>         // base template parameter
 #include <util/accumulators/IntDistribution.h>  // member
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
-   using namespace Util;
-   class Species;
    class SpeciesMutator;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Calculate distribution of type indices for mutable species.

@@ -1,9 +1,9 @@
-namespace McMd
+namespace Simp
 {
 
-/*! \page mcMd_species_Homopolymer_page  Homopolymer
+/*! \page simp_species_Homopolymer_page  Homopolymer
 
-\section mcMd_species_Homopolymer_synopsis_sec Synopsis
+\section simp_species_Homopolymer_synopsis_sec Synopsis
 
 Linear chain of atoms of the same type.
 
@@ -25,9 +25,9 @@ atoms. All dihedral potentials, if present, are characterized
 by the same angle potential type id, and are thus described by 
 the same parameters.
 
-\sa McMd::Homopolymer
+\sa Simp::Homopolymer
 
-\section mcMd_species_Homopolymer_param_sec Parameters
+\section simp_species_Homopolymer_param_sec Parameters
 Homopolymerhe parameter file format is:
 \code
   Homopolymer{

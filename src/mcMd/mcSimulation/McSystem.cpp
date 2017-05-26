@@ -8,7 +8,6 @@
 #include "McSystem.h"
 #include "McSimulation.h"
 #include <mcMd/simulation/stress.h>
-#include <mcMd/species/Species.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/generators/Generator.h>
@@ -43,6 +42,8 @@
 #include <mcMd/perturb/mcSystem/McPerturbationFactory.h>
 #endif
 
+#include <simp/species/Species.h>
+
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -58,6 +59,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

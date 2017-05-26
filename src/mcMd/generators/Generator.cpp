@@ -9,14 +9,15 @@
 #include "Generator.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/neighbor/CellList.h>
+#include <simp/species/Species.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

@@ -1,5 +1,5 @@
-#ifndef MCMD_LINEAR_H
-#define MCMD_LINEAR_H
+#ifndef SIMP_LINEAR_H
+#define SIMP_LINEAR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,7 +10,7 @@
 
 #include "Species.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -31,7 +31,7 @@ namespace McMd
    * subclass of Linear must be specified by implementing the pure virtual 
    * functions atomTypeId() and bondTypeId().
    *
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Species_Module
    */
    class Linear : public Species 
    {

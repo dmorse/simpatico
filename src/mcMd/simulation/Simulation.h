@@ -39,16 +39,19 @@ namespace Util
    class Vector;
 }
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
-   using namespace Util;
-
-   class Species;
-   class SpeciesManager;
-
    class Analyzer;
    class AnalyzerManager;
+   class SpeciesManager;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * The main object in a simulation, which coordinates others.
