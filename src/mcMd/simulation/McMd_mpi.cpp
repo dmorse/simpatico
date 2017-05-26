@@ -42,7 +42,7 @@ namespace McMd
       if (!Util::MpiTraits< PairSelector >::hasType) {
          PairSelector::commitMpiType();
       }
-      commitMpiSpeciesGroupTypes();
+      Simp::commitMpiSpeciesGroupTypes();
    }
 
 }

@@ -10,10 +10,6 @@
 #include <util/global.h>                    
 #include <simp/species/SpeciesGroup.tpp>  
 
-#ifdef UTIL_MPI
-#include <mcMd/simulation/Simp_mpi.h>       // to read DArray<SpeciesBond>
-#endif
-
 namespace Simp
 {
 

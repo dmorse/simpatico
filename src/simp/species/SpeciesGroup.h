@@ -299,7 +299,7 @@ namespace Simp
    /**
    * Commit all MPI SpeciesGroup data types.
    */  
-   void commitSpeciesGroupTypes(); 
+   void commitMpiSpeciesGroupTypes(); 
 
 }
 #endif  // ifdef UTIL_MPI

@@ -14,7 +14,7 @@ simp_species_+= \
 endif
 
 ifdef UTIL_MPI
-simp_species_+= SpeciesGroup.cpp
+simp_species_+= simp/species/SpeciesGroup.cpp
 endif
 
 simp_species_SRCS=\
