@@ -1,0 +1,144 @@
+Create branch tps in which to work
+
+Create directory src/mcMd/tps/
+
+Classes:
+
+    class MdSnapShot {
+
+       MdSnapShot(MdSystem& );
+
+       allocate(nAtom);
+
+       /**
+       * Get current state of system.
+       */
+       get(int iStep = 0);
+
+       /**
+       * Set current state of system to this snapshot.
+       */
+       set();
+
+       Vector const & position(int i);
+       Vector& position(int i);
+
+       Vector const & velocity(int i);
+       Vector& velocity(int i);
+
+    private:
+
+       DArray<Vector> positions_;
+       DArray<Vector> velocities_;
+       Boundary boundary_;
+       int iStep_;
+
+    };
+
+    class MdTrajectory {
+
+       MdSnapShot(MdSystem&);
+
+       reserve(int nStep);
+
+       setNext(int iStep);
+
+       clear();
+
+    private:
+
+       GArray<MdSnapShot> snapshots_;
+
+    };
+
+
+    class TpsSimulation : public MdSimulation
+    {
+
+       /**
+       * Md run of fixed length, store only final.
+       */
+       void run(MdSnapShot const & initial, bool reverse, 
+                int nStep, MdSnapShot& final);
+
+       /**
+       * Md run of fixed length, store entire trajectory.
+       */
+       void run(MdSnapShot const & initial, bool reverse, 
+                int nStep, MdTrajectory& final);
+
+       /**
+       * Md run until stop criterion, store only final.
+       *
+       * Note: Information about final state can be stored in criterion.
+       */
+       void run(MdSnapShot const & initial, bool reverse, 
+                MdCriterion& criterion, MdSnapShot& final);
+
+       /**
+       * Md run until stop criterion, save trajectory.
+       */
+       void run(MdSnapShot const & initial, bool reverse, 
+                MdCriterion& criterion, MdTrajectory& trajectory);
+
+       /**
+       * Add random velocities to a snapshot.
+       */ 
+       void modifyVelocities(double sigma, MdSnapShot const & in, 
+                            MdSnapShot& out);
+
+    };
+
+    class MdCriterion {
+
+       MdCriterion(MdSystem& system);
+
+       /**
+       * Test state of system.
+       */
+       virtual void test(int iStep);
+
+       /**
+       * Return true iff simulation should stop.
+       */
+       virtual bool stop() = 0;
+
+       /**
+       * Return integer state code. 
+       */
+       virtual int  state() = 0;
+
+       /**
+       * Test interval (number of MD steps between tests).
+       */
+       int iStep();
+
+       /**
+       * Return step index of last test.
+       */
+       int iStep();
+
+    private:
+  
+       MdSystem& systemPtr_;
+
+       int iStep_;
+
+       int interval_;
+
+    };
+
+
+    class MdReactionCoordinate {
+       
+       ReactionCoordinate(MdSystem& system);
+       double value() = 0;
+
+    };
+
+    Question: 
+
+    1) Do we need a separate method to store selected snapshots?
+       Does the interface need to reflect the selection strategy?
+       Can a class be used to define a generic selection strategy?
+
