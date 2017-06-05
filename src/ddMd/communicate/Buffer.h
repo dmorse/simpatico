@@ -534,9 +534,6 @@ namespace DdMd
       /// Type of atom being received (BlockDataType cast to int)
       int recvType_;
 
-      /// Number of atoms in a Group type (or 0 if not a Group).
-      int recvGroupSize_;
-
       /// Maximum number of local atoms in buffer.
       int atomCapacity_;
 
