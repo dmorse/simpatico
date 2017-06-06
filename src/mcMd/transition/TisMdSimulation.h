@@ -23,16 +23,14 @@ namespace McMd
       * The reaction coordinate is computed with the interval defined
       * by the ReactionAnalyzer.
       *
-      * Upon return, nCrossing is the number of forward crossings of
-      * the boundary of the reactant domain, i.e., the number of times
-      * the reaction coordinate passes througt the reactantCoordinate
-      * value from below, i.e., the number of sampled values that are
-      * greater than the reactantCoordinate for which the previous
-      * value was less than the reactantCoordinate.
+      * Upon return, nReactantExit is the number of times the trajectory
+      * exits the reactant domain, i.e., the number of sample for which
+      * the reaction coordinate is greater than the reactantCoordinate and
+      * for which the previous value was less than the reactantCoordinate.
       */
       void runTisEquilibrium(int nStep,
                              ReactionAnalyzer analyzer,
-                             int& nCrossing);
+                             int& nReactantExit);
 
       /**
       * Integrate a path sample for transition interface sampling.
@@ -48,7 +46,7 @@ namespace McMd
                       double upperCoordinate,
                       double sampleProbability,
                       ReactionAnalyzer& analyzer,
-                      MdSnapShotArray& samples,
+                      GArray<MdSnapShot>& samples,
                       double& maxCoordinate,
                       bool& crossesLower);
 

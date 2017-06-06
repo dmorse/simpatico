@@ -93,23 +93,24 @@ namespace McMd {
       UTIL_CHECK(iAtom == nAtom_);
    }
 
-
-   #if 0
    // Path sampling operations
-
-   /*
-   * Add random velocities to a snapshot.
-   */
-   void MdSnapShot::addRandomVelocities()
-   {
-   }
-
    /*
    * Reverse all velocities in this snapshot.
    */
    void MdSnapShot::reverseVelocities()
    {
+      UTIL_CHECK(isSet_);
+      UTIL_CHECK(nAtom_ > 0);
+      for (int i = 0; i < nAtom_; ++i) {
+         particles_[i].velocity *= -1;
+      }
    }
-   #endif
+
+   /*
+   * Add random velocities to a snapshot.
+   */
+   void MdSnapShot::addRandomVelocities(double sigma)
+   {
+   }
 
 }

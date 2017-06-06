@@ -1,6 +1,3 @@
-#ifndef MCMD_REACTION_ANALYZER_H
-#define MCMD_REACTION_ANALYZER_H
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -8,10 +5,16 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <mcMd/transition/ReactionAnalyzer.h>
+
 namespace McMd 
 {
 
-   ReactionAnalyzer::ReactionAnalyzer(MdSystem& system);
+   // using namespace Util;
+
+   ReactionAnalyzer::ReactionAnalyzer(MdSystem& system)
+    : SystemAnalyzer<MdSystem>(system)
+   {}
 
    void ReactionAnalyzer::readParameter(std::istream& in)
    {
@@ -21,11 +24,10 @@ namespace McMd
       read<double>(in, "productCoordinate", productCoordinate_);
    }
 
-   void ReactionAnalyzer::sample(int iStep)
+   void ReactionAnalyzer::sample(long iStep)
    {
       currentCoordinate_ = computeReactionCoordinate();
       iStep_ = iStep;
    }
 
 }
-#endif

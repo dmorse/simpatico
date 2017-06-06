@@ -8,6 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <mcMd/analyzers/SystemAnalyzer.h>
+#include <mcMd/mdSimulation/MdSystem.h>
+
 namespace McMd 
 {
 
@@ -16,33 +19,62 @@ namespace McMd
    class ReactionAnalyzer : public SystemAnalyzer<MdSystem>
    {
 
+      /**
+      * Constructor.
+      *  
+      * \param system associated MdSystem
+      */
       ReactionAnalyzer(MdSystem& system);
 
-      void readParameter(std::istream& in);
-
-      double computeReactionCoordinate()
-      { return 0; }
-
-      bool currentCoordinate() const
-      {  return currentCoordinate_; }
-
-      bool reactantCoordinate() const
-      {  return reactantCoordinate_; }
-
-      bool productCoordinate() const
-      {  return productCoordinate_; }
-
-      bool isReactant() const
-      {  return currentCoordinate_ < reactantCoordinate_; }
-
-      bool isProduct() const
-      {  return currentCoordinate > productCoordinate_; }
+      /**
+      * Read parameters from file.
+      * 
+      * \param in  input file containing parameters
+      */
+      virtual void readParameter(std::istream& in);
 
       /**
-      * Return step index of last test.
+      * Compute and return reaction coordinate value for associated MdSystem.
       */
-      int iStep();
-      {  return iStep_; }
+      virtual double computeReactionCoordinate();
+
+      /**
+      * Sample state 
+      * 
+      * Compute and store reaction coordinate and store time stamp
+      */
+      virtual void sample(long iStep);
+
+      /**
+      * Get the most recently sampled value of reaction coordinate.
+      */
+      bool currentCoordinate() const;
+
+      /**
+      * Get maximum value of reaction coordinate for reactant domain.
+      */
+      bool reactantCoordinate() const;
+
+      /**
+      * Get minimum value of reaction coordinate for product domain.
+      */
+      bool productCoordinate() const;
+
+      /**
+      *
+      * Is current reaction coordinate < reactant threshhold value?
+      */
+      bool isReactant() const;
+
+      /**
+      * Is current reaction coordinate > product threshhold value?
+      */
+      bool isProduct() const;
+
+      /**
+      * Return step index of most recent sample.
+      */
+      long iStep() const;
 
    protected:
 
@@ -64,9 +96,36 @@ namespace McMd
       /**
       * Time step of last sample.
       */
-      int iStep_;
+      long iStep_;
 
    };
+
+   inline
+   bool ReactionAnalyzer::currentCoordinate() const
+   {  return currentCoordinate_; }
+
+   inline
+   bool ReactionAnalyzer::reactantCoordinate() const
+   {  return reactantCoordinate_; }
+
+   inline
+   bool ReactionAnalyzer::productCoordinate() const
+   {  return productCoordinate_; }
+
+   inline
+   bool ReactionAnalyzer::isReactant() const
+   {  return currentCoordinate_ < reactantCoordinate_; }
+
+   inline
+   bool ReactionAnalyzer::isProduct() const
+   {  return currentCoordinate_ > productCoordinate_; }
+
+   /*
+   * Return step index of last test.
+   */
+   inline
+   long ReactionAnalyzer::iStep() const
+   {  return iStep_; }
 
 }
 #endif

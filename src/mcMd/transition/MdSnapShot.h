@@ -49,17 +49,15 @@ namespace McMd {
 
       // Path sampling operations
 
-      #if 0
-      /**
-      * Add random velocities to a snapshot.
-      */
-      void addRandomVelocities(double sigma, MdSnapShot const & in);
-
       /**
       * Reverse all velocities in this snapshot.
       */
       void reverseVelocities();
-      #endif
+
+      /**
+      * Add random velocities to a snapshot.
+      */
+      void addRandomVelocities(double sigma);
 
       // Accessors
 
