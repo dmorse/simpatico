@@ -49,29 +49,35 @@ namespace McMd
    /*
    * Read the interval from parameter file, with error checking.
    */
-   void Analyzer::readInterval(std::istream &in) 
+   void Analyzer::readInterval(std::istream &in, bool checkBase) 
    {
-      // Check that baseInterval has a nonzero, positive value
-      if (baseInterval == 0) {
-         UTIL_THROW("baseInterval == 0");
-      }
-      if (baseInterval < 0) {
-         UTIL_THROW("baseInterval < 0");
+      if (checkBase) {
+         // Require that baseInterval is positive
+         if (baseInterval == 0) {
+            UTIL_THROW("baseInterval == 0");
+         }
+         if (baseInterval < 0) {
+            UTIL_THROW("baseInterval < 0");
+         }
       }
    
       // Read interval value (inherited from Interval)
       read<long>(in, "interval", interval_);
    
       // Postconditons
+      // Require that interval is positive
       if (interval_ == 0) {
          UTIL_THROW("interval_ == 0");
       }
       if (interval_ < 0) {
          UTIL_THROW("interval_ < 0");
       }
-      if (interval_ % baseInterval != 0) {
-         UTIL_THROW("interval is not a multiple of baseInterval");
+      if (checkBase) {
+         if (interval_ % baseInterval != 0) {
+            UTIL_THROW("interval not multiple of baseInterval");
+         }
       }
+
    }
 
    void Analyzer::readOutputFileName(std::istream &in) 
@@ -89,29 +95,36 @@ namespace McMd
    /*
    * Load parameters from archive, with error checking.
    */
-   void Analyzer::loadInterval(Serializable::IArchive& ar)
+   void Analyzer::loadInterval(Serializable::IArchive& ar,
+                               bool checkBase)
    {
-      // Check that Analyzer::baseInterval has a nonzero, positive value
-      if (baseInterval == 0) {
-         UTIL_THROW("baseInterval == 0");
-      }
-      if (baseInterval < 0) {
-         UTIL_THROW("baseInterval < 0");
+      if (checkBase) {
+         // Check that Analyzer::baseInterval is positive
+         if (baseInterval == 0) {
+            UTIL_THROW("baseInterval == 0");
+         }
+         if (baseInterval < 0) {
+            UTIL_THROW("baseInterval < 0");
+         }
       }
    
       // Load parameters
       loadParameter<long>(ar, "interval", interval_);
    
       // Postconditons
+      // Require that interval is positive integer 
       if (interval_ == 0) {
          UTIL_THROW("interval_ == 0");
       }
       if (interval_ < 0) {
          UTIL_THROW("interval_ < 0");
       }
-      if (interval_ % baseInterval != 0) {
-         UTIL_THROW("interval is not a multiple of baseInterval");
+      if (checkBase) {
+         if (interval_ % baseInterval != 0) {
+            UTIL_THROW("interval not multiple of baseInterval");
+         }
       }
+
    }
 
    /*

@@ -171,9 +171,15 @@ namespace McMd
       /**
       * Read interval from file, with error checking.
       *
+      * This function always requires that interval be positive.
+      * Iff checkBse is true, require that Analyzer::BaseInterval 
+      * have a positive value (precondition) and that interval be 
+      * a multiple of baseInterval (postcondition).
+
       * \param in input parameter file stream
+      * \param checkBase check relationship to baseInterval
       */
-      void readInterval(std::istream &in);
+      void readInterval(std::istream &in, bool checkBase = true);
 
       /**
       * Read outputFileName from file.
@@ -185,9 +191,16 @@ namespace McMd
       /**
       * Load interval from archive, with error checking.
       *
+      * This function always requires that interval be positive.
+      * Iff checkBse is true, require that Analyzer::BaseInterval 
+      * have a positive value (precondition) and that interval be 
+      * a multiple of baseInterval (postcondition).
+
       * \param ar input/loading archive
+      * \param checkBase check relationship to baseInterval
       */
-      void loadInterval(Serializable::IArchive& ar);
+      void loadInterval(Serializable::IArchive& ar,
+                        bool checkBase = true);
 
       /**
       * Load output file name from archive.
