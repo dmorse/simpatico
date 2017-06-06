@@ -1,5 +1,3 @@
-#ifndef MCMD_MD_PARTICLE_H
-#define MCMD_MD_PARTICLE_H
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -7,20 +5,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/space/Vector.h>
+#include <mcMd/transition/MdParticle.h>
 
 namespace McMd 
 {
 
-    using namespace Util;
-
-    struct MdParticle 
-    {
-       Vector position;
-       Vector velocity;
-
-       MdParticle();
-    };
+   MdParticle::MdParticle()
+    : position(),
+      velocity()
+   {}
 
 }
-#endif

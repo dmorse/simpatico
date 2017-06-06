@@ -1,5 +1,5 @@
 #ifndef MCMD_MD_SNAPSHOT_H
-#ifndef MCMD_MD_SNAPSHOT_H
+#define MCMD_MD_SNAPSHOT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,33 +8,39 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <mcMd/transition/MdParticle.h>
+#include <util/containers/DArray.h>
+#include <util/boundary/Boundary.h>
+
 namespace McMd {
 
-   class MdSnapShot 
+   class MdSystem;
+
+   using namespace Util;
+
+   class MdSnapShot
    {
 
-      MdSnapShot(MdSystem& );
+      MdSnapShot(MdSystem& system);
 
       // Copy constructor
 
       // Assignment
 
-      allocate(nAtom);
+      /**
+      * Set state of associated MdSystem to state of this snapshot.
+      */
+      void setSystemState();
 
       /**
-      * Set current state of system to state of this snapshot.
+      * Copy current state of associated MdSystem to this MdSnapShot.
       */
-      setSystemState();
-
-      /**
-      * Get current state of system, store in this MdSnapShot.
-      */
-      getSystemState(int iStep = 0);
+      void getSystemState(int iStep = 0);
 
       /**
       * Unset state of snapshot, mark as unknown.
       */
-      unset();
+      void unset();
 
       /**
       * Is this snapshot set to a known state?
@@ -43,15 +49,17 @@ namespace McMd {
 
       // Path sampling operations
 
+      #if 0
       /**
       * Add random velocities to a snapshot.
-      */ 
+      */
       void addRandomVelocities(double sigma, MdSnapShot const & in);
 
       /**
-      * Copy a snapshot with reversed velocities. (Needed)?
-      */ 
-      void reverseVelocities(MdSnapShot const & in);
+      * Reverse all velocities in this snapshot.
+      */
+      void reverseVelocities();
+      #endif
 
       // Accessors
 
@@ -63,7 +71,7 @@ namespace McMd {
       /**
       * Get specific MdParticle by (non-const) reference.
       *
-      * \int 
+      * \int i particle index
       */
       MdParticle& particle(int i);
 
@@ -71,16 +79,26 @@ namespace McMd {
       * Get specific MdParticle by const reference.
       */
       MdParticle const & particle(int i) const;
-      
+
       /**
       * Get boundary by (non-const) reference.
-      */ 
+      */
       Boundary& boundary();
 
       /**
       * Get boundary by const reference.
-      */ 
+      */
       Boundary const & boundary() const;
+
+      /**
+      * Get associated system by (non-const) reference.
+      */
+      MdSystem& system();
+
+      /**
+      * Get boundary by const reference.
+      */
+      MdSystem const & system() const;
 
       /**
       * Time step of this snapshot.
@@ -95,10 +113,94 @@ namespace McMd {
       // System Boundary
       Boundary boundary_;
 
+      // Pointer to associated system.
+      MdSystem* systemPtr_;
+
+      // Number of atoms in snapshot.
+      int nAtom_;
+
       // Time step stamp
       int iStep_;
 
+      // Is the snapshot state set?
+      bool isSet_;
+
    };
+
+   // Inline Member Functions
+
+   /*
+   * Get associated system by reference.
+   */
+   inline
+   MdSystem& MdSnapShot::system()
+   {  return *systemPtr_; }
+
+   /*
+   * Get associated system by reference.
+   */
+   inline
+   MdSystem const & MdSnapShot::system() const
+   {  return *systemPtr_; }
+
+   /*
+   * Number of atoms for which memory is allocated;
+   */
+   inline
+   int MdSnapShot::nAtom() const
+   {  return nAtom_; }
+
+   /*
+   * Get specific MdParticle by (non-const) reference.
+   */
+   inline
+   MdParticle& MdSnapShot::particle(int i)
+   {  return particles_[i]; }
+
+   /*
+   * Get specific MdParticle by const reference.
+   */
+   inline
+   MdParticle const & MdSnapShot::particle(int i) const
+   {  return particles_[i]; }
+
+   /*
+   * Get boundary by (non-const) reference.
+   */
+   inline
+   Boundary& MdSnapShot::boundary()
+   {  return boundary_; }
+
+   /*
+   * Get boundary by const reference.
+   */
+   inline
+   Boundary const & MdSnapShot::boundary() const
+   {  return boundary_; }
+
+   /*
+   * Time step of this snapshot.
+   */
+   inline
+   int MdSnapShot::iStep() const
+   {  return iStep_; }
+
+   /*
+   * Unset state of snapshot, mark as unknown.
+   */
+   inline
+   void MdSnapShot::unset()
+   {  
+      isSet_ = false; 
+      nAtom_ = 0; 
+   }
+
+   /*
+   * Is this snapshot set to a known state?
+   */
+   inline
+   bool MdSnapShot::isSet()
+   {  return isSet_; }
 
 }
 #endif
