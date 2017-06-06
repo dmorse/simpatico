@@ -8,13 +8,9 @@
 #include "Species.h"
 
 #include <util/global.h>                    
-#include <mcMd/species/SpeciesGroup.tpp>  
+#include <simp/species/SpeciesGroup.tpp>  
 
-#ifdef UTIL_MPI
-#include <mcMd/simulation/McMd_mpi.h>       // to read DArray<SpeciesBond>
-#endif
-
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -268,7 +264,7 @@ namespace McMd
    /*
    * Set a pointer to an associated SpeciesMutator object.
    */
-   void Species::setMutatorPtr(SpeciesMutator* mutatorPtr)
+   void Species::setMutatorPtr(McMd::SpeciesMutator* mutatorPtr)
    {  mutatorPtr_ = mutatorPtr; }
 
    /*

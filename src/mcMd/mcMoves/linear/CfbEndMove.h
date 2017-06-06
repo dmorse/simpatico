@@ -12,13 +12,17 @@
 #include <util/containers/DArray.h>        // member template
 #include <util/space/Vector.h>              // member template parameter
 
+namespace Simp {
+   class Linear;
+}
+
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class McSystem;
-   class Linear;
 
    /**
    * Configuration bias end regrowth move for flexible linear chains.

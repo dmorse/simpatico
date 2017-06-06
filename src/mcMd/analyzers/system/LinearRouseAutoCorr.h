@@ -17,14 +17,15 @@
 #include <util/archives/serialize.h>             // used in method template
 #include <util/global.h>                         // used in method template
 
+namespace Simp {
+   class Species;
+}
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
-
+   using namespace Simp;
 
    /**
    * Autocorrelation for Rouse mode coefficients of a linear molecule.

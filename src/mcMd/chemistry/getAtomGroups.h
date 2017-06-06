@@ -9,7 +9,6 @@
 */
 
 #include <util/containers/FSArray.h>      // used in typedefs
-#include <mcMd/species/Species.h>         // used in typedefs
 #ifdef SIMP_BOND
 #include <mcMd/chemistry/Bond.h>          // typedef
 #endif
@@ -19,15 +18,16 @@
 #ifdef SIMP_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>      // typedef
 #endif
+#include <simp/species/Species.h>         // used in typedefs
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class Atom;
    class Molecule;
-   class Species;
 
    #ifdef SIMP_BOND
    /**
@@ -49,7 +49,7 @@ namespace McMd
    /**
    * Array to hold pointers to angles that contain a specific atom.
    */
-   typedef FSArray<const Angle*, Species::MaxAnglePerAtom> 
+   typedef FSArray<const Angle*, Simp::Species::MaxAnglePerAtom> 
            AtomAngleArray;
 
    /**
@@ -65,7 +65,7 @@ namespace McMd
    /**
    * Array to hold pointers to Dihedrals that contain a specific atom.
    */
-   typedef FSArray<const Dihedral*, Species::MaxDihedralPerAtom> 
+   typedef FSArray<const Dihedral*, Simp::Species::MaxDihedralPerAtom> 
            AtomDihedralArray;
 
    /**

@@ -8,7 +8,7 @@ Links to user documention of features that can be used with mcSim,
 mdSim or both:
 
 <ul style="list-style: none;">
-  <li> \subpage mcMd_species_page </li>
+  <li> \subpage simp_species_page </li>
   <li> \subpage mcMd_mcMoves_page </li>
   <li> \subpage mcMd_mdIntegrators_page </li>
   <li> \subpage mcMd_analyzers_page </li>

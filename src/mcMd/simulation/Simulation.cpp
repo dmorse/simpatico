@@ -10,9 +10,11 @@
 // namespace McMd
 #include <mcMd/analyzers/AnalyzerManager.h>
 #include <mcMd/species/SpeciesManager.h>
-#include <mcMd/species/Species.h>
-#include <mcMd/species/SpeciesGroup.tpp>
 #include <mcMd/chemistry/Activate.h>
+
+// namespace Simp
+#include <simp/species/Species.h>
+#include <simp/species/SpeciesGroup.tpp>
 
 // namespace Util
 #include <util/containers/ArraySet.h>
@@ -28,6 +30,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

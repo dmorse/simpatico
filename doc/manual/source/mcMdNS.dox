@@ -21,11 +21,10 @@ Each Atom is also associated with a Mask object that contains a list of other at
 
 The Group < int N > class template is a template class for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. These are referred to throughout the code as Bond, Angle, and Torsion objects, but these names are typedefs for Group<2>, Group<3>, and Group<4>. A Group < N > object has an array of N pointers to N Atom objects that interact via an N-body covalent interaction. It also has an integer group type id, which is used to associate different sets of interaction parameters to groups with different group type id values.
  
-A Molecule object represents a chemical molecule, i.e., a specific set of atoms that are connected by covalent bonds. Each Molecule is associated with a list of constituent Atom objects. Each Molecule is also associated with lists of Bond, Angle, and Torsion objects. The Molecule class provides methods to access its constituent Atom and Group < N > objects, using a local indexing scheme in which Atom and Group < N > objects are indexed from zero within each molecule of a species. For example, the method Atom& Molecule::atom(i) returns a reference to Atom number i of the invoking molecule, where i ranges from 0 up to one less than the number of atoms in the molecule. Each Molecule belongs to a Species, and holds a pointer to its parent Species.
+A Molecule object represents a chemical molecule, i.e., a specific set of atoms that are connected by covalent bonds. Each Molecule is associated with a list of constituent Atom objects. Each Molecule is also associated with lists of Bond, Angle, and Torsion objects. The Molecule class provides methods to access its constituent Atom and Group < N > objects, using a local indexing scheme in which Atom and Group < N > objects are indexed from zero within each molecule of a species. For example, the method Atom& Molecule::atom(i) returns a reference to Atom number i of the invoking molecule, where i ranges from 0 up to one less than the number of atoms in the molecule. Each Molecule belongs to a molecular species, and holds a pointer to an associated Simp::Species object that contains a description of the structure of each molecule in the species.
  
-A Species object contains a description of the chemical structure (connectivity) of a set of similiar molecules within a mixture.  Species is a polymorphic base class. The default implementation of Species simply reads all of the information needed to describe an arbitary molecule from file, i.e., it reads a list of atom types, and information about which atoms are connected by bonds or other 3- and 4- body groups. Subclasses of Species can be used to describe either unique structures (e.g., water or methane) or categories of molecule (e.g., linear bead-spring polymers) for which the structure is partly determined in part by parameters that must be read from an input file (e.g., the chain length and monomer types for a linear homopolymer). Each subclass of Species is responsible for defining its own input parameter format and for reading and writing the information it needs to fully specify a chemical structure. Several simple subclasses of Species are distributed with Simpatico, and users can write others.
-
 See also: \ref McMd_Chemistry_Module "Chemistry Module"
+See also: \ref Simp_Species_Module   "Species Module"
 
 \section McMd_System_sec Systems 
 
@@ -91,7 +90,7 @@ A complete MC or MD simulation is represented by a Simulation object.  MdSimulat
 
  - One or more McSystem or MdSystem objects.
 
- - a SpeciesManager that holds a set of Species objects.
+ - a SpeciesManager that holds a set of Simp::Species objects.
 
  - a Util::Random random number generator.
 

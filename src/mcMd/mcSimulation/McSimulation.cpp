@@ -13,7 +13,6 @@
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
@@ -35,6 +34,8 @@
 #endif
 #endif
 
+#include <simp/species/Species.h>
+
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Dbl.h>
@@ -54,6 +55,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    #ifdef UTIL_MPI
    /*

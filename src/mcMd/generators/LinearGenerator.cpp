@@ -8,16 +8,18 @@
 #include "LinearGenerator.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <mcMd/species/Species.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/neighbor/CellList.h>
+#include <simp/species/Species.h>
 #include <util/boundary/Boundary.h>
 
 namespace McMd
 {
 
    class CellList;
+
    using namespace Util;
+   using namespace Simp;
 
    LinearGenerator::LinearGenerator(Species& species, System& system)
     : Generator(species, system)

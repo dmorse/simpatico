@@ -1,5 +1,5 @@
-#ifndef MCMD_RING_H
-#define MCMD_RING_H
+#ifndef SIMP_RING_H
+#define SIMP_RING_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,7 +12,7 @@
 
 #include "Species.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -28,7 +28,7 @@ namespace McMd
    * subclass of Ring must be specified by implementing the pure virtual 
    * functions atomTypeId() and bondTypeId().
    *
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Species_Module
    */
    class Ring : public Species 
    {

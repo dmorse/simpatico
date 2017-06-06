@@ -7,7 +7,7 @@
 
 #include "BoundaryAverage.h"
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

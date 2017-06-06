@@ -11,17 +11,18 @@
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
-#include <mcMd/species/Ring.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/species/Ring.h>
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor

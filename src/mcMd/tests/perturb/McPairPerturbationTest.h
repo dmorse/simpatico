@@ -5,7 +5,7 @@
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mdSimulation/MdSystem.h>
-#include <mcMd/species/Species.h>
+#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/format/Dbl.h>

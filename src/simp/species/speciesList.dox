@@ -1,22 +1,22 @@
-namespace McMd
+namespace Simp
 {
 
-/*! \page mcMd_species_page  Molecular Species
+/*! \page simp_species_page  Molecular Species
 
 User documentation for classes that represent molecular species in
 mcSim or mdSim simulations:
 
 <ul style="list-style: none;">
-  <li> \subpage mcMd_species_Species_page </li>
-  <li> \subpage mcMd_species_Point_page </li>
-  <li> \subpage mcMd_species_Homopolymer_page </li>
-  <li> \subpage mcMd_species_Diblock_page </li>
-  <li> \subpage mcMd_species_Multiblock_page </li>
-  <li> \subpage mcMd_species_HomoRing_page </li>
+  <li> \subpage simp_species_Species_page </li>
+  <li> \subpage simp_species_Point_page </li>
+  <li> \subpage simp_species_Homopolymer_page </li>
+  <li> \subpage simp_species_Diblock_page </li>
+  <li> \subpage simp_species_Multiblock_page </li>
+  <li> \subpage simp_species_HomoRing_page </li>
 </ul>
 
 Parameter file blocks for individual species appear as subblocks
-of a \subpage mcMd_species_SpeciesManager_page block. 
+of a \subpage simp_species_SpeciesManager_page block. 
 
 The Species class is a base class, where the remaining classes 
 (Point, Homopolymer, etc.) in the above list are all subclasses 
@@ -56,9 +56,9 @@ a covalent bond, a SpeciesGroup<3> describes an angle group,
 and a SpeciesGroup<4> describes a dihedral group. The text 
 representation of a SpeciesGroup<N> object is used in the 
 parameter file format for the Species base class, and is 
-described \subpage mcMd_species_SpeciesGroup_page "here"
+described \subpage simp_species_SpeciesGroup_page "here"
 
-\sa McMd_Species_Module (developer documentation)
+\sa Simp_Species_Module (developer documentation)
  
 */
 

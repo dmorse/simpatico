@@ -8,7 +8,7 @@
 #include "ComMSD.h"
 #include <mcMd/simulation/System.h>               // base class template parameter
 #include <mcMd/simulation/Simulation.h>
-#include <mcMd/species/Species.h>                 // forward declaration in ComMSD.h
+#include <simp/species/Species.h>                 // forward declaration in ComMSD.h
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>

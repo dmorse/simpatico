@@ -15,12 +15,17 @@
 #include <cstdio> 
 #include <cstring> 
 
+namespace Simp
+{
+   class Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
-   class Species;
 
    /**
    * Number of inter and intramolecular links

@@ -1,5 +1,5 @@
-#ifndef MCMD_HOMO_RING_H
-#define MCMD_HOMO_RING_H
+#ifndef SIMP_HOMO_RING_H
+#define SIMP_HOMO_RING_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,7 +12,7 @@
 
 #include "Ring.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;
@@ -23,8 +23,8 @@ namespace McMd
    * A HomoRing is a chemically homogeneous ring of atoms, in which
    * all atoms are of the same type.
    *
-   * \sa \ref mcMd_species_HomoRing_page "parameter file format"
-   * \ingroup McMd_Species_Module
+   * \sa \ref simp_species_HomoRing_page "parameter file format"
+   * \ingroup Simp_Species_Module
    */
    class HomoRing : public Ring
    {

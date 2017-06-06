@@ -22,12 +22,16 @@
 #include <util/containers/ConstArrayIterator.h>
 #include <util/global.h>
 
+namespace Simp {
+   class   Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
-   class   Species;
    class   System;
 
    /**

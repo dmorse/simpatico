@@ -10,20 +10,21 @@
 
 #include <util/param/Factory.h>
 #include <util/param/Manager.h>
-#include "Species.h"
+#include <simp/species/Species.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace McMd;
 
    /**
    * A Manager for a set of Species objects.
    *
-   * \ingroup McMd_Manager_Module
-   * \ingroup McMd_Species_Module
+   * \ingroup Simp_Manager_Module
+   * \ingroup Simp_Species_Module
    */
-   class SpeciesManager : public Manager<Species>
+   class SpeciesManager : public Manager<Simp::Species>
    {
 
    public:
@@ -35,7 +36,7 @@ namespace McMd
 
    protected:
 
-      virtual Factory<Species>* newDefaultFactory() const;
+      virtual Factory<Simp::Species>* newDefaultFactory() const;
 
    };
 

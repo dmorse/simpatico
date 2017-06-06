@@ -7,7 +7,7 @@
 
 #include "Ring.h"
 
-namespace McMd
+namespace Simp
 {
 
    using namespace Util;

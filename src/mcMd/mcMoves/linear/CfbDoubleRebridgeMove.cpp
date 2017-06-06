@@ -11,17 +11,20 @@
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
-#include <mcMd/species/Linear.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/species/Linear.h>
+
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor
@@ -31,7 +34,7 @@ namespace McMd
       speciesId_(-1),
       nRegrow_(-1),
       bridgeLength_(0)
-   { setClassName("CfbDoubleRebridgeMove"); } 
+   {  setClassName("CfbDoubleRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial

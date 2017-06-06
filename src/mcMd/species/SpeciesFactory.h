@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>  
-#include "Species.h"
+#include <simp/species/Species.h>
 
 #include <string>
 
@@ -17,11 +17,12 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Default Factory for subclasses of Species.
    */
-   class SpeciesFactory : public Factory<Species> 
+   class SpeciesFactory : public Factory<Simp::Species> 
    {
 
    public:
@@ -32,7 +33,7 @@ namespace McMd
       * \param speciesName name of the Species subclass
       * \return Species* pointer to new instance of speciesName
       */
-      Species* factory(const std::string &speciesName) const;
+      Simp::Species* factory(const std::string &speciesName) const;
 
    };
 

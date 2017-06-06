@@ -15,12 +15,15 @@
 #include <util/space/IntVector.h>               // template parameter
 #include <util/containers/DArray.h>             // member template
 
+namespace Simp {
+   class Species;
+}
+
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
+   using namespace Simp;
 
    /**
    * Molecular center of mass mean squared displacement.

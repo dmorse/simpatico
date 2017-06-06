@@ -8,22 +8,23 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>   // base class template
-#include <util/accumulators/AutoCorrArray.h>     // member template 
-#include <util/space/Tensor.h>                   // member template parameter
-#include <util/containers/DArray.h>              // member template
+#include <mcMd/analyzers/SystemAnalyzer.h>    // base class template
+#include <util/accumulators/AutoCorrArray.h>  // member template 
+#include <util/space/Tensor.h>                // member template parameter
+#include <util/containers/DArray.h>           // member template
+#include <util/archives/serialize.h>          // used in method template
+#include <util/global.h>                      // used in method template
 
-#include <util/archives/serialize.h>             // used in method template
-#include <util/global.h>                         // used in method template
 
+namespace Simp {
+   class Species;
+}
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class Species;
-
+   using namespace Simp;
 
    /**
    * Autocorrelation for bond stress of a molecule.

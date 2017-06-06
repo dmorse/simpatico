@@ -14,12 +14,15 @@
 #include <util/space/Vector.h>                   // template parameter
 #include <util/containers/DArray.h>             // member template
 
+namespace Simp {
+   class Species;
+}
+  
 namespace McMd
 {
   
    using namespace Util;  
-
-   class Species;
+   using namespace Simp;  
 
    /**
    * Autocorrelation for vector separation of any two monomers on a molecule.

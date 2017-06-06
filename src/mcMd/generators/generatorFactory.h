@@ -8,13 +8,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+namespace Simp
+{
+   class Species;
+}
+
 namespace McMd
 {
 
    class Generator;
-   class Species;
    class McSystem;
    class MdSystem;
+
+   using namespace Simp;
 
    /**
    * Instantiates generator for on species in an McSystem.
