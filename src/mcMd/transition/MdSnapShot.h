@@ -27,17 +27,17 @@ namespace McMd {
       setSystemState();
 
       /**
-      * Set snapshot state to current state of system.
+      * Get current state of system, store in this MdSnapShot.
       */
       getSystemState(int iStep = 0);
 
       /**
       * Unset state of snapshot, mark as unknown.
       */
-      unset()
+      unset();
 
       /**
-      * Is this snapshot set to a state?
+      * Is this snapshot set to a known state?
       */
       bool isSet();
 
@@ -61,19 +61,19 @@ namespace McMd {
       int nAtom() const;
 
       /**
-      * Get specific position const reference.
+      * Get specific MdParticle by (non-const) reference.
       *
       * \int 
       */
       MdParticle& particle(int i);
 
       /**
-      * Get specific atom by const reference.
+      * Get specific MdParticle by const reference.
       */
-      MdParticle const & particle(int i);
+      MdParticle const & particle(int i) const;
       
       /**
-      * Get boundary by reference.
+      * Get boundary by (non-const) reference.
       */ 
       Boundary& boundary();
 
