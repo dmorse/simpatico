@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------
+# Setup script for src/mcMd namespace level directory:
+#
+# This script should be run once before the first time the code in this
+# directory is compiled, to create files in the src/mcMd directory that are
+# required by the build system but not contained in the repository. It MUST 
+# be invoked from the src/mcMd directory in which this script is located, 
+# i.e., when src/mcMd is the current working directory of the invoking shell.
+#
+# ------------------------------------------------------------------------
+# Create user-modifiable copies of default respository *_r files versions.
+
+# Namespace level config file
+cp config.mk_r config.mk
+
+# Factory classes
+cp configIos/ConfigIoFactory.cpp_r configIos/ConfigIoFactory.cpp
+cp trajectory/TrajectoryReaderFactory.cpp_r trajectory/TrajectoryReaderFactory.cpp
+cp species/SpeciesFactory.cpp_r species/SpeciesFactory.cpp
+cp potentials/angle/AngleFactory.cpp_r potentials/angle/AngleFactory.cpp
+cp potentials/bond/BondFactory.cpp_r potentials/bond/BondFactory.cpp
+cp potentials/dihedral/DihedralFactory.cpp_r potentials/dihedral/DihedralFactory.cpp
+cp potentials/external/ExternalFactory.cpp_r potentials/external/ExternalFactory.cpp
+cp potentials/coulomb/CoulombFactory.cpp_r potentials/coulomb/CoulombFactory.cpp
+cp potentials/link/LinkFactory.cpp_r potentials/link/LinkFactory.cpp
+cp potentials/pair/PairFactory.cpp_r potentials/pair/PairFactory.cpp
+cp mcMoves/McMoveFactory.cpp_r mcMoves/McMoveFactory.cpp
+cp mdIntegrators/MdIntegratorFactory.cpp_r mdIntegrators/MdIntegratorFactory.cpp
+cp perturb/mcSystem/McPerturbationFactory.cpp_r perturb/mcSystem/McPerturbationFactory.cpp
+cp analyzers/mcSystem/McAnalyzerFactory.cpp_r analyzers/mcSystem/McAnalyzerFactory.cpp
+cp analyzers/mdSystem/MdAnalyzerFactory.cpp_r analyzers/mdSystem/MdAnalyzerFactory.cpp
+cp analyzers/system/SystemAnalyzerFactory.cpp_r analyzers/system/SystemAnalyzerFactory.cpp
+cp generators/generatorFactory.cpp_r generators/generatorFactory.cpp
+
+# Source file lists in user and modules directories (user-contributed classes)
+cp user/sources.mk_r user/sources.mk
+cp modules/sources.mk_r modules/sources.mk
+
+# Main programs
+cp mdSim.cpp_r mdSim.cpp
+cp mcSim.cpp_r mcSim.cpp
+

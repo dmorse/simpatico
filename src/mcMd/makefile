@@ -57,6 +57,8 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f species/SpeciesFactory.cpp
 	rm -f trajectoryIos/TrajectoryIoFactory.cpp
 	rm -f generators/generatorFactory.cpp
+	rm -f mdSim.cpp
+	rm -f mcSim.cpp
 endif
 
 # Executable targets

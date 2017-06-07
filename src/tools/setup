@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------
+# Setup script for src/tools  directory
+ 
+# This script should be run once before the first time the code in this
+# directory is compiled, to create files in the src/tools directory that 
+# are required by the build system but not contained in the repository. 
+# It MUST be invoked from the directory in which this script is located, 
+# i.e., when src/tools is the current working directory of the invoking 
+# shell.
+
+# ------------------------------------------------------------------------
+# Create user-modifiable copies of default *_r repository file versions.
+
+# Namespace level config file
+cp config.mk_r config.mk
+
+# Factory classes
+cp config/ConfigReaderFactory.cpp_r config/ConfigReaderFactory.cpp
+cp config/ConfigWriterFactory.cpp_r config/ConfigWriterFactory.cpp
+cp trajectory/TrajectoryReaderFactory.cpp_r trajectory/TrajectoryReaderFactory.cpp
+cp processor/ProcessorAnalyzerFactory.cpp_r processor/ProcessorAnalyzerFactory.cpp
+
+# Source file list in user sub-directory
+cp user/sources.mk_r user/sources.mk
+

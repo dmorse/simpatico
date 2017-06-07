@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------
+# Setup script for src/ddMd directory:
+#
+# This script should be run once before the first time the code in this
+# directory is compiled, to create files that are required by the build 
+# system but not contained in the git repository. It MUST be invoked from
+# the directory in which this script is located, i.e., when src/ddMd is
+# the current working directory of the invoking shell).
+# 
+#------------------------------------------------------------------------
+# Create user-modifiable copies of default repository *_r files.
+
+# Namespace level config file
+cp config.mk_r config.mk
+
+# Factory classes
+cp configIos/ConfigIoFactory.cpp_r configIos/ConfigIoFactory.cpp
+cp potentials/angle/AngleFactory.cpp_r potentials/angle/AngleFactory.cpp
+cp potentials/bond/BondFactory.cpp_r potentials/bond/BondFactory.cpp
+cp potentials/dihedral/DihedralFactory.cpp_r potentials/dihedral/DihedralFactory.cpp
+cp potentials/external/ExternalFactory.cpp_r potentials/external/ExternalFactory.cpp
+cp potentials/pair/PairFactory.cpp_r potentials/pair/PairFactory.cpp
+cp integrators/IntegratorFactory.cpp_r integrators/IntegratorFactory.cpp
+cp analyzers/AnalyzerFactory.cpp_r analyzers/AnalyzerFactory.cpp
+cp modifiers/ModifierFactory.cpp_r modifiers/ModifierFactory.cpp
+
+# Source file list in user subdirectory
+cp user/sources.mk_r user/sources.mk

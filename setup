@@ -4,8 +4,9 @@
 # Setup script:
 #
 # This script should be run once before the first time the program is
-# compiled. It MUST be invoked from the root simpatico/ directory in 
-# which this script is located.
+# compiled, to create files that are required by the build system but
+# not contained in the repository. It MUST be invoked from the root 
+# simpatico/ directory in which this script is located.
 # 
 # This script:
 #
@@ -50,7 +51,6 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
 #   - Set $(ROOT_DIR) to absolute path of directory from which script invoked
 #   - Set $(BLD_DIR) to absolute path to src/ directory (in-source-build)
 
-# ------------------------------------------------------------------------
 # Setup src/util/ directory
 
 # Namespace config.mk in src/ directory (for in-source builds)
@@ -59,81 +59,10 @@ cp src/util/config.mk_r src/util/config.mk
 # Copy typedef for the class that defines boundary conditions
 cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 
-# ------------------------------------------------------------------------
-# Setup src/simp/ directory
-
-# Namepspace level config file
-cp src/simp/config.mk_r src/simp/config.mk
-
-# Source file in user directory (user-contributed files)
-cp src/simp/user/sources.mk_r src/simp/user/sources.mk
-
-# ------------------------------------------------------------------------
-# Setup src/mcMd/ directory
-
-# Namespace level config file
-cp src/mcMd/config.mk_r src/mcMd/config.mk
-
-# Factory classes
-cp src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
-cp src/mcMd/trajectory/TrajectoryReaderFactory.cpp_r src/mcMd/trajectory/TrajectoryReaderFactory.cpp
-cp src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
-cp src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
-cp src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
-cp src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
-cp src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
-cp src/mcMd/potentials/coulomb/CoulombFactory.cpp_r src/mcMd/potentials/coulomb/CoulombFactory.cpp
-cp src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
-cp src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
-cp src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
-cp src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
-cp src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
-cp src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
-cp src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
-cp src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
-cp src/mcMd/generators/generatorFactory.cpp_r src/mcMd/generators/generatorFactory.cpp
-
-# Source file lists in user and modules directories (user-contributed classes)
-cp src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
-cp src/mcMd/modules/sources.mk_r src/mcMd/modules/sources.mk
-
-# Main programs
-cp src/mcMd/mdSim.cpp_r src/mcMd/mdSim.cpp
-cp src/mcMd/mcSim.cpp_r src/mcMd/mcSim.cpp
-
-# ------------------------------------------------------------------------
-# Setup src/ddMd/ directory
-
-# Namespace level config file
-cp src/ddMd/config.mk_r src/ddMd/config.mk
-
-# Factory classes
-cp src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
-cp src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
-cp src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
-cp src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
-cp src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
-cp src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
-cp src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
-cp src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
-cp src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
-
-# Source file list in user subdirectory
-cp src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
-# ------------------------------------------------------------------------
-# Setup src/tools/ directory
-
-# Namespace level config file
-cp src/tools/config.mk_r src/tools/config.mk
-
-# Factory classes
-cp src/tools/config/ConfigReaderFactory.cpp_r src/tools/config/ConfigReaderFactory.cpp
-cp src/tools/config/ConfigWriterFactory.cpp_r src/tools/config/ConfigWriterFactory.cpp
-cp src/tools/trajectory/TrajectoryReaderFactory.cpp_r src/tools/trajectory/TrajectoryReaderFactory.cpp
-cp src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/ProcessorAnalyzerFactory.cpp
-
-# Source file list in user sub-directory
-cp src/tools/user/sources.mk_r src/tools/user/sources.mk
+(cd src/simp; ./setup)
+(cd src/mcMd; ./setup)
+(cd src/ddMd; ./setup)
+(cd src/tools; ./setup)
 
 #========================================================================
 # Setup bld/serial directory tree (out-of-source builds with MPI disabled)

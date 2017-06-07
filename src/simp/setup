@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------
+# Setup script for src/simp directory:
+#
+# This script should be run once before the first time the code in this
+# directory is compiled, to create files that are required by the build 
+# system but not contained in the git repository. It MUST be invoked from
+# the src/simp directory in which this script is located (i.e., when 
+# src/simp is the current working directory of the invoking shell).
+#------------------------------------------------------------------------
+# Create user-modifiable files by copying default repository *_r versions
+
+# Namepspace level config file
+cp config.mk_r config.mk
+
+# Source file in user sub-directory (user-contributed files)
+cp user/sources.mk_r user/sources.mk
+
