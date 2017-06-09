@@ -9,7 +9,7 @@ namespace Simp
    *
    * This module contains "interaction" classes that define potential
    * energy functions for individual nonbonded or bonded pair 
-   * interactions 3-body angle groups, 4-body dihedral groups, etc. 
+   * interactions, 3-body angle groups, 4-body dihedral groups, etc. 
    * These interaction classes are all simple non-polymorphic classes
    * that have no access to information about a parent system.
    *
