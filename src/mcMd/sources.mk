@@ -1,3 +1,4 @@
+# Include source files lists from subdirectories
 include $(SRC_DIR)/mcMd/chemistry/sources.mk
 include $(SRC_DIR)/mcMd/species/sources.mk
 include $(SRC_DIR)/mcMd/neighbor/sources.mk
@@ -14,6 +15,7 @@ include $(SRC_DIR)/mcMd/generators/sources.mk
 include $(SRC_DIR)/mcMd/modules/sources.mk
 include $(SRC_DIR)/mcMd/user/sources.mk
 
+# Concatenate source file lists from subdirectories
 mcMd_=\
     $(mcMd_chemistry_) \
     $(mcMd_species_) \
@@ -46,10 +48,12 @@ include $(SRC_DIR)/mcMd/tethers/sources.mk
 mcMd_+=$(mcMd_tethers_)
 endif
 
+# Create lists of src and object files, with absolute paths
 mcMd_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_))
 mcMd_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mcMd_:.cpp=.o))
 
+# Target to create library file for McMd namespace
 $(mcMd_LIB): $(mcMd_OBJS)
 	$(AR) rcs $(mcMd_LIB) $(mcMd_OBJS)

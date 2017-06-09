@@ -9,7 +9,7 @@
 # the src/simp directory in which this script is located (i.e., when 
 # src/simp is the current working directory of the invoking shell).
 #------------------------------------------------------------------------
-# Create user-modifiable files by copying default repository *_r versions
+# Create user-modifiable copies of default repository *_r versions
 
 # Namepspace level config file
 cp config.mk_r config.mk
