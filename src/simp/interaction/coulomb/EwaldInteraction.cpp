@@ -61,7 +61,7 @@ namespace Simp
    }
 
    /* 
-   * Read potential parameters from file.
+   * Read parameters (epsilon, alpha, rSpaceCutoff) from file.
    */
    void EwaldInteraction::readParameters(std::istream &in) 
    {
