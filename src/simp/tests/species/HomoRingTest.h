@@ -3,13 +3,13 @@
 
 #include <test/UnitTest.h>
 
-#include <mcMd/species/HomoRing.h>
+#include <simp/species/HomoRing.h>
 
 #include <iostream>
 #include <fstream>
 
 using namespace Util;
-using namespace McMd;
+using namespace Simp;
 
 class HomoRingTest : public UnitTest 
 {

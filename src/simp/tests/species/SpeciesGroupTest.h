@@ -4,11 +4,11 @@
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include <mcMd/species/SpeciesGroup.tpp>
+#include <simp/species/SpeciesGroup.tpp>
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/archives/BinaryFileIArchive.h>
 
-using namespace McMd;
+using namespace Simp;
 
 class SpeciesGroupTest : public UnitTest 
 {

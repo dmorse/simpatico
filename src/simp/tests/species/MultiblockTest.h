@@ -3,13 +3,13 @@
 
 #include <test/UnitTest.h>
 
-#include <mcMd/species/Multiblock.h>
+#include <simp/species/Multiblock.h>
 
 #include <iostream>
 #include <fstream>
 
 using namespace Util;
-using namespace McMd;
+using namespace Simp;
 
 class MultiblockTest : public UnitTest 
 {

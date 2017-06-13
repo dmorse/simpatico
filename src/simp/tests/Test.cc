@@ -9,12 +9,14 @@
 #endif
 
 #include "interaction/InteractionTestComposite.h"
+#include "species/SpeciesTestComposite.h"
 #include <test/CompositeTestRunner.h>
 
 using namespace Simp;
 
 TEST_COMPOSITE_BEGIN(SimpNsTestComposite)
 addChild(new InteractionTestComposite, "interaction/");
+addChild(new SpeciesTestComposite, "species/");
 TEST_COMPOSITE_END
 
 
@@ -22,8 +24,8 @@ int main(int argc, char* argv[])
 {
    #ifdef UTIL_MPI
    MPI::Init();
-   //Vector::commitMpiType();
-   //IntVector::commitMpiType();
+   Vector::commitMpiType();
+   IntVector::commitMpiType();
    #endif 
 
    SimpNsTestComposite runner;

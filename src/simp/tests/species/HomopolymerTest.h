@@ -3,13 +3,13 @@
 
 #include <test/UnitTest.h>
 
-#include <mcMd/species/Homopolymer.h>
+#include <simp/species/Homopolymer.h>
 
 #include <iostream>
 #include <fstream>
 
 using namespace Util;
-using namespace McMd;
+using namespace Simp;
 
 class HomopolymerTest : public UnitTest 
 {
