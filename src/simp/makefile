@@ -12,6 +12,7 @@ include $(BLD_DIR)/util/config.mk
 include $(BLD_DIR)/simp/config.mk
 include $(SRC_DIR)/simp/patterns.mk
 include $(SRC_DIR)/simp/sources.mk
+include $(SRC_DIR)/util/sources.mk
 
 #-----------------------------------------------------------------------
 # Main targets
@@ -20,7 +21,7 @@ all: $(simp_OBJS) $(simp_LIB)
 
 clean:
 	rm -f $(simp_OBJS) $(simp_OBJS:.o=.d) $(simp_LIB)
-#cd tests; $(MAKE) clean
+	cd tests; $(MAKE) clean
 
 veryclean:
 	$(MAKE) clean
@@ -31,4 +32,5 @@ veryclean:
 # Include dependency files
 
 -include $(simp_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

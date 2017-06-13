@@ -22,7 +22,13 @@ clean:
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd interaction; $(MAKE) clean
+	cd species; $(MAKE) clean
+else
+	cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
 endif
+
+clean-outputs:
+	cd species; $(MAKE) clean-outputs
 
 
 -include $(simp_tests_OBJS:.o=.d)

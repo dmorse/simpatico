@@ -33,14 +33,12 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd mdIntegrators; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
 	cd simulation; $(MAKE) clean
-	cd species; $(MAKE) clean
 else
 	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 endif
 
 clean-outputs:
 	cd chemistry; $(MAKE) clean-outputs
-	cd species; $(MAKE) clean-outputs
 	cd mcSimulation; $(MAKE) clean-outputs
 	cd mdSimulation; $(MAKE) clean-outputs
 
