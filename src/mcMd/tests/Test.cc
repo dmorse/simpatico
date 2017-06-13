@@ -5,7 +5,6 @@
 #include <test/CompositeTestRunner.h>
 
 #include "chemistry/ChemistryTestComposite.h"
-#include "species/SpeciesTestComposite.h"
 #include "neighbor/NeighborTestComposite.h"
 #include "simulation/SimulationTestComposite.h"
 #include "mcSimulation/McSimulationTest.h"
@@ -14,7 +13,6 @@
 // Define a class McMdNsTestComposite
 TEST_COMPOSITE_BEGIN(McMdNsTestComposite)
 addChild(new ChemistryTestComposite, "chemistry/");
-addChild(new SpeciesTestComposite, "species/");
 addChild(new NeighborTestComposite, "neighbor/");
 addChild(new SimulationTestComposite, "simulation/");
 addChild(new TEST_RUNNER(McSimulationTest), "mcSimulation/");

@@ -196,14 +196,21 @@ The two formats are similar in most respects. The most important differences are
 The following parameters appear in the main block in the format for either type of simulation:
 <ul>
 <li> nAtomType: The number of atom types, which are indexed by an integer index with values 0, ...,  nAtomType - 1. </li>
-<li> nBondType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
-<li> hasExternal: This is a boolean variable that is set to true (1) if an external potential will be used and false (0) otherwise. </li>
+<li> nBondType (optional): The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
+<li> nAngleType (optional): The number of angle potential types, which are indexed by an integer index with values 0, ...,  nAngleType - 1. </li>
+<li> nDihedralType (optional): The number of dihedral potential types, which are indexed by an index with values 0, ...,  nDihedralType - 1. </li>
+<li> hasExternal (optional): This is a boolean variable that is set to true (1) if an external potential will be used and false (0) otherwise. </li>
 <li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point value for the atom mass. </li>
 <li> maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion.
 <li> writeRestartInterval: The interval, in MD time steps or attempted MC moves, between time steps when a restart file is written.
 <li> writeRestartFileName: The base name used for the restart file.
 </ul>
-The writeRestartInterval and writeRestartFileName parameters are discussed in more detail \ref user_restart_page "here".
+
+The optional parameters nBondType, nAngleType and nDihedralType are each set to 0 by default. A value of zero for each of these parameters indicates that the associated type of covalent potential is disabled. Each type of covalent energy is thus disabled by default, and can be enabled by assigning nBondType, nAngleType or nDihedralType an appropriate nonzero value. 
+
+External one-body potentials are also disabled by default but can enabled by assigning the parameter hasExternal a value 1 (true) in the parameter file. The parameter hasExternal is set to 0 (false) by default, if not present in the parameter file. 
+
+The writeRestartInterval and writeRestartFileName parameters are discussed in more detail \ref user_restart_page "here". 
 
 \section user_param_mcmd_filemaster_section FileMaster
 The FileMaster block is associated with an instance of the class Util::FileMaster. This block contains several string parameters that specify locations of input and output files. The string "commandFileName" is the name of the command file that controls program execution after the parameter file is processed. The "inputPrefix" string is prepended to the names of input configuration files and other input files. The "outputPrefix" string is predended to the names of most output files. 
@@ -218,9 +225,6 @@ The Random block is associated with a Util::Random object.  The only parameter t
 
 \section user_param_mcmd_species_manager_section SpeciesManager
 The SpeciesManager block contains a sequence of one or more polymorphic blocks, each of which contains the appropriate file format for a subclass of McMd::Species. Each such subclass describes a different class of molecules, and so requires a different file format. Instances of the base class McMd::Species use a file format that is flexible enough to describe any molecular structure. 
-
-\section user_param_mcmd_analyzer_manager_section AnalyzerManager
-The AnalyzerManager block contains a single integer parameter named baseInterval, followed by a sequence of polymorphic blocks associated with subclasses of McMd::Analyzer.  Most subclasses of McMd::Analyzer implement an operation that calculates one or more physical properties and either outputs data or carries out a statistical analysis, or both. Each analyzer has an parameter named "interval" that specifies how often this operation should be invoked: Each analyzer is invoked when the global step counter is an integer multiple of its interval parameter. The interval for each analyzer must be a multiple of baseInterval.
 
 \section user_param_mcmd_mcsystem_section McSystem and MdSystem
 The format for an McSystem subblock of an MdSimulation is:
@@ -252,23 +256,23 @@ The format for an MdSystem subblock of an MdSimulation block is:
     MdIntegrator{ ...  }
   }
 \endcode
-The both types of System, values of the potential energy "style" parameters (pairStyle, bondStyle, etc.) are strings that specify the names of "interaction" classes that implement specific potential energy functions for nonbonded pair, covalent and external potentials, respectively. For example, pairStyle may be assigned a valueLJPair, indicating the LJPair interaction class defined in the src/simp/pair directory. Interaction classes of different types are in different subdirectories of the src/simp directory tree. 
+For both types of System, values of the potential energy "style" parameters (pairStyle, bondStyle, etc.) are strings that specify the names specific potential energy functions for nonbonded pair, covalent and external potentials, respectively. For example, pairStyle may be assigned a value LJPair to indicate a Lennard-Jones pair interaction or DpdPair to indicate the type of soft interaction used in dissipative particle dynamics simulations. Similarly, the bondStyle string may be assigned a value HarmonicBond to indicate a harmonic potential with a nonzero rest length, or FeneBond to indicate a finitely-extensible nonlinear element (FENE) bond potential energy function.
 
-For bond, angle and dihedral covalent potentials, the style string (e.g., bondStyle) and potential energy block (e.g., BondPotential) must be present if and only if the corresponding type of potential energy has been enabled by explicitly assigning a nonzero value to nBondType, nAngleType, or nDihedralType parameters, respectively, in the main McSimulation or MdSimulation block. Similarly, the externalStyle parameter and ExternalPotential block must be present if an only if the external potential has been explicitly assigned a value of true (1).  These style string and potential energy entries may not appear if the corresponding potential energy has been disabled by setting the corresonding n(Potential)Type variable to its default value of zero for covalent potentials or by setting hasExternal to its default value of false (0), or by not including these variables in the parameter file.
+Each of the allowed values for each of each "style" string variables is given by the name of an "interaction" class that implements the energy and force calculation for the specified potential energy function. Source files for interaction classes of different types (pair interactions, bond interactions, etc.) are located in different subdirectories of the src/simp/interaction directory.
 
-The only differences between an MdSystem block and an McSystem block are thus:
+The only differences between an MdSystem block and an McSystem block are:
   
-  - An MdSystem contains an MdPairPotential block (McMd::MdPairPotential) where an McSystem contains an McPairPotential block (McMd::McPairPotential).
+  - An MdSystem contains an MdPairPotential block (McMd::MdPairPotential) where an McSystem contains an McPairPotential block (McMd::McPairPotential), as discussed in greater detail below.
  
-  - An MdSystem block contains an additional McMd::MdIntegrator block. In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the McMd::MdIntegrator base class, with an opening line that specifies the desired subclass (e.g., NvtIntegrator{...}). 
+  - An MdSystem block contains an additional McMd::MdIntegrator block. 
 
+In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the McMd::MdIntegrator base class, with an opening line that specifies the desired subclass (e.g., NvtIntegrator{...}). 
 
+\subsection user_param_mdpair_subsection Pair Potentials
 
-\section user_param_mdpair_section Pair Potentials
+Though MC and MD simulations use the same potential classes for all covalent potentials (bond, angle, and dihedral), different classes with different parameter file formats are used to evaluate pair potentials in MC and MD simulations. This is necessary because different data structures are used to efficiently keep track of non-bonded neighbors in MC and MD simulations. The McMd::McPairPotential class, which is used in MC simulations, uses a cell list (an instance of McMd::CellList) to identify particles that are close enough to interact. The McMd::MdPairPotential, which is used in MD simulations, instead uses a Verlet pair list (an instance of McMd::PairList) for force and energy calculations, but uses an temporary cell list to periodically rebuild the pair list. The parameter file formats for both of these classes contains some extra parameters required to create the cell and/or pair list, in addition to parameters required to define the pair potential. 
 
-MC and MD simulations use the same potential classes for all covalent bond potentials, and for angle, and dihedral, and external potentials (if enabled). Different classes are used to evaluate pair potentials, because different data structures are used to keep track of neighbors in MC and MD simulations. The McMd::McPairPotential class uses a cell list (a instance of McMd::CellList), while an MdPairPotential uses a Verlet pair list (an instance of Util::PairList). The McMd::PairList class also uses an internal cell list, which is used periodically rebuild the pair list, but is not used for force or energy calculations.
-
-In an McSystem, the McPairPotential subblock contains the parameters required by a specific pairStyle (in this case, by the LJPair style), followed by a maxBoundary parameter. The maxBoundary parameter describes the dimensions of the largest expected dimensions of the periodic boundary.  The maxBoundary parameter is used to allocate memory for a cell list before the simulation begins. Only enough memory is allocated for the number of cells required for the boundary condition specified by maxBoundary, using a cell size that must be at least as large as the largest pair potential cutoff parameter.  In NVE and NVT simulations, maxBoundary can safely be chosen to be equal be equal to the actual rigid boundary (which is specified in an input configuration file). In NPT and NPH simulations, however, maxBoundary must be chosen large enough to guarantee that adequate memory is allocated to accomodate any fluctuation in system size that may occur during a simulation. The CellList does not occupy a large amount of memory, so their is little cost in choosing a maxBoundary that is larger than is likely to be needed. 
+In an McSystem, the McPairPotential subblock contains the parameters required by a specific pairStyle (e.g., by the LJPair style, in our example), followed by a maxBoundary parameter. The maxBoundary parameter describes the dimensions of the largest expected dimensions of the periodic boundary.  The maxBoundary parameter is used to allocate memory for a cell list before the simulation begins. Only enough memory is allocated for the number of cells required for the boundary condition specified by maxBoundary, using a cell size that must be at least as large as the largest pair potential cutoff parameter.  In NVE and NVT simulations, maxBoundary can safely be chosen to be equal be equal to the actual rigid boundary (which is specified in an input configuration file). In NPT and NPH simulations, however, maxBoundary must be chosen large enough to guarantee that adequate memory is allocated to accomodate any fluctuation in system size that may occur during a simulation. The CellList does not occupy a large amount of memory, so their is little cost in choosing a maxBoundary that is somewhat larger than is likely to be needed. 
 
 In an MdSystem, the MdPairPotential block contains the same parameters as for an McPotential, followed by additional parameters required to construct a Verlet pair list. The format is:
 \code  
@@ -278,7 +282,7 @@ In an MdSystem, the MdPairPotential block contains the same parameters as for an
       PairList{ ... }
    }
 \endcode
-The format of the PairList subblock is:
+The interaction parameters for each pair style include parameters that specify the cutoff distance beyond which the pair potential is approximated by zero for pairs with all combinations of particle types. The format of the PairList subblock is:
 \code
       PairList{
         atomCapacity    [int]
@@ -290,8 +294,28 @@ The value of atomCapacity is the maximum number of distinct atoms.  The value of
 
 The pair list in an MD simulation is rebuilt whenever one or more atoms in the simulation has moved a distance skin/2 or greater since the last time the pair list was rebuilt.  Increasing the value chosen for the "skin" parameter will thus generally cause the pair list to be rebuilt less frequently, but will increase the number of pairs retained in the pair list, and thus increase the cost of evaluating nonbonded forces that once every time step. There is thus an optimum value for each system. If the optimum value is not adequately known from previous experience, it can be identified by timing a few short trial simulations on a particular system with different values for the skin parameter.
 
-\section user_param_mcmd_ensemble_section Energy and Boundary Ensembles
-The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of Util::EnergyEnsemble and Util::BoundaryEnsemble respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter. Only "isothermal" makes sense for an MC simulation, but "adiabatic" ensemble is used for MD integrators that conserve energy or (for constant pressure ensembles) enthalpy. For isothermal simulations, temperature is specified as a value for kT, in units of energy. The BoundaryEnsemble block has a type parameter that can be either "rigid" (i.e., constant volume) or "isobaric". If this type is isobaric, the type parameter must be followed by a "pressure" parameter whose value specifies the target pressure in units of energy per volume.
+\subsection user_param_covalent_subsection Covalent Potentials
+
+For bond, angle and dihedral covalent potentials, the style string value (e.g., bondStyle) and the associated potential energy block (e.g., BondPotential) must be present if and only if a nonzero value has been explicitly assigned in the main McSimulation or MdSimulation block to the associated parameter nBondType, nAngleType, or nDihedralType, respectively, thus enabling the use of the associated type of covalent potential.  Recall that nBondType, nAngleType, and nDihedralType variables are optional variables that are set to zero by default, if the parameter is not present, thus disabling all covalent potentials by default. 
+
+The file format for each of the these covalent potential parameter file blocks simply contains the parameters required to define the associated potential energy function. The names and meanings of these parameters are different for different potential energy "styles", and are defined for each style by the readParameters() member function of the associated interaction class. The format for each such covalent potential energy block is thus the same as the parameter file format for the interaction class whose name is given by the associated style variable. For example, if bondStyle is assigned the value "HarmonicBond", then the file format for BondPotential block contains a list of the parameters required to define one or more type of harmonic bond. This format, which is defined by the HarmonicBond class, contains an array kappa of spring constants (one per bond type) and a corresponding array of equilibrium bond lengths.
+
+\subsection user_param_external_subsection External Potential (optional)
+
+An external potential is a potential energy that acts on each atom independently, and that depends only on the position and type of the atom. External potentials are disabled by default by may be enabled in either an MC or MD simulation by explicitly assigning a true (1) to the optional parameter hasExternal in the main McSimulation or MdSimulation block. The externalStyle parameter and ExternalPotential parameter block should be present within the McSystem or MdSystem block if and only if hasExternal has been explicitly set to true. The value of the externalStyle string gives the name of an external interaction class that is chosen from among those defined in the simp/interaction/external directory. The ExternalPotential parameter file block contains only parameters required to define an external potential, in a format that is different for different external potential styles, and is defined by the readParameters() function of the specified external interaction class. 
+
+\subsection user_param_mcmd_energy_ensemble_subsection Energy Ensemble
+
+The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of Util::EnergyEnsemble and Util::BoundaryEnsemble respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter. 
+
+Only an "isothermal" ensemble makes sense for an MC simulation, but an "adiabatic" ensemble is used for MD integrators that conserve energy or (for isobaric boundary ensembles) enthalpy. For isothermal simulations, temperature is specified as a value for kT, in units of energy. 
+
+\subsection user_param_mcmd_boundary_ensemble_subsection Boundary Ensemble
+
+The BoundaryEnsemble block has a type parameter that is a string whose value must be either "rigid" (i.e., constant volume) or "isobaric". If the type is isobaric, the type parameter must be followed by a "pressure" parameter whose value specifies the target pressure in units of energy per volume.
+
+\section user_param_mcmd_analyzer_manager_section AnalyzerManager
+The AnalyzerManager block of the main McSimulation or MdSimulation block contains a single integer parameter named baseInterval, followed by a sequence of polymorphic blocks associated with subclasses of McMd::Analyzer.  Most subclasses of McMd::Analyzer implement an operation that calculates one or more physical properties and either outputs data or carries out a statistical analysis, or both. Each analyzer has an parameter named "interval" that specifies how often this operation should be invoked: Each analyzer is invoked when the global step counter is an integer multiple of its interval parameter. The interval for each analyzer must be a multiple of baseInterval.
 
 <BR>
 \ref user_param_syntax_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
