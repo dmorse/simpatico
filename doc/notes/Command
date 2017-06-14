@@ -1,0 +1,46 @@
+Idea: A class that represents a new operation that cannot not
+be adequately modelled by one of the existing base classes 
+(e.g., as an Analyzer, Modifier, McMove, MdIntegrator, etc.)
+and that can be optionally invoked from the command script.
+
+Proposal:
+
+1) Create a polymorphic base class Command to represent objects 
+that implement such operations.
+
+2) A command is created and initialized in the param file and then 
+executed by a line in the command file. Create a CommandManager to
+hold one or more commands, with an optional block in the parameter
+file. 
+
+3) Command is a subclass of ParamComposite, and thus has a readParam
+method that is used to do any initialization that should be completed
+when the object is created. 
+
+4) A Command has a virtual execute function that executes the commands,
+with an interface.
+
+   bool execute(std::string commandName, std::istream in);
+
+Behavior: 
+
+If this function is passed a commandName string that it recognizes as
+the correct name for the associated command, it parses the rest of 
+the command line by reading from in the input stream in. 
+
+If this function is passed a commandName for a command it does not
+recognize and cannot execute, it immediately returns false without
+reading any further characters from the input stream.
+
+5) The readCommands() function of the parent simulation should have a
+loop over commands in which it invokes the execute() function of
+each user-defined command. This should come after the block in which
+it tests the basic built in commands.
+
+6) Some of the more complicated existing commands that are currently
+defined in the readCommands() functio should be encapsulated as 
+subclasses of Command that can be added to the CommandManager in 
+addition to the user-defined commands. This should substantially
+simplify the readCommands() function.
+
+
