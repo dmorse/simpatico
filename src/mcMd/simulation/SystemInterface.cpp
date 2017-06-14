@@ -6,7 +6,7 @@
 */
 
 // namespace McMd
-#include "SubSystem.h"
+#include "SystemInterface.h"
 #include "Simulation.h"
 #include <simp/species/Species.h>
 
@@ -21,7 +21,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   SubSystem::SubSystem(System& parent)
+   SystemInterface::SystemInterface(System& parent)
     : simulationPtr_(parent.simulationPtr_),
       systemPtr_(&parent),
       moleculeSetsPtr_(parent.moleculeSetsPtr_),
@@ -49,13 +49,13 @@ namespace McMd
    /*
    * Destructor.
    */
-   SubSystem::~SubSystem()
+   SystemInterface::~SystemInterface()
    {}
 
    /*
    * Is this System empty (i.e., devoid of Molecules) ?
    */
-   bool SubSystem::isEmpty() const
+   bool SystemInterface::isEmpty() const
    {
       for (int i = 0; i < simulation().nSpecies(); ++i) {
          if (nMolecule(i) != 0) return false;
@@ -66,7 +66,7 @@ namespace McMd
    /*
    * Return the total number of atoms in this System.
    */
-   int SubSystem::nAtom() const
+   int SystemInterface::nAtom() const
    {
       int sum = 0;
       for (int i = 0; i < simulation().nSpecies(); ++i) {

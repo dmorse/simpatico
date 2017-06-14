@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/potentials/external/ExternalPotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>                   // base class
+#include <mcMd/simulation/SystemInterface.h>             // base class
 #include <util/global.h>
 
 namespace Util
@@ -32,7 +32,8 @@ namespace McMd
    * \ingroup McMd_External_Module
    */
    template <class Interaction>
-   class ExternalPotentialImpl : public ExternalPotential, public SubSystem
+   class ExternalPotentialImpl : public ExternalPotential, 
+                                 private SystemInterface
    {
 
    public:
@@ -168,7 +169,7 @@ namespace McMd
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(System& system)
     : ExternalPotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    {  interactionPtr_ = new Interaction(); }
@@ -180,7 +181,7 @@ namespace McMd
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(
                          ExternalPotentialImpl<Interaction>& other)
     : ExternalPotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}

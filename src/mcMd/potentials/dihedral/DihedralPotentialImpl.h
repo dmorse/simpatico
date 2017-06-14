@@ -10,7 +10,7 @@
 
 #include <util/global.h>
 #include <mcMd/potentials/dihedral/DihedralPotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>                   // base class
+#include <mcMd/simulation/SystemInterface.h>             // base class
 
 namespace Util
 {
@@ -31,7 +31,8 @@ namespace McMd
    * \ingroup McMd_Dihedral_Module
    */
    template <class Interaction>
-   class DihedralPotentialImpl : public DihedralPotential, public SubSystem
+   class DihedralPotentialImpl : public DihedralPotential, 
+                                 private SystemInterface
    {
 
    public:
@@ -217,7 +218,7 @@ namespace McMd
    template <class Interaction>
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(System& system)
     : DihedralPotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    {  interactionPtr_ = new Interaction(); }
@@ -229,7 +230,7 @@ namespace McMd
    DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(
                          DihedralPotentialImpl<Interaction>& other)
     : DihedralPotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}

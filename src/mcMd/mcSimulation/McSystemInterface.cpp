@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McSystemAccess.h"
+#include "McSystemInterface.h"
 #include <mcMd/mcSimulation/McSystem.h>  
 
 namespace McMd
@@ -18,8 +18,8 @@ namespace McMd
    *
    * \param system parent McSystem
    */
-   McSystemAccess::McSystemAccess(McSystem& mcSystem)
-    : SubSystem(mcSystem)
+   McSystemInterface::McSystemInterface(McSystem& mcSystem)
+    : SystemInterface(mcSystem)
       #ifndef SIMP_NOPAIR
       , pairPotentialPtr_(0)
       #endif
@@ -64,7 +64,7 @@ namespace McMd
    /*
    * Destructor.
    */
-   McSystemAccess::~McSystemAccess()
+   McSystemInterface::~McSystemInterface()
    {}
 
 }

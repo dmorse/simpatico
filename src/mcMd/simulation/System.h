@@ -968,7 +968,7 @@ namespace McMd
 
    //friends:
 
-      friend class SubSystem;
+      friend class SystemInterface;
       friend class ::SystemTest;
 
    }; 

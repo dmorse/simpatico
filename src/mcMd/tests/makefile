@@ -30,6 +30,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd generators; $(MAKE) clean
 	cd mcSimulation; $(MAKE) clean
 	cd mdSimulation; $(MAKE) clean
+	cd potentials; $(MAKE) clean
 	cd mdIntegrators; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
 	cd simulation; $(MAKE) clean

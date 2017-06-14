@@ -8,11 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/simulation/SubSystem.h>            // base class
-#include <util/param/ParamComposite.h>            // base class
 #include <mcMd/potentials/pair/PairPotential.h>   // base class
+#include <mcMd/simulation/SystemInterface.h>      // base class
 #include <mcMd/neighbor/PairList.h>               // member
 
+#include <util/param/ParamComposite.h>            // base class
 #include <util/global.h>
 
 namespace Util
@@ -33,8 +33,8 @@ namespace McMd
    *
    * \ingroup McMd_Pair_Module
    */
-   class MdPairPotential : public ParamComposite, public SubSystem, 
-                           public PairPotential
+   class MdPairPotential : public ParamComposite, public PairPotential,
+                           public SystemInterface
    {
 
    public:

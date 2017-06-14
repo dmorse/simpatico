@@ -26,7 +26,7 @@ namespace McMd
    */
    McPairPotential::McPairPotential(System& system)
     : ParamComposite(),
-      SubSystem(system)
+      SystemInterface(system)
    {  setClassName("McPairPotential"); }
  
    /* 
