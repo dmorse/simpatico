@@ -37,15 +37,16 @@ namespace McMd
    { 
       if (name != "DEFORM_CELL") {
  
-         std::string filename;
-
+         #if 0
          // Read in configuration from file
+         std::string filename;
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
          std::ifstream inputFile;
          system().fileMaster().openInputFile(filename, inputFile);
          system().readConfig(inputFile);
          inputFile.close();
+         #endif
 
          System::MoleculeIterator molIter;
          Molecule::AtomIterator atomIter;
@@ -63,11 +64,12 @@ namespace McMd
             }
          }
 
-         // Read in new boundary
+         // Read new system boundary
          in >> boundary();
          Log::file() << "  " << system().boundary();
          Log::file() << std::endl;
 
+         // Convert positions back to Cartesian
          for (int iSpec=0; iSpec < nSpecies; ++iSpec) {
             begin(iSpec, molIter);
             for ( ; molIter.notEnd(); ++molIter) {
@@ -80,6 +82,12 @@ namespace McMd
             }
          }
 
+         #ifndef SIMP_NOPAIR 
+         // Generate cell list
+         pairPotential().buildCellList();
+         #endif
+
+         #if 0
          // Write out configuration to file
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
@@ -87,10 +95,6 @@ namespace McMd
          system().fileMaster().openOutputFile(filename, outputFile);
          system().writeConfig(outputFile);
          outputFile.close();
-
-         #ifndef SIMP_NOPAIR 
-         // Generate cell list
-         pairPotential().buildCellList();
          #endif
 
          // Command name recognized, successful completion.
