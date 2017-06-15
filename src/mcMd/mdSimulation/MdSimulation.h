@@ -47,6 +47,9 @@ namespace McMd
       */
       virtual ~MdSimulation();
 
+      /// \name Initialization
+      //@{
+
       /**
       * Process command line options.
       *
@@ -94,12 +97,23 @@ namespace McMd
       */
       virtual void readParameters(std::istream &in);
 
+      //@}
+      /// \name Serialization and Restart Files
+      //@{
+
       /**
-      * Load internal state from an archive.
+      * Load parameter file section of archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Read a restart file.
+      *
+      * \param filename base file name for all restart files.
+      */
+      void load(const std::string& filename);
 
       /**
       * Save internal state to an archive.
@@ -109,7 +123,28 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Read and execute commands from an input stream.
+      * Write a restart file.
+      *
+      * \param filename base file name for all restart files.
+      */
+      void save(const std::string& filename);
+
+      //@}
+      /// \name Command Script
+      //@{
+
+      /**
+      * Read and execute a single command from an input stream.
+      *
+      * Returns true if command string is recognized, false otherwise.
+      *
+      * \param command  command name string
+      * \param in  command input stream
+      */ 
+      bool readCommand(std::string const & command, std::istream& in);
+
+      /**
+      * Read and execute commands from a specific input stream.
       * 
       * \param in command script input stream.
       */
@@ -122,6 +157,10 @@ namespace McMd
       * the FileMaster.
       */
       void readCommands();
+
+      //@}
+      /// \name Simulation and Analysis Operations
+      //@{
 
       /**
       * Run an MD simulation of specified length.
@@ -136,11 +175,12 @@ namespace McMd
       *  
       * Preconditions: Atomic positions, velocities, and forces must all 
       * be initialized before this function is entered. If isContinuation
-      * is false, positions and forces must have been initialized by calling 
-      * the readConfig() or load() method. The readconfig() method initializes
-      * velocities only for file formats that contains velocities. Otherwise, 
-      * velocities can be initialized by system().setBoltzmannVelocities(),
-      * which can be invoked by a THERMALIZE command in the command script.
+      * is false, positions and forces must have been initialized by 
+      * calling the readConfig() or load() method. The readconfig() 
+      * method initializes velocities only for file formats that contain 
+      * velocities. Otherwise, velocities can be initialized by the
+      * system().setBoltzmannVelocities() function, which can be invoked 
+      * by a THERMALIZE command in the command script.
       *
       * \param endStep         Final value of MD step counter iStep_.
       * \param isContinuation  Is this a continuation of previous run?
@@ -177,19 +217,9 @@ namespace McMd
       void analyzeTrajectory(int min, int max, 
                              std::string classname, std::string filename);
 
-      /**
-      * Read a restart file.
-      *
-      * \param filename base file name for all restart files.
-      */
-      void load(const std::string& filename);
-
-      /**
-      * Write a restart file.
-      *
-      * \param filename base file name for all restart files.
-      */
-      void save(const std::string& filename);
+      //@}
+      /// \name Miscellaneous
+      //@{
 
       /**
       * Get the MdSystem being simulated by const reference.
@@ -206,6 +236,8 @@ namespace McMd
       */
       virtual bool isValid() const;
  
+      //@}
+
    private:
       
       /// System.
