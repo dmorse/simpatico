@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_SYSTEM_ACCESS_H
-#define MCMD_MC_SYSTEM_ACCESS_H
+#ifndef MCMD_MD_SYSTEM_INTERFACE_H
+#define MCMD_MD_SYSTEM_INTERFACE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,26 +8,26 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/simulation/SubSystem.h>  // base class
+#include <mcMd/simulation/SystemInterface.h>  // base class
 
 namespace McMd
 {
 
    using namespace Util;
 
-   class McSystem;
-   class McPairPotential;
+   class MdSystem;
+   class MdPairPotential;
    class BondPotential;
    class AnglePotential;
    class DihedralPotential;
    class ExternalPotential;
 
    /**
-   * Provides faster access to an McSystem.
+   * An interface to an MdSystem.
    *
-   * \ingroup McMd_McMove_Module
+   * \ingroup McMd_System_Module
    */
-   class McSystemAccess : public SubSystem
+   class MdSystemInterface : public SystemInterface
    {
    
    public:
@@ -35,22 +35,22 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param mcSystem parent McSystem
+      * \param mcSystem parent MdSystem
       */
-      McSystemAccess(McSystem& mcSystem);
+      MdSystemInterface(MdSystem& mcSystem);
    
       /**
       * Destructor.
       */
-      virtual ~McSystemAccess();
+      virtual ~MdSystemInterface();
    
    protected:
 
       #ifndef SIMP_NOPAIR
       /**
-      * Get the McPairPotential.
+      * Get the MdPairPotential.
       */
-      McPairPotential& pairPotential() const;
+      MdPairPotential& pairPotential() const;
       #endif
    
       #ifdef SIMP_BOND
@@ -84,7 +84,7 @@ namespace McMd
    private:
  
       #ifndef SIMP_NOPAIR
-      McPairPotential* pairPotentialPtr_;
+      MdPairPotential* pairPotentialPtr_;
       #endif
 
       #ifdef SIMP_BOND
@@ -109,9 +109,9 @@ namespace McMd
 
    #ifndef SIMP_NOPAIR
    /*
-   * Get McPairPotential of McSystem.
+   * Get MdPairPotential of MdSystem.
    */
-   inline McPairPotential& McSystemAccess::pairPotential() const
+   inline MdPairPotential& MdSystemInterface::pairPotential() const
    {  return *pairPotentialPtr_; }
    #endif
 
@@ -119,7 +119,7 @@ namespace McMd
    /*
    * Get the BondPotential.
    */
-   inline BondPotential& McSystemAccess::bondPotential() const
+   inline BondPotential& MdSystemInterface::bondPotential() const
    {  return *bondPotentialPtr_; }
    #endif
 
@@ -127,7 +127,7 @@ namespace McMd
    /*
    * Get AnglePotential. 
    */
-   inline AnglePotential& McSystemAccess::anglePotential() const
+   inline AnglePotential& MdSystemInterface::anglePotential() const
    {  return *anglePotentialPtr_; }
    #endif
 
@@ -135,7 +135,7 @@ namespace McMd
    /*
    * Get DihedralPotential.
    */
-   inline DihedralPotential& McSystemAccess::dihedralPotential() const
+   inline DihedralPotential& MdSystemInterface::dihedralPotential() const
    {  return *dihedralPotentialPtr_; }
    #endif
 
@@ -143,7 +143,7 @@ namespace McMd
    /*
    * Get ExternalPotential.
    */
-   inline ExternalPotential& McSystemAccess::externalPotential() const
+   inline ExternalPotential& MdSystemInterface::externalPotential() const
    {  return *externalPotentialPtr_; }
    #endif
 

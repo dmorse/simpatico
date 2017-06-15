@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/potentials/angle/AnglePotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>             // base class
+#include <mcMd/simulation/SystemInterface.h>             // base class
 #include <util/global.h>
 
 namespace Util
@@ -31,7 +31,7 @@ namespace McMd
    * \ingroup McMd_Angle_Module
    */
    template <class Interaction>
-   class AnglePotentialImpl : public AnglePotential, public SubSystem
+   class AnglePotentialImpl : public AnglePotential, private SystemInterface
    {
 
    public:
@@ -225,7 +225,7 @@ namespace McMd
    template <class Interaction>
    AnglePotentialImpl<Interaction>::AnglePotentialImpl(System& system)
     : AnglePotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    {  interactionPtr_ = new Interaction(); }
@@ -237,7 +237,7 @@ namespace McMd
    AnglePotentialImpl<Interaction>::AnglePotentialImpl(
                          AnglePotentialImpl<Interaction>& other)
     : AnglePotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}

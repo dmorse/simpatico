@@ -76,15 +76,14 @@ Interactions (Design change):
 
 - Change file format to read typeId (ids) << Interaction.
 
-SystemAccess base classes
+SystemInterface base classes
 -------------------------
 
-- Rename SubSystem SystemAccess
-- Define (Mc|Md)SystemAccess classes with potential energy accessors
-- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess
+- Define (Mc|Md)SystemInterface classes with potential energy accessors
+- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemInterface
 - Remove replace system().typePotential() by typePotential() in analyzers
-- Derive SystemMcMove from a protected McSystemAccess
+- Derive SystemMcMove from a protected McSystemInterface
 - Remove replace system().typePotential() by typePotential() in mcMoves
-- Derive MdIntegrator from a protected MdSystemAccess
+- Derive MdIntegrator from a protected MdSystemInterface
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 

@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>             // base class
-#include <mcMd/simulation/SubSystem.h>             // base class
+#include <mcMd/simulation/SystemInterface.h>       // base class
 #include <mcMd/potentials/pair/PairPotential.h>    // base class
 #include <mcMd/neighbor/CellList.h>                // member
 
@@ -27,8 +27,8 @@ namespace McMd
    *
    * \ingroup McMd_Pair_Module
    */
-   class McPairPotential : public ParamComposite, public SubSystem,
-                           public PairPotential
+   class McPairPotential : public ParamComposite, public PairPotential, 
+                           public SystemInterface
    {
 
    public:

@@ -1,5 +1,5 @@
-#ifndef MCMD_SUB_SYSTEM_H
-#define MCMD_SUB_SYSTEM_H
+#ifndef MCMD_SYSTEM_INTERFACE_H
+#define MCMD_SYSTEM_INTERFACE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -27,19 +27,19 @@ namespace McMd
    using namespace Util;
 
    /**
-   * A SubSystem is a partial copy of a System that has:
+   * An interface to a System.
+   *
+   * A SystemInterface is an interface for a system that is intended
+   * to be used as a protected or private base class for classes 
+   * that evaluate properties of a system. It provides functions
+   * to directly access:
    *
    *  - an ArraySet of Molecule objects of each Species.
    *  - a Boundary.
    *
-   * A SubSystem must be associated with a parent System.
-   *
-   * SubSystem is designed as a base class for classes that
-   * evaluate configurational properties, energy, and forces.
-   *
    * \ingroup McMd_System_Module
    */
-   class SubSystem
+   class SystemInterface
    {
 
    public:
@@ -49,12 +49,12 @@ namespace McMd
       *
       * \param parent parent System
       */
-      SubSystem(System& parent);
+      SystemInterface(System& parent);
 
       /**
       * Destructor.
       */
-      virtual ~SubSystem();
+      virtual ~SystemInterface();
 
       /**
       * Get the parent System by reference.
@@ -77,25 +77,25 @@ namespace McMd
       //@{
 
       /**
-      * Get the number of molecules of one Species in this SubSystem.
+      * Get the number of molecules of one Species in this SystemInterface.
       *
       * \param speciesId integer Id for a Species.
-      * \return number of molecules of specified Species in this SubSystem.
+      * \return number of molecules of specified Species in this SystemInterface.
       */
       int nMolecule(int speciesId) const;
 
       /**
-      * Return the total number of atoms in this SubSystem.
+      * Return the total number of atoms in this SystemInterface.
       */
       int nAtom() const;
 
       /**
-      * Is this an empty SubSystem (i.e., one with no molecules) ?
+      * Is this an empty SystemInterface (i.e., one with no molecules) ?
       */
       bool isEmpty() const;
 
       /**
-      * Initialize an iterator for molecules of one species in this SubSystem.
+      * Initialize an iterator for molecules of one species in this SystemInterface.
       *
       * \param speciesId integer Id for the desired Species (input)
       * \param iterator  molecule iterator (output)
@@ -103,7 +103,7 @@ namespace McMd
       void begin(int speciesId, System::MoleculeIterator& iterator);
 
       /**
-      * Initialize a const iterator for molecules of one species in this SubSystem.
+      * Initialize a const iterator for molecules of one species in this SystemInterface.
       *
       * \param speciesId integer Id for the desired Species (input)
       * \param iterator  molecule iterator (output)
@@ -158,7 +158,7 @@ namespace McMd
       * Pointer to DArray containing one System::MoleculeSet for each Species.
       *
       * The MoleculeSet (*moleculeSetsPtr_)[i] contains the molecules in
-      * this SubSystem that belong to Species i of the parent simulation.
+      * this SystemInterface that belong to Species i of the parent simulation.
       */
       DArray< System::MoleculeSet >* moleculeSetsPtr_;
 
@@ -202,7 +202,7 @@ namespace McMd
    /*
    * Get the parent Simulation by reference.
    */
-   inline Simulation& SubSystem::simulation() const
+   inline Simulation& SystemInterface::simulation() const
    {
       assert(simulationPtr_);
       return *simulationPtr_;
@@ -211,7 +211,7 @@ namespace McMd
    /*
    * Get the parent System by reference.
    */
-   inline System& SubSystem::system() const
+   inline System& SystemInterface::system() const
    {
       assert(systemPtr_);
       return *systemPtr_;
@@ -220,16 +220,16 @@ namespace McMd
    /*
    * Get the Boundary by reference.
    */
-   inline Boundary& SubSystem::boundary() const
+   inline Boundary& SystemInterface::boundary() const
    {
       assert(boundaryPtr_);
       return *boundaryPtr_;
    }
 
    /*
-   * Get the number of molecules of a specific Species in this SubSystem.
+   * Get the number of molecules of a specific Species in this SystemInterface.
    */
-   inline int SubSystem::nMolecule(int speciesId) const
+   inline int SystemInterface::nMolecule(int speciesId) const
    {
       assert(moleculeSetsPtr_);
       return (*moleculeSetsPtr_)[speciesId].size();
@@ -239,7 +239,7 @@ namespace McMd
    * Initialize a System::MoleculeIterator for molecules of one Species.
    */
    inline void
-   SubSystem::begin(int speciesId, System::MoleculeIterator& iterator)
+   SystemInterface::begin(int speciesId, System::MoleculeIterator& iterator)
    {
       assert(moleculeSetsPtr_);
       (*moleculeSetsPtr_)[speciesId].begin(iterator);
@@ -249,7 +249,7 @@ namespace McMd
    * Initialize a System::ConstMoleculeIterator for molecules of one Species.
    */
    inline void
-   SubSystem::begin(int speciesId, System::ConstMoleculeIterator& iterator) const
+   SystemInterface::begin(int speciesId, System::ConstMoleculeIterator& iterator) const
    {
       assert(moleculeSetsPtr_);
       (*moleculeSetsPtr_)[speciesId].begin(iterator);
@@ -259,7 +259,7 @@ namespace McMd
    /*
    * Does a bond potential exist?
    */
-   inline bool SubSystem::hasBonds() const
+   inline bool SystemInterface::hasBonds() const
    {  return hasBonds_; }
    #endif
 
@@ -267,31 +267,31 @@ namespace McMd
    /*
    * Does an angle potential exist?
    */
-   inline bool SubSystem::hasAngles() const
+   inline bool SystemInterface::hasAngles() const
    {  return hasAngles_; }
    #endif
 
    #ifdef SIMP_DIHEDRAL
    /// Does a dihedral potential exist?
-   inline bool SubSystem::hasDihedrals() const
+   inline bool SystemInterface::hasDihedrals() const
    {  return hasDihedrals_; }
    #endif
 
    #ifdef MCMD_LINK
    /// Does a link potential exist?
-   inline bool SubSystem::hasLinks() const
+   inline bool SystemInterface::hasLinks() const
    { return hasLinks_; }
    #endif
 
    #ifdef SIMP_EXTERNAL
    /// Does an external potential exist?
-   inline bool SubSystem::hasExternal() const
+   inline bool SystemInterface::hasExternal() const
    { return hasExternal_; }
    #endif
 
    #ifdef SIMP_TETHER
    /// Does a tether potential exist?
-   inline bool SubSystem::hasTethers() const
+   inline bool SystemInterface::hasTethers() const
    { return hasTethers_; }
    #endif
 
