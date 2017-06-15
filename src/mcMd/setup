@@ -32,6 +32,8 @@ cp perturb/mcSystem/McPerturbationFactory.cpp_r perturb/mcSystem/McPerturbationF
 cp analyzers/mcSystem/McAnalyzerFactory.cpp_r analyzers/mcSystem/McAnalyzerFactory.cpp
 cp analyzers/mdSystem/MdAnalyzerFactory.cpp_r analyzers/mdSystem/MdAnalyzerFactory.cpp
 cp analyzers/system/SystemAnalyzerFactory.cpp_r analyzers/system/SystemAnalyzerFactory.cpp
+cp commands/McCommandFactory.cpp_r commands/McCommandFactory.cpp
+cp commands/MdCommandFactory.cpp_r commands/MdCommandFactory.cpp
 cp generators/generatorFactory.cpp_r generators/generatorFactory.cpp
 
 # Source file lists in user and modules directories (user-contributed classes)

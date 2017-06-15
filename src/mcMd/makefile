@@ -44,6 +44,8 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f analyzers/mcSystem/McAnalyzerFactory.cpp
 	rm -f analyzers/mdSystem/MdAnalyzerFactory.cpp
 	rm -f analyzers/system/SystemAnalyzerFactory.cpp
+	rm -f commands/McCommandFactory.cpp
+	rm -f commands/MdCommandFactory.cpp
 	rm -f mcMoves/McMoveFactory.cpp
 	rm -f mdIntegrators/MdIntegratorFactory.cpp
 	rm -f perturb/mcSystem/McPerturbationFactory.cpp

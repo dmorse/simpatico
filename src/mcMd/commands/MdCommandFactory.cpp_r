@@ -1,0 +1,47 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "MdCommandFactory.h" // Class header
+
+#include <mcMd/mdSimulation/MdSimulation.h>
+#include <mcMd/mdSimulation/MdSystem.h>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   MdCommandFactory::MdCommandFactory(MdSimulation& simulation, 
+                                            MdSystem& system)
+    : simulationPtr_(&simulation),
+      systemPtr_(&system)
+   {}
+
+   /* 
+   * Return a pointer to a instance of Command subclass className.
+   */
+   Command* MdCommandFactory::factory(const std::string &className) const
+   {
+      Command* ptr = 0;
+
+      // Try subfactories first (if any) 
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      #if 0
+      if (className == "McEnergyOutput") {
+         ptr = new McEnergyOutput(system());
+      } 
+      #endif
+
+      return ptr;
+   }
+
+}
