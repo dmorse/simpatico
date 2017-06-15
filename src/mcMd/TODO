@@ -1,8 +1,8 @@
 Housekeeping
 ------------
 
-- Add *.dox files to document file format of interaction classes,
-  potential classes, and other ParamComposite subclasses.
+- Add *.dox files to document file format of all interaction classes
+  (done?), potential classes, and other ParamComposite subclasses.
 
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
@@ -34,23 +34,6 @@ Deformable Boundaries
 - Generalize snapshot and obsolete pair list methods to use 
   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
-AtomType
---------
-
-- Add static bool hasAtomDiameters_ and non-static double diameter_ members
-
-- Simulation a friend of AtomType, so that static hasAtomDiameters
-  variable can be read in Simulation block of the param file. Alternatively,
-  provide a static function to optionall read this parameter.
-
-- Add code to read diameter_ member if hasAtomDiametrers_. 
-
-Species
--------
-
-- Move Species, SpeciesGroup etc. to a new Topo namespace, so the Species
-  class heirarchy can be used for analysis in the Tool namespace.
-
 Serialization
 -------------
 
@@ -77,13 +60,25 @@ Interactions (Design change):
 - Change file format to read typeId (ids) << Interaction.
 
 SystemInterface base classes
--------------------------
+----------------------------
 
-- Define (Mc|Md)SystemInterface classes with potential energy accessors
 - Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemInterface
 - Remove replace system().typePotential() by typePotential() in analyzers
 - Derive SystemMcMove from a protected McSystemInterface
 - Remove replace system().typePotential() by typePotential() in mcMoves
 - Derive MdIntegrator from a protected MdSystemInterface
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
+
+AtomType Diameters
+------------------
+
+Idea: Provide atom diameters for use by generators:
+
+- Add static bool hasAtomDiameters_ and non-static double diameter_ members
+
+- Simulation a friend of AtomType, so that static hasAtomDiameters
+  variable can be read in Simulation block of the param file. Alternatively,
+  provide a static function to optionally read this parameter.
+
+- Add code to read diameter_ member if AtomType::hasAtomDiameters_ is true. 
 
