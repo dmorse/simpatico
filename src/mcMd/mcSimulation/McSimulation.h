@@ -52,6 +52,9 @@ namespace McMd
       */
       virtual ~McSimulation();
 
+      /// \name Initialization
+      //@{
+
       /**
       * Process command line options.
       *
@@ -95,12 +98,23 @@ namespace McMd
       */
       virtual void readParameters(std::istream &in);
 
+      //@}
+      /// \name Serialization and Restarting
+      //@{
+
       /**
-      * Load internal state from an archive.
+      * Load parameters from an archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Read restart file to continue simulation.
+      *
+      * \param filename name of input restart file
+      */
+      void load(const std::string& filename);
 
       /**
       * Save internal state to an archive.
@@ -110,9 +124,39 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       /**
+      * Write internal state to a restart file.
+      *
+      * \param filename name of output restart file
+      */
+      void save(const std::string& filename);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, unsigned int version);
+
+      //@}
+      /// \name Command Script Interface
+      //@{
+
+      /**
+      * Read and execute a single command from an input stream.
+      *
+      * Returns true if command string is recognized, false otherwise.
+      *
+      * \param command  command name string
+      * \param in  command input stream
+      */ 
+      bool readCommand(std::string const & command, std::istream& in);
+
+      /**
       * Read and execute commands from a specific input stream.
       * 
-      * \param in command file input stream. 
+      * \param in  command file input stream
       */
       void readCommands(std::istream& in);
 
@@ -123,6 +167,10 @@ namespace McMd
       * by the FileMaster.
       */
       void readCommands();
+
+      //@}
+      /// \name Simulation and Analysis Operations
+      //@{
 
       /**
       * Run an MC simulation of specified length.
@@ -181,24 +229,9 @@ namespace McMd
       void analyzeTrajectory(int min, int max, 
                              std::string classname, std::string filename);
 
-      /**
-      * Write restart files.
-      */
-      void save(const std::string& filename);
-
-      /**
-      * Read restart files.
-      */
-      void load(const std::string& filename);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, unsigned int version);
+      //@}
+      /// \name Miscellaneous
+      //@{
 
       /**
       * Get the McSystem by reference.
@@ -219,6 +252,8 @@ namespace McMd
       * Return true if valid, or throw an Exception. 
       */
       virtual bool isValid() const;
+
+      //@}
 
    protected:
 

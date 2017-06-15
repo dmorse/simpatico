@@ -453,206 +453,226 @@ namespace McMd
             if (command == "FINISH") {
                Log::file() << std::endl;
                readNext = false;
-            } else
-            if (command == "SET_CONFIG_IO") {
-               std::string classname;
-               inBuffer >> classname;
-               Log::file() << Str(classname, 15) << std::endl;
-               system().setConfigIo(classname);
-            } else
-            if (command == "READ_CONFIG") {
-               inBuffer >> filename;
-               Log::file() << Str(filename, 15) << std::endl;
-               fileMaster().openInputFile(filename, inputFile);
-               system().readConfig(inputFile);
-               inputFile.close();
-            } else
-            if (command == "SIMULATE") {
-               int endStep;
-               inBuffer >> endStep;
-               Log::file() << "  " << endStep << std::endl;
-               bool isContinuation = false;
-               simulate(endStep, isContinuation);
-            } else
-            if (command == "CONTINUE") {
-               if (iStep_ == 0) {
-                  UTIL_THROW("Attempt to continue when iStep_ == 0");
+            } else {
+               bool success;
+               success = readCommand(command, inBuffer);
+               if (!success)  {
+                  Log::file() << "Error: Unknown command  " << std::endl;
+                  readNext = false;
                }
-               int endStep;
-               inBuffer >> endStep;
-               Log::file() << Int(endStep, 15) << std::endl;
-               bool isContinuation = true;
-               simulate(endStep, isContinuation);
-            } else
-            if (command == "ANALYZE_CONFIGS") {
-               int min, max;
-               inBuffer >> min >> max >> filename;
-               Log::file() << "  " <<  min << "  " <<  max
-                           << "  " <<  filename << std::endl;
-               analyzeConfigs(min, max, filename);
-            } else
-            if (command == "ANALYZE_TRAJECTORY") {
-               std::string classname;
-               std::string filename;
-               int min, max;
-               inBuffer >> min >> max >> classname >> filename;
-               Log::file() << " " << Str(classname,15) 
-                           << " " << Str(filename, 15)
-                           << std::endl;
-               analyzeTrajectory(min, max, classname, filename);
-            } else 
-            if (command == "WRITE_CONFIG") {
-               inBuffer >> filename;
-               Log::file() << Str(filename, 15) << std::endl;
-               fileMaster().openOutputFile(filename, outputFile);
-               system().writeConfig(outputFile);
-               outputFile.close();
-            } else
-            if (command == "WRITE_PARAM") {
-               inBuffer >> filename;
-               Log::file() << "  " << filename << std::endl;
-               fileMaster().openOutputFile(filename, outputFile);
-               writeParam(outputFile);
-               outputFile.close();
-            } else 
-            if (command == "GENERATE_MOLECULES") {
-               DArray<double> diameters;
-               DArray<int> capacities;
-               diameters.allocate(nAtomType());
-               capacities.allocate(nSpecies());
-
-               // Parse command
-               inBuffer >> system().boundary();
-               Log::file() << "\n  Boundary:    " << system().boundary();
-               Label capacityLabel("Capacities:");
-               inBuffer >> capacityLabel;
-               Log::file() << "\n  Capacities: ";
-               for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-                  inBuffer >> capacities[iSpecies];
-                  Log::file() << "  " << capacities[iSpecies];
-               }
-               Label diameterLabel("Diameters:");
-               inBuffer >> diameterLabel;
-               Log::file() << "\n  Diameters: ";
-               for (int iType=0; iType < nAtomType(); iType++) {
-                  inBuffer >> diameters[iType];
-                  Log::file() << "  " << diameters[iType];
-               }
-               Log::file() << std::endl;
-
-               system().generateMolecules(capacities, diameters);
-
-            } else
-            if (command == "DEFORM_CELL") {
-               
-               // Read in configuration from file
-               inBuffer >> filename;
-               Log::file() << Str(filename, 15) << std::endl;
-               fileMaster().openInputFile(filename, inputFile);
-               system().readConfig(inputFile);
-               inputFile.close();
-
-               System::MoleculeIterator molIter;
-               Molecule::AtomIterator atomIter;
-               for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
-                  system().begin(iSpec, molIter);
-                  for ( ; molIter.notEnd(); ++molIter) {
-                     molIter->begin(atomIter);
-                     for ( ; atomIter.notEnd(); ++atomIter) {
-                        Vector cartPosition, genPosition;
-                        cartPosition = atomIter->position();
-                        system().boundary().transformCartToGen(cartPosition, genPosition);
-                        atomIter->position() = genPosition;
-                     }
-                  }
-               }
-
-               // Read in new boundary
-               inBuffer >> system().boundary();
-               Log::file() << "  " << system().boundary();
-               Log::file() << std::endl;
-
-               for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
-                  system().begin(iSpec, molIter);
-                  for ( ; molIter.notEnd(); ++molIter) {
-                     molIter->begin(atomIter);
-                     for ( ; atomIter.notEnd(); ++atomIter) {
-                        Vector cartPosition, genPosition;
-                        genPosition = atomIter->position();
-                        system().boundary().transformGenToCart(genPosition, cartPosition);
-                        atomIter->position() = cartPosition;
-                     }
-                  }
-               }
-
-               // Write out configuration to file
-               inBuffer >> filename;
-               Log::file() << Str(filename, 15) << std::endl;
-               fileMaster().openOutputFile(filename, outputFile);
-               system().writeConfig(outputFile);
-               outputFile.close();
-
-               #ifndef SIMP_NOPAIR 
-               // Generate cell list
-               system().pairPotential().buildCellList();
-               #endif
-
-            } else
-            #ifndef UTIL_MPI
-            #ifndef SIMP_NOPAIR
-            if (command == "SET_PAIR") {
-               std::string paramName;
-               int typeId1, typeId2; 
-               double value;
-               inBuffer >> paramName >> typeId1 >> typeId2 >> value;
-               Log::file() << "  " <<  paramName 
-                           << "  " <<  typeId1 << "  " <<  typeId2
-                           << "  " <<  value << std::endl;
-               system().pairPotential()
-                       .set(paramName, typeId1, typeId2, value);
-            } else 
-            #endif 
-            #ifdef SIMP_BOND
-            if (command == "SET_BOND") {
-               std::string paramName;
-               int typeId; 
-               double value;
-               inBuffer >> paramName >> typeId >> value;
-               Log::file() << "  " <<  paramName << "  " <<  typeId 
-                           << "  " <<  value << std::endl;
-               system().bondPotential().set(paramName, typeId, value);
-            } else 
-            #endif
-            #ifdef SIMP_ANGLE
-            if (command == "SET_ANGLE") {
-               std::string paramName;
-               int typeId; 
-               double value;
-               inBuffer >> paramName >> typeId >> value;
-               Log::file() << "  " <<  paramName << "  " <<  typeId 
-                           << "  " <<  value << std::endl;
-               system().anglePotential().set(paramName, typeId, value);
-            } else 
-            #endif 
-            #ifdef SIMP_DIHEDRAL
-            if (command == "SET_DIHEDRAL") {
-               std::string paramName;
-               int typeId; 
-               double value;
-               inBuffer >> paramName >> typeId >> value;
-               Log::file() << "  " <<  paramName << "  " <<  typeId 
-                           << "  " <<  value << std::endl;
-               system().dihedralPotential().set(paramName, typeId, value);
-            } else 
-            #endif // ifdef SIMP_DIHEDRAL
-            #endif // ifndef UTIL_MPI
-            {
-               Log::file() << "  Error: Unknown command  " << std::endl;
-               readNext = false;
             }
 
          }
       }
+   }
+
+
+   bool McSimulation::readCommand(std::string const & command, 
+                                  std::istream& in)
+   {
+      std::string   filename;
+      std::ifstream inputFile;
+      std::ofstream outputFile;
+      bool success = true;
+
+      if (command == "SET_CONFIG_IO") {
+         std::string classname;
+         in >> classname;
+         Log::file() << Str(classname, 15) << std::endl;
+         system().setConfigIo(classname);
+      } else
+      if (command == "READ_CONFIG") {
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         fileMaster().openInputFile(filename, inputFile);
+         system().readConfig(inputFile);
+         inputFile.close();
+      } else
+      if (command == "SIMULATE") {
+         int endStep;
+         in >> endStep;
+         Log::file() << "  " << endStep << std::endl;
+         bool isContinuation = false;
+         simulate(endStep, isContinuation);
+      } else
+      if (command == "CONTINUE") {
+         if (iStep_ == 0) {
+            UTIL_THROW("Attempt to continue when iStep_ == 0");
+         }
+         int endStep;
+         in >> endStep;
+         Log::file() << Int(endStep, 15) << std::endl;
+         bool isContinuation = true;
+         simulate(endStep, isContinuation);
+      } else
+      if (command == "ANALYZE_CONFIGS") {
+         int min, max;
+         in >> min >> max >> filename;
+         Log::file() << "  " <<  min << "  " <<  max
+                     << "  " <<  filename << std::endl;
+         analyzeConfigs(min, max, filename);
+      } else
+      if (command == "ANALYZE_TRAJECTORY") {
+         std::string classname;
+         std::string filename;
+         int min, max;
+         in >> min >> max >> classname >> filename;
+         Log::file() << " " << Str(classname,15) 
+                     << " " << Str(filename, 15)
+                     << std::endl;
+         analyzeTrajectory(min, max, classname, filename);
+      } else 
+      if (command == "WRITE_CONFIG") {
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         fileMaster().openOutputFile(filename, outputFile);
+         system().writeConfig(outputFile);
+         outputFile.close();
+      } else
+      if (command == "WRITE_PARAM") {
+         in >> filename;
+         Log::file() << "  " << filename << std::endl;
+         fileMaster().openOutputFile(filename, outputFile);
+         writeParam(outputFile);
+         outputFile.close();
+      } else 
+      if (command == "GENERATE_MOLECULES") {
+         DArray<double> diameters;
+         DArray<int> capacities;
+         diameters.allocate(nAtomType());
+         capacities.allocate(nSpecies());
+
+         // Parse command
+         in >> system().boundary();
+         Log::file() << "\n  Boundary:    " << system().boundary();
+         Label capacityLabel("Capacities:");
+         in >> capacityLabel;
+         Log::file() << "\n  Capacities: ";
+         for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
+            in >> capacities[iSpecies];
+            Log::file() << "  " << capacities[iSpecies];
+         }
+         Label diameterLabel("Diameters:");
+         in >> diameterLabel;
+         Log::file() << "\n  Diameters: ";
+         for (int iType=0; iType < nAtomType(); iType++) {
+            in >> diameters[iType];
+            Log::file() << "  " << diameters[iType];
+         }
+         Log::file() << std::endl;
+
+         system().generateMolecules(capacities, diameters);
+
+      } else
+      if (command == "DEFORM_CELL") {
+         
+         // Read in configuration from file
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         fileMaster().openInputFile(filename, inputFile);
+         system().readConfig(inputFile);
+         inputFile.close();
+
+         System::MoleculeIterator molIter;
+         Molecule::AtomIterator atomIter;
+         for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
+            system().begin(iSpec, molIter);
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(atomIter);
+               for ( ; atomIter.notEnd(); ++atomIter) {
+                  Vector cartPosition, genPosition;
+                  cartPosition = atomIter->position();
+                  system().boundary().transformCartToGen(cartPosition, genPosition);
+                  atomIter->position() = genPosition;
+               }
+            }
+         }
+
+         // Read in new boundary
+         in >> system().boundary();
+         Log::file() << "  " << system().boundary();
+         Log::file() << std::endl;
+
+         for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
+            system().begin(iSpec, molIter);
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(atomIter);
+               for ( ; atomIter.notEnd(); ++atomIter) {
+                  Vector cartPosition, genPosition;
+                  genPosition = atomIter->position();
+                  system().boundary().transformGenToCart(genPosition, cartPosition);
+                  atomIter->position() = cartPosition;
+               }
+            }
+         }
+
+         // Write out configuration to file
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         fileMaster().openOutputFile(filename, outputFile);
+         system().writeConfig(outputFile);
+         outputFile.close();
+
+         #ifndef SIMP_NOPAIR 
+         // Generate cell list
+         system().pairPotential().buildCellList();
+         #endif
+
+      } else
+      #ifndef UTIL_MPI
+      #ifndef SIMP_NOPAIR
+      if (command == "SET_PAIR") {
+         std::string paramName;
+         int typeId1, typeId2; 
+         double value;
+         in >> paramName >> typeId1 >> typeId2 >> value;
+         Log::file() << "  " <<  paramName 
+                     << "  " <<  typeId1 << "  " <<  typeId2
+                     << "  " <<  value << std::endl;
+         system().pairPotential()
+                 .set(paramName, typeId1, typeId2, value);
+      } else 
+      #endif 
+      #ifdef SIMP_BOND
+      if (command == "SET_BOND") {
+         std::string paramName;
+         int typeId; 
+         double value;
+         in >> paramName >> typeId >> value;
+         Log::file() << "  " <<  paramName << "  " <<  typeId 
+                     << "  " <<  value << std::endl;
+         system().bondPotential().set(paramName, typeId, value);
+      } else 
+      #endif
+      #ifdef SIMP_ANGLE
+      if (command == "SET_ANGLE") {
+         std::string paramName;
+         int typeId; 
+         double value;
+         in >> paramName >> typeId >> value;
+         Log::file() << "  " <<  paramName << "  " <<  typeId 
+                     << "  " <<  value << std::endl;
+         system().anglePotential().set(paramName, typeId, value);
+      } else 
+      #endif 
+      #ifdef SIMP_DIHEDRAL
+      if (command == "SET_DIHEDRAL") {
+         std::string paramName;
+         int typeId; 
+         double value;
+         in >> paramName >> typeId >> value;
+         Log::file() << "  " <<  paramName << "  " <<  typeId 
+                     << "  " <<  value << std::endl;
+         system().dihedralPotential().set(paramName, typeId, value);
+      } else 
+      #endif // ifdef SIMP_DIHEDRAL
+      #endif // ifndef UTIL_MPI
+
+      // Command name not recognized
+      {
+         success = false;
+      }
+      return success;
    }
 
    /*
