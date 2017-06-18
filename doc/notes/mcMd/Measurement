@@ -1,0 +1,69 @@
+Proposal: A class to standardize the interface for a quantity that
+is computed and stored, with public functions that allows users to
+compute (and set), unset or get the value.
+
+namespace McMd {
+
+   template <T>
+   class Measurement : public Setable<T>   
+   {
+
+      virtual void compute() = 0;
+
+      void unset()
+      {  value_.unset(); }
+
+      T const & value()
+      {  return value_.value(); }
+
+   private:
+
+      Setable<T> value_;
+
+   }
+
+}
+
+-------------------------------------------------------------------
+Usage:
+
+ - A subclass of Measurement will often be a member variable of
+   a class representing a potential energy or a system, in which
+   it may be  most natural implement the actual computation in 
+   a member of the enclosing class, and use the Measurement 
+   subclass only to keep track of the state.
+
+ - The enclosing class could provide a private member function 
+   to do the actual computation, and declare the Measurement 
+   to be a friend, so that the Measurement class can call this
+   function within the virtual Measurement::compute function.
+   This would require definition of a specialized subclass of
+   Measurement simple to implement the friend declaration, which
+   is a bit ugly. The required class definition, would, however
+   be very short. 
+
+ - If the enclosing class provides alternate ways of computing
+   and setting the measured value within functions that have a
+   different interface (e.g., computaton of stress as a side 
+   effect of computing forces), then the Measurement subclass
+   could also be declared a friend of the enclosing potential
+   energy or system class, so that the enclosing class can set 
+   the value of the Setable object directly. If applied to 
+   stress measurements, this would require, e.g., the
+   BondStress to be a friend of BondPotential. 
+
+ - Accessors functions could simply return a reference to
+   Measurement<double> or Measurement<Tensor>, rather than
+   the more specialized subclass.
+
+   This would require, for example, that we define a class
+   KineticEnergy to be a subclass of Measurement<double> and
+   that this class declare the MdSystem to be a friend, and
+   that MdSystem have a private computeKineticEnergy function
+   that is called by the KineticEnergy::compute() function.
+
+   For example, each potential energy will thus have a 
+   publically accessible Measurement<double> private variable 
+   named energy_  and a Measurement<Tensor> variable named 
+   stress_. 
+
