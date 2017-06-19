@@ -42,39 +42,14 @@ namespace McMd
       virtual ~Command();
 
       /**
-      * Read required parameters from file.
-      *
-      * Empty default implementation.
-      */
-      virtual void readParameters(std::istream &in);
-
-      /**
-      * Load internal state from an archive.
-      *
-      * Empty default implementation.
-      *
-      * \param ar input/loading archive
-      */
-      virtual void loadParameters(Serializable::IArchive &ar);
-
-      /**
-      * Save internal state to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchive &ar);
-
-      /**
       * Read and execute command.
       *
       * \return true if name is recognized, false if not
       */
-      virtual bool readCommand(std::string const & name, std::istream& in);
-
-      // Accessor Functions
+      virtual bool readCommand(std::string const & name, std::istream& in) = 0;
 
       /**
-      * Output statistics for this move (called at the end of the simulation)
+      * Output statistics for this command (called at the end of the simulation)
       */
       virtual void output();
 

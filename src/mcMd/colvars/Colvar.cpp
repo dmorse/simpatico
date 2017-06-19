@@ -5,8 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Command.h"
-#include <util/archives/Serializable_includes.h>
+#include "Colvar.h"
 
 namespace McMd
 {
@@ -16,19 +15,30 @@ namespace McMd
    /*
    * Default constructor.
    */
-   Command::Command() 
+   Colvar::Colvar() 
    {}
 
    /*
    * Default destructor.
    */
-   Command::~Command()
+   Colvar::~Colvar()
    {}
 
    /*
    * Output at end - empty default implementation.
    */
-   void Command::output()
-   {}
+   void Colvar::unset()
+   {  value_.unset(); }
+
+   /*
+   * Return value, compute if necesary.
+   */
+   double Colvar::value()
+   {
+      if (!value_.isSet()) {  
+         compute();
+      }
+      return value_.value();
+   }
 
 }

@@ -48,6 +48,7 @@ namespace McMd
          inputFile.close();
          #endif
 
+         // Tranform atomic positions to generalized [0,1] coordinates
          System::MoleculeIterator molIter;
          Molecule::AtomIterator atomIter;
          Vector cartPosition, genPosition;
@@ -69,7 +70,7 @@ namespace McMd
          Log::file() << "  " << system().boundary();
          Log::file() << std::endl;
 
-         // Convert positions back to Cartesian
+         // Transform positions back to Cartesian
          for (int iSpec=0; iSpec < nSpecies; ++iSpec) {
             begin(iSpec, molIter);
             for ( ; molIter.notEnd(); ++molIter) {
