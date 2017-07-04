@@ -25,9 +25,9 @@ namespace McMd
    * the unset() function to unset the stored value, and the value function
    * to retrieve the current value.
    *
-   * \ingroup McMd_Colvar_Module
+   * \ingroup McMd_ColVar_Module
    */
-   class Colvar : public ParamComposite
+   class ColVar : public ParamComposite
    {
 
    public:
@@ -35,14 +35,14 @@ namespace McMd
       /**
       * Constructor.
       */
-      Colvar();
+      ColVar();
 
       /**
       * Destructor.
       *
       * Empty default implementation.
       */
-      virtual ~Colvar();
+      virtual ~ColVar();
 
       /**
       * Compute and store the value of the collective variable.

@@ -15,25 +15,25 @@ namespace McMd
    /*
    * Default constructor.
    */
-   Colvar::Colvar() 
+   ColVar::ColVar() 
    {}
 
    /*
    * Default destructor.
    */
-   Colvar::~Colvar()
+   ColVar::~ColVar()
    {}
 
    /*
    * Output at end - empty default implementation.
    */
-   void Colvar::unset()
+   void ColVar::unset()
    {  value_.unset(); }
 
    /*
    * Return value, compute if necesary.
    */
-   double Colvar::value()
+   double ColVar::value()
    {
       if (!value_.isSet()) {  
          compute();
