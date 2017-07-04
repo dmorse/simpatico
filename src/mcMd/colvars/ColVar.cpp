@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Colvar.h"
+#include "ColVar.h"
 
 namespace McMd
 {

@@ -1,5 +1,5 @@
 mcMd_colvars_= \
-    mcMd/colvars/Colvar.cpp 
+    mcMd/colvars/ColVar.cpp 
 
 mcMd_colvars_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_colvars_))
