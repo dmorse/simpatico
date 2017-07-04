@@ -1,0 +1,35 @@
+Classes
+--------
+
+Collective Variable and Bias Potentials:
+
+class ColVar              collective variable for hybrid (no derivatives)
+class MdColVar            collective variable for md (with derivatives)
+
+class CvPotential         colvar bias potential, with 1D derivatives
+class CvGridPotential     potential defined on a grid
+class CvHarmonicPotential harmonic (umbrella sampling) cv potential
+
+Commands:
+
+class Command
+class CvMdSimulateComd   simulate command for cv biased md simulation
+class CvHdSimulateComd   simulate command for cv biased hybrid simulation
+
+-----------------------------------------------------------------------
+class ColVar {
+   void compute() = 0;
+   double value();
+   void unset();
+   bool isSet() const;
+}
+
+class MdColvar : public Colvar {
+   void addForces(double dPotentialdCv);
+}
+
+class CvPotential {
+   double value(double colvar);
+   double derivative(double colvar);
+}
+-----------------------------------------------------------------------
