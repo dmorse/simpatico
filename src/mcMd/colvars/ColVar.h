@@ -16,8 +16,6 @@ namespace McMd
 
    using namespace Util;
 
-   class Simulation;
-
    /**
    * Base class for collective variables.
    *
