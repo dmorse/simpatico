@@ -49,7 +49,7 @@ DDMD_SUFFIX:=
 # Enable modifiers
 ifdef DDMD_MODIFIERS
 DDMD_DEFS+= -DDDMD_MODIFIERS
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
+#DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
 endif
 
 #-----------------------------------------------------------------------

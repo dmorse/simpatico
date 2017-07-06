@@ -1,0 +1,71 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <mcMd/potentials/misc/SpecialFactory.h>
+
+#include <mcMd/simulation/System.h>
+#include <mcMd/mdSimulation/MdSystem.h>
+
+// MdPotential interface
+#include <mcMd/potentials/misc/MdPotential.h>
+
+
+
+namespace McMd
+{
+
+   using namespace Util;
+   using namespace Simp;
+
+   /**
+   * Default constructor.
+   */
+   SpecialFactory::SpecialFactory()
+   {}
+
+   /*
+   * Add a subfactory to the list of children, and set communicator (if any).
+   */
+   void SpecialFactory::addSubfactory(SpecialFactory& subfactory)
+   {  subfactories_.push_back(&subfactory); }
+
+   /*
+   * Return a pointer to a new MdPotential, if possible.
+   */
+   MdPotential* 
+   SpecialFactory::mdFactory(const std::string& name, System& system) const
+   {
+      MdPotential* ptr = 0;
+      MdSystem& mdsystem = dynamic_cast<MdSystem&>(system);
+
+      // Try subfactories first
+      ptr = tryMdSubfactories(name, system);
+      if (ptr) return ptr;
+
+      //if (name == "LJPair") {
+      //   ptr = new PairPotentialImpl<LJPair>(mdsystem);
+      //}
+
+      return ptr;
+   }
+
+   /*
+   * Try all subfactories in sequence searching for a match.
+   */
+   MdPotential* 
+   SpecialFactory::tryMdSubfactories(const std::string& className, System& system) const
+   {
+      MdPotential* typePtr = 0;
+      int n = subfactories_.size();
+      for (int i = 0; i < n && typePtr == 0; ++i) {
+         typePtr = subfactories_[i]->mdFactory(className, system);
+      }
+      return typePtr;
+   }
+
+}
+

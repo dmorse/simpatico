@@ -42,6 +42,9 @@ namespace McMd
    #ifdef SIMP_EXTERNAL
    class ExternalPotential;
    #endif
+   #ifdef SIMP_SPECIAL
+   class MdPotential;
+   #endif
    #ifdef SIMP_TETHER
    class TetherPotential;
    #endif
@@ -303,6 +306,18 @@ namespace McMd
       ExternalPotential& externalPotential() const;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /**
+      * Does a special potential exist?.
+      */
+      bool hasSpecialPotential() const;
+
+      /**
+      * Return special potential by reference.
+      */
+      MdPotential& specialPotential() const;
+      #endif
+
       #ifdef MCMD_LINK
       /**
       * Does a link potential exist?.
@@ -440,6 +455,11 @@ namespace McMd
       ExternalPotential* externalPotentialPtr_;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /// Pointer to a Special MdPotential.
+      MdPotential* specialPotentialPtr_;
+      #endif
+
       #ifdef MCMD_LINK
       /// Pointer to the MdLinkPotential.
       BondPotential* linkPotentialPtr_;
@@ -572,6 +592,23 @@ namespace McMd
    {
       assert(externalPotentialPtr_);
       return *externalPotentialPtr_;
+   }
+   #endif
+
+   #ifdef SIMP_SPECIAL
+   /*
+   * Does an special potential exist?
+   */
+   inline bool MdSystem::hasSpecialPotential() const
+   {  return bool(specialPotentialPtr_); }
+
+   /*
+   * Return special potential by reference.
+   */
+   inline MdPotential& MdSystem::specialPotential() const
+   {
+      assert(specialPotentialPtr_);
+      return *specialPotentialPtr_;
    }
    #endif
 

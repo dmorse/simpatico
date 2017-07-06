@@ -363,6 +363,7 @@ namespace McMd
       int hasTether() const;
       #endif
 
+      #ifdef SIMP_SPECIAL
       /**
       * Does a special potential exist?
       *
@@ -371,6 +372,7 @@ namespace McMd
       * variable. 
       */
       int hasSpecial() const;
+      #endif
 
       //@}
 
@@ -636,8 +638,10 @@ namespace McMd
       int hasTether_;
       #endif
 
+      #ifdef SIMP_SPECIAL
       /// Does a specialized potential exist? (0 false or 1 true)
       int hasSpecial_;
+      #endif 
 
       #ifdef UTIL_MPI
       /**
@@ -735,8 +739,10 @@ namespace McMd
    {  return hasTether_; }
    #endif
 
+   #ifdef SIMP_SPECIAL
    inline int Simulation::hasSpecial() const
    {  return hasSpecial_; }
+   #endif
 
    inline int Simulation::nSystem() const
    {  return nSystem_; }
