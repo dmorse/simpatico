@@ -143,6 +143,7 @@ namespace McMd
       #ifdef SIMP_TETHER
       tetherStyle_(),
       #endif
+      specialStyle_(),
       id_(0),
       isCopy_(false),
       createdFileMaster_(false)
@@ -236,6 +237,7 @@ namespace McMd
       #ifdef SIMP_TETHER
       tetherStyle_(other.tetherStyle_),
       #endif
+      specialStyle_(other.specialStyle_),
       id_(other.id_),
       isCopy_(true),
       createdFileMaster_(false)
@@ -487,6 +489,9 @@ namespace McMd
          read<std::string>(in, "tetherStyle", tetherStyle_);
       }
       #endif
+      if (simulation().hasSpecial()) {
+         read<std::string>(in, "specialStyle", specialStyle_);
+      }
    }
 
    /*
@@ -532,6 +537,9 @@ namespace McMd
          loadParameter<std::string>(ar, "tetherStyle", tetherStyle_);
       }
       #endif
+      if (simulation().hasSpecial()) {
+         loadParameter<std::string>(ar, "specialStyle", specialStyle_);
+      }
    }
 
    /*
@@ -577,6 +585,9 @@ namespace McMd
          ar << tetherStyle_;
       }
       #endif
+      if (simulation().hasSpecial()) {
+         ar << specialStyle_;
+      }
    }
 
    /*
@@ -1285,6 +1296,12 @@ namespace McMd
    std::string System::tetherStyle() const
    {  return tetherStyle_;  }
    #endif
+
+   /*
+   * Get the special style string.
+   */
+   std::string System::specialStyle() const
+   {  return specialStyle_;  }
 
    /*
    * Check validity of all data structures.

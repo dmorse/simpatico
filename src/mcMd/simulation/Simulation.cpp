@@ -71,6 +71,7 @@ namespace McMd
       #ifdef SIMP_TETHER
       , hasTether_(-1)
       #endif
+      , hasSpecial_(-1)
       , communicatorPtr_(&communicator)
    {
       setClassName("Simulation");
@@ -133,6 +134,7 @@ namespace McMd
       #ifdef SIMP_TETHER
       , hasTether_(-1)
       #endif
+      , hasSpecial_(-1)
       #ifdef UTIL_MPI
       , communicatorPtr_(0)
       #endif
@@ -240,11 +242,17 @@ namespace McMd
       }
       #endif
       #ifdef SIMP_TETHER
-      read<int>(in, "hasTether", hasTether_);
+      readOptional<int>(in, "hasTether", hasTether_);
       if (hasTether_ < 0) {
          UTIL_THROW("hasTether must be >= 0");
       }
       #endif
+
+      hasSpecial_ = 0; // Default value 
+      readOptional<int>(in, "hasSpecial", hasSpecial_); 
+      if (hasSpecial_ < 0) {
+         UTIL_THROW("hasSpecial must be >= 0");
+      }
 
       // Allocate and initialize array of AtomType objects
       atomTypes_.allocate(nAtomType_);
@@ -309,6 +317,8 @@ namespace McMd
       hasTether_ = false;
       loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
+      hasSpecial_ = 0;
+      loadParameter<int>(ar, "hasSpecial", hasSpecial_, false);
 
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
@@ -359,6 +369,7 @@ namespace McMd
       ar << hasTether_;
       Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
+      Parameter::saveOptional(ar, hasSpecial_, hasSpecial_);
 
       ar << atomTypes_;
       #ifndef SIMP_NOPAIR

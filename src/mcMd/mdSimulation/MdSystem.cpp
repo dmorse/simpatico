@@ -353,6 +353,17 @@ namespace McMd
          }
          #endif
 
+         #if 0
+         if (simulation().hasTether() > 0) {
+            specialPotentialPtr_ =
+                       specialFactory().factory(specialStyle(), *this);
+            if (specialPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create specialPotential");
+            }
+            readParamComposite(in, *specialPotentialPtr_);
+         }
+         #endif
+
          // Read EnergyEnsemble and BoundaryEnsemble
          readEnsembles(in);
       }

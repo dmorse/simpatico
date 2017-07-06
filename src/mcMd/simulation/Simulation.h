@@ -363,6 +363,15 @@ namespace McMd
       int hasTether() const;
       #endif
 
+      /**
+      * Does a special potential exist?
+      *
+      * A special potential is a specialized potential defined
+      * by a user, e.g., for biased MD sampling of a collective 
+      * variable. 
+      */
+      int hasSpecial() const;
+
       //@}
 
    protected:
@@ -627,6 +636,9 @@ namespace McMd
       int hasTether_;
       #endif
 
+      /// Does a specialized potential exist? (0 false or 1 true)
+      int hasSpecial_;
+
       #ifdef UTIL_MPI
       /**
       * Stream for log file output (serial jobs use std::cout).
@@ -722,6 +734,9 @@ namespace McMd
    inline int Simulation::hasTether() const
    {  return hasTether_; }
    #endif
+
+   inline int Simulation::hasSpecial() const
+   {  return hasSpecial_; }
 
    inline int Simulation::nSystem() const
    {  return nSystem_; }

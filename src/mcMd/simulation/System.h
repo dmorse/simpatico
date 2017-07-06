@@ -503,6 +503,11 @@ namespace McMd
       TetherMaster& tetherMaster() const;
       #endif
 
+      /**
+      * Return special potential style string.
+      */
+      std::string specialStyle() const;
+
       //@}
       #ifdef MCMD_PERTURB
       /// \name Free Energy Perturbation Theory
@@ -934,6 +939,9 @@ namespace McMd
       /// Name of tether potential style.
       std::string tetherStyle_;
       #endif
+
+      /// Name of special potential style.
+      std::string specialStyle_;
 
       /// Integer index for this System.
       int id_;
