@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/misc/MdPotential.h>
+#include <mcMd/potentials/misc/McPotential.h>
 
 namespace McMd
 {
@@ -13,16 +13,16 @@ namespace McMd
    /**
    * Constructor.
    */
-   MdPotential::MdPotential(bool createsStress)
+   McPotential::McPotential(bool createsStress)
     : ParamComposite(),
       EnergyCalculator(),
       StressCalculator(createsStress)
-   {  setClassName("MdPotential"); }
+   {  setClassName("McPotential"); }
 
    /**
    * Destructor (does nothing)
    */
-   MdPotential::~MdPotential()
+   McPotential::~McPotential()
    {}
 
 } 

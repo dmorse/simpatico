@@ -14,6 +14,19 @@ namespace McMd
    using namespace Util;   
 
    /*
+   * Constructor (protected).
+   */
+   StressCalculator::StressCalculator(bool createsStress)
+    : createsStress_(createsStress)
+   {  stress_.unset(); }
+
+   /*
+   * Return true iff subclass is a potential energy that creates stress.
+   */
+   bool StressCalculator::createsStress() const
+   {  return createsStress_; }
+
+   /*
    * Mark the stress as unknown.
    */
    void StressCalculator::unsetStress()
