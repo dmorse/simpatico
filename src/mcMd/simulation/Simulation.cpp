@@ -1230,7 +1230,7 @@ namespace McMd
       #else
       out << "-g MPI         OFF" << std::endl;
       #endif
-      #ifndef SIMP_COULOMB
+      #ifdef SIMP_COULOMB
       out << "-c Coulomb     ON " << std::endl;
       #else
       out << "-c Coulomb     OFF" << std::endl;
