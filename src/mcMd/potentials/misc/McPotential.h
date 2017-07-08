@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_POTENTIAL_H
-#define MCMD_MD_POTENTIAL_H
+#ifndef MCMC_MC_POTENTIAL_H
+#define MCMC_MC_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,17 +12,28 @@
 #include <mcMd/potentials/misc/EnergyCalculator.h>   // base class
 #include <mcMd/potentials/misc/StressCalculator.h>   // base class
 
+#include <string>
+
+namespace Util
+{
+   class Vector;
+   class Tensor;
+   class Random;
+}
+
 namespace McMd
 {
 
    using namespace Util;
 
+   class Atom;
+
    /**
-   * Potential for an MD simulation.
+   * Potential for an MC simulation.
    *
    * \ingroup McMd_Potential_Module
    */
-   class MdPotential : public virtual ParamComposite, 
+   class McPotential : public virtual ParamComposite, 
                        public virtual EnergyCalculator, 
                        public virtual StressCalculator
    {
@@ -32,12 +43,12 @@ namespace McMd
       /**
       * Destructor (does nothing)
       */
-      virtual ~MdPotential();
+      virtual ~McPotential();
 
       /**
-      * Add forces from this potential to all atomic forces.
+      * Compute and return energy for one atom.
       */
-      virtual void addForces() = 0;
+      virtual double atomEnergy(const Atom& atom) const = 0;
 
    protected:
 
@@ -46,7 +57,7 @@ namespace McMd
       *
       * Derived class constructor must set hasStress true or false.
       */
-      MdPotential(bool createsStress = true);
+      McPotential(bool createsStress = true);
 
    };
 

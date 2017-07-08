@@ -19,22 +19,23 @@ cp config.mk_r config.mk
 cp configIos/ConfigIoFactory.cpp_r configIos/ConfigIoFactory.cpp
 cp trajectory/TrajectoryReaderFactory.cpp_r trajectory/TrajectoryReaderFactory.cpp
 cp species/SpeciesFactory.cpp_r species/SpeciesFactory.cpp
-cp potentials/angle/AngleFactory.cpp_r potentials/angle/AngleFactory.cpp
-cp potentials/bond/BondFactory.cpp_r potentials/bond/BondFactory.cpp
-cp potentials/dihedral/DihedralFactory.cpp_r potentials/dihedral/DihedralFactory.cpp
-cp potentials/external/ExternalFactory.cpp_r potentials/external/ExternalFactory.cpp
-cp potentials/coulomb/CoulombFactory.cpp_r potentials/coulomb/CoulombFactory.cpp
-cp potentials/link/LinkFactory.cpp_r potentials/link/LinkFactory.cpp
 cp potentials/pair/PairFactory.cpp_r potentials/pair/PairFactory.cpp
+cp potentials/bond/BondFactory.cpp_r potentials/bond/BondFactory.cpp
+cp potentials/angle/AngleFactory.cpp_r potentials/angle/AngleFactory.cpp
+cp potentials/dihedral/DihedralFactory.cpp_r potentials/dihedral/DihedralFactory.cpp
+cp potentials/coulomb/CoulombFactory.cpp_r potentials/coulomb/CoulombFactory.cpp
+cp potentials/external/ExternalFactory.cpp_r potentials/external/ExternalFactory.cpp
+cp potentials/misc/SpecialFactory.cpp_r potentials/misc/SpecialFactory.cpp
+cp potentials/link/LinkFactory.cpp_r potentials/link/LinkFactory.cpp
 cp mcMoves/McMoveFactory.cpp_r mcMoves/McMoveFactory.cpp
 cp mdIntegrators/MdIntegratorFactory.cpp_r mdIntegrators/MdIntegratorFactory.cpp
 cp perturb/mcSystem/McPerturbationFactory.cpp_r perturb/mcSystem/McPerturbationFactory.cpp
 cp analyzers/mcSystem/McAnalyzerFactory.cpp_r analyzers/mcSystem/McAnalyzerFactory.cpp
 cp analyzers/mdSystem/MdAnalyzerFactory.cpp_r analyzers/mdSystem/MdAnalyzerFactory.cpp
 cp analyzers/system/SystemAnalyzerFactory.cpp_r analyzers/system/SystemAnalyzerFactory.cpp
+cp generators/generatorFactory.cpp_r generators/generatorFactory.cpp
 cp commands/McCommandFactory.cpp_r commands/McCommandFactory.cpp
 cp commands/MdCommandFactory.cpp_r commands/MdCommandFactory.cpp
-cp generators/generatorFactory.cpp_r generators/generatorFactory.cpp
 
 # Source file lists in user and modules directories (user-contributed classes)
 cp user/sources.mk_r user/sources.mk

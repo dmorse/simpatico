@@ -32,6 +32,9 @@
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif
+#ifdef SIMP_SPECIAL
+#include <mcMd/potentials/misc/SpecialFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
@@ -101,6 +104,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(0),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialFactoryPtr_(0),
+      #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(0),
       #endif
@@ -137,13 +143,15 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalStyle_(),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialStyle_(),
+      #endif
       #ifdef MCMD_LINK
       linkStyle_(),
       #endif
       #ifdef SIMP_TETHER
       tetherStyle_(),
       #endif
-      specialStyle_(),
       id_(0),
       isCopy_(false),
       createdFileMaster_(false)
@@ -195,6 +203,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialFactoryPtr_(other.specialFactoryPtr_),
+      #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
@@ -231,13 +242,15 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalStyle_(other.externalStyle_),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialStyle_(other.specialStyle_),
+      #endif
       #ifdef MCMD_LINK
       linkStyle_(other.linkStyle_),
       #endif
       #ifdef SIMP_TETHER
       tetherStyle_(other.tetherStyle_),
       #endif
-      specialStyle_(other.specialStyle_),
       id_(other.id_),
       isCopy_(true),
       createdFileMaster_(false)
@@ -290,6 +303,11 @@ namespace McMd
          #ifdef SIMP_EXTERNAL
          if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
+         }
+         #endif
+         #ifdef SIMP_SPECIAL
+         if (specialFactoryPtr_) {
+            delete specialFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
@@ -479,6 +497,11 @@ namespace McMd
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         read<std::string>(in, "specialStyle", specialStyle_);
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          read<std::string>(in, "linkStyle", linkStyle_);
@@ -489,9 +512,6 @@ namespace McMd
          read<std::string>(in, "tetherStyle", tetherStyle_);
       }
       #endif
-      if (simulation().hasSpecial()) {
-         read<std::string>(in, "specialStyle", specialStyle_);
-      }
    }
 
    /*
@@ -527,6 +547,11 @@ namespace McMd
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         loadParameter<std::string>(ar, "specialStyle", specialStyle_);
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          loadParameter<std::string>(ar, "linkStyle", linkStyle_);
@@ -537,9 +562,6 @@ namespace McMd
          loadParameter<std::string>(ar, "tetherStyle", tetherStyle_);
       }
       #endif
-      if (simulation().hasSpecial()) {
-         loadParameter<std::string>(ar, "specialStyle", specialStyle_);
-      }
    }
 
    /*
@@ -575,6 +597,11 @@ namespace McMd
          ar << externalStyle_;
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         ar << specialStyle_;
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          ar << linkStyle_;
@@ -585,9 +612,6 @@ namespace McMd
          ar << tetherStyle_;
       }
       #endif
-      if (simulation().hasSpecial()) {
-         ar << specialStyle_;
-      }
    }
 
    /*
@@ -1257,6 +1281,23 @@ namespace McMd
    {  return externalStyle_;  }
    #endif
 
+   #ifdef SIMP_SPECIAL
+   SpecialFactory& System::specialFactory()
+   {
+      if (specialFactoryPtr_ == 0) {
+         specialFactoryPtr_ = new SpecialFactory;
+      }
+      assert(specialFactoryPtr_);
+      return *specialFactoryPtr_;
+   }
+
+   /*
+   * Get the special style string.
+   */
+   std::string System::specialStyle() const
+   {  return specialStyle_;  }
+   #endif
+
    #ifdef MCMD_LINK
    /*
    * Return the Link factory by reference.
@@ -1296,12 +1337,6 @@ namespace McMd
    std::string System::tetherStyle() const
    {  return tetherStyle_;  }
    #endif
-
-   /*
-   * Get the special style string.
-   */
-   std::string System::specialStyle() const
-   {  return specialStyle_;  }
 
    /*
    * Check validity of all data structures.

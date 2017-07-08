@@ -71,6 +71,9 @@ namespace McMd
    #ifdef SIMP_EXTERNAL
    class ExternalPotential;
    #endif
+   #ifdef SIMP_SPECIAL
+   class SpecialFactory;
+   #endif
    #ifdef MCMD_LINK
    class LinkPotential;
    class LinkMaster;
@@ -469,6 +472,18 @@ namespace McMd
       std::string externalStyle() const;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /**
+      * Get the associated SpecialFactory by reference.
+      */
+      SpecialFactory& specialFactory();
+
+      /**
+      * Return special potential style string.
+      */
+      std::string specialStyle() const;
+      #endif
+
       #ifdef MCMD_LINK
       /**
       * Get the associated Link factory by reference.
@@ -502,11 +517,6 @@ namespace McMd
       */
       TetherMaster& tetherMaster() const;
       #endif
-
-      /**
-      * Return special potential style string.
-      */
-      std::string specialStyle() const;
 
       //@}
       #ifdef MCMD_PERTURB
@@ -862,6 +872,11 @@ namespace McMd
       Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
   
+      #ifdef SIMP_SPECIAL
+      /// Pointer to SpecialFactory
+      SpecialFactory* specialFactoryPtr_;
+      #endif
+  
       #ifdef MCMD_LINK
       /// Pointer to Link Factory
       Factory<BondPotential>* linkFactoryPtr_;
@@ -930,6 +945,11 @@ namespace McMd
       std::string externalStyle_;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /// Name of special potential style.
+      std::string specialStyle_;
+      #endif
+
       #ifdef MCMD_LINK
       /// Name of link potential style.
       std::string linkStyle_;
@@ -939,9 +959,6 @@ namespace McMd
       /// Name of tether potential style.
       std::string tetherStyle_;
       #endif
-
-      /// Name of special potential style.
-      std::string specialStyle_;
 
       /// Integer index for this System.
       int id_;

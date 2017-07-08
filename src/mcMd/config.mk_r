@@ -54,21 +54,21 @@ MCMD_SUFFIX:=
 # Enable free energy perturbation 
 ifdef UTIL_MPI
 ifdef MCMD_PERTURB
-MCMD_DEFS+= -DMCMD_PERTURB
+#MCMD_DEFS+= -DMCMD_PERTURB
 endif
 endif
 
 # Enable Link (mutable bond) potentials
 ifdef MCMD_LINK
 MCMD_DEFS+= -DMCMD_LINK
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
 endif
 
 # Enable recording of shifts of atomic coordinates into
 # primary periodic unit cell in MD simulations.
 ifdef MCMD_SHIFT
 MCMD_DEFS+= -DMCMD_SHIFT
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_s
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_r
 endif
 
 #-----------------------------------------------------------------------
