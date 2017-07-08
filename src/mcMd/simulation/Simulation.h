@@ -374,6 +374,11 @@ namespace McMd
 
       //@}
 
+      /**
+      * Output a list of options enabled and disabled during compilation.
+      */
+      void outputOptions(std::ostream& out) const;
+
    protected:
 
       /**

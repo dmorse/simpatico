@@ -102,7 +102,8 @@ namespace McMd
    */
    void MdSimulation::setOptions(int argc, char **argv)
    {
-      bool  eflag = false;  // echo
+      bool  qflag = false;  // query compile time options
+      bool  eflag = false;  // echo parameter file
       bool  rFlag = false;  // restart file
       bool  pFlag = false;  // param file 
       bool  cFlag = false;  // command file 
@@ -120,8 +121,11 @@ namespace McMd
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
+      while ((c = getopt(argc, argv, "qer:p:c:i:o:f")) != -1) {
          switch (c) {
+         case 'q':
+           qflag = true;
+           break;
          case 'e':
            eflag = true;
            break;
@@ -155,7 +159,13 @@ namespace McMd
            UTIL_THROW("Invalid command line option");
          }
       }
-   
+  
+      #ifndef UTIL_MPI
+      if (qflag) {
+         outputOptions(Log::file());
+      }
+      #endif
+ 
       // Set flag to echo parameters as they are read.
       if (eflag) {
          Util::ParamComponent::setEcho(true);
