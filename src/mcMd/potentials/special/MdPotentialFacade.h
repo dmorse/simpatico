@@ -44,7 +44,7 @@ namespace McMd
       void readParameters(std::istream& in);
 
       /**
-      * Compute total eneryg.
+      * Compute total energy.
       */
       void computeEnergy();
 

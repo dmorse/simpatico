@@ -56,8 +56,10 @@ namespace McMd
    template <class PotentialType, class FactoryType>
    void MdPotentialFacade<PotentialType, FactoryType>::computeEnergy()
    {
-      double energy;
-      energy = potentialPtr_->energy();
+      if (!energy_.isSet()) {
+         potentialPtr_->computeEnergy();
+      }
+      energy_.set(potentialPtr_->energy());
    }
 
    /*

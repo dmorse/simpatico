@@ -94,6 +94,13 @@ namespace McMd
             outputFile_ << Dbl(external);
          }
          #endif
+         #ifdef SIMP_SPECIAL
+         if (system().hasSpecialPotential()) {
+            double special = system().specialPotential().energy();
+            potential += special;
+            outputFile_ << Dbl(special);
+         }
+         #endif
          #ifdef MCMD_LINK
          if (system().hasLinkPotential()) {
             double link = system().linkPotential().energy();
@@ -152,15 +159,19 @@ namespace McMd
          outputFile_ << "[coulomb]    ";
       }
       #endif
- 
-      #ifdef MCMD_LINK
-      if (system().hasLinkPotential()) {
-         outputFile_ << "[link]       ";
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       if (system().hasExternalPotential()) {
          outputFile_ << "[external]   ";
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (system().hasSpecialPotential()) {
+         outputFile_ << "[special]    ";
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (system().hasLinkPotential()) {
+         outputFile_ << "[link]       ";
       }
       #endif
       #ifdef SIMP_TETHER

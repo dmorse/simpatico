@@ -11,6 +11,8 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/potentials/misc/MdPotential.h>
 
+#include <mcMd/potentials/special/MdExternalFacade.h>
+
 
 
 namespace McMd
@@ -44,9 +46,9 @@ namespace McMd
       ptr = tryMdSubfactories(name, system);
       if (ptr) return ptr;
 
-      //if (name == "LJPair") {
-      //   ptr = new PairPotentialImpl<LJPair>(mdsystem);
-      //}
+      if (name == "MdExternalFacade") {
+         ptr = new MdExternalFacade(mdsystem);
+      }
 
       return ptr;
    }
