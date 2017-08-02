@@ -60,9 +60,6 @@ namespace McMd
       */
       virtual double energy(double rSq, int type) const = 0;
    
-      // Prevent hiding of inherited function energy();
-      using EnergyCalculator::energy;
-    
       /**
       * Returns force/distance for one bond, for use in MD.
       *
@@ -114,8 +111,13 @@ namespace McMd
       virtual std::string interactionClassName() const = 0;
 
       //@}
-      /// \name System energy, force, and stress.
+      /// \name System forces and energy
       //@{
+
+      /**
+      * Add bond forces to all atomic forces.
+      */
+      virtual void addForces() = 0;
 
       /**
       * Calculate the covalent bond energy for one Atom.
@@ -125,11 +127,9 @@ namespace McMd
       */
       virtual double atomEnergy(const Atom& atom) const = 0;
 
-      /**
-      * Add bond forces to all atomic forces.
-      */
-      virtual void addForces() = 0;
-
+      // Prevent hiding of inherited function energy();
+      using EnergyCalculator::energy;
+    
       //@}
 
    };

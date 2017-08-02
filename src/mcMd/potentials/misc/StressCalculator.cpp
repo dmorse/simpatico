@@ -37,6 +37,8 @@ namespace McMd
    */
    void StressCalculator::computeStress(Tensor& stress)
    {
+      UTIL_CHECK(createsStress_);
+
       // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
@@ -51,6 +53,8 @@ namespace McMd
    */
    void StressCalculator::computeStress(Vector& pressures)
    {
+      UTIL_CHECK(createsStress_);
+
       // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();
@@ -67,6 +71,8 @@ namespace McMd
    */
    void StressCalculator::computeStress(double& pressure)
    {
+      UTIL_CHECK(createsStress_);
+
       // If necessary, compute stress tensor
       if (!stress_.isSet()) {
          computeStress();

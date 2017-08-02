@@ -40,7 +40,7 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
 #ifdef SIMP_SPECIAL
-#include <mcMd/potentials/misc/SpecialFactory.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
 #include <mcMd/potentials/misc/MdPotential.h>
 #endif
 #ifdef MCMD_LINK
@@ -895,6 +895,7 @@ namespace McMd
    {
       double energy = 0.0;
       #ifndef SIMP_NOPAIR
+      // In charged system, this only returns non-Coulombic pair energy.
       energy += pairPotential().energy();
       #endif
       #ifdef SIMP_BOND
@@ -914,7 +915,7 @@ namespace McMd
       #endif
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
-         energy += coulombPotential().kSpaceEnergy();
+         energy += coulombPotential().energy();
       }
       #endif
       #ifdef SIMP_EXTERNAL
@@ -966,6 +967,16 @@ namespace McMd
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
          coulombPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (hasExternalPotential()) {
+         externalPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         specialPotential().unsetEnergy();
       }
       #endif
    }

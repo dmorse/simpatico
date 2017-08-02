@@ -43,6 +43,7 @@ namespace McMd
       virtual ~PairPotential()
       {}
 
+      // Prevent hiding of inherited function
       using EnergyCalculator::energy;
 
       /// \name Pair Interaction Interface

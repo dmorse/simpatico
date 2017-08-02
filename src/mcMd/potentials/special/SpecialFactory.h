@@ -55,7 +55,9 @@ namespace McMd
       * \param subclass name of desired subclass of MdPotential
       * \param system   associated System
       */
-      virtual MdPotential* mdFactory(const std::string& subclass, System& system) const;
+      virtual 
+      MdPotential* mdFactory(const std::string& subclass, System& system) 
+      const;
 
    protected:
 
@@ -66,7 +68,8 @@ namespace McMd
       * \param  system    associated System
       * \return base class pointer to new MdPotential, or a null pointer.
       */
-      MdPotential* tryMdSubfactories(const std::string& className, System& system) const;
+      MdPotential* tryMdSubfactories(const std::string& className, 
+                                     System& system) const;
 
    private:
 

@@ -37,8 +37,14 @@ namespace McMd
 
       /**
       * Compute and store the stress tensor.
+      *
+      * Default implementation throws an Exception, to allow 
+      * testing and graceful failure potentials that do not 
+      * create stress.
       */
-      virtual void computeStress() = 0;
+      virtual void computeStress()
+      {  UTIL_THROW("Unimplemented computeStress function"); }
+      
 
       /**
       * Get pair stress tensor.

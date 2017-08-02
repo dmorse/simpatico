@@ -4,10 +4,6 @@ mcMd_potentials_misc_=\
     mcMd/potentials/misc/MdPotential.cpp \
     mcMd/potentials/misc/McPotential.cpp 
 
-ifdef SIMP_SPECIAL
-mcMd_potentials_misc_ += mcMd/potentials/misc/SpecialFactory.cpp
-endif
-
 mcMd_potentials_misc_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_potentials_misc_))
 mcMd_potentials_misc_OBJS=\

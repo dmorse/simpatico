@@ -5,12 +5,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/misc/SpecialFactory.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
 
 #include <mcMd/simulation/System.h>
 #include <mcMd/mdSimulation/MdSystem.h>
-
-// MdPotential interface
 #include <mcMd/potentials/misc/MdPotential.h>
 
 

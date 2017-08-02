@@ -26,12 +26,11 @@
 #ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef MCMD_LINK
-#include <mcMd/links/LinkMaster.h>
-#endif
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
-#include <mcMd/potentials/external/ExternalPotential.h>
+#endif
+#ifdef MCMD_LINK
+#include <mcMd/links/LinkMaster.h>
 #endif
 #ifdef SIMP_TETHER
 #include <mcMd/tethers/TetherMaster.h>
@@ -79,11 +78,11 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       , dihedralPotentialPtr_(0)
       #endif
-      #ifdef MCMD_LINK
-      , linkPotentialPtr_(0)
-      #endif
       #ifdef SIMP_EXTERNAL
       , externalPotentialPtr_(0)
+      #endif
+      #ifdef MCMD_LINK
+      , linkPotentialPtr_(0)
       #endif
       #ifdef SIMP_TETHER
       , tetherPotentialPtr_(0)
@@ -114,11 +113,11 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       if (dihedralPotentialPtr_) delete dihedralPotentialPtr_;
       #endif
-      #ifdef MCMD_LINK
-      if (linkPotentialPtr_) delete linkPotentialPtr_;
-      #endif
       #ifdef SIMP_EXTERNAL
       if (externalPotentialPtr_) delete externalPotentialPtr_;
+      #endif
+      #ifdef MCMD_LINK
+      if (linkPotentialPtr_) delete linkPotentialPtr_;
       #endif
       #ifdef SIMP_TETHER
       if (tetherPotentialPtr_) delete tetherPotentialPtr_;
@@ -179,18 +178,6 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_LINK
-      assert(linkPotentialPtr_ == 0);
-      if (simulation().nLinkType() > 0) {
-         readLinkMaster(in);
-         linkPotentialPtr_ = linkFactory().factory(linkStyle());
-         if (linkPotentialPtr_ == 0) {
-            UTIL_THROW("Failed attempt to create BondPotential for links");
-         }
-         readParamComposite(in, *linkPotentialPtr_);
-      }
-      #endif
-
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal()) {
@@ -200,6 +187,18 @@ namespace McMd
             UTIL_THROW("Failed attempt to create ExternalPotential");
          }
          readParamComposite(in, *externalPotentialPtr_);
+      }
+      #endif
+
+      #ifdef MCMD_LINK
+      assert(linkPotentialPtr_ == 0);
+      if (simulation().nLinkType() > 0) {
+         readLinkMaster(in);
+         linkPotentialPtr_ = linkFactory().factory(linkStyle());
+         if (linkPotentialPtr_ == 0) {
+            UTIL_THROW("Failed attempt to create BondPotential for links");
+         }
+         readParamComposite(in, *linkPotentialPtr_);
       }
       #endif
 
@@ -275,18 +274,6 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_LINK
-      assert(linkPotentialPtr_ == 0);
-      if (simulation().nLinkType() > 0) {
-         loadLinkMaster(ar);
-         linkPotentialPtr_ = linkFactory().factory(linkStyle());
-         if (linkPotentialPtr_ == 0) {
-            UTIL_THROW("Failed attempt to create BondPotential for links");
-         }
-         loadParamComposite(ar, *linkPotentialPtr_);
-      }
-      #endif
-
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal()) {
@@ -296,6 +283,18 @@ namespace McMd
             UTIL_THROW("Failed attempt to create ExternalPotential");
          }
          loadParamComposite(ar, *externalPotentialPtr_);
+      }
+      #endif
+
+      #ifdef MCMD_LINK
+      assert(linkPotentialPtr_ == 0);
+      if (simulation().nLinkType() > 0) {
+         loadLinkMaster(ar);
+         linkPotentialPtr_ = linkFactory().factory(linkStyle());
+         if (linkPotentialPtr_ == 0) {
+            UTIL_THROW("Failed attempt to create BondPotential for links");
+         }
+         loadParamComposite(ar, *linkPotentialPtr_);
       }
       #endif
 
@@ -346,18 +345,18 @@ namespace McMd
          dihedralPotential().save(ar); 
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         saveLinkMaster(ar);
-         assert(linkPotentialPtr_);
-         linkPotentialPtr_->save(ar); 
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal() > 0) {
          assert(externalPotentialPtr_);
          externalPotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         saveLinkMaster(ar);
+         assert(linkPotentialPtr_);
+         linkPotentialPtr_->save(ar); 
       }
       #endif
       #ifdef SIMP_TETHER
@@ -471,14 +470,14 @@ namespace McMd
          energy += dihedralPotential().atomEnergy(atom);
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         energy += linkPotential().atomEnergy(atom);
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().atomEnergy(atom);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         energy += linkPotential().atomEnergy(atom);
       }
       #endif
       #ifdef SIMP_TETHER
@@ -515,14 +514,14 @@ namespace McMd
          energy += dihedralPotential().energy();
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         energy += linkPotential().energy();
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().energy();
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         energy += linkPotential().energy();
       }
       #endif
       #ifdef SIMP_TETHER
@@ -554,6 +553,11 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       if (hasDihedralPotential()) {
           dihedralPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (hasExternalPotential()) {
+          externalPotential().unsetEnergy();
       }
       #endif
    }
