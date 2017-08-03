@@ -17,6 +17,6 @@ namespace McMd
    */
    MdExternalFacade::MdExternalFacade(System& system)
     : MdPotentialFacade<ExternalPotential, ExternalFactory>(system)
-   {  setClassName("MdExternalFacade"); }
+   {}
 
 } 

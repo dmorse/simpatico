@@ -45,7 +45,7 @@ MdSimulation{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
     }
-    MdExternalFacade{
+    SpecialPotential{
       style                     LamellarOrderingExternal
       perpDirection             2
       prefactor                 1.000

@@ -22,7 +22,7 @@ namespace McMd
       systemPtr_(&system),
       potentialPtr_(0),
       style_()
-   {  setClassName("MdPotentialFacade"); }
+   {  setClassName("SpecialPotential"); }
 
    /*
    * Destructor.
@@ -44,9 +44,14 @@ namespace McMd
    {
       read(in, "style", style_);
 
+      // Create PotentialType child 
       FactoryType factory(*systemPtr_);
       potentialPtr_ = factory.factory(style_);
       UTIL_CHECK (potentialPtr_);
+
+      // Read parameters for child
+      bool next = false;
+      addParamComposite(*potentialPtr_, next);
       potentialPtr_->readParameters(in);
    }
 
