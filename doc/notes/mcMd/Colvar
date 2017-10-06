@@ -1,26 +1,98 @@
 Classes
 --------
 
-Collective Variable and Bias Potentials:
+Proposed Classes:
+-----------------
 
+Collective Variables:
 class ColVar              collective variable for hybrid (no derivatives)
-class MdColVar            collective variable for md (with derivatives)
+class MdColVar            collective variable for md (with addForces)
 
-class CvPotential         colvar bias potential, with 1D derivatives
+Bias Functions:
+class CvFunction          colvar bias potential, with 1D derivatives
+class CvIdentityFunction  bias potential = collective variable
+class CvLinearFunction  bias potential = collective variable
+class CvHarmonicFunction  harmonic (umbrella sampling) cv potential
 class CvGridPotential     potential defined on a grid
-class CvHarmonicPotential harmonic (umbrella sampling) cv potential
 
-Commands:
+Question: Rename CvFunction as BiasFunction ?
 
-class Command
-class CvMdSimulateComd   simulate command for cv biased md simulation
-class CvHdSimulateComd   simulate command for cv biased hybrid simulation
+Open Design Questions:
+----------------------
+
+>> Biased MD simulations:
+   Md simulations biased by a function of a collective variable.
+   These include adapative algorithms such as metadynamics.
+
+   Option 1: 
+   Implement the bias potential as a "special" potential.  
+   Questions: 
+        1) How do implement the adaptation procedure?
+            Option: As part of addForces() function ?
+            Option: Add new function to SpecialPotential for this purpose ?
+        2) How do we implement accumulation of statistics ?
+            Option: Part of addForces() ?
+            Option: Add new function to SpecialPotential for this purpose ?
+   Proposal:
+        Add a SpecialPotential base class that has a separate analyize()
+        function with an internally defined interval. Default implementation 
+        does nothing. Modify MD loop to call this every time step, but set
+        actions and schedule internally.
+   
+   Option 2:
+   Implement the bias potential via a separate command. 
+   Questions:  
+        1) What object owns the required potential energy class?
+        2) How do we make sure the forces are applied ?
+        3) How do we implement adaptation of the bias ?
+
+   Current Preference: Option 1 with an enlarged interface for SpecialPotential.
+
+>> Hybrid MD/MC simulations
+
+   Simulations in which short MD simulations are used as proposed moves. 
+
+   Comment: The main loop for this is different than for a conventional MD
+   simulation, so its hard to implement in an MD framework. The inner loop
+   is, however, the same as an MD simulation, so it makes sense to implement
+   this within the framework of an MdSimulation.
+
+   Option: Implement as a new command in an MdSimulation, which implements 
+   Metropolis acceptance / rejection.
+
+   Questions:
+
+       1) What object owns the required ColVar and Bias classes ?
+          Proposal: The HybridColVarSimulationCommand object ?
+       2) Where is adaptation implemented ? (same, in the command ?)
+          Proposal: Also in the command class.
+
+   Comment: It should be possible to define the Hybrid MD algorithm as a 
+   base class or template. The basic command for this just requires some
+   sort of bias or potential energy class that can evaluate a function of 
+   a collective variable, without requiring either an addForces or an 
+   atomEnergy function. What class should we use for this bias? If we
+   use a template, what interface should we require?
+
+   Proposal: Use a template, which takes a potential energy as a template
+   parameter, and calls the computeEnergy() function.  This would allow 
+   the use of any of the existing potential energies, including special
+   potentials, as bias potentials. 
+
+   Question: Should the algorithm for hybrid MD simulations include
+   function calls intended to allow for adaptation?
+
+   Proposal: At least initially, no. Perhaps make a separate command
+   with adaptation, to allow use of a special potential in which we
+   call the SpecialPotential::analyze() function.
 
 -----------------------------------------------------------------------
+Proposed Class Interfaces:
+
 class ColVar {
    void compute() = 0;
-   double value();
    void unset();
+   double value();
    bool isSet() const;
 }
 

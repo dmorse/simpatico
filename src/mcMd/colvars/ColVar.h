@@ -17,11 +17,12 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Base class for collective variables.
+   * Abstract base class for collective variables.
    *
-   * Usage: Use the compute() function to compute and store a value, the
-   * the unset() function to unset the stored value, and the value function
-   * to retrieve the current value.
+   * Usage: Call the compute() function to compute and store a value, 
+   * call the unset() function to unset the stored value, and the value() 
+   * function to retrieve the current value. Derived classes must
+   * implement the pure virtual compute() function.
    *
    * \ingroup McMd_ColVar_Module
    */
@@ -59,6 +60,9 @@ namespace McMd
 
    protected:
 
+      /**
+      * Setable value of collective variable.
+      */ 
       Setable<double> value_;
 
    };

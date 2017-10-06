@@ -25,7 +25,7 @@ cp potentials/angle/AngleFactory.cpp_r potentials/angle/AngleFactory.cpp
 cp potentials/dihedral/DihedralFactory.cpp_r potentials/dihedral/DihedralFactory.cpp
 cp potentials/coulomb/CoulombFactory.cpp_r potentials/coulomb/CoulombFactory.cpp
 cp potentials/external/ExternalFactory.cpp_r potentials/external/ExternalFactory.cpp
-cp potentials/misc/SpecialFactory.cpp_r potentials/misc/SpecialFactory.cpp
+cp potentials/special/SpecialFactory.cpp_r potentials/special/SpecialFactory.cpp
 cp potentials/link/LinkFactory.cpp_r potentials/link/LinkFactory.cpp
 cp mcMoves/McMoveFactory.cpp_r mcMoves/McMoveFactory.cpp
 cp mdIntegrators/MdIntegratorFactory.cpp_r mdIntegrators/MdIntegratorFactory.cpp

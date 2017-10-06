@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "CvPotential.h"
+#include "CvFunction.h"
 
 namespace McMd
 {
@@ -15,13 +15,13 @@ namespace McMd
    /*
    * Default constructor.
    */
-   CvPotential::CvPotential() 
+   CvFunction::CvFunction() 
    {}
 
    /*
    * Default destructor.
    */
-   CvPotential::~CvPotential()
+   CvFunction::~CvFunction()
    {}
 
 }

@@ -18,7 +18,7 @@ namespace McMd
    /**
    * Collective variables for MD simulation, with atom forces.
    *
-   * Added addForces() function computes forces on atoms.
+   * The addForces() function computes forces on all atoms.
    *
    * \ingroup McMd_ColVar_Module
    */
