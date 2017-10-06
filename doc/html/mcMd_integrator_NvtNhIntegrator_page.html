@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -40,7 +39,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_features_page.html">2.8 Parameter File Options</a></li><li class="navelem"><a class="el" href="user_features_mcmd_page.html">2.8.4 Options for mcSim and mdSim</a></li><li class="navelem"><a class="el" href="mcMd_mdIntegrators_page.html">Molecular Dynamics Integrators</a></li>  </ul>
+<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_features_page.html">2.9 Run-Time Options</a></li><li class="navelem"><a class="el" href="user_features_mcmd_page.html">2.9.3 Options for mcSim and mdSim</a></li><li class="navelem"><a class="el" href="mcMd_mdIntegrators_page.html">Molecular Dynamics Integrators</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -53,15 +52,15 @@ Synopsis</h1>
 <p><a class="el" href="classMcMd_1_1NvtNhIntegrator.html" title="A Nose-Hoover NVT molecular dynamics integrator. ">NvtNhIntegrator</a> implements a reversible Nose'-Hoover NVT (isothermal) integrator.</p>
 <p>This integrator requires that the <a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">Util::EnergyEnsemble</a> of the associated system must be set to "isothermal". The target temperature is the temperature returned by the function <a class="el" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature. ">Util::EnergyEnsemble::temperature()</a>.</p>
 <p>Equations of motion: </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} &amp; = &amp; \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} &amp; = &amp; \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}" src="form_117.png"/>
+<img class="formulaDsp" alt="\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} &amp; = &amp; \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} &amp; = &amp; \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}" src="form_121.png"/>
 </p>
 <p> in which:</p>
 <ul>
-<li><img class="formulaInl" alt="${\bf v}_{i}$" src="form_118.png"/> is the velocity of particle i</li>
-<li><img class="formulaInl" alt="${\bf v}_{i}$" src="form_118.png"/> is the force on particle i</li>
-<li><img class="formulaInl" alt="$T_{K} = 2K/3N$" src="form_119.png"/> is the instantaneous kinetic temperature, where <img class="formulaInl" alt="$K$" src="form_120.png"/> is the instantaneous kinetic energy and <img class="formulaInl" alt="$N$" src="form_121.png"/> is the total number of atoms.</li>
-<li><img class="formulaInl" alt="$T_{0}$" src="form_122.png"/> is the target temperature</li>
-<li><img class="formulaInl" alt="$\tau_{T}$" src="form_123.png"/> is a user-defined relaxation time parameter</li>
+<li><img class="formulaInl" alt="${\bf v}_{i}$" src="form_122.png"/> is the velocity of particle i</li>
+<li><img class="formulaInl" alt="${\bf v}_{i}$" src="form_122.png"/> is the force on particle i</li>
+<li><img class="formulaInl" alt="$T_{K} = 2K/3N$" src="form_123.png"/> is the instantaneous kinetic temperature, where <img class="formulaInl" alt="$K$" src="form_124.png"/> is the instantaneous kinetic energy and <img class="formulaInl" alt="$N$" src="form_125.png"/> is the total number of atoms.</li>
+<li><img class="formulaInl" alt="$T_{0}$" src="form_126.png"/> is the target temperature</li>
+<li><img class="formulaInl" alt="$\tau_{T}$" src="form_127.png"/> is a user-defined relaxation time parameter</li>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classMcMd_1_1NvtNhIntegrator.html" title="A Nose-Hoover NVT molecular dynamics integrator. ">McMd::NvtNhIntegrator</a> </dd>
 <dd>
@@ -78,7 +77,7 @@ Parameters</h1>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

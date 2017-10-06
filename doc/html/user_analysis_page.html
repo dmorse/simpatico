@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.7 Data Analysis</title>
+<title>Simpatico: 2.8 Data Analysis</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -45,10 +44,10 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.7 Data Analysis </div>  </div>
+<div class="title">2.8 Data Analysis </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_examples_page.html">2.6 Examples</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_features_page.html">2.8 Parameter File Options</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_examples_page.html">2.7 Examples</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_features_page.html">2.9 Run-Time Options</a> (Next) <br />
 </p>
 <p>Simpatico provides extensible facilities for evaluating and analyzing a variety of physical properties. Several different modes of operation are possible:</p>
 <ul>
@@ -83,12 +82,12 @@ Postprocessing ddSim simulations</h1>
 <p>The mcSim and mdSim programs can be used to postprocess configuration files output from ddSim simulations of molecular and atomic liquids if and only if the following conventions are respected in the ddSim configuration and output files. (1) Configuration must be output using the <a class="el" href="classDdMd_1_1DdMdOrderedConfigIo.html" title="Native / default format for configuration files. ">DdMd::DdMdOrderedConfigIo</a>, which outputs atoms in order by their global atom id. Atom ids must be consecutive, starting from 0. (2) The ddSim configuration may only contain molecules of the types specified in the mcSim or mdSim parameter file format. (3) the number of molecules of each type must exactly equal the capacity specified for that species in the mcSim or mdSim parameter file. (4) Atoms within each molecule must be listed consecutively, in the order assumed by the mcSim or mdSim species definition, with all molecules of the first species listed first, followed by all molecules of the second species, etc. In order for this to work, these constraints on the connectivity and numbering of atoms that must be satisfied by the input configuration file used to initialize the ddSim simulation. When mcSim or mdSim are used to analyze a ddSim simulation, the information about groups in a ddSim configuration file is ignored, and is simply assumed to yield the same topology as that specified by the species definitions in the parameter file.</p>
 <p>The mdPp program is a new serial program that is designed specifically for postprocessing ddSim simulation trajectories. Unlike mcSim and mdSim, it can read the sections of a ddim configuration file that specify molecular connectivity, and need not make such strong assumptions about molecular structure or the format of the configuration file. Classes that implement analysis algorithms for mdPp must be subclasses of <a class="el" href="classTools_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Tools::Analyzer</a> base class. At the time of writing, however, we have only written a few analyzer classes for this program, though users can easily write there own. This program will become more useful in coming months as more analyzers are ported to this framework.</p>
 <p><br />
- <a class="el" href="user_examples_page.html">2.6 Examples</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_features_page.html">2.8 Parameter File Options</a> (Next) </p>
+ <a class="el" href="user_examples_page.html">2.7 Examples</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_features_page.html">2.9 Run-Time Options</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

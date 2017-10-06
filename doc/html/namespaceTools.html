@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -172,10 +171,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a06e371a5d7dbec0ee78fb5b792fb7994"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceTools.html#a06e371a5d7dbec0ee78fb5b792fb7994">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classTools_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
 <tr class="memdesc:a06e371a5d7dbec0ee78fb5b792fb7994"><td class="mdescLeft">&#160;</td><td class="mdescRight">ostream inserter (&lt;&lt;) for a <a class="el" href="classTools_1_1Group.html" title="A group of covalently interacting atoms. ">Group</a>.  <a href="#a06e371a5d7dbec0ee78fb5b792fb7994">More...</a><br /></td></tr>
 <tr class="separator:a06e371a5d7dbec0ee78fb5b792fb7994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32bd329ff0cce0bb7dd144974594561f"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceTools.html#a32bd329ff0cce0bb7dd144974594561f">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classTools_1_1Species.html">Species</a> &amp;species)</td></tr>
+<tr class="memitem:a32bd329ff0cce0bb7dd144974594561f"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceTools.html#a32bd329ff0cce0bb7dd144974594561f">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classSimp_1_1Species.html">Species</a> &amp;species)</td></tr>
 <tr class="memdesc:a32bd329ff0cce0bb7dd144974594561f"><td class="mdescLeft">&#160;</td><td class="mdescRight">istream extractor (&gt;&gt;) for a <a class="el" href="classTools_1_1Species.html" title="A set of identical molecules. ">Species</a>.  <a href="#a32bd329ff0cce0bb7dd144974594561f">More...</a><br /></td></tr>
 <tr class="separator:a32bd329ff0cce0bb7dd144974594561f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1daf09f2cee17a984f14786857e514bf"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceTools.html#a1daf09f2cee17a984f14786857e514bf">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classTools_1_1Species.html">Species</a> &amp;species)</td></tr>
+<tr class="memitem:a1daf09f2cee17a984f14786857e514bf"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceTools.html#a1daf09f2cee17a984f14786857e514bf">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classSimp_1_1Species.html">Species</a> &amp;species)</td></tr>
 <tr class="memdesc:a1daf09f2cee17a984f14786857e514bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">ostream inserter (&lt;&lt;) for a <a class="el" href="classTools_1_1Species.html" title="A set of identical molecules. ">Species</a>.  <a href="#a1daf09f2cee17a984f14786857e514bf">More...</a><br /></td></tr>
 <tr class="separator:a1daf09f2cee17a984f14786857e514bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -278,7 +277,7 @@ template&lt;int N&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classTools_1_1Species.html">Species</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classSimp_1_1Species.html">Species</a> &amp;&#160;</td>
           <td class="paramname"><em>species</em>&#160;</td>
         </tr>
         <tr>
@@ -301,7 +300,7 @@ template&lt;int N&gt; </div>
 
 <p>Definition at line <a class="el" href="tools_2chemistry_2Species_8cpp_source.html#l00206">206</a> of file <a class="el" href="tools_2chemistry_2Species_8cpp_source.html">tools/chemistry/Species.cpp</a>.</p>
 
-<p>References <a class="el" href="tools_2chemistry_2Species_8cpp_source.html#l00036">Tools::Species::initialize()</a>.</p>
+<p>References <a class="el" href="simp_2species_2Species_8h_source.html#l00290">Simp::Species::nAtom_</a>.</p>
 
 </div>
 </div>
@@ -318,7 +317,7 @@ template&lt;int N&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classTools_1_1Species.html">Species</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classSimp_1_1Species.html">Species</a> &amp;&#160;</td>
           <td class="paramname"><em>species</em>&#160;</td>
         </tr>
         <tr>
@@ -342,13 +341,15 @@ template&lt;int N&gt; </div>
 
 <p>Definition at line <a class="el" href="tools_2chemistry_2Species_8cpp_source.html#l00217">217</a> of file <a class="el" href="tools_2chemistry_2Species_8cpp_source.html">tools/chemistry/Species.cpp</a>.</p>
 
+<p>References <a class="el" href="simp_2species_2Species_8h_source.html#l00290">Simp::Species::nAtom_</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:32 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:41 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

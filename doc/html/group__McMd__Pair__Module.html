@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -48,8 +47,8 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Nonbonded pair potentials. </p>
-<p><a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a> are abstract base classes that define slightly different interfaces use with MC and MD simulations, respectively. These interfaces are implemented by corresponding class templates <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. ">MdPairPotentialImpl</a> and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. ">MdPairPotentialImpl</a>, each of which takes an interaction class as a template argument. Thus, for example, the class MdPairPotentialImpl&lt;LJPair&gt; implements a Lennard-Jones pair potential for use in MD simulations.</p>
-<p>Non-bonded pair potentials. </p>
+<p><a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a> are abstract base classes that define slightly different interfaces use with MC and MD simulations, respectively.</p>
+<p>In neutral systems (with no Coulomb interactions), these interfaces are implemented by corresponding class templates <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. ">MdPairPotentialImpl</a> and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. ">MdPairPotentialImpl</a>, each of which takes an interaction class as a template argument. Thus, for example, the class MdPairPotentialImpl&lt;LJPair&gt; implements a Lennard-Jones pair potential for use in MD simulations. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -58,6 +57,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McPairPotentialImpl.html">McMd::McPairPotentialImpl&lt; Interaction &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation template for an <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a>.  <a href="classMcMd_1_1McPairPotentialImpl.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of a pair potential for a charged system.  <a href="classMcMd_1_1MdEwaldPairPotentialImpl.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1MdPairPotential.html">McMd::MdPairPotential</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An <a class="el" href="classMcMd_1_1PairPotential.html" title="Interface for a Pair Potential. ">PairPotential</a> for MD simulation.  <a href="classMcMd_1_1MdPairPotential.html#details">More...</a><br /></td></tr>
@@ -76,7 +78,7 @@ Classes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

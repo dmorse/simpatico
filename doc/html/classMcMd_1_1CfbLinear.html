@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,9 +61,10 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for configuration bias (CFB) end regrowth moves. </p>
-<p>This class provides functions that use Rosenbluth sampling to delete or add a single atom to a specified end of a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> molecule. These are the building blocks of configuration bias regrowth and reptation algorithms for linear chains. </p>
+<p>This class provides functions that use Rosenbluth sampling to delete or add a single atom to a specified end of a Linear molecule. These are the building blocks of configuration bias regrowth and reptation algorithms for linear chains.</p>
+<p>Limitations: The current implementation works with model with external and angle potentials, but does not yet work with dihedral potentials. The treatment of angle potentials does not use the angle potential to bias the choice of trial bond orientations, and so is not efficient for strong angle potentials. </p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00032">32</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00039">39</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -102,10 +102,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa268aa909a061b42f4332de5cdf5809a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save speciesId and nTrial.  <a href="#aa268aa909a061b42f4332de5cdf5809a">More...</a><br /></td></tr>
 <tr class="separator:aa268aa909a061b42f4332de5cdf5809a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88dd759ad3a604b717f638207c947d67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CfbLinear.html#a88dd759ad3a604b717f638207c947d67">deleteAtom</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule, int atomId, int sign, double &amp;rosenbluth, double &amp;energy)</td></tr>
-<tr class="memdesc:a88dd759ad3a604b717f638207c947d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">CFB algorithm for deleting an end atom from a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> molecule.  <a href="#a88dd759ad3a604b717f638207c947d67">More...</a><br /></td></tr>
+<tr class="memdesc:a88dd759ad3a604b717f638207c947d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">CFB algorithm for deleting an end atom from a Linear molecule.  <a href="#a88dd759ad3a604b717f638207c947d67">More...</a><br /></td></tr>
 <tr class="separator:a88dd759ad3a604b717f638207c947d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3fd2a5b40e59d8bac15144696349fa8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CfbLinear.html#ac3fd2a5b40e59d8bac15144696349fa8">addAtom</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom0, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1, int atomId, int sign, double &amp;rosenbluth, double &amp;energy)</td></tr>
-<tr class="memdesc:ac3fd2a5b40e59d8bac15144696349fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration bias algorithm for adding an atom to a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> molecule.  <a href="#ac3fd2a5b40e59d8bac15144696349fa8">More...</a><br /></td></tr>
+<tr class="memdesc:ac3fd2a5b40e59d8bac15144696349fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration bias algorithm for adding an atom to a Linear molecule.  <a href="#ac3fd2a5b40e59d8bac15144696349fa8">More...</a><br /></td></tr>
 <tr class="separator:ac3fd2a5b40e59d8bac15144696349fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classMcMd_1_1SystemMove"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1SystemMove')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1SystemMove.html">McMd::SystemMove</a></td></tr>
 <tr class="memitem:a0e0820f84f29be1e6b6d4216196d6abf inherit pub_methods_classMcMd_1_1SystemMove"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemMove.html#a0e0820f84f29be1e6b6d4216196d6abf">SystemMove</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;<a class="el" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4">system</a>)</td></tr>
@@ -469,7 +469,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00030">30</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00032">32</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -498,9 +498,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00043">43</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00045">45</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00338">McMd::McSystem::hasAnglePotential()</a>, <a class="el" href="McSystem_8h_source.html#l00380">McMd::McSystem::hasExternalPotential()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00556">McMd::Species::nAngle()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00578">McMd::Species::nDihedral()</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -533,9 +533,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1CfbReptateMove.html#a953c4c0b6debd6e9a1686d0f794e4510">McMd::CfbReptateMove</a>, and <a class="el" href="classMcMd_1_1CfbLinearEndMove.html#ae53f54ce1962c689ab8ba583eb7e78a0">McMd::CfbLinearEndMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00087">87</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00092">92</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00037">McMd::CfbLinearEndMove::readParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00045">McMd::CfbReptateMove::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00038">McMd::CfbLinearEndMove::readParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00048">McMd::CfbReptateMove::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -573,9 +573,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1CfbReptateMove.html#a4ca7aef326816beb8a42ddf687994857">McMd::CfbReptateMove</a>, and <a class="el" href="classMcMd_1_1CfbLinearEndMove.html#a9a3decac657cbab41c4494025787176d">McMd::CfbLinearEndMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00097">97</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00102">102</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00060">McMd::CfbLinearEndMove::loadParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00105">McMd::CfbReptateMove::loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00061">McMd::CfbLinearEndMove::loadParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00110">McMd::CfbReptateMove::loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -613,9 +613,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1CfbReptateMove.html#a47b5e1df1a987767086b45b19de57b19">McMd::CfbReptateMove</a>, and <a class="el" href="classMcMd_1_1CfbLinearEndMove.html#a1c39131fdf43d5aa3448a925789fc455">McMd::CfbLinearEndMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00107">107</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00112">112</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00083">McMd::CfbLinearEndMove::save()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00141">McMd::CfbReptateMove::save()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00084">McMd::CfbLinearEndMove::save()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00148">McMd::CfbReptateMove::save()</a>.</p>
 
 </div>
 </div>
@@ -661,7 +661,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>CFB algorithm for deleting an end atom from a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> molecule. </p>
+<p>CFB algorithm for deleting an end atom from a Linear molecule. </p>
 <p>This function computes the energy of an end atom and a Rosenbluth factor for removing it. It does not remove the end atom from the system cell list.</p>
 <p>Upon return:</p>
 <ul>
@@ -679,11 +679,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00117">117</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00122">122</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00344">McMd::McSystem::anglePotential()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00473">McMd::Molecule::atom()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00485">McMd::Molecule::bond()</a>, <a class="el" href="McSystem_8h_source.html#l00330">McMd::McSystem::bondPotential()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="classMcMd_1_1AnglePotential.html#a847246ad842f580cc70b77f08dd59547">McMd::AnglePotential::energy()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#adeb8260e86ec3d3e3f48f4a0171b3639">McMd::BondPotential::energy()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::externalPotential()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00432">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00198">McMd::Group&lt; NAtom &gt;::typeId()</a>, and <a class="el" href="Random_8cpp_source.html#l00122">Util::Random::unitVector()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00477">McMd::Molecule::atom()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="classMcMd_1_1AnglePotential.html#a847246ad842f580cc70b77f08dd59547">McMd::AnglePotential::energy()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00436">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="Random_8cpp_source.html#l00122">Util::Random::unitVector()</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00093">McMd::CfbLinearEndMove::move()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00162">McMd::CfbReptateMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00094">McMd::CfbLinearEndMove::move()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00169">McMd::CfbReptateMove::move()</a>.</p>
 
 </div>
 </div>
@@ -741,7 +741,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Configuration bias algorithm for adding an atom to a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> molecule. </p>
+<p>Configuration bias algorithm for adding an atom to a Linear molecule. </p>
 <p>This function generates and computes Rosenbluth factors for nTrial trial positions, chooses one, updates the atomic position. It does not add the end atom to the system cell list.</p>
 <p>The function signature requires references to atom0 (the atom to be added) and atom1 (the one to which it is bonded) in order to allow this to be used in a reptation algorithm in which atoms are not added in place: In the reptation algorithm, a trial removal is made at the tail end of the molecule, and then the removed atom is used to store the position of trial addition at the head end. The atom positions are then shifted to restore the proper order in memory only if the move is accepted.</p>
 <p>Upon return:</p>
@@ -762,11 +762,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00230">230</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8cpp_source.html#l00240">240</a> of file <a class="el" href="CfbLinear_8cpp_source.html">CfbLinear.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00344">McMd::McSystem::anglePotential()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00527">McMd::Species::atomTypeId()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00151">Util::EnergyEnsemble::beta()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00485">McMd::Molecule::bond()</a>, <a class="el" href="McSystem_8h_source.html#l00330">McMd::McSystem::bondPotential()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="Random_8h_source.html#l00237">Util::Random::drawFrom()</a>, <a class="el" href="classMcMd_1_1AnglePotential.html#a847246ad842f580cc70b77f08dd59547">McMd::AnglePotential::energy()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#adeb8260e86ec3d3e3f48f4a0171b3639">McMd::BondPotential::energy()</a>, <a class="el" href="SystemMove_8h_source.html#l00093">McMd::SystemMove::energyEnsemble()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::externalPotential()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00432">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#a12f2a3b03182c750d2fa1cbd61f6a827">McMd::BondPotential::randomBondLength()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00414">McMd::Molecule::species()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00198">McMd::Group&lt; NAtom &gt;::typeId()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="Random_8cpp_source.html#l00122">Util::Random::unitVector()</a>.</p>
+<p>References <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00532">Simp::Species::atomTypeId()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00151">Util::EnergyEnsemble::beta()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="Random_8h_source.html#l00237">Util::Random::drawFrom()</a>, <a class="el" href="classMcMd_1_1AnglePotential.html#a847246ad842f580cc70b77f08dd59547">McMd::AnglePotential::energy()</a>, <a class="el" href="SystemMove_8h_source.html#l00093">McMd::SystemMove::energyEnsemble()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00436">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00418">McMd::Molecule::species()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="Random_8cpp_source.html#l00122">Util::Random::unitVector()</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00093">McMd::CfbLinearEndMove::move()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00162">McMd::CfbReptateMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00094">McMd::CfbLinearEndMove::move()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00169">McMd::CfbReptateMove::move()</a>.</p>
 
 </div>
 </div>
@@ -793,7 +793,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get nTrial. </p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00174">174</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00181">181</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
 
 </div>
 </div>
@@ -820,9 +820,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get speciesId. </p>
 
-<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00180">180</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
+<p>Definition at line <a class="el" href="CfbLinear_8h_source.html#l00187">187</a> of file <a class="el" href="CfbLinear_8h_source.html">CfbLinear.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00060">McMd::CfbLinearEndMove::loadParameters()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00105">McMd::CfbReptateMove::loadParameters()</a>, <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00093">McMd::CfbLinearEndMove::move()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00162">McMd::CfbReptateMove::move()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00355">McMd::CfbReptateMove::output()</a>, <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00037">McMd::CfbLinearEndMove::readParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00045">McMd::CfbReptateMove::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00061">McMd::CfbLinearEndMove::loadParameters()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00110">McMd::CfbReptateMove::loadParameters()</a>, <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00094">McMd::CfbLinearEndMove::move()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00169">McMd::CfbReptateMove::move()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00366">McMd::CfbReptateMove::output()</a>, <a class="el" href="CfbLinearEndMove_8cpp_source.html#l00038">McMd::CfbLinearEndMove::readParameters()</a>, and <a class="el" href="CfbReptateMove_8cpp_source.html#l00048">McMd::CfbReptateMove::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -834,7 +834,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:27 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:34 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

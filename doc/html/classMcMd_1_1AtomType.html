@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,9 +61,9 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Descriptor for a type of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>. </p>
-<p>An AtomTypeType has a mass, a name string, and an integer id. [It will later acquire a charge.] </p>
+<p>An AtomTypeType has a mass, a name string, and an integer id. If coulomb interactions are enabled (ifdef SIMP_COULOMB), it also has a electrical charge. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00027">27</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00030">30</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">AtomType.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -80,12 +79,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a12e2e9d46014307ea62fcf98777fa55f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AtomType.html#a12e2e9d46014307ea62fcf98777fa55f">setId</a> (int Id)</td></tr>
 <tr class="memdesc:a12e2e9d46014307ea62fcf98777fa55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the type index.  <a href="#a12e2e9d46014307ea62fcf98777fa55f">More...</a><br /></td></tr>
 <tr class="separator:a12e2e9d46014307ea62fcf98777fa55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5244760eac14661dda39a58427d41ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AtomType.html#ab5244760eac14661dda39a58427d41ca">setMass</a> (double <a class="el" href="classMcMd_1_1AtomType.html#a5f2cdb3e532127d965b5573e32f094be">mass</a>)</td></tr>
-<tr class="memdesc:ab5244760eac14661dda39a58427d41ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the mass.  <a href="#ab5244760eac14661dda39a58427d41ca">More...</a><br /></td></tr>
-<tr class="separator:ab5244760eac14661dda39a58427d41ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0fb169c60df62d5b18ac4382a14fb0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AtomType.html#ae0fb169c60df62d5b18ac4382a14fb0c">setName</a> (std::string <a class="el" href="classMcMd_1_1AtomType.html#a84a5cde669d1d5d1a4aecfa529334f10">name</a>)</td></tr>
 <tr class="memdesc:ae0fb169c60df62d5b18ac4382a14fb0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the name string.  <a href="#ae0fb169c60df62d5b18ac4382a14fb0c">More...</a><br /></td></tr>
 <tr class="separator:ae0fb169c60df62d5b18ac4382a14fb0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5244760eac14661dda39a58427d41ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AtomType.html#ab5244760eac14661dda39a58427d41ca">setMass</a> (double <a class="el" href="classMcMd_1_1AtomType.html#a5f2cdb3e532127d965b5573e32f094be">mass</a>)</td></tr>
+<tr class="memdesc:ab5244760eac14661dda39a58427d41ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the mass.  <a href="#ab5244760eac14661dda39a58427d41ca">More...</a><br /></td></tr>
+<tr class="separator:ab5244760eac14661dda39a58427d41ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr class="memitem:a5f2cdb3e532127d965b5573e32f094be"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AtomType.html#a5f2cdb3e532127d965b5573e32f094be">mass</a> () const </td></tr>
 <tr class="memdesc:a5f2cdb3e532127d965b5573e32f094be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the mass.  <a href="#a5f2cdb3e532127d965b5573e32f094be">More...</a><br /></td></tr>
@@ -153,7 +152,7 @@ Friends</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00024">24</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00030">30</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
 
 </div>
 </div>
@@ -180,54 +179,15 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00028">28</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00034">34</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00121">id()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab5244760eac14661dda39a58427d41ca"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void McMd::AtomType::setMass </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>mass</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set the mass. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mass</td><td>atom mass </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00105">105</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
-
-<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00113">mass()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00167">id()</a>.</p>
 
 </div>
 </div>
 <a class="anchor" id="ae0fb169c60df62d5b18ac4382a14fb0c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void McMd::AtomType::setName </td>
@@ -237,11 +197,6 @@ Friends</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Set the name string. </p>
@@ -252,9 +207,37 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00109">109</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00040">40</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00117">name()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00173">name()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab5244760eac14661dda39a58427d41ca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void McMd::AtomType::setMass </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mass</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the mass. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mass</td><td>atom mass </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00046">46</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
+
+<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00179">mass()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
 
 </div>
 </div>
@@ -281,9 +264,11 @@ Friends</h2></td></tr>
 
 <p>Get the mass. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00113">113</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00179">179</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00082">Util::bcast&lt; McMd::AtomType &gt;()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00744">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00071">Util::recv&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00062">Util::send&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00105">setMass()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00070">McMd::NveVvIntegrator::setup()</a>, <a class="el" href="mcMd_2mdIntegrators_2NvtLangevinIntegrator_8cpp_source.html#l00083">McMd::NvtLangevinIntegrator::setup()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00142">McMd::NvtDpdVvIntegrator::setup()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00108">McMd::NvtNhIntegrator::setup()</a>, and <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00088">McMd::NphIntegrator::setup()</a>.</p>
+<p>References <a class="el" href="PairSelector_8cpp_source.html#l00093">McMd::operator&lt;&lt;()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00082">McMd::operator&gt;&gt;()</a>, and <a class="el" href="global_8h_source.html#l00075">UTIL_ASSERT</a>.</p>
+
+<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00150">Util::bcast&lt; McMd::AtomType &gt;()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00919">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00127">Util::recv&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00108">Util::send&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00046">setMass()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00070">McMd::NveVvIntegrator::setup()</a>, <a class="el" href="mcMd_2mdIntegrators_2NvtLangevinIntegrator_8cpp_source.html#l00083">McMd::NvtLangevinIntegrator::setup()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00142">McMd::NvtDpdVvIntegrator::setup()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00108">McMd::NvtNhIntegrator::setup()</a>, and <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00088">McMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -310,9 +295,9 @@ Friends</h2></td></tr>
 
 <p>Get the name string. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00117">117</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00173">173</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00082">Util::bcast&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00071">Util::recv&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00062">Util::send&lt; McMd::AtomType &gt;()</a>, and <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00109">setName()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00150">Util::bcast&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00127">Util::recv&lt; McMd::AtomType &gt;()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00108">Util::send&lt; McMd::AtomType &gt;()</a>, and <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00040">setName()</a>.</p>
 
 </div>
 </div>
@@ -339,11 +324,9 @@ Friends</h2></td></tr>
 
 <p>Get the index. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00121">121</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00167">167</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00044">operator&lt;&lt;</a>, and <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00034">operator&gt;&gt;</a>.</p>
-
-<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00028">setId()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00034">setId()</a>.</p>
 
 </div>
 </div>
@@ -382,7 +365,7 @@ Friends</h2></td></tr>
 
 <p>istream extractor (&gt;&gt;) for an <a class="el" href="classMcMd_1_1AtomType.html" title="Descriptor for a type of Atom. ">AtomType</a>. </p>
 <p>Format:</p>
-<p>name [string] mass [double]</p>
+<p>name [string] mass [double] charge [double]</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input stream </td></tr>
@@ -392,9 +375,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>modified input stream </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00034">34</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00121">id()</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00069">69</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,7 +413,7 @@ Friends</h2></td></tr>
 
 <p>ostream inserter (&lt;&lt;) for an <a class="el" href="classMcMd_1_1AtomType.html" title="Descriptor for a type of Atom. ">AtomType</a>. </p>
 <p>Format, one one line with no line break:</p>
-<p>name mass</p>
+<p>name mass [charge]</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">out</td><td>output stream </td></tr>
@@ -442,9 +423,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>modified output stream </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00044">44</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00121">id()</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html#l00084">84</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8cpp_source.html">mcMd/chemistry/AtomType.cpp</a>.</p>
 
 </div>
 </div>
@@ -498,7 +477,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00160">160</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00235">235</a> of file <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html">mcMd/chemistry/AtomType.h</a>.</p>
 
 </div>
 </div>
@@ -510,7 +489,7 @@ template&lt;class Archive &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:26 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:34 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

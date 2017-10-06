@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -75,9 +74,11 @@ Inheritance diagram for McMd::LinkPotentialImpl&lt; Interaction &gt;:</div>
  <div class="center">
   <img src="classMcMd_1_1LinkPotentialImpl.png" usemap="#McMd::LinkPotentialImpl_3C_20Interaction_20_3E_map" alt=""/>
   <map id="McMd::LinkPotentialImpl_3C_20Interaction_20_3E_map" name="McMd::LinkPotentialImpl&lt; Interaction &gt;_map">
-<area href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. " alt="McMd::BondPotential" shape="rect" coords="120,168,350,192"/>
-<area href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: " alt="McMd::SubSystem" shape="rect" coords="360,168,590,192"/>
+<area href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. " alt="McMd::BondPotential" shape="rect" coords="360,168,590,192"/>
+<area href="classMcMd_1_1SystemInterface.html" title="An interface to a System. " alt="McMd::SystemInterface" shape="rect" coords="600,168,830,192"/>
 <area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="120,112,350,136"/>
+<area href="classMcMd_1_1EnergyCalculator.html" title="Interface for a class that calculates a total energy. " alt="McMd::EnergyCalculator" shape="rect" coords="360,112,590,136"/>
+<area href="classMcMd_1_1StressCalculator.html" title="Interface for a stress calculator. " alt="McMd::StressCalculator" shape="rect" coords="600,112,830,136"/>
 <area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="120,56,350,80"/>
 <area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="0,0,230,24"/>
 <area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="240,0,470,24"/>
@@ -86,7 +87,7 @@ Inheritance diagram for McMd::LinkPotentialImpl&lt; Interaction &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeb4ca7525b4ad51ff4fab45050fdcc76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#aeb4ca7525b4ad51ff4fab45050fdcc76">LinkPotentialImpl</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;<a class="el" href="classMcMd_1_1SubSystem.html#a8829a1dd26da68214c3319015a2c242e">system</a>)</td></tr>
+<tr class="memitem:aeb4ca7525b4ad51ff4fab45050fdcc76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#aeb4ca7525b4ad51ff4fab45050fdcc76">LinkPotentialImpl</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;<a class="el" href="classMcMd_1_1SystemInterface.html#a77ae39d99fe3523bc0cd791531e6125a">system</a>)</td></tr>
 <tr class="memdesc:aeb4ca7525b4ad51ff4fab45050fdcc76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aeb4ca7525b4ad51ff4fab45050fdcc76">More...</a><br /></td></tr>
 <tr class="separator:aeb4ca7525b4ad51ff4fab45050fdcc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5c7e1e6c5b6c1c6e7040902f5468089"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#ab5c7e1e6c5b6c1c6e7040902f5468089">LinkPotentialImpl</a> (<a class="el" href="classMcMd_1_1LinkPotentialImpl.html">LinkPotentialImpl</a>&lt; Interaction &gt; &amp;other)</td></tr>
@@ -127,21 +128,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a16e6e0955f03100fd59b12d0bac1c3d3"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#a16e6e0955f03100fd59b12d0bac1c3d3">atomEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
 <tr class="memdesc:a16e6e0955f03100fd59b12d0bac1c3d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the link potential energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>.  <a href="#a16e6e0955f03100fd59b12d0bac1c3d3">More...</a><br /></td></tr>
 <tr class="separator:a16e6e0955f03100fd59b12d0bac1c3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae751134f20e2211df702d15760ddc81b"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#ae751134f20e2211df702d15760ddc81b">energy</a> () const </td></tr>
-<tr class="memdesc:ae751134f20e2211df702d15760ddc81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total link potential energy of the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#ae751134f20e2211df702d15760ddc81b">More...</a><br /></td></tr>
-<tr class="separator:ae751134f20e2211df702d15760ddc81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1806d970b68d00be813549d904596ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#ac1806d970b68d00be813549d904596ef">addForces</a> ()</td></tr>
 <tr class="memdesc:ac1806d970b68d00be813549d904596ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and increment link forces for all atoms.  <a href="#ac1806d970b68d00be813549d904596ef">More...</a><br /></td></tr>
 <tr class="separator:ac1806d970b68d00be813549d904596ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb13c57184c37e4c9d00e4f3038bd7fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#abb13c57184c37e4c9d00e4f3038bd7fe">computeStress</a> (double &amp;stress) const </td></tr>
-<tr class="memdesc:abb13c57184c37e4c9d00e4f3038bd7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total nonbonded pressure.  <a href="#abb13c57184c37e4c9d00e4f3038bd7fe">More...</a><br /></td></tr>
-<tr class="separator:abb13c57184c37e4c9d00e4f3038bd7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa764b0ee75c4ab3a972305762043aed7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#aa764b0ee75c4ab3a972305762043aed7">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const </td></tr>
-<tr class="memdesc:aa764b0ee75c4ab3a972305762043aed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z nonbonded pressures.  <a href="#aa764b0ee75c4ab3a972305762043aed7">More...</a><br /></td></tr>
-<tr class="separator:aa764b0ee75c4ab3a972305762043aed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af83745cfeb61474627b0bd72db6c3e9e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#af83745cfeb61474627b0bd72db6c3e9e">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const </td></tr>
-<tr class="memdesc:af83745cfeb61474627b0bd72db6c3e9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute stress tensor.  <a href="#af83745cfeb61474627b0bd72db6c3e9e">More...</a><br /></td></tr>
-<tr class="separator:af83745cfeb61474627b0bd72db6c3e9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8803539d6843cd1bf41113a01495c958"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#a8803539d6843cd1bf41113a01495c958">computeEnergy</a> ()</td></tr>
+<tr class="memdesc:a8803539d6843cd1bf41113a01495c958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and store pair energy for this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#a8803539d6843cd1bf41113a01495c958">More...</a><br /></td></tr>
+<tr class="separator:a8803539d6843cd1bf41113a01495c958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f331a7bcb4c64f2b05a0f2632a1c31"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkPotentialImpl.html#a47f331a7bcb4c64f2b05a0f2632a1c31">computeStress</a> ()</td></tr>
+<tr class="memdesc:a47f331a7bcb4c64f2b05a0f2632a1c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the total nonbonded pressure.  <a href="#a47f331a7bcb4c64f2b05a0f2632a1c31">More...</a><br /></td></tr>
+<tr class="separator:a47f331a7bcb4c64f2b05a0f2632a1c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classMcMd_1_1BondPotential"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1BondPotential')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1BondPotential.html">McMd::BondPotential</a></td></tr>
 <tr class="memitem:acf119bb45237f6aed7d956108cde1f1f inherit pub_methods_classMcMd_1_1BondPotential"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1BondPotential.html#acf119bb45237f6aed7d956108cde1f1f">BondPotential</a> ()</td></tr>
 <tr class="memdesc:acf119bb45237f6aed7d956108cde1f1f inherit pub_methods_classMcMd_1_1BondPotential"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor .  <a href="#acf119bb45237f6aed7d956108cde1f1f">More...</a><br /></td></tr>
@@ -383,16 +378,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#aeadef78f34eee3090a34dd5b6373b8b6">ioCommunicator</a> () const </td></tr>
 <tr class="memdesc:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the MPI communicator by reference.  <a href="#aeadef78f34eee3090a34dd5b6373b8b6">More...</a><br /></td></tr>
 <tr class="separator:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classMcMd_1_1SubSystem"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1SubSystem')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1SubSystem.html">McMd::SubSystem</a></td></tr>
-<tr class="memitem:a5e46369bc81639d336e06eec6ee83da5 inherit pub_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a5e46369bc81639d336e06eec6ee83da5">SubSystem</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;parent)</td></tr>
-<tr class="memdesc:a5e46369bc81639d336e06eec6ee83da5 inherit pub_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5e46369bc81639d336e06eec6ee83da5">More...</a><br /></td></tr>
-<tr class="separator:a5e46369bc81639d336e06eec6ee83da5 inherit pub_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ce831f96c3c40b7f2e20eb1c35bbb93 inherit pub_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a5ce831f96c3c40b7f2e20eb1c35bbb93">~SubSystem</a> ()</td></tr>
-<tr class="memdesc:a5ce831f96c3c40b7f2e20eb1c35bbb93 inherit pub_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a5ce831f96c3c40b7f2e20eb1c35bbb93">More...</a><br /></td></tr>
-<tr class="separator:a5ce831f96c3c40b7f2e20eb1c35bbb93 inherit pub_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8829a1dd26da68214c3319015a2c242e inherit pub_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a8829a1dd26da68214c3319015a2c242e">system</a> () const </td></tr>
-<tr class="memdesc:a8829a1dd26da68214c3319015a2c242e inherit pub_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> by reference.  <a href="#a8829a1dd26da68214c3319015a2c242e">More...</a><br /></td></tr>
-<tr class="separator:a8829a1dd26da68214c3319015a2c242e inherit pub_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1EnergyCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1EnergyCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1EnergyCalculator.html">McMd::EnergyCalculator</a></td></tr>
+<tr class="memitem:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#afc97619737d45ab11a8126618979d76b">unsetEnergy</a> ()</td></tr>
+<tr class="memdesc:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the energy as unknown.  <a href="#afc97619737d45ab11a8126618979d76b">More...</a><br /></td></tr>
+<tr class="separator:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#a6ad7b79b1b2cc43e85434cfb186e1fab">energy</a> ()</td></tr>
+<tr class="memdesc:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the energy contribution, compute if necessary.  <a href="#a6ad7b79b1b2cc43e85434cfb186e1fab">More...</a><br /></td></tr>
+<tr class="separator:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1StressCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1StressCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1StressCalculator.html">McMd::StressCalculator</a></td></tr>
+<tr class="memitem:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a47d7a699bc99250173936e42f1ae37b8">unsetStress</a> ()</td></tr>
+<tr class="memdesc:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the stress as unknown.  <a href="#a47d7a699bc99250173936e42f1ae37b8">More...</a><br /></td></tr>
+<tr class="separator:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a03c611d5183c1bf195b23e85c9701d03">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;stress)</td></tr>
+<tr class="memdesc:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pair stress tensor.  <a href="#a03c611d5183c1bf195b23e85c9701d03">More...</a><br /></td></tr>
+<tr class="separator:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#aeaaf6cdb987c031fe1c8f77837054614">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;pressures)</td></tr>
+<tr class="memdesc:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the xx, yy, zz non-Coulomb pair pressures.  <a href="#aeaaf6cdb987c031fe1c8f77837054614">More...</a><br /></td></tr>
+<tr class="separator:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a0a7f135a52bc261ab9fcfd19b6280b9d">computeStress</a> (double &amp;pressure)</td></tr>
+<tr class="memdesc:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scalar pressure.  <a href="#a0a7f135a52bc261ab9fcfd19b6280b9d">More...</a><br /></td></tr>
+<tr class="separator:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1SystemInterface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1SystemInterface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1SystemInterface.html">McMd::SystemInterface</a></td></tr>
+<tr class="memitem:a9b66abe08125b75a98bbeb92b2c093ac inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a9b66abe08125b75a98bbeb92b2c093ac">SystemInterface</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;parent)</td></tr>
+<tr class="memdesc:a9b66abe08125b75a98bbeb92b2c093ac inherit pub_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9b66abe08125b75a98bbeb92b2c093ac">More...</a><br /></td></tr>
+<tr class="separator:a9b66abe08125b75a98bbeb92b2c093ac inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f5d8ca0e65fc579e51ece001b03edd inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#aa2f5d8ca0e65fc579e51ece001b03edd">~SystemInterface</a> ()</td></tr>
+<tr class="memdesc:aa2f5d8ca0e65fc579e51ece001b03edd inherit pub_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aa2f5d8ca0e65fc579e51ece001b03edd">More...</a><br /></td></tr>
+<tr class="separator:aa2f5d8ca0e65fc579e51ece001b03edd inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ae39d99fe3523bc0cd791531e6125a inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a77ae39d99fe3523bc0cd791531e6125a">system</a> () const </td></tr>
+<tr class="memdesc:a77ae39d99fe3523bc0cd791531e6125a inherit pub_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> by reference.  <a href="#a77ae39d99fe3523bc0cd791531e6125a">More...</a><br /></td></tr>
+<tr class="separator:a77ae39d99fe3523bc0cd791531e6125a inherit pub_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -436,43 +451,31 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ae979e22ecef3a94c0e826224b3761df9 inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#ae979e22ecef3a94c0e826224b3761df9">ParamComponent</a> (const <a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;other)</td></tr>
 <tr class="memdesc:ae979e22ecef3a94c0e826224b3761df9 inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ae979e22ecef3a94c0e826224b3761df9">More...</a><br /></td></tr>
 <tr class="separator:ae979e22ecef3a94c0e826224b3761df9 inherit pro_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_classMcMd_1_1SubSystem"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classMcMd_1_1SubSystem')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classMcMd_1_1SubSystem.html">McMd::SubSystem</a></td></tr>
-<tr class="memitem:a102d96ae35bd762d7d6db041cfa5d635 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a102d96ae35bd762d7d6db041cfa5d635">boundary</a> () const </td></tr>
-<tr class="memdesc:a102d96ae35bd762d7d6db041cfa5d635 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary by reference.  <a href="#a102d96ae35bd762d7d6db041cfa5d635">More...</a><br /></td></tr>
-<tr class="separator:a102d96ae35bd762d7d6db041cfa5d635 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c1f202fd05dc1a764d088a3b4a92baf inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf">simulation</a> () const </td></tr>
-<tr class="memdesc:a3c1f202fd05dc1a764d088a3b4a92baf inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others. ">Simulation</a> by reference.  <a href="#a3c1f202fd05dc1a764d088a3b4a92baf">More...</a><br /></td></tr>
-<tr class="separator:a3c1f202fd05dc1a764d088a3b4a92baf inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1a33268fa7f273eba9d234852bae9b5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5">nMolecule</a> (int speciesId) const </td></tr>
-<tr class="memdesc:ac1a33268fa7f273eba9d234852bae9b5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of molecules of one <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> in this <a class="el" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: ">SubSystem</a>.  <a href="#ac1a33268fa7f273eba9d234852bae9b5">More...</a><br /></td></tr>
-<tr class="separator:ac1a33268fa7f273eba9d234852bae9b5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acafb1d8bf6a926c0a9b6c10f53a263bc inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#acafb1d8bf6a926c0a9b6c10f53a263bc">nAtom</a> () const </td></tr>
-<tr class="memdesc:acafb1d8bf6a926c0a9b6c10f53a263bc inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total number of atoms in this <a class="el" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: ">SubSystem</a>.  <a href="#acafb1d8bf6a926c0a9b6c10f53a263bc">More...</a><br /></td></tr>
-<tr class="separator:acafb1d8bf6a926c0a9b6c10f53a263bc inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65911b76900a059c96ee497fe3216246 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a65911b76900a059c96ee497fe3216246">isEmpty</a> () const </td></tr>
-<tr class="memdesc:a65911b76900a059c96ee497fe3216246 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this an empty <a class="el" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: ">SubSystem</a> (i.e., one with no molecules) ?  <a href="#a65911b76900a059c96ee497fe3216246">More...</a><br /></td></tr>
-<tr class="separator:a65911b76900a059c96ee497fe3216246 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6db1c815a7f397f5159f85dfb16aa2c inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#ab6db1c815a7f397f5159f85dfb16aa2c">begin</a> (int speciesId, <a class="el" href="classMcMd_1_1System.html#aeee4a70e1f9b8194c170a48c8fa08826">System::MoleculeIterator</a> &amp;iterator)</td></tr>
-<tr class="memdesc:ab6db1c815a7f397f5159f85dfb16aa2c inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an iterator for molecules of one species in this <a class="el" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: ">SubSystem</a>.  <a href="#ab6db1c815a7f397f5159f85dfb16aa2c">More...</a><br /></td></tr>
-<tr class="separator:ab6db1c815a7f397f5159f85dfb16aa2c inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a830ce50575e4a34052c47569500eadf0 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a830ce50575e4a34052c47569500eadf0">begin</a> (int speciesId, <a class="el" href="classMcMd_1_1System.html#acb5f24a14ca6186cb63c0ef4a69107d7">System::ConstMoleculeIterator</a> &amp;iterator) const </td></tr>
-<tr class="memdesc:a830ce50575e4a34052c47569500eadf0 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a const iterator for molecules of one species in this <a class="el" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has: ">SubSystem</a>.  <a href="#a830ce50575e4a34052c47569500eadf0">More...</a><br /></td></tr>
-<tr class="separator:a830ce50575e4a34052c47569500eadf0 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1593d5e027ed0ffc2b7e8cd843cdfd71 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a1593d5e027ed0ffc2b7e8cd843cdfd71">hasBonds</a> () const </td></tr>
-<tr class="memdesc:a1593d5e027ed0ffc2b7e8cd843cdfd71 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a bond potential exist?  <a href="#a1593d5e027ed0ffc2b7e8cd843cdfd71">More...</a><br /></td></tr>
-<tr class="separator:a1593d5e027ed0ffc2b7e8cd843cdfd71 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11912ee1923f4eba8806072646efb365 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a11912ee1923f4eba8806072646efb365">hasAngles</a> () const </td></tr>
-<tr class="memdesc:a11912ee1923f4eba8806072646efb365 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does an angle potential exist?  <a href="#a11912ee1923f4eba8806072646efb365">More...</a><br /></td></tr>
-<tr class="separator:a11912ee1923f4eba8806072646efb365 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56f20798427bdfdfb55fab339ec649d5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a56f20798427bdfdfb55fab339ec649d5">hasDihedrals</a> () const </td></tr>
-<tr class="memdesc:a56f20798427bdfdfb55fab339ec649d5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a dihedral potential exist?  <a href="#a56f20798427bdfdfb55fab339ec649d5">More...</a><br /></td></tr>
-<tr class="separator:a56f20798427bdfdfb55fab339ec649d5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3998b67ff184e3df3d786748af1fe203 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a3998b67ff184e3df3d786748af1fe203">hasLinks</a> () const </td></tr>
-<tr class="memdesc:a3998b67ff184e3df3d786748af1fe203 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a link potential exist?  <a href="#a3998b67ff184e3df3d786748af1fe203">More...</a><br /></td></tr>
-<tr class="separator:a3998b67ff184e3df3d786748af1fe203 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aff2fe7087f190a2c174e548e15ace5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SubSystem.html#a4aff2fe7087f190a2c174e548e15ace5">hasExternal</a> () const </td></tr>
-<tr class="memdesc:a4aff2fe7087f190a2c174e548e15ace5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does an external potential exist?  <a href="#a4aff2fe7087f190a2c174e548e15ace5">More...</a><br /></td></tr>
-<tr class="separator:a4aff2fe7087f190a2c174e548e15ace5 inherit pro_methods_classMcMd_1_1SubSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classMcMd_1_1SystemInterface"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classMcMd_1_1SystemInterface')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classMcMd_1_1SystemInterface.html">McMd::SystemInterface</a></td></tr>
+<tr class="memitem:ac440f62c4bac7f8aeb5f6f63a36f7c99 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#ac440f62c4bac7f8aeb5f6f63a36f7c99">boundary</a> () const </td></tr>
+<tr class="memdesc:ac440f62c4bac7f8aeb5f6f63a36f7c99 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary by reference.  <a href="#ac440f62c4bac7f8aeb5f6f63a36f7c99">More...</a><br /></td></tr>
+<tr class="separator:ac440f62c4bac7f8aeb5f6f63a36f7c99 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aab0da7d4ff1900091f3c0cce07c902 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a1aab0da7d4ff1900091f3c0cce07c902">simulation</a> () const </td></tr>
+<tr class="memdesc:a1aab0da7d4ff1900091f3c0cce07c902 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others. ">Simulation</a> by reference.  <a href="#a1aab0da7d4ff1900091f3c0cce07c902">More...</a><br /></td></tr>
+<tr class="separator:a1aab0da7d4ff1900091f3c0cce07c902 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5062af891d6b6d81a19b80685ac93505 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a5062af891d6b6d81a19b80685ac93505">nMolecule</a> (int speciesId) const </td></tr>
+<tr class="memdesc:a5062af891d6b6d81a19b80685ac93505 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of molecules of one Species in this <a class="el" href="classMcMd_1_1SystemInterface.html" title="An interface to a System. ">SystemInterface</a>.  <a href="#a5062af891d6b6d81a19b80685ac93505">More...</a><br /></td></tr>
+<tr class="separator:a5062af891d6b6d81a19b80685ac93505 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db49ef5d06abae9a42e696af83f6e90 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a1db49ef5d06abae9a42e696af83f6e90">nAtom</a> () const </td></tr>
+<tr class="memdesc:a1db49ef5d06abae9a42e696af83f6e90 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total number of atoms in this <a class="el" href="classMcMd_1_1SystemInterface.html" title="An interface to a System. ">SystemInterface</a>.  <a href="#a1db49ef5d06abae9a42e696af83f6e90">More...</a><br /></td></tr>
+<tr class="separator:a1db49ef5d06abae9a42e696af83f6e90 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd1f32c1a1027d01df7eb47666001af inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#aebd1f32c1a1027d01df7eb47666001af">isEmpty</a> () const </td></tr>
+<tr class="memdesc:aebd1f32c1a1027d01df7eb47666001af inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this an empty <a class="el" href="classMcMd_1_1SystemInterface.html" title="An interface to a System. ">SystemInterface</a> (i.e., one with no molecules) ?  <a href="#aebd1f32c1a1027d01df7eb47666001af">More...</a><br /></td></tr>
+<tr class="separator:aebd1f32c1a1027d01df7eb47666001af inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34fc8f2101af92bd4a37ae05fcd5dd16 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a34fc8f2101af92bd4a37ae05fcd5dd16">begin</a> (int speciesId, <a class="el" href="classMcMd_1_1System.html#aeee4a70e1f9b8194c170a48c8fa08826">System::MoleculeIterator</a> &amp;iterator)</td></tr>
+<tr class="memdesc:a34fc8f2101af92bd4a37ae05fcd5dd16 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an iterator for molecules of one species in this <a class="el" href="classMcMd_1_1SystemInterface.html" title="An interface to a System. ">SystemInterface</a>.  <a href="#a34fc8f2101af92bd4a37ae05fcd5dd16">More...</a><br /></td></tr>
+<tr class="separator:a34fc8f2101af92bd4a37ae05fcd5dd16 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dd5ddddb8d0557e2e5ab0408782ff32 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a2dd5ddddb8d0557e2e5ab0408782ff32">begin</a> (int speciesId, <a class="el" href="classMcMd_1_1System.html#acb5f24a14ca6186cb63c0ef4a69107d7">System::ConstMoleculeIterator</a> &amp;iterator) const </td></tr>
+<tr class="memdesc:a2dd5ddddb8d0557e2e5ab0408782ff32 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a const iterator for molecules of one species in this <a class="el" href="classMcMd_1_1SystemInterface.html" title="An interface to a System. ">SystemInterface</a>.  <a href="#a2dd5ddddb8d0557e2e5ab0408782ff32">More...</a><br /></td></tr>
+<tr class="separator:a2dd5ddddb8d0557e2e5ab0408782ff32 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a9ec820854377dfe64e4ec513294863 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemInterface.html#a8a9ec820854377dfe64e4ec513294863">hasLinks</a> () const </td></tr>
+<tr class="memdesc:a8a9ec820854377dfe64e4ec513294863 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a link potential exist?  <a href="#a8a9ec820854377dfe64e4ec513294863">More...</a><br /></td></tr>
+<tr class="separator:a8a9ec820854377dfe64e4ec513294863 inherit pro_methods_classMcMd_1_1SystemInterface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aeb4ca7525b4ad51ff4fab45050fdcc76"></a>
@@ -493,7 +496,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00209">209</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00195">195</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
@@ -517,7 +520,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Copy constructor. </p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00224">224</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00210">210</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
@@ -548,7 +551,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00237">237</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00223">223</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -578,13 +581,13 @@ template&lt;class Interaction &gt; </div>
 </div><div class="memdoc">
 
 <p>Read potential energy. </p>
-<p>This method reads the bond potential Interaction parameter block. Before calling Interaction::readParameters(), it passes <a class="el" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference. ">simulation()</a>.nBondType() to Interaction::setNBondType(). </p>
+<p>This method reads the bond potential Interaction parameter block. Before calling Interaction::readParameters(), it passes <a class="el" href="classMcMd_1_1SystemInterface.html#a1aab0da7d4ff1900091f3c0cce07c902" title="Get the parent Simulation by reference. ">simulation()</a>.nBondType() to Interaction::setNBondType(). </p>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00244">244</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00230">230</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="SubSystem_8h_source.html#l00205">McMd::SubSystem::simulation()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="SystemInterface_8h_source.html#l00205">McMd::SystemInterface::simulation()</a>.</p>
 
 </div>
 </div>
@@ -626,9 +629,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#adeb8260e86ec3d3e3f48f4a0171b3639">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00259">259</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00245">245</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -670,9 +673,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a4e0fa92e350fbea1f03223296c105e06">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00267">267</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00253">253</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="LinkPotentialImpl_8h_source.html#l00276">McMd::LinkPotentialImpl&lt; Interaction &gt;::randomBondLength()</a>.</p>
+<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="LinkPotentialImpl_8h_source.html#l00262">McMd::LinkPotentialImpl&lt; Interaction &gt;::randomBondLength()</a>.</p>
 
 </div>
 </div>
@@ -720,11 +723,11 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a12f2a3b03182c750d2fa1cbd61f6a827">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00276">276</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00262">262</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
-<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00267">McMd::LinkPotentialImpl&lt; Interaction &gt;::forceOverR()</a>.</p>
+<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00253">McMd::LinkPotentialImpl&lt; Interaction &gt;::forceOverR()</a>.</p>
 
 </div>
 </div>
@@ -860,9 +863,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a53cd97f33b9ca0ce0a3f048a4ff80508">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00406">406</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00391">391</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -901,44 +904,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#acc54e613fc48c9a78b69e36a51d30308">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00283">283</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00269">269</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="LinkMaster_8h_source.html#l00226">McMd::LinkMaster::atomLinkSet()</a>, <a class="el" href="SubSystem_8h_source.html#l00223">McMd::SubSystem::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00308">McMd::LinkPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="SSet_8h_source.html#l00254">Util::SSet&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae751134f20e2211df702d15760ddc81b"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="classMcMd_1_1LinkPotentialImpl.html">McMd::LinkPotentialImpl</a>&lt; Interaction &gt;::energy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return total link potential energy of the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
-
-<p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#ada7b35c3396a46791d372a559c3f47ef">McMd::BondPotential</a>.</p>
-
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00308">308</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
-
-<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="SubSystem_8h_source.html#l00223">McMd::SubSystem::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="LinkMaster_8h_source.html#l00255">McMd::LinkMaster::link()</a>, <a class="el" href="LinkMaster_8h_source.html#l00261">McMd::LinkMaster::nLink()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, and <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>.</p>
-
-<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00283">McMd::LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="LinkMaster_8h_source.html#l00226">McMd::LinkMaster::atomLinkSet()</a>, <a class="el" href="SystemInterface_8h_source.html#l00223">McMd::SystemInterface::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="EnergyCalculator_8cpp_source.html#l00024">McMd::EnergyCalculator::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="SSet_8h_source.html#l00254">Util::SSet&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>.</p>
 
 </div>
 </div>
@@ -969,13 +937,46 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a3d0e8db9f209eeaf8427324ad8a22aea">McMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00328">328</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00294">294</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="SubSystem_8h_source.html#l00223">McMd::SubSystem::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00298">McMd::Atom::force()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="LinkMaster_8h_source.html#l00255">McMd::LinkMaster::link()</a>, <a class="el" href="LinkMaster_8h_source.html#l00261">McMd::LinkMaster::nLink()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="setToZero_8h_source.html#l00025">Util::setToZero()</a>, <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="SystemInterface_8h_source.html#l00223">McMd::SystemInterface::boundary()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00298">McMd::Atom::force()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="LinkMaster_8h_source.html#l00255">McMd::LinkMaster::link()</a>, <a class="el" href="LinkMaster_8h_source.html#l00261">McMd::LinkMaster::nLink()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, and <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abb13c57184c37e4c9d00e4f3038bd7fe"></a>
+<a class="anchor" id="a8803539d6843cd1bf41113a01495c958"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Interaction &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classMcMd_1_1LinkPotentialImpl.html">McMd::LinkPotentialImpl</a>&lt; Interaction &gt;::computeEnergy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate and store pair energy for this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
+
+<p>Implements <a class="el" href="classMcMd_1_1EnergyCalculator.html#ad4f878f06098473b7c42671b5c6cb904">McMd::EnergyCalculator</a>.</p>
+
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00319">319</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="SystemInterface_8h_source.html#l00223">McMd::SystemInterface::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="EnergyCalculator_8cpp_source.html#l00024">McMd::EnergyCalculator::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">McMd::LinkPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="LinkMaster_8h_source.html#l00255">McMd::LinkMaster::link()</a>, <a class="el" href="LinkMaster_8h_source.html#l00261">McMd::LinkMaster::nLink()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="Setable_8h_source.html#l00107">Util::Setable&lt; T &gt;::set()</a>, <a class="el" href="setToZero_8h_source.html#l00025">Util::setToZero()</a>, <a class="el" href="Link_8h_source.html#l00189">McMd::Link::typeId()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a47f331a7bcb4c64f2b05a0f2632a1c31"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -987,9 +988,8 @@ template&lt;class Interaction &gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classMcMd_1_1LinkPotentialImpl.html">McMd::LinkPotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
           <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -999,93 +999,11 @@ template&lt;class Interaction &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Compute total nonbonded pressure. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressure. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Compute and store the total nonbonded pressure. </p>
 
-<p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#aa83eea9cd7ed92008c1d3b064ef0fd03">McMd::BondPotential</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1StressCalculator.html#a65a5f57185df3135426536c20009640c">McMd::StressCalculator</a>.</p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00381">381</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa764b0ee75c4ab3a972305762043aed7"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classMcMd_1_1LinkPotentialImpl.html">McMd::LinkPotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute x, y, z nonbonded pressures. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressures. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a5e7e71ca4cdb32de745e438072bd6032">McMd::BondPotential</a>.</p>
-
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00385">385</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af83745cfeb61474627b0bd72db6c3e9e"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classMcMd_1_1LinkPotentialImpl.html">McMd::LinkPotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute stress tensor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressures. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classMcMd_1_1BondPotential.html#a1d3ed0fac9982246f7ac70b99bdf5842">McMd::BondPotential</a>.</p>
-
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00390">390</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00370">370</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -1114,9 +1032,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Return bond interaction by reference. </p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00395">395</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00380">380</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00328">McMd::LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00283">McMd::LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00259">McMd::LinkPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00267">McMd::LinkPotentialImpl&lt; Interaction &gt;::forceOverR()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00406">McMd::LinkPotentialImpl&lt; Interaction &gt;::interactionClassName()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00276">McMd::LinkPotentialImpl&lt; Interaction &gt;::randomBondLength()</a>, and <a class="el" href="LinkPotentialImpl_8h_source.html#l00244">McMd::LinkPotentialImpl&lt; Interaction &gt;::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00294">McMd::LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00269">McMd::LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00319">McMd::LinkPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00245">McMd::LinkPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00253">McMd::LinkPotentialImpl&lt; Interaction &gt;::forceOverR()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00391">McMd::LinkPotentialImpl&lt; Interaction &gt;::interactionClassName()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00262">McMd::LinkPotentialImpl&lt; Interaction &gt;::randomBondLength()</a>, and <a class="el" href="LinkPotentialImpl_8h_source.html#l00230">McMd::LinkPotentialImpl&lt; Interaction &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1145,7 +1063,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Return bond interaction by const reference. </p>
 
-<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00399">399</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="LinkPotentialImpl_8h_source.html#l00384">384</a> of file <a class="el" href="LinkPotentialImpl_8h_source.html">LinkPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -1156,7 +1074,7 @@ template&lt;class Interaction &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:29 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:36 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -50,7 +49,7 @@
 <div class="contents">
 <div class="textblock"><p><a class="el" href="developer_standards_page.html">5.2 Coding Standards</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="developer_iterator_page.html">5.4 Loops and Iterators</a> (Next) <br />
 </p>
-<p>The format of the parameter file (discussed in <a class="el" href="user_param_page.html">2.3 Parameter Files</a>) consists of a set of nested blocks, in which each block contains the data required to initialize an instance of a particular class. Each class that reads data from the parameter file is derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">Util::ParamComposite</a> base class, and must provide an implementation of one or the other (but not both) of the following two virtual functions: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> readParameters(std::istream&amp; in);</div><div class="line"><span class="keywordtype">void</span> readParam(std::istream&amp; in);</div></div><!-- fragment --><p> The readParameters() method to defines the file formt for the body of a parameter file block, excluding the lines containing the opening and closing brackets. The readParam() method defines the file format for a parameter file block. The default implementation of <a class="el" href="classUtil_1_1ParamComposite.html#a6fc094b057fd9a21641b089f6f063b39" title="Read the parameter file block. ">ParamComposite::readParam()</a> calls readParameters() and adds opening and closing lines. Most subclasses of ParamComposite re-implement the readParameters() method and rely on the default implementation of readParam() to provide the opening and closing lines. A few (including all the Manager classes) instead re-implement readParam().</p>
+<p>The format of the parameter file (discussed in <a class="el" href="user_param_page.html">2.4 Parameter Files</a>) consists of a set of nested blocks, in which each block contains the data required to initialize an instance of a particular class. Each class that reads data from the parameter file is derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">Util::ParamComposite</a> base class, and must provide an implementation of one or the other (but not both) of the following two virtual functions: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> readParameters(std::istream&amp; in);</div><div class="line"><span class="keywordtype">void</span> readParam(std::istream&amp; in);</div></div><!-- fragment --><p> The readParameters() method to defines the file formt for the body of a parameter file block, excluding the lines containing the opening and closing brackets. The readParam() method defines the file format for a parameter file block. The default implementation of <a class="el" href="classUtil_1_1ParamComposite.html#a6fc094b057fd9a21641b089f6f063b39" title="Read the parameter file block. ">ParamComposite::readParam()</a> calls readParameters() and adds opening and closing lines. Most subclasses of ParamComposite re-implement the readParameters() method and rely on the default implementation of readParam() to provide the opening and closing lines. A few (including all the Manager classes) instead re-implement readParam().</p>
 <p>The source code for the readParameters() or readParam() method of a class is thus the most reliable documentation of the format of the associated parameter file block. It is thus useful for users, as well as developers, to be able to read the implementation of these method, so that they can check the source code to resolve any questions about the file format. In the examples below, we discuss the implementation of a readParameters() method.</p>
 <p>The implementation of readParameters() typically uses a several protected methods that are inherited from the parent <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">Util::ParamComposite</a> class. These are: </p><ul style="list-style: none;">
 <li>
@@ -69,7 +68,7 @@ readParamComposite(std::istream&amp; in, ParamComposite&amp; child) invokes the 
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

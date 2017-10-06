@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -58,12 +57,12 @@
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::SpeciesMutator Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__McMd__Module.html">McMd namespace</a> &raquo; <a class="el" href="group__McMd__Species__Module.html">Species</a></div></div>  </div>
+<div class="title">McMd::SpeciesMutator Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__Simp__Module.html">Simp namespace</a> &raquo; <a class="el" href="group__Simp__Species__Module.html">Species</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Mix-in class for mutable subclasses of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a>. </p>
-<p>A mutable species is a class that is derived from both <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> and <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species. ">SpeciesMutator</a>. A mutable species models a species in which each molecule can be in any of an enumerable number of internal states. This may be used to represent, for example, homopolymers that can change type within a semi-grand canonical simulation, or polymers that can grow or shrink within some extended ensemble simulations. Changes in internal states may change the types of atoms and bonds, and may temporarily erase, or deactivate, certain atoms and bonds.</p>
+<div class="textblock"><p>Mix-in class for mutable subclasses of Species. </p>
+<p>A mutable species is a class that is derived from both Species and <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species. ">SpeciesMutator</a>. A mutable species models a species in which each molecule can be in any of an enumerable number of internal states. This may be used to represent, for example, homopolymers that can change type within a semi-grand canonical simulation, or polymers that can grow or shrink within some extended ensemble simulations. Changes in internal states may change the types of atoms and bonds, and may temporarily erase, or deactivate, certain atoms and bonds.</p>
 <p>Each molecule in a mutable species is assigned an integer state id, to specify its internal state. Each state is assigned a floating point statistical weight. The statistical weights are unnormalized, i.e., they need not add to unity. The <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species. ">SpeciesMutator</a> class provides arrays that store these state variables and statistical weights, and methods to access them. </p>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00041">41</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
@@ -222,7 +221,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="classMcMd_1_1SpeciesMutator.html#a1a51a86513e252896453feb55083098c">setMoleculeState()</a>.</p>
 
-<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00045">McMd::McMdConfigIo::read()</a>.</p>
+<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00046">McMd::McMdConfigIo::read()</a>.</p>
 
 </div>
 </div>
@@ -271,7 +270,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="SpeciesMutator_8h_source.html#l00201">moleculeStateId()</a>.</p>
 
-<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00182">McMd::McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00183">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -319,7 +318,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80">McMd::HomopolymerSG</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00084">McMd::Generator::generate()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00084">readMoleculeState()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00085">McMd::Generator::generate()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00084">readMoleculeState()</a>.</p>
 
 </div>
 </div>
@@ -366,7 +365,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00229">229</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00045">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00046">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -402,7 +401,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00201">201</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00556">McMd::Molecule::id()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>.</p>
 
 <p>Referenced by <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00075">writeMoleculeState()</a>.</p>
 
@@ -433,7 +432,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00215">215</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SpeciesMutator_8cpp_source.html#l00033">allocateSpeciesMutator()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00061">McMd::TypeDistribution::loadParameters()</a>, and <a class="el" href="TypeDistribution_8cpp_source.html#l00037">McMd::TypeDistribution::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="SpeciesMutator_8cpp_source.html#l00033">allocateSpeciesMutator()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00062">McMd::TypeDistribution::loadParameters()</a>, and <a class="el" href="TypeDistribution_8cpp_source.html#l00038">McMd::TypeDistribution::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -469,7 +468,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00208">208</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00096">McMd::SemiGrandDistribution::sample()</a>, and <a class="el" href="TypeDistribution_8cpp_source.html#l00091">McMd::TypeDistribution::sample()</a>.</p>
+<p>Referenced by <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00097">McMd::SemiGrandDistribution::sample()</a>, and <a class="el" href="TypeDistribution_8cpp_source.html#l00092">McMd::TypeDistribution::sample()</a>.</p>
 
 </div>
 </div>
@@ -554,7 +553,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="SpeciesMutator_8h_source.html#l00215">nState()</a>, and <a class="el" href="SpeciesMutator_8h_source.html#l00133">NullStateId</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00045">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00046">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -603,9 +602,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8cpp_source.html#l00057">57</a> of file <a class="el" href="SpeciesMutator_8cpp_source.html">SpeciesMutator.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00556">McMd::Molecule::id()</a>, <a class="el" href="SpeciesMutator_8h_source.html#l00133">NullStateId</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>, <a class="el" href="SpeciesMutator_8h_source.html#l00133">NullStateId</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00110">McMd::HomopolymerSG::setMoleculeState()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00111">McMd::HomopolymerSG::setMoleculeState()</a>.</p>
 
 </div>
 </div>
@@ -644,7 +643,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

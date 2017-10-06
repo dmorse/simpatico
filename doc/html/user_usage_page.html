@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.2 Running a simulation</title>
+<title>Simpatico: 2.3 Running a simulation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -45,12 +44,12 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.2 Running a simulation </div>  </div>
+<div class="title">2.3 Running a simulation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_compile_page.html">2.1 Compiling</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.3 Parameter Files</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_compile_page.html">2.2 Compiling</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.4 Parameter Files</a> (Next) <br />
 </p>
-<p>This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see <a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a>).</p>
+<p>This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see <a class="el" href="user_multi_page.html">2.11 Multi-System Simulations</a>).</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__Programs__Module.html">Programs</a></dd></dl>
 <h1><a class="anchor" id="usage_inputs"></a>
 Input files</h1>
@@ -62,7 +61,7 @@ a <a class="el" href="user_usage_page.html#usage_command_section">command</a> fi
 <li>
 a <a class="el" href="user_usage_page.html#usage_cfgfile_section">configuration</a> file  </li>
 </ul>
-<p>The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see <a class="el" href="user_param_page.html">2.3 Parameter Files</a> , <a class="el" href="user_commands_page.html">2.4 Command Files</a> and <a class="el" href="user_cfgfile_page.html">2.5 Configuration Files</a>). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.</p>
+<p>The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see <a class="el" href="user_param_page.html">2.4 Parameter Files</a> , <a class="el" href="user_commands_page.html">2.5 Command Files</a> and <a class="el" href="user_cfgfile_page.html">2.6 Configuration Files</a>). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.</p>
 <p>When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the command file is specified within the parameter file. The command file is read after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution.</p>
 <h1><a class="anchor" id="usage_run_serial_section"></a>
 Running a simulation</h1>
@@ -85,7 +84,7 @@ Program structure</h1>
 <li>The third line invokes the readParam() member function. This function reads the parameter file that was specified as an argument to the -p command line option and initializes the simulation.</li>
 <li>The fourth line invokes the readCommands() member function. This function reads the command file that was specified as an argument to -c command line option and executes each command in sequence, until it encounters a command that tells it to stop execution.</li>
 </ul>
-<p>The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in <a class="el" href="mdSim_8cpp_source.html">mdSim.cpp</a> is an instance of class <a class="el" href="classMcMd_1_1MdSimulation.html" title="A molecular dynamics simulation of a single MdSystem. ">McMd::MdSimulation</a>, and the main object in ddSim.ccpp is an instance of class <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation. ">DdMd::Simulation</a>. <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> is the name of a C++ namespace that contains the code for single-processor MC and MD simulations. <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> is a namespace that contains code for parallel domain decomposition MD simulations.</p>
+<p>The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of class <a class="el" href="classMcMd_1_1MdSimulation.html" title="A molecular dynamics simulation of a single MdSystem. ">McMd::MdSimulation</a>, and the main object in ddSim.ccpp is an instance of class <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation. ">DdMd::Simulation</a>. <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> is the name of a C++ namespace that contains the code for single-processor MC and MD simulations. <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> is a namespace that contains code for parallel domain decomposition MD simulations.</p>
 <h1><a class="anchor" id="usage_parameter_section"></a>
 Parameter file</h1>
 <p>The parameter file contains all the data required to initialize a simulation, i.e., to initialize all variables to valid values, allocate all required memory, and leave the main simulation object ready for use. These data includes:</p>
@@ -139,12 +138,12 @@ Command line options</h1>
 <p>If the name of the command file is not specified as a command line option (option -c), it must be specified as the first parameter in the FileMaster block of the parameter file. The input and output prefix strings may also be specified as optional parameters of the FileMaster parameter file block. Values that are specified in the parameter file block will override any values specified as command line arguments.</p>
 <p>Other command line options that are relevant only to multi-system simulations are discussed separately <a class="el" href="user_multi_page.html">here</a>.</p>
 <p><br />
- <a class="el" href="user_compile_page.html">2.1 Compiling</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.3 Parameter Files</a> (Next) </p>
+ <a class="el" href="user_compile_page.html">2.2 Compiling</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.4 Parameter Files</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

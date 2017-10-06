@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,7 +61,7 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Identifies clusters of molecules, such as micelles. </p>
 
-<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00029">29</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00034">34</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -78,7 +77,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7e13a465ca68122fb1a701245b4c2796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulator.  <a href="#a7e13a465ca68122fb1a701245b4c2796">More...</a><br /></td></tr>
 <tr class="separator:a7e13a465ca68122fb1a701245b4c2796"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6addd9ffcdf28e12fdcf0a5a8e7b795c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ClusterIdentifier.html#a6addd9ffcdf28e12fdcf0a5a8e7b795c">identifyClusters</a> ()</td></tr>
-<tr class="memdesc:a6addd9ffcdf28e12fdcf0a5a8e7b795c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find all clusters.  <a href="#a6addd9ffcdf28e12fdcf0a5a8e7b795c">More...</a><br /></td></tr>
+<tr class="memdesc:a6addd9ffcdf28e12fdcf0a5a8e7b795c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identify all clusters (main operation).  <a href="#a6addd9ffcdf28e12fdcf0a5a8e7b795c">More...</a><br /></td></tr>
 <tr class="separator:a6addd9ffcdf28e12fdcf0a5a8e7b795c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6057c3f080c9c294f9ed372f0a9593cf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ClusterIdentifier.html#a6057c3f080c9c294f9ed372f0a9593cf">nCluster</a> () const </td></tr>
 <tr class="memdesc:a6057c3f080c9c294f9ed372f0a9593cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of clusters.  <a href="#a6057c3f080c9c294f9ed372f0a9593cf">More...</a><br /></td></tr>
@@ -190,9 +189,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">48</a> of file <a class="el" href="ClusterIdentifier_8cpp_source.html">ClusterIdentifier.cpp</a>.</p>
 
-<p>References <a class="el" href="Cluster_8cpp_source.html#l00052">McMd::Cluster::addLink()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00729">McMd::Simulation::atomCapacity()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00562">McMd::Molecule::begin()</a>, <a class="el" href="System_8h_source.html#l00972">McMd::System::boundary()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00515">McMd::Species::capacity()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00084">cluster()</a>, <a class="el" href="ClusterLink_8h_source.html#l00081">McMd::ClusterLink::clusterId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">McMd::CellList::getNeighbors()</a>, <a class="el" href="Cluster_8h_source.html#l00054">McMd::Cluster::id()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00556">McMd::Molecule::id()</a>, <a class="el" href="ClusterLink_8h_source.html#l00073">McMd::ClusterLink::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00310">McMd::Atom::molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00093">McMd::CellList::setAtomCapacity()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Cluster_8cpp_source.html#l00052">McMd::Cluster::addLink()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00732">McMd::Simulation::atomCapacity()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00566">McMd::Molecule::begin()</a>, <a class="el" href="System_8h_source.html#l00997">McMd::System::boundary()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00520">Simp::Species::capacity()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00089">cluster()</a>, <a class="el" href="ClusterLink_8h_source.html#l00093">McMd::ClusterLink::clusterId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">McMd::CellList::getNeighbors()</a>, <a class="el" href="Cluster_8h_source.html#l00061">McMd::Cluster::id()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>, <a class="el" href="ClusterLink_8h_source.html#l00083">McMd::ClusterLink::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00310">McMd::Atom::molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00093">McMd::CellList::setAtomCapacity()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterHistogram_8cpp_source.html#l00084">McMd::ClusterHistogram::loadParameters()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00046">McMd::ClusterHistogram::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterHistogram_8cpp_source.html#l00087">McMd::ClusterHistogram::loadParameters()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00049">McMd::ClusterHistogram::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -209,13 +208,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Find all clusters. </p>
+<p>Identify all clusters (main operation). </p>
 
 <p>Definition at line <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">128</a> of file <a class="el" href="ClusterIdentifier_8cpp_source.html">ClusterIdentifier.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00396">McMd::CellList::addAtom()</a>, <a class="el" href="Cluster_8cpp_source.html#l00052">McMd::Cluster::addLink()</a>, <a class="el" href="System_8h_source.html#l01055">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00972">McMd::System::boundary()</a>, <a class="el" href="Cluster_8cpp_source.html#l00025">McMd::Cluster::clear()</a>, <a class="el" href="ClusterLink_8h_source.html#l00081">McMd::ClusterLink::clusterId()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00100">Util::PArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">isValid()</a>, <a class="el" href="ClusterLink_8h_source.html#l00073">McMd::ClusterLink::molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Cluster_8cpp_source.html#l00039">McMd::Cluster::setId()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00114">McMd::CellList::setup()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>.</p>
+<p>References <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00396">McMd::CellList::addAtom()</a>, <a class="el" href="Cluster_8cpp_source.html#l00052">McMd::Cluster::addLink()</a>, <a class="el" href="System_8h_source.html#l01080">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00997">McMd::System::boundary()</a>, <a class="el" href="Cluster_8cpp_source.html#l00025">McMd::Cluster::clear()</a>, <a class="el" href="ClusterLink_8h_source.html#l00093">McMd::ClusterLink::clusterId()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00100">Util::PArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">isValid()</a>, <a class="el" href="ClusterLink_8h_source.html#l00083">McMd::ClusterLink::molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Cluster_8cpp_source.html#l00039">McMd::Cluster::setId()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00114">McMd::CellList::setup()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterHistogram_8cpp_source.html#l00145">McMd::ClusterHistogram::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">McMd::ClusterHistogram::sample()</a>.</p>
 
 </div>
 </div>
@@ -242,9 +241,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get number of clusters. </p>
 
-<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00064">64</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00069">69</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">isValid()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00145">McMd::ClusterHistogram::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">isValid()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">McMd::ClusterHistogram::sample()</a>.</p>
 
 </div>
 </div>
@@ -278,7 +277,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00072">72</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00077">77</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
 
 </div>
 </div>
@@ -313,9 +312,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00084">84</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterIdentifier_8h_source.html#l00089">89</a> of file <a class="el" href="ClusterIdentifier_8h_source.html">ClusterIdentifier.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">initialize()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00145">McMd::ClusterHistogram::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">initialize()</a>, and <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">McMd::ClusterHistogram::sample()</a>.</p>
 
 </div>
 </div>
@@ -336,7 +335,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">196</a> of file <a class="el" href="ClusterIdentifier_8cpp_source.html">ClusterIdentifier.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01055">McMd::System::begin()</a>, <a class="el" href="ClusterLink_8h_source.html#l00081">McMd::ClusterLink::clusterId()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00100">Util::ConstPArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="ClusterLink_8h_source.html#l00073">McMd::ClusterLink::molecule()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00064">nCluster()</a>, <a class="el" href="System_8h_source.html#l01036">McMd::System::nMolecule()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01080">McMd::System::begin()</a>, <a class="el" href="ClusterLink_8h_source.html#l00093">McMd::ClusterLink::clusterId()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00100">Util::ConstPArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="ClusterLink_8h_source.html#l00083">McMd::ClusterLink::molecule()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00069">nCluster()</a>, <a class="el" href="System_8h_source.html#l01061">McMd::System::nMolecule()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 <p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">identifyClusters()</a>.</p>
 
@@ -350,7 +349,7 @@ Public Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:27 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

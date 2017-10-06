@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,7 +61,7 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for a Angle Interaction. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00033">33</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00036">36</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">AnglePotential.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -72,10 +71,12 @@ Inheritance diagram for McMd::AnglePotential:</div>
   <img src="classMcMd_1_1AnglePotential.png" usemap="#McMd::AnglePotential_map" alt=""/>
   <map id="McMd::AnglePotential_map" name="McMd::AnglePotential_map">
 <area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="125,112,365,136"/>
+<area href="classMcMd_1_1EnergyCalculator.html" title="Interface for a class that calculates a total energy. " alt="McMd::EnergyCalculator" shape="rect" coords="375,112,615,136"/>
+<area href="classMcMd_1_1StressCalculator.html" title="Interface for a stress calculator. " alt="McMd::StressCalculator" shape="rect" coords="625,112,865,136"/>
 <area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="125,56,365,80"/>
 <area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="0,0,240,24"/>
 <area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="250,0,490,24"/>
-<area href="classMcMd_1_1AnglePotentialImpl.html" title="Implementation template for an AnglePotential. " alt="McMd::AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="125,224,365,248"/>
+<area href="classMcMd_1_1AnglePotentialImpl.html" title="Implementation template for an AnglePotential. " alt="McMd::AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="375,224,615,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -116,18 +117,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a75de72c54ae6129551b185bf3c1c97f3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a75de72c54ae6129551b185bf3c1c97f3">addForces</a> ()</td></tr>
 <tr class="memdesc:a75de72c54ae6129551b185bf3c1c97f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add bond forces to all atomic forces.  <a href="#a75de72c54ae6129551b185bf3c1c97f3">More...</a><br /></td></tr>
 <tr class="separator:a75de72c54ae6129551b185bf3c1c97f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46a4c50e74a143bab7491ae4d2abe90c"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a46a4c50e74a143bab7491ae4d2abe90c">energy</a> () const  =0</td></tr>
-<tr class="memdesc:a46a4c50e74a143bab7491ae4d2abe90c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total angle potential energy for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#a46a4c50e74a143bab7491ae4d2abe90c">More...</a><br /></td></tr>
-<tr class="separator:a46a4c50e74a143bab7491ae4d2abe90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a67ebc5be40f9fee3038d0f6738225e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a4a67ebc5be40f9fee3038d0f6738225e">computeStress</a> (double &amp;stress) const  =0</td></tr>
-<tr class="memdesc:a4a67ebc5be40f9fee3038d0f6738225e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total angle potential isotropic pressure contribution.  <a href="#a4a67ebc5be40f9fee3038d0f6738225e">More...</a><br /></td></tr>
-<tr class="separator:a4a67ebc5be40f9fee3038d0f6738225e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afec6419b4194c8267d4f11141baf121b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#afec6419b4194c8267d4f11141baf121b">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const  =0</td></tr>
-<tr class="memdesc:afec6419b4194c8267d4f11141baf121b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z angle potential pressure components.  <a href="#afec6419b4194c8267d4f11141baf121b">More...</a><br /></td></tr>
-<tr class="separator:afec6419b4194c8267d4f11141baf121b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f6def598e825d41900283ff053e4f3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#aa0f6def598e825d41900283ff053e4f3">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const  =0</td></tr>
-<tr class="memdesc:aa0f6def598e825d41900283ff053e4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute angle potential stress tensor contribution.  <a href="#aa0f6def598e825d41900283ff053e4f3">More...</a><br /></td></tr>
-<tr class="separator:aa0f6def598e825d41900283ff053e4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classUtil_1_1ParamComposite"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classUtil_1_1ParamComposite')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classUtil_1_1ParamComposite.html">Util::ParamComposite</a></td></tr>
 <tr class="memitem:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a873eea7d2dbc19cde816d1bef602496c">ParamComposite</a> ()</td></tr>
 <tr class="memdesc:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a873eea7d2dbc19cde816d1bef602496c">More...</a><br /></td></tr>
@@ -365,6 +354,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#aeadef78f34eee3090a34dd5b6373b8b6">ioCommunicator</a> () const </td></tr>
 <tr class="memdesc:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the MPI communicator by reference.  <a href="#aeadef78f34eee3090a34dd5b6373b8b6">More...</a><br /></td></tr>
 <tr class="separator:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1EnergyCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1EnergyCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1EnergyCalculator.html">McMd::EnergyCalculator</a></td></tr>
+<tr class="memitem:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#afc97619737d45ab11a8126618979d76b">unsetEnergy</a> ()</td></tr>
+<tr class="memdesc:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the energy as unknown.  <a href="#afc97619737d45ab11a8126618979d76b">More...</a><br /></td></tr>
+<tr class="separator:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#ad4f878f06098473b7c42671b5c6cb904">computeEnergy</a> ()=0</td></tr>
+<tr class="memdesc:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#ad4f878f06098473b7c42671b5c6cb904">More...</a><br /></td></tr>
+<tr class="separator:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#a6ad7b79b1b2cc43e85434cfb186e1fab">energy</a> ()</td></tr>
+<tr class="memdesc:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the energy contribution, compute if necessary.  <a href="#a6ad7b79b1b2cc43e85434cfb186e1fab">More...</a><br /></td></tr>
+<tr class="separator:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1StressCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1StressCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1StressCalculator.html">McMd::StressCalculator</a></td></tr>
+<tr class="memitem:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a47d7a699bc99250173936e42f1ae37b8">unsetStress</a> ()</td></tr>
+<tr class="memdesc:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the stress as unknown.  <a href="#a47d7a699bc99250173936e42f1ae37b8">More...</a><br /></td></tr>
+<tr class="separator:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a65a5f57185df3135426536c20009640c">computeStress</a> ()=0</td></tr>
+<tr class="memdesc:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the stress tensor.  <a href="#a65a5f57185df3135426536c20009640c">More...</a><br /></td></tr>
+<tr class="separator:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a03c611d5183c1bf195b23e85c9701d03">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;stress)</td></tr>
+<tr class="memdesc:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pair stress tensor.  <a href="#a03c611d5183c1bf195b23e85c9701d03">More...</a><br /></td></tr>
+<tr class="separator:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#aeaaf6cdb987c031fe1c8f77837054614">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;pressures)</td></tr>
+<tr class="memdesc:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the xx, yy, zz non-Coulomb pair pressures.  <a href="#aeaaf6cdb987c031fe1c8f77837054614">More...</a><br /></td></tr>
+<tr class="separator:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a0a7f135a52bc261ab9fcfd19b6280b9d">computeStress</a> (double &amp;pressure)</td></tr>
+<tr class="memdesc:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scalar pressure.  <a href="#a0a7f135a52bc261ab9fcfd19b6280b9d">More...</a><br /></td></tr>
+<tr class="separator:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -502,7 +517,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#aefa7e7e1d8de9236bb440e3eb44ffe3a">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinear_8cpp_source.html#l00230">McMd::CfbLinear::addAtom()</a>, <a class="el" href="CfbLinear_8cpp_source.html#l00117">McMd::CfbLinear::deleteAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00061">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00378">McMd::McNVTChemicalPotential::load()</a>, <a class="el" href="McSystem_8cpp_source.html#l00448">McMd::McSystem::potentialEnergy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00702">McMd::MdSystem::potentialEnergy()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00117">McMd::McNVTChemicalPotential::sample()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00053">McMd::McEnergyOutput::sample()</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinear_8cpp_source.html#l00240">McMd::CfbLinear::addAtom()</a>, and <a class="el" href="CfbLinear_8cpp_source.html#l00122">McMd::CfbLinear::deleteAtom()</a>.</p>
 
 </div>
 </div>
@@ -624,8 +639,6 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a76d3cd4e0e270497f1b595f6abd8b386">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00378">McMd::McNVTChemicalPotential::load()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00117">McMd::McNVTChemicalPotential::sample()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a7012c359ed4ee4ede7a3671ba8b9db81"></a>
@@ -732,8 +745,6 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#aba1d98aa021a2b2f998258bc3e905924">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00309">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00395">McMd::McSimulation::readCommands()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ad629d3680b22df0e75ef03e5389a4c5a"></a>
@@ -831,7 +842,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculate the covalent bond energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>. </p>
-<p>Default method throws an exception.This allows testing of subclasses that only work for MD simulation, and crash gracefully if used for MC.</p>
+<p>Default implementation throws an exception. This allows testing of subclasses that only work for MD simulation, and crash gracefully if used for MC.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td><a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a> object of interest </td></tr>
@@ -842,11 +853,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a76c94bb506b15b2c6375077d7ee3d173">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00141">141</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00150">150</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00268">McMd::CfbRebridgeBase::addMiddleAtom()</a>, <a class="el" href="McSystem_8cpp_source.html#l00404">McMd::McSystem::atomPotentialEnergy()</a>, and <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00151">McMd::CfbRebridgeBase::deleteMiddleAtom()</a>.</p>
 
 </div>
 </div>
@@ -876,142 +885,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a9d63fc34ffcf68c8a8143aa9a1d2b728">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00153">153</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00162">162</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00659">McMd::MdSystem::calculateForces()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a46a4c50e74a143bab7491ae4d2abe90c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual double McMd::AnglePotential::energy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the total angle potential energy for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a87c587a577ca8527eeb43d69422e958c">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4a67ebc5be40f9fee3038d0f6738225e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute total angle potential isotropic pressure contribution. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
-
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00744">McMd::MdSystem::kineticEnergy()</a>, and <a class="el" href="McSystem_8cpp_source.html#l00448">McMd::McSystem::potentialEnergy()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afec6419b4194c8267d4f11141baf121b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute x, y, z angle potential pressure components. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressure components. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#af3e8ade6a3b35d866f930f0a165e4d09">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa0f6def598e825d41900283ff053e4f3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute angle potential stress tensor contribution. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) stress tensor contribution. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#ab618b6eca188d2162b26b0d51bd4db99">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +899,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:26 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:34 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.4 Command Files</title>
+<title>Simpatico: 2.5 Command Files</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -45,12 +44,13 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.4 Command Files </div>  </div>
+<div class="title">2.5 Command Files </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_param_page.html">2.3 Parameter Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_cfgfile_page.html">2.5 Configuration Files</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_param_page.html">2.4 Parameter Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_cfgfile_page.html">2.6 Configuration Files</a> (Next) <br />
 </p>
-<p>For any Simpatico simulation program, after the parameter file is processed by the readParam() method, the progress of a simulation is controlled by a command file, which is processed by a readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file.</p>
+<p>For any Simpatico simulation program, after the parameter file is processed by the readParam() method, the progress of a simulation is controlled by a command file, which is processed by a readCommand() method. The name of the command file is usually specified in command line argument that invokes the program, as an argument of the -c command line option. If the name of the command file is not specified in the command line, it can instead by given in the parameter file as the value of the optional commandFileName parameter in the FileMaster block of the parameter file.</p>
+<p>If the command file name given by the special string "paramfile", the program will assume that command file has been appended to the end of the parameter file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to read commands from the parameter file rather than from a separate command file.</p>
 <p>The command file contains a sequence of one-line commands that are read and executed in sequence. Each command begins with an all upper case label. Some commands take one or more parameters, which must appear after the upper case label, separated by spaces. The script stops execution when it encounters the command string 'FINISH' on a line by itself.</p>
 <h1><a class="anchor" id="example_sec"></a>
 Example</h1>
@@ -118,12 +118,12 @@ Commands</h1>
 </table>
 <p>The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled, respectively.</p>
 <p><br />
- <a class="el" href="user_param_page.html">2.3 Parameter Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_cfgfile_page.html">2.5 Configuration Files</a> (Next) </p>
+ <a class="el" href="user_param_page.html">2.4 Parameter Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_cfgfile_page.html">2.6 Configuration Files</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

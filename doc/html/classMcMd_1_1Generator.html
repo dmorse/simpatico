@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -64,7 +63,7 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generates initial configurations for molecules of one species. </p>
 
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00034">34</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8h_source.html#l00038">38</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Generator_8h_source.html">Generator.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -80,35 +79,32 @@ Inheritance diagram for McMd::Generator:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7184360a1eba1d587127acd55a759eb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a7184360a1eba1d587127acd55a759eb7">Generator</a> (<a class="el" href="classMcMd_1_1Species.html">Species</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#a78e29160342f685290d2310a937486ab">species</a>, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#a779addeda34db44812e99e3fee9fa007">system</a>)</td></tr>
+<tr class="memitem:a7184360a1eba1d587127acd55a759eb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a7184360a1eba1d587127acd55a759eb7">Generator</a> (<a class="el" href="classSimp_1_1Species.html">Species</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#a78e29160342f685290d2310a937486ab">species</a>, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#a779addeda34db44812e99e3fee9fa007">system</a>)</td></tr>
 <tr class="memdesc:a7184360a1eba1d587127acd55a759eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a7184360a1eba1d587127acd55a759eb7">More...</a><br /></td></tr>
 <tr class="separator:a7184360a1eba1d587127acd55a759eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cdad63258eceb95e2ff97b2c3a02ba6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a7cdad63258eceb95e2ff97b2c3a02ba6">~Generator</a> ()</td></tr>
 <tr class="memdesc:a7cdad63258eceb95e2ff97b2c3a02ba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a7cdad63258eceb95e2ff97b2c3a02ba6">More...</a><br /></td></tr>
 <tr class="separator:a7cdad63258eceb95e2ff97b2c3a02ba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83b59e99e5f2a0567feaa2ef67732c3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a83b59e99e5f2a0567feaa2ef67732c3b">setBondPotential</a> (<a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#aa871427f500d7af0efcaa58ba67b3f22">bondPotential</a>)</td></tr>
-<tr class="memdesc:a83b59e99e5f2a0567feaa2ef67732c3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an association with a <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a>.  <a href="#a83b59e99e5f2a0567feaa2ef67732c3b">More...</a><br /></td></tr>
-<tr class="separator:a83b59e99e5f2a0567feaa2ef67732c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8467655834639072ef03419258ab00fe"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a8467655834639072ef03419258ab00fe">generate</a> (int nMolecule, const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
-<tr class="memdesc:a8467655834639072ef03419258ab00fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate nMolecule molecules of the associated <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a>.  <a href="#a8467655834639072ef03419258ab00fe">More...</a><br /></td></tr>
-<tr class="separator:a8467655834639072ef03419258ab00fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1279b2fa415de0b01e1499bdda1827f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#ab1279b2fa415de0b01e1499bdda1827f">generate</a> (int nMolecule, <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; const &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
+<tr class="memdesc:ab1279b2fa415de0b01e1499bdda1827f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate nMolecule molecules of the associated Species.  <a href="#ab1279b2fa415de0b01e1499bdda1827f">More...</a><br /></td></tr>
+<tr class="separator:ab1279b2fa415de0b01e1499bdda1827f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a68bb840d1a45cf7bd6fa7fc1ee78459d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a68bb840d1a45cf7bd6fa7fc1ee78459d">setupCellList</a> (int atomCapacity, <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#acdeccb27073372d6f74cf15e81486acf">boundary</a>, const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
-<tr class="memdesc:a68bb840d1a45cf7bd6fa7fc1ee78459d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate any required memory for the cell list.  <a href="#a68bb840d1a45cf7bd6fa7fc1ee78459d">More...</a><br /></td></tr>
-<tr class="separator:a68bb840d1a45cf7bd6fa7fc1ee78459d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a160049c661033bc9bcd46dc2ff767039"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a160049c661033bc9bcd46dc2ff767039">setupCellList</a> (int atomCapacity, <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;<a class="el" href="classMcMd_1_1Generator.html#acdeccb27073372d6f74cf15e81486acf">boundary</a>, const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
+<tr class="memdesc:a160049c661033bc9bcd46dc2ff767039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate any required memory for the cell list.  <a href="#a160049c661033bc9bcd46dc2ff767039">More...</a><br /></td></tr>
+<tr class="separator:a160049c661033bc9bcd46dc2ff767039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a9507751288bdf8b5cf5811c289f1fbce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a9507751288bdf8b5cf5811c289f1fbce">attemptPlaceAtom</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
-<tr class="memdesc:a9507751288bdf8b5cf5811c289f1fbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt to place an atom.  <a href="#a9507751288bdf8b5cf5811c289f1fbce">More...</a><br /></td></tr>
-<tr class="separator:a9507751288bdf8b5cf5811c289f1fbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1eb5fbce4d4c8de51994dd457a12174"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#af1eb5fbce4d4c8de51994dd457a12174">attemptPlaceMolecule</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule, const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)=0</td></tr>
-<tr class="memdesc:af1eb5fbce4d4c8de51994dd457a12174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt to insert an entire molecule (pure virtual).  <a href="#af1eb5fbce4d4c8de51994dd457a12174">More...</a><br /></td></tr>
-<tr class="separator:af1eb5fbce4d4c8de51994dd457a12174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e29160342f685290d2310a937486ab"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1Species.html">Species</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a78e29160342f685290d2310a937486ab">species</a> ()</td></tr>
-<tr class="memdesc:a78e29160342f685290d2310a937486ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> by reference.  <a href="#a78e29160342f685290d2310a937486ab">More...</a><br /></td></tr>
+<tr class="memitem:a0982a24410206334c2dd00e09c7af1dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a0982a24410206334c2dd00e09c7af1dc">attemptPlaceAtom</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
+<tr class="memdesc:a0982a24410206334c2dd00e09c7af1dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt to place an atom.  <a href="#a0982a24410206334c2dd00e09c7af1dc">More...</a><br /></td></tr>
+<tr class="separator:a0982a24410206334c2dd00e09c7af1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a650218cd6f5e8329399a2c4f0d2a99d8"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a650218cd6f5e8329399a2c4f0d2a99d8">attemptPlaceMolecule</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule, const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;diameters, <a class="el" href="classMcMd_1_1CellList.html">CellList</a> &amp;cellList)=0</td></tr>
+<tr class="memdesc:a650218cd6f5e8329399a2c4f0d2a99d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt to insert an entire molecule (pure virtual).  <a href="#a650218cd6f5e8329399a2c4f0d2a99d8">More...</a><br /></td></tr>
+<tr class="separator:a650218cd6f5e8329399a2c4f0d2a99d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78e29160342f685290d2310a937486ab"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classSimp_1_1Species.html">Species</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#a78e29160342f685290d2310a937486ab">species</a> ()</td></tr>
+<tr class="memdesc:a78e29160342f685290d2310a937486ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated Species by reference.  <a href="#a78e29160342f685290d2310a937486ab">More...</a><br /></td></tr>
 <tr class="separator:a78e29160342f685290d2310a937486ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6711514a5f29fc3cab11100cab65caf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#ac6711514a5f29fc3cab11100cab65caf">simulation</a> ()</td></tr>
 <tr class="memdesc:ac6711514a5f29fc3cab11100cab65caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others. ">Simulation</a> by reference.  <a href="#ac6711514a5f29fc3cab11100cab65caf">More...</a><br /></td></tr>
@@ -119,9 +115,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:acdeccb27073372d6f74cf15e81486acf"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#acdeccb27073372d6f74cf15e81486acf">boundary</a> () const </td></tr>
 <tr class="memdesc:acdeccb27073372d6f74cf15e81486acf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated Boundary by reference.  <a href="#acdeccb27073372d6f74cf15e81486acf">More...</a><br /></td></tr>
 <tr class="separator:acdeccb27073372d6f74cf15e81486acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa871427f500d7af0efcaa58ba67b3f22"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Generator.html#aa871427f500d7af0efcaa58ba67b3f22">bondPotential</a> ()</td></tr>
-<tr class="memdesc:aa871427f500d7af0efcaa58ba67b3f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a> by reference.  <a href="#aa871427f500d7af0efcaa58ba67b3f22">More...</a><br /></td></tr>
-<tr class="separator:aa871427f500d7af0efcaa58ba67b3f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7184360a1eba1d587127acd55a759eb7"></a>
@@ -131,7 +124,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="memname">McMd::Generator::Generator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classMcMd_1_1Species.html">Species</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classSimp_1_1Species.html">Species</a> &amp;&#160;</td>
           <td class="paramname"><em>species</em>, </td>
         </tr>
         <tr>
@@ -151,13 +144,13 @@ Protected Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">species</td><td>associated <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> object </td></tr>
+    <tr><td class="paramname">species</td><td>associated Species object </td></tr>
     <tr><td class="paramname">system</td><td>parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00024">24</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00025">25</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,42 +177,12 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00035">35</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00036">36</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a83b59e99e5f2a0567feaa2ef67732c3b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void McMd::Generator::setBondPotential </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td>
-          <td class="paramname"><em>bondPotential</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create an association with a <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bondPotential</td><td><a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00042">42</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
-
-<p>References <a class="el" href="Generator_8h_source.html#l00205">bondPotential()</a>.</p>
-
-<p>Referenced by <a class="el" href="generatorFactory_8cpp_source.html#l00025">McMd::generatorFactory()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8467655834639072ef03419258ab00fe"></a>
+<a class="anchor" id="ab1279b2fa415de0b01e1499bdda1827f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -235,7 +198,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; const &amp;&#160;</td>
           <td class="paramname"><em>diameters</em>, </td>
         </tr>
         <tr>
@@ -257,7 +220,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generate nMolecule molecules of the associated <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a>. </p>
+<p>Generate nMolecule molecules of the associated Species. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>Size of diameters array == number of atom types</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -268,15 +231,15 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00084">84</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00085">85</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00981">McMd::System::addMolecule()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00216">McMd::CellList::atomCapacity()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00729">McMd::Simulation::atomCapacity()</a>, <a class="el" href="classMcMd_1_1Generator.html#af1eb5fbce4d4c8de51994dd457a12174">attemptPlaceMolecule()</a>, <a class="el" href="Log_8cpp_source.html#l00057">Util::Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00820">McMd::Simulation::getMolecule()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00509">McMd::Species::id()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00599">McMd::Species::isMutable()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00605">McMd::Species::mutator()</a>, <a class="el" href="System_8cpp_source.html#l00999">McMd::System::removeMolecule()</a>, <a class="el" href="classMcMd_1_1SpeciesMutator.html#a1a51a86513e252896453feb55083098c">McMd::SpeciesMutator::setMoleculeState()</a>, <a class="el" href="Generator_8h_source.html#l00186">simulation()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, <a class="el" href="Generator_8h_source.html#l00180">species()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="Generator_8h_source.html#l00192">system()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l01018">McMd::System::addMolecule()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00216">McMd::CellList::atomCapacity()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00732">McMd::Simulation::atomCapacity()</a>, <a class="el" href="classMcMd_1_1Generator.html#a650218cd6f5e8329399a2c4f0d2a99d8">attemptPlaceMolecule()</a>, <a class="el" href="Log_8cpp_source.html#l00057">Util::Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00853">McMd::Simulation::getMolecule()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00514">Simp::Species::id()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00604">Simp::Species::isMutable()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00610">Simp::Species::mutator()</a>, <a class="el" href="System_8cpp_source.html#l01036">McMd::System::removeMolecule()</a>, <a class="el" href="classMcMd_1_1SpeciesMutator.html#a1a51a86513e252896453feb55083098c">McMd::SpeciesMutator::setMoleculeState()</a>, <a class="el" href="Generator_8h_source.html#l00190">simulation()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, <a class="el" href="Generator_8h_source.html#l00184">species()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="Generator_8h_source.html#l00196">system()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00309">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00395">McMd::McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00409">McMd::McSystem::generateMolecules()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00632">McMd::MdSystem::generateMolecules()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a68bb840d1a45cf7bd6fa7fc1ee78459d"></a>
+<a class="anchor" id="a160049c661033bc9bcd46dc2ff767039"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -298,7 +261,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;&#160;</td>
           <td class="paramname"><em>diameters</em>, </td>
         </tr>
         <tr>
@@ -331,15 +294,15 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00128">128</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00129">129</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
 
 <p>References <a class="el" href="Array_8h_source.html#l00153">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00093">McMd::CellList::setAtomCapacity()</a>, and <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00114">McMd::CellList::setup()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00309">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00395">McMd::McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00409">McMd::McSystem::generateMolecules()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00632">McMd::MdSystem::generateMolecules()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9507751288bdf8b5cf5811c289f1fbce"></a>
+<a class="anchor" id="a0982a24410206334c2dd00e09c7af1dc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -355,7 +318,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;&#160;</td>
           <td class="paramname"><em>diameters</em>, </td>
         </tr>
         <tr>
@@ -389,15 +352,15 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success, false on failure. </dd></dl>
 
-<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00049">49</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8cpp_source.html#l00050">50</a> of file <a class="el" href="Generator_8cpp_source.html">Generator.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00396">McMd::CellList::addAtom()</a>, <a class="el" href="Generator_8h_source.html#l00198">boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">McMd::CellList::getNeighbors()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
+<p>References <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00396">McMd::CellList::addAtom()</a>, <a class="el" href="Generator_8h_source.html#l00202">boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">McMd::CellList::getNeighbors()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
 
-<p>Referenced by <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="LinearGenerator_8cpp_source.html#l00030">McMd::LinearGenerator::attemptPlaceMolecule()</a>.</p>
+<p>Referenced by <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="LinearGenerator_8cpp_source.html#l00032">McMd::LinearGenerator::attemptPlaceMolecule()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af1eb5fbce4d4c8de51994dd457a12174"></a>
+<a class="anchor" id="a650218cd6f5e8329399a2c4f0d2a99d8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -413,7 +376,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; double &gt; &amp;&#160;</td>
           <td class="paramname"><em>diameters</em>, </td>
         </tr>
         <tr>
@@ -446,9 +409,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true on success, false on failure. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1LinearGenerator.html#ab64cab76f877da04cd92595045d011a9">McMd::LinearGenerator</a>, and <a class="el" href="classMcMd_1_1PointGenerator.html#ad0d2431739006625bc751be585412fba">McMd::PointGenerator</a>.</p>
-
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00084">generate()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00085">generate()</a>.</p>
 
 </div>
 </div>
@@ -460,7 +421,7 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1Species.html">Species</a> &amp; McMd::Generator::species </td>
+          <td class="memname">const <a class="el" href="classSimp_1_1Species.html">Species</a> &amp; McMd::Generator::species </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -473,11 +434,11 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get the associated <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> by reference. </p>
+<p>Get the associated Species by reference. </p>
 
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00180">180</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8h_source.html#l00184">184</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LinearGenerator_8cpp_source.html#l00030">McMd::LinearGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="Generator_8cpp_source.html#l00084">generate()</a>.</p>
+<p>Referenced by <a class="el" href="LinearGenerator_8cpp_source.html#l00032">McMd::LinearGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="Generator_8cpp_source.html#l00085">generate()</a>.</p>
 
 </div>
 </div>
@@ -504,9 +465,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others. ">Simulation</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00186">186</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8h_source.html#l00190">190</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, <a class="el" href="LinearGenerator_8cpp_source.html#l00030">McMd::LinearGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="Generator_8cpp_source.html#l00084">generate()</a>.</p>
+<p>Referenced by <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, <a class="el" href="LinearGenerator_8cpp_source.html#l00032">McMd::LinearGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="Generator_8cpp_source.html#l00085">generate()</a>.</p>
 
 </div>
 </div>
@@ -533,9 +494,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00192">192</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8h_source.html#l00196">196</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00084">generate()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00085">generate()</a>.</p>
 
 </div>
 </div>
@@ -562,38 +523,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated Boundary by reference. </p>
 
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00198">198</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
+<p>Definition at line <a class="el" href="Generator_8h_source.html#l00202">202</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00049">attemptPlaceAtom()</a>, <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="LinearGenerator_8cpp_source.html#l00030">McMd::LinearGenerator::attemptPlaceMolecule()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa871427f500d7af0efcaa58ba67b3f22"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp; McMd::Generator::bondPotential </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the associated <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a> by reference. </p>
-
-<p>Definition at line <a class="el" href="Generator_8h_source.html#l00205">205</a> of file <a class="el" href="Generator_8h_source.html">Generator.h</a>.</p>
-
-<p>Referenced by <a class="el" href="LinearGenerator_8cpp_source.html#l00030">McMd::LinearGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="Generator_8cpp_source.html#l00042">setBondPotential()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00050">attemptPlaceAtom()</a>, <a class="el" href="PointGenerator_8cpp_source.html#l00028">McMd::PointGenerator::attemptPlaceMolecule()</a>, and <a class="el" href="LinearGenerator_8cpp_source.html#l00032">McMd::LinearGenerator::attemptPlaceMolecule()</a>.</p>
 
 </div>
 </div>
@@ -605,7 +537,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:28 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

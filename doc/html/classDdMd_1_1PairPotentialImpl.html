@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -65,9 +64,9 @@
 class DdMd::PairPotentialImpl&lt; Interaction &gt;</h3>
 
 <p>Implementation template for a <a class="el" href="classDdMd_1_1PairPotential.html" title="Abstract base class for computing nonbonded pair forces and energies. ">PairPotential</a>. </p>
-<p>This template provides a concrete implementation of the <a class="el" href="classDdMd_1_1PairPotential.html" title="Abstract base class for computing nonbonded pair forces and energies. ">PairPotential</a> base class for a specific nonbonded pair interaction class, representing a specific functional form for the pair potential (e.g., cutoff Lennard-Jones). The template argument Interaction represents the specified pair interaction class (e.g., LJPair for cutoff Lennard-Jones), which is normally a class in the <a class="el" href="namespaceInter.html" title="Potential energy interaction functions. ">Inter</a> namespace from the src/inter/pair directory. </p>
+<p>This template provides a concrete implementation of the <a class="el" href="classDdMd_1_1PairPotential.html" title="Abstract base class for computing nonbonded pair forces and energies. ">PairPotential</a> base class for a specific nonbonded pair interaction class, representing a specific functional form for the pair potential (e.g., cutoff Lennard-Jones). The template argument Interaction represents the specified pair interaction class (e.g., LJPair for cutoff Lennard-Jones), which is normally a class in the <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace from the src/simp/pair directory. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00041">41</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00042">42</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -587,9 +586,9 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00332">332</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00338">338</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01240">DdMd::Simulation::nAtomType()</a>, and <a class="el" href="PairPotentialImpl_8h_source.html#l00366">DdMd::PairPotentialImpl&lt; Interaction &gt;::setNAtomType()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01234">DdMd::Simulation::nAtomType()</a>, and <a class="el" href="PairPotentialImpl_8h_source.html#l00372">DdMd::PairPotentialImpl&lt; Interaction &gt;::setNAtomType()</a>.</p>
 
 </div>
 </div>
@@ -610,7 +609,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Default constructor (for unit testing). </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00345">345</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00351">351</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -639,7 +638,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00355">355</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00361">361</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -673,11 +672,11 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a0df5d6195d10bbcba48f89db827829d2">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00366">366</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00372">372</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00332">DdMd::PairPotentialImpl&lt; Interaction &gt;::PairPotentialImpl()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00338">DdMd::PairPotentialImpl&lt; Interaction &gt;::PairPotentialImpl()</a>.</p>
 
 </div>
 </div>
@@ -719,9 +718,9 @@ This object may not already be initialized</dd></dl>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1PairPotential.html#a67051f54c0b62005bc0a52e95b11a934">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00377">377</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00383">383</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">DdMd::PairPotential::readParameters()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">DdMd::PairPotential::readParameters()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
 
 </div>
 </div>
@@ -763,9 +762,9 @@ This object may not already be initialized</dd></dl>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1PairPotential.html#a311924d374e82e24e827b3d8f94df141">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00397">397</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00403">403</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">DdMd::PairPotential::loadParameters()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00249">Util::ParamComposite::addParamComposite()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">DdMd::PairPotential::loadParameters()</a>, and <a class="el" href="global_8h_source.html#l00068">UTIL_CHECK</a>.</p>
 
 </div>
 </div>
@@ -804,9 +803,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1PairPotential.html#af66dad128cc52bbab8a903ebf1162452">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00413">413</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00419">419</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">DdMd::PairPotential::save()</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">DdMd::PairPotential::save()</a>.</p>
 
 </div>
 </div>
@@ -863,9 +862,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#ae5af217d005a9d6ca651fef1b43b55b7">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00423">423</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00429">429</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -922,9 +921,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a40913e4731e9b1b0d55ebbfe5fad165c">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00431">431</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00437">437</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -987,7 +986,7 @@ template&lt;class Interaction&gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#ad7c9908f7b4776331f468fd39e4a44ea">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00146">146</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00147">147</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -1043,7 +1042,7 @@ template&lt;class Interaction&gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a8d2a1ca344ea9840a7209e4530ecdac5">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00156">156</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00157">157</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -1074,9 +1073,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00445">445</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00451">451</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -1107,9 +1106,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a2f467b489c527ffb799e9905d136538b">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00452">452</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00458">458</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00172">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
+<p>References <a class="el" href="PairPotentialImpl_8h_source.html#l00173">DdMd::PairPotentialImpl&lt; Interaction &gt;::interaction()</a>.</p>
 
 </div>
 </div>
@@ -1138,9 +1137,9 @@ template&lt;class Interaction&gt; </div>
 
 <p>Return underlying pair interaction object by const reference. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00172">172</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00173">173</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00452">DdMd::PairPotentialImpl&lt; Interaction &gt;::interactionClassName()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00397">DdMd::PairPotentialImpl&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00445">DdMd::PairPotentialImpl&lt; Interaction &gt;::maxPairCutoff()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00423">DdMd::PairPotentialImpl&lt; Interaction &gt;::pairEnergy()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00431">DdMd::PairPotentialImpl&lt; Interaction &gt;::pairForceOverR()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00377">DdMd::PairPotentialImpl&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00413">DdMd::PairPotentialImpl&lt; Interaction &gt;::save()</a>, and <a class="el" href="PairPotentialImpl_8h_source.html#l00366">DdMd::PairPotentialImpl&lt; Interaction &gt;::setNAtomType()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00458">DdMd::PairPotentialImpl&lt; Interaction &gt;::interactionClassName()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00403">DdMd::PairPotentialImpl&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00451">DdMd::PairPotentialImpl&lt; Interaction &gt;::maxPairCutoff()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00429">DdMd::PairPotentialImpl&lt; Interaction &gt;::pairEnergy()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00437">DdMd::PairPotentialImpl&lt; Interaction &gt;::pairForceOverR()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00383">DdMd::PairPotentialImpl&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00419">DdMd::PairPotentialImpl&lt; Interaction &gt;::save()</a>, and <a class="el" href="PairPotentialImpl_8h_source.html#l00372">DdMd::PairPotentialImpl&lt; Interaction &gt;::setNAtomType()</a>.</p>
 
 </div>
 </div>
@@ -1169,7 +1168,7 @@ template&lt;class Interaction&gt; </div>
 
 <p>Return underlying pair interaction object by reference. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00178">178</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00179">179</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -1201,11 +1200,11 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1Potential.html#ac7aa9e76573ba14b7fa8a1924543a053">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00459">459</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00465">465</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00397">DdMd::PairPotential::methodId()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l01016">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l01023">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>.</p>
 
 </div>
 </div>
@@ -1238,7 +1237,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1Potential.html#a4e88eaa5bfc37822ae1132c0f157ddfd">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00477">477</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00483">483</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00447">DdMd::CellList::begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">DdMd::PairPotential::cellList_</a>, <a class="el" href="Potential_8cpp_source.html#l00039">DdMd::Potential::energy()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">DdMd::Atom::force()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00046">DdMd::Cell::getNeighbors()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="Potential_8cpp_source.html#l00057">DdMd::Potential::isEnergySet()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00397">DdMd::PairPotential::methodId()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00301">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00317">DdMd::Cell::nextCellPtr()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00261">DdMd::PairList::nPair()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8cpp_source.html#l00120">DdMd::Potential::reduceEnergy()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">DdMd::PairPotential::storage()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -1273,9 +1272,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Potential.html#a256c5e027422d8ea1ab4203d3d2eaba4">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00949">949</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00956">956</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">DdMd::PairPotential::boundary()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="Potential_8h_source.html#l00235">DdMd::Potential::incrementPairStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="Potential_8cpp_source.html#l00094">DdMd::Potential::isStressSet()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8cpp_source.html#l00142">DdMd::Potential::reduceStress()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, and <a class="el" href="Tensor_8h_source.html#l00429">Util::Tensor::zero()</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">DdMd::PairPotential::boundary()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="Potential_8h_source.html#l00235">DdMd::Potential::incrementPairStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="Potential_8cpp_source.html#l00094">DdMd::Potential::isStressSet()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8cpp_source.html#l00142">DdMd::Potential::reduceStress()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, and <a class="el" href="Tensor_8h_source.html#l00441">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -1308,9 +1307,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#af394f480c6c9046cc4672e980154b395">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l01091">1091</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l01098">1098</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00163">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00223">DdMd::PairPotential::setPairEnergies()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00229">DdMd::PairPotential::unsetPairEnergies()</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00223">DdMd::PairPotential::setPairEnergies()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00229">DdMd::PairPotential::unsetPairEnergies()</a>.</p>
 
 </div>
 </div>
@@ -1343,9 +1342,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Potential.html#a9dffbbb623977295ba0f532dbce80625">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l01016">1016</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l01023">1023</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">DdMd::PairPotential::boundary()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00459">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">DdMd::Atom::force()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="Potential_8h_source.html#l00235">DdMd::Potential::incrementPairStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="Potential_8cpp_source.html#l00094">DdMd::Potential::isStressSet()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8cpp_source.html#l00142">DdMd::Potential::reduceStress()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, and <a class="el" href="Tensor_8h_source.html#l00429">Util::Tensor::zero()</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">DdMd::PairPotential::boundary()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00465">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">DdMd::Atom::force()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="Potential_8h_source.html#l00235">DdMd::Potential::incrementPairStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="Potential_8cpp_source.html#l00094">DdMd::Potential::isStressSet()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">DdMd::PairPotential::pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8cpp_source.html#l00142">DdMd::Potential::reduceStress()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, and <a class="el" href="Tensor_8h_source.html#l00441">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -1356,7 +1355,7 @@ template&lt;class Interaction &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:33 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -150,10 +149,6 @@
 <li>addEndAtom()
 : <a class="el" href="classMcMd_1_1CfbEndBase.html#a2656f9e9d218ddd0b8b165d3084b21d6">McMd::CfbEndBase</a>
 </li>
-<li>addFactories()
-: <a class="el" href="classMcMd_1_1McModule.html#ae03d13b426df81f689966bc9cb831b85">McMd::McModule</a>
-, <a class="el" href="classMcMd_1_1MdModule.html#a786ebfb281ddb4f056be5d046cb9bd50">McMd::MdModule</a>
-</li>
 <li>addFilePrefix()
 : <a class="el" href="classCompositeTestRunner.html#a82bcc97f1d88455c6d1d5f3a88041a5f">CompositeTestRunner</a>
 , <a class="el" href="classTestRunner.html#ae977948edaf2121faa85af96b7aefdcf">TestRunner</a>
@@ -168,8 +163,12 @@
 , <a class="el" href="classMcMd_1_1ExternalPotential.html#a13c89076210d5b5726ef552f8ee969ab">McMd::ExternalPotential</a>
 , <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#acef02fbf9e69068efc058ae2bf52a98b">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>
 , <a class="el" href="classMcMd_1_1LinkPotentialImpl.html#ac1806d970b68d00be813549d904596ef">McMd::LinkPotentialImpl&lt; Interaction &gt;</a>
+, <a class="el" href="classMcMd_1_1MdCoulombPotential.html#a528e110ec96eb5c4fe022238147006cc">McMd::MdCoulombPotential</a>
+, <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#af798c56086b90b8ee5c3610f22211304">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>
+, <a class="el" href="classMcMd_1_1MdEwaldPotential.html#a66ab22cac2ef030aad6bd2de8de28950">McMd::MdEwaldPotential</a>
 , <a class="el" href="classMcMd_1_1MdPairPotential.html#a8a932498c7a68f5bfc9a77c2e4169808">McMd::MdPairPotential</a>
 , <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a03f4f89ed62a5488900cb1815fa1d8ab">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>
+, <a class="el" href="classMcMd_1_1MdSpmePotential.html#ade811f889ae08086d06cbba394cfd9cc">McMd::MdSpmePotential</a>
 </li>
 <li>addGhost()
 : <a class="el" href="classDdMd_1_1AtomMap.html#aa6fcefad6417368e34a744ae9619747d">DdMd::AtomMap</a>
@@ -230,7 +229,7 @@
 , <a class="el" href="classDdMd_1_1GroupDistributor.html#a59b058e40e3205586cf2bdc9162e24ac">DdMd::GroupDistributor&lt; N &gt;</a>
 , <a class="el" href="classDdMd_1_1PairList.html#a6f4378807386780d0c0c84c56098ad2f">DdMd::PairList</a>
 , <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab">McMd::Atom</a>
-, <a class="el" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca">McMd::Species</a>
+, <a class="el" href="classSimp_1_1Species.html#a4b73439deb2ff2ba9df54c3c9a738781">Simp::Species</a>
 , <a class="el" href="classTools_1_1AtomStorage.html#a9b0c5db39cb71f2f0a223d60e91e7ad8">Tools::AtomStorage</a>
 , <a class="el" href="classTools_1_1CellList.html#a022c78bcce1e345ec9e10feea75ba740">Tools::CellList</a>
 , <a class="el" href="classUtil_1_1ArraySet.html#a5c12e86ed6a4c2051b32c348991779cc">Util::ArraySet&lt; Data &gt;</a>
@@ -259,6 +258,9 @@
 </li>
 <li>allowed()
 : <a class="el" href="classUtil_1_1FlagSet.html#af6b90ad4d79d218229924beb20d5bd34">Util::FlagSet</a>
+</li>
+<li>alpha()
+: <a class="el" href="classSimp_1_1EwaldInteraction.html#a4ba07f09d6127978037c1cb3dfedc75d">Simp::EwaldInteraction</a>
 </li>
 <li>analyzeConfigs()
 : <a class="el" href="classMcMd_1_1McSimulation.html#ac7c29734097be7866552493b24e1a3a3">McMd::McSimulation</a>
@@ -296,81 +298,28 @@
 , <a class="el" href="classMcMd_1_1MdSimulation.html#a0d185e5d21c67cad206f95b8365e2022">McMd::MdSimulation</a>
 , <a class="el" href="classTools_1_1Processor.html#a095dc7b569a8ae0e1ba2aa7822a503a3">Tools::Processor</a>
 </li>
-<li>angle()
-: <a class="el" href="classMcMd_1_1Molecule.html#a9233fdbb563b2fcdf30189cacfaaa60d">McMd::Molecule</a>
-</li>
-<li>angleCapacity()
-: <a class="el" href="classMcMd_1_1Simulation.html#a8b2d1eab807aed5cf6310ae385bdcbf5">McMd::Simulation</a>
-</li>
-<li>angleCollector()
-: <a class="el" href="classDdMd_1_1ConfigIo.html#a00c727e230ce06dcd89b4b19f4050a02">DdMd::ConfigIo</a>
-, <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a0bbaa9ae558c9da18dca89c574cbc3f5">DdMd::TrajectoryWriter</a>
-</li>
-<li>angleDistributor()
-: <a class="el" href="classDdMd_1_1ConfigIo.html#a0d0b4e989294e63495b53d24b1cc4912">DdMd::ConfigIo</a>
-</li>
 <li>angleEnergy()
 : <a class="el" href="classDdMd_1_1AnglePotential.html#a39dcd26c9125c7cb7c2c12677813b98f">DdMd::AnglePotential</a>
 , <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a541e56041783abce9f1e1e4a9c9fc90a">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>
-, <a class="el" href="classMcMd_1_1GroupRebridgeBase.html#acb95a3d6dbb65fe692be24667cf24caa">McMd::GroupRebridgeBase</a>
 </li>
 <li>AngleFactory()
 : <a class="el" href="classDdMd_1_1AngleFactory.html#a9437d69e2625e2bcdbeab9bc5f2a31ce">DdMd::AngleFactory</a>
-</li>
-<li>angleFactory()
-: <a class="el" href="classDdMd_1_1Simulation.html#ac65c089925ada362d8c28d83890e2e0a">DdMd::Simulation</a>
-</li>
-<li>AngleFactory()
-: <a class="el" href="classMcMd_1_1AngleFactory.html#a27fe22283612bbbb4dd1165f149eacf6">McMd::AngleFactory</a>
-</li>
-<li>angleFactory()
-: <a class="el" href="classMcMd_1_1System.html#a3fd031b5779c3b48d73d768ed815ea53">McMd::System</a>
+, <a class="el" href="classMcMd_1_1AngleFactory.html#a27fe22283612bbbb4dd1165f149eacf6">McMd::AngleFactory</a>
 </li>
 <li>angleForce()
 : <a class="el" href="classDdMd_1_1AnglePotential.html#a7de1d97cb9ae2b54e5e509befab44cb2">DdMd::AnglePotential</a>
 , <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a6d002003d405dbdbf21bd6ae958ae902">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>
 </li>
-<li>AngleIterator
-: <a class="el" href="classMcMd_1_1Molecule.html#a3dca04e90002ce2ec118ebd5ecaa8bad">McMd::Molecule</a>
-</li>
 <li>AnglePotential()
 : <a class="el" href="classDdMd_1_1AnglePotential.html#a9491c51310938d90d00878f1aca252ad">DdMd::AnglePotential</a>
-</li>
-<li>anglePotential()
-: <a class="el" href="classDdMd_1_1Simulation.html#a43e2adcccb9270fd212e21ea0a922469">DdMd::Simulation</a>
-, <a class="el" href="classDdMd_1_1SimulationAccess.html#a2c35b5b6d1f297a128d468644f0cc6ed">DdMd::SimulationAccess</a>
-</li>
-<li>AnglePotential()
-: <a class="el" href="classMcMd_1_1AnglePotential.html#ac0ffcb6e42de0fbfed10a39398eba97b">McMd::AnglePotential</a>
-</li>
-<li>anglePotential()
-: <a class="el" href="classMcMd_1_1McSystem.html#af48d722b9c2f95ce28258ff6bd5ffe5d">McMd::McSystem</a>
-, <a class="el" href="classMcMd_1_1McSystemAccess.html#ad8eaf518bc1c08af22442b14cff5268d">McMd::McSystemAccess</a>
-, <a class="el" href="classMcMd_1_1MdSystem.html#a10f0d3a1f7cf0cca59517d5865a2126f">McMd::MdSystem</a>
+, <a class="el" href="classMcMd_1_1AnglePotential.html#ac0ffcb6e42de0fbfed10a39398eba97b">McMd::AnglePotential</a>
 </li>
 <li>AnglePotentialImpl()
 : <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#af9156b2b86fd5d8445952f3a328b2402">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>
 , <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a37c89bb2904a9a07da202ad7ba61ee29">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>
 </li>
-<li>angles()
-: <a class="el" href="classTools_1_1Configuration.html#acea3a7c1a36522c6fc14660befcff913">Tools::Configuration</a>
-, <a class="el" href="classTools_1_1TrajectoryWriter.html#ab351de8c11f3b4888a60f0ce48e95057">Tools::TrajectoryWriter</a>
-</li>
 <li>AngleStorage()
 : <a class="el" href="classDdMd_1_1AngleStorage.html#a90b5c0947f60841523862842072a3e76">DdMd::AngleStorage</a>
-</li>
-<li>angleStorage()
-: <a class="el" href="classDdMd_1_1ConfigIo.html#a870686669ebe5cc842f54226f9146403">DdMd::ConfigIo</a>
-, <a class="el" href="classDdMd_1_1Simulation.html#a552a3d54ebe01ae31fbee38fd0f6a21a">DdMd::Simulation</a>
-, <a class="el" href="classDdMd_1_1SimulationAccess.html#a96e995f80a83f7da6df8ca73c6be9e34">DdMd::SimulationAccess</a>
-, <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a1c57d1bdd720ccf61c23a3247cf84d5f">DdMd::TrajectoryWriter</a>
-</li>
-<li>angleStyle()
-: <a class="el" href="classDdMd_1_1Simulation.html#a3ade036c2a01fdab7db09dfe5c1ad292">DdMd::Simulation</a>
-, <a class="el" href="classMcMd_1_1System.html#aadb9f9fd39556ad5423dce3f69ac24d5">McMd::System</a>
-</li>
-<li>angleType_
-: <a class="el" href="classMcMd_1_1Homopolymer.html#ab4c362e5e9fc8c62afed6754a3ed2881">McMd::Homopolymer</a>
 </li>
 <li>append()
 : <a class="el" href="classCommandLine.html#a7a0c3d31115c240d08c5d0d032e17be7">CommandLine</a>
@@ -420,7 +369,7 @@
 , <a class="el" href="classDdMd_1_1AtomDistributor.html#a342cdb0b33d09f8e8c16a079cd8ee167">DdMd::AtomDistributor</a>
 , <a class="el" href="classDdMd_1_1AtomStorage.html#a7b5f674b9a20bec3e4f9db3b17ff190f">DdMd::AtomStorage</a>
 , <a class="el" href="classDdMd_1_1BondPotential.html#a9b06c2b896764ec784df6a06e96c98dc">DdMd::BondPotential</a>
-, <a class="el" href="classDdMd_1_1ConfigIo.html#a6c47bdf67eb248b0d55c9a1db16c91a5">DdMd::ConfigIo</a>
+, <a class="el" href="classDdMd_1_1ConfigIo.html#aae856279c367bfbce8e544ef6b587ad7">DdMd::ConfigIo</a>
 , <a class="el" href="classDdMd_1_1DihedralPotential.html#a3e9dad67a1730e3c18c3e3907bdce6f2">DdMd::DihedralPotential</a>
 , <a class="el" href="classDdMd_1_1Exchanger.html#ab2585517272c0f7052bd6abc15289302">DdMd::Exchanger</a>
 , <a class="el" href="classDdMd_1_1ExternalPotential.html#a380e54479cf8d4725c810eee0a5589fc">DdMd::ExternalPotential</a>
@@ -448,20 +397,8 @@
 <li>atom2TypeId()
 : <a class="el" href="classMcMd_1_1PairSelector.html#a3118fd399a159e0f8b0f1b624b1660ff">McMd::PairSelector</a>
 </li>
-<li>AtomAngleIdArray
-: <a class="el" href="classMcMd_1_1Species.html#ac36fd36049b714908a78a3d400f337f1">McMd::Species</a>
-</li>
-<li>atomAngleIds()
-: <a class="el" href="classMcMd_1_1Species.html#a46b5f7dba673af4b1a249412282c37c2">McMd::Species</a>
-</li>
 <li>AtomArray()
 : <a class="el" href="classDdMd_1_1AtomArray.html#a07e61bd4f5643567be0545101659c177">DdMd::AtomArray</a>
-</li>
-<li>AtomBondIdArray
-: <a class="el" href="classMcMd_1_1Species.html#a0ee6c76ebbd2304e54ca7bcd05566dd5">McMd::Species</a>
-</li>
-<li>atomBondIds()
-: <a class="el" href="classMcMd_1_1Species.html#a5c480b7744ac852ecdb9ecd472d3b38f">McMd::Species</a>
 </li>
 <li>atomCapacity()
 : <a class="el" href="classDdMd_1_1AtomStorage.html#a1999a4188a96a22d903608988eb507d8">DdMd::AtomStorage</a>
@@ -483,12 +420,6 @@
 </li>
 <li>AtomContext()
 : <a class="el" href="structDdMd_1_1AtomContext.html#a2deadb300cbd50fce88d6f5332db1790">DdMd::AtomContext</a>
-</li>
-<li>AtomDihedralIdArray
-: <a class="el" href="classMcMd_1_1Species.html#a8ccdfdddba6761a069916e854e26460c">McMd::Species</a>
-</li>
-<li>atomDihedralIds()
-: <a class="el" href="classMcMd_1_1Species.html#a19eb0de8bc3f79383a27e9f6a4989003">McMd::Species</a>
 </li>
 <li>AtomDisplaceMove()
 : <a class="el" href="classMcMd_1_1AtomDisplaceMove.html#abe32d8d743477832c1113fb2d9aa0765">McMd::AtomDisplaceMove</a>
@@ -515,7 +446,7 @@
 <li>atomId
 : <a class="el" href="structDdMd_1_1AtomContext.html#ad77cd1cafc435fadbe77aafe6a3908c7">DdMd::AtomContext</a>
 , <a class="el" href="classDdMd_1_1Group.html#a949e11f2c2e90e04396e1a0b41ad3486">DdMd::Group&lt; N &gt;</a>
-, <a class="el" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d">McMd::SpeciesGroup&lt; NAtom &gt;</a>
+, <a class="el" href="classSimp_1_1SpeciesGroup.html#ad513bf26219d32e313b12f7333122706">Simp::SpeciesGroup&lt; NAtom &gt;</a>
 , <a class="el" href="structTools_1_1Atom.html#a78dbde672cc1c718c2a296dd55e4bbc2">Tools::Atom</a>
 </li>
 <li>atomIds
@@ -524,11 +455,11 @@
 <li>AtomIterator
 : <a class="el" href="classMcMd_1_1Molecule.html#aa586d0226ef16a1ecce1d5e7b7630ee7">McMd::Molecule</a>
 </li>
-<li>atomLinkSet()
-: <a class="el" href="classMcMd_1_1LinkMaster.html#a9e07f2f2e3856b5207a6a462bdd11f66">McMd::LinkMaster</a>
-</li>
 <li>AtomLinkSet
 : <a class="el" href="classMcMd_1_1LinkMaster.html#a79f3e45b2dd2c606e6114f09c1c03ed3">McMd::LinkMaster</a>
+</li>
+<li>atomLinkSet()
+: <a class="el" href="classMcMd_1_1LinkMaster.html#ab89a56806a6e577fe85956ec5a912bac">McMd::LinkMaster</a>
 </li>
 <li>AtomMap()
 : <a class="el" href="classDdMd_1_1AtomMap.html#a77c893f1cbe5fb29e91f27b366644f4b">DdMd::AtomMap</a>
@@ -576,27 +507,27 @@
 : <a class="el" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4">McMd::Simulation</a>
 </li>
 <li>atomType_
-: <a class="el" href="classMcMd_1_1Homopolymer.html#a0f0c95103e6d361e7d724bfbea7500dd">McMd::Homopolymer</a>
+: <a class="el" href="classSimp_1_1Homopolymer.html#a58d05c171099edf733fa7f725b01b67b">Simp::Homopolymer</a>
 </li>
 <li>atomTypeCoeffs_
 : <a class="el" href="classDdMd_1_1VanHove.html#ac9c5937ff994bb395bc47d5b1c853aaf">DdMd::VanHove</a>
 </li>
 <li>atomTypeId()
-: <a class="el" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f">McMd::Species</a>
+: <a class="el" href="classSimp_1_1Species.html#a75a1e624aebc96f0934775a9aafcc969">Simp::Species</a>
 </li>
 <li>atomTypeIdPairs_
 : <a class="el" href="classMcMd_1_1StructureFactorP.html#a129bb85708b9cedc83e6683c6c860ae2">McMd::StructureFactorP</a>
 </li>
 <li>atomTypeIds_
 : <a class="el" href="classMcMd_1_1EndSwapMove.html#a6067ffbe69ab2d51d191ada4edd2993b">McMd::EndSwapMove</a>
-, <a class="el" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272">McMd::Species</a>
+, <a class="el" href="classSimp_1_1Species.html#ac810d7c783cdcd4fc9135f7bca8db8ae">Simp::Species</a>
 </li>
 <li>atomTypes()
-: <a class="el" href="classMcMd_1_1Simulation.html#ab3def858da2a9acf1ea88914ee389901">McMd::Simulation</a>
+: <a class="el" href="classMcMd_1_1Simulation.html#ac058a29daffdfba0a08c8559a7a4e756">McMd::Simulation</a>
 </li>
 <li>atomTypes_
-: <a class="el" href="classMcMd_1_1Diblock.html#a33ac63af4d189af3c5479c1bf8cedd18">McMd::Diblock</a>
-, <a class="el" href="classMcMd_1_1Multiblock.html#a1cdda9f3f369a6cbbfc43648d92b5794">McMd::Multiblock</a>
+: <a class="el" href="classSimp_1_1Diblock.html#a18eed2755014b0a0fc8be98c8a04228a">Simp::Diblock</a>
+, <a class="el" href="classSimp_1_1Multiblock.html#afe51d5d43203951a7b5d0834409f6a66">Simp::Multiblock</a>
 </li>
 <li>attachNext()
 : <a class="el" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7">Util::Node&lt; Data &gt;</a>
@@ -605,12 +536,12 @@
 : <a class="el" href="classUtil_1_1Node.html#a875335842884011eb1246d55134d9c98">Util::Node&lt; Data &gt;</a>
 </li>
 <li>attemptPlaceAtom()
-: <a class="el" href="classMcMd_1_1Generator.html#a9507751288bdf8b5cf5811c289f1fbce">McMd::Generator</a>
+: <a class="el" href="classMcMd_1_1Generator.html#a0982a24410206334c2dd00e09c7af1dc">McMd::Generator</a>
 </li>
 <li>attemptPlaceMolecule()
-: <a class="el" href="classMcMd_1_1Generator.html#af1eb5fbce4d4c8de51994dd457a12174">McMd::Generator</a>
-, <a class="el" href="classMcMd_1_1LinearGenerator.html#ab64cab76f877da04cd92595045d011a9">McMd::LinearGenerator</a>
-, <a class="el" href="classMcMd_1_1PointGenerator.html#ad0d2431739006625bc751be585412fba">McMd::PointGenerator</a>
+: <a class="el" href="classMcMd_1_1Generator.html#a650218cd6f5e8329399a2c4f0d2a99d8">McMd::Generator</a>
+, <a class="el" href="classMcMd_1_1LinearGenerator.html#aee3b7651fa6809915f6a0ff61e404f80">McMd::LinearGenerator</a>
+, <a class="el" href="classMcMd_1_1PointGenerator.html#a76a68679384f17dfdebc7873b5aff016">McMd::PointGenerator</a>
 </li>
 <li>AutoCorr()
 : <a class="el" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f">Util::AutoCorr&lt; Data, Product &gt;</a>
@@ -628,7 +559,7 @@
 : <a class="el" href="classUtil_1_1AutoCorrelation.html#acefac97246a62506d9da85437888a48c">Util::AutoCorrelation&lt; Data, Product &gt;</a>
 </li>
 <li>autoCorrelation()
-: <a class="el" href="classUtil_1_1AutoCorrStage.html#af03554b45550a34bfc51f7dab742cbd6">Util::AutoCorrStage&lt; Data, Product &gt;</a>
+: <a class="el" href="classUtil_1_1AutoCorrStage.html#a74f0f2fb76254aebef27ef494e717381">Util::AutoCorrStage&lt; Data, Product &gt;</a>
 </li>
 <li>AutoCorrStage()
 : <a class="el" href="classUtil_1_1AutoCorrStage.html#a26b6e43270835c7059162d069c25d543">Util::AutoCorrStage&lt; Data, Product &gt;</a>
@@ -655,7 +586,7 @@
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:14:53 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:07:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

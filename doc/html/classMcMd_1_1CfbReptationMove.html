@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -60,7 +59,7 @@
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration bias reptation move for a <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract). ">Linear</a> species. </p>
+<div class="textblock"><p>Configuration bias reptation move for a Linear species. </p>
 <p>A reptation move uses a configuration bias algorithm to add a segment to one end of a chain (the head) and delete one from the other (the tail). The direction of the move (i.e., which end is the head) is chosen at random. The only parameter is nTrial, the number of trial positions for the new position of the head monomer. </p>
 
 <p>Definition at line <a class="el" href="CfbReptationMove_8h_source.html#l00035">35</a> of file <a class="el" href="CfbReptationMove_8h_source.html">CfbReptationMove.h</a>.</p>
@@ -470,7 +469,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00028">28</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00030">30</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
@@ -503,9 +502,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1CfbEndBase.html#a188ed204b9bd2d9f5c000745ce168ef4">McMd::CfbEndBase</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00048">48</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00050">50</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00527">McMd::Species::atomTypeId()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00515">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00747">McMd::Simulation::maskedPairPolicy()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00111">McMd::CfbEndBase::MaxTrial_</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00521">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00534">McMd::Species::nBond()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00114">McMd::CfbEndBase::nTrial_</a>, <a class="el" href="McMove_8cpp_source.html#l00042">McMd::McMove::readProbability()</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00541">McMd::Species::speciesBond()</a>, <a class="el" href="SpeciesGroup_8h_source.html#l00182">McMd::SpeciesGroup&lt; NAtom &gt;::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00532">Simp::Species::atomTypeId()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00520">Simp::Species::capacity()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00751">McMd::Simulation::maskedPairPolicy()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00111">McMd::CfbEndBase::MaxTrial_</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00526">Simp::Species::nAtom()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00114">McMd::CfbEndBase::nTrial_</a>, <a class="el" href="McMove_8cpp_source.html#l00042">McMd::McMove::readProbability()</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -541,9 +540,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#aa061075f18a9faef0a21a11713ff35f6">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00124">124</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00128">128</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
-<p>References <a class="el" href="McMove_8cpp_source.html#l00048">McMd::McMove::loadParameters()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00111">McMd::CfbEndBase::MaxTrial_</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00534">McMd::Species::nBond()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00114">McMd::CfbEndBase::nTrial_</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00541">McMd::Species::speciesBond()</a>, <a class="el" href="SpeciesGroup_8h_source.html#l00182">McMd::SpeciesGroup&lt; NAtom &gt;::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="McMove_8cpp_source.html#l00048">McMd::McMove::loadParameters()</a>, <a class="el" href="CfbEndBase_8h_source.html#l00111">McMd::CfbEndBase::MaxTrial_</a>, <a class="el" href="CfbEndBase_8h_source.html#l00114">McMd::CfbEndBase::nTrial_</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -579,7 +578,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#a6977206c8382434730c4f2eab99f4f5c">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00169">169</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00175">175</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
 <p>References <a class="el" href="CfbEndBase_8h_source.html#l00114">McMd::CfbEndBase::nTrial_</a>, and <a class="el" href="McMove_8cpp_source.html#l00058">McMd::McMove::save()</a>.</p>
 
@@ -610,9 +609,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#ab1d158203cfb51bb9d7bda9095a5cc86">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00190">190</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00196">196</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
-<p>References <a class="el" href="McPairPotential_8h_source.html#l00144">McMd::McPairPotential::addAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00188">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8cpp_source.html#l00041">McMd::Mask::append()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00473">McMd::Molecule::atom()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8cpp_source.html#l00030">McMd::Mask::clear()</a>, <a class="el" href="McPairPotential_8h_source.html#l00148">McMd::McPairPotential::deleteAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00061">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::externalPotential()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00556">McMd::Molecule::id()</a>, <a class="el" href="McMove_8h_source.html#l00197">McMd::McMove::incrementNAccept()</a>, <a class="el" href="McMove_8h_source.html#l00191">McMd::McMove::incrementNAttempt()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00302">McMd::Atom::mask()</a>, <a class="el" href="Random_8h_source.html#l00260">Util::Random::metropolis()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00432">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="System_8cpp_source.html#l01067">McMd::System::randomMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00266">McMd::Atom::setTypeId()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="McPairPotential_8h_source.html#l00152">McMd::McPairPotential::updateAtomCell()</a>.</p>
+<p>References <a class="el" href="McPairPotential_8h_source.html#l00141">McMd::McPairPotential::addAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00188">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8cpp_source.html#l00041">McMd::Mask::append()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00477">McMd::Molecule::atom()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#aa97fcdff13c782c50a546280940d22b9">McMd::McPairPotential::atomEnergy()</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8cpp_source.html#l00030">McMd::Mask::clear()</a>, <a class="el" href="McPairPotential_8h_source.html#l00145">McMd::McPairPotential::deleteAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00061">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>, <a class="el" href="McMove_8h_source.html#l00197">McMd::McMove::incrementNAccept()</a>, <a class="el" href="McMove_8h_source.html#l00191">McMd::McMove::incrementNAttempt()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00302">McMd::Atom::mask()</a>, <a class="el" href="Random_8h_source.html#l00260">Util::Random::metropolis()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00436">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="System_8cpp_source.html#l01104">McMd::System::randomMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00266">McMd::Atom::setTypeId()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="McPairPotential_8h_source.html#l00149">McMd::McPairPotential::updateAtomCell()</a>.</p>
 
 </div>
 </div>
@@ -641,9 +640,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#af00f1b3a944c31282431fc814ede2881">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00385">385</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="CfbReptationMove_8cpp_source.html#l00395">395</a> of file <a class="el" href="CfbReptationMove_8cpp_source.html">CfbReptationMove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="System_8h_source.html#l01021">McMd::System::fileMaster()</a>, <a class="el" href="System_8h_source.html#l01036">McMd::System::nMolecule()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, and <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="System_8h_source.html#l01046">McMd::System::fileMaster()</a>, <a class="el" href="System_8h_source.html#l01061">McMd::System::nMolecule()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, and <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>.</p>
 
 </div>
 </div>
@@ -655,7 +654,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:27 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

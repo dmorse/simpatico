@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -93,9 +92,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af1567f224e73ef319826e3e8fff80a36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1GroupRebridgeBase.html#af1567f224e73ef319826e3e8fff80a36">tetraEnergy</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> *aPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *bPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *cPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *dPtr, int bondType, double &amp;energy)</td></tr>
 <tr class="memdesc:af1567f224e73ef319826e3e8fff80a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the energy cost for rebriding a tetra group.  <a href="#af1567f224e73ef319826e3e8fff80a36">More...</a><br /></td></tr>
 <tr class="separator:af1567f224e73ef319826e3e8fff80a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb95a3d6dbb65fe692be24667cf24caa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1GroupRebridgeBase.html#acb95a3d6dbb65fe692be24667cf24caa">angleEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;a, const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;b, const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;c, int type)</td></tr>
-<tr class="memdesc:acb95a3d6dbb65fe692be24667cf24caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the angle energy for a bead triple.  <a href="#acb95a3d6dbb65fe692be24667cf24caa">More...</a><br /></td></tr>
-<tr class="separator:acb95a3d6dbb65fe692be24667cf24caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac05cce3c965038322e3420a72b95c9b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1GroupRebridgeBase.html#ac05cce3c965038322e3420a72b95c9b4">octaEnergy</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> *aPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *bPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *cPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *dPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *mPtr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *nPtr, int bondType, double &amp;energy)</td></tr>
 <tr class="memdesc:ac05cce3c965038322e3420a72b95c9b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the energy cost for rebriding an octa group.  <a href="#ac05cce3c965038322e3420a72b95c9b4">More...</a><br /></td></tr>
 <tr class="separator:ac05cce3c965038322e3420a72b95c9b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -463,7 +459,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00024">24</a> of file <a class="el" href="GroupRebridgeBase_8cpp_source.html">GroupRebridgeBase.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00352">McMd::McSystem::hasDihedralPotential()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -560,73 +556,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00053">53</a> of file <a class="el" href="GroupRebridgeBase_8cpp_source.html">GroupRebridgeBase.cpp</a>.</p>
 
-<p>References <a class="el" href="GroupRebridgeBase_8h_source.html#l00095">angleEnergy()</a>, <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00178">McMd::Group&lt; NAtom &gt;::atom()</a>, <a class="el" href="McSystem_8h_source.html#l00330">McMd::McSystem::bondPotential()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#a47e113684827c5377a4562efad9eddee">McMd::PairPotential::energy()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#adeb8260e86ec3d3e3f48f4a0171b3639">McMd::BondPotential::energy()</a>, <a class="el" href="getAtomGroups_8cpp_source.html#l00042">McMd::getAtomAngles()</a>, <a class="el" href="getAtomGroups_8cpp_source.html#l00021">McMd::getAtomBonds()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00188">octaEnergy()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00178">McMd::Group&lt; NAtom &gt;::atom()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#a47e113684827c5377a4562efad9eddee">McMd::PairPotential::energy()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00188">octaEnergy()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
 
 <p>Referenced by <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00113">McMd::RingTetraRebridgeMove::move()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00038">~GroupRebridgeBase()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acb95a3d6dbb65fe692be24667cf24caa"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double McMd::GroupRebridgeBase::angleEnergy </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the angle energy for a bead triple. </p>
-<p>a &ndash; b &ndash; c</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">a</td><td>atom a </td></tr>
-    <tr><td class="paramname">b</td><td>atom b </td></tr>
-    <tr><td class="paramname">c</td><td>atom c </td></tr>
-    <tr><td class="paramname">type</td><td>angle type </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GroupRebridgeBase_8h_source.html#l00095">95</a> of file <a class="el" href="GroupRebridgeBase_8h_source.html">GroupRebridgeBase.h</a>.</p>
-
-<p>References <a class="el" href="Vector_8h_source.html#l00625">Util::Vector::abs()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>.</p>
-
-<p>Referenced by <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00053">tetraEnergy()</a>.</p>
 
 </div>
 </div>
@@ -707,7 +639,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00188">188</a> of file <a class="el" href="GroupRebridgeBase_8cpp_source.html">GroupRebridgeBase.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00330">McMd::McSystem::bondPotential()</a>, <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#a47e113684827c5377a4562efad9eddee">McMd::PairPotential::energy()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#adeb8260e86ec3d3e3f48f4a0171b3639">McMd::BondPotential::energy()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
+<p>References <a class="el" href="SystemMove_8h_source.html#l00087">McMd::SystemMove::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#a47e113684827c5377a4562efad9eddee">McMd::PairPotential::energy()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>.</p>
 
 <p>Referenced by <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00053">tetraEnergy()</a>.</p>
 
@@ -721,7 +653,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:28 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

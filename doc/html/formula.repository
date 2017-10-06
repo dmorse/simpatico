@@ -22,151 +22,156 @@
 \form#21:$\epsilon$
 \form#22:$l$
 \form#23:\[ V(r) = \frac{\kappa}{2} r^{2} \]
-\form#24:$\cos(\phi)$
-\form#25:$\phi$
-\form#26:\[ V(\phi) = \kappa [ 1 + \cos(\phi) ] \]
-\form#27:\[ V(\phi) = kappa [1 + cos(phi)] \]
-\form#28:$ \phi $
-\form#29:$ {\bf r}_{i} $
-\form#30:\[ {\bf b}_i = {\bf r}_i - {\bf r}_{i-1} \]
-\form#31:\[ {\bf v}_{1} = {\bf b}_1 \times {\bf b}_2 \quad\quad {\bf v}_{2} = {\bf b}_2 \times {\bf b}_3 \]
-\form#32:\[ {\bf u}_1 = {\bf v}_{1}/|{\bf v}_{1}| \quad\quad {\bf u}_2 = {\bf v}_{2}/|{\bf v}_{2}| \]
-\form#33:\[ \cos(\phi) \equiv {\bf u}_1 \cdot {\bf u}_2 \]
-\form#34:$0 \leq i < 4$
-\form#35:\[ V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m\phi) \]
-\form#36:\[ V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m \phi)] \]
-\form#37:$\rho$
-\form#38:$\rho \equiv 0.7$
-\form#39:$V_{i}(x)$
-\form#40:$i$
-\form#41:\[ V_{i}(x) = \lambda A_{i} \tanh \left ( \frac{1}{WqL} \cos( qx ) \right) \]
-\form#42:\[ q = \frac{2\pi}{L}n \]
-\form#43:$L$
-\form#44:$n$
-\form#45:$W$
-\form#46:$A_{i}$
-\form#47:$\lambda$
-\form#48:$z$
-\form#49:$0 < z < L$
-\form#50:$z = 0$
-\form#51:$z = L$
-\form#52:\[ V(d) = \frac{4\pi \epsilon \rho\sigma^{3}} {45} \left ( \frac{\sigma^{9}}{d^{9}} - 7.5 \frac{\sigma^{9}}{d^{9}} + \frac{25}{\sqrt{10}} \right) \]
-\form#53:$ d_{i} < d < d_{c} $
-\form#54:$ d_{i} = 0.506079 \sigma $
-\form#55:$ d_{c} $
-\form#56:$ d > d_{c} $
-\form#57:$ V(d) = 0 $
-\form#58:$ d < d_{i} $
-\form#59:$ V(d) = V(d_{i}) $
-\form#60:\[ V(r) = \frac{\epsilon}{2} \left ( 1 - \frac{ r}{\sigma} \right )^{2} \]
-\form#61:$ r < \sigma $
-\form#62:$V(r) = 0$
-\form#63:$ r > \sigma $
-\form#64:$\sigma$
-\form#65:$j$
-\form#66:\[ V(r) = 4 \epsilon \left [ \left ( \frac{\sigma}{r} \right )^{12} - \left ( \frac{\sigma}{r} \right )^{6} \right ] + s \]
-\form#67:$ r < r_{c} $
-\form#68:$s$
-\form#69:$V(r_c) = 0$
-\form#70:$r_{c}/\sigma = 1.122 = 2^{1/6}$
-\form#71:$ r = \sigma 2^{1/6}$
-\form#72:\[ r_{c} \equiv 2^{1/6} \sigma \]
-\form#73:\[ V(r) = 4 \epsilon \left [ \left ( \frac{\sigma}{r} \right )^{12} - \left ( \frac{\sigma}{r} \right )^{6} + \frac{1}{4} \right ] \]
-\form#74:\[ C(t) = k_{B}T G(t) \]
-\form#75:$G(t)$
-\form#76:$C(t)$
-\form#77:\[ C(t) = \frac{1}{10} \sum_{ij=0}^{2} \langle V [\sigma_{ij}(t) - P(t)\delta_{ij}] [\sigma_{ij}(0) - P(0)\delta_{ij}] \rangle \]
-\form#78:$V = \sqrt{V(t)V(0)}$
-\form#79:$\sigma_{ij}(t)$
-\form#80:\[ P(t) \equiv \sum_{i=0}^{2} \sigma_{ii}(t)/3 \]
-\form#81:$ R_0, R_1, ...., R_{N_{i}-1} $
-\form#82:\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]
-\form#83:$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $
-\form#84:$ \langle \cdots \rangle $
-\form#85:\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]
-\form#86:$u_{ai}$
-\form#87:${\bf u}_{a}$
-\form#88:\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]
-\form#89:$ V(t) = R_i(t) - R_j(t) $
-\form#90:\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]
-\form#91:$ \tau $
-\form#92:$ \langle \cdots \rangle$
-\form#93:$ V(t) \cdot V(t') $
-\form#94:$ V(t) $
-\form#95:\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]
-\form#96:$\rho_a(k)$
-\form#97:\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]
-\form#98:$ \rho_{ma}(k) $
-\form#99:$ \rho_a(k) $
-\form#100:$ R_0, R_1, ...., R_{N-1} $
-\form#101:\[ R_g^2 = \sum_i \langle | R_i - R_{cm} |^2 \rangle / N \]
-\form#102:$ R_{cm} = (R_0 + R_1 + ... R_{N-1})/N $
-\form#103:\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]
-\form#104:$\rho(k)$
-\form#105:\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
-\form#106:\[ S(k) = < \rho_a(k) \rho_b(-k) / V > \]
-\form#107:\[ \rho_a(k) = \sum_{i} \exp( i k \cdot r_i ) \]
-\form#108:\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]
-\form#109:$V \equiv \sqrt{V(t)V(0)}$
-\form#110:$\psi(k,t)$
-\form#111:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
-\form#112:$ c_{a} $
-\form#113:$ \psi = \rho_0 - \rho_1 $
-\form#114:\[ m\frac{d{\bf v}}{dt} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
-\form#115:$\gamma$
-\form#116:${\bf f}^{\rm (r)}$
-\form#117:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
-\form#118:${\bf v}_{i}$
-\form#119:$T_{K} = 2K/3N$
-\form#120:$K$
-\form#121:$N$
-\form#122:$T_{0}$
-\form#123:$\tau_{T}$
-\form#124:\[ \rho(k) = \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
-\form#125:$a$
-\form#126:$v(m, a)$
-\form#127:$m$
-\form#128:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
-\form#129:\[ F(t) = k_{B}TG(t) \]
-\form#130:$t_{i}$
-\form#131:\[ t_i \equiv i*interval*\Delta t \]
-\form#132:$\Delta t$
-\form#133:$ k_{B}T G(t) $
-\form#134:${\bf v}$
-\form#135:\[ m\frac{d{\bf v}}{dt} = {\bf f} \]
-\form#136:\[ {\bf f} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
-\form#137:\begin{eqnarray*} \langle {\bf f}^{\rm (r)}\rangle & = & 0 \\ \langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle & = & 2 m kT \gamma \delta (t-t') . \end{eqnarray*}
-\form#138:${\bf v}(n)$
-\form#139:${\bf r}(n)$
-\form#140:\begin{eqnarray*} \overline{\bf v}(n) & = & {\bf v}(n) + {\bf f}(n) \Delta t /(2m) \\ {\bf r}(n+1) & = & {\bf r}(n) + \overline{\bf v}(n)\Delta t \\ {\bf f}(n+1) & = & {\bf f}(\;{\bf r}(n+1),\; \overline{\bf v}(n)\; ) \\ {\bf v}(n+1) & = & \overline{\bf v}(n) + {\bf f}(n+1)\Delta t /(2m) \\ \end{eqnarray*}
-\form#141:${\bf f}$
-\form#142:\[ {\bf f}(n+1) = {\bf f}^{\rm (pot)}(n+1) + c_{v}\overline{\bf v}(n) + c_{r}{\bf u}(n+1), \]
-\form#143:${\bf f}^{\rm (pot)}(n+1)$
-\form#144:${\bf r}(n+1)$
-\form#145:$c_{v}$
-\form#146:$c_{r}$
-\form#147:${\bf u}$
-\form#148:$[-1/2, 1/2]$
-\form#149:${\bf f}(n+1)$
-\form#150:$\overline{\bf v}(n)$
-\form#151:\[ \overline{\bf v} (n+1) = ( 1 + c_{v} \Delta t/m )\overline{\bf v}(n) + (c_{r}\Delta t/m) {\bf u} \]
-\form#152:$1 + c_{v}\Delta t/m = e^{-\gamma\Delta t}$
-\form#153:\[ c_{v} = -m (1 - e^{-\gamma\Delta t})/\Delta t , \]
-\form#154:$c_{v} < 0$
-\form#155:\[ \langle v_{i} v_{j} \rangle = \delta_{ij} k_{B}T/m , \]
-\form#156:\[ \langle \overline{v}_{i} \overline{v}_{j} \rangle = \delta_{ij} d k_{B}T/m . \]
-\form#157:$d$
-\form#158:$\gamma\Delta t \rightarrow 0$
-\form#159:$\langle u_{i} u_{j} \rangle = \delta_{ij}/12$
-\form#160:\[ c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t \]
-\form#161:\[ {\bf v}(n+1) = [1 + c_{v}\Delta t/(2m)] \overline{\bf v}(n) + [c_{r} \Delta t/(2m)] {\bf u}(n+1) \]
-\form#162:\[ d = 2/(1 + e^{-\gamma\Delta t}) . \]
-\form#163:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
-\form#164:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
-\form#165:$\theta = 0$
-\form#166:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
-\form#167:${\bf b}_{1}$
-\form#168:${\bf b}_{2}$
-\form#169:${\bf b}_{3}$
-\form#170:$\phi = 0$
-\form#171:$\phi = \pi $
+\form#24:$q_{1}$
+\form#25:$q_{2}$
+\form#26:\[ V(r) = \frac{1}{4 \pi \epsilon r } {\rm erfc}( \alpha r) \]
+\form#27:$ r < r_{c} $
+\form#28:$V(r) = 0$
+\form#29:$\alpha$
+\form#30:$\cos(\phi)$
+\form#31:$\phi$
+\form#32:\[ V(\phi) = \kappa [ 1 + \cos(\phi) ] \]
+\form#33:\[ V(\phi) = kappa [1 + cos(phi)] \]
+\form#34:$ \phi $
+\form#35:$ {\bf r}_{i} $
+\form#36:\[ {\bf b}_i = {\bf r}_i - {\bf r}_{i-1} \]
+\form#37:\[ {\bf v}_{1} = {\bf b}_1 \times {\bf b}_2 \quad\quad {\bf v}_{2} = {\bf b}_2 \times {\bf b}_3 \]
+\form#38:\[ {\bf u}_1 = {\bf v}_{1}/|{\bf v}_{1}| \quad\quad {\bf u}_2 = {\bf v}_{2}/|{\bf v}_{2}| \]
+\form#39:\[ \cos(\phi) \equiv {\bf u}_1 \cdot {\bf u}_2 \]
+\form#40:$0 \leq i < 4$
+\form#41:\[ V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m\phi) \]
+\form#42:\[ V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m \phi)] \]
+\form#43:$\rho$
+\form#44:$\rho \equiv 0.7$
+\form#45:$V_{i}(x)$
+\form#46:$i$
+\form#47:\[ V_{i}(x) = \lambda A_{i} \tanh \left ( \frac{1}{WqL} \cos( qx ) \right) \]
+\form#48:\[ q = \frac{2\pi}{L}n \]
+\form#49:$L$
+\form#50:$n$
+\form#51:$W$
+\form#52:$A_{i}$
+\form#53:$\lambda$
+\form#54:$z$
+\form#55:$0 < z < L$
+\form#56:$z = 0$
+\form#57:$z = L$
+\form#58:\[ V(d) = \frac{4\pi \epsilon \rho\sigma^{3}} {45} \left ( \frac{\sigma^{9}}{d^{9}} - 7.5 \frac{\sigma^{9}}{d^{9}} + \frac{25}{\sqrt{10}} \right) \]
+\form#59:$ d_{i} < d < d_{c} $
+\form#60:$ d_{i} = 0.506079 \sigma $
+\form#61:$ d_{c} $
+\form#62:$ d > d_{c} $
+\form#63:$ V(d) = 0 $
+\form#64:$ d < d_{i} $
+\form#65:$ V(d) = V(d_{i}) $
+\form#66:\[ V(r) = \frac{\epsilon}{2} \left ( 1 - \frac{ r}{\sigma} \right )^{2} \]
+\form#67:$ r < \sigma $
+\form#68:$ r > \sigma $
+\form#69:$\sigma$
+\form#70:$j$
+\form#71:\[ V(r) = 4 \epsilon \left [ \left ( \frac{\sigma}{r} \right )^{12} - \left ( \frac{\sigma}{r} \right )^{6} \right ] + s \]
+\form#72:$s$
+\form#73:$V(r_c) = 0$
+\form#74:$r_{c}/\sigma = 1.122 = 2^{1/6}$
+\form#75:$ r = \sigma 2^{1/6}$
+\form#76:\[ r_{c} \equiv 2^{1/6} \sigma \]
+\form#77:\[ V(r) = 4 \epsilon \left [ \left ( \frac{\sigma}{r} \right )^{12} - \left ( \frac{\sigma}{r} \right )^{6} + \frac{1}{4} \right ] \]
+\form#78:\[ C(t) = k_{B}T G(t) \]
+\form#79:$G(t)$
+\form#80:$C(t)$
+\form#81:\[ C(t) = \frac{1}{10} \sum_{ij=0}^{2} \langle V [\sigma_{ij}(t) - P(t)\delta_{ij}] [\sigma_{ij}(0) - P(0)\delta_{ij}] \rangle \]
+\form#82:$V = \sqrt{V(t)V(0)}$
+\form#83:$\sigma_{ij}(t)$
+\form#84:\[ P(t) \equiv \sum_{i=0}^{2} \sigma_{ii}(t)/3 \]
+\form#85:$ R_0, R_1, ...., R_{N_{i}-1} $
+\form#86:\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]
+\form#87:$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $
+\form#88:$ \langle \cdots \rangle $
+\form#89:\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]
+\form#90:$u_{ai}$
+\form#91:${\bf u}_{a}$
+\form#92:\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]
+\form#93:$ V(t) = R_i(t) - R_j(t) $
+\form#94:\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]
+\form#95:$ \tau $
+\form#96:$ \langle \cdots \rangle$
+\form#97:$ V(t) \cdot V(t') $
+\form#98:$ V(t) $
+\form#99:\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]
+\form#100:$\rho_a(k)$
+\form#101:\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]
+\form#102:$ \rho_{ma}(k) $
+\form#103:$ \rho_a(k) $
+\form#104:$ R_0, R_1, ...., R_{N-1} $
+\form#105:\[ R_g^2 = \sum_i \langle | R_i - R_{cm} |^2 \rangle / N \]
+\form#106:$ R_{cm} = (R_0 + R_1 + ... R_{N-1})/N $
+\form#107:\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]
+\form#108:$\rho(k)$
+\form#109:\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
+\form#110:\[ S(k) = < \rho_a(k) \rho_b(-k) / V > \]
+\form#111:\[ \rho_a(k) = \sum_{i} \exp( i k \cdot r_i ) \]
+\form#112:\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]
+\form#113:$V \equiv \sqrt{V(t)V(0)}$
+\form#114:$\psi(k,t)$
+\form#115:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
+\form#116:$ c_{a} $
+\form#117:$ \psi = \rho_0 - \rho_1 $
+\form#118:\[ m\frac{d{\bf v}}{dt} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
+\form#119:$\gamma$
+\form#120:${\bf f}^{\rm (r)}$
+\form#121:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
+\form#122:${\bf v}_{i}$
+\form#123:$T_{K} = 2K/3N$
+\form#124:$K$
+\form#125:$N$
+\form#126:$T_{0}$
+\form#127:$\tau_{T}$
+\form#128:\[ R_e^2 = \langle | R_{N-1} - R_{0} |^2 \rangle \]
+\form#129:\[ \rho(k) = \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
+\form#130:$a$
+\form#131:$v(m, a)$
+\form#132:$m$
+\form#133:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
+\form#134:\[ F(t) = k_{B}TG(t) \]
+\form#135:$t_{i}$
+\form#136:\[ t_i \equiv i*interval*\Delta t \]
+\form#137:$\Delta t$
+\form#138:$ k_{B}T G(t) $
+\form#139:${\bf v}$
+\form#140:\[ m\frac{d{\bf v}}{dt} = {\bf f} \]
+\form#141:\[ {\bf f} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]
+\form#142:\begin{eqnarray*} \langle {\bf f}^{\rm (r)}\rangle & = & 0 \\ \langle {\bf f}^{\rm (r)}(t) {\bf f}^{\rm (r)}(t') \rangle & = & 2 m kT \gamma \delta (t-t') . \end{eqnarray*}
+\form#143:${\bf v}(n)$
+\form#144:${\bf r}(n)$
+\form#145:\begin{eqnarray*} \overline{\bf v}(n) & = & {\bf v}(n) + {\bf f}(n) \Delta t /(2m) \\ {\bf r}(n+1) & = & {\bf r}(n) + \overline{\bf v}(n)\Delta t \\ {\bf f}(n+1) & = & {\bf f}(\;{\bf r}(n+1),\; \overline{\bf v}(n)\; ) \\ {\bf v}(n+1) & = & \overline{\bf v}(n) + {\bf f}(n+1)\Delta t /(2m) \\ \end{eqnarray*}
+\form#146:${\bf f}$
+\form#147:\[ {\bf f}(n+1) = {\bf f}^{\rm (pot)}(n+1) + c_{v}\overline{\bf v}(n) + c_{r}{\bf u}(n+1), \]
+\form#148:${\bf f}^{\rm (pot)}(n+1)$
+\form#149:${\bf r}(n+1)$
+\form#150:$c_{v}$
+\form#151:$c_{r}$
+\form#152:${\bf u}$
+\form#153:$[-1/2, 1/2]$
+\form#154:${\bf f}(n+1)$
+\form#155:$\overline{\bf v}(n)$
+\form#156:\[ \overline{\bf v} (n+1) = ( 1 + c_{v} \Delta t/m )\overline{\bf v}(n) + (c_{r}\Delta t/m) {\bf u} \]
+\form#157:$1 + c_{v}\Delta t/m = e^{-\gamma\Delta t}$
+\form#158:\[ c_{v} = -m (1 - e^{-\gamma\Delta t})/\Delta t , \]
+\form#159:$c_{v} < 0$
+\form#160:\[ \langle v_{i} v_{j} \rangle = \delta_{ij} k_{B}T/m , \]
+\form#161:\[ \langle \overline{v}_{i} \overline{v}_{j} \rangle = \delta_{ij} d k_{B}T/m . \]
+\form#162:$d$
+\form#163:$\gamma\Delta t \rightarrow 0$
+\form#164:$\langle u_{i} u_{j} \rangle = \delta_{ij}/12$
+\form#165:\[ c_{r} = \sqrt{12 m k_{B}T d ( 1 - e^{-2\gamma\Delta t})}/\Delta t \]
+\form#166:\[ {\bf v}(n+1) = [1 + c_{v}\Delta t/(2m)] \overline{\bf v}(n) + [c_{r} \Delta t/(2m)] {\bf u}(n+1) \]
+\form#167:\[ d = 2/(1 + e^{-\gamma\Delta t}) . \]
+\form#168:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
+\form#169:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
+\form#170:$\theta = 0$
+\form#171:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
+\form#172:${\bf b}_{1}$
+\form#173:${\bf b}_{2}$
+\form#174:${\bf b}_{3}$
+\form#175:$\phi = 0$
+\form#176:$\phi = \pi $

@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -64,13 +63,13 @@
 <div class="textblock"><p><a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Analyzer</a> to calculate average isotropic pressure. </p>
 <p>See <a class="el" href="mcMd_analyzer_MdStressAutoCorr_page.html">here</a> for the parameter file format and any other user documentation.</p>
 <p>This analyzer computes the stress autocorrelation function </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ C(t) = k_{B}T G(t) \]" src="form_74.png"/>
+<img class="formulaDsp" alt="\[ C(t) = k_{B}T G(t) \]" src="form_78.png"/>
 </p>
-<p> for an isotropic liquid, where <img class="formulaInl" alt="$G(t)$" src="form_75.png"/> is the shear stress relaxation modulus. This function is given by a sum </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ C(t) = \frac{1}{10} \sum_{ij=0}^{2} \langle V [\sigma_{ij}(t) - P(t)\delta_{ij}] [\sigma_{ij}(0) - P(0)\delta_{ij}] \rangle \]" src="form_77.png"/>
+<p> for an isotropic liquid, where <img class="formulaInl" alt="$G(t)$" src="form_79.png"/> is the shear stress relaxation modulus. This function is given by a sum </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ C(t) = \frac{1}{10} \sum_{ij=0}^{2} \langle V [\sigma_{ij}(t) - P(t)\delta_{ij}] [\sigma_{ij}(0) - P(0)\delta_{ij}] \rangle \]" src="form_81.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$V = \sqrt{V(t)V(0)}$" src="form_78.png"/> is the system volume, <img class="formulaInl" alt="$\sigma_{ij}(t)$" src="form_79.png"/> is the total stress tensor (virial + kinetic), and </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ P(t) \equiv \sum_{i=0}^{2} \sigma_{ii}(t)/3 \]" src="form_80.png"/>
+<p> where <img class="formulaInl" alt="$V = \sqrt{V(t)V(0)}$" src="form_82.png"/> is the system volume, <img class="formulaInl" alt="$\sigma_{ij}(t)$" src="form_83.png"/> is the total stress tensor (virial + kinetic), and </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ P(t) \equiv \sum_{i=0}^{2} \sigma_{ii}(t)/3 \]" src="form_84.png"/>
 </p>
 <p> is the pressure. </p>
 
@@ -464,7 +463,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get echo parameter.  <a href="#ac5808de278115409092e94f9c72362c2">More...</a><br /></td></tr>
 <tr class="separator:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classMcMd_1_1Analyzer"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classMcMd_1_1Analyzer')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classMcMd_1_1Analyzer.html">McMd::Analyzer</a></td></tr>
-<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 1</td></tr>
+<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 0</td></tr>
 <tr class="memdesc:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for an <a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Analyzer</a> must be a multiple of baseInterval.  <a href="#af712ec400c7c198f10a4cef2e88ec09b">More...</a><br /></td></tr>
 <tr class="separator:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classMcMd_1_1Analyzer"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classMcMd_1_1Analyzer')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classMcMd_1_1Analyzer.html">McMd::Analyzer</a></td></tr>
@@ -558,7 +557,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MdStressAutoCorr_8cpp_source.html#l00030">30</a> of file <a class="el" href="MdStressAutoCorr_8cpp_source.html">MdStressAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="Tensor_8h_source.html#l00540">Util::Tensor::add()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#a08c9a96e77baa1504d10e7e093258a63">McMd::MdSystem::computeKineticStress()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#a16edbf0e3f35a86538e560d14697e2be">McMd::MdSystem::computeVirialStress()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; MdSystem &gt;::system()</a>.</p>
+<p>References <a class="el" href="Tensor_8h_source.html#l00567">Util::Tensor::add()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#a08c9a96e77baa1504d10e7e093258a63">McMd::MdSystem::computeKineticStress()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#a16edbf0e3f35a86538e560d14697e2be">McMd::MdSystem::computeVirialStress()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; MdSystem &gt;::system()</a>.</p>
 
 </div>
 </div>
@@ -570,7 +569,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:38 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

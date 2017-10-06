@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.5 Configuration Files</title>
+<title>Simpatico: 2.6 Configuration Files</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -45,10 +44,10 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.5 Configuration Files </div>  </div>
+<div class="title">2.6 Configuration Files </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_commands_page.html">2.4 Command Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_examples_page.html">2.6 Examples</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_commands_page.html">2.5 Command Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_examples_page.html">2.7 Examples</a> (Next) <br />
 </p>
 <p>The instantaneous state of a system is recorded in a configuration file. Each of the simpatico programs has a default configuration file format, and is also able to read and write several other formats.</p>
 <p>The default configuration file formats for mcSim, mdSim and ddSim are slightly different. In all cases, the default configuration file format contains the dimensions of the periodic boundary, and the positions of all atoms. Configuration file formats for mdSim and ddSim, that are designed for use with MD simulations, also contain atomic velocities.</p>
@@ -90,12 +89,12 @@ Using non-default config file formats</h1>
 <p>Because the data structures used in the ddSim parallel MD program are signficantly different from those used in mcSim and mdSim, mcSim and mdSim can currently read ddSim and lammps configuration files only if the configuration files obey a restrictive convention regarding the ordering of atom ids. This convention is discussed in the class documentation for <a class="el" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files. ">McMd::LammpsConfigIo</a> and <a class="el" href="classMcMd_1_1DdMdConfigIo.html" title="ConfigIo for DdMd data files. ">McMd::DdMdConfigIo</a>. The <a class="el" href="classDdMd_1_1DdMdOrderedConfigIo.html" title="Native / default format for configuration files. ">DdMd::DdMdOrderedConfigIo</a> and <a class="el" href="classDdMd_1_1LammpsConfigIo.html" title="Lammps data file format for configuration files. ">DdMd::LammpsConfigIo</a> are designed to produce configuration files with sequentially ordered atom ids that can be read by mdSim and mcSim. The default <a class="el" href="classDdMd_1_1DdMdConfigIo.html" title="Native / default format for configuration files. ">DdMd::DdMdConfigIo</a> format does not write files with sequentially ordered atom ids, and so avoids the cost in time and memory of assembling an ordered list of atoms from data that is initially distirbuted over many processors.</p>
 <p>An mdSim MD simulation can be instructed to read an output file created by an earlier mcSim MC simulation by adding a command "SET_CONFIG_IO McConfigIo" before the READ_CONFIG command. Because the default MC file format does not contain any information about velocities, however, this pair of commands would normally be followed in the file for an MdSimulation by a THERMALIZE command, to generate random velocities chosen from a Maxwell-Boltzmann distribution.</p>
 <p><br />
- <a class="el" href="user_commands_page.html">2.4 Command Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_examples_page.html">2.6 Examples</a> (Next) </p>
+ <a class="el" href="user_commands_page.html">2.5 Command Files</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_examples_page.html">2.7 Examples</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

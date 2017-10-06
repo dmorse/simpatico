@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.3.3 Parameter Files: ddSim</title>
+<title>Simpatico: 2.4.3 Parameter Files: ddSim</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -40,15 +39,15 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_param_page.html">2.3 Parameter Files</a></li>  </ul>
+<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_param_page.html">2.4 Parameter Files</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.3.3 Parameter Files: ddSim </div>  </div>
+<div class="title">2.4.3 Parameter Files: ddSim </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_param_mcmd_page.html">2.3.2 Parameter Files: mdSim and mcSim</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_commands_page.html">2.4 Command Files</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_param_mcmd_page.html">2.4.2 Parameter Files: mdSim and mcSim</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_commands_page.html">2.5 Command Files</a> (Next) <br />
 </p>
 <h1><a class="anchor" id="param_ddMd_example_section"></a>
 Example (ddSim):</h1>
@@ -76,14 +75,14 @@ Buffer</h1>
 <h1><a class="anchor" id="user_param_DdMdIntegrator_section"></a>
 MD Integrator</h1>
 <p>The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion. ">DdMd::Integrator</a>. Each subclass of <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion. ">DdMd::Integrator</a> implements a parallel MD integrator. The <a class="el" href="classDdMd_1_1NveIntegrator.html" title="A velocity-Verlet constant energy integrator. ">DdMd::NveIntegrator</a> class used in the above example implements a simple NVE velocity-Verlet algorithm. The most important parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.</p>
-<p>The Integrator block also contains a parameter saveInterval, which controls the frequency with which a restart (or checkpoint) file is rewritten. Setting saveInterval = 0, as in the above example, suppresses writing of the checkpoint file. The restart system is discussed in more detail in Sec. <a class="el" href="user_restart_page.html">2.9 Restarting</a>.</p>
+<p>The Integrator block also contains a parameter saveInterval, which controls the frequency with which a restart (or checkpoint) file is rewritten. Setting saveInterval = 0, as in the above example, suppresses writing of the checkpoint file. The restart system is discussed in more detail in Sec. <a class="el" href="user_restart_page.html">2.10 Restarting</a>.</p>
 <p><br />
- <a class="el" href="user_param_mcmd_page.html">2.3.2 Parameter Files: mdSim and mcSim</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.3 Parameter Files</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_commands_page.html">2.4 Command Files</a> (Next) </p>
+ <a class="el" href="user_param_mcmd_page.html">2.4.2 Parameter Files: mdSim and mcSim</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_param_page.html">2.4 Parameter Files</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_commands_page.html">2.5 Command Files</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -50,22 +49,25 @@
 <div class="contents">
 <div class="textblock"><p><a class="el" href="source_page.html">3 Source Code Overview</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="developer_page.html">5 Developer Information</a> (Next) <br />
 </p>
-<p>Users may extend the capabilities of Simpatico by writing new subclasses of a set of base classes that represent elements of a simulation. Different base class are used to represent molecular species, potential energy functions, analyzers, file formats, and Monte Carlo or molecular dynamics algorithms.</p>
-<p>The procedure for adding a new capability or algorithm generally involves three steps: </p><ul>
+<p>Simpatico is designed to be extensible. Users may extend to any simulation program in the package by writing new C++ classes to implement new capabilities. We will refer to such new classes as "user classes". User classes may define new data analysis algorithms, Monte Carlo moves, molecule dynamics integrators, potential energy functions, molecular species, and file formats.</p>
+<p>Most types of new user class must be subclasses of an existing abstract base class that defines the interface for a particular element of a simulation. For example, a class that implements a new Monte Carlo move for the mcSim Monte Carlo program must be defined in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace and must be a subclass of the <a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves. ">McMd::McMove</a> base class. User classes are compiled using the same build system as that used to compile the base source code, and are compiled along with the base code. To make that possible, source files for user classes must be placed within one of several special directories within the simpatico src/ directory tree that are provided for this purpose. When a simulation is run, a user class is generally enabled by adding an associated parameter file block at an appropriate location within the simulation parameter file. Thus, for example, the appearance within of the parameter file block for a new subclass of <a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves. ">McMove</a> within the <a class="el" href="classMcMd_1_1McMoveManager.html" title="Manager for a set of McMove objects. ">McMoveManager</a> block of the parameter file for an mcSim simulation would instruct the mcSim program to add an instance of the new class to the list of Monte Carlo move objects from which it selects at random during the simulation.</p>
+<p>Incorporating a new user class into a simpatico program thus generally involves three steps: </p><ol>
 <li>
-Write a new C++ class that implements the new capability. This should be derived from one of the existing base classes.  </li>
+Write a new class. In most cases, thus must be a subclass of some existing base class.  </li>
 <li>
-Incorporate the new class into the simpatico build system, so it can be compiled and linked into one or more executables.  </li>
+Add the new class to the simpatico build system, so that it may be compiled.  </li>
 <li>
-Modify the implementation of an associated Factory class, so that the parameter file block associated with the new class will be recognized if it appears in a parameter file. </li>
-</ul>
-<p>For larger projects, one can also organize a set several related classes that implement related algorithms into a Module. Each of the these procedures is discussed in greater greater detail in the following subpages.</p>
-<h2>Contents:</h2>
+Enable a simulation program to recognize the associated parameter file block.  </li>
+</ol>
+<p>Each of these steps is described in more detail in what follows. A new file can be added to the build system (step 2) simply by adding the name of the source file to a list in a file named "sources.mk" in the directory that contains the source file, as discussed <a class="el" href="extend_build_page.html">here</a>. To enable a simulation program to read the parameter file block associated with a new class, the user must generally modify the behavior of an assocaited Factory class that is responsible for parsing the relevant part of the parameter file. The simplest way to do this is to edit the source code of the Factory class, as discussed <a class="el" href="extend_factory_page.html">here</a>.</p>
+<p>The following pages describe procedures for adding user classes in more detail. </p><h2>Contents:</h2>
 <ul style="list-style: none;">
 <li>
-<a class="el" href="extend_base_page.html">4.1 Base Classes</a>  </li>
+<a class="el" href="extend_overview_page.html">4.1 Source File Locations</a>  </li>
 <li>
-<a class="el" href="extend_build_page.html">4.2 Build system (adding new classes)</a>  </li>
+<a class="el" href="extend_base_page.html">4.2 Base Classes</a>  </li>
+<li>
+<a class="el" href="extend_build_page.html">4.3 Build system</a>  </li>
 <li>
 <a class="el" href="extend_factory_page.html">4.3 Factory Classes</a>  </li>
 <li>
@@ -81,7 +83,7 @@ Modify the implementation of an associated Factory class, so that the parameter 
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

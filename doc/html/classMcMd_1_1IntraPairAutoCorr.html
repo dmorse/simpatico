@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,13 +61,13 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Autocorrelation for vector separation of any two monomers on a molecule. </p>
 <p>This class evaluates the autocorrelation function for the vector that separates two atoms with indices atom1Id and atom2Id on a molecule of species speciesId. It can be used to evaluate the autocorrelation function for individual bonds or for the end-to-end vector of a linear polymer.</p>
-<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_89.png"/>. This class calculates and outputs the function </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_90.png"/>
+<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_93.png"/>. This class calculates and outputs the function </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_94.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ \tau $" src="form_91.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_92.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_93.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_94.png"/> at different times.</p>
+<p> where <img class="formulaInl" alt="$ \tau $" src="form_95.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_96.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_97.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_98.png"/> at different times.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="mcMd_analyzer_IntraPairAutoCorr_page.html">parameter file format</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00048">48</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00051">51</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -390,7 +389,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get echo parameter.  <a href="#ac5808de278115409092e94f9c72362c2">More...</a><br /></td></tr>
 <tr class="separator:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classMcMd_1_1Analyzer"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classMcMd_1_1Analyzer')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classMcMd_1_1Analyzer.html">McMd::Analyzer</a></td></tr>
-<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 1</td></tr>
+<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 0</td></tr>
 <tr class="memdesc:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for an <a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Analyzer</a> must be a multiple of baseInterval.  <a href="#af712ec400c7c198f10a4cef2e88ec09b">More...</a><br /></td></tr>
 <tr class="separator:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classMcMd_1_1SystemAnalyzer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classMcMd_1_1SystemAnalyzer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classMcMd_1_1SystemAnalyzer.html">McMd::SystemAnalyzer&lt; System &gt;</a></td></tr>
@@ -510,7 +509,7 @@ Additional Inherited Members</h2></td></tr>
 <ul>
 <li>int interval sampling interval</li>
 <li>string outputFileName output file name</li>
-<li>int speciesId integer Id for molecular <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a></li>
+<li>int speciesId integer Id for molecular Species</li>
 <li>int atom1Id local atom Id for 1st atom</li>
 <li>int atom2Id local atom Id for 2nd atom</li>
 <li>int capacity capacity of array of previous values.</li>
@@ -526,7 +525,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00042">42</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00515">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00521">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="simp_2species_2Species_8h_source.html#l00520">Simp::Species::capacity()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00526">Simp::Species::nAtom()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -564,7 +563,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00088">88</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00515">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00083">McMd::Analyzer::loadParameters()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00521">McMd::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="simp_2species_2Species_8h_source.html#l00520">Simp::Species::capacity()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00083">McMd::Analyzer::loadParameters()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00526">Simp::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -639,9 +638,9 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00155">155</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00158">158</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00255">McMd::Analyzer::serialize()</a>.</p>
+<p>References <a class="el" href="serialize_8h_source.html#l00029">Util::serialize()</a>.</p>
 
 </div>
 </div>
@@ -672,7 +671,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00129">129</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01036">McMd::System::nMolecule()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01061">McMd::System::nMolecule()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -710,7 +709,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00144">144</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00473">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00972">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01045">McMd::System::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00477">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00997">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01070">McMd::System::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -753,7 +752,7 @@ template&lt;class Archive &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:28 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:36 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

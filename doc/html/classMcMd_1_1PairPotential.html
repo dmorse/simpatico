@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,7 +61,7 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for a Pair Potential. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html#l00029">29</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">mcMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html#l00035">35</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">mcMd/potentials/pair/PairPotential.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">PairPotential.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -71,10 +70,13 @@ Inheritance diagram for McMd::PairPotential:</div>
  <div class="center">
   <img src="classMcMd_1_1PairPotential.png" usemap="#McMd::PairPotential_map" alt=""/>
   <map id="McMd::PairPotential_map" name="McMd::PairPotential_map">
-<area href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). " alt="McMd::McPairPotential" shape="rect" coords="0,56,248,80"/>
-<area href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. " alt="McMd::MdPairPotential" shape="rect" coords="258,56,506,80"/>
-<area href="classMcMd_1_1McPairPotentialImpl.html" title="Implementation template for an McPairPotential. " alt="McMd::McPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,112,248,136"/>
-<area href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. " alt="McMd::MdPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="258,112,506,136"/>
+<area href="classMcMd_1_1EnergyCalculator.html" title="Interface for a class that calculates a total energy. " alt="McMd::EnergyCalculator" shape="rect" coords="73,0,355,24"/>
+<area href="classMcMd_1_1StressCalculator.html" title="Interface for a stress calculator. " alt="McMd::StressCalculator" shape="rect" coords="365,0,647,24"/>
+<area href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). " alt="McMd::McPairPotential" shape="rect" coords="0,112,282,136"/>
+<area href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. " alt="McMd::MdPairPotential" shape="rect" coords="438,112,720,136"/>
+<area href="classMcMd_1_1McPairPotentialImpl.html" title="Implementation template for an McPairPotential. " alt="McMd::McPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,282,192"/>
+<area href="classMcMd_1_1MdEwaldPairPotentialImpl.html" title="Implementation of a pair potential for a charged system. " alt="McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="292,168,574,192"/>
+<area href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential. " alt="McMd::MdPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="584,168,866,192"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -102,19 +104,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a84cf99695c198d39a9bd4d145ac38985"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a84cf99695c198d39a9bd4d145ac38985">interactionClassName</a> () const  =0</td></tr>
 <tr class="memdesc:a84cf99695c198d39a9bd4d145ac38985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of pair interaction class (e.g., "LJPair").  <a href="#a84cf99695c198d39a9bd4d145ac38985">More...</a><br /></td></tr>
 <tr class="separator:a84cf99695c198d39a9bd4d145ac38985"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Global Energy, Force, and Stress Evaluators</div></td></tr>
-<tr class="memitem:a4f9b1460856bc9c74852ff3668528c9d"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a4f9b1460856bc9c74852ff3668528c9d">energy</a> ()=0</td></tr>
-<tr class="memdesc:a4f9b1460856bc9c74852ff3668528c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#a4f9b1460856bc9c74852ff3668528c9d">More...</a><br /></td></tr>
-<tr class="separator:a4f9b1460856bc9c74852ff3668528c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3969b89d9fc4581234ad2423064bca83"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a3969b89d9fc4581234ad2423064bca83">computeStress</a> (double &amp;stress) const  =0</td></tr>
-<tr class="memdesc:a3969b89d9fc4581234ad2423064bca83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total nonbonded pressure.  <a href="#a3969b89d9fc4581234ad2423064bca83">More...</a><br /></td></tr>
-<tr class="separator:a3969b89d9fc4581234ad2423064bca83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ac536f0dd7557c295a3bab06d13a4e1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a3ac536f0dd7557c295a3bab06d13a4e1">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const  =0</td></tr>
-<tr class="memdesc:a3ac536f0dd7557c295a3bab06d13a4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z nonbonded pressures.  <a href="#a3ac536f0dd7557c295a3bab06d13a4e1">More...</a><br /></td></tr>
-<tr class="separator:a3ac536f0dd7557c295a3bab06d13a4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf078f1c9e952fda781b643a1686cdab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#abf078f1c9e952fda781b643a1686cdab">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const  =0</td></tr>
-<tr class="memdesc:abf078f1c9e952fda781b643a1686cdab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute stress tensor.  <a href="#abf078f1c9e952fda781b643a1686cdab">More...</a><br /></td></tr>
-<tr class="separator:abf078f1c9e952fda781b643a1686cdab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1EnergyCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1EnergyCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1EnergyCalculator.html">McMd::EnergyCalculator</a></td></tr>
+<tr class="memitem:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#afc97619737d45ab11a8126618979d76b">unsetEnergy</a> ()</td></tr>
+<tr class="memdesc:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the energy as unknown.  <a href="#afc97619737d45ab11a8126618979d76b">More...</a><br /></td></tr>
+<tr class="separator:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#ad4f878f06098473b7c42671b5c6cb904">computeEnergy</a> ()=0</td></tr>
+<tr class="memdesc:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#ad4f878f06098473b7c42671b5c6cb904">More...</a><br /></td></tr>
+<tr class="separator:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#a6ad7b79b1b2cc43e85434cfb186e1fab">energy</a> ()</td></tr>
+<tr class="memdesc:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the energy contribution, compute if necessary.  <a href="#a6ad7b79b1b2cc43e85434cfb186e1fab">More...</a><br /></td></tr>
+<tr class="separator:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1StressCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1StressCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1StressCalculator.html">McMd::StressCalculator</a></td></tr>
+<tr class="memitem:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a47d7a699bc99250173936e42f1ae37b8">unsetStress</a> ()</td></tr>
+<tr class="memdesc:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the stress as unknown.  <a href="#a47d7a699bc99250173936e42f1ae37b8">More...</a><br /></td></tr>
+<tr class="separator:a47d7a699bc99250173936e42f1ae37b8 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a65a5f57185df3135426536c20009640c">computeStress</a> ()=0</td></tr>
+<tr class="memdesc:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the stress tensor.  <a href="#a65a5f57185df3135426536c20009640c">More...</a><br /></td></tr>
+<tr class="separator:a65a5f57185df3135426536c20009640c inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a03c611d5183c1bf195b23e85c9701d03">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;stress)</td></tr>
+<tr class="memdesc:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pair stress tensor.  <a href="#a03c611d5183c1bf195b23e85c9701d03">More...</a><br /></td></tr>
+<tr class="separator:a03c611d5183c1bf195b23e85c9701d03 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#aeaaf6cdb987c031fe1c8f77837054614">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;pressures)</td></tr>
+<tr class="memdesc:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the xx, yy, zz non-Coulomb pair pressures.  <a href="#aeaaf6cdb987c031fe1c8f77837054614">More...</a><br /></td></tr>
+<tr class="separator:aeaaf6cdb987c031fe1c8f77837054614 inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StressCalculator.html#a0a7f135a52bc261ab9fcfd19b6280b9d">computeStress</a> (double &amp;pressure)</td></tr>
+<tr class="memdesc:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scalar pressure.  <a href="#a0a7f135a52bc261ab9fcfd19b6280b9d">More...</a><br /></td></tr>
+<tr class="separator:a0a7f135a52bc261ab9fcfd19b6280b9d inherit pub_methods_classMcMd_1_1StressCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af44d935dc00d2394db50699988def71a"></a>
@@ -140,7 +155,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor (does nothing) </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html#l00037">37</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">mcMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html#l00043">43</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">mcMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -185,9 +200,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Return pair energy for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af6ac73ba8a709cb131bafac42df742ab">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a725f3c0d7eb96e673fdc954e14281add">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#afd5cf5c93b5c54520cc5e28c2732cbed">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af6ac73ba8a709cb131bafac42df742ab">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a725f3c0d7eb96e673fdc954e14281add">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00188">McMd::GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="McSystem_8cpp_source.html#l00448">McMd::McSystem::potentialEnergy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00702">McMd::MdSystem::potentialEnergy()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00106">McMd::McMuExchange::sample()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00053">McMd::McEnergyOutput::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00157">McMd::MdPairEnergyCoefficients::sample()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00053">McMd::GroupRebridgeBase::tetraEnergy()</a>.</p>
+<p>Referenced by <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00188">McMd::GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="McSystem_8cpp_source.html#l00497">McMd::McSystem::potentialEnergy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00842">McMd::MdSystem::potentialEnergy()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00106">McMd::McMuExchange::sample()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00055">McMd::MdEnergyOutput::sample()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00053">McMd::McEnergyOutput::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00157">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MdEnergyAnalyzer_8cpp_source.html#l00394">McMd::MdEnergyAnalyzer::sample()</a>, <a class="el" href="McEnergyAnalyzer_8cpp_source.html#l00309">McMd::McEnergyAnalyzer::sample()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00053">McMd::GroupRebridgeBase::tetraEnergy()</a>.</p>
 
 </div>
 </div>
@@ -231,7 +246,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return force / separation for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#add3cdfb0f7aef6343e1fec05c225ad31">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#accd9927a12fd8fca4b6c90a78c7abada">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#a2408e2ec69a7e43092d656e6f4a1704d">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#add3cdfb0f7aef6343e1fec05c225ad31">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#accd9927a12fd8fca4b6c90a78c7abada">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -290,9 +305,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a23a1ddabcde4bdb9b67066be0dcb721c">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a83695b396283f95a97fa1a2cde6f1e92">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#a4e04338ffb6bc9c3bf7d469c4cc51eaa">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a23a1ddabcde4bdb9b67066be0dcb721c">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a83695b396283f95a97fa1a2cde6f1e92">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00309">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00395">McMd::McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00384">McMd::MdSimulation::readCommand()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00470">McMd::McSimulation::readCommand()</a>.</p>
 
 </div>
 </div>
@@ -344,7 +359,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a787dd534d592924e6a9ee28f5d64f411">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a298e3d561af56403bdc2f3abbf86c268">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#ae810a4b3b057afc62db69b067250347d">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a787dd534d592924e6a9ee28f5d64f411">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a298e3d561af56403bdc2f3abbf86c268">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -371,7 +386,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return maximum cutoff distance. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a9bcee7c1732c4c69fe17292206286f5f">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#ab885a3e37a5298cc3c3ac21ffea1c6e5">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a9bcee7c1732c4c69fe17292206286f5f">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 <p>Referenced by <a class="el" href="McPairPotential_8cpp_source.html#l00041">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00096">McMd::NvtDpdVvIntegrator::loadParameters()</a>, and <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00069">McMd::NvtDpdVvIntegrator::readParameters()</a>.</p>
 
@@ -400,140 +415,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Return name of pair interaction class (e.g., "LJPair"). </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aab51ca9deb3bef8ca52287c5c600c817">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a92a14ad4cf4cd5b034c3501f4b05a355">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#a31bd79d01389e85ccb96519b476c45d3">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aab51ca9deb3bef8ca52287c5c600c817">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a92a14ad4cf4cd5b034c3501f4b05a355">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="McPerturbationFactory_8cpp_source.html#l00049">McMd::McPerturbationFactory::factory()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00111">McMd::PairFactory::mdFactory()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4f9b1460856bc9c74852ff3668528c9d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual double McMd::PairPotential::energy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a49e535350c113eb883679f32cbe9bf97">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a1bec16b69126f45b4d0c25822d5b4808">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3969b89d9fc4581234ad2423064bca83"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute total nonbonded pressure. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#ab2547cae3cbcac76ad57f9919815b1a2">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
-
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00744">McMd::MdSystem::kineticEnergy()</a>, and <a class="el" href="McSystem_8cpp_source.html#l00448">McMd::McSystem::potentialEnergy()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3ac536f0dd7557c295a3bab06d13a4e1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute x, y, z nonbonded pressures. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressures. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a4a8b4523ac3dae4a0b9ad26327847786">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af09a0439db065c93bf71e75f0fdc175b">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="abf078f1c9e952fda781b643a1686cdab"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;&#160;</td>
-          <td class="paramname"><em>stress</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute stress tensor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stress</td><td>(output) pressures. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#ad53446264cd8a327956d2142fc34f5b8">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a25cb0dd69e076be9f234a8596b8c170b">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Referenced by <a class="el" href="McPerturbationFactory_8cpp_source.html#l00049">McMd::McPerturbationFactory::factory()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00147">McMd::PairFactory::mdFactory()</a>.</p>
 
 </div>
 </div>
@@ -544,7 +428,7 @@ Public Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

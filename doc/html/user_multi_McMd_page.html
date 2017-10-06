@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.10.1 Multi-system simulations: mcSim and mdSim</title>
+<title>Simpatico: 2.11.1 Multi-system simulations: mcSim and mdSim</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -40,15 +39,15 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a></li>  </ul>
+<li class="navelem"><a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a></li><li class="navelem"><a class="el" href="user_page.html">2 User Guide</a></li><li class="navelem"><a class="el" href="user_multi_page.html">2.11 Multi-System Simulations</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.10.1 Multi-system simulations: mcSim and mdSim </div>  </div>
+<div class="title">2.11.1 Multi-system simulations: mcSim and mdSim </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_multi_DdMd_page.html">2.10.2 Multi-system simulations: ddSim</a> (Next) &#160; &#160; &#160; &#160; <br />
+<div class="textblock"><p><a class="el" href="user_multi_DdMd_page.html">2.11.2 Multi-system simulations: ddSim</a> (Next) &#160; &#160; &#160; &#160; <br />
 </p>
 <p>MPI-enabled versions of mcSim and mdSim allow different processors within an MPI communicator to simulate different systems, with one system per processor. The names of MPI-enabled versions of these programs include a suffix _m (for MPI), and are called mcSim_m and mdSim_m if no other optional features are enabled.</p>
 <p>The multi-processor versions of mcSim or mdSim can be invoked in either "independent" mode or "perturbation" mode. In "independent" mode, these programs simply run a set of completely independent simulations, with completely separate input files for every processor. In "perturbation" mode, these programs use different input configuration files for different processors but use a single parameter and command file to control all processors. In perturbation mode, the parameter file contains instructions for assigning a sequence of slightly different set of parameter values to different processors. Both modes are described in more detail below.</p>
@@ -81,12 +80,12 @@ Restarting multi-system simulations</h1>
 <p>Different conventions are used for the placement of restart command files for "independent" and "replicated" simulations. Independent simulations use a separate restart command file for each processor, each of which is placed in the same numbered directory as the associated restart file. Replicated simulations use a single restart command file, which must be placed in the same directory as the single restart file, and the single parameter file and command file for the original simulation. In either case, the base name of the restart command file is passed as command line parameter of the -c option.</p>
 <p>The command to restart a multi-processor simulation is similar to that for a single-processor simulation. The command to restart a 3 processor mcSim simulation of either independent or replicated systems, using the mcSim_m executable and the mpirun command to launch an MPI program, using a restart file named "restart" and a command file named "restart.cmd", is: </p><div class="fragment"><div class="line">mpirun -np 3 mcSim_m -e -r restart -c restart.cmd</div></div><!-- fragment --><p> Information about whether the original simulations were independent or replicated is stored within all restart files, and does not need to be be specified by a command line option when the simulation is restarted. Invoking an mcSim or mdSim executable with both the "-r" and "-f" options is thus illegal, and will cause execution to halt with an error message.</p>
 <p><br />
- <a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_DdMd_page.html">2.10.2 Multi-system simulations: ddSim</a> (Next) &#160; &#160; &#160; &#160; </p>
+ <a class="el" href="user_multi_page.html">2.11 Multi-System Simulations</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_DdMd_page.html">2.11.2 Multi-system simulations: ddSim</a> (Next) &#160; &#160; &#160; &#160; </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

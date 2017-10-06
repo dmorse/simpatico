@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -61,8 +60,9 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms). ">Molecule</a> in a cluster. </p>
+<p>A cluster is defined by a linked list of <a class="el" href="structMcMd_1_1ClusterLink.html" title="Molecule in a cluster. ">ClusterLink</a> objects. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00020">20</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00022">22</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -108,7 +108,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Set to default state. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00061">61</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00069">69</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 
 <p>Referenced by <a class="el" href="Cluster_8cpp_source.html#l00025">McMd::Cluster::clear()</a>.</p>
 
@@ -138,9 +138,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Set pointer to associated molecule. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00069">69</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00078">78</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 
-<p>References <a class="el" href="ClusterLink_8h_source.html#l00073">molecule()</a>.</p>
+<p>References <a class="el" href="ClusterLink_8h_source.html#l00083">molecule()</a>.</p>
 
 </div>
 </div>
@@ -167,9 +167,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get associated molecule by reference. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00073">73</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00083">83</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">McMd::ClusterIdentifier::isValid()</a>, and <a class="el" href="ClusterLink_8h_source.html#l00069">setMolecule()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">McMd::ClusterIdentifier::isValid()</a>, <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">McMd::ClusterHistogram::sample()</a>, and <a class="el" href="ClusterLink_8h_source.html#l00078">setMolecule()</a>.</p>
 
 </div>
 </div>
@@ -196,9 +196,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get pointer to next link in linked list. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00077">77</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00088">88</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Cluster_8cpp_source.html#l00025">McMd::Cluster::clear()</a>, <a class="el" href="Cluster_8cpp_source.html#l00060">McMd::Cluster::isValid()</a>, and <a class="el" href="Cluster_8cpp_source.html#l00039">McMd::Cluster::setId()</a>.</p>
+<p>Referenced by <a class="el" href="Cluster_8cpp_source.html#l00025">McMd::Cluster::clear()</a>, <a class="el" href="Cluster_8cpp_source.html#l00060">McMd::Cluster::isValid()</a>, <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">McMd::ClusterHistogram::sample()</a>, and <a class="el" href="Cluster_8cpp_source.html#l00039">McMd::Cluster::setId()</a>.</p>
 
 </div>
 </div>
@@ -225,7 +225,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get cluster identifier. </p>
 
-<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00081">81</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
+<p>Definition at line <a class="el" href="ClusterLink_8h_source.html#l00093">93</a> of file <a class="el" href="ClusterLink_8h_source.html">ClusterLink.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="Cluster_8cpp_source.html#l00060">McMd::Cluster::isValid()</a>, and <a class="el" href="ClusterIdentifier_8cpp_source.html#l00196">McMd::ClusterIdentifier::isValid()</a>.</p>
 
@@ -238,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:27 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

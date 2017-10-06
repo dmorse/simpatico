@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -384,7 +383,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get echo parameter.  <a href="#ac5808de278115409092e94f9c72362c2">More...</a><br /></td></tr>
 <tr class="separator:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classMcMd_1_1Analyzer"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classMcMd_1_1Analyzer')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classMcMd_1_1Analyzer.html">McMd::Analyzer</a></td></tr>
-<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 1</td></tr>
+<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 0</td></tr>
 <tr class="memdesc:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for an <a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Analyzer</a> must be a multiple of baseInterval.  <a href="#af712ec400c7c198f10a4cef2e88ec09b">More...</a><br /></td></tr>
 <tr class="separator:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classMcMd_1_1SystemAnalyzer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classMcMd_1_1SystemAnalyzer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classMcMd_1_1SystemAnalyzer.html">McMd::SystemAnalyzer&lt; System &gt;</a></td></tr>
@@ -470,7 +469,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00031">31</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00034">34</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
@@ -505,7 +504,7 @@ Additional Inherited Members</h2></td></tr>
 <ul>
 <li>int interval : sampling interval</li>
 <li>string outputFileName : base name for output file(s)</li>
-<li>int speciesId : integer id for <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Species</a> of interest</li>
+<li>int speciesId : integer id for Species of interest</li>
 <li>int atomTypeId : integer id for core atom type</li>
 <li>double cutoff : distance cutoff</li>
 </ul>
@@ -518,7 +517,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a47ff063d3049206e3806d50b19e33946">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00046">46</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00049">49</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="IntDistribution_8cpp_source.html#l00153">Util::IntDistribution::clear()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00114">Util::IntDistribution::setParam()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -549,7 +548,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#aa5cdc8e0d1f1151ffbc6d7daf71cc245">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00135">135</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00138">138</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="IntDistribution_8cpp_source.html#l00153">Util::IntDistribution::clear()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -587,9 +586,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classMcMd_1_1Analyzer.html#a576d9ef1ae896122b249b5ce2058546a">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00145">145</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00148">148</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
-<p>References <a class="el" href="ClusterIdentifier_8h_source.html#l00084">McMd::ClusterIdentifier::cluster()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00064">McMd::ClusterIdentifier::nCluster()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00165">Util::IntDistribution::sample()</a>, and <a class="el" href="Cluster_8h_source.html#l00060">McMd::Cluster::size()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00566">McMd::Molecule::begin()</a>, <a class="el" href="System_8h_source.html#l00997">McMd::System::boundary()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00089">McMd::ClusterIdentifier::cluster()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Tensor_8h_source.html#l00763">Util::Tensor::dyad()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="Cluster_8h_source.html#l00075">McMd::Cluster::head()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ClusterLink_8h_source.html#l00083">McMd::ClusterLink::molecule()</a>, <a class="el" href="ClusterIdentifier_8h_source.html#l00069">McMd::ClusterIdentifier::nCluster()</a>, <a class="el" href="ClusterLink_8h_source.html#l00088">McMd::ClusterLink::next()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00165">Util::IntDistribution::sample()</a>, <a class="el" href="Cluster_8h_source.html#l00067">McMd::Cluster::size()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00052">Util::toString()</a>, <a class="el" href="Vector_8h_source.html#l00514">Util::Vector::zero()</a>, and <a class="el" href="Tensor_8h_source.html#l00441">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -618,7 +617,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ab14b1c3cfe5319b54c16c330e6eb724f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00159">159</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00253">253</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="IntDistribution_8h_source.html#l00140">Util::IntDistribution::data()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="IntDistribution_8h_source.html#l00165">Util::IntDistribution::min()</a>, <a class="el" href="IntDistribution_8h_source.html#l00177">Util::IntDistribution::nBin()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
@@ -656,7 +655,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ae90b5ab7326be9d6b32c2e2e4ea468bf">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00120">120</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00123">123</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00126">McMd::Analyzer::save()</a>.</p>
 
@@ -694,7 +693,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a57d1bfefb27ec9e3453f4ad331e60c1f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00084">84</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ClusterHistogram_8cpp_source.html#l00087">87</a> of file <a class="el" href="ClusterHistogram_8cpp_source.html">ClusterHistogram.cpp</a>.</p>
 
 <p>References <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00083">McMd::Analyzer::loadParameters()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -742,7 +741,7 @@ template&lt;class Archive &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:27 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

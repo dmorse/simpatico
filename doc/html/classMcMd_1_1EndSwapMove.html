@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,10 +61,11 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A move that swaps the ends of a linear hetero-polymer. </p>
-<p>This move changes the energy if of a linear heteropolymer by reversing the sequence of atom types. When applied to a diblock copolymer, is swaps the A and B blocks. It is pointless if applied to a homopolymer, or to a symmetric ABA triblock.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="mcMd_mcMove_EndSwapMove_page.html">param file format</a> </dd></dl>
+<p>This move changes the energy if of a linear heteropolymer by reversing the sequence of atom types. When applied to a diblock copolymer, it swaps the A and B blocks.</p>
+<p>Limitation: This implementation only works with flexible chains, with no angle or dihedral potentials.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="mcMd_mcMove_EndSwapMove_page.html">parameter file format</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00035">35</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00036">36</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -98,7 +98,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a761833ecc7c5f1e1a1919e343f95c767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#a761833ecc7c5f1e1a1919e343f95c767">More...</a><br /></td></tr>
 <tr class="separator:a761833ecc7c5f1e1a1919e343f95c767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeba214460db7b2d0045014ff82c8cb8b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EndSwapMove.html#aeba214460db7b2d0045014ff82c8cb8b">move</a> ()</td></tr>
-<tr class="memdesc:aeba214460db7b2d0045014ff82c8cb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate and accept or reject configuration bias move.  <a href="#aeba214460db7b2d0045014ff82c8cb8b">More...</a><br /></td></tr>
+<tr class="memdesc:aeba214460db7b2d0045014ff82c8cb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate and accept or reject a move.  <a href="#aeba214460db7b2d0045014ff82c8cb8b">More...</a><br /></td></tr>
 <tr class="separator:aeba214460db7b2d0045014ff82c8cb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classMcMd_1_1SystemMove"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1SystemMove')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1SystemMove.html">McMd::SystemMove</a></td></tr>
 <tr class="memitem:a0e0820f84f29be1e6b6d4216196d6abf inherit pub_methods_classMcMd_1_1SystemMove"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1SystemMove.html#a0e0820f84f29be1e6b6d4216196d6abf">SystemMove</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;<a class="el" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4">system</a>)</td></tr>
@@ -462,9 +462,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00027">27</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00030">30</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8h_source.html#l00338">McMd::McSystem::hasAnglePotential()</a>, <a class="el" href="McSystem_8h_source.html#l00352">McMd::McSystem::hasDihedralPotential()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -495,9 +495,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#a2ac5de34c3858f347091ea9ba7a4edc1">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00054">54</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00059">59</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00075">atomTypeIds_</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00521">McMd::Species::nAtom()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00078">positions_</a>, <a class="el" href="McMove_8cpp_source.html#l00042">McMd::McMove::readProbability()</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00072">speciesId_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00076">atomTypeIds_</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00526">Simp::Species::nAtom()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00079">positions_</a>, <a class="el" href="McMove_8cpp_source.html#l00042">McMd::McMove::readProbability()</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00073">speciesId_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -533,9 +533,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#aa061075f18a9faef0a21a11713ff35f6">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00084">84</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00089">89</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
 
-<p>References <a class="el" href="EndSwapMove_8h_source.html#l00075">atomTypeIds_</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00599">McMd::Species::isMutable()</a>, <a class="el" href="McMove_8cpp_source.html#l00048">McMd::McMove::loadParameters()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00521">McMd::Species::nAtom()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00078">positions_</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00847">McMd::Simulation::species()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00072">speciesId_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="EndSwapMove_8h_source.html#l00076">atomTypeIds_</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00604">Simp::Species::isMutable()</a>, <a class="el" href="McMove_8cpp_source.html#l00048">McMd::McMove::loadParameters()</a>, <a class="el" href="simp_2species_2Species_8h_source.html#l00526">Simp::Species::nAtom()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00079">positions_</a>, <a class="el" href="McMove_8h_source.html#l00203">McMd::McMove::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00880">McMd::Simulation::species()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00073">speciesId_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -571,9 +571,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#a6977206c8382434730c4f2eab99f4f5c">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00110">110</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00115">115</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
 
-<p>References <a class="el" href="EndSwapMove_8h_source.html#l00075">atomTypeIds_</a>, <a class="el" href="McMove_8cpp_source.html#l00058">McMd::McMove::save()</a>, and <a class="el" href="EndSwapMove_8h_source.html#l00072">speciesId_</a>.</p>
+<p>References <a class="el" href="EndSwapMove_8h_source.html#l00076">atomTypeIds_</a>, <a class="el" href="McMove_8cpp_source.html#l00058">McMd::McMove::save()</a>, and <a class="el" href="EndSwapMove_8h_source.html#l00073">speciesId_</a>.</p>
 
 </div>
 </div>
@@ -598,13 +598,13 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generate and accept or reject configuration bias move. </p>
+<p>Generate and accept or reject a move. </p>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1McMove.html#ab1d158203cfb51bb9d7bda9095a5cc86">McMd::McMove</a>.</p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00120">120</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8cpp_source.html#l00125">125</a> of file <a class="el" href="EndSwapMove_8cpp_source.html">EndSwapMove.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00473">McMd::Molecule::atom()</a>, <a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">McMd::ExternalPotential::atomEnergy()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00075">atomTypeIds_</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::externalPotential()</a>, <a class="el" href="McMove_8h_source.html#l00197">McMd::McMove::incrementNAccept()</a>, <a class="el" href="McMove_8h_source.html#l00191">McMd::McMove::incrementNAttempt()</a>, <a class="el" href="Random_8h_source.html#l00260">Util::Random::metropolis()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#a8044fc96979428f5846cabeb4429da8b">McMd::McPairPotential::moleculeEnergy()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00432">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00316">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00078">positions_</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="System_8cpp_source.html#l01067">McMd::System::randomMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00266">McMd::Atom::setTypeId()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00072">speciesId_</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="McPairPotential_8h_source.html#l00152">McMd::McPairPotential::updateAtomCell()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00477">McMd::Molecule::atom()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00076">atomTypeIds_</a>, <a class="el" href="SystemMove_8h_source.html#l00099">McMd::SystemMove::boltzmann()</a>, <a class="el" href="McMove_8h_source.html#l00197">McMd::McMove::incrementNAccept()</a>, <a class="el" href="McMove_8h_source.html#l00191">McMd::McMove::incrementNAttempt()</a>, <a class="el" href="Random_8h_source.html#l00260">Util::Random::metropolis()</a>, <a class="el" href="classMcMd_1_1McPairPotential.html#a8044fc96979428f5846cabeb4429da8b">McMd::McPairPotential::moleculeEnergy()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00436">McMd::Molecule::nAtom()</a>, <a class="el" href="McSystem_8h_source.html#l00386">McMd::McSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00079">positions_</a>, <a class="el" href="McMove_8h_source.html#l00209">McMd::McMove::random()</a>, <a class="el" href="System_8cpp_source.html#l01104">McMd::System::randomMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00266">McMd::Atom::setTypeId()</a>, <a class="el" href="EndSwapMove_8h_source.html#l00073">speciesId_</a>, <a class="el" href="SystemMove_8h_source.html#l00081">McMd::SystemMove::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00274">McMd::Atom::typeId()</a>, and <a class="el" href="McPairPotential_8h_source.html#l00149">McMd::McPairPotential::updateAtomCell()</a>.</p>
 
 </div>
 </div>
@@ -629,9 +629,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Integer index for molecular species. </p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00072">72</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00073">73</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
 
-<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00084">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00120">move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00054">readParameters()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00110">save()</a>.</p>
+<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00089">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00125">move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00059">readParameters()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00115">save()</a>.</p>
 
 </div>
 </div>
@@ -655,9 +655,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Array of atom type indices. </p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00075">75</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00076">76</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
 
-<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00084">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00120">move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00054">readParameters()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00110">save()</a>.</p>
+<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00089">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00125">move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00059">readParameters()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00115">save()</a>.</p>
 
 </div>
 </div>
@@ -681,9 +681,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Array of atomic positions (temporary). </p>
 
-<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00078">78</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
+<p>Definition at line <a class="el" href="EndSwapMove_8h_source.html#l00079">79</a> of file <a class="el" href="EndSwapMove_8h_source.html">EndSwapMove.h</a>.</p>
 
-<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00084">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00120">move()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00054">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00089">loadParameters()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00125">move()</a>, and <a class="el" href="EndSwapMove_8cpp_source.html#l00059">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -695,7 +695,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:28 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

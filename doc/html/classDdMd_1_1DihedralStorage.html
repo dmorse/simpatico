@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -61,7 +60,7 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Container for Group&lt;4&gt; (dihedral) objects. </p>
-<p>Only differences from <a class="el" href="classTools_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a> is the className, which is set in the constructor and effects the param file format. </p>
+<p>Only differences from <a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a> is the className, which is set in the constructor and effects the param file format. </p>
 
 <p>Definition at line <a class="el" href="DihedralStorage_8h_source.html#l00025">25</a> of file <a class="el" href="DihedralStorage_8h_source.html">DihedralStorage.h</a>.</p>
 </div>
@@ -99,7 +98,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6b5fc04f15014de43c026ec972241a8e inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a6b5fc04f15014de43c026ec972241a8e">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr class="memdesc:a6b5fc04f15014de43c026ec972241a8e inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create associations for distributor and collector members.  <a href="#a6b5fc04f15014de43c026ec972241a8e">More...</a><br /></td></tr>
 <tr class="separator:a6b5fc04f15014de43c026ec972241a8e inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae61e94fac2ace9df291c525009026a19 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae61e94fac2ace9df291c525009026a19">initialize</a> (int <a class="el" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846">capacity</a>, int totalCapacity)</td></tr>
+<tr class="memitem:ae61e94fac2ace9df291c525009026a19 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae61e94fac2ace9df291c525009026a19">initialize</a> (int <a class="el" href="classDdMd_1_1GroupStorage.html#a9d2c09c9e2fdef8ea7f15fd75d17e9b3">capacity</a>, int <a class="el" href="classDdMd_1_1GroupStorage.html#a1001e053811ee1bf208908cc0639d51e">totalCapacity</a>)</td></tr>
 <tr class="memdesc:ae61e94fac2ace9df291c525009026a19 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory and initialize.  <a href="#ae61e94fac2ace9df291c525009026a19">More...</a><br /></td></tr>
 <tr class="separator:ae61e94fac2ace9df291c525009026a19 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b5dc826756f7e337ccf57ee41186e54 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a2b5dc826756f7e337ccf57ee41186e54">loadParameters</a> (<a class="el" href="classUtil_1_1Serializable.html#ac6bcbf9bac926cada5a398804410e891">Serializable::IArchive</a> &amp;ar)</td></tr>
@@ -118,7 +117,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3ed43652b4af4f407c4c3c8550417ee5 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new Group with a specified id, in a single step.  <a href="#a3ed43652b4af4f407c4c3c8550417ee5">More...</a><br /></td></tr>
 <tr class="separator:a3ed43652b4af4f407c4c3c8550417ee5 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae40f5903392f548ffe3cda2f020c94a9 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae40f5903392f548ffe3cda2f020c94a9">returnPtr</a> ()</td></tr>
-<tr class="memdesc:ae40f5903392f548ffe3cda2f020c94a9 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts a transaction begun by the <a class="el" href="classTools_1_1GroupStorage.html#ac65d21228ebdc6fdfc8360220c836505" title="Append a new element to container and return its address. ">newPtr()</a> function.  <a href="#ae40f5903392f548ffe3cda2f020c94a9">More...</a><br /></td></tr>
+<tr class="memdesc:ae40f5903392f548ffe3cda2f020c94a9 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverts a transaction begun by the <a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2" title="Returns an address available for addition of a new Group. ">newPtr()</a> function.  <a href="#ae40f5903392f548ffe3cda2f020c94a9">More...</a><br /></td></tr>
 <tr class="separator:ae40f5903392f548ffe3cda2f020c94a9 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e66e8443f13c8788acaacb548d1c685 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a7e66e8443f13c8788acaacb548d1c685">remove</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *groupPtr)</td></tr>
 <tr class="memdesc:a7e66e8443f13c8788acaacb548d1c685 inherit pub_methods_classDdMd_1_1GroupStorage"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a specific Group.  <a href="#a7e66e8443f13c8788acaacb548d1c685">More...</a><br /></td></tr>
@@ -544,7 +543,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:23 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:32 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

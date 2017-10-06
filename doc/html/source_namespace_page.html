@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -53,16 +52,16 @@
 <p>The classes used in simpatico are divided into five namespaces. The source code for each namespace is in a corresponding subdirectories of the src/directory:</p>
 <ul>
 <li>namespace <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> (directory src/util) contains general utilities for C++ programming and scientific computation.</li>
-<li>namespace <a class="el" href="namespaceInter.html" title="Potential energy interaction functions. ">Inter</a> (directory src/inter) contains classes that define specific potential energy functions, such as the Lennard-Jones pair potential.</li>
-<li>namespace <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> (directory src/mcMd) contains classes required to construct single-processor Monte Carlo and molecular dynamics simulations, and the main programs for mcSim and mdSim.</li>
-<li>namespace <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and the main program for the ddSim executable.</li>
+<li>namespace <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> (directory src/simp) contains general classes for all simpatico simulation and analysis programs.</li>
+<li>namespace <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> (directory src/mcMd) contains classes for single-processor Monte Carlo and molecular dynamics simulations, for the mcSim and mdSim programs.</li>
+<li>namespace <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and for the ddSim program.</li>
 <li>namespace <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> (in directory src/tools) contains classes for pre- and postprocessing of molecular dynamics trajectories, and the main program for the mdPp executable.</li>
 </ul>
-<p>The code in some namespaces depends on symbols defined in others. A namespace named B is said to "depend" on another namespace A if any class in namespace B uses any classes or other symbols defined in A. The <a class="el" href="namespaceInter.html" title="Potential energy interaction functions. ">Inter</a>, <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>, and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> namespaces all depend on the <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> namespace, in this sense. The dependencies are:</p>
+<p>The code in some namespaces depends on symbols defined in others. A namespace named B is said to "depend" on another namespace A if any class in namespace B uses any classes or other symbols defined in A. The <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>, <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>, and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> namespaces all depend on the <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> namespace, in this sense. The dependencies are:</p>
 <ul>
 <li><a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> does not depend on any other namespace</li>
-<li><a class="el" href="namespaceInter.html" title="Potential energy interaction functions. ">Inter</a> depends only on <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a></li>
-<li><a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>, and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> each depends on <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> and <a class="el" href="namespaceInter.html" title="Potential energy interaction functions. ">Inter</a>, but not on each other.</li>
+<li><a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> depends only on <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a></li>
+<li><a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>, and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> each depends on <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> and <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>, but not on each other.</li>
 </ul>
 <p>A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module within a namespace contain a sets of functionally related classes.</p>
 <p><br />
@@ -71,7 +70,7 @@
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

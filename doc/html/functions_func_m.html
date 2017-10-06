@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -89,17 +88,8 @@
 &#160;
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>makeAngle()
-: <a class="el" href="classMcMd_1_1Species.html#aebf9931e9727df0019d163eab9a130b7">McMd::Species</a>
-</li>
-<li>makeBond()
-: <a class="el" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152">McMd::Species</a>
-</li>
 <li>makeCompleteGroup()
 : <a class="el" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f">Util::SymmetryGroup&lt; Symmetry &gt;</a>
-</li>
-<li>makeDihedral()
-: <a class="el" href="classMcMd_1_1Species.html#a2ab5279edb49ced90eb02b73b81f768e">McMd::Species</a>
 </li>
 <li>makeGrid()
 : <a class="el" href="classDdMd_1_1CellList.html#a135936da1d249e2a6a0deda98a57c46b">DdMd::CellList</a>
@@ -110,6 +100,11 @@
 </li>
 <li>makeStar()
 : <a class="el" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c">Util::PointGroup</a>
+</li>
+<li>makeWaves()
+: <a class="el" href="classMcMd_1_1MdCoulombPotential.html#a8d1f96c328eb7f65537c72628ee2a29b">McMd::MdCoulombPotential</a>
+, <a class="el" href="classMcMd_1_1MdEwaldPotential.html#abd52d2392d207cc8037009484059ff68">McMd::MdEwaldPotential</a>
+, <a class="el" href="classMcMd_1_1MdSpmePotential.html#acd716e4b6b049e8e82d66088e8935c6c">McMd::MdSpmePotential</a>
 </li>
 <li>makeWaveVectors()
 : <a class="el" href="classDdMd_1_1StructureFactor.html#aa6157062262e65f51dedea4ee3549b9f">DdMd::StructureFactor</a>
@@ -203,12 +198,13 @@
 <li>maxPairCutoff()
 : <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">DdMd::PairPotential</a>
 , <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a76646e22089db0c8729942c7999959c0">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>
-, <a class="el" href="classInter_1_1CompensatedPair.html#adae40cd314a5f8142c904b1a70fcd7f7">Inter::CompensatedPair&lt; BarePair, LinkPotential &gt;</a>
-, <a class="el" href="classInter_1_1DpdPair.html#a5a5cf8e773d479b72b0f43fd7b34dedf">Inter::DpdPair</a>
-, <a class="el" href="classInter_1_1LJPair.html#ac2ddeeba413b7719c36ddea6a717a8fd">Inter::LJPair</a>
 , <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a9bcee7c1732c4c69fe17292206286f5f">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>
+, <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#ab885a3e37a5298cc3c3ac21ffea1c6e5">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>
 , <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>
 , <a class="el" href="classMcMd_1_1PairPotential.html#a1065aebafe14a6f60e95d27578d844d1">McMd::PairPotential</a>
+, <a class="el" href="classSimp_1_1CompensatedPair.html#a776426ac4eb7435ad576804e9cc2be5d">Simp::CompensatedPair&lt; BarePair, LinkPotential &gt;</a>
+, <a class="el" href="classSimp_1_1DpdPair.html#aa154c6683e90b50859cedf6044222022">Simp::DpdPair</a>
+, <a class="el" href="classSimp_1_1LJPair.html#a74348edb23a12cb1d484c75700e75103">Simp::LJPair</a>
 </li>
 <li>maxSqDisplacement()
 : <a class="el" href="classDdMd_1_1AtomStorage.html#a03169962f8e58d36fb5f6b57ea3bae92">DdMd::AtomStorage</a>
@@ -225,6 +221,12 @@
 <li>McConfigIo()
 : <a class="el" href="classMcMd_1_1McConfigIo.html#ad11cc74358100cb5a6d3eb024ede89ea">McMd::McConfigIo</a>
 </li>
+<li>McCoulombPotential()
+: <a class="el" href="classMcMd_1_1McCoulombPotential.html#acd6f197f9ebec166f66fae006657c185">McMd::McCoulombPotential</a>
+</li>
+<li>McEnergyAnalyzer()
+: <a class="el" href="classMcMd_1_1McEnergyAnalyzer.html#a4b0000f3a2750e96722473d879a814fa">McMd::McEnergyAnalyzer</a>
+</li>
 <li>McEnergyAverage()
 : <a class="el" href="classMcMd_1_1McEnergyAverage.html#a23e5ddc5a706aedba367ae4eb04e53ff">McMd::McEnergyAverage</a>
 </li>
@@ -233,12 +235,6 @@
 </li>
 <li>McEnergyPerturbation()
 : <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a645cfd4e395f6e1f8da4b58019c36f44">McMd::McEnergyPerturbation</a>
-</li>
-<li>McExternalEnergyAverage()
-: <a class="el" href="classMcMd_1_1McExternalEnergyAverage.html#aa9974bf5bb532eea85b24da68092e1a4">McMd::McExternalEnergyAverage</a>
-</li>
-<li>McExternalPerturbation()
-: <a class="el" href="classMcMd_1_1McExternalPerturbation.html#a3bcb44f568ff4a5cecc2f4b74899b050">McMd::McExternalPerturbation&lt; Interaction &gt;</a>
 </li>
 <li>mcFactory()
 : <a class="el" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610">McMd::PairFactory</a>
@@ -251,9 +247,6 @@
 </li>
 <li>McMdConfigIo()
 : <a class="el" href="classMcMd_1_1McMdConfigIo.html#a4b93b8c48c34307ab1b4ee6650c30da3">McMd::McMdConfigIo</a>
-</li>
-<li>McModule()
-: <a class="el" href="classMcMd_1_1McModule.html#a20788144eedcc30dcda8e25b3801863e">McMd::McModule</a>
 </li>
 <li>McMove()
 : <a class="el" href="classMcMd_1_1McMove.html#a8f862910c91f9ad9f7eb819f33e44514">McMd::McMove</a>
@@ -279,9 +272,6 @@
 <li>McPairEnergyAverage()
 : <a class="el" href="classMcMd_1_1McPairEnergyAverage.html#af029be97604e5e2fc3a07f303ecfe88c">McMd::McPairEnergyAverage</a>
 </li>
-<li>McPairExternalPerturbation()
-: <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#aa6c4a461a29d10aee739de3a3d2e5777">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>
-</li>
 <li>McPairPerturbation()
 : <a class="el" href="classMcMd_1_1McPairPerturbation.html#a57eac1ba4331dd478904833bf26a57b0">McMd::McPairPerturbation&lt; Interaction &gt;</a>
 </li>
@@ -306,8 +296,8 @@
 <li>McSystem()
 : <a class="el" href="classMcMd_1_1McSystem.html#a7f67c1c874511b85f3bc59359fcc1cc0">McMd::McSystem</a>
 </li>
-<li>McSystemAccess()
-: <a class="el" href="classMcMd_1_1McSystemAccess.html#a874034e6fbd446f38fdabce94549ebde">McMd::McSystemAccess</a>
+<li>McSystemInterface()
+: <a class="el" href="classMcMd_1_1McSystemInterface.html#a0ad39aa7e10e51ebab392353ca27ce9d">McMd::McSystemInterface</a>
 </li>
 <li>McVirialStressTensorAverage()
 : <a class="el" href="classMcMd_1_1McVirialStressTensorAverage.html#a8c31a01192e771d64b99ba83092603c9">McMd::McVirialStressTensorAverage</a>
@@ -320,6 +310,18 @@
 </li>
 <li>MdConfigIo()
 : <a class="el" href="classMcMd_1_1MdConfigIo.html#a7818c5af8e47b5a7d1a3be888956d0c4">McMd::MdConfigIo</a>
+</li>
+<li>MdCoulombPotential()
+: <a class="el" href="classMcMd_1_1MdCoulombPotential.html#af477ffb9e4ac97a86ca176fb8f2669a4">McMd::MdCoulombPotential</a>
+</li>
+<li>MdEnergyAnalyzer()
+: <a class="el" href="classMcMd_1_1MdEnergyAnalyzer.html#a9b566f35cad4a8a6e88564be7157393a">McMd::MdEnergyAnalyzer</a>
+</li>
+<li>MdEwaldPairPotentialImpl()
+: <a class="el" href="classMcMd_1_1MdEwaldPairPotentialImpl.html#ae3d0f0c818f19d99f57c4d3c620098ba">McMd::MdEwaldPairPotentialImpl&lt; Interaction &gt;</a>
+</li>
+<li>MdEwaldPotential()
+: <a class="el" href="classMcMd_1_1MdEwaldPotential.html#ab6877c4656845fc4c8efff3cbdbe5d11">McMd::MdEwaldPotential</a>
 </li>
 <li>mdFactory()
 : <a class="el" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502">McMd::PairFactory</a>
@@ -345,9 +347,6 @@
 <li>MdKineticEnergyAverage()
 : <a class="el" href="classMcMd_1_1MdKineticEnergyAverage.html#a5de58b246669831faf47869ec34f7a30">McMd::MdKineticEnergyAverage</a>
 </li>
-<li>MdModule()
-: <a class="el" href="classMcMd_1_1MdModule.html#a3342228aadfcaee7e282c6f542e95921">McMd::MdModule</a>
-</li>
 <li>MdMove()
 : <a class="el" href="classMcMd_1_1MdMove.html#a11ce8856e0584849c94c0fd516154fbd">McMd::MdMove</a>
 </li>
@@ -364,13 +363,19 @@
 : <a class="el" href="classMcMd_1_1MdPotentialEnergyAverage.html#aad4e44930f85eb5a050e34f1626b96ca">McMd::MdPotentialEnergyAverage</a>
 </li>
 <li>MdSimulation()
-: <a class="el" href="classMcMd_1_1MdSimulation.html#a398bbfc03ab83953b4e50a52062e5e27">McMd::MdSimulation</a>
+: <a class="el" href="classMcMd_1_1MdSimulation.html#a45e02728dc38bd8d714a79287ff2321d">McMd::MdSimulation</a>
+</li>
+<li>MdSpmePotential()
+: <a class="el" href="classMcMd_1_1MdSpmePotential.html#af8a9ed8b1174d3713a860cb1c025c9c8">McMd::MdSpmePotential</a>
 </li>
 <li>MdStressAutoCorr()
 : <a class="el" href="classMcMd_1_1MdStressAutoCorr.html#ad95f4dbdf87f88e414317b1be86f83a4">McMd::MdStressAutoCorr</a>
 </li>
 <li>MdSystem()
-: <a class="el" href="classMcMd_1_1MdSystem.html#ae262b888f8cf3b6afcf06e9bba99b9a6">McMd::MdSystem</a>
+: <a class="el" href="classMcMd_1_1MdSystem.html#a2ee2fab373caa46183911abdbaa678a2">McMd::MdSystem</a>
+</li>
+<li>MdSystemInterface()
+: <a class="el" href="classMcMd_1_1MdSystemInterface.html#a7c18d6cadcfca552a9a3987f3a77766f">McMd::MdSystemInterface</a>
 </li>
 <li>MdVirialStressTensorAverage()
 : <a class="el" href="classMcMd_1_1MdVirialStressTensorAverage.html#a5febae380d7eeeb69334157b8bba4555">McMd::MdVirialStressTensorAverage</a>
@@ -423,7 +428,7 @@
 : <a class="el" href="classDdMd_1_1Modifier.html#a6669c8b2c3ca94519631c3817b65d183">DdMd::Modifier</a>
 </li>
 <li>ModifierFactory()
-: <a class="el" href="classDdMd_1_1ModifierFactory.html#aee0d04c07de451909e2a165ce039ac5d">DdMd::ModifierFactory</a>
+: <a class="el" href="classDdMd_1_1ModifierFactory.html#a422b70dd00a28038227976774593318f">DdMd::ModifierFactory</a>
 </li>
 <li>ModifierManager()
 : <a class="el" href="classDdMd_1_1ModifierManager.html#ae980b32ad9beb18a4c639a692d534e97">DdMd::ModifierManager</a>
@@ -466,6 +471,9 @@
 <li>MonoclinicBoundary()
 : <a class="el" href="classUtil_1_1MonoclinicBoundary.html#a217a6b81dc23fbee4e4bb8646e31d6d3">Util::MonoclinicBoundary</a>
 </li>
+<li>monomial()
+: <a class="el" href="classUtil_1_1Polynomial.html#aa1d136d94b8c323bce738340774dca6c">Util::Polynomial&lt; T &gt;</a>
+</li>
 <li>move()
 : <a class="el" href="classMcMd_1_1AtomDisplaceMove.html#a9483252c6661c14a6cc3c3b12cf869d2">McMd::AtomDisplaceMove</a>
 , <a class="el" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a164b51720454f8d7a933e91e68a5c220">McMd::CfbDoubleRebridgeMove</a>
@@ -477,6 +485,7 @@
 , <a class="el" href="classMcMd_1_1CfbRingRebridgeMove.html#acc4207e0218deb3100f05592b19dd5a1">McMd::CfbRingRebridgeMove</a>
 , <a class="el" href="classMcMd_1_1DpdMove.html#aa7ae45057ef703ab1966b5c1c8f66091">McMd::DpdMove</a>
 , <a class="el" href="classMcMd_1_1EndSwapMove.html#aeba214460db7b2d0045014ff82c8cb8b">McMd::EndSwapMove</a>
+, <a class="el" href="classMcMd_1_1GcSliplinkMove.html#af2f83f38c304f21921961b47a3368c17">McMd::GcSliplinkMove</a>
 , <a class="el" href="classMcMd_1_1HomopolymerSemiGrandMove.html#a4b1f4457c8b940fb6af0a206a8003765">McMd::HomopolymerSemiGrandMove</a>
 , <a class="el" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c">McMd::HybridMdMove</a>
 , <a class="el" href="classMcMd_1_1HybridNphMdMove.html#a7a7da112812b38b67d6801839abff7e5">McMd::HybridNphMdMove</a>
@@ -486,12 +495,16 @@
 , <a class="el" href="classMcMd_1_1RigidDisplaceMove.html#ad058c4c4642ebfbfdfb69bdf94aa0e9b">McMd::RigidDisplaceMove</a>
 , <a class="el" href="classMcMd_1_1RingOctaRebridgeMove.html#a5101bcd749e8390d484eda5b6041d76c">McMd::RingOctaRebridgeMove</a>
 , <a class="el" href="classMcMd_1_1RingTetraRebridgeMove.html#ae607777be585776da9dbe0600f842e04">McMd::RingTetraRebridgeMove</a>
+, <a class="el" href="classMcMd_1_1Sliplinker.html#a92aef4257a2475f045f990a49758118f">McMd::Sliplinker</a>
+, <a class="el" href="classMcMd_1_1SliplinkerAll.html#a47fa949642002404ba867a34f4cee73e">McMd::SliplinkerAll</a>
+, <a class="el" href="classMcMd_1_1SliplinkerEnd.html#ac67b4f0cec7014650cbd065ba19dd185">McMd::SliplinkerEnd</a>
+, <a class="el" href="classMcMd_1_1SliplinkMove.html#a669ef08f8521a4163c79797b2607e3d1">McMd::SliplinkMove</a>
 </li>
 <li>moveAtom()
 : <a class="el" href="classMcMd_1_1McPairPotential.html#aaac9410ab3d1dae3e3e4125bea374df4">McMd::McPairPotential</a>
 </li>
 <li>MpiFileIo()
-: <a class="el" href="classUtil_1_1MpiFileIo.html#acade0b046a375d4407aa98dca46bfcdc">Util::MpiFileIo</a>
+: <a class="el" href="classUtil_1_1MpiFileIo.html#a01b0ce2abff83abd2bff03d7ef757bdb">Util::MpiFileIo</a>
 </li>
 <li>MpiLoader()
 : <a class="el" href="classUtil_1_1MpiLoader.html#ad0c46043b00a27cb738ebf0b25cc00f2">Util::MpiLoader&lt; IArchive &gt;</a>
@@ -503,16 +516,16 @@
 : <a class="el" href="classUtil_1_1MpiStructBuilder.html#a3a65505e0cd724576e4f64a32c23fda9">Util::MpiStructBuilder</a>
 </li>
 <li>MTRand_int32()
-: <a class="el" href="classUtil_1_1MTRand__int32.html#ac89a3d46037663c195cf6ac2d498f0b6">Util::MTRand_int32</a>
+: <a class="el" href="classUtil_1_1MTRand__int32.html#a1980249753ec7ecea4c6812a96719cab">Util::MTRand_int32</a>
 </li>
 <li>mu()
 : <a class="el" href="classUtil_1_1SpeciesEnsemble.html#a17990b528b8689ddc4927e467801439a">Util::SpeciesEnsemble</a>
 </li>
 <li>Multiblock()
-: <a class="el" href="classMcMd_1_1Multiblock.html#a86d9f9c9581e2f137703e580d85c2141">McMd::Multiblock</a>
+: <a class="el" href="classSimp_1_1Multiblock.html#aa86fae0d3b34a9a33176981d2357118f">Simp::Multiblock</a>
 </li>
 <li>MultiHarmonicDihedral()
-: <a class="el" href="classInter_1_1MultiHarmonicDihedral.html#a33e4d76f3fdf93ab76e19a91b0ee4320">Inter::MultiHarmonicDihedral</a>
+: <a class="el" href="classSimp_1_1MultiHarmonicDihedral.html#aa86ac07d2ecfcaff50443c873b5ad9b4">Simp::MultiHarmonicDihedral</a>
 </li>
 <li>multiply()
 : <a class="el" href="classUtil_1_1IntVector.html#aeb5ce5cc9bb5e53c087ec0cd1b1c6987">Util::IntVector</a>
@@ -520,14 +533,14 @@
 , <a class="el" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315">Util::Vector</a>
 </li>
 <li>mutator()
-: <a class="el" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96">McMd::Species</a>
+: <a class="el" href="classSimp_1_1Species.html#aff4392092296b450b28f3a13c14ec6a7">Simp::Species</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:14:53 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:07:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

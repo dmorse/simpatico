@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 2.9 Restarting</title>
+<title>Simpatico: 2.10 Restarting</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -45,10 +44,10 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">2.9 Restarting </div>  </div>
+<div class="title">2.10 Restarting </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="user_features_page.html">2.8 Parameter File Options</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="user_features_page.html">2.9 Run-Time Options</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_page.html">2.11 Multi-System Simulations</a> (Next) <br />
 </p>
 <p>All simpatico simulation programs can be restarted from a binary restart file, if such a restart files was output periodically during the original simulation. The option to restart is designed to allow a user to either recover from a failure (caused, e.g., by a hardware failure or a wall-clock limit on a queue) or to continue a simulation that completed successfully.</p>
 <p>A restart file preserves the full internal state of a simulation. This includes a great deal of information that is not preserved in a configuration file, including the internal state of statistical accumulators used by on-the-fly analyzers, the internal state of some MD integrators that are based on an extended dynamical system (e.g., Nose-Hoover), and the state of the random number generator. It is designed to allow the simulation to continue as if had not been interrupted.</p>
@@ -68,12 +67,12 @@ Restarting - command line usage</h1>
 <p>To restart a ddSim simulation, one must, of course, also launch an MPI environment. To continue simulation that uses 8 processors, using a restart named restart and and command file named restart.cmd, one might thus enter: </p><div class="fragment"><div class="line">mpirun -np 8 ddSim -r restart -c restart.cmd</div></div><!-- fragment --><p> To continue a ddSim simulation, the number of processors must be the same as that used in the original simulation.</p>
 <p>The -r option may be combined with the -e option. This causes parameters that would normally be read from the parameter file to be echoed to standard output as they are read from the restart file.</p>
 <p><br />
- <a class="el" href="user_features_page.html">2.8 Parameter File Options</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a> (Next) </p>
+ <a class="el" href="user_features_page.html">2.9 Run-Time Options</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_page.html">2 User Guide</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_page.html">2.11 Multi-System Simulations</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

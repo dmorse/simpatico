@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -75,16 +74,14 @@ Inheritance diagram for McMd::Perturbation:</div>
  <div class="center">
   <img src="classMcMd_1_1Perturbation.png" usemap="#McMd::Perturbation_map" alt=""/>
   <map id="McMd::Perturbation_map" name="McMd::Perturbation_map">
-<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="880,112,1310,136"/>
-<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="880,56,1310,80"/>
-<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="660,0,1090,24"/>
-<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="1100,0,1530,24"/>
-<area href="classMcMd_1_1LinearPerturbation.html" alt="McMd::LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="660,224,1090,248"/>
-<area href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter. " alt="McMd::LinearPerturbation&lt; SystemType &gt;" shape="rect" coords="1100,224,1530,248"/>
-<area href="classMcMd_1_1McEnergyPerturbation.html" title="A Perturbation with a variable inverse temperature. " alt="McMd::McEnergyPerturbation" shape="rect" coords="0,280,430,304"/>
-<area href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter. " alt="McMd::McExternalPerturbation&lt; Interaction &gt;" shape="rect" coords="440,280,870,304"/>
-<area href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an..." alt="McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;" shape="rect" coords="880,280,1310,304"/>
-<area href="classMcMd_1_1McPairPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon()..." alt="McMd::McPairPerturbation&lt; Interaction &gt;" shape="rect" coords="1320,280,1750,304"/>
+<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="261,112,512,136"/>
+<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="261,56,512,80"/>
+<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="130,0,381,24"/>
+<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="391,0,642,24"/>
+<area href="classMcMd_1_1LinearPerturbation.html" alt="McMd::LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="130,224,381,248"/>
+<area href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter. " alt="McMd::LinearPerturbation&lt; SystemType &gt;" shape="rect" coords="391,224,642,248"/>
+<area href="classMcMd_1_1McEnergyPerturbation.html" title="A Perturbation with a variable inverse temperature. " alt="McMd::McEnergyPerturbation" shape="rect" coords="0,280,251,304"/>
+<area href="classMcMd_1_1McPairPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon()..." alt="McMd::McPairPerturbation&lt; Interaction &gt;" shape="rect" coords="261,280,512,304"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -532,9 +529,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00034">34</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00163">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00156">rank_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00156">rank_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
 
-<p>Referenced by <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00043">McMd::McExternalPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, and <a class="el" href="McPairExternalPerturbation_8h_source.html#l00141">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, and <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -574,7 +571,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00070">70</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00163">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
 
 <p>Referenced by <a class="el" href="McPairPerturbation_8h_source.html#l00148">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>.</p>
 
@@ -616,7 +613,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>References <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, and <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00899">McMd::System::savePerturbation()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00936">McMd::System::savePerturbation()</a>.</p>
 
 </div>
 </div>
@@ -711,7 +708,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>References <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>.</p>
 
-<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00148">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00043">McMd::McExternalPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00141">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::readParameters()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>.</p>
+<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00148">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>.</p>
 
 </div>
 </div>
@@ -740,7 +737,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Get perturbation parameter p[i] of index i for this system. </p>
 <p>Returns the value of the perturbation parameter p[i]. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#ad1ffd1462bd055f37dfdba3783d9b041">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#a77da364af1d74130348dcc0fe21d0112">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#aeeb771eeb2bbb9d109ce1849548c5141">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#add7292fa260a4568a9f1cc2871eaac2f">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#a77da364af1d74130348dcc0fe21d0112">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#add7292fa260a4568a9f1cc2871eaac2f">McMd::McEnergyPerturbation</a>.</p>
 
 </div>
 </div>
@@ -769,7 +766,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Get derivative of the Boltzmann weight W(X,p) with respect to the perturbation parameter p[i] of index i. </p>
 <p>For a system in which W(X,p) = beta*H depends on a microstate X and a parameter p, this method returns the value of dW(X, p)/dp[i] for the current system microstate (i.e., for the current particle positions). </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#a81b7765cacdd1cefd671c90f20a6bae6">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab88b42a0fdf0167212f7ec344ddba6fe">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#ae83f2ee3c92df467ece9e0e1c6c813d0">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a83e5657cb9f9c93b1e800d7e697b792f">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab88b42a0fdf0167212f7ec344ddba6fe">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a83e5657cb9f9c93b1e800d7e697b792f">McMd::McEnergyPerturbation</a>.</p>
 
 <p>Referenced by <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>.</p>
 
@@ -836,7 +833,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Sets the perturbation parameter in the associated system. </p>
 <p>This method modifies the parameters of the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> so as to correspond to the value of the parameter member variable. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#a95faf0c3ae1af02709f8f1ef959adf01">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab66e56b4de777e867a5e8116432906f2">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#a0a119cff727b402b7129c88cc777a3cf">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#af5d2a104e1f17c0886e14f185f86de09">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab66e56b4de777e867a5e8116432906f2">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#af5d2a104e1f17c0886e14f185f86de09">McMd::McEnergyPerturbation</a>.</p>
 
 <p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
 
@@ -971,7 +968,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00173">173</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McExternalPerturbation_8cpp_source.html#l00091">McMd::McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00195">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00216">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00040">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00070">McMd::McExternalPerturbation&lt; Interaction &gt;::setParameter()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00176">McMd::McPairPerturbation&lt; Interaction &gt;::setParameter()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00186">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::setParameter()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
+<p>Referenced by <a class="el" href="McPairPerturbation_8h_source.html#l00195">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00040">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00176">McMd::McPairPerturbation&lt; Interaction &gt;::setParameter()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
 
 </div>
 </div>
@@ -1064,7 +1061,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

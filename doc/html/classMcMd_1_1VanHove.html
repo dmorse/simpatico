@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -62,14 +61,14 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Evaluates the van Hove function S(k,t) for one or more wavevector k. </p>
 <p>The van Hove function S(k,t) is defined here as an expectation value </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]" src="form_108.png"/>
+<img class="formulaDsp" alt="\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]" src="form_112.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$V \equiv \sqrt{V(t)V(0)}$" src="form_109.png"/> is system volume, and where <img class="formulaInl" alt="$\psi(k,t)$" src="form_110.png"/> is a mode amplitude given by a sum </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_111.png"/>
+<p> where <img class="formulaInl" alt="$V \equiv \sqrt{V(t)V(0)}$" src="form_113.png"/> is system volume, and where <img class="formulaInl" alt="$\psi(k,t)$" src="form_114.png"/> is a mode amplitude given by a sum </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_115.png"/>
 </p>
-<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_112.png"/> is a user-specified coefficient for atoms of type a.</p>
+<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_116.png"/> is a user-specified coefficient for atoms of type a.</p>
 <p>The Van Hove class can calculate S(k,t) for a list of wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coefficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors.</p>
-<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_113.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
+<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_117.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
 <div class="fragment"><div class="line"><a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883">VanHove</a>{</div><div class="line">   <a class="code" href="classMcMd_1_1Analyzer.html#a6417953ce43e49b345840679bc162478">interval</a>                      1000</div><div class="line">   <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd">outputFileName</a>             <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883">VanHove</a></div><div class="line">   atomTypeCoeffs              1.0000      -1.0000</div><div class="line">   nBuffer                        100</div><div class="line">   nWave                            5</div><div class="line">   waveIntVectors     8      0      0</div><div class="line">                      9      0      0 </div><div class="line">                     10      0      0 </div><div class="line">                     11      0      0 </div><div class="line">                     12      0      0 </div><div class="line">}</div></div><!-- fragment --><p> At the end of a simulation, all of the autocorrelation functions are output in a file with a suffix *.dat. Each line in this file contains the 3 Miller indices of a wavevector, the absolute magnitude of the wavevector, and a list of nAtomTypeIdPair structure factor values for the wavevector, one for each atomTypeId pair.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="mcMd_analyzer_VanHove_page.html">parameter file format</a> </dd></dl>
 
@@ -398,7 +397,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get echo parameter.  <a href="#ac5808de278115409092e94f9c72362c2">More...</a><br /></td></tr>
 <tr class="separator:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classMcMd_1_1Analyzer"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classMcMd_1_1Analyzer')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classMcMd_1_1Analyzer.html">McMd::Analyzer</a></td></tr>
-<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 1</td></tr>
+<tr class="memitem:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Analyzer.html#af712ec400c7c198f10a4cef2e88ec09b">baseInterval</a> = 0</td></tr>
 <tr class="memdesc:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for an <a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">Analyzer</a> must be a multiple of baseInterval.  <a href="#af712ec400c7c198f10a4cef2e88ec09b">More...</a><br /></td></tr>
 <tr class="separator:af712ec400c7c198f10a4cef2e88ec09b inherit pub_static_attribs_classMcMd_1_1Analyzer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classMcMd_1_1SystemAnalyzer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classMcMd_1_1SystemAnalyzer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classMcMd_1_1SystemAnalyzer.html">McMd::SystemAnalyzer&lt; System &gt;</a></td></tr>
@@ -553,7 +552,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00044">44</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00690">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00688">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
@@ -738,7 +737,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00124">124</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01055">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00972">McMd::System::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00841">McMd::Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00422">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="System_8h_source.html#l00963">McMd::System::simulation()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="Vector_8h_source.html#l00369">Util::Vector::Zero</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01080">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00997">McMd::System::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00874">McMd::Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00422">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="Vector_8h_source.html#l00369">Util::Vector::Zero</a>.</p>
 
 </div>
 </div>
@@ -781,7 +780,7 @@ template&lt;class Archive &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:32 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:40 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

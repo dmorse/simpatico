@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -54,12 +53,12 @@
 Potential Energy</h1>
 <p>All simpatico programs use a potential energy that can contain:</p>
 <ul>
-<li>nonbonded <a class="el" href="inter_pair_page.html">pair</a> interactions</li>
-<li>covalent <a class="el" href="inter_bond_page.html">bond</a> (2 body), <a class="el" href="inter_angle_page.html">angle</a> (3 body) and <a class="el" href="inter_dihedral_page.html">dihedral</a> (4 body) potentials</li>
-<li><a class="el" href="inter_external_page.html">external</a> one-particle potentials</li>
+<li>nonbonded <a class="el" href="simp_interaction_pair_page.html">pair</a> interactions</li>
+<li>covalent <a class="el" href="simp_interaction_bond_page.html">bond</a> (2 body), <a class="el" href="simp_interaction_angle_page.html">angle</a> (3 body) and <a class="el" href="simp_interaction_dihedral_page.html">dihedral</a> (4 body) potentials</li>
+<li><a class="el" href="simp_interaction_external_page.html">external</a> one-particle potentials</li>
 </ul>
 <p>Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD algorithms, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.</p>
-<p>Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace. The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.</p>
+<p>Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/simp directory, and all such classes are defined in the "Simp" C++ namespace. The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.</p>
 <p>Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature.</p>
 <h1><a class="anchor" id="features_integrators_sec"></a>
 Molecular Dynamics Integrators</h1>
@@ -137,7 +136,7 @@ Intermediate scattering (van Hove) function S(k, t) .  </li>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

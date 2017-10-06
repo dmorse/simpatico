@@ -31,7 +31,6 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
@@ -64,7 +63,7 @@
 <div class="textblock"><p>Factory for subclasses <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a> or <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a>. </p>
 <p>This class is not derived from the Factory template because it provides a different interface, with separate <a class="el" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610" title="Return a pointer to a new McPairPotential, if possible. ">mcFactory()</a> and <a class="el" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible. ">mdFactory()</a> methods to create <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a> objects. Unlike a standard Factory, it also does not provide a readObject method, and so does not require a param communicator. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00033">33</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">mcMd/potentials/pair/PairFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00034">34</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">mcMd/potentials/pair/PairFactory.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">PairFactory.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -118,7 +117,7 @@ Protected Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00038">38</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00042">42</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -145,9 +144,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">46</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">mcMd/potentials/pair/PairFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">47</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">mcMd/potentials/pair/PairFactory.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00044">addSubfactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00051">mcFactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00081">mdFactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00150">tryMcSubfactories()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00164">tryMdSubfactories()</a>.</p>
+<p>References <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00048">addSubfactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00055">mcFactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00085">mdFactory()</a>, <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00186">tryMcSubfactories()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00200">tryMdSubfactories()</a>.</p>
 
 </div>
 </div>
@@ -175,9 +174,9 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00044">44</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00048">48</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">~PairFactory()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">~PairFactory()</a>.</p>
 
 </div>
 </div>
@@ -222,9 +221,9 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00051">51</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00055">55</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00219">McMd::McSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00123">McMd::McSystem::readParameters()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">~PairFactory()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00231">McMd::McSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00134">McMd::McSystem::readParameters()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">~PairFactory()</a>.</p>
 
 </div>
 </div>
@@ -269,9 +268,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00081">81</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00085">85</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00338">McMd::MdSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00213">McMd::MdSystem::readParameters()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">~PairFactory()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l00988">McMd::System::simulation()</a>.</p>
+
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00388">McMd::MdSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00108">McMd::MdSystem::MdSystem()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00248">McMd::MdSystem::readParameters()</a>, and <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">~PairFactory()</a>.</p>
 
 </div>
 </div>
@@ -305,7 +306,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00111">111</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00147">147</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
 <p>References <a class="el" href="classMcMd_1_1PairPotential.html#a84cf99695c198d39a9bd4d145ac38985">McMd::PairPotential::interactionClassName()</a>.</p>
 
@@ -353,9 +354,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>base class pointer to new <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a>, or a null pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00150">150</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00186">186</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">~PairFactory()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">~PairFactory()</a>.</p>
 
 </div>
 </div>
@@ -401,9 +402,9 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>base class pointer to new <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a>, or a null pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00164">164</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00200">200</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00046">~PairFactory()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00047">~PairFactory()</a>.</p>
 
 </div>
 </div>
@@ -438,7 +439,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>base class pointer to new <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a>, or a null pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00177">177</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00213">213</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
 </div>
 </div>
@@ -450,7 +451,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 8 2017 23:13:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
