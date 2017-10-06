@@ -38,7 +38,7 @@ each user-defined command. This should come after the block in which
 it tests the basic built in commands.
 
 6) Some of the more complicated existing commands that are currently
-defined in the readCommands() functio should be encapsulated as 
+defined in the readCommands() function should be encapsulated as 
 subclasses of Command that can be added to the CommandManager in 
 addition to the user-defined commands. This should substantially
 simplify the readCommands() function.

@@ -8,14 +8,11 @@ Collective Variables:
 class ColVar              collective variable for hybrid (no derivatives)
 class MdColVar            collective variable for md (with addForces)
 
-Bias Functions:
-class CvFunction          colvar bias potential, with 1D derivatives
-class CvIdentityFunction  bias potential = collective variable
-class CvLinearFunction  bias potential = collective variable
-class CvHarmonicFunction  harmonic (umbrella sampling) cv potential
-class CvGridPotential     potential defined on a grid
-
-Question: Rename CvFunction as BiasFunction ?
+Bias Potentials:
+class CvBias              colvar bias potential, with 1D derivatives
+class LinearCvBias        cv potential linear in collective variable
+class HarmonicCvBias      harmonic (umbrella sampling) cv potential
+class GridCvBias          potential defined on a grid
 
 Open Design Questions:
 ----------------------

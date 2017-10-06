@@ -16,10 +16,10 @@ namespace McMd
 {
 
    class System;
-   class MdPotential;
+   class SpecialPotential;
 
    /**
-   * Factory for specialized subclasses of MdPotential.
+   * Factory for specialized subclasses of SpecialPotential.
    *
    * \ingroup McMd_Special_Module
    */
@@ -50,26 +50,26 @@ namespace McMd
       void addSubfactory(SpecialFactory& subfactory);
 
       /**
-      * Return a pointer to a new MdPotential, if possible.
+      * Return a pointer to a new SpecialPotential, if possible.
       *
-      * \param subclass name of desired subclass of MdPotential
+      * \param subclass name of desired subclass of SpecialPotential
       * \param system   associated System
       */
       virtual 
-      MdPotential* mdFactory(const std::string& subclass, System& system) 
+      SpecialPotential* mdFactory(const std::string& subclass, System& system) 
       const;
 
    protected:
 
       /**
-      * Search subfactories for match to MdPotential subclass name. 
+      * Search subfactories for match to SpecialPotential subclass name. 
       *
       * \param  className name of subclass
       * \param  system    associated System
-      * \return base class pointer to new MdPotential, or a null pointer.
+      * \return base class pointer to new SpecialPotential, or a null pointer.
       */
-      MdPotential* tryMdSubfactories(const std::string& className, 
-                                     System& system) const;
+      SpecialPotential* tryMdSubfactories(const std::string& className, 
+                                          System& system) const;
 
    private:
 

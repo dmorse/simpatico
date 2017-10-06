@@ -40,8 +40,8 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
 #ifdef SIMP_SPECIAL
+#include <mcMd/potentials/special/SpecialPotential.h>
 #include <mcMd/potentials/special/SpecialFactory.h>
-#include <mcMd/potentials/misc/MdPotential.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>

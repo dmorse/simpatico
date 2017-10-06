@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdPotentialFacade.h"
+#include "SpecialPotentialFacade.h"
 #include <mcMd/simulation/System.h> 
 
 namespace McMd
@@ -17,8 +17,8 @@ namespace McMd
    * Constructor.
    */
    template <class PotentialType, class FactoryType>
-   MdPotentialFacade<PotentialType, FactoryType>::MdPotentialFacade(System& system)
-    : MdPotential(false),
+   SpecialPotentialFacade<PotentialType, FactoryType>::SpecialPotentialFacade(System& system)
+    : SpecialPotential(false),
       systemPtr_(&system),
       potentialPtr_(0),
       style_()
@@ -28,7 +28,7 @@ namespace McMd
    * Destructor.
    */
    template <class PotentialType, class FactoryType>
-   MdPotentialFacade<PotentialType, FactoryType>::~MdPotentialFacade()
+   SpecialPotentialFacade<PotentialType, FactoryType>::~SpecialPotentialFacade()
    {
       if (potentialPtr_) {
          delete potentialPtr_;
@@ -40,7 +40,7 @@ namespace McMd
    */
    template <class PotentialType, class FactoryType>
    void 
-   MdPotentialFacade<PotentialType, FactoryType>::readParameters(std::istream& in)
+   SpecialPotentialFacade<PotentialType, FactoryType>::readParameters(std::istream& in)
    {
       read(in, "style", style_);
 
@@ -59,7 +59,7 @@ namespace McMd
    * Compute total eneryg.
    */
    template <class PotentialType, class FactoryType>
-   void MdPotentialFacade<PotentialType, FactoryType>::computeEnergy()
+   void SpecialPotentialFacade<PotentialType, FactoryType>::computeEnergy()
    {
       if (!energy_.isSet()) {
          potentialPtr_->computeEnergy();
@@ -71,7 +71,7 @@ namespace McMd
    * Add forces from this potential to all atomic forces.
    */
    template <class PotentialType, class FactoryType>
-   void MdPotentialFacade<PotentialType, FactoryType>::addForces()
+   void SpecialPotentialFacade<PotentialType, FactoryType>::addForces()
    {  potentialPtr_->addForces(); }
 
 } 

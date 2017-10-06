@@ -1,5 +1,5 @@
-#ifndef MCMD_EXTERNAL_FACADE_H
-#define MCMD_EXTERNAL_FACADE_H
+#ifndef MCMD_SPECIAL_EXTERNAL_H
+#define MCMD_SPECIAL_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/special/MdPotentialFacade.h>   // base class
-#include <mcMd/potentials/external/ExternalPotential.h>  // templ arg
-#include <mcMd/potentials/external/ExternalFactory.h>    // templ arg
+#include <mcMd/potentials/special/SpecialPotentialFacade.h>   // base class
+#include <mcMd/potentials/external/ExternalPotential.h>       // templ arg
+#include <mcMd/potentials/external/ExternalFactory.h>         // templ arg
 
 namespace McMd
 {
@@ -24,8 +24,8 @@ namespace McMd
    *
    * \ingroup McMd_Potential_Module
    */
-   class MdExternalFacade : 
-         public MdPotentialFacade<ExternalPotential, ExternalFactory>
+   class SpecialExternal : 
+         public SpecialPotentialFacade<ExternalPotential, ExternalFactory>
    {
 
    public:
@@ -33,7 +33,7 @@ namespace McMd
       /**
       * Constructor.
       */
-      MdExternalFacade(System& system);
+      SpecialExternal(System& system);
 
    };
 

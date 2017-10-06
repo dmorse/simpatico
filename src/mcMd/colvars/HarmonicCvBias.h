@@ -1,5 +1,5 @@
-#ifndef MCMD_CV_HARMONIC_FUNCTION_H
-#define MCMD_CV_HARMONIC_FUNCTION_H
+#ifndef MCMD_HARMONIC_CV_BIAS_H
+#define MCMD_HARMONIC_CV_BIAS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/colvars/CvFunction.h>
+#include <mcMd/colvars/CvBias.h>
 
 namespace McMd
 {
@@ -23,9 +23,9 @@ namespace McMd
    * a function  k*(cv - cv0)/2, where cv is a current value of a 
    * collective variable and where cv0 and k are parameters.
    *
-   * \ingroup McMd_CvFunction_Module
+   * \ingroup McMd_Colvar_Module
    */
-   class CvHarmonicFunction : public CvFunction
+   class HarmonicCvBias : public CvBias
    {
 
    public:
@@ -33,14 +33,14 @@ namespace McMd
       /**
       * Constructor.
       */
-      CvHarmonicFunction();
+      HarmonicCvBias();
 
       /**
       * Destructor.
       *
       * Empty default implementation.
       */
-      virtual ~CvHarmonicFunction();
+      virtual ~HarmonicCvBias();
 
       /**
       * Read parameters from file.

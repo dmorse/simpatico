@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdExternalFacade.h"
+#include "SpecialExternal.h"
 
 namespace McMd
 {
@@ -15,8 +15,8 @@ namespace McMd
    /**
    * Constructor.
    */
-   MdExternalFacade::MdExternalFacade(System& system)
-    : MdPotentialFacade<ExternalPotential, ExternalFactory>(system)
+   SpecialExternal::SpecialExternal(System& system)
+    : SpecialPotentialFacade<ExternalPotential, ExternalFactory>(system)
    {}
 
 } 

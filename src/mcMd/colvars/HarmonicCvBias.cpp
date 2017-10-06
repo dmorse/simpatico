@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "CvHarmonicFunction.h"
+#include "HarmonicCvBias.h"
 
 namespace McMd
 {
@@ -15,19 +15,19 @@ namespace McMd
    /*
    * Default constructor.
    */
-   CvHarmonicFunction::CvHarmonicFunction() 
+   HarmonicCvBias::HarmonicCvBias() 
    {}
 
    /*
    * Default destructor.
    */
-   CvHarmonicFunction::~CvHarmonicFunction()
+   HarmonicCvBias::~HarmonicCvBias()
    {}
 
    /*
    * Read parameters from file.
    */
-   void CvHarmonicFunction::readParameters(std::istream& in)
+   void HarmonicCvBias::readParameters(std::istream& in)
    {
       read<double>(in, "cv0", cv0_);
       read<double>(in, "k", k_);
@@ -36,7 +36,7 @@ namespace McMd
    /*
    * Load internal state from archive.
    */
-   void CvHarmonicFunction::loadParameters(Serializable::IArchive& ar)
+   void HarmonicCvBias::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<double>(ar, "cv0", cv0_);
       loadParameter<double>(ar, "k", k_);
@@ -45,7 +45,7 @@ namespace McMd
    /*
    * Sae internal state to archive.
    */
-   void CvHarmonicFunction::save(Serializable::OArchive& ar)
+   void HarmonicCvBias::save(Serializable::OArchive& ar)
    {
       ar << cv0_;
       ar << k_;
@@ -54,7 +54,7 @@ namespace McMd
    /*
    * Compute and return the bias potential value.
    */
-   double CvHarmonicFunction::value(double cv)
+   double HarmonicCvBias::value(double cv)
    {
       double dcv = cv - cv0_;
       return 0.5*k_*dcv*dcv;
@@ -63,7 +63,7 @@ namespace McMd
    /*
    * Compute and return the derivative of the bias potential.
    */
-   double CvHarmonicFunction::derivative(double cv)
+   double HarmonicCvBias::derivative(double cv)
    {
       return k_*(cv - cv0_);
    }

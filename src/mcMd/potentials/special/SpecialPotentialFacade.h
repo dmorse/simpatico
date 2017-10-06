@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_POTENTIAL_FACADE_H
-#define MCMD_MD_POTENTIAL_FACADE_H
+#ifndef MCMD_SPECIAL_POTENTIAL_FACADE_H
+#define MCMD_SPECIAL_POTENTIAL_FACADE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/misc/MdPotential.h> // base class
+#include <mcMd/potentials/special/SpecialPotential.h> // base class
 
 namespace McMd
 {
@@ -18,12 +18,12 @@ namespace McMd
    using namespace Util;
 
    /**
-   * MdPotential interface to a more specialized potential.
+   * SpecialPotential interface to an existing potential.
    *
    * \ingroup McMd_Potential_Module
    */
    template <class PotentialType, class FactoryType>
-   class MdPotentialFacade : public MdPotential
+   class SpecialPotentialFacade : public SpecialPotential
    {
 
    public:
@@ -31,12 +31,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      MdPotentialFacade(System& system);
+      SpecialPotentialFacade(System& system);
 
       /**
       * Destructor.
       */
-      virtual ~MdPotentialFacade();
+      virtual ~SpecialPotentialFacade();
 
       /**
       * Read parameters.
@@ -67,5 +67,5 @@ namespace McMd
    };
 
 }
-#include "MdPotentialFacade.tpp" 
+#include "SpecialPotentialFacade.tpp" 
 #endif

@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "CvFunction.h"
+#include "CvBias.h"
 
 namespace McMd
 {
@@ -15,13 +15,13 @@ namespace McMd
    /*
    * Default constructor.
    */
-   CvFunction::CvFunction() 
+   CvBias::CvBias() 
    {}
 
    /*
    * Default destructor.
    */
-   CvFunction::~CvFunction()
+   CvBias::~CvBias()
    {}
 
 }

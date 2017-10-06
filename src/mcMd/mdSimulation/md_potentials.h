@@ -32,7 +32,7 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
 #ifdef SIMP_SPECIAL
-#include <mcMd/potentials/misc/MdPotential.h>
+#include <mcMd/potentials/special/SpecialPotential.h>
 #endif
 #ifdef SIMP_TETHER
 #include <mcMd/potentials/tether/MdTetherPotential.h>

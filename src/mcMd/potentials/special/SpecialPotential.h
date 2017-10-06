@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_POTENTIAL_H
-#define MCMD_MD_POTENTIAL_H
+#ifndef MCMD_SPECIAL_POTENTIAL_H
+#define MCMD_SPECIAL_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -18,13 +18,12 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Potential for an MD simulation.
+   * Specialized potential for an MD simulation.
    *
    * \ingroup McMd_Potential_Module
    */
-   class MdPotential : public virtual ParamComposite, 
-                       public virtual EnergyCalculator, 
-                       public virtual StressCalculator
+   class SpecialPotential : public ParamComposite, 
+                            public EnergyCalculator, public StressCalculator
    {
 
    public:
@@ -32,7 +31,7 @@ namespace McMd
       /**
       * Destructor (does nothing)
       */
-      virtual ~MdPotential();
+      virtual ~SpecialPotential();
 
       /**
       * Add forces from this potential to all atomic forces.
@@ -44,9 +43,9 @@ namespace McMd
       /**
       * Constructor.
       *
-      * Derived class constructor must set hasStress true or false.
+      * Derived class constructor must set createsStress true or false.
       */
-      MdPotential(bool createsStress = true);
+      SpecialPotential(bool createsStress = true);
 
    };
 
