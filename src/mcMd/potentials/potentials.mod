@@ -78,4 +78,11 @@ namespace McMd
    * \brief External one-body potentials.
    */
 
+   /**
+   * \defgroup McMd_Special_Module Special Potentials
+   * \ingroup McMd_Potential_Module
+   *
+   * \brief Special (i.e., specialized) potentials.
+   */
+
 }

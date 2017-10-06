@@ -20,7 +20,7 @@ namespace McMd
    /**
    * SpecialPotential interface to an existing potential.
    *
-   * \ingroup McMd_Potential_Module
+   * \ingroup McMd_Special_Module
    */
    template <class PotentialType, class FactoryType>
    class SpecialPotentialFacade : public SpecialPotential

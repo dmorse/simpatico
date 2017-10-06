@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Potential for testing purposes.
    *
-   * \ingroup McMd_Potential_Module
+   * \ingroup McMd_Special_Module
    */
    class SpecialExternal : 
          public SpecialPotentialFacade<ExternalPotential, ExternalFactory>

@@ -20,7 +20,7 @@ namespace McMd
    /**
    * Specialized potential for an MD simulation.
    *
-   * \ingroup McMd_Potential_Module
+   * \ingroup McMd_Special_Module
    */
    class SpecialPotential : public ParamComposite, 
                             public EnergyCalculator, public StressCalculator
