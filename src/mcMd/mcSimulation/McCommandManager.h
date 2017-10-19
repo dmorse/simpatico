@@ -66,10 +66,10 @@ namespace McMd
    private:
 
       /// Pointer to parent Simulation
-      McSimulation* simulationPtr_;
+      McSimulation*  simulationPtr_;
 
       /// Pointer to associated McSystem.
-      McSystem*   systemPtr_;
+      McSystem*  systemPtr_;
 
    };
 

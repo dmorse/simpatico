@@ -66,6 +66,7 @@ namespace McMd
       system_(),
       mcMoveManagerPtr_(0),
       mcAnalyzerManagerPtr_(0),
+      // mcCommandManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -82,9 +83,11 @@ namespace McMd
       // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
       mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
+      //mcCommandrManagerPtr_ = new McAnalyzerManager(*this);
 
       // Pass Manager<Analyzer>* to Simulation base class.
       setAnalyzerManager(mcAnalyzerManagerPtr_);
+      //setCommandManager(mcCommandManagerPtr_);
    }
    #endif
 
@@ -96,6 +99,7 @@ namespace McMd
       system_(),
       mcMoveManagerPtr_(0),
       mcAnalyzerManagerPtr_(0),
+      // mcCommandManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -112,9 +116,11 @@ namespace McMd
       // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
       mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
+      //mcCommandManagerPtr_ = new McCommandManager(*this);
 
       // Pass Manager<Analyzer>* to Simulation base class.
       setAnalyzerManager(mcAnalyzerManagerPtr_);
+      //setCommandManager(mcCommandManagerPtr_);
    }
 
    /*
@@ -332,6 +338,7 @@ namespace McMd
       loadParamComposite(ar, system());
       loadParamComposite(ar, *mcMoveManagerPtr_);
       loadParamComposite(ar, analyzerManager());
+      //loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -352,6 +359,7 @@ namespace McMd
       system().saveParameters(ar);
       mcMoveManagerPtr_->save(ar);
       analyzerManager().save(ar);
+      //commandManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -714,6 +722,7 @@ namespace McMd
       } else {
          iStep_ = 0;
          analyzerManager().setup();
+         // commandManager().setup();
          mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;

@@ -37,18 +37,7 @@ namespace McMd
    { 
       if (name != "DEFORM_CELL") {
  
-         #if 0
-         // Read in configuration from file
-         std::string filename;
-         in >> filename;
-         Log::file() << Str(filename, 15) << std::endl;
-         std::ifstream inputFile;
-         system().fileMaster().openInputFile(filename, inputFile);
-         system().readConfig(inputFile);
-         inputFile.close();
-         #endif
-
-         // Tranform atomic positions to generalized [0,1] coordinates
+         // Transform atomic positions to generalized [0,1] coordinates
          System::MoleculeIterator molIter;
          Molecule::AtomIterator atomIter;
          Vector cartPosition, genPosition;
@@ -86,16 +75,6 @@ namespace McMd
          #ifndef SIMP_NOPAIR 
          // Generate cell list
          pairPotential().buildCellList();
-         #endif
-
-         #if 0
-         // Write out configuration to file
-         in >> filename;
-         Log::file() << Str(filename, 15) << std::endl;
-         std::ofstream outputFile;
-         system().fileMaster().openOutputFile(filename, outputFile);
-         system().writeConfig(outputFile);
-         outputFile.close();
          #endif
 
          // Command name recognized, successful completion.

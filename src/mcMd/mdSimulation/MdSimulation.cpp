@@ -7,6 +7,7 @@
 
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdAnalyzerManager.h>
+//#include <mcMd/mdSimulation/MdCommandManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
@@ -49,6 +50,7 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdAnalyzerManagerPtr_(0),
+      // mdCommandManagerPtr_(0),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -58,9 +60,14 @@ namespace McMd
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
+
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
       assert(mdAnalyzerManagerPtr_);
       setAnalyzerManager(mdAnalyzerManagerPtr_);
+
+      //mdCommandManagerPtr_ = new MdCommandManager(*this);
+      //assert(mdCommandManagerPtr_);
+      //setCommandManager(mdCommandManagerPtr_);
    }
    #endif
 
@@ -80,9 +87,14 @@ namespace McMd
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
+
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
       assert(mdAnalyzerManagerPtr_);
       setAnalyzerManager(mdAnalyzerManagerPtr_);
+
+      // mdCommandManagerPtr_ = new MdCommandManager(*this);
+      // assert(mdCommandManagerPtr_);
+      // setCommandManager(mdCommandManagerPtr_);
    }
 
    /* 
@@ -240,6 +252,7 @@ namespace McMd
       readParamComposite(in, system_);
       Analyzer::baseInterval = 0; 
       readParamCompositeOptional(in, analyzerManager());
+      //readParamCompositeOptional(in, commandManager());
 
       // Parameters for writing restart files
       saveInterval_ = 0;
@@ -287,6 +300,7 @@ namespace McMd
       Simulation::loadParameters(ar); 
       loadParamComposite(ar, system_); 
       loadParamComposite(ar, analyzerManager());
+      // loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -307,6 +321,7 @@ namespace McMd
       Simulation::save(ar); 
       system_.saveParameters(ar);
       analyzerManager().save(ar);
+      //commandManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -568,6 +583,7 @@ namespace McMd
          #endif
          system().calculateForces();
          analyzerManager().setup();
+         //commandManager().setup();
          system_.mdIntegrator().setup();
       }
       int beginStep = iStep_;
