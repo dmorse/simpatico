@@ -8,7 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>   // base class
+#include <mcMd/potentials/misc/EnergyCalculator.h>   // base class
+#include <util/param/ParamComposite.h>               // base class
 
 #include <string>
 
@@ -26,13 +27,12 @@ namespace McMd
 
    class Atom;
 
-
    /**
    * Abstract External Potential class.
    *
    * \ingroup McMd_External_Module
    */
-   class ExternalPotential : public ParamComposite
+   class ExternalPotential : public ParamComposite, public EnergyCalculator
    {
 
    public:
@@ -49,7 +49,8 @@ namespace McMd
       virtual ~ExternalPotential()
       {}
 
-      //@{ External Interaction Interface
+      /// \name External Interaction Interface
+      //@{ 
 
       /**
       * Returns external potential energy of a single particle. 
@@ -69,7 +70,14 @@ namespace McMd
       */
       virtual void getForce(const Vector& position, int type, Vector& force) const = 0;
 
+      /**
+      * Return name of external interaction class (e.g., "LamellarOrderingExternal").
+      */
+      virtual std::string interactionClassName() const = 0;
+   
       //@}
+      /// \name System Force and Energy
+      //@{
 
       /**
       * Add external force of an Atom to the total force acting on it.
@@ -77,20 +85,17 @@ namespace McMd
       virtual void addForces() = 0;
 
       /**
-      * Return total external energy of this System.
-      */
-      virtual double energy() const = 0;
-
-      /**
       * Calculate the external energy for one Atom.
+      * 
+      * \param atom reference to Atom of interest
       */
       virtual double atomEnergy(const Atom& atom) const = 0;
 
-      /**
-      * Return name of external interaction class (e.g., "LamellarOrderingExternal").
-      */
-      virtual std::string interactionClassName() const = 0;
-   
+      // Prevent hiding of inherited accessor function
+      using EnergyCalculator::energy;
+
+      //@}
+
    };
 
 }

@@ -40,8 +40,8 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
 #ifdef SIMP_SPECIAL
-#include <mcMd/potentials/misc/SpecialFactory.h>
-#include <mcMd/potentials/misc/MdPotential.h>
+#include <mcMd/potentials/special/SpecialPotential.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>
@@ -185,11 +185,11 @@ namespace McMd
          externalPotentialPtr_ = &system.externalPotential();
       }
       #endif
-      #ifdef SIMP_SPECIAL
+      // #ifdef SIMP_SPECIAL
       // if (system.hasSpecialPotential()) {
       //   specialPotentialPtr_ = &system.specialPotential();
       // }
-      #endif
+      // #endif
       #ifdef MCMD_LINK
       if (system.hasLinkPotential()) {
          linkPotentialPtr_ = &system.linkPotential();
@@ -895,6 +895,7 @@ namespace McMd
    {
       double energy = 0.0;
       #ifndef SIMP_NOPAIR
+      // In charged system, this only returns non-Coulombic pair energy.
       energy += pairPotential().energy();
       #endif
       #ifdef SIMP_BOND
@@ -914,7 +915,7 @@ namespace McMd
       #endif
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
-         energy += coulombPotential().kSpaceEnergy();
+         energy += coulombPotential().energy();
       }
       #endif
       #ifdef SIMP_EXTERNAL
@@ -966,6 +967,16 @@ namespace McMd
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
          coulombPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (hasExternalPotential()) {
+         externalPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         specialPotential().unsetEnergy();
       }
       #endif
    }
@@ -1073,6 +1084,14 @@ namespace McMd
          stress += dStress;
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         if (specialPotential().createsStress()) {
+            specialPotential().computeStress(dStress);
+            stress += dStress;
+         }
+      }
+      #endif
       #ifdef MCMD_LINK
       if (hasLinkPotential()) {
          linkPotential().computeStress(dStress);
@@ -1157,6 +1176,14 @@ namespace McMd
          coulombPotential().unsetStress();
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         if (specialPotential().createsStress()) {
+            specialPotential().unsetStress();
+         }
+      }
+      #endif
+
    }
 
    // Miscellaneous member functions

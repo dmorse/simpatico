@@ -34,7 +34,7 @@ namespace McMd
    * \ingroup McMd_Pair_Module
    */
    class MdPairPotential : public ParamComposite, public PairPotential,
-                           public SystemInterface
+                           protected SystemInterface
    {
 
    public:

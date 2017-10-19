@@ -33,7 +33,7 @@
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif
 #ifdef SIMP_SPECIAL
-#include <mcMd/potentials/misc/SpecialFactory.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>

@@ -43,7 +43,7 @@ namespace McMd
    class ExternalPotential;
    #endif
    #ifdef SIMP_SPECIAL
-   class MdPotential;
+   class SpecialPotential;
    #endif
    #ifdef SIMP_TETHER
    class TetherPotential;
@@ -315,7 +315,7 @@ namespace McMd
       /**
       * Return special potential by reference.
       */
-      MdPotential& specialPotential() const;
+      SpecialPotential& specialPotential() const;
       #endif
 
       #ifdef MCMD_LINK
@@ -456,8 +456,8 @@ namespace McMd
       #endif
 
       #ifdef SIMP_SPECIAL
-      /// Pointer to a Special MdPotential.
-      MdPotential* specialPotentialPtr_;
+      /// Pointer to a SpecialPotential.
+      SpecialPotential* specialPotentialPtr_;
       #endif
 
       #ifdef MCMD_LINK
@@ -605,7 +605,7 @@ namespace McMd
    /*
    * Return special potential by reference.
    */
-   inline MdPotential& MdSystem::specialPotential() const
+   inline SpecialPotential& MdSystem::specialPotential() const
    {
       assert(specialPotentialPtr_);
       return *specialPotentialPtr_;

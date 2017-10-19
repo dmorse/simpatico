@@ -246,18 +246,6 @@ namespace McMd
       CoulombPotential& coulombPotential() const;
       #endif
 
-      #ifdef MCMD_LINK
-      /**
-      * Does a link potential exist?.
-      */
-      bool hasLinkPotential() const;
-
-      /**
-      * Return the McLinkPotential by reference.
-      */
-      BondPotential& linkPotential() const;
-      #endif
-
       #ifdef SIMP_EXTERNAL
       /**
       * Does an external potential exist?.
@@ -268,6 +256,18 @@ namespace McMd
       * Return ExternalPotential by reference.
       */
       ExternalPotential& externalPotential() const;
+      #endif
+
+      #ifdef MCMD_LINK
+      /**
+      * Does a link potential exist?.
+      */
+      bool hasLinkPotential() const;
+
+      /**
+      * Return the McLinkPotential by reference.
+      */
+      BondPotential& linkPotential() const;
       #endif
 
       #ifdef SIMP_TETHER
@@ -339,14 +339,14 @@ namespace McMd
       CoulombPotential* coulombPotentialPtr_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Pointer to the McLinkPotential.
-      BondPotential* linkPotentialPtr_;
-      #endif
-
       #ifdef SIMP_EXTERNAL
       /// Pointer to an ExternalPotential.
       ExternalPotential* externalPotentialPtr_;
+      #endif
+
+      #ifdef MCMD_LINK
+      /// Pointer to the McLinkPotential.
+      BondPotential* linkPotentialPtr_;
       #endif
 
       #ifdef SIMP_TETHER

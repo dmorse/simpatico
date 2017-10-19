@@ -131,14 +131,15 @@ namespace McMd
    */
    void McSimulation::setOptions(int argc, char **argv)
    {
-      bool eflag = false;  // echo
-      bool rFlag = false;  // restart file
+      bool qflag = false;  // query compile time options
+      bool eflag = false;  // echo parameter file
+      bool rFlag = false;  // read restart file
       bool pFlag = false;  // param file 
       bool cFlag = false;  // command file 
       bool iFlag = false;  // input prefix
       bool oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
-      bool  fflag = false;  // free energy perturbation
+      bool fflag = false;  // free energy perturbation
       #endif
       char* rarg = 0;
       char* pArg = 0;
@@ -149,8 +150,11 @@ namespace McMd
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "er:p:c:i:o:f")) != -1) {
+      while ((c = getopt(argc, argv, "qer:p:c:i:o:f")) != -1) {
          switch (c) {
+         case 'q':
+           qflag = true;
+           break;
          case 'e':
             eflag = true;
             break;
@@ -185,6 +189,13 @@ namespace McMd
          }
       }
    
+  
+      #ifndef UTIL_MPI
+      if (qflag) {
+         outputOptions(Log::file());
+      }
+      #endif
+ 
       // Set flag to echo parameters as they are read.
       if (eflag) {
          Util::ParamComponent::setEcho(true);

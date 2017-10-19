@@ -590,10 +590,10 @@ namespace McMd
    * Initialize all Molecule and Atom objects for one Species (private).
    *
    * This function creates associations between Species, Molecule, and
-   * Atom objects for all molecules of one species, and sets atom typeIds.
+   * Atom objects for all molecules of one species, & sets atom typeIds.
    *
    * For each molecule, it sets the id, species pointer, nAtom, and the 
-   * firstAtom pointer. The molecule id is only unique within each species.
+   * firstAtom pointer. The molecule id is only unique within a species.
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
@@ -638,7 +638,8 @@ namespace McMd
 
       // Push all molecules of this species onto the reservoir stack
       // Push on in reverse order, so that they pop off in sequence
-      moleculePtr = &molecules_[firstMoleculeIds_[iSpecies] + capacity - 1];
+      moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]
+                  + capacity - 1];
       for (iMol = 0; iMol < capacity; ++iMol) {
          reservoirs_[iSpecies].push(*moleculePtr);
          --moleculePtr;
@@ -648,11 +649,11 @@ namespace McMd
 
    #ifdef SIMP_BOND
    /*
-   * Initialize all Bond objects for Molecules of one Species. (private)
+   * Initialize Bond objects for Molecules of one Species. (private)
    *
-   * This functions assigns pointers to Atoms and bond types ids within a
-   * contiguous block of Bond objects, and sets a pointer in each Molecule
-   * to the first Bond in the associated block.
+   * This functions assigns Atom pointers and bond types ids within 
+   * a contiguous block of Bond objects, and sets a pointer in each 
+   * Molecule to the first Bond in the associated block.
    */
    void Simulation::initializeSpeciesBonds(int iSpecies)
    {
@@ -703,7 +704,7 @@ namespace McMd
                bondPtr->setTypeId(type);
 
                #ifndef SIMP_NOPAIR
-               // If MaskBonded, add each bonded atom to its partners Mask
+               // If MaskBonded, add each atom to its partner's Mask
                if (maskedPairPolicy_ == MaskBonded) {
                   atom0Ptr->mask().append(*atom1Ptr);
                   atom1Ptr->mask().append(*atom0Ptr);
@@ -724,9 +725,9 @@ namespace McMd
    /*
    * Initialize all Angle objects for Molecules of one Species.
    *
-   * This functions assigns pointers to Atoms and angle types ids within a
-   * contiguous block of Angle objects, and sets a pointer in each Molecule
-   * to the first Angle in the associated block.
+   * This functions assigns Atom pointers and angle types ids within 
+   * a contiguous block of Angle objects, and sets a pointer in each 
+   * Molecule to the first Angle in the associated block.
    */
    void Simulation::initializeSpeciesAngles(int iSpecies)
    {
@@ -763,7 +764,7 @@ namespace McMd
             // Create angles for a molecule
             for (iAngle = 0; iAngle < nAngle; ++iAngle) {
 
-               // Get pointers to atoms spanning the angle and angle type
+               // Get pointers to 3 atoms and an angle type
                atom0Id  = speciesPtr->speciesAngle(iAngle).atomId(0);
                atom1Id  = speciesPtr->speciesAngle(iAngle).atomId(1);
                atom2Id  = speciesPtr->speciesAngle(iAngle).atomId(2);
@@ -794,9 +795,9 @@ namespace McMd
    /*
    * Initialize all Dihedral objects for Molecules of one Species.
    *
-   * This functions assigns pointers to Atoms and Dihedral types ids within
-   * a contiguous block of Dihedral objects, and sets a pointer in each 
-   * Molecule to the first Dihedral in the associated block.
+   * This functions assigns Atom pointers dihedral types ids within
+   * a contiguous block of Dihedral objects, and sets a pointer in 
+   * each Molecule to the first Dihedral in the associated block.
    */
    void Simulation::initializeSpeciesDihedrals(int iSpecies)
    {
@@ -830,13 +831,13 @@ namespace McMd
             for (iDihedral = 0; iDihedral < nDihedral; ++iDihedral) {
 
                // Get local indices for atoms and dihedral type
-               atom0Id  = speciesPtr->speciesDihedral(iDihedral).atomId(0);
-               atom1Id  = speciesPtr->speciesDihedral(iDihedral).atomId(1);
-               atom2Id  = speciesPtr->speciesDihedral(iDihedral).atomId(2);
-               atom3Id  = speciesPtr->speciesDihedral(iDihedral).atomId(3);
-               type     = speciesPtr->speciesDihedral(iDihedral).typeId();
+               atom0Id = speciesPtr->speciesDihedral(iDihedral).atomId(0);
+               atom1Id = speciesPtr->speciesDihedral(iDihedral).atomId(1);
+               atom2Id = speciesPtr->speciesDihedral(iDihedral).atomId(2);
+               atom3Id = speciesPtr->speciesDihedral(iDihedral).atomId(3);
+               type    = speciesPtr->speciesDihedral(iDihedral).typeId();
 
-               // Calculate atom pointers
+               // Compute atom pointers
                atom0Ptr = firstAtomPtr + atom0Id;
                atom1Ptr = firstAtomPtr + atom1Id;
                atom2Ptr = firstAtomPtr + atom2Id;
@@ -1215,6 +1216,65 @@ namespace McMd
       }
 
       return true;
+   }
+
+   void Simulation::outputOptions(std::ostream& out) const
+   {
+      #ifdef UTIL_DEBUG
+      out << "-g Debugging   ON " << std::endl;
+      #else
+      out << "-g Debugging   OFF" << std::endl;
+      #endif
+      #ifdef UTIL_MPI
+      out << "-g MPI         ON " << std::endl;
+      #else
+      out << "-g MPI         OFF" << std::endl;
+      #endif
+      #ifdef SIMP_COULOMB
+      out << "-c Coulomb     ON " << std::endl;
+      #else
+      out << "-c Coulomb     OFF" << std::endl;
+      #endif
+      #ifndef SIMP_NOPAIR
+      out << "-np Pairs      ON " << std::endl;
+      #else
+      out << "-np Pairs      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_BOND
+      out << "-b Bonds       ON " << std::endl;
+      #else
+      out << "-b Bonds       OFF" << std::endl;
+      #endif
+      #ifdef SIMP_ANGLE
+      out << "-d Angles      ON " << std::endl;
+      #else
+      out << "-d Angles      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      out << "-d Dihedrals   ON " << std::endl;
+      #else
+      out << "-d Dihedrals   OFF" << std::endl;
+      #endif
+      #ifdef SIMP_EXTERNAL
+      out << "-e External    ON " << std::endl;
+      #else
+      out << "-e External    OFF" << std::endl;
+      #endif
+      #ifdef SIMP_SPECIAL
+      out << "-s Special     ON " << std::endl;
+      #else
+      out << "-s Special     OFF" << std::endl;
+      #endif
+      #ifdef MCMD_LINK
+      out << "-l Link        ON " << std::endl;
+      #else
+      out << "-l Link        OFF" << std::endl;
+      #endif
+      #ifdef MCMD_SHIFT
+      out << "-i Shift       ON " << std::endl;
+      #else
+      out << "-i Shift       OFF" << std::endl;
+      #endif
    }
 
    // Mutators / Setters

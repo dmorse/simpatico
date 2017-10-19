@@ -1,5 +1,5 @@
-#ifndef MCMD_CV_POTENTIAL_H
-#define MCMD_CV_POTENTIAL_H
+#ifndef MCMD_CV_BIAS_H
+#define MCMD_CV_BIAS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,13 +16,14 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Bias potential for a collective variable (CV).
+   * Bias potential as a function of a collective variable (CV).
    *
-   * This potential may be used in MD as well as MC simulations.
+   * This potential may be used to define a bias potential in MD or 
+   * MC simulations.
    *
-   * \ingroup McMd_CvPotential_Module
+   * \ingroup McMd_Colvar_Module
    */
-   class CvPotential : public ParamComposite
+   class CvBias : public ParamComposite
    {
 
    public:
@@ -30,14 +31,14 @@ namespace McMd
       /**
       * Constructor.
       */
-      CvPotential();
+      CvBias();
 
       /**
       * Destructor.
       *
       * Empty default implementation.
       */
-      virtual ~CvPotential();
+      virtual ~CvBias();
 
       /**
       * Compute and return the bias potential value.

@@ -1,0 +1,38 @@
+Interface for Special Potentials 
+--------------------------------
+
+Idea:
+
+   1) Derive from EnergyCalculator and StressCalculator.
+
+   2) Add hasStress() function and that returns a private bool
+      hasStress_  that is set in a protected constructor. Functions
+      that compute or access stress should inside if (hasStress){}.
+
+   3) Provides and interface similar to covalent potentials, 
+      including addForces() and atomEnergy() functions, BUT default 
+      implementation of atomEnergy() and addForces() should throw
+      exceptions - allow for possibility of gracefull run time error
+      upon attempt to use unimplemented feature.
+
+   4) Analyze function: Provide a separate function to be used to
+      update any internal statistics and to adapt potential in case
+      of an adaptive potential. Default implemenation does nothing.
+
+   5) Provide configRead() and configWrite() functions, with a
+      default doNothing implementation. These can be used to output
+      and information required in the configuration file. The format
+      is designed to be used only the default McMD io format, but 
+      can be specific to a very specialized type of potential. The
+      McMdConfigIo can call these functions.
+
+class ColVarPotential : public SpecialPotential  {
+
+   Define as a based class with a pointer to a ColVar and a pointer
+   to a CvBias. Provide with protected setColVar() and setBias()
+   functions, which can be set in the constructor of a derived 
+   class.      
+
+   Consider adding factories, so that nature of the ColVar and Bias
+   could be set at run time, based on names given in the parameter
+   file.

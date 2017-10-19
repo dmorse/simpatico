@@ -37,8 +37,14 @@ namespace McMd
 
       /**
       * Compute and store the stress tensor.
+      *
+      * Default implementation throws an Exception, to allow 
+      * testing and graceful failure potentials that do not 
+      * create stress.
       */
-      virtual void computeStress() = 0;
+      virtual void computeStress()
+      {  UTIL_THROW("Unimplemented computeStress function"); }
+      
 
       /**
       * Get pair stress tensor.
@@ -70,12 +76,27 @@ namespace McMd
       */
       void computeStress(double& pressure);
 
-      //@}
+      /**
+      * Return false if subclass does not generate stress.
+      */
+      bool createsStress() const;
 
    protected:
 
       // Setable value of stress tensor.
       Setable<Tensor> stress_;
+
+      /**
+      * Constructor (protected to prevent direct instantiation).
+      *
+      * Derived class constructor must set hasStress true or false.
+      */
+      StressCalculator(bool createsStress = true);
+
+   private:
+
+      /// True iff potential gemerate a stress contribution.
+      bool createsStress_;
 
    };
 

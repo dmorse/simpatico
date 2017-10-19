@@ -1,5 +1,5 @@
-#ifndef MCMD_CV_HARMONIC_POTENTIAL_H
-#define MCMD_CV_HARMONIC_POTENTIAL_H
+#ifndef MCMD_HARMONIC_CV_BIAS_H
+#define MCMD_HARMONIC_CV_BIAS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/colvars/CvPotential.h>
+#include <mcMd/colvars/CvBias.h>
 
 namespace McMd
 {
@@ -16,16 +16,16 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Harmonic potential for a collective variable (CV).
+   * Harmonic function of a collective variable (CV).
    *
-   * This defines a harmonic potential of a collective variable, of the 
+   * This defines a harmonic function of a collective variable, of the 
    * type often used in umbrella sampling. The potential is defined by 
    * a function  k*(cv - cv0)/2, where cv is a current value of a 
    * collective variable and where cv0 and k are parameters.
    *
-   * \ingroup McMd_CvPotential_Module
+   * \ingroup McMd_Colvar_Module
    */
-   class CvHarmonicPotential : public CvPotential
+   class HarmonicCvBias : public CvBias
    {
 
    public:
@@ -33,14 +33,14 @@ namespace McMd
       /**
       * Constructor.
       */
-      CvHarmonicPotential();
+      HarmonicCvBias();
 
       /**
       * Destructor.
       *
       * Empty default implementation.
       */
-      virtual ~CvHarmonicPotential();
+      virtual ~HarmonicCvBias();
 
       /**
       * Read parameters from file.
@@ -75,7 +75,7 @@ namespace McMd
       /**
       * Compute and return the derivative of the bias potential.
       *
-      * Returns k*(cv - cv0)
+      * Returns value of expression k*(cv - cv0)
       *
       * \param cv collective variable value. 
       */

@@ -29,14 +29,19 @@ include $(SRC_DIR)/mcMd/potentials/coulomb/sources.mk
 mcMd_potentials_+=$(mcMd_potentials_coulomb_) 
 endif
 
-ifdef MCMD_LINK
-include $(SRC_DIR)/mcMd/potentials/link/sources.mk
-mcMd_potentials_+=$(mcMd_potentials_link_) 
-endif
-
 ifdef SIMP_EXTERNAL
 include $(SRC_DIR)/mcMd/potentials/external/sources.mk
 mcMd_potentials_+=$(mcMd_potentials_external_) 
+endif
+
+ifdef SIMP_SPECIAL
+include $(SRC_DIR)/mcMd/potentials/special/sources.mk
+mcMd_potentials_+=$(mcMd_potentials_special_) 
+endif
+
+ifdef MCMD_LINK
+include $(SRC_DIR)/mcMd/potentials/link/sources.mk
+mcMd_potentials_+=$(mcMd_potentials_link_) 
 endif
 
 mcMd_potentials_SRCS=\

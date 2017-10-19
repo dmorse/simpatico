@@ -5,13 +5,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/misc/SpecialFactory.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
 
 #include <mcMd/simulation/System.h>
 #include <mcMd/mdSimulation/MdSystem.h>
+#include <mcMd/potentials/special/SpecialPotential.h>
 
-// MdPotential interface
-#include <mcMd/potentials/misc/MdPotential.h>
+#include <mcMd/potentials/special/SpecialExternal.h>
 
 
 
@@ -34,21 +34,21 @@ namespace McMd
    {  subfactories_.push_back(&subfactory); }
 
    /*
-   * Return a pointer to a new MdPotential, if possible.
+   * Return a pointer to a new SpecialPotential, if possible.
    */
-   MdPotential* 
+   SpecialPotential* 
    SpecialFactory::mdFactory(const std::string& name, System& system) const
    {
-      MdPotential* ptr = 0;
+      SpecialPotential* ptr = 0;
       MdSystem& mdsystem = dynamic_cast<MdSystem&>(system);
 
       // Try subfactories first
       ptr = tryMdSubfactories(name, system);
       if (ptr) return ptr;
 
-      //if (name == "LJPair") {
-      //   ptr = new PairPotentialImpl<LJPair>(mdsystem);
-      //}
+      if (name == "SpecialExternal") {
+         ptr = new SpecialExternal(mdsystem);
+      }
 
       return ptr;
    }
@@ -56,10 +56,10 @@ namespace McMd
    /*
    * Try all subfactories in sequence searching for a match.
    */
-   MdPotential* 
+   SpecialPotential* 
    SpecialFactory::tryMdSubfactories(const std::string& className, System& system) const
    {
-      MdPotential* typePtr = 0;
+      SpecialPotential* typePtr = 0;
       int n = subfactories_.size();
       for (int i = 0; i < n && typePtr == 0; ++i) {
          typePtr = subfactories_[i]->mdFactory(className, system);

@@ -5,23 +5,18 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "CvPotential.h"
+#include "SpecialExternal.h"
 
 namespace McMd
 {
 
    using namespace Util;
 
-   /*
-   * Default constructor.
+   /**
+   * Constructor.
    */
-   CvPotential::CvPotential() 
+   SpecialExternal::SpecialExternal(System& system)
+    : SpecialPotentialFacade<ExternalPotential, ExternalFactory>(system)
    {}
 
-   /*
-   * Default destructor.
-   */
-   CvPotential::~CvPotential()
-   {}
-
-}
+} 
