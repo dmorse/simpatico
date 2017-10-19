@@ -25,12 +25,6 @@ namespace McMd
    {}
 
    /*
-   * Output at end - empty default implementation.
-   */
-   void ColVar::unset()
-   {  value_.unset(); }
-
-   /*
    * Return value, compute if necesary.
    */
    double ColVar::value()
@@ -40,5 +34,17 @@ namespace McMd
       }
       return value_.value();
    }
+
+   /*
+   * Unset colvar value, i.e., mark as unknown.
+   */
+   void ColVar::unset()
+   {  value_.unset(); }
+
+   /*   
+   * Return true iff value is set (i.e., known).
+   */
+   bool ColVar::isSet() const
+   {  return value_.isSet(); }
 
 }

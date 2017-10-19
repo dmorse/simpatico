@@ -49,14 +49,19 @@ namespace McMd
       virtual void compute() = 0;
 
       /**
+      * Return current value, compute if not already set.
+      */
+      virtual double value();
+
+      /**
       * Unset the stored value (mark as unknown or obsolete).
       */
       void unset();
 
       /**
-      * Return current value, compute if not already set.
+      * Is the value already set?
       */
-      virtual double value();
+      bool isSet() const;
 
    protected:
 

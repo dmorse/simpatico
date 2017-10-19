@@ -31,11 +31,6 @@ namespace McMd
    public:
 
       /**
-      * Mark the stress as unknown.
-      */
-      virtual void unsetStress();
-
-      /**
       * Compute and store the stress tensor.
       *
       * Default implementation throws an Exception, to allow 
@@ -45,6 +40,10 @@ namespace McMd
       virtual void computeStress()
       {  UTIL_THROW("Unimplemented computeStress function"); }
       
+      /**
+      * Mark the stress as unknown.
+      */
+      virtual void unsetStress();
 
       /**
       * Get pair stress tensor.

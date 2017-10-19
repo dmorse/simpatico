@@ -18,7 +18,10 @@ namespace McMd
    /**
    * Collective variables for MD simulation, with atom forces.
    *
-   * The addForces() function computes forces on all atoms.
+   * The addForces() function adds forces on all atoms resulting from
+   * a bias potential W that is a function of the collective variable. 
+   * The derivative of bias potential W with respect to the collective
+   * variable is passed to this function as a function parameter.
    *
    * \ingroup McMd_ColVar_Module
    */
