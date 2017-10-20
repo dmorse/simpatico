@@ -43,6 +43,12 @@ namespace McMd
 
       /**
       * Read and execute command.
+      * 
+      * The string name is the capitalized command name that begins a command.
+      * If the name string matches the command name for this command, the rest 
+      * of the line is read, the command is executed, and the function returns
+      * true. If the name does not match, the function immediately returns 
+      * false without reading from istream in.
       *
       * \return true if name is recognized, false if not
       */

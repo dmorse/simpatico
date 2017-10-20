@@ -3,6 +3,7 @@ mcMd_commands_= \
     mcMd/commands/Command.cpp \
     mcMd/commands/McCommandFactory.cpp \
     mcMd/commands/MdCommandFactory.cpp \
+    mcMd/commands/CommandManager.cpp \
     mcMd/commands/McDeformCommand.cpp 
 
 mcMd_commands_SRCS=\

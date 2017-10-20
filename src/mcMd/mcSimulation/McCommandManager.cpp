@@ -16,7 +16,7 @@ namespace McMd
 
    // Constructor.
    McCommandManager::McCommandManager(McSimulation& simulation)
-    : Manager<Command>(true),
+    : CommandManager(),
       simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
    {  setClassName("McCommandManager"); }
@@ -24,7 +24,7 @@ namespace McMd
    // Constructor.
    McCommandManager::McCommandManager(McSimulation& simulation, 
 		                            McSystem& system)
-    : Manager<Command>(true),
+    : CommandManager(),
       simulationPtr_(&simulation),
       systemPtr_(&system)
    {}

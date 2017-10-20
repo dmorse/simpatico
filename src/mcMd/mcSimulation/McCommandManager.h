@@ -8,8 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/Manager.h>      // base class template
-#include <mcMd/commands/Command.h>   // class template argument
+#include <mcMd/commands/CommandManager.h> // base class 
 
 namespace Util { template <typename T> class Factory; }
 
@@ -31,7 +30,7 @@ namespace McMd
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Command_Module
    */
-   class McCommandManager : public Manager<Command>
+   class McCommandManager : public CommandManager
    {
 
    public:
