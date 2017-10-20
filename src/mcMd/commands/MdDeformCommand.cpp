@@ -5,9 +5,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McDeformCommand.h"
-#include <mcMd/mcSimulation/McSystem.h>
-#include <mcMd/potentials/pair/McPairPotential.h>
+#include "MdDeformCommand.h"
+#include <mcMd/mdSimulation/MdSystem.h>
+#include <mcMd/potentials/pair/MdPairPotential.h>
 
 namespace McMd
 {
@@ -17,7 +17,7 @@ namespace McMd
    /*
    * Default constructor.
    */
-   McDeformCommand::McDeformCommand(McSystem& system) 
+   MdDeformCommand::MdDeformCommand(MdSystem& system) 
     : DeformCommand(system),
       pairPtr_(&system.pairPotential())
    {}
@@ -25,17 +25,16 @@ namespace McMd
    /*
    * Default destructor.
    */
-   McDeformCommand::~McDeformCommand()
+   MdDeformCommand::~MdDeformCommand()
    {}
 
    /*
-   * Rebuild cell list after deformation.
+   * Rebuild pair list after deformation.
    */
-   void McDeformCommand::reneighbor()
+   void MdDeformCommand::reneighbor()
    {
       #ifndef SIMP_NOPAIR 
-      // Generate cell list
-      pairPtr_->buildCellList();
+      pairPtr_->buildPairList();
       #endif
    }
 

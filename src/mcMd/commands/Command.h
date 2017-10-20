@@ -22,6 +22,23 @@ namespace McMd
    /**
    * Command is an object that can be invoked from the command script.
    *
+   * Usage: 
+   *
+   * Usage: In this snippet, "in" is a std::istream with a cursor set at the beginning
+   * of a line in command script, and "command" is an instance of a subclass of the 
+   * Command base classe, representing a specific command.
+   * \code
+   *  
+   *   std::string name;
+   *   in >> name;
+   *   if (command.match(name)) {
+   *      command.execute(in);
+   *   }
+   *
+   * \endcode
+   * The readCommand() function of a CommandManager instead applies the match command
+   * to a list of commands and executes the first one with a name that matches.
+   *
    * \ingroup McMd_Command_Module
    */
    class Command : public ParamComposite
@@ -31,8 +48,10 @@ namespace McMd
 
       /**
       * Constructor.
+      *
+      * \param name identifier for this command, as the first word in a command line.
       */
-      Command();
+      Command(std::string name);
 
       /**
       * Destructor.
@@ -42,22 +61,35 @@ namespace McMd
       virtual ~Command();
 
       /**
-      * Read and execute command.
-      * 
-      * The string name is the capitalized command name that begins a command.
-      * If the name string matches the command name for this command, the rest 
-      * of the line is read, the command is executed, and the function returns
-      * true. If the name does not match, the function immediately returns 
-      * false without reading from istream in.
+      * Compare a string to the name of this command.
       *
-      * \return true if name is recognized, false if not
+      * \return true if name matches the name for this command, false otherwise.
       */
-      virtual bool readCommand(std::string const & name, std::istream& in) = 0;
+      virtual bool match(std::string name);
 
       /**
-      * Output statistics for this command (called at the end of the simulation)
+      * Execute this command.
+      *
+      * This function should be called after the command name is read from the
+      * istream in, and the match() function has been called and returned true.
+      * The std::itream in should be the input stream from which the name was 
+      * read, with the cursor initially set after the end of the name string.
+      *
+      * \param in input stream from which the command name was read.
+      */
+      virtual void execute(std::istream& in) = 0;
+
+      /**
+      * Output statistics accumulated by this command (called at the end of the simulation).
+      *
+      * Empty default implementation.
       */
       virtual void output();
+
+   private:
+
+      /// Identifier for this command in a command script
+      std::string name_;
 
    };
 

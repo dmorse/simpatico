@@ -4,7 +4,9 @@ mcMd_commands_= \
     mcMd/commands/McCommandFactory.cpp \
     mcMd/commands/MdCommandFactory.cpp \
     mcMd/commands/CommandManager.cpp \
-    mcMd/commands/McDeformCommand.cpp 
+    mcMd/commands/DeformCommand.cpp \
+    mcMd/commands/McDeformCommand.cpp \
+    mcMd/commands/MdDeformCommand.cpp 
 
 mcMd_commands_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_commands_))

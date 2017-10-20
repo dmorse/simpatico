@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_DEFORM_COMMAND_H
-#define MCMD_MC_DEFORM_COMMAND_H
+#ifndef MCMD_MD_DEFORM_COMMAND_H
+#define MCMD_MD_DEFORM_COMMAND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,13 +9,13 @@
 */
 
 #include <mcMd/commands/DeformCommand.h>
-#include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 namespace McMd
 {
 
-   class McSystem;
-   class McPairPotential;
+   class MdSystem;
+   class MdPairPotential;
    using namespace Util;
 
    /**
@@ -23,7 +23,7 @@ namespace McMd
    *
    * \ingroup McMd_Command_Module
    */
-   class McDeformCommand : public DeformCommand
+   class MdDeformCommand : public DeformCommand
    {
 
    public:
@@ -31,12 +31,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      McDeformCommand(McSystem& system);
+      MdDeformCommand(MdSystem& system);
 
       /**
       * Destructor.
       */
-      virtual ~McDeformCommand();
+      virtual ~MdDeformCommand();
 
       /**
       * Rebuild cell list.
@@ -45,7 +45,7 @@ namespace McMd
 
    private:
 
-      McPairPotential* pairPtr_;
+      MdPairPotential* pairPtr_;
 
    };
 

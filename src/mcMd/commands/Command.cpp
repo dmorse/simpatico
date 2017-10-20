@@ -14,9 +14,10 @@ namespace McMd
    using namespace Util;
 
    /*
-   * Default constructor.
+   * Constructor.
    */
-   Command::Command() 
+   Command::Command(std::string name) 
+    : name_(name)
    {}
 
    /*
@@ -24,6 +25,12 @@ namespace McMd
    */
    Command::~Command()
    {}
+
+   /*
+   * Attempt to match a string to the name identifier for this command.
+   */
+   bool Command::match(std::string name)
+   {  return (name == name_); }
 
    /*
    * Output at end - empty default implementation.

@@ -27,8 +27,10 @@ namespace McMd
       int n = size();
       bool match = false;
       for (int i = 0; i < n; ++i) {
-          match = (*this)[i].readCommand(name, in);
+          Command& command = (*this)[i];
+          match = command.match(name);
           if (match) {
+             command.execute(in);
              return true;
           }
       }
