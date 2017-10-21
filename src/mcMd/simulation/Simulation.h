@@ -46,9 +46,10 @@ namespace Simp {
 namespace McMd
 {
 
+   class SpeciesManager;
    class Analyzer;
    class AnalyzerManager;
-   class SpeciesManager;
+   class CommandManager;
 
    using namespace Util;
    using namespace Simp;
@@ -68,6 +69,8 @@ namespace McMd
    *  - A SpeciesManager, which has one or more Species objects.
    *
    *  - An AnalyzerManager, which has one or more Analyzer objects.
+   *
+   *  - A CommandManager, which has one or more Command objects.
    *
    *  - A FileMaster to manage associated input and output files.
    *
@@ -386,23 +389,22 @@ namespace McMd
       /**
       * Step index for main MC or MD loop.
       */
-      int  iStep_;
+      int iStep_;
 
       /**
       * Number of Systems of interacting molecules (> 1 in Gibbs ensemble).
       *
-      * Protected so it can be read from file and modified by a Gibbs subclass.
-      * Note that nSystem_ is initialized to 1 in the Simulation constructor.
+      * Protected so it can be read from file and modified by a Gibbs 
+      * ensemble subclass. Initialized to nSystem_ = 1 in constructor.
       */
-      int  nSystem_;
+      int nSystem_;
 
       /**
       * Set the associated AnalyzerManager.
       *
-      * This is used in the constructor for each subclass of Simulation
-      * (e.g., in McSimulation and MdSimulation) by register an instance 
-      * of an appropriate subclass of AnalyzerManager (e.g, either a
-      * McAnalyzerManager or a MdAnalyzerManager). 
+      * This should be called in the constructor for each subclass of 
+      * Simulation (e.g., in McSimulation and MdSimulation) by register 
+      * an instance of an appropriate subclass of AnalyzerManager.
       */
       void setAnalyzerManager(AnalyzerManager* ptr);
 
@@ -410,6 +412,16 @@ namespace McMd
       * Get the associated AnalyzerManager by reference.
       */
       AnalyzerManager& analyzerManager();
+
+      /**
+      * Set the associated CommandManager.
+      */
+      void setCommandManager(CommandManager* ptr);
+
+      /**
+      * Get the associated CommandManager by reference.
+      */
+      CommandManager& commandManager();
 
    private:
 
@@ -437,6 +449,14 @@ namespace McMd
       * instantiated by each subclass of Simulation.
       */
       AnalyzerManager* analyzerManagerPtr_;
+
+      /**
+      * Manager for data analysis and output classes.
+      *
+      * An instance of a default subclass of CommandManager must be 
+      * instantiated by each subclass of Simulation.
+      */
+      CommandManager* commandManagerPtr_;
 
       /** 
       * Array of all Molecule objects, for all Species.
@@ -800,13 +820,16 @@ namespace McMd
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }
 
-   inline void Simulation::setAnalyzerManager(AnalyzerManager* ptr)
-   {  analyzerManagerPtr_ = ptr; }
-
    inline AnalyzerManager& Simulation::analyzerManager()
    {  
-      assert(analyzerManagerPtr_);
+      UTIL_CHECK(analyzerManagerPtr_);
       return *analyzerManagerPtr_; 
+   }
+
+   inline CommandManager& Simulation::commandManager()
+   {
+      UTIL_CHECK(commandManagerPtr_);
+      return *commandManagerPtr_; 
    }
 
    inline int Simulation::iStep() const

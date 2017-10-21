@@ -7,7 +7,7 @@
 
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdAnalyzerManager.h>
-//#include <mcMd/mdSimulation/MdCommandManager.h>
+#include <mcMd/mdSimulation/MdCommandManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
@@ -50,7 +50,7 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdAnalyzerManagerPtr_(0),
-      // mdCommandManagerPtr_(0),
+      mdCommandManagerPtr_(0),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -61,13 +61,15 @@ namespace McMd
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
 
+      // Instantiate Manager objects
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
-      assert(mdAnalyzerManagerPtr_);
-      setAnalyzerManager(mdAnalyzerManagerPtr_);
+      UTIL_CHECK(mdAnalyzerManagerPtr_);
+      mdCommandManagerPtr_ = new MdCommandManager(*this);
+      UTIL_CHECK(mdCommandManagerPtr_);
 
-      //mdCommandManagerPtr_ = new MdCommandManager(*this);
-      //assert(mdCommandManagerPtr_);
-      //setCommandManager(mdCommandManagerPtr_);
+      // Pass pointers to managers to Simulation base class
+      setAnalyzerManager(mdAnalyzerManagerPtr_);
+      setCommandManager(mdCommandManagerPtr_);
    }
    #endif
 
@@ -88,13 +90,15 @@ namespace McMd
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
 
+      // Instantiate Manager objects
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
-      assert(mdAnalyzerManagerPtr_);
-      setAnalyzerManager(mdAnalyzerManagerPtr_);
+      UTIL_CHECK(mdAnalyzerManagerPtr_);
+      mdCommandManagerPtr_ = new MdCommandManager(*this);
+      UTIL_CHECK(mdCommandManagerPtr_);
 
-      // mdCommandManagerPtr_ = new MdCommandManager(*this);
-      // assert(mdCommandManagerPtr_);
-      // setCommandManager(mdCommandManagerPtr_);
+      // Pass pointers to managers to Simulation base class
+      setAnalyzerManager(mdAnalyzerManagerPtr_);
+      setCommandManager(mdCommandManagerPtr_);
    }
 
    /* 
@@ -102,10 +106,11 @@ namespace McMd
    */
    MdSimulation::~MdSimulation()
    {
-      assert(mdAnalyzerManagerPtr_);
       if (mdAnalyzerManagerPtr_) {
          delete mdAnalyzerManagerPtr_;
-         mdAnalyzerManagerPtr_ = 0;
+      }
+      if (mdCommandManagerPtr_) {
+         delete mdCommandManagerPtr_;
       }
    }
 
@@ -252,7 +257,7 @@ namespace McMd
       readParamComposite(in, system_);
       Analyzer::baseInterval = 0; 
       readParamCompositeOptional(in, analyzerManager());
-      //readParamCompositeOptional(in, commandManager());
+      // readParamCompositeOptional(in, commandManager());
 
       // Parameters for writing restart files
       saveInterval_ = 0;
@@ -583,7 +588,6 @@ namespace McMd
          #endif
          system().calculateForces();
          analyzerManager().setup();
-         //commandManager().setup();
          system_.mdIntegrator().setup();
       }
       int beginStep = iStep_;

@@ -39,6 +39,8 @@ namespace McMd
 
       /**
       * Attempt to read a command line, execute if recognized.
+      *
+      * \return true iff succesful match to name
       */
       bool readCommand(std::string const & name, std::istream& in);
 

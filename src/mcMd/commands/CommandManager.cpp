@@ -24,16 +24,15 @@ namespace McMd
 
    bool CommandManager::readCommand(std::string const & name, std::istream& in) 
    {
-      int n = size();
-      bool match = false;
-      for (int i = 0; i < n; ++i) {
-          Command& command = (*this)[i];
-          match = command.match(name);
-          if (match) {
-             command.execute(in);
-             return true;
-          }
+      for (int i = 0; i < size(); ++i) {
+         Command& command = (*this)[i];
+         if (command.match(name)) {
+            command.execute(in);
+            // Success: Match and execution
+            return true;
+         }
       }
+      // Failure: If this point was reach, nothing matched name
       return false;
    }
 

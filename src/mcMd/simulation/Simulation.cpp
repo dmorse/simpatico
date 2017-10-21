@@ -41,6 +41,7 @@ namespace McMd
       nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
+      commandManagerPtr_(0),
       moleculeCapacity_(0),
       nAtomType_(-1),
       atomCapacity_(0)
@@ -106,6 +107,7 @@ namespace McMd
       nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
+      commandManagerPtr_(0),
       moleculeCapacity_(0),
       nAtomType_(-1),
       atomCapacity_(0)
@@ -165,6 +167,18 @@ namespace McMd
       if (logFile_.is_open()) logFile_.close();
       #endif
    }
+
+   /*
+   * Set AnalyzerManager - protected, called by subclass constructor.
+   */
+   void Simulation::setAnalyzerManager(AnalyzerManager* ptr)
+   {  analyzerManagerPtr_ = ptr; }
+
+   /*
+   * Set CommandManager - protected, called by subclass constructor.
+   */
+   void Simulation::setCommandManager(CommandManager* ptr)
+   {  commandManagerPtr_ = ptr; }
 
    #ifdef UTIL_MPI
    /*
@@ -1284,7 +1298,7 @@ namespace McMd
    */
    Factory<Species>& Simulation::speciesFactory()
    {
-      assert(speciesManagerPtr_);
+      UTIL_CHECK(speciesManagerPtr_);
       return speciesManagerPtr_->factory();
    }
 
@@ -1293,7 +1307,7 @@ namespace McMd
    */
    Factory<Analyzer>& Simulation::analyzerFactory()
    {
-      assert(analyzerManagerPtr_);
+      UTIL_CHECK(analyzerManagerPtr_);
       return analyzerManagerPtr_->factory();
    }
 

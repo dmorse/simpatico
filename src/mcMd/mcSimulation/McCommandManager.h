@@ -10,12 +10,9 @@
 
 #include <mcMd/commands/CommandManager.h> // base class 
 
-namespace Util { template <typename T> class Factory; }
-
 namespace McMd
 {
 
-   class Simulation;
    class McSimulation;
    class McSystem;
 

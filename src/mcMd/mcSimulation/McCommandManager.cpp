@@ -23,7 +23,7 @@ namespace McMd
 
    // Constructor.
    McCommandManager::McCommandManager(McSimulation& simulation, 
-		                            McSystem& system)
+                                      McSystem& system)
     : CommandManager(),
       simulationPtr_(&simulation),
       systemPtr_(&system)

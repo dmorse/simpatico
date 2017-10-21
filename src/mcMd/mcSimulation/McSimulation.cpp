@@ -9,6 +9,7 @@
 
 #include "McSimulation.h"
 #include "McAnalyzerManager.h"
+#include "McCommandManager.h"
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/analyzers/Analyzer.h>
@@ -66,7 +67,7 @@ namespace McMd
       system_(),
       mcMoveManagerPtr_(0),
       mcAnalyzerManagerPtr_(0),
-      // mcCommandManagerPtr_(0),
+      mcCommandManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -80,14 +81,14 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Analyzer managers
+      // Create Manager objects
       mcMoveManagerPtr_ = new McMoveManager(*this);
       mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
-      //mcCommandrManagerPtr_ = new McAnalyzerManager(*this);
+      mcCommandrManagerPtr_ = new McCommandManager(*this);
 
-      // Pass Manager<Analyzer>* to Simulation base class.
+      // Pass pointers to managers to Simulation base class.
       setAnalyzerManager(mcAnalyzerManagerPtr_);
-      //setCommandManager(mcCommandManagerPtr_);
+      setCommandManager(mcCommandManagerPtr_);
    }
    #endif
 
@@ -99,7 +100,7 @@ namespace McMd
       system_(),
       mcMoveManagerPtr_(0),
       mcAnalyzerManagerPtr_(0),
-      // mcCommandManagerPtr_(0),
+      mcCommandManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -116,11 +117,11 @@ namespace McMd
       // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
       mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
-      //mcCommandManagerPtr_ = new McCommandManager(*this);
+      mcCommandManagerPtr_ = new McCommandManager(*this);
 
-      // Pass Manager<Analyzer>* to Simulation base class.
+      // Pass pointers to managers to Simulation base class.
       setAnalyzerManager(mcAnalyzerManagerPtr_);
-      //setCommandManager(mcCommandManagerPtr_);
+      setCommandManager(mcCommandManagerPtr_);
    }
 
    /*
@@ -128,8 +129,15 @@ namespace McMd
    */
    McSimulation::~McSimulation()
    {
-      delete mcMoveManagerPtr_;
-      delete mcAnalyzerManagerPtr_;
+      if (mcMoveManagerPtr_) {
+         delete mcMoveManagerPtr_;
+      }
+      if (mcAnalyzerManagerPtr_) {
+         delete mcAnalyzerManagerPtr_;
+      }
+      if (mcCommandManagerPtr_) {
+         delete mcCommandManagerPtr_;
+      }
    }
 
    /*
@@ -288,6 +296,9 @@ namespace McMd
       Analyzer::baseInterval = 0; // default value
       readParamCompositeOptional(in, analyzerManager());
 
+      // Read Commands (optionally) 
+      // readParamCompositeOptional(in, commandManager());
+
       // Parameters for writing restart files (optionally)
       saveInterval_ = 0; // default value
       readOptional<int>(in, "saveInterval", saveInterval_);
@@ -338,7 +349,7 @@ namespace McMd
       loadParamComposite(ar, system());
       loadParamComposite(ar, *mcMoveManagerPtr_);
       loadParamComposite(ar, analyzerManager());
-      //loadParamComposite(ar, commandManager());
+      // loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -359,7 +370,7 @@ namespace McMd
       system().saveParameters(ar);
       mcMoveManagerPtr_->save(ar);
       analyzerManager().save(ar);
-      //commandManager().save(ar);
+      // commandManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -722,7 +733,6 @@ namespace McMd
       } else {
          iStep_ = 0;
          analyzerManager().setup();
-         // commandManager().setup();
          mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;

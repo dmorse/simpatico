@@ -22,7 +22,7 @@ namespace McMd
    class McMove;
    class McMoveManager;
    class McAnalyzerManager;
-   // class McCommandManager;
+   class McCommandManager;
 
    /**
    * A Monte-Carlo simulation of one McSystem.
@@ -275,7 +275,7 @@ namespace McMd
       McAnalyzerManager* mcAnalyzerManagerPtr_;
 
       /// Pointer to Manager for Command objects.
-      // McCommandManager* mcCommandManagerPtr_;
+      McCommandManager* mcCommandManagerPtr_;
 
       /// Pointer to parameter file passed to readParameters(istream&)
       std::istream* paramFilePtr_;

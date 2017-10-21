@@ -17,7 +17,7 @@ namespace McMd
    using namespace Util;
 
    class MdAnalyzerManager;
-   // class MdCommandManager;
+   class MdCommandManager;
 
    /**
    * A molecular dynamics simulation of a single MdSystem.
@@ -248,7 +248,7 @@ namespace McMd
       MdAnalyzerManager*  mdAnalyzerManagerPtr_;
 
       /// Pointer to manager for Command objects.
-      // MdCommandManager*  mdCommandManagerPtr_;
+      MdCommandManager*  mdCommandManagerPtr_;
 
       /// Restart output file name
       std::string saveFileName_;
