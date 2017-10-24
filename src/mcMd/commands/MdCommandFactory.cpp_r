@@ -10,6 +10,9 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 
+// Commands
+#include <mcMd/commands/MdDeformCommand.h>
+
 namespace McMd
 {
 
@@ -35,11 +38,9 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      #if 0
-      if (className == "McEnergyOutput") {
-         ptr = new McEnergyOutput(system());
+      if (className == "MdDeformCommand") {
+         ptr = new MdDeformCommand(system());
       } 
-      #endif
 
       return ptr;
    }

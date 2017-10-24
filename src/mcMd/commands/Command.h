@@ -9,15 +9,11 @@
 */
 
 #include <util/param/ParamComposite.h>
-#include <util/random/Random.h>
-#include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class Simulation;
 
    /**
    * Command is an object that can be invoked from the command script.
@@ -80,11 +76,16 @@ namespace McMd
       virtual void execute(std::istream& in) = 0;
 
       /**
-      * Output statistics accumulated by this command (called at the end of the simulation).
-      *
-      * Empty default implementation.
+      * Save state to archive (empty default implementation).
       */
-      virtual void output();
+      virtual void save(Serializable::OArchive& ar)
+      {}
+
+      /**
+      * Load parameters from an archive (empty default implementation).
+      */
+      virtual void loadParameters(Serializable::IArchive& ar)
+      {}
 
    private:
 

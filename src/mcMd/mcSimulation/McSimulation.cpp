@@ -292,12 +292,10 @@ namespace McMd
       assert(mcMoveManagerPtr_);
       readParamComposite(in, *mcMoveManagerPtr_);
 
-      // Read Analyzers (optionally)
+      // Read analyzer and command managers (optionally)
       Analyzer::baseInterval = 0; // default value
       readParamCompositeOptional(in, analyzerManager());
-
-      // Read Commands (optionally) 
-      // readParamCompositeOptional(in, commandManager());
+      readParamCompositeOptional(in, commandManager());
 
       // Parameters for writing restart files (optionally)
       saveInterval_ = 0; // default value
@@ -349,7 +347,7 @@ namespace McMd
       loadParamComposite(ar, system());
       loadParamComposite(ar, *mcMoveManagerPtr_);
       loadParamComposite(ar, analyzerManager());
-      // loadParamComposite(ar, commandManager());
+      loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -370,7 +368,7 @@ namespace McMd
       system().saveParameters(ar);
       mcMoveManagerPtr_->save(ar);
       analyzerManager().save(ar);
-      // commandManager().save(ar);
+      commandManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -733,7 +731,6 @@ namespace McMd
       } else {
          iStep_ = 0;
          analyzerManager().setup();
-         mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;
       int nStep = endStep - beginStep;
@@ -884,7 +881,6 @@ namespace McMd
       UTIL_CHECK(max > min);
       UTIL_CHECK(Analyzer::baseInterval > 0);
       UTIL_CHECK(analyzerManager().size() > 0);
-      
 
       Timer             timer;
       std::string       filename;

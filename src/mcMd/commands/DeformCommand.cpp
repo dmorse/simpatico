@@ -7,8 +7,9 @@
 
 #include "DeformCommand.h"
 #include <mcMd/simulation/Simulation.h>
-#include <util/format/Str.h>
-#include <util/misc/FileMaster.h>
+#include <mcMd/simulation/System.h>
+//#include <util/format/Str.h>
+//#include <util/misc/FileMaster.h>
 
 namespace McMd
 {

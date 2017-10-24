@@ -5,10 +5,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McCommandFactory.h" // Class header
+#include "McCommandFactory.h"                  // class header
 
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
+
+// Commands
+#include <mcMd/commands/McDeformCommand.h>
 
 namespace McMd
 {
@@ -35,11 +38,9 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      #if 0
-      if (className == "McEnergyOutput") {
-         ptr = new McEnergyOutput(system());
+      if (className == "McDeformCommand") {
+         ptr = new McDeformCommand(system());
       } 
-      #endif
 
       return ptr;
    }

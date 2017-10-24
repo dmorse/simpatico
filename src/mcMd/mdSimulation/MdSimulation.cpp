@@ -257,7 +257,7 @@ namespace McMd
       readParamComposite(in, system_);
       Analyzer::baseInterval = 0; 
       readParamCompositeOptional(in, analyzerManager());
-      // readParamCompositeOptional(in, commandManager());
+      readParamCompositeOptional(in, commandManager());
 
       // Parameters for writing restart files
       saveInterval_ = 0;
@@ -305,7 +305,7 @@ namespace McMd
       Simulation::loadParameters(ar); 
       loadParamComposite(ar, system_); 
       loadParamComposite(ar, analyzerManager());
-      // loadParamComposite(ar, commandManager());
+      loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -326,7 +326,7 @@ namespace McMd
       Simulation::save(ar); 
       system_.saveParameters(ar);
       analyzerManager().save(ar);
-      //commandManager().save(ar);
+      commandManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;

@@ -32,10 +32,4 @@ namespace McMd
    bool Command::match(std::string name)
    {  return (name == name_); }
 
-   /*
-   * Output at end - empty default implementation.
-   */
-   void Command::output()
-   {}
-
 }
