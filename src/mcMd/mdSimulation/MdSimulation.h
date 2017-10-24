@@ -242,13 +242,13 @@ namespace McMd
    private:
       
       /// System.
-      MdSystem  system_;
+      MdSystem system_;
 
       /// Pointer to manager for Analyzer objects.
-      MdAnalyzerManager*  mdAnalyzerManagerPtr_;
+      MdAnalyzerManager* mdAnalyzerManagerPtr_;
 
       /// Pointer to manager for Command objects.
-      MdCommandManager*  mdCommandManagerPtr_;
+      MdCommandManager* mdCommandManagerPtr_;
 
       /// Restart output file name
       std::string saveFileName_;

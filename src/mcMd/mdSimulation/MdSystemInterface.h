@@ -35,9 +35,9 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param mcSystem parent MdSystem
+      * \param mdSystem parent MdSystem
       */
-      MdSystemInterface(MdSystem& mcSystem);
+      MdSystemInterface(MdSystem& mdSystem);
    
       /**
       * Destructor.

@@ -35,6 +35,6 @@ namespace McMd
 
    /// Return pointer to a new CommandFactory.
    Factory<Command>* MdCommandManager::newDefaultFactory() const
-   {  return new MdCommandFactory(*simulationPtr_, *systemPtr_); }
+   {  return new MdCommandFactory(simulation(), system()); }
 
 }

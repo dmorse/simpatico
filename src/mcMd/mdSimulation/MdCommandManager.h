@@ -62,6 +62,16 @@ namespace McMd
       */
       virtual Util::Factory<Command>* newDefaultFactory() const;
 
+      /**
+      * Get parent MdSimulation by reference.
+      */
+      MdSimulation& simulation() const;
+
+      /**
+      * Get associated MdSystem by reference.
+      */
+      MdSystem& system() const;
+
    private:
 
       /// Pointer to parent Simulation
@@ -71,6 +81,22 @@ namespace McMd
       MdSystem*   systemPtr_;
 
    };
+
+   // Inline member functions
+
+   inline
+   MdSimulation& MdCommandManager::simulation() const
+   {
+      assert(simulationPtr_);
+      return *simulationPtr_;
+   }
+
+   inline
+   MdSystem& MdCommandManager::system() const
+   {
+      assert(systemPtr_);
+      return *systemPtr_;
+   }
 
 }
 #endif

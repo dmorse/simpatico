@@ -18,8 +18,8 @@ namespace McMd
    *
    * \param system parent MdSystem
    */
-   MdSystemInterface::MdSystemInterface(MdSystem& mcSystem)
-    : SystemInterface(mcSystem)
+   MdSystemInterface::MdSystemInterface(MdSystem& mdSystem)
+    : SystemInterface(mdSystem)
       #ifndef SIMP_NOPAIR
       , pairPotentialPtr_(0)
       #endif
@@ -37,26 +37,26 @@ namespace McMd
       #endif
    {
       #ifndef SIMP_NOPAIR
-      pairPotentialPtr_ = &mcSystem.pairPotential();
+      pairPotentialPtr_ = &mdSystem.pairPotential();
       #endif
       #ifdef SIMP_BOND
       if (hasBonds()) {
-         bondPotentialPtr_ = &mcSystem.bondPotential();
+         bondPotentialPtr_ = &mdSystem.bondPotential();
       }
       #endif
       #ifdef SIMP_ANGLE
       if (hasAngles()) {
-         anglePotentialPtr_ = &mcSystem.anglePotential();
+         anglePotentialPtr_ = &mdSystem.anglePotential();
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (hasDihedrals()) {
-         dihedralPotentialPtr_ = &mcSystem.dihedralPotential();
+         dihedralPotentialPtr_ = &mdSystem.dihedralPotential();
       }
       #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternal()) {
-         externalPotentialPtr_ = &mcSystem.externalPotential();
+         externalPotentialPtr_ = &mdSystem.externalPotential();
       }
       #endif
    }
