@@ -483,7 +483,8 @@ namespace McMd
                readNext = false;
             } else {
                bool success;
-               success = readCommand(command, inBuffer);
+               //success = readCommand(command, inBuffer);
+               success = commandManager().readCommand(command, inBuffer);
                if (!success)  {
                   Log::file() << "Error: Unknown command  " << std::endl;
                   readNext = false;
@@ -494,7 +495,18 @@ namespace McMd
       }
    }
 
+   /*
+   * Read and execute commands from the default command file.
+   */
+   void McSimulation::readCommands()
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
 
+   #if 0
    bool McSimulation::readCommand(std::string const & command, 
                                   std::istream& in)
    {
@@ -702,18 +714,7 @@ namespace McMd
       }
       return success;
    }
-
-   /*
-   * Read and execute commands from the default command file.
-   */
-   void McSimulation::readCommands()
-   {  
-      if (fileMaster().commandFileName().empty()) {
-         UTIL_THROW("Empty command file name");
-      }
-      readCommands(fileMaster().commandFile()); 
-   }
-
+   #endif
 
    /*
    * Run this MC simulation.

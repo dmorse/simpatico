@@ -72,6 +72,20 @@ namespace McMd
       */
       MdSystem& system() const;
 
+      /**
+      * Attempt to read one of the standard commands.
+      *
+      * Precondition: The command identifier should have been read from
+      * stream in, and should be passed as string parameter command. 
+      * If the command name is matched, any further parameters required 
+      * by the command are read from stream in.
+      *
+      * \param command command name (capitalized identifer)
+      * \param in input stream from which command was read
+      */
+      virtual
+      bool readStandardCommand(std::string command, std::istream& in);
+
    private:
 
       /// Pointer to parent Simulation

@@ -22,8 +22,16 @@ namespace McMd
    CommandManager::~CommandManager()
    {}
 
-   bool CommandManager::readCommand(std::string const & name, std::istream& in) 
+   bool 
+   CommandManager::readCommand(std::string name, std::istream& in) 
    {
+      // Attempt to match one of the standard commands
+      bool success = readStandardCommand(name, in);
+      if (success) {
+         return true;
+      }
+
+      // Attempt to match a customized command
       for (int i = 0; i < size(); ++i) {
          Command& command = (*this)[i];
          if (command.match(name)) {
@@ -32,8 +40,13 @@ namespace McMd
             return true;
          }
       }
-      // Failure: If this point was reach, nothing matched name
+
+      // Failure: If this point was reach, no match was found
       return false;
    }
+
+   bool 
+   CommandManager::readStandardCommand(std::string name, std::istream& in) 
+   { return false; }
 
 }

@@ -40,9 +40,19 @@ namespace McMd
       /**
       * Attempt to read a command line, execute if recognized.
       *
-      * \return true iff succesful match to name
+      * \return true iff succesful match to command
       */
-      bool readCommand(std::string const & name, std::istream& in);
+      bool readCommand(std::string name, std::istream& in);
+
+   protected:
+
+      /**
+      * Attempt to read a standard built-in command, execute if recognized.
+      *
+      * \return true iff succesful match to command
+      */
+      virtual
+      bool readStandardCommand(std::string name, std::istream& in);
 
    };
 

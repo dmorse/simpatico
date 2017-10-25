@@ -144,6 +144,7 @@ namespace McMd
       /// \name Command Script Interface
       //@{
 
+      #if 0
       /**
       * Read and execute a single command from an input stream.
       *
@@ -153,6 +154,7 @@ namespace McMd
       * \param in  command input stream
       */ 
       bool readCommand(std::string const & command, std::istream& in);
+      #endif
 
       /**
       * Read and execute commands from a specific input stream.

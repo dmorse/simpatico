@@ -389,7 +389,8 @@ namespace McMd
                readNext = false;
             } else {
                bool success;
-               success = readCommand(command, inBuffer);
+               // success = readCommand(command, inBuffer);
+               success = commandManager().readCommand(command, inBuffer);
                if (!success)  {
                   Log::file() << "Error: Unknown command  " << std::endl;
                   readNext = false;
@@ -411,6 +412,7 @@ namespace McMd
       readCommands(fileMaster().commandFile()); 
    }
 
+   #if 0
    bool MdSimulation::readCommand(std::string const & command, 
                                   std::istream& in)
    {
@@ -567,6 +569,7 @@ namespace McMd
       }
       return success;
    }
+   #endif
 
    /* 
    * Run a simulation.

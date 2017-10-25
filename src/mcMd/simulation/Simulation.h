@@ -466,8 +466,8 @@ namespace McMd
       /**
       * Array containing indices to the first Molecule of each species.
       *
-      * Element firstAtomIds[i] is an integer index for the first Molecule of the
-      * block of the molecules_ Array associated with species number i.
+      * Element firstAtomIds[i] is an integer index for the first Molecule 
+      * of the block of the molecules_ Array associated with species i.
       */
       DArray<int> firstMoleculeIds_;
 
@@ -556,8 +556,8 @@ namespace McMd
       /**
       * Array containing indices to the first Bond of each species.
       *
-      * Element firstBondIds[i] is an integer index for the first Bond of the
-      * block of the bonds_ Array associated with species number i.
+      * Element firstBondIds[i] is an integer index for the first Bond of
+      * the block of the bonds_ Array associated with species number i.
       */
       DArray<int> firstBondIds_;
 
@@ -569,8 +569,8 @@ namespace McMd
       /**
       * Number of bonds allocated.
       *
-      * The number of Bond objects allocated in the DArray bonds_ , for all
-      * Species in all Systems.
+      * The number of Bond objects allocated in the DArray bonds_ , for 
+      * all Species in all Systems.
       */
       int bondCapacity_;
       #endif
@@ -579,8 +579,8 @@ namespace McMd
       /**
       * Array of all Angle objects.
       *
-      * The organization of angles_ is closely anologous to that of bonds_: The 
-      * Angles associated with a Molecule are stored in a contiguous block, 
+      * The organization of angles_ is analogous to that of bonds_: The 
+      * angle associated with a Molecule are stored in a contiguous block, 
       * and blocks associated with molecules are of the same Species are 
       * stored sequentially within a larger block.
       */
@@ -589,8 +589,8 @@ namespace McMd
       /**
       * Array containing indices to the first Angle of each species.
       *
-      * Element firstAngleIds[i] is an integer index for the first Angle of the
-      * block of the angles_ Array associated with species number i.
+      * Element firstAngleIds[i] is an integer index for the first Angle 
+      * of the block of the angles_ Array associated with species number i.
       */
       DArray<int> firstAngleIds_;
 
@@ -612,18 +612,19 @@ namespace McMd
       /**
       * Array of all Dihedral objects.
       *
-      * The organization of dihedrals_ is closely anologous to that of angles_:
+      * The organization of dihedrals_ is anologous to that of angles_:
       * The Dihedrals associated with a Molecule are stored in a contiguous
-      * block, and blocks associated with molecules are of the same Species are
-      * stored sequentially within a larger block.
+      * block, and blocks associated with molecules are of the same Species 
+      * are stored sequentially within a larger block.
       */
       DArray<Dihedral> dihedrals_;
 
       /**
       * Array containing indices to the first Dihedral of each species.
       *
-      * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
-      * block of the dihedrals_ Array associated with species number i.
+      * Element firstDihedralIds[i] is an integer index for the first 
+      * Dihedral of the block of the dihedrals_ Array associated with 
+      * species number i.
       */
       DArray<int> firstDihedralIds_;
 
@@ -635,8 +636,8 @@ namespace McMd
       /**
       * Number of dihedrals allocated.
       *
-      * The number of Dihedral objects allocated in the DArray dihedrals_, for all
-      * Species in all Systems.
+      * The number of Dihedral objects allocated in the DArray dihedrals_, 
+      * for all Species in all Systems.
       */
       int dihedralCapacity_;
       #endif
