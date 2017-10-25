@@ -144,20 +144,8 @@ namespace McMd
       /// \name Command Script Interface
       //@{
 
-      #if 0
       /**
-      * Read and execute a single command from an input stream.
-      *
-      * Returns true if command string is recognized, false otherwise.
-      *
-      * \param command  command name string
-      * \param in  command input stream
-      */ 
-      bool readCommand(std::string const & command, std::istream& in);
-      #endif
-
-      /**
-      * Read and execute commands from a specific input stream.
+      * Read and execute commands from a command file input stream.
       * 
       * \param in  command file input stream
       */
@@ -170,6 +158,23 @@ namespace McMd
       * by the FileMaster.
       */
       void readCommands();
+
+      /**
+      * Read and execute a single command from an input stream.
+      *
+      * Usage: The capitalized command name must have been read
+      * from istream "in" and passed as the "command" argument. If 
+      * the command name is recognized, any required arguments are
+      * read from stream in, the specified command is executed,
+      * and a value of true is returned. A false value is 
+      * returned if the command string is not recognized.
+      * 
+      * Implementation: Calls CommandManager::readCommand().
+      *
+      * \param command  command name string
+      * \param in  command input stream
+      */ 
+      bool readCommand(std::string const & command, std::istream& in);
 
       //@}
       /// \name Simulation and Analysis Operations

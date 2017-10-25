@@ -6,8 +6,6 @@
 */
 
 #include <mcMd/mdSimulation/MdSimulation.h>
-#include <mcMd/mdSimulation/MdAnalyzerManager.h>
-#include <mcMd/mdSimulation/MdCommandManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
@@ -49,8 +47,8 @@ namespace McMd
    MdSimulation::MdSimulation(MPI::Intracomm& communicator)
     : Simulation(communicator),
       system_(),
-      mdAnalyzerManagerPtr_(0),
-      mdCommandManagerPtr_(0),
+      mdAnalyzerManager_(*this),
+      mdCommandManager_(*this),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -61,15 +59,17 @@ namespace McMd
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
 
+      #if 0
       // Instantiate Manager objects
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
       UTIL_CHECK(mdAnalyzerManagerPtr_);
       mdCommandManagerPtr_ = new MdCommandManager(*this);
       UTIL_CHECK(mdCommandManagerPtr_);
+      #endif
 
       // Pass pointers to managers to Simulation base class
-      setAnalyzerManager(mdAnalyzerManagerPtr_);
-      setCommandManager(mdCommandManagerPtr_);
+      setAnalyzerManager(&mdAnalyzerManager_);
+      setCommandManager(&mdCommandManager_);
    }
    #endif
 
@@ -79,7 +79,8 @@ namespace McMd
    MdSimulation::MdSimulation()
     : Simulation(),
       system_(),
-      mdAnalyzerManagerPtr_(0),
+      mdAnalyzerManager_(*this),
+      mdCommandManager_(*this),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -90,15 +91,17 @@ namespace McMd
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
 
+      #if 0
       // Instantiate Manager objects
       mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
       UTIL_CHECK(mdAnalyzerManagerPtr_);
       mdCommandManagerPtr_ = new MdCommandManager(*this);
       UTIL_CHECK(mdCommandManagerPtr_);
+      #endif
 
       // Pass pointers to managers to Simulation base class
-      setAnalyzerManager(mdAnalyzerManagerPtr_);
-      setCommandManager(mdCommandManagerPtr_);
+      setAnalyzerManager(&mdAnalyzerManager_);
+      setCommandManager(&mdCommandManager_);
    }
 
    /* 
@@ -106,12 +109,14 @@ namespace McMd
    */
    MdSimulation::~MdSimulation()
    {
+      #if 0
       if (mdAnalyzerManagerPtr_) {
          delete mdAnalyzerManagerPtr_;
       }
       if (mdCommandManagerPtr_) {
          delete mdCommandManagerPtr_;
       }
+      #endif
    }
 
    /*
@@ -411,6 +416,13 @@ namespace McMd
       }
       readCommands(fileMaster().commandFile()); 
    }
+
+   /*
+   * Read and execute a single command.
+   */
+   bool MdSimulation::readCommand(std::string const & command, 
+                                  std::istream& in)
+   {  return commandManager().readCommand(command, in); }
 
    #if 0
    bool MdSimulation::readCommand(std::string const & command, 

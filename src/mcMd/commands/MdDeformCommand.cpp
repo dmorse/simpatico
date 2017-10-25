@@ -20,7 +20,7 @@ namespace McMd
    MdDeformCommand::MdDeformCommand(MdSystem& system) 
     : DeformCommand(system),
       pairPtr_(&system.pairPotential())
-   {}
+   {  setClassName("MdDeformCommand"); }
 
    /*
    * Default destructor.

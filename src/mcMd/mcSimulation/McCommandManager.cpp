@@ -23,7 +23,10 @@ namespace McMd
     : CommandManager(),
       simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
-   {  setClassName("McCommandManager"); }
+   {
+      // Note: No setClassname("MdCommandManager");
+      // Retain name CommandManager set by base class.
+   }  
 
    // Constructor.
    McCommandManager::McCommandManager(McSimulation& simulation, 
@@ -139,6 +142,62 @@ namespace McMd
          Log::file() << std::endl;
 
          system().generateMolecules(capacities, diameters);
+
+      } else
+      if (name == "DEFORM_CELL") {
+
+         // Read in configuration from file
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         simulation().fileMaster().openInputFile(filename, inputFile);
+         system().readConfig(inputFile);
+         inputFile.close();
+
+         int nSpecies = simulation().nSpecies();
+         System::MoleculeIterator molIter;
+         Molecule::AtomIterator atomIter;
+         for (int iSpec=0; iSpec < nSpecies; ++iSpec) {
+            system().begin(iSpec, molIter);
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(atomIter);
+               for ( ; atomIter.notEnd(); ++atomIter) {
+                  Vector cartPosition, genPosition;
+                  cartPosition = atomIter->position();
+                  system().boundary().transformCartToGen(cartPosition, genPosition);
+                  atomIter->position() = genPosition;
+               }
+            }
+         }
+
+         // Read in new boundary
+         in >> system().boundary();
+         Log::file() << "  " << system().boundary();
+         Log::file() << std::endl;
+
+         for (int iSpec=0; iSpec < nSpecies; ++iSpec) {
+            system().begin(iSpec, molIter);
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(atomIter);
+               for ( ; atomIter.notEnd(); ++atomIter) {
+                  Vector cartPosition, genPosition;
+                  genPosition = atomIter->position();
+                  system().boundary().transformGenToCart(genPosition, cartPosition);
+                  atomIter->position() = cartPosition;
+               }
+            }
+         }
+
+         // Write out configuration to file
+         in >> filename;
+         Log::file() << Str(filename, 15) << std::endl;
+         simulation().fileMaster().openOutputFile(filename, outputFile);
+         system().writeConfig(outputFile);
+         outputFile.close();
+
+         #ifndef SIMP_NOPAIR 
+         // Generate cell list
+         system().pairPotential().buildCellList();
+         #endif
 
       } else
       #ifndef UTIL_MPI

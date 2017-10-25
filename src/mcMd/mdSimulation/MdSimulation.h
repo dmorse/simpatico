@@ -8,16 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdSystem.h"
-#include <mcMd/simulation/Simulation.h>
+#include <mcMd/simulation/Simulation.h>     // base class
+#include "MdSystem.h"                       // member
+#include "MdAnalyzerManager.h"              // member
+#include "MdCommandManager.h"               // member
 
 namespace McMd
 {
 
    using namespace Util;
-
-   class MdAnalyzerManager;
-   class MdCommandManager;
 
    /**
    * A molecular dynamics simulation of a single MdSystem.
@@ -135,16 +134,6 @@ namespace McMd
       //@{
 
       /**
-      * Read and execute a single command from an input stream.
-      *
-      * Returns true if command string is recognized, false otherwise.
-      *
-      * \param command  command name string
-      * \param in  command input stream
-      */ 
-      bool readCommand(std::string const & command, std::istream& in);
-
-      /**
       * Read and execute commands from a specific input stream.
       * 
       * \param in command script input stream.
@@ -158,6 +147,23 @@ namespace McMd
       * the FileMaster.
       */
       void readCommands();
+
+      /**
+      * Read and execute a single command from an input stream.
+      *
+      * Usage: The capitalized command name must have been read
+      * from istream "in" and passed as the "command" argument. If 
+      * the command name is recognized, any required arguments are
+      * read from stream in, the specified command is executed,
+      * and a value of true is returned. A false value is 
+      * returned if the command string is not recognized.
+      * 
+      * Implementation: Calls commandManager().readCommand().
+      *
+      * \param command  command name string
+      * \param in  command input stream
+      */ 
+      bool readCommand(std::string const & command, std::istream& in);
 
       //@}
       /// \name Simulation and Analysis Operations
@@ -244,11 +250,11 @@ namespace McMd
       /// System.
       MdSystem system_;
 
-      /// Pointer to manager for Analyzer objects.
-      MdAnalyzerManager* mdAnalyzerManagerPtr_;
+      /// Manager for Analyzer objects.
+      MdAnalyzerManager mdAnalyzerManager_;
 
-      /// Pointer to manager for Command objects.
-      MdCommandManager* mdCommandManagerPtr_;
+      /// Manager for Command objects.
+      MdCommandManager mdCommandManager_;
 
       /// Restart output file name
       std::string saveFileName_;

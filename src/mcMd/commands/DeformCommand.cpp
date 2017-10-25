@@ -22,7 +22,7 @@ namespace McMd
    DeformCommand::DeformCommand(System& system) 
     : Command("DEFORM_CELL"),
       SystemInterface(system)
-   {}
+   {  setClassName("DeformCommand"); }
 
    /*
    * Default destructor.

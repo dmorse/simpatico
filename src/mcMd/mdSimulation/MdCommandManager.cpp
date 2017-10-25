@@ -23,7 +23,11 @@ namespace McMd
     : CommandManager(),
       simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
-   {  setClassName("MdCommandManager"); }
+   {
+      // Note:
+      // No command to set classname to MdCommandManager - 
+      // Retain name CommandManager set by base class.
+   }
 
    // Constructor.
    MdCommandManager::MdCommandManager(MdSimulation& simulation, 
@@ -56,9 +60,9 @@ namespace McMd
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
          simulation().fileMaster().openInputFile(filename, inputFile);
-         Log::file() << "Opened config file" << std::endl;
+         // Log::file() << "Opened config file" << std::endl;
          system().readConfig(inputFile);
-         Log::file() << "Finished reading config file" << std::endl;
+         // Log::file() << "Finished reading config file" << std::endl;
          inputFile.close();
       } else
       if (name == "THERMALIZE") {
