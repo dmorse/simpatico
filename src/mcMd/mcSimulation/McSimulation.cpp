@@ -8,12 +8,9 @@
 #include <util/global.h>
 
 #include "McSimulation.h"
-#include "McAnalyzerManager.h"
-#include "McCommandManager.h"
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
@@ -65,9 +62,9 @@ namespace McMd
    McSimulation::McSimulation(MPI::Intracomm& communicator)
     : Simulation(communicator),
       system_(),
-      mcMoveManagerPtr_(0),
-      mcAnalyzerManagerPtr_(0),
-      mcCommandManagerPtr_(0),
+      mcMoveManager_(*this),
+      mcAnalyzerManager_(*this),
+      mcCommandManager_(*this),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -81,14 +78,9 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create Manager objects
-      mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
-      mcCommandrManagerPtr_ = new McCommandManager(*this);
-
       // Pass pointers to managers to Simulation base class.
-      setAnalyzerManager(mcAnalyzerManagerPtr_);
-      setCommandManager(mcCommandManagerPtr_);
+      setAnalyzerManager(&mcAnalyzerManager_);
+      setCommandManager(&mcCommandManager_);
    }
    #endif
 
@@ -98,9 +90,9 @@ namespace McMd
    McSimulation::McSimulation()
     : Simulation(),
       system_(),
-      mcMoveManagerPtr_(0),
-      mcAnalyzerManagerPtr_(0),
-      mcCommandManagerPtr_(0),
+      mcMoveManager_(*this),
+      mcAnalyzerManager_(*this),
+      mcCommandManager_(*this),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -114,31 +106,16 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Analyzer managers
-      mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
-      mcCommandManagerPtr_ = new McCommandManager(*this);
-
       // Pass pointers to managers to Simulation base class.
-      setAnalyzerManager(mcAnalyzerManagerPtr_);
-      setCommandManager(mcCommandManagerPtr_);
+      setAnalyzerManager(&mcAnalyzerManager_);
+      setCommandManager(&mcCommandManager_);
    }
 
    /*
    * Destructor.
    */
    McSimulation::~McSimulation()
-   {
-      if (mcMoveManagerPtr_) {
-         delete mcMoveManagerPtr_;
-      }
-      if (mcAnalyzerManagerPtr_) {
-         delete mcAnalyzerManagerPtr_;
-      }
-      if (mcCommandManagerPtr_) {
-         delete mcCommandManagerPtr_;
-      }
-   }
+   {}
 
    /*
    * Process command line options.
@@ -289,8 +266,7 @@ namespace McMd
       readParamComposite(in, system());
 
       // Read Monte Carlo Moves
-      assert(mcMoveManagerPtr_);
-      readParamComposite(in, *mcMoveManagerPtr_);
+      readParamComposite(in, mcMoveManager());
 
       // Read analyzer and command managers (optionally)
       Analyzer::baseInterval = 0; // default value
@@ -345,7 +321,7 @@ namespace McMd
 
       Simulation::loadParameters(ar);
       loadParamComposite(ar, system());
-      loadParamComposite(ar, *mcMoveManagerPtr_);
+      loadParamComposite(ar, mcMoveManager());
       loadParamComposite(ar, analyzerManager());
       loadParamComposite(ar, commandManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
@@ -366,7 +342,7 @@ namespace McMd
    {
       Simulation::save(ar);
       system().saveParameters(ar);
-      mcMoveManagerPtr_->save(ar);
+      mcMoveManager().save(ar);
       analyzerManager().save(ar);
       commandManager().save(ar);
       ar << saveInterval_;
@@ -512,7 +488,6 @@ namespace McMd
                                   std::istream& in)
    {  return commandManager().readCommand(command, in); }
 
-
    /*
    * Run this MC simulation.
    */
@@ -559,7 +534,7 @@ namespace McMd
          }
 
          // Choose and attempt an McMove
-         mcMoveManagerPtr_->chooseMove().move();
+         mcMoveManager().chooseMove().move();
 
          #ifdef UTIL_MPI
          #ifdef MCMD_PERTURB
@@ -609,7 +584,7 @@ namespace McMd
       }
 
       // Output results of move statistics to files
-      mcMoveManagerPtr_->output();
+      mcMoveManager().output();
 
       // Output time for the run
       Log::file() << std::endl;
@@ -632,12 +607,12 @@ namespace McMd
            << setw(12) << right << "Accepted"
            << setw(15) << right << "AcceptRate"
            << endl;
-      int nMove = mcMoveManagerPtr_->size();
+      int nMove = mcMoveManager().size();
       for (int iMove = 0; iMove < nMove; ++iMove) {
-         attempt = (*mcMoveManagerPtr_)[iMove].nAttempt();
-         accept  = (*mcMoveManagerPtr_)[iMove].nAccept();
+         attempt = mcMoveManager()[iMove].nAttempt();
+         accept  = mcMoveManager()[iMove].nAccept();
          Log::file() << setw(32) << left 
-              << mcMoveManagerPtr_->className(iMove)
+              << mcMoveManager().className(iMove)
               << setw(12) << right << attempt
               << setw(12) << accept
               << setw(15) << fixed << setprecision(6)
@@ -810,7 +785,7 @@ namespace McMd
    * Get the McMove factory.
    */
    Factory<McMove>& McSimulation::mcMoveFactory()
-   {  return mcMoveManagerPtr_->factory(); }
+   {  return mcMoveManager().factory(); }
 
    /*
    * Check validity: return true if valid, or throw Exception.

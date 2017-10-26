@@ -8,8 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/simulation/Simulation.h>   // base class
-#include <mcMd/mcSimulation/McSystem.h>   // class member
+#include <mcMd/simulation/Simulation.h>           // base class
+#include <mcMd/mcSimulation/McSystem.h>           // member
+#include <mcMd/mcSimulation/McAnalyzerManager.h>  // member
+#include <mcMd/mcSimulation/McCommandManager.h>   // member
+#include <mcMd/mcMoves/McMoveManager.h>           // member
 #include <util/global.h>
 
 namespace Util { template <typename T> class Factory; }
@@ -20,9 +23,6 @@ namespace McMd
    using namespace Util;
 
    class McMove;
-   class McMoveManager;
-   class McAnalyzerManager;
-   class McCommandManager;
 
    /**
    * A Monte-Carlo simulation of one McSystem.
@@ -273,16 +273,16 @@ namespace McMd
    private:
    
       /// System.
-      McSystem       system_;
+      McSystem system_;
    
       /// Pointer to Manager for Monte Carlo moves.
-      McMoveManager* mcMoveManagerPtr_;
+      McMoveManager mcMoveManager_;
 
-      /// Pointer to Manager for Analyzer objects.
-      McAnalyzerManager* mcAnalyzerManagerPtr_;
+      /// Manager for Analyzer objects.
+      McAnalyzerManager mcAnalyzerManager_;
 
-      /// Pointer to Manager for Command objects.
-      McCommandManager* mcCommandManagerPtr_;
+      /// Manager for Command objects.
+      McCommandManager mcCommandManager_;
 
       /// Pointer to parameter file passed to readParameters(istream&)
       std::istream* paramFilePtr_;
@@ -301,28 +301,26 @@ namespace McMd
 
    }; 
 
-   // Inline Methods
+   // Inline member functions
 
    /* 
    * Get the McSystem.
    */
    inline McSystem& McSimulation::system()
-   { return system_; }
+   {  return system_; }
 
    /* 
    * Get a const ref to the McSystem.
    */
    inline const McSystem& McSimulation::system() const
-   { return system_; }
+   {  return system_; }
 
    /* 
    * Get the McMoveManager (protected).
    */
-   inline McMoveManager& McSimulation::mcMoveManager()
-   {
-      assert(mcMoveManagerPtr_);  
-      return *mcMoveManagerPtr_; 
-   }
+   inline 
+   McMoveManager& McSimulation::mcMoveManager()
+   {  return mcMoveManager_; }
 
 }    
 #endif
