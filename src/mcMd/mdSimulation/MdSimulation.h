@@ -154,16 +154,16 @@ namespace McMd
       * Usage: The capitalized command name must have been read
       * from istream "in" and passed as the "command" argument. If 
       * the command name is recognized, any required arguments are
-      * read from stream in, the specified command is executed,
-      * and a value of true is returned. A false value is 
-      * returned if the command string is not recognized.
+      * read from stream "in", the specified command is executed,
+      * and a value of true is returned. A value of false is
+      * returned iff the command string is not recognized.
       * 
       * Implementation: Calls commandManager().readCommand().
       *
       * \param command  command name string
       * \param in  command input stream
       */ 
-      bool readCommand(std::string const & command, std::istream& in);
+      bool readCommand(std::string command, std::istream& in);
 
       //@}
       /// \name Simulation and Analysis Operations

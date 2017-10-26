@@ -174,7 +174,7 @@ namespace McMd
       * \param command  command name string
       * \param in  command input stream
       */ 
-      bool readCommand(std::string const & command, std::istream& in);
+      bool readCommand(std::string command, std::istream& in);
 
       //@}
       /// \name Simulation and Analysis Operations
@@ -275,7 +275,7 @@ namespace McMd
       /// System.
       McSystem system_;
    
-      /// Pointer to Manager for Monte Carlo moves.
+      /// Manager for Monte Carlo moves.
       McMoveManager mcMoveManager_;
 
       /// Manager for Analyzer objects.
