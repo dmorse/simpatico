@@ -24,9 +24,8 @@ namespace McMd
       simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
    {
-      // Note:
-      // No command to set classname to MdCommandManager - 
-      // Retain name CommandManager set by base class.
+      // Note: No command setClassName("MdCommandManager")
+      // Retains name CommandManager set by base class.
    }
 
    // Constructor.
@@ -41,13 +40,11 @@ namespace McMd
    MdCommandManager::~MdCommandManager()
    {}
 
-   /// Return pointer to a new CommandFactory.
+   // Return pointer to a new CommandFactory.
    Factory<Command>* MdCommandManager::newDefaultFactory() const
    {  return new MdCommandFactory(simulation(), system()); }
 
-   /**
-   * Attempt to read one standard (built-in) command.
-   */
+   // Attempt to read one standard (built-in) command.
    bool 
    MdCommandManager::readStandardCommand(std::string name, std::istream& in)
    {
@@ -107,7 +104,7 @@ namespace McMd
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
          simulation().fileMaster().openOutputFile(filename, outputFile);
-         writeParam(outputFile);
+         simulation().writeParam(outputFile);
          outputFile.close();
       } else
       if (name == "SET_CONFIG_IO") {

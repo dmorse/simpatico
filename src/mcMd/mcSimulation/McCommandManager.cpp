@@ -111,7 +111,7 @@ namespace McMd
          in >> filename;
          Log::file() << "  " << filename << std::endl;
          simulation().fileMaster().openOutputFile(filename, outputFile);
-         writeParam(outputFile);
+         simulation().writeParam(outputFile);
          outputFile.close();
       } else 
       if (name == "GENERATE_MOLECULES") {

@@ -268,7 +268,7 @@ namespace McMd
       // Read Monte Carlo Moves
       readParamComposite(in, mcMoveManager());
 
-      // Read analyzer and command managers (optionally)
+      // Read Analyzer and Command managers (optionally)
       Analyzer::baseInterval = 0; // default value
       readParamCompositeOptional(in, analyzerManager());
       readParamCompositeOptional(in, commandManager());
@@ -484,8 +484,7 @@ namespace McMd
    /*
    * Read and execute a single command.
    */
-   bool McSimulation::readCommand(std::string const & command, 
-                                  std::istream& in)
+   bool McSimulation::readCommand(std::string command, std::istream& in)
    {  return commandManager().readCommand(command, in); }
 
    /*
@@ -499,7 +498,7 @@ namespace McMd
 
       // Setup before main loop
       if (isContinuation) {
-         Log::file() << "Restarting from iStep = " 
+         Log::file() << "Continuing from iStep = " 
                      << iStep_ << std::endl;
       } else {
          iStep_ = 0;
