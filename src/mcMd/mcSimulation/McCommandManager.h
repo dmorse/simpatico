@@ -19,10 +19,15 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Manager for Command objects in an McSimulation.
+   * Command interpreter and Manager for an McSimulation.
    *
-   * The default Factory<Command> object for an McCommandManager is
-   * an McCommandFactory.
+   * The implementation of the readStandardCommand() function defines the 
+   * standard, built-in commands for an McSimulation. Additional commands
+   * may be added in the optional CommandManager section of the parameter
+   * file and then invoked in the command file. 
+   *
+   * The default Factory<Command> object for an McCommandManager is an
+   * McCommandFactory.
    *
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Command_Module

@@ -22,10 +22,15 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Manager for Command objects in an MdSimulation.
+   * Command interpreter and Command Manager for an MdSimulation.
    *
-   * The default Factory<Command> object for an MdCommandManager is
-   * an MdCommandFactory.
+   * The implementation of the readStandardCommand() function defines the 
+   * standard, built-in commands for an MdSimulation. Additional commands
+   * may be added in the optional CommandManager section of the parameter
+   * file and then invoked in the command file. 
+   *
+   * The default Factory<Command> object for an MdCommandManager is an
+   * MdCommandFactory.
    *
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Command_Module
@@ -73,12 +78,14 @@ namespace McMd
       MdSystem& system() const;
 
       /**
-      * Attempt to read one of the standard commands.
+      * Attempt to read one of the standard built-in commands.
       *
       * Precondition: The command identifier should have been read from
       * stream in, and should be passed as string parameter command. 
       * If the command name is matched, any further parameters required 
-      * by the command are read from stream in.
+      * by the command are read from stream in, the command is executed,
+      * the function returns a true value. If the command name is not
+      * recognized, this function immediately returns false.
       *
       * \param command command name (capitalized identifer)
       * \param in input stream from which command was read

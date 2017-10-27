@@ -184,6 +184,7 @@ namespace McMd
   
       #ifndef UTIL_MPI
       if (qflag) {
+         // Output list of enabled/disabled compile-time options.
          outputOptions(Log::file());
       }
       #endif

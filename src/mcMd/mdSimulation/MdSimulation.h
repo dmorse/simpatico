@@ -53,17 +53,25 @@ namespace McMd
       /**
       * Process command line options.
       *
-      * Options:
+      * Main options:
+      *  
+      *   -q   Query: Print list of enabled/disabled features
       *
-      *   -e  Enable echoing of the parameter file to a file.
+      *   -e   Echo: Enable echoing of parameter file on read
       *
-      *   -p  Enable use of a free energy perturbation. 
+      *   -r filename.  Restart: restart from specified file
       *
-      *   -r filename. Restart a simulation.
+      *   -p filename.  Parameter: Specify a parameter file
       *
-      * When restarting a simulation, the required parameter "filename"
-      * is the base name for the 3 required input files: filename.prm, 
-      * filename.rst, and filename.cmd.
+      *   -c filename.  Command: Specify a command file
+      * 
+      *   -i filename.  Input: Specify path prefix for input files
+      *
+      *   -o filename.  Input: Specify path prefix for output files
+      *
+      * The -p and -r options are mutually exclusive: When a
+      * simulation is restarted, all information required from
+      * a parameter file is in the restart file. 
       *
       * \param argc number of arguments
       * \param argv vector of pointers to char* string arguments
@@ -71,25 +79,46 @@ namespace McMd
       void setOptions(int argc, char **argv);
 
       /**
+      * Read parameters from the default parameter istream.
+      *
+      * Calls readParam(std::istream&) internally, with a
+      * default parameter file istream given by the return
+      * value of FileMaster::paramFile(). 
+      *
+      * Single parameter file: If compiled as a serial program
+      * (ifndef UTIL_MPI) or as a parallel program in mode that
+      * uses a single parameter file (i.e., with option -f), 
+      * the parameter file name is the argument passed to the 
+      * -p command line option, if the main program is invoked 
+      * with the -p option, or the parameter file is read from
+      * standard input, std::cin, if not invoked with a -p
+      * option.
+      * 
+      * Multiple parameter files: If compiled as a parallel
+      * program (ifdef UITL_MPI) and used in a mode with 
+      * separate parameter files for independent simulations
+      * (i.e., without the -f option), then the parameter file
+      * for the simulation performed by processor number n is
+      * file named n/<filename>, where <filename> is either the
+      * argument of the -p command line option, if invoked with 
+      * that option, or the default string <filename> = "param".
+      *
+      * \pre: Call after setOptions().
+      */
+      void readParam();
+
+      /**
       * Read parameter file.
       *
-      * Returns and does nothing if in process of restarting.
+      * Returns and does nothing if in process of restarting
+      * (i.e., if the main program was invoked with -r option).
+      *
+      * \pre: Call after setOptions().
       *
       * \param in parameter file stream
       */
       void readParam(std::istream &in);
    
-      /**
-      * Read parameters from the default parameter istream.
-      *
-      * Calls readParam(std::istream& ) internally, with a
-      * default parameter file istream.  The default file is 
-      * std::cin in serial mode (ifndef UTIL_MPI) and the 
-      * file "n/param" for processor n in parallel mode 
-      * (ifdef UTIL_MPI).
-      */
-      void readParam();
-
       /**
       * Read parameters from stream, without begin and end lines.
       *
@@ -102,6 +131,13 @@ namespace McMd
       //@{
 
       /**
+      * Read a restart file.
+      *
+      * \param filename base file name for all restart files.
+      */
+      void load(const std::string& filename);
+
+      /**
       * Load parameter file section of archive.
       *
       * \param ar input/loading archive
@@ -109,11 +145,13 @@ namespace McMd
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Read a restart file.
+      * Write a restart file.
       *
-      * \param filename base file name for all restart files.
+      * Calls save(Serializable::OArchive) internally. 
+      *
+      * \param filename restart file name
       */
-      void load(const std::string& filename);
+      void save(const std::string& filename);
 
       /**
       * Save internal state to an archive.
@@ -122,16 +160,16 @@ namespace McMd
       */
       virtual void save(Serializable::OArchive &ar);
 
-      /**
-      * Write a restart file.
-      *
-      * \param filename base file name for all restart files.
-      */
-      void save(const std::string& filename);
-
       //@}
       /// \name Command Script
       //@{
+
+      /**
+      * Read and execute commands from a default command file.
+      *
+      * This function calls readCommands(fileMaster().commandFile()).
+      */
+      void readCommands();
 
       /**
       * Read and execute commands from a specific input stream.
@@ -141,24 +179,16 @@ namespace McMd
       void readCommands(std::istream& in);
 
       /**
-      * Read and execute commands from a default command file.
-      *
-      * This method opens a file using the commandFile name from
-      * the FileMaster.
-      */
-      void readCommands();
-
-      /**
       * Read and execute a single command from an input stream.
       *
       * Usage: The capitalized command name must have been read
-      * from istream "in" and passed as the "command" argument. If 
-      * the command name is recognized, any required arguments are
-      * read from stream "in", the specified command is executed,
-      * and a value of true is returned. A value of false is
-      * returned iff the command string is not recognized.
+      * from istream "in" and passed as the "command" argument. 
+      * If the command name is recognized, any additional arguments 
+      * are read from stream "in", the command is executed, and
+      * a value of true is returned. A value of false is returned
+      * iff the command name string is not recognized.
       * 
-      * Implementation: Calls commandManager().readCommand().
+      * Calls commandManager().readCommand(command, in) internally.
       *
       * \param command  command name string
       * \param in  command input stream
@@ -197,15 +227,24 @@ namespace McMd
       /**
       * Read and analyze a sequence of configuration files.
       *
-      * This method reads and analyzes a sequence of configuration files,
-      * which were normally generated by running a previous simulation using 
-      * DumpConfig, and applies the sample() method of every Analyzer to
-      * each such configuration. 
+      * This function reads and analyzes a sequence of configuration files
+      * that were normally generated by running a previous simulation using 
+      * the ConfigWriter analyzer to periodically dump configurations. This
+      * function applies the sample() method of every Analyzer to each such
+      * stored configuration. 
+      * 
+      * The function reads a sequence of configuration files with names of 
+      * the form inputPrefix + basename + n , for integer suffixes in the
+      * range min <= n <= max. This is consistent with the output format
+      * format used by the WriteConfig class. The inputPrefix used in 
+      * an analysis simulation is often a directory name, with a trailing
+      * directory separator "/", that is the same as the outputPrefix used
+      * in the earlier simulation run.
       *
-      * The method reads files with names of the form inputPrefix() + n for 
-      * integer suffixes min <= n <= max. This is consistent with the output
-      * format used by DumpConfig, if the inputPrefix of the FileMaster for
-      * this McAnalyzer is set to the output prefix for the dump files. 
+      * In parallel mode, for processor with MPI rank m, the path "m/" 
+      * is prepended to the fileMaster input prefix, so that paths to 
+      * all files associated with processor m begin with the string
+      * "m/inputPrefix" + basename.
       * 
       * \param min  integer index of first configuration file
       * \param max  integer index of last configuration file
@@ -214,7 +253,10 @@ namespace McMd
       void analyzeConfigs(int min, int max, std::string basename);
 
       /**
-      * Read and analyze a trajectory dump.
+      * Read and analyze a trajectory file.
+      * 
+      * This function reads and analyzes a trajectory file, which is a
+      * single file containing a sequence of configuration snapshots. 
       * 
       * \param min start at this frame number
       * \param max end at this frame number
