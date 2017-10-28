@@ -86,19 +86,6 @@ namespace Simp
    }
 
    #ifdef UTIL_MPI
-   /**
-   * Initialize MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<SpeciesEnsemble>::type = MPI::BYTE;
-   bool MpiTraits<SpeciesEnsemble>::hasType = false;
-
-   /*
-   * Initialize MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<SpeciesEnsemble::Type>::type = MPI::INT;
-   bool MpiTraits<SpeciesEnsemble::Type>::hasType = true;
-
-
    /*
    * Commit MPI Datatype.
    */
@@ -115,4 +102,24 @@ namespace Simp
    }
    #endif
 
+}
+ 
+#ifdef UTIL_MPI
+namespace Util
+{
+
+   /*
+   * Initialize MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Simp::SpeciesEnsemble>::type = MPI::BYTE;
+   bool MpiTraits<Simp::SpeciesEnsemble>::hasType = false;
+
+   /*
+   * Initialize MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Simp::SpeciesEnsemble::Type>::type = MPI::INT;
+   bool MpiTraits<Simp::SpeciesEnsemble::Type>::hasType = true;
+
 } 
+#endif
+

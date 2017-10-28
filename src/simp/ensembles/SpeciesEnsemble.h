@@ -10,9 +10,6 @@
 
 #include <util/param/ParamComposite.h>
 #include <util/archives/serialize.h>
-#ifdef UTIL_MPI
-#include <util/mpi/MpiTraits.h>
-#endif
 #include <util/global.h>
 
 namespace Simp
@@ -143,12 +140,18 @@ namespace Simp
    inline void serialize(Archive& ar, SpeciesEnsemble::Type& data, const unsigned int version)
    {  serializeEnum(ar, data, version); }
 
-   #ifdef UTIL_MPI
+}
+
+#ifdef UTIL_MPI
+#include <util/mpi/MpiTraits.h>
+namespace Util
+{
+
    /**
-   * Explicit specialization MpiTraits<SpeciesEnsemble>.
+   * Explicit specialization MpiTraits<Simp::SpeciesEnsemble>.
    */
    template <>
-   class MpiTraits<SpeciesEnsemble>
+   class MpiTraits<Simp::SpeciesEnsemble>
    {  
    public:  
       static MPI::Datatype type;    ///< MPI Datatype
@@ -156,17 +159,17 @@ namespace Simp
    };
 
    /**
-   * Explicit specialization MpiTraits<SpeciesEnsemble::Type>.
+   * Explicit specialization MpiTraits<Simp::SpeciesEnsemble::Type>.
    */
    template <>
-   class MpiTraits<SpeciesEnsemble::Type>
+   class MpiTraits<Simp::SpeciesEnsemble::Type>
    {  
    public:  
       static MPI::Datatype type;    ///< MPI Datatype
       static bool hasType;          ///< Is the MPI type initialized?
    };
-   #endif
 
 }
+#endif
 
 #endif

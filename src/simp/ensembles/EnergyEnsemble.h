@@ -10,9 +10,6 @@
 
 #include <util/param/ParamComposite.h>
 #include <util/archives/serialize.h>
-#ifdef UTIL_MPI
-#include <util/mpi/MpiTraits.h>
-#endif
 #include <util/global.h>
 
 namespace Simp
@@ -128,7 +125,7 @@ namespace Simp
    * \param type EnergyEnsemble::Type enum value to be read from stream
    * \return modified input stream
    */
-   std::istream& operator>>(std::istream& in, EnergyEnsemble::Type &type);
+   std::istream& operator >> (std::istream& in, EnergyEnsemble::Type &type);
 
    /**
    * ostream inserter for a EnergyEnsemble::Type enum value.
@@ -137,7 +134,8 @@ namespace Simp
    * \param  type  EnergyEnsemble::Type enum value to be written to stream
    * \return modified output stream
    */
-   std::ostream& operator<<(std::ostream& out, const EnergyEnsemble::Type &type);
+   std::ostream& 
+   operator << (std::ostream& out, EnergyEnsemble::Type const & type);
 
    // Inline methods
  
@@ -173,16 +171,23 @@ namespace Simp
    * \param version  archive version id
    */
    template <class Archive>
-   inline void serialize(Archive& ar, EnergyEnsemble::Type& data, const unsigned int version)
+   inline 
+   void serialize(Archive& ar, EnergyEnsemble::Type& data, 
+                  const unsigned int version)
    {  serializeEnum(ar, data, version); }
 
+}
 
-   #ifdef UTIL_MPI
+#ifdef UTIL_MPI
+#include <util/mpi/MpiTraits.h>
+namespace Util 
+{
+
    /**
-   * Explicit specialization MpiTraits<EnergyEnsemble>.
+   * Explicit specialization MpiTraits<Simp::EnergyEnsemble>.
    */
    template <>
-   class MpiTraits<EnergyEnsemble>
+   class MpiTraits<Simp::EnergyEnsemble>
    {  
    public:  
       static MPI::Datatype type;       ///< MPI Datatype
@@ -190,16 +195,17 @@ namespace Simp
    };
 
    /**
-   * Explicit specialization MpiTraits<EnergyEnsemble::Type>.
+   * Explicit specialization MpiTraits<Simp::EnergyEnsemble::Type>.
    */
    template <>
-   class MpiTraits<EnergyEnsemble::Type>
+   class MpiTraits<Simp::EnergyEnsemble::Type>
    {  
    public:  
       static MPI::Datatype type;       ///< MPI Datatype
       static bool hasType;             ///< Is the MPI type initialized?
    };
-   #endif
 
 }
+#endif
+
 #endif

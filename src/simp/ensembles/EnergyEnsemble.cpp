@@ -111,19 +111,8 @@ namespace Simp{
       return out;
    }
 
+
    #ifdef UTIL_MPI
-   /*
-   * Initialize EnergyEnsemble MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<EnergyEnsemble>::type = MPI::BYTE;
-   bool MpiTraits<EnergyEnsemble>::hasType = false;
-
-   /*
-   * Initialize EnergyEnsemble::Type MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<EnergyEnsemble::Type>::type = MPI::INT;
-   bool MpiTraits<EnergyEnsemble::Type>::hasType = true;
-
    /*
    * Commit MPI Datatype.
    */
@@ -142,3 +131,21 @@ namespace Simp{
    #endif
 
 }
+#ifdef UTIL_MPI
+namespace Util 
+{
+
+   /*
+   * Initialize Simp::EnergyEnsemble MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Simp::EnergyEnsemble>::type = MPI::BYTE;
+   bool MpiTraits<Simp::EnergyEnsemble>::hasType = false;
+
+   /*
+   * Initialize Simp::EnergyEnsemble::Type MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Simp::EnergyEnsemble::Type>::type = MPI::INT;
+   bool MpiTraits<Simp::EnergyEnsemble::Type>::hasType = true;
+
+}
+#endif

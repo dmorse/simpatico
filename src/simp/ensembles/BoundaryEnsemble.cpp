@@ -109,14 +109,6 @@ namespace Simp
    }
 
    #ifdef UTIL_MPI
-   // Initialize BoundaryEnsemble MPI Datatype.
-   MPI::Datatype MpiTraits<BoundaryEnsemble>::type = MPI::BYTE;
-   bool MpiTraits<BoundaryEnsemble>::hasType = false;
-
-   // Initialize BoundaryEnsemble::Type MPI Datatype.
-   MPI::Datatype MpiTraits<BoundaryEnsemble::Type>::type = MPI::INT;
-   bool MpiTraits<BoundaryEnsemble::Type>::hasType = true;
-
    /**
    * Commit MPI Datatype.
    */
@@ -134,3 +126,18 @@ namespace Simp
    #endif
 
 }
+
+#ifdef UTIL_MPI
+namespace Util
+{
+
+   // Initialize Simp::BoundaryEnsemble MPI Datatype.
+   MPI::Datatype MpiTraits<Simp::BoundaryEnsemble>::type = MPI::BYTE;
+   bool MpiTraits<Simp::BoundaryEnsemble>::hasType = false;
+
+   // Initialize Simp::BoundaryEnsemble::Type MPI Datatype.
+   MPI::Datatype MpiTraits<Simp::BoundaryEnsemble::Type>::type = MPI::INT;
+   bool MpiTraits<Simp::BoundaryEnsemble::Type>::hasType = true;
+
+}
+#endif
