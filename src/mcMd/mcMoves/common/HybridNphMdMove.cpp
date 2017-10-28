@@ -10,18 +10,19 @@
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#include <util/boundary/OrthorhombicBoundary.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/chemistry/Atom.h>
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <util/boundary/OrthorhombicBoundary.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor

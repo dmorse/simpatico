@@ -8,11 +8,8 @@
 #include "McSystem.h"
 #include "McSimulation.h"
 #include <mcMd/simulation/stress.h>
-#include <util/ensembles/BoundaryEnsemble.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
-
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -37,12 +34,13 @@
 #include <mcMd/tethers/TetherMaster.h>
 #include <mcMd/potentials/tether/TetherPotential.h>
 #endif
-
 #ifdef MCMD_PERTURB
 #include <mcMd/perturb/mcSystem/McPerturbationFactory.h>
 #endif
 
 #include <simp/species/Species.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>

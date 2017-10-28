@@ -13,7 +13,6 @@
 #include <mcMd/configIos/ConfigIoFactory.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/trajectory/TrajectoryReaderFactory.h>
-
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
@@ -40,7 +39,6 @@
 #include <mcMd/potentials/tether/tetherFactory.h>
 #include <mcMd/tethers/TetherMaster.h>
 #endif
-
 #ifdef MCMD_PERTURB
 #include <mcMd/perturb/Perturbation.h>
 #ifdef UTIL_MPI
@@ -50,10 +48,9 @@
 
 // namespace Simp
 #include <simp/species/Species.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 
-// namespace Util
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>

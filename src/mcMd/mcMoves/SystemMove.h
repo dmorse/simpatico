@@ -8,14 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/mcMoves/McMove.h>      // base class
-#include <util/ensembles/EnergyEnsemble.h> // inline function
-#include <util/boundary/Boundary.h>        // typedef
+#include <mcMd/mcMoves/McMove.h>            // base class
+#include <simp/ensembles/EnergyEnsemble.h>  // inline function
+#include <util/boundary/Boundary.h>         // typedef
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class McSystem;
 

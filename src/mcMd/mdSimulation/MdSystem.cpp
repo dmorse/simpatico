@@ -10,16 +10,14 @@
 #include "MdSimulation.h"
 #include <mcMd/configIos/MdConfigIo.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#include <util/ensembles/BoundaryEnsemble.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairIterator.h>
 #include <mcMd/neighbor/CellList.h>
 #include <mcMd/mdIntegrators/MdIntegratorFactory.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
-
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
+#include <mcMd/simulation/stress.h>
 
 #ifdef SIMP_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
@@ -47,11 +45,13 @@
 #include <mcMd/tethers/TetherMaster.h>
 #endif
 
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
 #include <util/space/Dimension.h>
 
-#include <mcMd/simulation/stress.h>
 #include <util/space/Tensor.h>
 #include <util/accumulators/setToZero.h>
 

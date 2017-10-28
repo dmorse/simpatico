@@ -14,18 +14,20 @@
 
 #include <iostream>
 
-namespace Util
-{
+namespace Util {
    class Random;
+}
+namespace Simp {
    class EnergyEnsemble;
 }
 
 namespace McMd
 {
 
-   using namespace Util;
-
    class PairList;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * A velocity-Verlet dissipative particle dynamics (DPD) integrator.
