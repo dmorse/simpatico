@@ -1240,9 +1240,9 @@ namespace McMd
       out << "-g Debugging   OFF" << std::endl;
       #endif
       #ifdef UTIL_MPI
-      out << "-g MPI         ON " << std::endl;
+      out << "-m MPI         ON " << std::endl;
       #else
-      out << "-g MPI         OFF" << std::endl;
+      out << "-m MPI         OFF" << std::endl;
       #endif
       #ifdef SIMP_COULOMB
       out << "-c Coulomb     ON " << std::endl;
@@ -1260,9 +1260,9 @@ namespace McMd
       out << "-b Bonds       OFF" << std::endl;
       #endif
       #ifdef SIMP_ANGLE
-      out << "-d Angles      ON " << std::endl;
+      out << "-a Angles      ON " << std::endl;
       #else
-      out << "-d Angles      OFF" << std::endl;
+      out << "-a Angles      OFF" << std::endl;
       #endif
       #ifdef SIMP_DIHEDRAL
       out << "-d Dihedrals   ON " << std::endl;
