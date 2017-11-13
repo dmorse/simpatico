@@ -18,8 +18,10 @@ namespace McMd
    * Default constructor.
    */
    McDeformCommand::McDeformCommand(McSystem& system) 
-    : DeformCommand(system),
-      pairPtr_(&system.pairPotential())
+    : DeformCommand(system)
+      #ifndef SIMP_NOPAIR
+      , pairPtr_(&system.pairPotential())
+      #endif
    {  setClassName("McDeformCommand"); }
 
    /*

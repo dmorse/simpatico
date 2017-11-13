@@ -727,22 +727,46 @@ namespace McMd
 
    // Public inline accessor member functions
 
+   inline int Simulation::nSystem() const
+   {  return nSystem_; }
+
    inline int Simulation::nAtomType() const
    {  return nAtomType_; }
+
+   inline int Simulation::moleculeCapacity() const
+   {  return moleculeCapacity_; }
+
+   inline int Simulation::atomCapacity() const
+   {  return atomCapacity_; }
+
+   inline const Array<AtomType>& Simulation::atomTypes() const
+   {  return atomTypes_; }
+
+   inline const AtomType& Simulation::atomType(int i) const
+   {  return atomTypes_[i]; }
 
    #ifdef SIMP_BOND
    inline int Simulation::nBondType() const
    {  return nBondType_; }
+
+   inline int Simulation::bondCapacity() const
+   {  return bondCapacity_; }
    #endif
 
    #ifdef SIMP_ANGLE
    inline int Simulation::nAngleType() const
    {  return nAngleType_; }
+
+   inline int Simulation::angleCapacity() const
+   {  return angleCapacity_; }
    #endif
 
    #ifdef SIMP_DIHEDRAL
    inline int Simulation::nDihedralType() const
    {  return nDihedralType_; }
+
+   inline int Simulation::dihedralCapacity() const
+   {  return dihedralCapacity_; }
    #endif
 
    #ifdef SIMP_COULOMB
@@ -770,30 +794,6 @@ namespace McMd
    {  return hasSpecial_; }
    #endif
 
-   inline int Simulation::nSystem() const
-   {  return nSystem_; }
-
-   inline int Simulation::moleculeCapacity() const
-   {  return moleculeCapacity_; }
-
-   inline int Simulation::atomCapacity() const
-   {  return atomCapacity_; }
-
-   #ifdef SIMP_BOND
-   inline int Simulation::bondCapacity() const
-   {  return bondCapacity_; }
-   #endif
-
-   #ifdef SIMP_ANGLE
-   inline int Simulation::angleCapacity() const
-   {  return angleCapacity_; }
-   #endif
-
-   #ifdef SIMP_DIHEDRAL
-   inline int Simulation::dihedralCapacity() const
-   {  return dihedralCapacity_; }
-   #endif
-
    #ifndef SIMP_NOPAIR
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
@@ -801,12 +801,6 @@ namespace McMd
 
    inline Random& Simulation::random()
    {  return random_; }
-
-   inline const Array<AtomType>& Simulation::atomTypes() const
-   {  return atomTypes_; }
-
-   inline const AtomType& Simulation::atomType(int i) const
-   {  return atomTypes_[i]; }
 
    #ifdef UTIL_MPI
    inline MPI::Intracomm& Simulation::communicator()
@@ -818,6 +812,9 @@ namespace McMd
 
    // Protected inline member functions
    
+   inline int Simulation::iStep() const
+   {  return iStep_; }
+
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }
 
@@ -832,9 +829,6 @@ namespace McMd
       UTIL_CHECK(commandManagerPtr_);
       return *commandManagerPtr_; 
    }
-
-   inline int Simulation::iStep() const
-   {  return iStep_; }
 
 }
 #endif

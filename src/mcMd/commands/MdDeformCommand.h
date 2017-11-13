@@ -45,7 +45,9 @@ namespace McMd
 
    private:
 
+      #ifndef SIMP_NOPAIR
       MdPairPotential* pairPtr_;
+      #endif
 
    };
 

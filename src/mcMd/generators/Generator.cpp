@@ -26,8 +26,10 @@ namespace McMd
     : speciesPtr_(&species),
       simulationPtr_(&system.simulation()),
       systemPtr_(&system),
-      boundaryPtr_(&system.boundary()),
-      bondPotentialPtr_(0)
+      boundaryPtr_(&system.boundary())
+      #ifdef SIMP_BOND
+      , bondPotentialPtr_(0)
+      #endif
    {}
 
    /*

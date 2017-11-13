@@ -1,0 +1,72 @@
+Goal: Develop a suite of validation tests beyond those already 
+implemented as unit tests.  These validation tests will run an
+unmodified version of the main simulation program in order to make
+sure that executable is the same as that used by end-user.
+
+Particularly interested in tests that run a full simulation to test:
+
+1) Successful completion of simulation, for full range of options.
+2) Succesful completion of restarted simulation.
+3) Mathematical validity of algorithms (e.g., energy conservation)
+
+Comment: Normal completion tests (1 and 2) are separate from and 
+somewhat simpler than mathematical validity tests. Some validity 
+tests could also be implemented as unit tests.
+
+Question: Should we introduce a unit test for each of the analyzers,
+integrators etc., to test, e.g., restartability, before running full 
+program program validation tests?  
+
+Can we implement restart tests within the existing unit test framework? 
+Should we implement a separate restart test for each analyzer, or one
+large test that tests them all together? The problem with writing one
+for each analyzer is that it becomes a lot of short simulations (one
+simulation per analyzer). Combining them into a single restart test 
+would basically be a full program validation test implemented as a unit 
+test. The make file command used to run the unit test framework could 
+test for existence of a file.
+
+Should we write a variant of the main program that writes a file upon
+normal completion? Perhaps add a command line option to do write a
+report upon normal completion, which would be used only for validation
+testing.
+
+Pipeline:
+---------
+
+ 1) Use make system to build main program of interest.
+
+     Test success by capture return value of make command.
+
+ 2) Run a simulation, using files placed in that directory.
+
+    Test success by:
+          1) Testing for creation of a file.
+          2) Testing return value of main program.
+
+     Confirm normal completion. If normal completion:
+
+ 3) Run separate program to inspect outputs to validate. Expected values
+    could in some cases be hard coded, based on regression.
+
+ 4) Restart simulation.
+
+ 5) Inspect outputs of restarted program.
+
+
+Validate Directory Structure:
+-----------------------------
+
+     validate/
+ 
+        v#/           <- code version directory #=1,2,3,...
+           test       <- Script to build, run all tests
+           bld/       <- build directory
+             makefile (including clean target)
+           cfg/  <- initial config files (used by 1 or more tests)
+           test#/     <- specific test number #=1,2,3,...
+             param    <- parameter file
+             command  <- command file
+             inspect  <- Code to inspect output files (python?)
+             out/     <- output files
+     
