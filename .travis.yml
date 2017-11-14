@@ -22,6 +22,6 @@ install:
   - make mcMd
 
 script:
-  - cd bld/serial/util && make run
-  - cd bld/serial/simp && make run 
-  - cd bld/serial/mcMd && make run 
+  - cd $TRAVIS_BLD_DIR/bld/serial/util/tests && make run 
+  - cd $TRAVIS_BLD_DIR/bld/serial/simp/tests && make run 
+  - cd $TRAVIS_BLD_DIR/bld/serial/mcMd/tests && make run 
