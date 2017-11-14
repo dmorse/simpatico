@@ -18,7 +18,7 @@ before_install:
 
 install:
   - ./setup
-  - ./configure -g$(SMP_G)
+  - ./configure -g$SMP_G -a1 -d1 -e1
   - make mcMd
 
 script:
