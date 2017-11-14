@@ -95,6 +95,8 @@ namespace McMd
       /// \name Initial Configurations
       //@{
 
+      using System::readConfig;
+
       /**
       * Read system configuration from file.
       *

@@ -789,6 +789,17 @@ namespace McMd
    }
 
    /*
+   * Open, read, and close a configuration file.
+   */
+   void System::readConfig(std::string filename)
+   {
+      std::ifstream file;
+      fileMaster().openInputFile(filename, file);
+      readConfig(file);
+      file.close();
+   }
+
+   /*
    * Write configuration to specified output stream.
    */
    void System::writeConfig(std::ostream &out)
@@ -797,6 +808,17 @@ namespace McMd
          configIoPtr_ = newDefaultConfigIo();
       }
       configIoPtr_->write(out);
+   }
+
+   /*
+   * Open, write, and close a configuration file.
+   */
+   void System::writeConfig(std::string filename)
+   {
+      std::ofstream file;
+      fileMaster().openOutputFile(filename, file);
+      writeConfig(file);
+      file.close();
    }
 
    /*

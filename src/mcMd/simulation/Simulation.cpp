@@ -266,7 +266,6 @@ namespace McMd
          UTIL_THROW("hasTether must be >= 0");
       }
       #endif
-
       #ifdef SIMP_SPECIAL
       hasSpecial_ = 0; // Default value 
       readOptional<int>(in, "hasSpecial", hasSpecial_); 
@@ -301,6 +300,17 @@ namespace McMd
       // Allocate and initialize all private arrays.
       initialize();
 
+   }
+
+   /*
+   * Open, write and close a parameter file.
+   */
+   void Simulation::writeParam(std::string filename) 
+   {
+      std::ofstream file;
+      fileMaster().openOutputFile(filename, file);
+      writeParam(file);
+      file.close();
    }
 
    /*

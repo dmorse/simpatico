@@ -233,6 +233,17 @@ namespace McMd
       */
       virtual void readConfig(std::istream& in);
 
+      /** 
+      * Open, read and close configuration file.
+      *
+      * Uses FileMaster::openInputFile(filename) to open the file,
+      * which appends an input file prefix to the path. Calls the
+      * function readConfig(std::istream& ) internally. 
+      *
+      * \param filename configuration file name
+      */
+      void readConfig(std::string filename);
+
       /**
       * Write system configuration to a specified ostream.
       *
@@ -243,6 +254,17 @@ namespace McMd
       * \param out configuration file output stream
       */
       void writeConfig(std::ostream& out);
+
+      /** 
+      * Open, write and close a configuration file.
+      *
+      * Uses FileMaster::openOutputFile(filename) to open the file,
+      * which appends a output file prefix to the path. Calls the
+      * function readConfig(std::istream& ) internally. 
+      *
+      * \param filename configuration file name
+      */
+      void writeConfig(std::string filename);
 
       /**
       * Load configuration.

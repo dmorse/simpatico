@@ -25,7 +25,7 @@ namespace McMd
       systemPtr_(&simulation.system())
    {
       // Note: No command setClassName("MdCommandManager")
-      // Retains name CommandManager set by base class.
+      // This class retains name CommandManager set by base class.
    }
 
    // Constructor.
@@ -49,18 +49,12 @@ namespace McMd
    MdCommandManager::readStandardCommand(std::string name, std::istream& in)
    {
       std::string filename;
-      std::ifstream inputFile;
-      std::ofstream outputFile;
       bool success = true;
 
       if (name == "READ_CONFIG") {
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openInputFile(filename, inputFile);
-         // Log::file() << "Opened config file" << std::endl;
-         system().readConfig(inputFile);
-         // Log::file() << "Finished reading config file" << std::endl;
-         inputFile.close();
+         system().readConfig(filename);
       } else
       if (name == "THERMALIZE") {
          double temperature;
@@ -96,16 +90,12 @@ namespace McMd
       if (name == "WRITE_CONFIG") {
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openOutputFile(filename, outputFile);
-         system().writeConfig(outputFile);
-         outputFile.close();
+         system().writeConfig(filename);
       } else
       if (name == "WRITE_PARAM") {
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openOutputFile(filename, outputFile);
-         simulation().writeParam(outputFile);
-         outputFile.close();
+         simulation().writeParam(filename);
       } else
       if (name == "SET_CONFIG_IO") {
          std::string classname;

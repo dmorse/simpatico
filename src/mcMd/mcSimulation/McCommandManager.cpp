@@ -25,7 +25,7 @@ namespace McMd
       systemPtr_(&simulation.system())
    {
       // Note: No setClassname("MdCommandManager");
-      // Retain name CommandManager set by base class.
+      // This class retains name CommandManager set by base class.
    }  
 
    // Constructor.
@@ -49,8 +49,6 @@ namespace McMd
    McCommandManager::readStandardCommand(std::string name, std::istream& in)
    {
       std::string   filename;
-      std::ifstream inputFile;
-      std::ofstream outputFile;
       bool success = true;
 
       if (name == "SET_CONFIG_IO") {
@@ -62,9 +60,7 @@ namespace McMd
       if (name == "READ_CONFIG") {
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openInputFile(filename, inputFile);
-         system().readConfig(inputFile);
-         inputFile.close();
+         system().readConfig(filename);
       } else
       if (name == "SIMULATE") {
          int endStep;
@@ -103,16 +99,12 @@ namespace McMd
       if (name == "WRITE_CONFIG") {
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openOutputFile(filename, outputFile);
-         system().writeConfig(outputFile);
-         outputFile.close();
+         system().writeConfig(filename);
       } else
       if (name == "WRITE_PARAM") {
          in >> filename;
          Log::file() << "  " << filename << std::endl;
-         simulation().fileMaster().openOutputFile(filename, outputFile);
-         simulation().writeParam(outputFile);
-         outputFile.close();
+         simulation().writeParam(filename);
       } else 
       if (name == "GENERATE_MOLECULES") {
          DArray<double> diameters;
@@ -149,9 +141,7 @@ namespace McMd
          // Read in configuration from file
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openInputFile(filename, inputFile);
-         system().readConfig(inputFile);
-         inputFile.close();
+         system().readConfig(filename);
 
          int nSpecies = simulation().nSpecies();
          System::MoleculeIterator molIter;
@@ -190,9 +180,7 @@ namespace McMd
          // Write out configuration to file
          in >> filename;
          Log::file() << Str(filename, 15) << std::endl;
-         simulation().fileMaster().openOutputFile(filename, outputFile);
-         system().writeConfig(outputFile);
-         outputFile.close();
+         system().writeConfig(filename);
 
          #ifndef SIMP_NOPAIR 
          // Generate cell list

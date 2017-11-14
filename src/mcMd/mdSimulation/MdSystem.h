@@ -130,6 +130,8 @@ namespace McMd
       */
       virtual void readConfig(std::istream& in);
 
+      using System::readConfig;
+
       /**
       * Load the MdSystem configuration from an archive.
       *
@@ -431,7 +433,7 @@ namespace McMd
       #endif
 
       #ifdef SIMP_BOND
-      /// Pointer to an BondPotential.
+      /// Pointer to a BondPotential.
       BondPotential* bondPotentialPtr_;
       #endif
 
@@ -466,7 +468,7 @@ namespace McMd
       #endif
 
       #ifdef SIMP_TETHER
-      /// Pointer to an TetherPotential.
+      /// Pointer to a TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
 
@@ -597,7 +599,7 @@ namespace McMd
 
    #ifdef SIMP_SPECIAL
    /*
-   * Does an special potential exist?
+   * Does a special potential exist?
    */
    inline bool MdSystem::hasSpecialPotential() const
    {  return bool(specialPotentialPtr_); }

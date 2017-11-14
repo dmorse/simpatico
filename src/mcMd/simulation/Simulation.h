@@ -120,27 +120,6 @@ namespace McMd
       */
       virtual ~Simulation();
 
-      /**
-      * Read parameter file and initialize.
-      *
-      * \param in parameter input stream
-      */
-      virtual void readParameters(std::istream &in);
-
-      /**
-      * Load internal state from an archive.
-      *
-      * \param ar input/loading archive
-      */
-      virtual void loadParameters(Serializable::IArchive &ar);
-
-      /**
-      * Save internal state to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchive &ar);
-
       /// \name Initialization 
       //@{
 
@@ -167,6 +146,26 @@ namespace McMd
       #endif
 
       /**
+      * Read parameter file block and initialize simulation.
+      *
+      * \param in parameter input stream
+      */
+      virtual void readParameters(std::istream &in);
+
+      using ParamComposite::writeParam;
+
+      /**
+      * Open output, write and close an output parameter file.
+      *
+      * Calls ParamComposite::writeParam internally. Opens file
+      * using FileMaster::openOutputFile function, with adds 
+      * output prefix to filename. 
+      *
+      * \param filename name of output parameter file
+      */
+      void writeParam(std::string filename);
+
+      /**
       * Allocate and initialize a molecule set for one Species.
       * 
       * This function is called during initialization by the readParam()
@@ -177,6 +176,24 @@ namespace McMd
       */
       void 
       allocateMoleculeSet(Util::ArraySet<Molecule> &set, int speciesId) const;
+
+      //@}
+      /// \name Serialization (Load / Save)
+      //@{
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       //@}
       /// \name Molecule Management
