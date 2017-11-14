@@ -2,6 +2,11 @@ sudo: required
 dist: trusty
 language: c++
 
+branches:
+  only:
+   - master
+   - devel
+
 matrix:
   include:
     - os: linux
