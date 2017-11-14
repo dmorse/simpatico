@@ -1,0 +1,32 @@
+sudo: required
+dist: trusty
+language: c++
+
+branches:
+  only:
+   - master
+   - devel
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      env: SMP_G=1
+    - os: linux
+      compiler: clang
+      env: SMP_G=0
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install python; fi
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
+  - export PATH=$PATH:$(pwd)/bin
+
+install:
+  - ./setup
+  - ./configure -g$SMP_G -a1 -d1 -e1
+  - make mcMd
+
+script:
+  - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
+  - cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run 
+  - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
