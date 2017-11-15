@@ -333,13 +333,15 @@ void McSimulationTest::testSimulateBond()
    readParam("in/McSimulation"); 
    readConfig("in/config"); 
 
-   std::string baseFileName("simulate.0");
-   simulation_.save(baseFileName);
+   std::string fileName = filePrefix();
+   fileName += "tmp/simulate.0";
+   simulation_.save(fileName);
 
    simulation_.simulate(20);
 
-   baseFileName = "simulate.20";
-   simulation_.save(baseFileName);
+   fileName = filePrefix();
+   fileName += "tmp/simulate.20";
+   simulation_.save(fileName);
 
 }
 
@@ -351,13 +353,15 @@ void McSimulationTest::testSimulateAngle()
    readParam("in/McSimulationAngle"); 
    readConfig("in/md.config");
 
-   std::string baseFileName("simulateAngle.0");
-   simulation_.save(baseFileName);
+   std::string fileName = filePrefix();
+   fileName += "tmp/simulateAngle.0";
+   simulation_.save(fileName);
 
-   simulation_.simulate(40);
+   simulation_.simulate(20);
 
-   baseFileName = "simulateAngle.20";
-   simulation_.save(baseFileName);
+   fileName = filePrefix();
+   fileName += "tmp/simulateAngle.20";
+   simulation_.save(fileName);
 }
 #endif
 
@@ -369,18 +373,21 @@ void McSimulationTest::testWriteRestartBond()
    readParam("in/McSimulation"); 
    readConfig("in/config"); 
 
-   std::string baseFileName("writeRestart.0");
-   simulation_.save(baseFileName);
+   std::string fileName = filePrefix();
+   fileName += "tmp/writeRestart.0";
+   simulation_.save(fileName);
 
    simulation_.simulate(10);
-   baseFileName = "writeRestart.10";
-   simulation_.save(baseFileName);
+   fileName = filePrefix();
+   fileName += "tmp/writeRestart.10";
+   simulation_.save(fileName);
 
    bool isContinuation = true;
    simulation_.simulate(20, isContinuation);
 
-   baseFileName = "writeRestart.20";
-   simulation_.save(baseFileName);
+   fileName = filePrefix();
+   fileName += "tmp/writeRestart.20";
+   simulation_.save(fileName);
 }
 
 void McSimulationTest::testReadRestart()
@@ -388,11 +395,13 @@ void McSimulationTest::testReadRestart()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   std::string baseFileName("writeRestart.10");
-   simulation_.load(baseFileName);
+   std::string fileName = filePrefix();
+   fileName += "tmp/writeRestart.10";
+   simulation_.load(fileName);
 
-   baseFileName = "readRestart";
-   simulation_.save(baseFileName);
+   fileName = filePrefix();
+   fileName += "tmp/readRestart";
+   simulation_.save(fileName);
 }
 
 TEST_BEGIN(McSimulationTest)

@@ -20,13 +20,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f out/param
-	rm -f *.rst
-	rm -f writeRestart.0
-	rm -f writeRestart.10
-	rm -f writeRestart.20
-	rm -f simulate.*
-	rm -f simulateAngle.*
+	rm -f tmp/*
 
 -include $(mcMd_tests_mcSimulation_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
