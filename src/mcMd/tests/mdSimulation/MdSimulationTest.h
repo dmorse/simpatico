@@ -288,13 +288,11 @@ void MdSimulationTest::testSimulate()
    simulation_.readCommands();
    std::cout << std::endl;
 
-   //std::string fileName("simulate.0");
-   //simulation_.save(fileName);
+   //simulation_.save("simulate.0");
 
    simulation_.simulate(2000);
 
-   //fileName = "simulate.20";
-   //simulation_.save(fileName);
+   //simulation_.save("simulate.2000");
 }
 
 void MdSimulationTest::testWriteRestart()
@@ -310,22 +308,16 @@ void MdSimulationTest::testWriteRestart()
    std::cout << std::endl;
 
    // Save initial state to tmp/begin
-   // std::string fileName = filePrefix();
-   std::string fileName;
-   fileName = "tmp/begin.rst";
-   simulation_.save(fileName);
+   simulation_.save("tmp/begin.rst");
 
+   // Run simulation of 10000 steps
    simulation_.simulate(10000);
 
-   // Save state at iStep = 10000 to middle
-   //fileName = filePrefix();
-   fileName = "tmp/middle.rst";
-   simulation_.save(fileName);
+   // Save state at iStep = 10000 to file middle.rst
+   simulation_.save("tmp/middle.rst");
 
    // Write configuration at iStep = 1000 to middle.cfg
-   //fileName = filePrefix();
-   fileName = "tmp/middle.cfg";
-   std::ofstream configFile(fileName);
+   std::ofstream configFile("tmp/middle.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
@@ -333,9 +325,7 @@ void MdSimulationTest::testWriteRestart()
    simulation_.simulate(10100, isContinuation);
 
    // Write configuration at iStep = 101000 
-   //fileName = filePrefix();
-   fileName = "tmp/end.cfg";
-   configFile.open(fileName);
+   configFile.open("tmp/end.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
@@ -347,20 +337,13 @@ void MdSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    // Restart after iStep = 10000
-   //std::string fileName = filePrefix();
-   std::string fileName;
-   fileName = "tmp/middle.rst";
-   simulation_.load(fileName);
+   simulation_.load("tmp/middle.rst");
 
    // Save new restart file at iStep = 10000
-   //fileName = filePrefix();
-   fileName = "tmp/middle2.rst";
-   simulation_.save(fileName);
+   simulation_.save("tmp/middle2.rst");
 
    // Save config file at iStep = 10000
-   //fileName = filePrefix();
-   fileName = "tmp/middle2.cfg";
-   std::ofstream configFile(fileName);
+   std::ofstream configFile("tmp/middle2.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
@@ -368,9 +351,7 @@ void MdSimulationTest::testReadRestart()
    bool isContinuation = true;
    simulation_.simulate(10100, isContinuation);
 
-   //fileName = filePrefix();
-   fileName = "tmp/end2.cfg";
-   configFile.open(fileName);
+   configFile.open("tmp/end2.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 }
