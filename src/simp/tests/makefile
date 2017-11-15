@@ -13,7 +13,7 @@ all: $(simp_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(simp_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/simp/tests/ 
-	@cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
+	cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
 
 quiet: $(simp_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/simp/tests/ > log
