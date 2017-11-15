@@ -30,7 +30,7 @@ namespace McMd
    * McCommandFactory.
    *
    * \ingroup McMd_Manager_Module
-   * \ingroup McMd_Command_Module
+   * \ingroup McMd_Command_Mc_Module
    */
    class McCommandManager : public CommandManager
    {

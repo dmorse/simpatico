@@ -21,7 +21,7 @@ namespace McMd
    /**
    * Command to deform the unit cell.
    *
-   * \ingroup McMd_Command_Module
+   * \ingroup McMd_Command_Md_Module
    */
    class MdDeformCommand : public DeformCommand
    {

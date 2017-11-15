@@ -33,7 +33,7 @@ namespace McMd
    * MdCommandFactory.
    *
    * \ingroup McMd_Manager_Module
-   * \ingroup McMd_Command_Module
+   * \ingroup McMd_Command_Md_Module
    */
    class MdCommandManager : public CommandManager
    {

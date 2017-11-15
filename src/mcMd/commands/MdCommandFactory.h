@@ -23,7 +23,7 @@ namespace McMd
    * CommandFactory for an MdSimulation
    *
    * \ingroup McMd_Factory_Module
-   * \ingroup McMd_Command_Module
+   * \ingroup McMd_Command_Md_Module
    */
    class MdCommandFactory : public Factory<Command>
    {

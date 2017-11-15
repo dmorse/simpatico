@@ -99,9 +99,9 @@ namespace McMd
       * separate parameter files for independent simulations
       * (i.e., without the -f option), then the parameter file
       * for the simulation performed by processor number n is
-      * file named n/<filename>, where <filename> is either the
+      * file named n/filename, where "filename" is either the
       * argument of the -p command line option, if invoked with 
-      * that option, or the default string <filename> = "param".
+      * that option, or the default string filename = "param".
       *
       * \pre: Call after setOptions().
       */

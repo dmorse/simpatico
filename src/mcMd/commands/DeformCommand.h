@@ -20,7 +20,7 @@ namespace McMd
    /**
    * Command to deform the unit cell.
    *
-   * \ingroup McMd_Command_Module
+   * \ingroup McMd_Command_McMd_Module
    */
    class DeformCommand : public Command, private SystemInterface
    {
