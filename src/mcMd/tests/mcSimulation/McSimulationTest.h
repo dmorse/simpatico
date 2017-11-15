@@ -333,14 +333,13 @@ void McSimulationTest::testSimulateBond()
    readParam("in/McSimulation"); 
    readConfig("in/config"); 
 
-   std::string fileName = filePrefix();
-   fileName += "tmp/simulate.0";
+   std::string fileName;
+   fileName = "tmp/simulate.0";
    simulation_.save(fileName);
 
    simulation_.simulate(20);
 
-   fileName = filePrefix();
-   fileName += "tmp/simulate.20";
+   fileName = "tmp/simulate.20";
    simulation_.save(fileName);
 
 }
@@ -353,14 +352,13 @@ void McSimulationTest::testSimulateAngle()
    readParam("in/McSimulationAngle"); 
    readConfig("in/md.config");
 
-   std::string fileName = filePrefix();
-   fileName += "tmp/simulateAngle.0";
+   std::string fileName;
+   fileName = "tmp/simulateAngle.0";
    simulation_.save(fileName);
 
    simulation_.simulate(20);
 
-   fileName = filePrefix();
-   fileName += "tmp/simulateAngle.20";
+   fileName = "tmp/simulateAngle.20";
    simulation_.save(fileName);
 }
 #endif
@@ -373,20 +371,18 @@ void McSimulationTest::testWriteRestartBond()
    readParam("in/McSimulation"); 
    readConfig("in/config"); 
 
-   std::string fileName = filePrefix();
-   fileName += "tmp/writeRestart.0";
+   std::string fileName;
+   fileName = "tmp/writeRestart.0";
    simulation_.save(fileName);
 
    simulation_.simulate(10);
-   fileName = filePrefix();
-   fileName += "tmp/writeRestart.10";
+   fileName = "tmp/writeRestart.10";
    simulation_.save(fileName);
 
    bool isContinuation = true;
    simulation_.simulate(20, isContinuation);
 
-   fileName = filePrefix();
-   fileName += "tmp/writeRestart.20";
+   fileName = "tmp/writeRestart.20";
    simulation_.save(fileName);
 }
 
@@ -395,12 +391,11 @@ void McSimulationTest::testReadRestart()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   std::string fileName = filePrefix();
-   fileName += "tmp/writeRestart.10";
+   std::string fileName;
+   fileName = "tmp/writeRestart.10";
    simulation_.load(fileName);
 
-   fileName = filePrefix();
-   fileName += "tmp/readRestart";
+   fileName = "tmp/readRestart";
    simulation_.save(fileName);
 }
 

@@ -18,13 +18,15 @@ run: $(mcMd_tests_OBJS)
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
+	@rm -f count
 
 clean:
 	rm -f $(mcMd_tests_OBJS)
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
-	rm -f *.cfg log count
+	rm -f log 
 ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f count
 	cd analyzers; $(MAKE) clean
 	cd chemistry; $(MAKE) clean
 	cd generators; $(MAKE) clean
@@ -39,6 +41,7 @@ else
 endif
 
 clean-outputs:
+	rm -f count
 	cd chemistry; $(MAKE) clean-outputs
 	cd mcSimulation; $(MAKE) clean-outputs
 	cd mdSimulation; $(MAKE) clean-outputs
