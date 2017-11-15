@@ -16,7 +16,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f binary
+	@rm -f binary
 
 -include $(simp_tests_species_OBJS:.o=.d)
 -include $(simp_OBJS:.o=.d)

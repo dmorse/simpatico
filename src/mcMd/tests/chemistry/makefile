@@ -24,7 +24,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f tmp/*
+	@rm -f tmp/*
 
 -include $(mcMd_tests_chemistry_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
