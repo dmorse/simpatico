@@ -6,19 +6,20 @@
 */
 
 #include "McMuExchange.h"                            // class header
-#include <util/misc/FileMaster.h>
-#include <util/archives/Serializable_includes.h>
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/neighbor/CellList.h>
-
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/species/Species.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+
+#include <util/archives/Serializable_includes.h>
 #include <util/boundary/Boundary.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <util/space/Vector.h>
+#include <util/misc/FileMaster.h>
 #include <util/global.h>
 
 #include <math.h>
@@ -27,6 +28,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

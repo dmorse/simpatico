@@ -15,9 +15,12 @@
 
 namespace Util { 
    class FileMaster;
+   class Random;
+}
+
+namespace Simp { 
    class EnergyEnsemble;
    class BoundaryEnsemble;
-   class Random;
 }
 
 namespace DdMd
@@ -44,6 +47,7 @@ namespace DdMd
    class AtomType;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Provides access to members of Simulation object.

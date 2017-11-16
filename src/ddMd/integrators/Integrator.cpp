@@ -26,7 +26,8 @@
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
 
-#include <util/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
+
 #include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
@@ -37,6 +38,9 @@ namespace DdMd
 {
 
    class Simulation;
+
+   using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

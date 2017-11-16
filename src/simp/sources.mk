@@ -1,11 +1,13 @@
 # Include source files lists from subdirectories
 include $(SRC_DIR)/simp/interaction/sources.mk
 include $(SRC_DIR)/simp/species/sources.mk
+include $(SRC_DIR)/simp/ensembles/sources.mk
 
 # Concatenate source file lists from subdirectories
 simp_=\
     $(simp_interaction_) \
-    $(simp_species_)
+    $(simp_species_) \
+    $(simp_ensembles_) 
 
 # Create lists of src and object files, with absolute paths
 simp_SRCS=\

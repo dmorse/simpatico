@@ -40,10 +40,12 @@
 #include <ddMd/potentials/external/ExternalFactory.h>
 #endif
 
+// namespace Simp
+#include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
+
 // namespace Util
 #include <util/misc/FileMaster.h>
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/space/Tensor.h>
@@ -68,6 +70,7 @@ namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

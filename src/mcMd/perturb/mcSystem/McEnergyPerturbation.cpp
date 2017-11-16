@@ -8,12 +8,13 @@
 
 #include "McEnergyPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
-#include <util/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

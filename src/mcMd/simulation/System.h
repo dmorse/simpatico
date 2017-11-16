@@ -25,14 +25,15 @@
 
 class SystemTest;
 
-namespace Util 
-{ 
+namespace Util { 
    template <typename T> class Factory;
-   class EnergyEnsemble;
-   class BoundaryEnsemble;
    class FileMaster;
 }
 
+namespace Simp {
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
+} 
 namespace McMd
 {
 
