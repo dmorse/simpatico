@@ -28,9 +28,8 @@ clean:
 	rm -f $(mcMd_tests_OBJS)
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
-	rm -f log 
+	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
-	rm -f count
 	cd analyzers; $(MAKE) clean
 	cd chemistry; $(MAKE) clean
 	cd generators; $(MAKE) clean
@@ -45,7 +44,6 @@ else
 endif
 
 clean-outputs:
-	@rm -f count
 	@cd chemistry; $(MAKE) clean-outputs
 	@cd mcSimulation; $(MAKE) clean-outputs
 	@cd mdSimulation; $(MAKE) clean-outputs
