@@ -19,6 +19,8 @@ matrix:
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install python; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install openmpi-bin; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi1.6; fi
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
   - export PATH=$PATH:$(pwd)/bin
 
