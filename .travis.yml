@@ -28,6 +28,7 @@ install:
   - ./setup
   - ./configure -g$SMP_G -a1 -d1 -e1
   - make mcMd
+  - make ddMd
 
 script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
