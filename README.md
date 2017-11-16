@@ -60,7 +60,7 @@ in separate repositories.
 A recent copy of the web manual for simpatico is available online, 
 at
 
-   <http://dmorse.github.com/simpatico/index.html>.
+   <http://dmorse.github.com/simpatico/doc/html/index.html>.
 
 This manual provides both user and developer documentation in an
 integrated form.
