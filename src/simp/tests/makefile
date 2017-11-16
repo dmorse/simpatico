@@ -12,10 +12,16 @@ TEST=simp/tests/Test
 all: $(simp_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(simp_tests_OBJS)
+	$(BLD_DIR)/$(TEST) $(SRC_DIR)/simp/tests/ 
+	cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
+
+quiet: $(simp_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/simp/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in simp/tests/log" > count
 	@cat count
+	@rm -f count
+	@cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
 
 clean:
 	rm -f $(simp_tests_OBJS) $(simp_tests_OBJS:.o=.d) $(BLD_DIR)/$(TEST)
@@ -28,7 +34,7 @@ else
 endif
 
 clean-outputs:
-	cd species; $(MAKE) clean-outputs
+	@cd species; $(MAKE) clean-outputs
 
 
 -include $(simp_tests_OBJS:.o=.d)

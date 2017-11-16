@@ -41,8 +41,8 @@ class SerializeConfigIoTest: public ParamFileTest
    #ifdef SIMP_DIHEDRAL
    DihedralStorage  dihedralStorage;
    #endif
-   bool hasAngle;
-   bool hasDihedral;
+   bool hasAngles;
+   bool hasDihedrals;
 
 public:
 
@@ -82,13 +82,13 @@ public:
       domain.setRank(0);
       #endif
 
-      hasAngle = false;
+      hasAngles = false;
       #ifdef SIMP_ANGLE
-      hasAngle = true;
+      hasAngles = true;
       #endif
-      hasDihedral = false;
+      hasDihedrals = false;
       #ifdef SIMP_DIHEDRAL
-      hasDihedral = true;
+      hasDihedrals = true;
       #endif
    }
 
@@ -125,10 +125,10 @@ public:
 
       // Open parameter file
       std::ifstream file;
-      if (hasDihedral) {
+      if (hasDihedrals) {
          openInputFile("in/ConfigIo_a_d", file);
       } else {
-         if (hasAngle) {
+         if (hasAngles) {
             openInputFile("in/ConfigIo_a", file);
          } else {
             openInputFile("in/ConfigIo", file);
@@ -147,13 +147,13 @@ public:
       #endif
    
       #ifdef SIMP_ANGLE
-      if (hasAngle) {
+      if (hasAngles) {
          angleStorage.associate(domain, atomStorage, buffer);
          angleStorage.readParam(file);
       }
       #endif
       #ifdef SIMP_DIHEDRAL
-      if (hasDihedral) {
+      if (hasDihedrals) {
          dihedralStorage.associate(domain, atomStorage, buffer);
          dihedralStorage.readParam(file);
       }
@@ -189,21 +189,15 @@ public:
       inFile.close();
 
       std::ofstream outFile;
-      openOutputFile("out2", outFile);
+      openOutputFile("tmp/out2", outFile);
       configIo.writeConfig(outFile);
       outFile.close();
 
       clearStorage();
 
-      openInputFile("out2", inFile);
+      openInputFile("tmp/out2", inFile);
       configIo.readConfig(inFile, MaskBonded);
       inFile.close();
-
-      #if 0
-      openOutputFile("out", outFile);
-      configIo.writeConfig(outFile);
-      outFile.close();
-      #endif
 
    }
 

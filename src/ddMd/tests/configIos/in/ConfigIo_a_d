@@ -23,9 +23,9 @@ DihedralStorage{
   totalCapacity      100
 }
 DdMdConfigIo{
+}
+
   atomCacheCapacity      100
   bondCacheCapacity      100
   angleCacheCapacity     100
   dihedralCacheCapacity  100
-}
-

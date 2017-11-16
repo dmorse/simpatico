@@ -11,6 +11,7 @@
 #include "chemistry/ChemistryTestComposite.h"
 #include "storage/StorageTestComposite.h"
 #include "configIos/ConfigIoTest.h"
+#include "configIos/SerializeConfigIoTest.h"
 #include "communicate/CommunicateTestComposite.h"
 #include "neighbor/NeighborTestComposite.h"
 #include "simulation/SimulationTest.h"
@@ -29,6 +30,7 @@ addChild(new ModifierTestComposite, "modifiers/");
 #endif
 #ifdef TEST_MPI
 addChild(new TEST_RUNNER(ConfigIoTest), "configIos/");
+addChild(new TEST_RUNNER(SerializeConfigIoTest), "configIos/");
 addChild(new CommunicateTestComposite, "communicate/");
 addChild(new TEST_RUNNER(SimulationTest), "simulation/");
 #endif

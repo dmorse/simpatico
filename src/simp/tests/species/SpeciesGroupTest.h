@@ -45,7 +45,7 @@ public:
 
       // Write to binary file archive
       BinaryFileOArchive oa;
-      openOutputFile("binary", oa.file());
+      openOutputFile("tmp/binary", oa.file());
       oa << i1;
       oa << v;
       oa << i2;
@@ -55,7 +55,7 @@ public:
       SpeciesGroup<2> u;
       int j1, j2;
       BinaryFileIArchive ia;
-      openInputFile("binary", ia.file());
+      openInputFile("tmp/binary", ia.file());
       ia >> j1;
       ia >> u;
       ia >> j2;

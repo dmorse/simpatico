@@ -31,7 +31,7 @@ public:
 
    virtual void setUp()
    { 
-      int n_ = 20;
+      n_ = 20;
       array_.allocate(n_);
       map_.allocate(n_);
       int bit = 0;

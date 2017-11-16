@@ -22,23 +22,35 @@ TEST_COMPOSITE_END
 
 int main(int argc, char* argv[])
 {
-   #ifdef UTIL_MPI
-   MPI::Init();
-   Vector::commitMpiType();
-   IntVector::commitMpiType();
-   #endif 
+   try {
 
-   SimpNsTestComposite runner;
+      #ifdef UTIL_MPI
+      MPI::Init();
+      Vector::commitMpiType();
+      IntVector::commitMpiType();
+      #endif 
+   
+      SimpNsTestComposite runner;
+   
+      if (argc > 2) {
+         UTIL_THROW("Too many arguments");
+      }
+      if (argc == 2) {
+         runner.addFilePrefix(argv[1]);
+      }
 
-   if (argc > 2) {
-      UTIL_THROW("Too many arguments");
+      // Run all unit tests
+      int failures = runner.run();
+   
+      #ifdef UTIL_MPI
+      MPI::Finalize();
+      #endif 
+
+      return (failures != 0);
+
+   } catch (...) {
+
+      std::cerr << "Uncaught exception in src/simp/tests/Test.cc" << std::endl;
+      return 1;
    }
-   if (argc == 2) {
-      runner.addFilePrefix(argv[1]);
-    }
-   runner.run();
-
-   #ifdef UTIL_MPI
-   MPI::Finalize();
-   #endif 
 }

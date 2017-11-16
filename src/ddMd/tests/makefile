@@ -14,10 +14,16 @@ TEST=ddMd/tests/Test
 all: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
+	$(MPIRUN) 6 $(BLD_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ 
+	cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
+
+quiet: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 	$(MPIRUN) 6 $(BLD_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in ddMd/tests/log" > count
 	@cat count
+	@rm -f count
+	@cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
 
 clean:
 	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
@@ -36,8 +42,8 @@ else
 endif
 
 clean-outputs:
-	cd chemistry; $(MAKE) clean-outputs
-	cd configIos; $(MAKE) clean-outputs
+	@cd chemistry; $(MAKE) clean-outputs
+	@cd configIos; $(MAKE) clean-outputs
         
 -include $(ddMd_tests_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

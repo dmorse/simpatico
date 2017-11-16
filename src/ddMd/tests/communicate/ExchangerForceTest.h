@@ -133,13 +133,13 @@ void ExchangerForceTest::initialize()
    exchanger.addGroupExchanger(bondStorage);
    #ifdef SIMP_ANGLE
    angleStorage.associate(domain, atomStorage, buffer);
-   if (hasAngle) {
+   if (hasAngles) {
       exchanger.addGroupExchanger(angleStorage);
    }
    #endif
    #ifdef SIMP_DIHEDRAL
    dihedralStorage.associate(domain, atomStorage, buffer);
-   if (hasDihedral) {
+   if (hasDihedrals) {
       exchanger.addGroupExchanger(dihedralStorage);
    }
    #endif
@@ -191,12 +191,12 @@ void ExchangerForceTest::initialize()
    bondStorage.readParam(file());
    #endif
    #ifdef SIMP_ANGLE
-   if (hasAngle) {
+   if (hasAngles) {
       angleStorage.readParam(file());
    }
    #endif
    #ifdef SIMP_DIHEDRAL
-   if (hasDihedral) {
+   if (hasDihedrals) {
       dihedralStorage.readParam(file());
    }
    #endif

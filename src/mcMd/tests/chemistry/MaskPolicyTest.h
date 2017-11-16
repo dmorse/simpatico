@@ -35,13 +35,13 @@ public:
       std::cout << policy << std::endl ;
 
       Util::TextFileOArchive oar;
-      openOutputFile("ar.txt", oar.file());
+      openOutputFile("tmp/ar.txt", oar.file());
       oar & policy;
       oar.file().close();
 
       MaskPolicy clone;
       Util::TextFileIArchive iar;
-      openInputFile("ar.txt", iar.file());
+      openInputFile("tmp/ar.txt", iar.file());
       iar & clone;
 
       TEST_ASSERT(policy == clone);

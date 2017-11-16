@@ -15,9 +15,10 @@ clean:
 	rm -f $(ddMd_tests_chemistry_OBJS) 
 	rm -f $(ddMd_tests_chemistry_OBJS:.o=.d)
 	rm -f $(ddMd_tests_chemistry_OBJS:.o=)
+	rm -f tmp/*
 
 clean-outputs:
-	rm -f binary
+	@rm -f tmp/*
 
 -include $(ddMd_tests_chemistry_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

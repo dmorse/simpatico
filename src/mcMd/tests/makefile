@@ -14,17 +14,24 @@ TEST=mcMd/tests/Test
 all: $(mcMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(mcMd_tests_OBJS)
+	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/
+	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
+
+quiet: $(mcMd_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
+	@rm -f count
+	@cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
 clean:
 	rm -f $(mcMd_tests_OBJS)
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
-	rm -f *.cfg log count
+	rm -f log 
 ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f count
 	cd analyzers; $(MAKE) clean
 	cd chemistry; $(MAKE) clean
 	cd generators; $(MAKE) clean
@@ -39,9 +46,10 @@ else
 endif
 
 clean-outputs:
-	cd chemistry; $(MAKE) clean-outputs
-	cd mcSimulation; $(MAKE) clean-outputs
-	cd mdSimulation; $(MAKE) clean-outputs
+	@rm -f count
+	@cd chemistry; $(MAKE) clean-outputs
+	@cd mcSimulation; $(MAKE) clean-outputs
+	@cd mdSimulation; $(MAKE) clean-outputs
 
 -include $(mcMd_tests_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
