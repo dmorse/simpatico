@@ -34,3 +34,4 @@ script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
+  - cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
