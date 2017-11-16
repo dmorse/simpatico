@@ -22,7 +22,6 @@ quiet: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
 	@echo `grep failed log` ", "\
               `grep successful log` "in tools/tests/log" > count
 	@cat count
-	@rm -rf count
 
 clean:
 	rm -f $(tools_tests_OBJS) 

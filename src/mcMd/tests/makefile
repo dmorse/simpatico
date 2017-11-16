@@ -22,7 +22,6 @@ quiet: $(mcMd_tests_OBJS)
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
-	@rm -f count
 	@cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
 clean:

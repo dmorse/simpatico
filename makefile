@@ -34,10 +34,10 @@ tools:
 # Test targets
 
 test-serial:
-	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/simp/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/tools/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/util/tests; $(MAKE) quiet
+	@cd bld/serial/simp/tests; $(MAKE) quiet
+	@cd bld/serial/mcMd/tests; $(MAKE) quiet
+	@cd bld/serial/tools/tests; $(MAKE) quiet
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/simp/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
@@ -48,7 +48,7 @@ test-serial:
 	@rm -f count
 
 test-parallel:
-	cd bld/parallel/ddMd/tests; $(MAKE) all; $(MAKE) run
+	cd bld/parallel/ddMd/tests; $(MAKE) quiet
 	@cat bld/parallel/ddMd/tests/count >> count
 	@echo " "
 	@cat count

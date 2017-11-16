@@ -22,7 +22,6 @@ quiet: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 	@echo `grep failed log` ", "\
               `grep successful log` "in ddMd/tests/log" > count
 	@cat count
-	@rm -f count
 	@cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
 
 clean:

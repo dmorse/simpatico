@@ -20,7 +20,6 @@ quiet: $(simp_tests_OBJS)
 	@echo `grep failed log` ", "\
               `grep successful log` "in simp/tests/log" > count
 	@cat count
-	@rm -f count
 	@cd $(SRC_DIR)/simp/tests; $(MAKE) clean-outputs
 
 clean:
