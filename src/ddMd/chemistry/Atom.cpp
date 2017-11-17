@@ -12,15 +12,14 @@
 #include <ddMd/communicate/Buffer.h>
 #endif
 
-#define ATOM_GHOST_CONTEXT
-
 namespace DdMd
 {
 
    using namespace Util;
 
    /*
-   * Initialize hasAtomContext_ flag to true. This enable AtomContext info by default.
+   * Initialize hasAtomContext_ flag to false. This disables storage and
+   * communication of AtomContext information by default.
    */
    bool Atom::hasAtomContext_ = false;
 
@@ -31,7 +30,7 @@ namespace DdMd
    {  hasAtomContext_ = hasAtomContext; }
 
    /*
-   * Constructor (private, used by AtomArray).
+   * Constructor (private, used only by AtomArray).
    */
    Atom::Atom() :
      position_(0.0),
@@ -81,7 +80,6 @@ namespace DdMd
    }
 
    #ifdef UTIL_MPI
-
    // Atom Exchange
 
    /*
@@ -111,7 +109,7 @@ namespace DdMd
    }
 
    /*
-   * Receive ownership of an Atom.
+   * Unpack and receive ownership of an Atom.
    */
    void Atom::unpackAtom(Buffer& buffer)
    {
@@ -174,11 +172,9 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<unsigned int>(plan().flags());
-      #ifdef ATOM_GHOST_CONTEXT
       if (hasAtomContext_) {
          buffer.pack<AtomContext>(context());
       }
-      #endif
       buffer.incrementSendSize();
    }
 
@@ -196,11 +192,9 @@ namespace DdMd
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
-      #ifdef ATOM_GHOST_CONTEXT
       if (hasAtomContext_) {
          buffer.unpack<AtomContext>(context());
       }
-      #endif
       buffer.decrementRecvSize();
    }
 
@@ -213,11 +207,9 @@ namespace DdMd
       size += 2*sizeof(int); 
       size += sizeof(Vector); 
       size += sizeof(unsigned int);
-      #ifdef ATOM_GHOST_CONTEXT
       if (hasAtomContext_) {
          size += sizeof(AtomContext);
       }
-      #endif
       return size;
    }
 
@@ -262,8 +254,8 @@ namespace DdMd
       force() += f;
       buffer.decrementRecvSize();
    }
+   #endif // ifdef UTIL_MPI
 
-   #ifdef ATOM_COPY_LOCAL
    /*
    * Copy ghost atom data from sendAtom to this Atom.
    */
@@ -273,22 +265,15 @@ namespace DdMd
       setTypeId(sendAtom.typeId());
       plan().setFlags(sendAtom.plan().flags());
       position() = sendAtom.position();
-      #ifdef ATOM_GHOST_CONTEXT
       if (hasAtomContext_) {
          context() = sendAtom.context();
       }
-      #endif
    }
-   #endif
 
-   #ifdef ATOM_COPY_LOCAL
    /*
    * Copy update position of local ghost from sendAtom to this.
    */
    void Atom::copyLocalUpdate(const Atom& sendAtom)
    {  position_ = sendAtom.position(); }
-   #endif
-
-   #endif // ifdef UTIL_MPI
 
 }

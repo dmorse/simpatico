@@ -9,7 +9,6 @@
 */
 
 //#define UTIL_32BIT
-#define ATOM_COPY_LOCAL
 
 #include <util/space/Vector.h>            // members
 #include <ddMd/chemistry/Mask.h>          // member
@@ -260,9 +259,10 @@ namespace DdMd
       #endif
       //@}
 
-      #ifdef UTIL_MPI
       /// \name Pack and Unpack Methods (Interprocessor Communication)
       //@{
+
+      #ifdef UTIL_MPI
 
       /**
       * Pack an Atom into a send buffer, for exchange of ownership.
@@ -335,7 +335,8 @@ namespace DdMd
       */
       void unpackForce(Buffer& buffer);
 
-      #ifdef ATOM_COPY_LOCAL
+      #endif // ifdef UTIL_MPI
+
       /**
       * Copies data from local atom to update this ghost atom.
       *
@@ -349,10 +350,8 @@ namespace DdMd
       * \param sendAtom Local atom to be copied to update this atom.
       */
       void copyLocalUpdate(Atom const & sendAtom);
-      #endif
 
       //@}
-      #endif
 
    private:
 
@@ -396,7 +395,7 @@ namespace DdMd
 
       #ifdef UTIL_32BIT
       /**
-      * On machines with 4 byte pointer, this pads the size to 64 bytes.
+      * On machines with 32bit pointer, pads sizeof(Atom) to 64 bytes.
       */
       int pad_;
       #endif

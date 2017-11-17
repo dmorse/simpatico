@@ -63,7 +63,7 @@ namespace DdMd
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
    {
-      int nGroup;  // Total number of groups in file
+      int nGroup = 0; // Total number of groups in file
       if (domain().isMaster()) {  
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
