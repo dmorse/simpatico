@@ -696,9 +696,8 @@ namespace DdMd
                   // Make a ghost copy of local atom on this processor
                   atomPtr = atomStoragePtr_->newGhostPtr();
                   recvArray_(i, j).append(*atomPtr);
-                  #ifdef ATOM_COPY_LOCAL
                   atomPtr->copyLocalGhost(*sendPtr);
-                  #else
+                  #if 0
                   atomPtr->setId(sendPtr->id());
                   atomPtr->setTypeId(sendPtr->typeId());
                   atomPtr->plan().setFlags(sendPtr->plan().flags());
@@ -876,9 +875,8 @@ namespace DdMd
                assert(size == recvArray_(i, j).size());
                for (k = 0; k < size; ++k) {
                   atomPtr = &recvArray_(i, j)[k];
-                  #ifdef ATOM_COPY_LOCAL
                   atomPtr->copyLocalUpdate(sendArray_(i, j)[k]);
-                  #else
+                  #if 0
                   atomPtr->position() = sendArray_(i, j)[k].position();
                   #endif
                   if (shift) {
