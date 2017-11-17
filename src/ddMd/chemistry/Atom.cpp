@@ -12,6 +12,8 @@
 #include <ddMd/communicate/Buffer.h>
 #endif
 
+#define ATOM_GHOST_CONTEXT
+
 namespace DdMd
 {
 
@@ -20,7 +22,7 @@ namespace DdMd
    /*
    * Initialize hasAtomContext_ flag to true. This enable AtomContext info by default.
    */
-   bool Atom::hasAtomContext_ = true;
+   bool Atom::hasAtomContext_ = false;
 
    /*
    * Enable (true) or disable (false) use of AtomContext data.
@@ -79,6 +81,9 @@ namespace DdMd
    }
 
    #ifdef UTIL_MPI
+
+   // Atom Exchange
+
    /*
    * Pack a local Atom for exchange of ownership.
    */
@@ -157,6 +162,8 @@ namespace DdMd
       return size;
    }
 
+   // Ghost Exchange
+
    /*
    * Pack data required for a ghost Atom for sending.
    */
@@ -167,6 +174,11 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<unsigned int>(plan().flags());
+      #ifdef ATOM_GHOST_CONTEXT
+      if (hasAtomContext_) {
+         buffer.pack<AtomContext>(context());
+      }
+      #endif
       buffer.incrementSendSize();
    }
 
@@ -184,6 +196,11 @@ namespace DdMd
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
+      #ifdef ATOM_GHOST_CONTEXT
+      if (hasAtomContext_) {
+         buffer.unpack<AtomContext>(context());
+      }
+      #endif
       buffer.decrementRecvSize();
    }
 
@@ -196,8 +213,15 @@ namespace DdMd
       size += 2*sizeof(int); 
       size += sizeof(Vector); 
       size += sizeof(unsigned int);
+      #ifdef ATOM_GHOST_CONTEXT
+      if (hasAtomContext_) {
+         size += sizeof(AtomContext);
+      }
+      #endif
       return size;
    }
+
+   // Ghost Position Updates
 
    /*
    * Pack updates ghost position.
@@ -216,6 +240,8 @@ namespace DdMd
       buffer.unpack<Vector>(position());
       buffer.decrementRecvSize();
    }
+
+   // Force Updates
 
    /*
    * Pack ghost force.
@@ -236,6 +262,33 @@ namespace DdMd
       force() += f;
       buffer.decrementRecvSize();
    }
+
+   #ifdef ATOM_COPY_LOCAL
+   /*
+   * Copy ghost atom data from sendAtom to this Atom.
+   */
+   void Atom::copyLocalGhost(const Atom& sendAtom)
+   {
+      setId(sendAtom.id());
+      setTypeId(sendAtom.typeId());
+      plan().setFlags(sendAtom.plan().flags());
+      position() = sendAtom.position();
+      #ifdef ATOM_GHOST_CONTEXT
+      if (hasAtomContext_) {
+         context() = sendAtom.context();
+      }
+      #endif
+   }
    #endif
+
+   #ifdef ATOM_COPY_LOCAL
+   /*
+   * Copy update position of local ghost from sendAtom to this.
+   */
+   void Atom::copyLocalUpdate(const Atom& sendAtom)
+   {  position_ = sendAtom.position(); }
+   #endif
+
+   #endif // ifdef UTIL_MPI
 
 }

@@ -9,6 +9,7 @@
 */
 
 //#define UTIL_32BIT
+#define ATOM_COPY_LOCAL
 
 #include <util/space/Vector.h>            // members
 #include <ddMd/chemistry/Mask.h>          // member
@@ -100,7 +101,7 @@ namespace DdMd
       /**
       * Assignment.
       */
-      Atom& operator = (const Atom& other);
+      Atom& operator = (Atom const & other);
 
       /**
       * Reset integer members to initial null values.
@@ -334,6 +335,22 @@ namespace DdMd
       */
       void unpackForce(Buffer& buffer);
 
+      #ifdef ATOM_COPY_LOCAL
+      /**
+      * Copies data from local atom to update this ghost atom.
+      *
+      * \param sendAtom Local atom to be copied to this atom.
+      */
+      void copyLocalGhost(Atom const & sendAtom);
+
+      /**
+      * Copies position of local atom to update this ghost atom.
+      * 
+      * \param sendAtom Local atom to be copied to update this atom.
+      */
+      void copyLocalUpdate(Atom const & sendAtom);
+      #endif
+
       //@}
       #endif
 
@@ -400,7 +417,7 @@ namespace DdMd
       *
       * Private and not implemented to prohibit copy construction.
       */
-      Atom(const Atom& other);
+      Atom(Atom const & other);
 
    // friends:
    
@@ -455,7 +472,7 @@ namespace DdMd
    /*
    * Get position by const reference.
    */
-   inline const Vector& Atom::position() const
+   inline Vector const & Atom::position() const
    {  return position_; }
 
    /*
@@ -467,7 +484,7 @@ namespace DdMd
    /*
    * Get force by const reference.
    */
-   inline const Vector& Atom::force() const
+   inline Vector const & Atom::force() const
    {  return force_; }
 
    /*
@@ -496,7 +513,7 @@ namespace DdMd
    /*
    * Get velocity by const reference.
    */
-   inline const Vector& Atom::velocity() const
+   inline Vector const & Atom::velocity() const
    { return arrayPtr_->velocities_[localId_ >> 1]; }
 
    /*
@@ -508,7 +525,7 @@ namespace DdMd
    /*
    * Get the Mask by const reference.
    */
-   inline const Mask& Atom::mask() const
+   inline Mask const & Atom::mask() const
    {  return arrayPtr_->masks_[localId_ >> 1]; }
 
    /*
@@ -520,7 +537,7 @@ namespace DdMd
    /*
    * Get the communication plan by const reference.
    */
-   inline const Plan& Atom::plan() const
+   inline Plan const & Atom::plan() const
    {  return arrayPtr_->plans_[localId_ >> 1]; }
 
    /*
@@ -549,7 +566,7 @@ namespace DdMd
    /*
    * Get AtomContext by const reference.
    */
-   inline const AtomContext& Atom::context() const
+   inline AtomContext const & Atom::context() const
    {
       if (!hasAtomContext_) {
          UTIL_THROW("Atom does not have AtomContext");
