@@ -15,7 +15,7 @@
 
 #include <simp/species/Linear.h>
 
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 

@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/configIos/ConfigIo.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -17,11 +17,12 @@
 namespace McMd
 {
 
-   using namespace Util;
-
    class System;
    class Atom;
    
+   using namespace Util;
+   using namespace Simp;
+
    /**
    * Base class for default Mc and Md configIos.
    *

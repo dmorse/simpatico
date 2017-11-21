@@ -18,8 +18,8 @@
 #include <ddMd/storage/DihedralStorage.h>     // member
 #include <ddMd/chemistry/AtomType.h>          // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>        // member
+#include <simp/boundary/Boundary.h>           // member
 #include <util/random/Random.h>               // member
-#include <util/boundary/Boundary.h>           // member
 #include <util/space/Tensor.h>                // member (template param)
 #include <util/containers/DArray.h>           // member (template)
 #include <util/containers/DMatrix.h>          // member (template)

@@ -11,7 +11,7 @@
 #include "Cell.h"
 #include "CellTag.h"
 #include <mcMd/chemistry/Atom.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/IntVector.h>
 #include <util/containers/DArray.h>
 #include <util/containers/FSArray.h>
@@ -25,6 +25,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * A cell list for Atom objects in a periodic system boundary. 

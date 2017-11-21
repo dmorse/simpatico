@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>    // base class
-#include <util/boundary/Boundary.h>       // typedef
+#include <simp/boundary/Boundary.h>       // typedef
 
 #include <iostream>
 
@@ -17,6 +17,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class Simulation;
    class MdSystem;

@@ -12,7 +12,7 @@
 
 #include <util/param/ParamComposite.h>        // base class
 
-#include <util/boundary/Boundary.h>           // member (typedef)
+#include <simp/boundary/Boundary.h>           // member (typedef)
 #include <mcMd/chemistry/Molecule.h>          // member template parameter
 
 #include <util/containers/DArray.h>           // member template
@@ -33,11 +33,13 @@ namespace Util {
 namespace Simp {
    class EnergyEnsemble;
    class BoundaryEnsemble;
-} 
+}
+ 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
     * Observer interface. Classes that need to be notified

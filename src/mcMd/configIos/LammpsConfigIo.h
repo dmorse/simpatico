@@ -8,18 +8,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/configIos/ConfigIo.h> // base class
-#include <util/boundary/Boundary.h>   // base class
+#include <mcMd/configIos/ConfigIo.h>  // base class
+#include <simp/boundary/Boundary.h>   
 #include <util/space/Vector.h>   
 
 namespace McMd
 {
 
-   using namespace Util;
-
    class Simulation;
    class System;
    
+   using namespace Util;
+   using namespace Simp;
+
    /**
    * ConfigIo for Lammps data files.
    *

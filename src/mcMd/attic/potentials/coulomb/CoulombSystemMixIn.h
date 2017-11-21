@@ -10,7 +10,7 @@
 
 #include <mcMd/chemistry/AtomType.h>   // Member template parameter
 #include <util/containers/Array.h>     // member class template
-#include <util/boundary/Boundary.h>    // typedef
+#include <simp/boundary/Boundary.h>    // typedef
 
 namespace McMd
 {

@@ -5,8 +5,8 @@
 #include <test/UnitTestRunner.h>
 
 #include <mcMd/neighbor/CellList.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/random/Random.h>
 #include <util/containers/RArray.h>
@@ -14,6 +14,7 @@
 #include <iostream>
 
 using namespace Util;
+using namespace Simp;
 using namespace McMd;
 
 

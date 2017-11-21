@@ -11,16 +11,16 @@
 #include "ClusterHistogram.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/species/Species.h>
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/misc/ioUtil.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Tensor.h>
 #include <util/containers/DArray.h>
 #include <sstream>
@@ -29,6 +29,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    ClusterHistogram::ClusterHistogram(System& system) 

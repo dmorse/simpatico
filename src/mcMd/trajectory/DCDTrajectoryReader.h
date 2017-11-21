@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/trajectory/TrajectoryReader.h> // base class
-#include <util/boundary/Boundary.h>           // typedef
+#include <simp/boundary/Boundary.h>           // typedef
 #include <util/containers/DArray.h>           // member
 
 #include <fstream>
@@ -18,6 +18,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
    
    /**
    * TrajectoryReader for CHARMM ".dcd" data files. 

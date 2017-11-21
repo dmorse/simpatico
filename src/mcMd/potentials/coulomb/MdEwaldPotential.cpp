@@ -11,20 +11,21 @@
 #include "MdEwaldPotential.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
+#include <mcMd/chemistry/AtomType.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 #include <util/math/Constants.h>
-#include <stdlib.h>
-
-#include <util/boundary/Boundary.h>
-#include <cmath>
 #include <util/containers/Array.h>
-#include <mcMd/chemistry/AtomType.h>
+
+#include <cmath>
+#include <stdlib.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

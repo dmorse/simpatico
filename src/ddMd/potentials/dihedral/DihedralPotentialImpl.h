@@ -220,14 +220,13 @@ namespace DdMd
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
-#include <util/global.h>
-
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 //#include <util/accumulators/setToZero.h>
+#include <util/global.h>
 
 #include <fstream>
 
@@ -235,6 +234,7 @@ namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

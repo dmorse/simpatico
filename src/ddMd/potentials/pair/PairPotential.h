@@ -5,7 +5,7 @@
 #include <ddMd/neighbor/CellList.h>     // member
 #include <ddMd/neighbor/PairList.h>     // member
 #include <ddMd/misc/DdTimer.h>          // member
-#include <util/boundary/Boundary.h>     // member (typedef)
+#include <simp/boundary/Boundary.h>     // member (typedef)
 #include <util/global.h>
 
 #include <iostream>
@@ -28,7 +28,9 @@ namespace DdMd
    class Simulation;
    class AtomStorage;
    class Domain;
+
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Abstract base class for computing nonbonded pair forces and energies.

@@ -16,7 +16,7 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <simp/ensembles/BoundaryEnsemble.h>
-#include <util/boundary/OrthorhombicBoundary.h>
+#include <simp/boundary/OrthorhombicBoundary.h>
 
 namespace McMd
 {

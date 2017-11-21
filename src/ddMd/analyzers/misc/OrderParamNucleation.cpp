@@ -11,7 +11,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/math/Constants.h>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
@@ -21,6 +21,7 @@ namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    OrderParamNucleation::OrderParamNucleation(Simulation& simulation) 

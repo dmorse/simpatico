@@ -19,7 +19,7 @@
 #ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
-#include <util/boundary/Boundary.h>         // typedef
+#include <simp/boundary/Boundary.h>         // typedef
 
 namespace DdMd
 {
@@ -30,6 +30,7 @@ namespace DdMd
    template <int N> class GroupCollector;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Base class to write a trajectory to a single file.

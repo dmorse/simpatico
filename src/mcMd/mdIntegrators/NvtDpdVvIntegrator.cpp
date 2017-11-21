@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <simp/ensembles/EnergyEnsemble.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/space/Vector.h>
 

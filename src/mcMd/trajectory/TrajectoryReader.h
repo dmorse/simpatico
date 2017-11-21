@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/boundary/Boundary.h>  // typedef
+#include <simp/boundary/Boundary.h>  // typedef
 #include <util/global.h>
 
 #include <iostream>
@@ -16,10 +16,11 @@
 namespace McMd
 {
 
-   using namespace Util;
-
    class Simulation;
    class System;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Trajectory file reader (base class).

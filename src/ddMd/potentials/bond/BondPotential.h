@@ -2,7 +2,7 @@
 #define DDMD_BOND_POTENTIAL_H
 
 #include <ddMd/potentials/Potential.h>        // base class
-#include <util/boundary/Boundary.h>           // typedef
+#include <simp/boundary/Boundary.h>           // typedef
 
 #include <iostream>
 
@@ -16,10 +16,11 @@
 namespace DdMd
 {
 
-   using namespace Util;
-
    class Simulation;
    template <int N> class GroupStorage;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Abstract base class for computing bond forces and energies.

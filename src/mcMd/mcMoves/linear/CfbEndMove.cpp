@@ -15,13 +15,14 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <simp/species/Linear.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor

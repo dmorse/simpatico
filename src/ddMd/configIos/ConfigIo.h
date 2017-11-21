@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <util/boundary/Boundary.h>              // typedef
+
 #include <ddMd/storage/AtomStorage.h>            // member
 #ifdef SIMP_BOND
 #include <ddMd/storage/BondStorage.h>            // inline function
@@ -20,6 +20,7 @@
 #ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>        // inline function
 #endif 
+#include <simp/boundary/Boundary.h>              // typedef
 #include <util/containers/DArray.h>              // member
 
 #include <ddMd/chemistry/MaskPolicy.h>
@@ -35,6 +36,7 @@ namespace DdMd
    template <int N> class GroupCollector;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Abstract reader/writer for configuration files.

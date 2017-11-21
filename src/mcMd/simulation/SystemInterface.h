@@ -9,8 +9,8 @@
 */
 
 #include <mcMd/simulation/System.h>               // parent (provides typedefs)
-#include <util/boundary/Boundary.h>               // member
 #include <mcMd/chemistry/Molecule.h>              // member template parameter
+#include <simp/boundary/Boundary.h>               // member
 
 #include <util/containers/DArray.h>               // member template
 #include <util/containers/PArrayIterator.h>       // inline function begin()
@@ -25,6 +25,7 @@ namespace McMd
    class Simulation;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * An interface to a System.

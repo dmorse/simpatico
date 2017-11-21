@@ -15,9 +15,9 @@
 
 #include <simp/species/Species.h>
 #include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/boundary/Boundary.h>
 
 #include <util/archives/Serializable_includes.h>
-#include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/misc/FileMaster.h>
 #include <util/global.h>

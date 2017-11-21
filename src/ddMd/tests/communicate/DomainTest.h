@@ -1,12 +1,12 @@
 #ifndef DDMD_DOMAIN_TEST_H
 #define DDMD_DOMAIN_TEST_H
 
-#include <util/global.h>
 #include <ddMd/communicate/Domain.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/format/Int.h>
 #include <util/mpi/MpiLogger.h>
+#include <util/global.h>
 
 #ifdef UTIL_MPI
 #ifndef TEST_MPI
@@ -21,6 +21,7 @@
 #include <iostream>
 
 using namespace Util;
+using namespace Simp;
 using namespace DdMd;
 
 class DomainTest : public ParamFileTest

@@ -8,10 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/containers/RArray.h>          // member template
 #include <ddMd/chemistry/AtomType.h>         // member template parametr
-#include <util/boundary/Boundary.h>          // typedef
 #include <ddMd/chemistry/MaskPolicy.h>       // enumeration
+#include <simp/boundary/Boundary.h>          // typedef
+#include <util/containers/RArray.h>          // member template
 
 namespace Util { 
    class FileMaster;

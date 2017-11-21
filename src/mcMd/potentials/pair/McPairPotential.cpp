@@ -8,10 +8,9 @@
 #include "McPairPotential.h"
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
-#include <util/boundary/Boundary.h> 
 #include <mcMd/chemistry/Atom.h> 
 #include <mcMd/chemistry/Molecule.h> 
-
+#include <simp/boundary/Boundary.h> 
 #include <util/global.h> 
 
 #include <fstream>
@@ -20,6 +19,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.

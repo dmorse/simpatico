@@ -10,7 +10,7 @@
 
 #include "Cell.h"
 #include <ddMd/chemistry/Atom.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
 #include <util/containers/GArray.h>
@@ -20,6 +20,7 @@ namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * A cell list used only to identify nearby atom pairs.
