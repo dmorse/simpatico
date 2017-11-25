@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/param/ParamComposite.h>
 #include <util/global.h>
 #include <cmath>

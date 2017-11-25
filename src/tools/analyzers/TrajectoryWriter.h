@@ -9,7 +9,7 @@
 */
 
 #include <tools/analyzers/Analyzer.h>        // base class
-#include <util/boundary/Boundary.h>          // typedef
+#include <simp/boundary/Boundary.h>          // typedef
 
 namespace Tools
 {
@@ -20,6 +20,7 @@ namespace Tools
    template <int N> class GroupStorage;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Based class for classes that write trajectories to a single file.

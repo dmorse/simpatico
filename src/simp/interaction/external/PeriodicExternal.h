@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/param/ParamComposite.h>
