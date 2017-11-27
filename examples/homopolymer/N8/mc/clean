@@ -1,0 +1,9 @@
+#!/bin/bash
+./atomDisplace/clean
+./cfbDoubleRebridge/clean
+./cfbEnd/clean
+./cfbReptate/clean
+./combine/clean
+./hybridMd/clean
+./generate/clean
+

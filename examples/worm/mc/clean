@@ -1,0 +1,4 @@
+#!/bin/bash
+./AtomDisp/clean
+./HybridMd/clean
+./Reptation/clean
