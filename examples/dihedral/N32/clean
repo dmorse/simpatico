@@ -1,0 +1,3 @@
+#!/bin/bash
+./md/clean
+./dd/clean
