@@ -9,8 +9,8 @@ Usage:
 
 Parallel NVE md simulation on 4 processors:
 
-    mpirun -np 4 ddSim_a_d -e -p param -c commands
+    mpirun -np 4 ddSim -e -p param -c commands
 
 Restarting and extending previous simulation
 
-    mpirun -np 4 ddSim_a_d -e -r restart -c restart.cmd
+    mpirun -np 4 ddSim -e -r restart -c restart.cmd

@@ -12,8 +12,8 @@ Change directory (cd) to an example subdirectory, then enter:
 
 MC simulation:
 
-    mcSim_a_d -e -p param.nve -c commands
+    mcSim -e -p param.nve -c commands
 
 Restart and extend previous simulation
 
-    mdcim_a_d -e -r restart -c restart.cmd
+    mdcim -e -r restart -c restart.cmd
