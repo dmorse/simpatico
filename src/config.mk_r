@@ -24,7 +24,7 @@
 # This file contains definitions of makefile variables that specify:
 # 
 #  - Absolute paths for the simpatico directory and some subdirectories
-#  - Identifiers for the choice of compiler and MPI library
+#  - Identifiers for the choice of compiler and os/package manager
 #  - Compiler options and flags for specific compilers
 #  - A variable UTIL_MPI that, if defined, enables MPI
 #  - A variable UTIL_CXX11 that, if defined, enables use of C++11
@@ -86,26 +86,30 @@ BIN_DIR=$(ROOT_DIR)/bin
 #UTIL_CXX11=1
 
 #-----------------------------------------------------------------------
-# Compiler and MPI library identifiers:
+# Compiler, Operating System, and MPI library identifiers:
 #
 # Users may select a compiler and a MPI library implementation by setting
 # values for the strings:
 #
 # COMPILER - string identifier for the compiler (e.g., gcc or intel)
-# MPI_LIB  - string identifier for the MPI library (e.g., mpicxx or openmpi)
+# OS       - string identifier for operating system and package manager
+#
+# Allowed values:
+# COMPILER : gcc, intel
+# OS       : generic, mac-port
 #
 # Each valid combination of these strings selects a block of definitions 
 # for variables that define the name of the compiler and the string of 
-# options that should be passed to the compiler and linker.
+# options that should be passed to the compiler and linker. 
+# The OS=generic options works for generic unix systems in which all
+# include files and libraries are placed in standard locations as defined
+# by shell environment variables. 
 
 COMPILER=gcc
-MPI_LIB=mpicxx
+OS=generic
 
 # ------------------------------------------------------------------------
-# Variables used to define makefile pattern rules:
-#
-# Each of the following blocks of variable definitions sets values of the 
-# following variables for a particular compiler and mpi library:
+# The following variables are used directly in makefile pattern rules.
 #
 # CXX         - C++ compiler executable name (must be in the users PATH)
 # CXXFLAGS    - flags used to compile source files, without linking
@@ -138,11 +142,10 @@ MPI_LIB=mpicxx
 # options that define only the preprocessor macro definitions used in 
 # that namespace, which are defined using the compiler "-D" option.
 # ------------------------------------------------------------------------
-# Settings for specific compilers and mpi libraries:
+# Variable definitions for specific COMPILER and OS identifier combinations:
 
 # Global default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
-
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
 else
@@ -159,43 +162,37 @@ ifeq ($(COMPILER),gcc)
    TESTFLAGS= -Wall $(CXX_STD)
    AR=ar
    ifneq ($(UTIL_MPI),1)
-      # Gnu g++ (no mpi)
       CXX=g++
    else
-      ifeq ($(MPI_LIB),mpicxx)
-         # Gnu g++ using a module and mpicxx macro
-         CXX=mpicxx
-      endif
-      ifeq ($(MPI_LIB),openmpi)
-         # Gnu g++ using the openmpi library explicitly
-         CXX=g++
-         INCLUDES+= -I/opt/local/include/openmpi
-         LDFLAGS+= -L/opt/local/lib -lmpi_cxx -lmpi
-      endif
+      CXX=mpicxx
    endif
 endif
 
 # -- Intel ICC compiler ---
 ifeq ($(COMPILER),intel)
-   AR=xiar
+   CXXFLAGS= -ansi $(CXX_STD)
    WINLINE=
+   TESTFLAGS= -ansi $(CXX_STD)
+   AR=xiar
    ifneq ($(UTIL_MPI),1)
       # Serial intel icpc compiler (no mpi)
       CXX=icpc
-      CXXFLAGS= -fast -ansi $(CXX_STD)
-      TESTFLAGS= -ansi $(CXX_STD)
+      CXXFLAGS=+ -fast 
    else
-      ifeq ($(MPI_LIB),mpicxx)
-         # Intel icpc compiler using linux modules and mpicxx script
-         CXX=mpicxx
-         CXXFLAGS= -ansi $(CXX_STD)
-         TESTFLAGS= -ansi $(CXX_STD)
-      endif
+      CXX=mpicxx
+   endif
+endif
+
+# ---- Paths for MPI Library ----
+ifeq ($(UTIL_MPI),1)
+   ifeq ($(OS),mac-port)
+      INCLUDES+= -I/opt/local/include/openmpi-mp
+      LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
    endif
 endif
 
 #-----------------------------------------------------------------------
-# Automatic dependency generation (comment out to disabled)
+# Automatic dependency generation (comment out to disable)
 #
 # Automatic dependency is enabled by default and should normally be 
 # left enabled. Automatic dependency generation allows the build system
