@@ -19,4 +19,4 @@ Serial NVT MD simulation:
 
 Restarting and extending previous simulation
 
-    mdSim -e -r restart -c restart.cmd
+    mdSim -e -r restart -c commands.rst

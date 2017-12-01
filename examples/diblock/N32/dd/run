@@ -13,7 +13,7 @@ if [ ! -d "tmp" ]; then
    mkdir tmp
 fi
 mv -f out/* tmp
-mpirun -np 6 ddSim -e -r restart -c restart.cmd
+mpirun -np 6 ddSim -e -r restart -c commands.rst
 if [ ! -d "out.rst" ]; then
    mkdir out.rst
 fi

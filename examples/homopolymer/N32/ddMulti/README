@@ -9,5 +9,5 @@ Run simulation of two independent systems on 8 processors:
 
 Restart above simulation:
 
-    mpirun -np 8 ddSim -s 2 -r restart -c restart.cmd
+    mpirun -np 8 ddSim -s 2 -r restart -c commands.rst
 

@@ -16,4 +16,4 @@ MC simulation:
 
 Restart and extend previous simulation
 
-    mdcim -e -r restart -c restart.cmd
+    mdcim -e -r restart -c commands.rst

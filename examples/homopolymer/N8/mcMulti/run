@@ -10,7 +10,7 @@ cat 1/log
 mv 0/log 0/mid
 mv 1/log 1/mid
 mv 2/log 2/mid
-mpirun -np 3 mcSim_m -e -r restart -c restart.cmd
+mpirun -np 3 mcSim_m -e -r restart -c commands.rst
 echo " "
 echo "Log file for homopolymer/N8/mcMulti/1 after restart"
 cat 1/log

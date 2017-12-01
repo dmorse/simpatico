@@ -18,4 +18,4 @@ NVT DPD simulation
 
 Restarting NVE or NVT MD simulations
 
-    mdSim -e -r restart -c restart.cmd
+    mdSim -e -r restart -c commands.rst

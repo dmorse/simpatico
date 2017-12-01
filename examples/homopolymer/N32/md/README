@@ -4,5 +4,5 @@ To run NVE md simulation, with log information to screen:
 
 To restart the simulation and continue to 25000 steps
 
-   mdSim -e -r restart -c restart.cmd
+   mdSim -e -r restart -c commands.rst
 
