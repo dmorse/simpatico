@@ -6,39 +6,35 @@ branches:
   only:
    - master
    - devel
+   - test
 
 matrix:
   include:
     - os: linux
       compiler: gcc
-      env: SMP_G=1
+      env: SIMP_DEBUG=1 SIMP_PROG=mcMd
     - os: linux
-      compiler: clang
-      env: SMP_G=0
+      compiler: gcc
+      env: SIMP_DEBUG=1 SIMP_PROG=ddMd
+    - os: linux
+      compiler: gcc
+      env: SIMP_DEBUG=1 SIMP_PROG=mcMd_mpi
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install python; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install openmpi-bin; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi-dev; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi1.6; fi
+  - sudo apt-get --yes install python; fi
+  - sudo apt-get --yes install openmpi-bin; fi
+  - sudo apt-get --yes install libopenmpi-dev; fi
+  - sudo apt-get --yes install libopenmpi1.6; fi
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
   - export PATH=$PATH:$(pwd)/bin
 
 install:
   - ./setup
-  - ./configure -g$SMP_G -a1 -d1 -e1
-  - make mcMd
-  - make tools
-  - make ddMd
-  - make mcMd-mpi
+  - ./configure -g$SIMP_DEBUG -a1 -d1 -e1
+  - if [ "SIMP_PROG" == "mcMd" ]; then make mcMd; fi
+  - if [ "SIMP_PROG" == "mcMd" ]; then make tools; fi
+  - if [ "SIMP_PROG" == "ddMd" ]; then make ddMd; fi
+  - if [ "SIMP_PROG" == "mcMd_mpi" ]; then make mcMd-mpi; fi
 
 script:
-  - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run.nve && ./clean
-  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean
-  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti && ./run && ./clean
-  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti && ./run && ./clean
+  ./.travis.script
