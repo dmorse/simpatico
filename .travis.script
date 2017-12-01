@@ -13,7 +13,8 @@ if [ "$SIMP_PROG" == "ddMd" ]; then
    cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
 fi
 
-if [ "$SIMP_PROG" == "mcMd_mpi" ]; then 
+if [ "$SIMP_PROG" == "mcMdMpi" ]; then 
+  cd $TRAVIS_BUILD_DIR/bld/parallel/mcMd/tests && make run 
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti && ./run && ./clean
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti && ./run && ./clean
 fi

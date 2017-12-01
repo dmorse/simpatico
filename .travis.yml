@@ -18,7 +18,7 @@ matrix:
       env: SIMP_DEBUG=1 SIMP_PROG=ddMd
     - os: linux
       compiler: gcc
-      env: SIMP_DEBUG=1 SIMP_PROG=mcMd_mpi
+      env: SIMP_DEBUG=1 SIMP_PROG=mcMdMpi
 
 before_install:
   - sudo apt-get --yes install python
@@ -34,7 +34,7 @@ install:
   - if [ "$SIMP_PROG" == "mcMd" ]; then make mcMd; fi
   - if [ "$SIMP_PROG" == "mcMd" ]; then make tools; fi
   - if [ "$SIMP_PROG" == "ddMd" ]; then make ddMd; fi
-  - if [ "$SIMP_PROG" == "mcMd_mpi" ]; then make mcMd-mpi; fi
+  - if [ "$SIMP_PROG" == "mcMdMpi" ]; then make mcMd-mpi; fi
 
 script:
   ./.travis.script
