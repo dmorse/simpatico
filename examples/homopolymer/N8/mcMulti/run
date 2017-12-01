@@ -4,15 +4,15 @@ mpirun -np 3 mcSim_m -e -p param -c commands
 cp -R 0/out 0/mid
 cp -R 1/out 1/mid
 cp -R 2/out 2/mid
-Echo " "
-Echo "Log file for homopolymer/N8/mcMulti/1"
+echo " "
+echo "Log file for homopolymer/N8/mcMulti/1"
 cat 1/log
 mv 0/log 0/mid
 mv 1/log 1/mid
 mv 2/log 2/mid
 mpirun -np 3 mcSim_m -e -r restart -c restart.cmd
-Echo " "
-Echo "Log file for homopolymer/N8/mcMulti/1 after restart"
+echo " "
+echo "Log file for homopolymer/N8/mcMulti/1 after restart"
 cat 1/log
 mv 0/log 0/out
 mv 1/log 1/out
