@@ -31,10 +31,10 @@ before_install:
 install:
   - ./setup
   - ./configure -g$SIMP_DEBUG -a1 -d1 -e1
-  - if [ "SIMP_PROG" == "mcMd" ]; then make mcMd; fi
-  - if [ "SIMP_PROG" == "mcMd" ]; then make tools; fi
-  - if [ "SIMP_PROG" == "ddMd" ]; then make ddMd; fi
-  - if [ "SIMP_PROG" == "mcMd_mpi" ]; then make mcMd-mpi; fi
+  - if [ "$SIMP_PROG" == "mcMd" ]; then make mcMd; fi
+  - if [ "$SIMP_PROG" == "mcMd" ]; then make tools; fi
+  - if [ "$SIMP_PROG" == "ddMd" ]; then make ddMd; fi
+  - if [ "$SIMP_PROG" == "mcMd_mpi" ]; then make mcMd-mpi; fi
 
 script:
   ./.travis.script
