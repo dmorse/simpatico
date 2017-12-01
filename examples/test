@@ -14,7 +14,7 @@ fi
 #-----------------------------------------------------------------------
 
 cd $SCRIPT_DIR/homopolymer/N8/md
-./run.nve 
+./run
 ./clean
 
 cd $SCRIPT_DIR/homopolymer/N8/mc/combine 
@@ -26,5 +26,9 @@ cd $SCRIPT_DIR/homopolymer/N8/mdMulti
 ./clean
 
 cd $SCRIPT_DIR/homopolymer/N8/mdMulti
+./run
+./clean
+
+cd $SCRIPT_DIR/diblock/N32/dd
 ./run
 ./clean

@@ -1,7 +1,0 @@
-#!/bin/bash
-set -e
-mdSim -q -e -p param.nve -c commands 
-cp -R out mid
-mdSim -q -e -r restart -c restart.cmd
-
-

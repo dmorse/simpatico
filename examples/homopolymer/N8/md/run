@@ -1,0 +1,15 @@
+#!/bin/bash
+set -ev
+
+MODE=nve
+if [ $# -gt 0 ]; then
+   MODE=$1
+fi
+PARAM=param.$MODE
+echo "Parameter file : " $PARAM
+
+mdSim -q -e -p $PARAM -c commands 
+cp -R out mid
+mdSim -q -e -r restart -c restart.cmd
+
+

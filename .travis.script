@@ -1,20 +1,21 @@
 #!/bin/bash
 set -ev
 
-if [ "$SIMP_PROG" == "mcMd" ]; then 
+if [ "$SMP_PROG" == "mcMd" ]; then 
    cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run
    cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run
    cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run
    cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run
-   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run.nve && ./clean
+   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run && ./clean
    cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean
 fi
 
-if [ "$SIMP_PROG" == "ddMd" ]; then 
+if [ "$SMP_PROG" == "ddMd" ]; then
    cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
+   cd $TRAVIS_BUILD_DIR/examples/diblock/N32/dd && ./run && ./clean
 fi
 
-if [ "$SIMP_PROG" == "mcMdMpi" ]; then 
+if [ "$SMP_PROG" == "mcMdMpi" ]; then 
   cd $TRAVIS_BUILD_DIR/bld/parallel/mcMd/tests && make run 
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti && ./run && ./clean
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti && ./run && ./clean
