@@ -30,6 +30,7 @@ install:
   - make mcMd
   - make tools
   - make ddMd
+  - make mcMd-mpi
 
 script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
