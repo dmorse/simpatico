@@ -21,10 +21,10 @@ matrix:
       env: SIMP_DEBUG=1 SIMP_PROG=mcMd_mpi
 
 before_install:
-  - sudo apt-get --yes install python; fi
-  - sudo apt-get --yes install openmpi-bin; fi
-  - sudo apt-get --yes install libopenmpi-dev; fi
-  - sudo apt-get --yes install libopenmpi1.6; fi
+  - sudo apt-get --yes install python
+  - sudo apt-get --yes install openmpi-bin
+  - sudo apt-get --yes install libopenmpi-dev
+  - sudo apt-get --yes install libopenmpi1.6
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
   - export PATH=$PATH:$(pwd)/bin
 
