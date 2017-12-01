@@ -21,9 +21,9 @@ matrix:
       env: SMP_G=1 SMP_M=1 SMP_PROG=mcMdMpi
 
 before_install:
-  - if [ "SMP_M" == "1" ]; then sudo apt-get --yes install openmpi-bin; fi
-  - if [ "SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi-dev; fi
-  - if [ "SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi1.6; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install openmpi-bin; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi-dev; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi1.6; fi
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
   - export PATH=$PATH:$(pwd)/bin
 
