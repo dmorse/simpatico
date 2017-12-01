@@ -55,7 +55,8 @@ Simulation{
     tauT              0.5
     tauP              0.5
     mode              cubic
-    saveInterval      0
+    saveInterval      2000
+    saveFileName      restart
   }
   Random{
     seed              8012457890

@@ -50,7 +50,7 @@ Simulation{
   }
   NveIntegrator{
     dt                0.005
-    saveInterval      4000
+    saveInterval      2000
     saveFileName      restart
   }
   Random{
