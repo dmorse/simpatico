@@ -30,8 +30,8 @@ before_install:
 install:
   - ./setup
   - ./configure -g$SMP_G -a1 -d1 -e1
+  - make tools
   - if [ "$SMP_PROG" == "mcMd" ]; then make mcMd; fi
-  - if [ "$SMP_PROG" == "mcMd" ]; then make tools; fi
   - if [ "$SMP_PROG" == "ddMd" ]; then make ddMd; fi
   - if [ "$SMP_PROG" == "mcMdMpi" ]; then make mcMd-mpi; fi
 

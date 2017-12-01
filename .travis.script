@@ -12,7 +12,7 @@ fi
 
 if [ "$SMP_PROG" == "ddMd" ]; then
    cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
-   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N32/dd && ./run && ./clean
+   cd $TRAVIS_BUILD_DIR/examples/diblock/N32/dd && ./run && ./clean
 fi
 
 if [ "$SMP_PROG" == "mcMdMpi" ]; then 
