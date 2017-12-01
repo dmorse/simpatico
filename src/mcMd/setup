@@ -9,7 +9,18 @@
 # be invoked from the src/mcMd directory in which this script is located, 
 # i.e., when src/mcMd is the current working directory of the invoking shell.
 #
-# ------------------------------------------------------------------------
+#------------------------------------------------------------------------
+# Set working directory to directory containing script, if not already.
+
+unset CDPATH
+SCRIPT_DIR="$( \cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
+if [ "$SCRIPT_DIR" != "$PWD" ]; then
+   echo "Resetting working directory to directory containing script"
+   \cd $SCRIPT_DIR
+fi
+
+#------------------------------------------------------------------------
+
 # Create user-modifiable copies of default respository *_r files versions
 
 # Namespace level config file

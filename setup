@@ -5,7 +5,7 @@
 #
 # This script should be run once before the first time the program is
 # compiled, to create files that are required by the build system but
-# not contained in the repository. It MUST be invoked from the root 
+# not contained in the repository. It should be invoked from the root 
 # simpatico/ directory in which this script is located.
 # 
 # This script:
@@ -41,8 +41,27 @@
 #
 # 5) Install the makeDep dependency-maker script in the bin/ directory
 #
+# 6) Sets and exports the SIMPATICO_DIR shell environment variable
+#
 #========================================================================
+# Set working directory to directory containing script, if not already.
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
+if [ "$SCRIPT_DIR" != "$PWD" ]; then
+   echo "Resetting working directory to directory containing script:"
+   unset CDPATH
+   \cd $SCRIPT_DIR
+fi
+
+#========================================================================
+# Set and export SIMPATICO_DIR
+
+SIMPATICO_DIR=$PWD
+export SIMPATICO_DIR
+
+#=======================================================================
 # Setup src/ source file directory tree
+
 
 # Install main configuration file src/config.mk, by copying src/config.mk_r
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
@@ -54,15 +73,15 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
 # Setup src/util/ directory
 
 # Namespace config.mk in src/ directory (for in-source builds)
-cp src/util/config.mk_r src/util/config.mk
+cp ./src/util/config.mk_r src/util/config.mk
 
 # Copy typedef for the class that defines boundary conditions
 cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 
-(cd src/simp; ./setup)
-(cd src/mcMd; ./setup)
-(cd src/ddMd; ./setup)
-(cd src/tools; ./setup)
+(cd ./src/simp; ./setup)
+(cd ./src/mcMd; ./setup)
+(cd ./src/ddMd; ./setup)
+(cd ./src/tools; ./setup)
 
 #========================================================================
 # Setup bld/serial directory tree (out-of-source builds with MPI disabled)
@@ -130,7 +149,7 @@ cp src/configure bld/parallel/configure
 
 # Enable UTIL_MPI by default in bld/parallel (silently).
 # (Run in subprocess to avoid permanentaly changing directory)
-(cd bld/parallel; ./configure -m1 &> /dev/null)
+(cd ./bld/parallel; ./configure -m1 &> /dev/null)
 
 #========================================================================
 # Install scripts
@@ -138,3 +157,4 @@ cp src/configure bld/parallel/configure
 # Install a copy of the makeDep dependency-maker script in bin/
 cp scripts/python/makeDep bin/makeDep
 
+#========================================================================

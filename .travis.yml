@@ -37,3 +37,5 @@ script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run && ./clean
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean

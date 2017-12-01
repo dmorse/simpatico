@@ -50,10 +50,10 @@ MdSimulation{
     }
   }
   AnalyzerManager{
-    baseInterval                           10
+    baseInterval                          10
 
     LogProgress{
-      interval                           5000
+      interval                          2000
     }
 
     MdEnergyOutput{
@@ -87,10 +87,10 @@ MdSimulation{
     }
 
     RDF{
-      interval                         10000
+      interval                          5000
       outputFileName                     RDF
-      max                                5.0
-      nBin                               500
+      max                                4.0
+      nBin                               400
       selector                         inter   -1    -1
     }
 
@@ -135,7 +135,7 @@ MdSimulation{
     }
 
   }
-  saveInterval                 10000
+  saveInterval                  5000
   saveFileName               restart
 }
 
