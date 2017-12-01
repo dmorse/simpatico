@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+mpirun -np 3 mdSim_m -e -p param -c commands 
+cp -R 0/out 0/mid
+cp -R 1/out 1/mid
+cp -R 2/out 2/mid
+mpirun -np 3 mdSim_m -e -r restart -c restart.cmd
+
+

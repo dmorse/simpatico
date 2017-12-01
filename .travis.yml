@@ -30,6 +30,7 @@ install:
   - make mcMd
   - make tools
   - make ddMd
+  - make mcMd-mpi
 
 script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
@@ -37,3 +38,7 @@ script:
   - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run 
   - cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run.nve && ./clean
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti && ./run && ./clean
+  - cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti && ./run && ./clean
