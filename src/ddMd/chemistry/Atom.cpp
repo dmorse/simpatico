@@ -18,9 +18,10 @@ namespace DdMd
    using namespace Util;
 
    /*
-   * Initialize hasAtomContext_ flag to true. This enable AtomContext info by default.
+   * Initialize hasAtomContext_ flag to false. This disables storage and
+   * communication of AtomContext information by default.
    */
-   bool Atom::hasAtomContext_ = true;
+   bool Atom::hasAtomContext_ = false;
 
    /*
    * Enable (true) or disable (false) use of AtomContext data.
@@ -29,7 +30,7 @@ namespace DdMd
    {  hasAtomContext_ = hasAtomContext; }
 
    /*
-   * Constructor (private, used by AtomArray).
+   * Constructor (private, used only by AtomArray).
    */
    Atom::Atom() :
      position_(0.0),
@@ -79,6 +80,8 @@ namespace DdMd
    }
 
    #ifdef UTIL_MPI
+   // Atom Exchange
+
    /*
    * Pack a local Atom for exchange of ownership.
    */
@@ -106,7 +109,7 @@ namespace DdMd
    }
 
    /*
-   * Receive ownership of an Atom.
+   * Unpack and receive ownership of an Atom.
    */
    void Atom::unpackAtom(Buffer& buffer)
    {
@@ -157,6 +160,8 @@ namespace DdMd
       return size;
    }
 
+   // Ghost Exchange
+
    /*
    * Pack data required for a ghost Atom for sending.
    */
@@ -167,6 +172,9 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<unsigned int>(plan().flags());
+      if (hasAtomContext_) {
+         buffer.pack<AtomContext>(context());
+      }
       buffer.incrementSendSize();
    }
 
@@ -184,6 +192,9 @@ namespace DdMd
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
+      if (hasAtomContext_) {
+         buffer.unpack<AtomContext>(context());
+      }
       buffer.decrementRecvSize();
    }
 
@@ -196,8 +207,13 @@ namespace DdMd
       size += 2*sizeof(int); 
       size += sizeof(Vector); 
       size += sizeof(unsigned int);
+      if (hasAtomContext_) {
+         size += sizeof(AtomContext);
+      }
       return size;
    }
+
+   // Ghost Position Updates
 
    /*
    * Pack updates ghost position.
@@ -216,6 +232,8 @@ namespace DdMd
       buffer.unpack<Vector>(position());
       buffer.decrementRecvSize();
    }
+
+   // Force Updates
 
    /*
    * Pack ghost force.
@@ -236,6 +254,26 @@ namespace DdMd
       force() += f;
       buffer.decrementRecvSize();
    }
-   #endif
+   #endif // ifdef UTIL_MPI
+
+   /*
+   * Copy ghost atom data from sendAtom to this Atom.
+   */
+   void Atom::copyLocalGhost(const Atom& sendAtom)
+   {
+      setId(sendAtom.id());
+      setTypeId(sendAtom.typeId());
+      plan().setFlags(sendAtom.plan().flags());
+      position() = sendAtom.position();
+      if (hasAtomContext_) {
+         context() = sendAtom.context();
+      }
+   }
+
+   /*
+   * Copy update position of local ghost from sendAtom to this.
+   */
+   void Atom::copyLocalUpdate(const Atom& sendAtom)
+   {  position_ = sendAtom.position(); }
 
 }

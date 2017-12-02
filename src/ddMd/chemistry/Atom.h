@@ -100,7 +100,7 @@ namespace DdMd
       /**
       * Assignment.
       */
-      Atom& operator = (const Atom& other);
+      Atom& operator = (Atom const & other);
 
       /**
       * Reset integer members to initial null values.
@@ -259,9 +259,10 @@ namespace DdMd
       #endif
       //@}
 
-      #ifdef UTIL_MPI
       /// \name Pack and Unpack Methods (Interprocessor Communication)
       //@{
+
+      #ifdef UTIL_MPI
 
       /**
       * Pack an Atom into a send buffer, for exchange of ownership.
@@ -334,8 +335,23 @@ namespace DdMd
       */
       void unpackForce(Buffer& buffer);
 
+      #endif // ifdef UTIL_MPI
+
+      /**
+      * Copies data from local atom to update this ghost atom.
+      *
+      * \param sendAtom Local atom to be copied to this atom.
+      */
+      void copyLocalGhost(Atom const & sendAtom);
+
+      /**
+      * Copies position of local atom to update this ghost atom.
+      * 
+      * \param sendAtom Local atom to be copied to update this atom.
+      */
+      void copyLocalUpdate(Atom const & sendAtom);
+
       //@}
-      #endif
 
    private:
 
@@ -379,7 +395,7 @@ namespace DdMd
 
       #ifdef UTIL_32BIT
       /**
-      * On machines with 4 byte pointer, this pads the size to 64 bytes.
+      * On machines with 32bit pointer, pads sizeof(Atom) to 64 bytes.
       */
       int pad_;
       #endif
@@ -400,7 +416,7 @@ namespace DdMd
       *
       * Private and not implemented to prohibit copy construction.
       */
-      Atom(const Atom& other);
+      Atom(Atom const & other);
 
    // friends:
    
@@ -455,7 +471,7 @@ namespace DdMd
    /*
    * Get position by const reference.
    */
-   inline const Vector& Atom::position() const
+   inline Vector const & Atom::position() const
    {  return position_; }
 
    /*
@@ -467,7 +483,7 @@ namespace DdMd
    /*
    * Get force by const reference.
    */
-   inline const Vector& Atom::force() const
+   inline Vector const & Atom::force() const
    {  return force_; }
 
    /*
@@ -496,7 +512,7 @@ namespace DdMd
    /*
    * Get velocity by const reference.
    */
-   inline const Vector& Atom::velocity() const
+   inline Vector const & Atom::velocity() const
    { return arrayPtr_->velocities_[localId_ >> 1]; }
 
    /*
@@ -508,7 +524,7 @@ namespace DdMd
    /*
    * Get the Mask by const reference.
    */
-   inline const Mask& Atom::mask() const
+   inline Mask const & Atom::mask() const
    {  return arrayPtr_->masks_[localId_ >> 1]; }
 
    /*
@@ -520,7 +536,7 @@ namespace DdMd
    /*
    * Get the communication plan by const reference.
    */
-   inline const Plan& Atom::plan() const
+   inline Plan const & Atom::plan() const
    {  return arrayPtr_->plans_[localId_ >> 1]; }
 
    /*
@@ -549,7 +565,7 @@ namespace DdMd
    /*
    * Get AtomContext by const reference.
    */
-   inline const AtomContext& Atom::context() const
+   inline AtomContext const & Atom::context() const
    {
       if (!hasAtomContext_) {
          UTIL_THROW("Atom does not have AtomContext");

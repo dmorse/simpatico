@@ -64,7 +64,7 @@ namespace DdMd
                   GroupDistributor<N>& distributor) 
    {
       if (domain().isMaster()) {  
-         int nGroup;  // Total number of groups in file
+         int nGroup = 0;  // Total number of groups in file
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
