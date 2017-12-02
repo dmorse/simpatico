@@ -10,4 +10,4 @@ MC simulation:
 
 Restarting and extending above simulations
 
-    mcSim -e -r restart -c restart.cmd
+    mcSim -e -r restart -c commands.rst

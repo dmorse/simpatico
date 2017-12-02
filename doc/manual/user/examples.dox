@@ -12,13 +12,14 @@ Subdirectories of the examples/ directory contain different types of examples th
 
 \section examples_layout_sec Typical File Layout
 
-The input files for each example are in a separate directory.  In the simplest examples, the parameter file is named "param" and the command file is named "commands". In some examples, the parameter file and command file names also have suffixes that denote which version of the program they should be used with, as explained in detail in the file examples/README.
+The input files for each example are in a separate directory.  In the simplest examples, the parameter file is named "param" and the command file is named "commands". In some molecular dynamics examples, the directory may contain two or more parameter file named param.nve, param.nvt, or param.npt that can be used to run examples in NVE, NVT or NPT ensembles. The file commands.rst, if present, is command script that can be used to restart and extend a simulation. Most examples contain a README file that explains details of usage for the example in that directory.
 
-The directory structure for the simplest example directories looks like this:
+The directory structure for the simplest example directories contains the following set of files and subdirectories:
 \code
 
     param
     commands
+    commands.rst
     in/
        config
     out/
@@ -44,6 +45,19 @@ to send the log output to the screen, or
 to run the MC example in the background and send this output to a file named "log".  Among the output files that will be created in the out/ directory is a configuration file that contains the final system configuration. This is usually named out/config.
 
 The above directions assume that the users PATH shell variable has been set to include the directory that contains the mcSim (or mdSim) executable file.
+
+\section examples_scripts_sec Scripts
+
+Some example directories contain an executable bash script named "clean", and some also contain an script named "run". Executing the "run" file (if any), by typing
+\code
+   > ./run
+\endcode
+from within the example directory, will generally run a simulation and then restart the simulation, placing the outputs of the original run and restarted simulation in different directory. Executing the "clean" script, by typing
+\code
+   > ./clean
+\endcode
+will remove any files that were created by a previous run. Note the dot and backslash "./" before the name of the script names "run" and "clean" in the above examples. This represents the name of the current directory, is necessary to allow the shell to find the script if the current directory is not in the command search PATH. 
+
 
 <BR>
 \ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 

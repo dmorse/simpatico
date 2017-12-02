@@ -10,4 +10,4 @@ NVE md simulation on 8 processors:
 
 Restarting and extending previous simulation:
 
-    mpirun -np 8 mdSim -e -r restart -c restart.cmd
+    mpirun -np 8 mdSim -e -r restart -c commands.rst

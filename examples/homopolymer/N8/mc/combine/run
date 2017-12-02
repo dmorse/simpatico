@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+mcSim -q -e -p param -c commands 
+cp -R out mid
+mcSim -q -e -r restart -c commands.rst
+
+

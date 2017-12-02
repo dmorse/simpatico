@@ -7,7 +7,7 @@
 
 #include "HomopolymerSG.h"
 #ifdef UTIL_MPI
-#include <mcMd/simulation/mcMd_mpi.h>
+#include <mcMd/simulation/McMd_mpi.h>
 #endif
 
 namespace McMd

@@ -6,34 +6,34 @@ branches:
   only:
    - master
    - devel
+   - test
 
 matrix:
   include:
     - os: linux
       compiler: gcc
-      env: SMP_G=1
+      env: SMP_G=1 SMP_M=0 SMP_PROG=mcMd
     - os: linux
-      compiler: clang
-      env: SMP_G=0
+      compiler: gcc
+      env: SMP_G=1 SMP_M=1 SMP_PROG=ddMd
+    - os: linux
+      compiler: gcc
+      env: SMP_G=1 SMP_M=1 SMP_PROG=mcMdMpi
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install python; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install openmpi-bin; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi-dev; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --yes install libopenmpi1.6; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install openmpi-bin; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi-dev; fi
+  - if [ "$SMP_M" == "1" ]; then sudo apt-get --yes install libopenmpi1.6; fi
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/scripts/python
   - export PATH=$PATH:$(pwd)/bin
 
 install:
   - ./setup
   - ./configure -g$SMP_G -a1 -d1 -e1
-  - make mcMd
   - make tools
-  - make ddMd
+  - if [ "$SMP_PROG" == "mcMd" ]; then make mcMd; fi
+  - if [ "$SMP_PROG" == "ddMd" ]; then make ddMd; fi
+  - if [ "$SMP_PROG" == "mcMdMpi" ]; then make mcMd-mpi; fi
 
 script:
-  - cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run 
-  - cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
+  ./.travis.script

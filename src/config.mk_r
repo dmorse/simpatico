@@ -16,15 +16,15 @@
 #
 # Users may edit any of the user copies of this file to configure 
 # the build process, either manually or by using the configure script 
-# in the same directory as the relevant config.mk file, but should 
-# normally avoid modifying the repository file src/config.mk_r.
+# in the same directory as the relevant config.mk file. Users should,
+# however, normally avoid modifying the repository file src/config.mk_r.
 #-----------------------------------------------------------------------
 # Summary of contents:
 #
 # This file contains definitions of makefile variables that specify:
 # 
 #  - Absolute paths for the simpatico directory and some subdirectories
-#  - Identifiers for the choice of compiler and MPI library
+#  - Identifiers for the choice of compiler and os/package manager
 #  - Compiler options and flags for specific compilers
 #  - A variable UTIL_MPI that, if defined, enables MPI
 #  - A variable UTIL_CXX11 that, if defined, enables use of C++11
@@ -38,12 +38,13 @@
 # configure script from the directory that contains the config.mk file 
 # with appropriate options.  Specifically, this script may be used to 
 # enable (option -m1) or disable (-m0) MPI, to enable (-k1) or disable 
-# (-k0) automatic dependency generation, or or choose the compiler 
-# identifier string (the -h option). For example, the command:
+# (-k0) automatic dependency generation, to choose the compiler 
+# identifier string (the -j option), or to choose the operating system 
+# identifier (the -o option). For example, the command:
 #
-# ./configure -m1 -h gcc
+# ./configure -m1 -j gcc
 #
-# would enable MPI and select the gcc compiler.
+# would enable MPI and select the gcc compiler prior to compilation.
 #-----------------------------------------------------------------------
 # Absolute directory paths
 #
@@ -51,12 +52,14 @@
 # the absolute path to the root simpatico/ directory, and BLD_DIR 
 # should be set to the path to the directory that contains this 
 # config.mk file. The value of BLD_DIR is the root of the directory 
-# in which object *.o files will be placed during compilation. In the 
-# repository file config.mk_r, the absolute path for ROOT_DIR and the 
-# relative path to BLD_DIR are assigned placeholder values of "PWD" 
-# and "OWD", respectively. These placeholders are replaced by actual 
-# paths by the setup script when it creates user copies of config.mk
-# in the src/, bld/parallel and bld/serial directory.
+# in which object *.o files will be placed during compilation. 
+#
+# In the repository file config.mk_r, the absolute path for ROOT_DIR 
+# and the relative path to BLD_DIR are assigned placeholder values of 
+# "PWD" and "OWD", respectively. These placeholders are replaced by 
+# actual # paths by the setup script when it creates user copies of 
+# the config.mk file in the src/, bld/parallel and bld/serial 
+# directories.
 # 
 # BLD_DIR = path to the object directory that will contain *.o files
 # SRC_DIR = path to the src/ directory, which contains source files
@@ -72,7 +75,7 @@ SRC_DIR=$(ROOT_DIR)/src
 BIN_DIR=$(ROOT_DIR)/bin
 
 #-----------------------------------------------------------------------
-# Mesage Passing Library (Disable/enable by commenting out / uncommenting).
+# Mesage Passing Library (Disable / enable by commenting out / uncommenting).
 # The message passing library (MPI) must be enabled to build a parallel
 # program.
 
@@ -80,32 +83,48 @@ BIN_DIR=$(ROOT_DIR)/bin
 
 #-----------------------------------------------------------------------
 # C++11 Standard (Disable/enable by commenting out or uncommenting).
-# This is disabled by default. If C++11 is disabled, the code uses
-# only syntax and features defined in the older C++ 1998 standard.
+# C+11 is disabled (commented out) by default. If C++11 is disabled, 
+# the code uses only syntax and features defined in the older C++ 1998 
+# standard.
 
 #UTIL_CXX11=1
 
 #-----------------------------------------------------------------------
-# Compiler and MPI library identifiers:
+# Compiler and Operating System Identifier Strings:
 #
 # Users may select a compiler and a MPI library implementation by setting
 # values for the strings:
 #
 # COMPILER - string identifier for the compiler (e.g., gcc or intel)
-# MPI_LIB  - string identifier for the MPI library (e.g., mpicxx or openmpi)
+# OS       - string identifier for operating system and package manager
+#
+# Allowed values:
+#
+# COMPILER : gcc (default), intel
+# OS       : generic (default), mac-port
 #
 # Each valid combination of these strings selects a block of definitions 
 # for variables that define the name of the compiler and the string of 
-# options that should be passed to the compiler and linker.
+# options that should be passed to the compiler and linker. 
+#
+# The value OS=generic works for any generic unix systems in which all 
+# include files and libraries are placed in standard locations, so that
+# no special paths need to be added to the compiler search paths for
+# header files or libraries. This can be used both for standard linux 
+# variants and the Mac OS X # operating system if MPI library was 
+# installed using either by compiling from source or by using the 
+# Homebrew package manager.
+#
+# The value OS=mac-port should be used to compile on Mac OSX using an
+# open-mpi MPI library installed by the MacPort system, which places
+# header and library files in non-standard locations within the 
+# /opt/local directory tree.
 
 COMPILER=gcc
-MPI_LIB=mpicxx
+OS=generic
 
 # ------------------------------------------------------------------------
-# Variables used to define makefile pattern rules:
-#
-# Each of the following blocks of variable definitions sets values of the 
-# following variables for a particular compiler and mpi library:
+# The following variables are used directly in makefile pattern rules.
 #
 # CXX         - C++ compiler executable name (must be in the users PATH)
 # CXXFLAGS    - flags used to compile source files, without linking
@@ -138,11 +157,10 @@ MPI_LIB=mpicxx
 # options that define only the preprocessor macro definitions used in 
 # that namespace, which are defined using the compiler "-D" option.
 # ------------------------------------------------------------------------
-# Settings for specific compilers and mpi libraries:
+# Variable definitions for specific COMPILER and OS identifier combinations:
 
 # Global default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
-
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
 else
@@ -159,43 +177,37 @@ ifeq ($(COMPILER),gcc)
    TESTFLAGS= -Wall $(CXX_STD)
    AR=ar
    ifneq ($(UTIL_MPI),1)
-      # Gnu g++ (no mpi)
       CXX=g++
    else
-      ifeq ($(MPI_LIB),mpicxx)
-         # Gnu g++ using a module and mpicxx macro
-         CXX=mpicxx
-      endif
-      ifeq ($(MPI_LIB),openmpi)
-         # Gnu g++ using the openmpi library explicitly
-         CXX=g++
-         INCLUDES+= -I/opt/local/include/openmpi
-         LDFLAGS+= -L/opt/local/lib -lmpi_cxx -lmpi
-      endif
+      CXX=mpicxx
    endif
 endif
 
 # -- Intel ICC compiler ---
 ifeq ($(COMPILER),intel)
-   AR=xiar
+   CXXFLAGS= -ansi $(CXX_STD)
    WINLINE=
+   TESTFLAGS= -ansi $(CXX_STD)
+   AR=xiar
    ifneq ($(UTIL_MPI),1)
       # Serial intel icpc compiler (no mpi)
       CXX=icpc
-      CXXFLAGS= -fast -ansi $(CXX_STD)
-      TESTFLAGS= -ansi $(CXX_STD)
+      CXXFLAGS=+ -fast 
    else
-      ifeq ($(MPI_LIB),mpicxx)
-         # Intel icpc compiler using linux modules and mpicxx script
-         CXX=mpicxx
-         CXXFLAGS= -ansi $(CXX_STD)
-         TESTFLAGS= -ansi $(CXX_STD)
-      endif
+      CXX=mpicxx
+   endif
+endif
+
+# ---- Paths for MPI Library ----
+ifeq ($(UTIL_MPI),1)
+   ifeq ($(OS),mac-port)
+      INCLUDES+= -I/opt/local/include/openmpi-mp
+      LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
    endif
 endif
 
 #-----------------------------------------------------------------------
-# Automatic dependency generation (comment out to disabled)
+# Automatic dependency generation (comment out to disable)
 #
 # Automatic dependency is enabled by default and should normally be 
 # left enabled. Automatic dependency generation allows the build system

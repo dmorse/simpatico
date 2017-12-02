@@ -1,0 +1,23 @@
+#!/bin/bash
+set -ev
+
+MODE=nve
+if [ $# -gt 0 ]; then
+   MODE=$1
+fi
+PARAM=param.$MODE
+echo "Parameter file : " $PARAM
+
+mpirun -np 6 ddSim -e -p "$PARAM" -c commands
+if [ ! -d "tmp" ]; then
+   mkdir tmp
+fi
+mv -f out/* tmp
+mpirun -np 6 ddSim -e -r restart -c commands.rst
+if [ ! -d "out.rst" ]; then
+   mkdir out.rst
+fi
+mv -f out/* out.rst
+mv -f tmp/* out
+rmdir tmp
+
