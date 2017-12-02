@@ -10,4 +10,4 @@ NVT md simulation:
 
 Restarting and extending above simulations
 
-    mdSim -e -r restart -c restart.cmd
+    mdSim -e -r restart -c commands.rst

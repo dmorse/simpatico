@@ -14,4 +14,4 @@ Parallel NVT md simulation on 4 processors:
 
 Restarting and extending:
 
-    mpirun -np 6 ddSim -e -r restart -c restart.cmd
+    mpirun -np 6 ddSim -e -r restart -c commands.rst

@@ -10,6 +10,6 @@ echo "Parameter file : " $PARAM
 
 mdSim -q -e -p $PARAM -c commands 
 cp -R out mid
-mdSim -q -e -r restart -c restart.cmd
+mdSim -q -e -r restart -c commands.rst
 
 

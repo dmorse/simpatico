@@ -10,4 +10,4 @@ Monte Carlo (MC) simulation:
 
 Restarting MC simulations
 
-    mcSim -e -r restart -c restart.cmd
+    mcSim -e -r restart -c commands.rst

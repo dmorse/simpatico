@@ -10,4 +10,4 @@ Parallel NVE md simulation on 6 processors:
 
 Restarting and extending previous simulation
 
-    mpirun -np 6 ddSim -e -r restart -c restart.cmd
+    mpirun -np 6 ddSim -e -r restart -c commands.rst
