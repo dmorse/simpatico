@@ -1,0 +1,10 @@
+simp/interaction/external/BoxExternal.h
+simp/interaction/external/GeneralPeriodicExternal.h
+simp/interaction/external/LamellarOrderingExternal.h
+simp/interaction/external/LocalLamellarOrderingExternal.h
+simp/interaction/external/NucleationExternal.h
+simp/interaction/external/OrthoBoxExternal.h
+simp/interaction/external/PeriodicExternal.h
+simp/interaction/external/SimplePeriodicExternal.h
+simp/interaction/external/SlitExternal.h
+simp/interaction/external/SphericalTabulatedExternal.h
