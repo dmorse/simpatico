@@ -188,8 +188,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/stress.h>
 #include <mcMd/neighbor/PairIterator.h>
-#include <util/boundary/Boundary.h>
-
+#include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/accumulators/setToZero.h>
@@ -200,6 +199,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Default constructor.

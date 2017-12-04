@@ -21,9 +21,9 @@ namespace Util
 namespace McMd
 {
 
-   using namespace Util;
-
    class System;
+
+   using namespace Util;
 
    /**
    * Implementation template for an DihedralPotential.
@@ -198,8 +198,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/chemistry/getAtomGroups.h>
-
-#include <util/boundary/Boundary.h> 
+#include <simp/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -211,6 +210,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.

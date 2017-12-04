@@ -9,10 +9,10 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>
 
@@ -20,6 +20,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor.

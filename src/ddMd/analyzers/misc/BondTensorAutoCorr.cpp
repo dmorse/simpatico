@@ -9,12 +9,13 @@
 #include <ddMd/analyzers/AutoCorrAnalyzer.tpp>
 #include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/GroupIterator.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 
 namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

@@ -10,6 +10,7 @@
 
 #include "interaction/InteractionTestComposite.h"
 #include "species/SpeciesTestComposite.h"
+#include "boundary/BoundaryTestComposite.h"
 #include <test/CompositeTestRunner.h>
 
 using namespace Simp;
@@ -17,6 +18,7 @@ using namespace Simp;
 TEST_COMPOSITE_BEGIN(SimpNsTestComposite)
 addChild(new InteractionTestComposite, "interaction/");
 addChild(new SpeciesTestComposite, "species/");
+addChild(new BoundaryTestComposite, "boundary/");
 TEST_COMPOSITE_END
 
 

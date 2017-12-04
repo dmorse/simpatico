@@ -8,30 +8,33 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>           // base class
-#include <ddMd/communicate/Domain.h>             // member
-#include <ddMd/communicate/Buffer.h>             // member
-#include <ddMd/communicate/Exchanger.h>          // member
-#include <ddMd/storage/AtomStorage.h>            // member
-#include <ddMd/storage/BondStorage.h>            // member
-#include <ddMd/storage/AngleStorage.h>           // member
-#include <ddMd/storage/DihedralStorage.h>        // member
-#include <ddMd/chemistry/AtomType.h>             // member (template param)
-#include <ddMd/chemistry/MaskPolicy.h>           // member
-#include <util/random/Random.h>                  // member
-#include <util/boundary/Boundary.h>              // member
-#include <util/space/Tensor.h>                   // member (template param)
-#include <util/containers/DArray.h>              // member (template)
-#include <util/containers/DMatrix.h>             // member (template)
-#include <util/misc/Setable.h>                   // member (template)
-#include <util/signal/Signal.h>                  // members
-#include <util/archives/Serializable.h>          // typedef in function interface
+#include <util/param/ParamComposite.h>        // base class
+#include <ddMd/communicate/Domain.h>          // member
+#include <ddMd/communicate/Buffer.h>          // member
+#include <ddMd/communicate/Exchanger.h>       // member
+#include <ddMd/storage/AtomStorage.h>         // member
+#include <ddMd/storage/BondStorage.h>         // member
+#include <ddMd/storage/AngleStorage.h>        // member
+#include <ddMd/storage/DihedralStorage.h>     // member
+#include <ddMd/chemistry/AtomType.h>          // member (template param)
+#include <ddMd/chemistry/MaskPolicy.h>        // member
+#include <simp/boundary/Boundary.h>           // member
+#include <util/random/Random.h>               // member
+#include <util/space/Tensor.h>                // member (template param)
+#include <util/containers/DArray.h>           // member (template)
+#include <util/containers/DMatrix.h>          // member (template)
+#include <util/misc/Setable.h>                // member (template)
+#include <util/signal/Signal.h>               // members
+#include <util/archives/Serializable.h>       // typedef in interface
 
 #include <fstream>
 
 namespace Util {
    class FileMaster;
    template <typename T> class Factory;
+}
+
+namespace Simp {
    class EnergyEnsemble;
    class BoundaryEnsemble;
 }
@@ -61,6 +64,7 @@ namespace DdMd
    #endif
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Main object for a domain-decomposition MD simulation.

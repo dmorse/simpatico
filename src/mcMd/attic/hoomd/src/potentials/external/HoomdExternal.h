@@ -14,7 +14,7 @@
 
 #include <util/space/Dimension.h>
 #include <util/param/ParamComposite.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <math.h>

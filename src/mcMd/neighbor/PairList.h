@@ -9,7 +9,7 @@
 */
 
 #include "CellList.h"
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/param/ParamComposite.h>
 #include <util/containers/DArray.h>
 #include <util/space/Vector.h>
@@ -20,6 +20,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class Atom;
    class PairIterator;

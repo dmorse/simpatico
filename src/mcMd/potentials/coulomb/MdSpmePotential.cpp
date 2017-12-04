@@ -10,10 +10,11 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/chemistry/AtomType.h>
 
+#include <simp/boundary/Boundary.h>
+
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 #include <util/math/Constants.h>
-#include <util/boundary/Boundary.h>
 #include <util/containers/Array.h>
 
 #include <stdlib.h>
@@ -23,6 +24,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

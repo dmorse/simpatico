@@ -11,7 +11,6 @@
 #include "HoomdMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/chemistry/Atom.h>
 #include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
@@ -19,6 +18,7 @@
 #include <mcMd/potentials/bond/BondFactory.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 #include <simp/interaction/bond/HarmonicBond.h>
 #include <simp/interaction/bond/HarmonicL0Bond.h>
 #include <simp/interaction/bond/FeneBond.h>

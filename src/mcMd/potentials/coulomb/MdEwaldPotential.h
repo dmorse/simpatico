@@ -10,7 +10,10 @@
 
 #include <mcMd/potentials/coulomb/MdCoulombPotential.h>       // base class
 #include <mcMd/potentials/coulomb/EwaldRSpaceAccumulator.h>   // member
+#include <mcMd/chemistry/AtomType.h>     // member template parameter
+
 #include <simp/interaction/coulomb/EwaldInteraction.h>        // member
+#include <simp/boundary/Boundary.h>      // typedef
 
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/space/Vector.h>           // member template parameter
@@ -18,9 +21,7 @@
 #include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
 #include <util/misc/Setable.h>           // member template
-#include <mcMd/chemistry/AtomType.h>     // member template parameter
 #include <util/containers/Array.h>       // member class template
-#include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
 

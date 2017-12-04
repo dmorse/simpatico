@@ -10,10 +10,10 @@
 
 #include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
 #include <mcMd/mcSimulation/McSystem.h>     // base template parameter
+#include <simp/ensembles/EnergyEnsemble.h>  // inline function
 #include <util/accumulators/Average.h>      // member
 #include <util/accumulators/Distribution.h> // member
 #include <util/random/Random.h>             // member
-#include <util/ensembles/EnergyEnsemble.h>  // inline function
 #include <util/archives/Serializable.h>     // typedef
 
 #include <cstdio>
@@ -22,6 +22,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class Atom;
 

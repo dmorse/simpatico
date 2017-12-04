@@ -8,13 +8,14 @@
 #include "TrajectoryReader.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
+#include <simp/species/Species.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor. 

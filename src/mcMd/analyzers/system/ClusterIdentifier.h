@@ -11,7 +11,7 @@
 #include <mcMd/analyzers/system/Cluster.h>       // member template argument
 #include <mcMd/analyzers/system/ClusterLink.h>   // member template argument
 #include <mcMd/neighbor/CellList.h>              // member
-#include <util/boundary/Boundary.h>              // argument (typedef)
+#include <simp/boundary/Boundary.h>              // argument (typedef)
 #include <util/containers/DArray.h>              // member template
 #include <util/containers/GArray.h>              // member template
 #include <util/containers/GStack.h>              // member template

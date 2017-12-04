@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <simp/boundary/Boundary.h>  // typedef
 #include <util/containers/Array.h>   // function argument, template
-#include <util/boundary/Boundary.h>  // typedef
 
 namespace Simp {
    class Species;

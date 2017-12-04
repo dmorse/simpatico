@@ -15,13 +15,14 @@
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
 #include <simp/species/Ring.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor

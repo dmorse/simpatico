@@ -8,7 +8,7 @@
 #include "PointGenerator.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 
 namespace McMd
 {

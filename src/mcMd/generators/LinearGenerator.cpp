@@ -11,7 +11,7 @@
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/neighbor/CellList.h>
 #include <simp/species/Species.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 
 namespace McMd
 {

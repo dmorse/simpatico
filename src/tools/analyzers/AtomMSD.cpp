@@ -10,7 +10,7 @@
 #include <tools/chemistry/Atom.h>
 #include <tools/chemistry/Species.h>
 #include <tools/storage/Configuration.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/archives/Serializable_includes.h>
 
@@ -20,6 +20,7 @@ namespace Tools
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

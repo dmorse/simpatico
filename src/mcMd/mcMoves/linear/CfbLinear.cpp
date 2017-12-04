@@ -16,8 +16,8 @@
 
 #include <simp/species/Species.h>
 #include <simp/species/Linear.h>
+#include <simp/boundary/Boundary.h>
 
-#include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
 
 namespace McMd

@@ -173,8 +173,8 @@ namespace McMd
 #include <mcMd/links/Link.h>
 
 #include <simp/species/Species.h>
+#include <simp/boundary/Boundary.h> 
 
-#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>

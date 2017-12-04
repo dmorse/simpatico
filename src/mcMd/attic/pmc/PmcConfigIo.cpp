@@ -11,7 +11,7 @@
 #include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/boundary/OrthorhombicBoundary.h>
+#include <simp/boundary/OrthorhombicBoundary.h>
 #include <util/space/Vector.h>
 #include <util/param/Label.h>
 

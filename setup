@@ -76,12 +76,20 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
 cp ./src/util/config.mk_r src/util/config.mk
 
 # Copy typedef for the class that defines boundary conditions
-cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
+cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
 
 (cd ./src/simp; ./setup)
 (cd ./src/mcMd; ./setup)
 (cd ./src/ddMd; ./setup)
 (cd ./src/tools; ./setup)
+
+# Comment out UTIL_BOUND definition in util/config.mk
+UTIL_CONFIG=src/util/config.mk
+if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
+   sed "s/UTIL_BOUND *=.*$/UTIL_BOUND=1/" "$UTIL_CONFIG" > temp
+   sed "s/^ *UTIL_BOUND=/#UTIL_BOUND=/" temp > "$UTIL_CONFIG"
+   rm temp
+fi
 
 #========================================================================
 # Setup bld/serial directory tree (out-of-source builds with MPI disabled)
@@ -97,6 +105,14 @@ cp src/simp/config.mk_r bld/serial/simp/config.mk
 cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
 cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
 cp src/tools/config.mk_r bld/serial/tools/config.mk
+
+# Comment out UTIL_BOUND definition in util/config.mk
+UTIL_CONFIG=bld/serial/util/config.mk
+if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
+   sed "s/UTIL_BOUND *=.*$/UTIL_BOUND=1/" "$UTIL_CONFIG" > temp
+   sed "s/^ *UTIL_BOUND=/#UTIL_BOUND=/" temp > "$UTIL_CONFIG"
+   rm temp
+fi
 
 # Makefiles
 cp src/makefile bld/serial/makefile
@@ -129,6 +145,14 @@ cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
 cp src/tools/config.mk_r bld/parallel/tools/config.mk
 cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
 
+# Comment out UTIL_BOUND definition in util/config.mk
+UTIL_CONFIG=bld/parallel/util/config.mk
+if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
+   sed "s/UTIL_BOUND *=.*$/UTIL_BOUND=1/" "$UTIL_CONFIG" > temp
+   sed "s/^ *UTIL_BOUND=/#UTIL_BOUND=/" temp > "$UTIL_CONFIG"
+   rm temp
+fi
+
 # Makefiles 
 cp src/makefile bld/parallel/makefile
 cp src/util/makefile bld/parallel/util/makefile
@@ -155,6 +179,6 @@ cp src/configure bld/parallel/configure
 # Install scripts
 
 # Install a copy of the makeDep dependency-maker script in bin/
-cp scripts/python/makeDep bin/makeDep
+(cp scripts/python/makeDep bin/makeDep)
 
 #========================================================================

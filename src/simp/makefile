@@ -27,6 +27,9 @@ veryclean:
 	$(MAKE) clean
 	rm -f */*.o */*.d
 	rm -f lib*.a
+ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f boundary/Boundary.h
+endif
 
 #-----------------------------------------------------------------------
 # Include dependency files

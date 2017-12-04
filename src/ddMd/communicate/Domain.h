@@ -8,19 +8,20 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <simp/boundary/Boundary.h>     // typedef used in interface
 #include <util/param/ParamComposite.h>  // base class
-#include <util/boundary/Boundary.h>     // typedef used in interface
 #include <util/containers/FMatrix.h>    // member template
 #include <util/containers/FArray.h>     // member template
-#include <util/space/IntVector.h>        // member
-#include <util/space/Grid.h>             // member
-#include <util/space/Dimension.h>        // constant expression
+#include <util/space/IntVector.h>       // member
+#include <util/space/Grid.h>            // member
+#include <util/space/Dimension.h>       // constant expression
 #include <util/global.h>
 
 namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Decomposition of the system into domains associated with processors.

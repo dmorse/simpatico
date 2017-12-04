@@ -21,10 +21,10 @@ namespace Util
 namespace McMd
 {
 
+   class System;
+
    using namespace Util;
    using namespace Simp;
-
-   class System;
 
    /**
    * Template implementation of ExternalPotential.
@@ -152,8 +152,8 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h>
 
 #include <simp/species/Species.h>
+#include <simp/boundary/Boundary.h>
 
-#include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 
