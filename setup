@@ -76,7 +76,7 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
 cp ./src/util/config.mk_r src/util/config.mk
 
 # Copy typedef for the class that defines boundary conditions
-cp src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
+cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
 
 (cd ./src/simp; ./setup)
 (cd ./src/mcMd; ./setup)
