@@ -49,7 +49,7 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
     g)
       MACRO_ON=UTIL_DEBUG
       VALUE=1
-      FILE=util/config.mk
+      FILE=config.mk
       ;;
     p)
       MACRO_OFF=SIMP_NOPAIR
