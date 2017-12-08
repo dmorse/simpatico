@@ -9,10 +9,15 @@
 */
 
 #include "ClusterLink.h"
+#include <util/space/Tensor.h>
+#include <util/space/Vector.h>
+#include <util/global.h>
+#include <mcMd/simulation/System.h>                   // base class templ param
 
 namespace McMd
 {
-
+   class System;
+   
    /**
    * Cluster of molecules.
    *
@@ -80,6 +85,16 @@ namespace McMd
       */
       bool isValid() const;
 
+      /**
+      * Return the cluster COM
+      */
+      Vector clusterCOM( int atomTypeInCluster, System* systemPtr);
+
+      /**
+      * Return the cluster radius of gyration tensor
+      */
+      Tensor clusterRgTensor(int atomTypeInCluster, System* systemPtr);
+
    private:
 
       // Integer identifier for this cluster.
@@ -91,6 +106,7 @@ namespace McMd
       // Pointer to first link in singly-linked list.
       ClusterLink* head_;
 
+      //Pointer to parent system
    };
 
 }

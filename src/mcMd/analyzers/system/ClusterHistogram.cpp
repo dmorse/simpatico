@@ -191,50 +191,17 @@ namespace McMd
          allCOMs.allocate(identifier_.nCluster());
          allRgTensors.allocate(identifier_.nCluster());
          Molecule::ConstAtomIterator atomIter;
+         System* systemPtr = &system();
          for (int i = 0; i < identifier_.nCluster(); i++) {
              thisCluster = identifier_.cluster(i);
-             thisClusterStart = thisCluster.head();
              outputFile_ << i << "	" ;
              //For that cluster, calculate the center of mass
-             nAtomsInCluster = 0;
-             clusterCOM.zero();
-             //Pick the first atom of the first molecule in the cluster to move everything else relative to it            
-             r0 = (thisClusterStart->molecule()).atom(0).position();
-             while (thisClusterStart) {
-                next = thisClusterStart->next();
-                thisMolecule = thisClusterStart->molecule();
-                thisMolecule.begin(atomIter);
-                for ( ; atomIter.notEnd();++atomIter) {
-                  if (atomIter->typeId() == atomTypeId_) {
-                    system().boundary().distanceSq(atomIter->position(),r0,dr);
-                    clusterCOM += dr;
-                    nAtomsInCluster += 1;    
-                  }
-                }
-                thisClusterStart = next;
-             }
-             //
-             clusterCOM /= nAtomsInCluster;
-             clusterCOM += r0;
+             clusterCOM = thisCluster.clusterCOM(atomTypeId_, systemPtr);
              outputFile_ << clusterCOM;
              outputFile_ << "\n";
              allCOMs[i] = clusterCOM;
              //Calculate Rg
-             thisClusterStart = thisCluster.head();
-             rgTensor.zero(); 
-             while (thisClusterStart) {
-                next = thisClusterStart->next();
-                thisMolecule = thisClusterStart->molecule();
-                thisMolecule.begin(atomIter);
-                for ( ; atomIter.notEnd(); ++atomIter) {
-                  if (atomIter->typeId()==atomTypeId_) {
-                    system().boundary().distanceSq(atomIter->position(),clusterCOM,dr);
-                    rgTensor += rgDyad.dyad(dr,dr);
-                  }                
-                } 
-                thisClusterStart = next;
-             }
-             rgTensor /= nAtomsInCluster;
+             rgTensor = thisCluster.clusterRgTensor(atomTypeId_, systemPtr);
              allRgTensors[i] = rgTensor;
          }
          outputFile_.close();
