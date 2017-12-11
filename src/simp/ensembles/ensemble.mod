@@ -3,6 +3,7 @@ namespace Util
 
 /**
 * \defgroup Ensemble_Module Statistical Ensembles
+* \ingroup Simp_Module
 *
 * Statistical mechanical ensembles for specific macro-variables.
 *
@@ -26,8 +27,6 @@ namespace Util
 * We envision generalizing the BoundaryEnsemble to allow for constant
 * stress ensembles, and may generalize some or all of the ensembles 
 * to allow for non-Boltzmann statistical ensembles. 
-*
-* \ingroup Util_NS_Module
 */
 
 }

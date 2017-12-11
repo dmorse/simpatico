@@ -827,6 +827,8 @@ RECURSIVE              = YES
 EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
                          ../src/tools/hoomd/xmlParser.cpp \
                          ../src/tools/hoomd/ExtractTopologyMain.cpp \
+                         ../src/util/boundary \
+                         ../src/util/ensembles \
                          ../src/mcMd/attic \
                          ../src/ddMd/potentials/coulomb \
                          ../src/ddMd/attic

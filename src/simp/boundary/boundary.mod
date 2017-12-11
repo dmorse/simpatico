@@ -2,7 +2,7 @@ namespace Simp{
 
    /**
    * \defgroup Boundary_Module Boundary
-   * \ingroup  Simp_NS_Module
+   * \ingroup  Simp_Module
    *
    * \brief   Unit cells for periodic boundary conditions.
    *
