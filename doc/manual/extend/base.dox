@@ -9,14 +9,14 @@ namespace McMd
 
 \section extend_base_mcMd_section Base classes for mcSim and mdSim
 
-The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the McMd namespace. Among these are:
+The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the McMd or Simp namespace. Among these are:
 <ul>
- <li> McMd::Species, a molecular species </li>
+ <li> Simp::Species, a molecular species </li>
  <li> McMd::McMove, a MC Markov move </li>
  <li> McMd::MdIntegrator, an MD integration algorithm </li>
  <li> McMd::Analyzer, a data analysis or output operation </li>
- <li> McMd::ConfigIo, a configuration file format</li>
- <li> McMd::TrajectoryIo, an MD trajectory file format</li>
+ <li> McMd::ConfigIo, a configuration file reader and writer </li>
+ <li> McMd::TrajectoryReader, an MD trajectory file reader</li>
  <li> McMd::Perturbation, which defines a free energy perturbation</li>
 </ul>
 In order to implement, for instance, a new data analysis operation in mcSim and/or MdSim, the user must thus write a subclass of the McMd::Analyzer base class. The McMd namespace also contains a set of potential energy base classes:
@@ -28,7 +28,7 @@ In order to implement, for instance, a new data analysis operation in mcSim and/
  <li> McMd::AnglePotential, a covalent four-body dihedral potential </li>
  <li> McMd::ExternalPotential, an external one-body potential</li>
 </ul>
-The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential classes are used in both MC and MD simulations. Two different classes, McPairPotential and MdPairPotential, are provided for nonbonded interations in MC and MD simulations, respectively, because of differences in the algorithms and calculations required in these two contexts.
+The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential classes are used in both MC and MD simulations. Two different classes, McPairPotential and MdPairPotential, are provided for nonbonded interations in MC and MD simulations, because of differences in the algorithms and types of calculations required in MC and MD simulations
 
 \section extend_base_ddMd_section Base classes for ddSim 
 The base classes used by the ddSim parallel MD program are defined in the DdMd namespace. Several have names identical to names of analogous classes in the McMd namespace. These base classes include:
