@@ -7,8 +7,6 @@
 
 #include "Cluster.h"
 #include <util/global.h>
-#include <mcMd/simulation/System.h>
-#include <mcMd/simulation/Simulation.h>
 
 using namespace Util;
 
@@ -76,7 +74,7 @@ namespace McMd
       return true;
    }
 
-   Vector Cluster::clusterCOM(int atomTypeInCluster, System* systemPtr)
+   Vector Cluster::clusterCOM(int atomTypeInCluster, Boundary* boundaryPtr)
    {
      ClusterLink* thisClusterStart;
      ClusterLink* next; 
@@ -97,7 +95,7 @@ namespace McMd
        thisMolecule.begin(atomIter);
        for( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeInCluster) {
-           systemPtr->boundary().distanceSq(atomIter->position(),r0,dr);
+           boundaryPtr->distanceSq(atomIter->position(),r0,dr);
            com += dr;
            nAtomsInCluster += 1;
          }
@@ -106,13 +104,13 @@ namespace McMd
      }
      com /= nAtomsInCluster;
      com += r0;
-     systemPtr->boundary().shift(com);
+     boundaryPtr->shift(com);
      return com;
    }
 
-   Tensor Cluster::clusterRgTensor(int atomTypeInCluster, System* systemPtr )
+   Tensor Cluster::clusterRgTensor(int atomTypeInCluster, Boundary* boundaryPtr )
    {
-     Vector com = clusterCOM( atomTypeInCluster, systemPtr);
+     Vector com = clusterCOM( atomTypeInCluster, boundaryPtr);
      Tensor rgTensor;
      rgTensor.zero();
      ClusterLink* thisClusterStart;
@@ -130,7 +128,7 @@ namespace McMd
        for( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeInCluster) {
            nAtomsInCluster += 1;
-           systemPtr->boundary().distanceSq(atomIter->position(), com,dr);
+           boundaryPtr->distanceSq(atomIter->position(), com,dr);
            rgTensor += rgDyad.dyad(dr,dr);
          }
        }

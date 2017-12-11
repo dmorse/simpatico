@@ -191,17 +191,17 @@ namespace McMd
          allCOMs.allocate(identifier_.nCluster());
          allRgTensors.allocate(identifier_.nCluster());
          Molecule::ConstAtomIterator atomIter;
-         System* systemPtr = &system();
+         Boundary* boundaryPtr = &system().boundary();
          for (int i = 0; i < identifier_.nCluster(); i++) {
              thisCluster = identifier_.cluster(i);
              outputFile_ << i << "	" ;
              //For that cluster, calculate the center of mass
-             clusterCOM = thisCluster.clusterCOM(atomTypeId_, systemPtr);
+             clusterCOM = thisCluster.clusterCOM(atomTypeId_, boundaryPtr);
              outputFile_ << clusterCOM;
              outputFile_ << "\n";
              allCOMs[i] = clusterCOM;
              //Calculate Rg
-             rgTensor = thisCluster.clusterRgTensor(atomTypeId_, systemPtr);
+             rgTensor = thisCluster.clusterRgTensor(atomTypeId_, boundaryPtr);
              allRgTensors[i] = rgTensor;
          }
          outputFile_.close();

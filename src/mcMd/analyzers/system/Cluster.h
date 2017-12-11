@@ -88,12 +88,12 @@ namespace McMd
       /**
       * Return the cluster COM
       */
-      Vector clusterCOM( int atomTypeInCluster, System* systemPtr);
+      Vector clusterCOM( int atomTypeInCluster, Boundary* boundaryPtr);
 
       /**
       * Return the cluster radius of gyration tensor
       */
-      Tensor clusterRgTensor(int atomTypeInCluster, System* systemPtr);
+      Tensor clusterRgTensor(int atomTypeInCluster, Boundary* boundaryPtr);
 
    private:
 
