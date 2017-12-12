@@ -184,30 +184,29 @@ namespace McMd
          Vector clusterCOM;
          Vector r0;
          Vector dr;
-         Tensor rgTensor;
+         Tensor moment;
          Tensor rgDyad;
          DArray<Vector> allCOMs;
-         DArray<Tensor> allRgTensors;
+         DArray<Tensor> allMoments;
          allCOMs.allocate(identifier_.nCluster());
-         allRgTensors.allocate(identifier_.nCluster());
+         allMoments.allocate(identifier_.nCluster());
          Molecule::ConstAtomIterator atomIter;
-         Boundary* boundaryPtr = &system().boundary();
          for (int i = 0; i < identifier_.nCluster(); i++) {
              thisCluster = identifier_.cluster(i);
              outputFile_ << i << "	" ;
              //For that cluster, calculate the center of mass
-             clusterCOM = thisCluster.clusterCOM(atomTypeId_, boundaryPtr);
+             clusterCOM = thisCluster.clusterCOM(atomTypeId_, system().boundary());
              outputFile_ << clusterCOM;
              outputFile_ << "\n";
              allCOMs[i] = clusterCOM;
              //Calculate Rg
-             rgTensor = thisCluster.clusterRgTensor(atomTypeId_, boundaryPtr);
-             allRgTensors[i] = rgTensor;
+             moment = thisCluster.momentTensor(atomTypeId_, system().boundary());
+             allMoments[i] = moment;
          }
          outputFile_.close();
-         fileMaster().openOutputFile(outputFileName(".RgTensors"+toString(iStep)),outputFile_);
+         fileMaster().openOutputFile(outputFileName(".momentTensors"+toString(iStep)),outputFile_);
          for (int i = 0; i < identifier_.nCluster(); i++) {
-             outputFile_ << i << "	" << allRgTensors[i] << "\n";
+             outputFile_ << i << "	" << allMoments[i] << "\n";
            
          }
          outputFile_.close();

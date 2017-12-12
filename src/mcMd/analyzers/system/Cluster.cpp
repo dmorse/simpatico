@@ -74,7 +74,7 @@ namespace McMd
       return true;
    }
 
-   Vector Cluster::clusterCOM(int atomTypeInCluster, Boundary* boundaryPtr)
+   Vector Cluster::clusterCOM(int atomTypeInCluster, Boundary const & boundary)
    {
      ClusterLink* thisClusterStart;
      ClusterLink* next; 
@@ -95,7 +95,7 @@ namespace McMd
        thisMolecule.begin(atomIter);
        for( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeInCluster) {
-           boundaryPtr->distanceSq(atomIter->position(),r0,dr);
+           boundary.distanceSq(atomIter->position(),r0,dr);
            com += dr;
            nAtomsInCluster += 1;
          }
@@ -104,13 +104,13 @@ namespace McMd
      }
      com /= nAtomsInCluster;
      com += r0;
-     boundaryPtr->shift(com);
+     boundary.shift(com);
      return com;
    }
 
-   Tensor Cluster::clusterRgTensor(int atomTypeInCluster, Boundary* boundaryPtr )
+   Tensor Cluster::momentTensor(int atomTypeInCluster, Boundary const & boundary)
    {
-     Vector com = clusterCOM( atomTypeInCluster, boundaryPtr);
+     Vector com = clusterCOM( atomTypeInCluster, boundary);
      Tensor rgTensor;
      rgTensor.zero();
      ClusterLink* thisClusterStart;
@@ -128,7 +128,7 @@ namespace McMd
        for( ; atomIter.notEnd(); ++atomIter) {
          if (atomIter->typeId() == atomTypeInCluster) {
            nAtomsInCluster += 1;
-           boundaryPtr->distanceSq(atomIter->position(), com,dr);
+           boundary.distanceSq(atomIter->position(), com,dr);
            rgTensor += rgDyad.dyad(dr,dr);
          }
        }
