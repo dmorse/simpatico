@@ -5,8 +5,7 @@ namespace McMd
    * \defgroup McMd_Command_Module Commands
    * \ingroup McMd_Module
    *  
-   * An Command object represents a command that can be 
-   * invoked from the command script. 
+   * Operations that can be invoked from the command script. 
    */
 
    /**
