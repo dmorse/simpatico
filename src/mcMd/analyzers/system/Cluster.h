@@ -9,10 +9,15 @@
 */
 
 #include "ClusterLink.h"
+#include <util/space/Tensor.h>
+#include <util/space/Vector.h>
+#include <util/global.h>
+#include <mcMd/simulation/System.h>                   // base class templ param
 
 namespace McMd
 {
-
+   class System;
+   
    /**
    * Cluster of molecules.
    *
@@ -79,6 +84,16 @@ namespace McMd
       * Return true if valid, false otherwise.
       */
       bool isValid() const;
+
+      /**
+      * Return the cluster COM
+      */
+      Vector clusterCOM( int atomTypeInCluster, Boundary const & boundary);
+
+      /**
+      * Return the cluster radius of gyration tensor
+      */
+      Tensor momentTensor(int atomTypeInCluster, Boundary const & boundary);
 
    private:
 
