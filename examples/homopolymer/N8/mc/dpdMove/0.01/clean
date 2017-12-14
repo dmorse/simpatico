@@ -1,4 +1,5 @@
 #!/bin/bash
 rm -f out/*
-rm -f *.rst
+rm -f rst/*
+rm -f restart
 

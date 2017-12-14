@@ -140,7 +140,7 @@ namespace McMd
       char* iArg = 0;
       char* oArg = 0;
    
-      // Read program arguments
+      // Read and store all program arguments
       int c;
       opterr = 0;
       while ((c = getopt(argc, argv, "qer:p:c:i:o:f")) != -1) {
@@ -181,7 +181,9 @@ namespace McMd
            UTIL_THROW("Invalid command line option");
          }
       }
-  
+ 
+      // Apply requested options 
+ 
       #ifndef UTIL_MPI
       if (qflag) {
          // Output list of enabled/disabled compile-time options.
@@ -224,6 +226,17 @@ namespace McMd
          fileMaster().setParamFileName(std::string(pArg));
       }
 
+      // If option -r, restart
+      if (rFlag) {
+         // Log::file() << "Reading restart file "
+         //             << std::string(rarg) << std::endl;
+         isRestarting_ = true; 
+         load(std::string(rarg));
+      }
+
+      // The -c, -i, and -o options are applied after the -r option
+      // so that they override any paths set in the restart file. 
+
       // If option -c, set command file name
       if (cFlag) {
          fileMaster().setCommandFileName(std::string(cArg));
@@ -237,14 +250,6 @@ namespace McMd
       // If option -o, set path prefix for output files
       if (oFlag) {
          fileMaster().setOutputPrefix(std::string(oArg));
-      }
-
-      // If option -r, restart
-      if (rFlag) {
-         // Log::file() << "Reading restart file "
-         //             << std::string(rarg) << std::endl;
-         isRestarting_ = true; 
-         load(std::string(rarg));
       }
 
    }

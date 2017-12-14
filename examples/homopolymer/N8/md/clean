@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -f out/*
-rm -Rf mid
+rm -Rf rst/*
 rm -f restart
 rm -f log
 

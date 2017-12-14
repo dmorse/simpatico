@@ -74,4 +74,68 @@ namespace McMd
       return true;
    }
 
+   Vector Cluster::clusterCOM(int atomTypeInCluster, Boundary const & boundary)
+   {
+     ClusterLink* thisClusterStart;
+     ClusterLink* next; 
+     Vector com;
+     Vector dr;
+     com.zero();
+     thisClusterStart = head();
+     Vector r0 = (thisClusterStart->molecule()).atom(0).position();
+     Molecule thisMolecule;
+     Molecule::ConstAtomIterator atomIter; 
+     int nAtomsInCluster = 0;     
+       
+
+     com.zero();
+     while(thisClusterStart) {
+       next = thisClusterStart->next();
+       thisMolecule = thisClusterStart->molecule();
+       thisMolecule.begin(atomIter);
+       for( ; atomIter.notEnd(); ++atomIter) {
+         if (atomIter->typeId() == atomTypeInCluster) {
+           boundary.distanceSq(atomIter->position(),r0,dr);
+           com += dr;
+           nAtomsInCluster += 1;
+         }
+       }
+       thisClusterStart = next;
+     }
+     com /= nAtomsInCluster;
+     com += r0;
+     boundary.shift(com);
+     return com;
+   }
+
+   Tensor Cluster::momentTensor(int atomTypeInCluster, Boundary const & boundary)
+   {
+     Vector com = clusterCOM( atomTypeInCluster, boundary);
+     Tensor rgTensor;
+     rgTensor.zero();
+     ClusterLink* thisClusterStart;
+     ClusterLink* next; 
+     thisClusterStart = head();
+     Molecule thisMolecule;
+     Molecule::ConstAtomIterator atomIter;
+     Vector dr;
+     Tensor rgDyad;
+     int nAtomsInCluster = 0;     
+     while(thisClusterStart) {
+       next = thisClusterStart->next();
+       thisMolecule = thisClusterStart->molecule();
+       thisMolecule.begin(atomIter);
+       for( ; atomIter.notEnd(); ++atomIter) {
+         if (atomIter->typeId() == atomTypeInCluster) {
+           nAtomsInCluster += 1;
+           boundary.distanceSq(atomIter->position(), com,dr);
+           rgTensor += rgDyad.dyad(dr,dr);
+         }
+       }
+       thisClusterStart = next;
+     }
+     rgTensor /= nAtomsInCluster;
+     return rgTensor;
+   }
+
 }
