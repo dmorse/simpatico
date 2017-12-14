@@ -1,2 +1,2 @@
-RESTART           3000000
+RESTART           1600000
 FINISH

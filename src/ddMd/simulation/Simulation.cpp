@@ -311,7 +311,7 @@ namespace DdMd
       char* oArg = 0;
       int  nSystem = 1;
 
-      // Read command-line arguments
+      // Read and store all command-line arguments
       int c;
       opterr = 0;
       while ((c = getopt(argc, argv, "es:p:r:c:i:o:")) != -1) {
@@ -389,6 +389,22 @@ namespace DdMd
          fileMaster().setParamFileName(std::string(pArg));
       }
 
+      // If option -r, load state from a restart file.
+      if (rFlag) {
+         if (isIoProcessor()) {
+            Log::file() << "Begin reading restart, base file name "
+                        << std::string(rArg) << std::endl;
+         }
+         load(std::string(rArg));
+         if (isIoProcessor()) {
+            Log::file() << "Done reading restart file" << std::endl;
+            Log::file() << std::endl;
+         }
+      }
+
+      // The -c, -i, and -o options are applied after the -r option
+      // so that they override any paths set in the restart file. 
+
       // If option -c, set command file name
       if (cFlag) {
          fileMaster().setCommandFileName(std::string(cArg));
@@ -402,20 +418,6 @@ namespace DdMd
       // If option -o, set path prefix for output files
       if (oFlag) {
          fileMaster().setOutputPrefix(std::string(oArg));
-      }
-
-
-      // If option -r, load state from a restart file.
-      if (rFlag) {
-         if (isIoProcessor()) {
-            Log::file() << "Begin reading restart, base file name "
-                        << std::string(rArg) << std::endl;
-         }
-         load(std::string(rArg));
-         if (isIoProcessor()) {
-            Log::file() << "Done reading restart file" << std::endl;
-            Log::file() << std::endl;
-         }
       }
 
    }
