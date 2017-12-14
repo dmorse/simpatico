@@ -16,7 +16,7 @@ Here is a brief summary of instructions for compiling all of the simpatico progr
 
    - make mcMd
 
-   - Check MPI settings in build/parallel/config.mk
+   - Check/modify MPI settings in bld/parallel build directory
 
    - make mcMd-mpi
 
@@ -58,7 +58,7 @@ Explanation: The setup script creates several configuration files that are requi
 
 The simpatico makefile system can build the package either "out-of-source" or "in-source". When the package is built "in-source", object files, static library files and other non-executable files that are generated during compilation are placed in the src/ directory tree, alongside the corresponding C++ source files. When it is built "out-of-source", these generated files are placed in a separate "build" directory tree, outside the source tree. In either case, the executable files for all programs are installed in the simpatico/bin directory. We recommend that most users build the package out of source. 
 
-To perform a standard "out-of-source" build of any simpatico program, simply invoke "make" with an appropriate target ("mcMd", "ddMd" or "mcMd-mpi") from the simpatico/ root directory, as described in the above short instructions. The main makefile in the root directory will automatically build out-of-source, and uses different build directories for serial (single-processor) and parallel (mpi-enabled) programs: The serial mcSim and mdSim programs are built in the simpatico/bld/serial/ directory, whereas the ddSim parallel MD program and multi-processor versions of mcSim and mdSim are built in the simpatico/bld/parallel directory.
+To perform a standard out-of-source build of any simpatico program, simply invoke "make" with an appropriate target ("mcMd", "ddMd" or "mcMd-mpi") from the simpatico/ root directory, as described in the above short instructions. The main makefile in the root directory will automatically build out-of-source, and uses different build directories for serial (single-processor) and parallel (mpi-enabled) programs. Specifically, the serial mcSim and mdSim programs are built in the simpatico/bld/serial/ directory, whereas the ddSim parallel MD program and multi-processor versions of mcSim and mdSim are built in the simpatico/bld/parallel directory.
 
 To peform an in-source build of any program, one must instead invoke "make" with an appropriate target from the simpatico/src/ directory, rather than from the simpatico/ root directory. The same commands are used as those used to build out-of-source from the root directory: Invoking "make mcMd" from the src/ directory performs an in-source build of mcSim and mdSim. Invoking "make ddMd" from src/ builds ddSim. Invoking "make mcMd-mpi" builds multi-processor versions of mcSim and mdSim. In addition, invoking the command "make all" from almost any subdirectory of the src/ directory tree will also compile all C++ files in the tree rooted at that directory. Developers often find it convenient to compile in-source when working on new code. 
  
@@ -82,7 +82,8 @@ If you prefer to use the intel compiler (and if it is installed on your computer
 \endcode
 from the simpatico root/ directory and/or the simpatico/src directory. Entering this command from the simpatico/ directory selects the intel compiler for use in all out-of-source builds, in both the bld/serial and bld/parallel directories. Entering this command from the simpatico/src directory selects the intel compiler for use in in-source builds. To explicitly choose the gcc compiler (e.g., after choosing the intel compiler and then changing your mind), instead enter "./configure -j gcc".
 
-Details: The choice of compiler for use in each build directory is specified by the value of a makefile variable named COMPILER that is defined the main config.mk configuration file in that directory. Thus far, the only valid values for this identifier are "gcc" or "intel". The default value, COMPILER=gcc, selects the gnu C++ compiler, for which the compiler command name is "g++". Setting COMPILER=intel selects the intel C++ compiler, for which the compiler command is "icpc".  The value of the COMPILER variable is used to select a block of definitions of other variables that define which command line options should be passed to a specific compiler. To change the options passed to a particular compiler, one must manually edit the values assigned to these makefile variables in the main config.mk file. Users who wish to do this should read the documentation in config.mk file, which explains the purpose of each of the relevant makefile variables. Users who are comfortable with makefiles should also find it straightforward to extend this file so as to allow use of compilers other than the gcc and intel compilers.
+Details: The choice of compiler for use in each build directory is specified by the value of a makefile variable named COMPILER that is defined the main config.mk configuration file in that directory. Thus far, the only valid values for this identifier are "gcc" or "intel". The default value, COMPILER=gcc, selects the gnu C++ compiler, for which the compiler command name is "g++". Setting COMPILER=intel selects the intel C++ compiler, for which the compiler command is "icpc".  
+The value of the COMPILER variable is used to select definitions of other variables in the main config.mk file that define the command line options that will be passed to the compiler. To change the options passed to a particular compiler, one must manually edit the main config.mk file in the build directory. Users who wish to do this should read the documentation in config.mk file, which explains the purpose of each of the relevant makefile variables. Experienced users should find it straightforward to extend this file as needed to allow use of other compilers or modify compiler options.
 
 \section compile_mcMd_section Compiling mcSim and mdSim
 
@@ -92,27 +93,45 @@ As a first step, try compiling the single-processor versions of the mcSim and md
 \endcode
 This will compile a large number of *.cpp files from the simpatico/src/ directory, placing corresponding object (*.o) and dependency (*.d) files in the simpatico/bld/serial directory, and then install executable files named mcSim and mdSim in the simpatico/bin directory. 
 
-\section compile_mpi_section Choosing an MPI library
+\section compile_mdPp_section Compiling the mdPp post-processor
 
-The ddSim program and the multi-processor versions of mcSim and mdSim require an MPI library for interprocessor communication. The choice of MPI library implementation is specified by a variable named MPI_LIB that is defined in the main config.mk file in each build directory.  The value of MPI_LIB can be changed by manually editing the relevant line of this file. The values of the variables COMPILER and MPI_LIB are used to choose a block of makefile variable definitions for a specific combination of compiler and MPI library. 
+The mdPp post-processor program is another a simple single-processor program that you can compile before attempting to compile any parallel programs. To do so, cd to the simpatico/ root directory and enter:
+\code
+> make tools
+\endcode
+This will place *.o and *.d files in the simpatico/bld/serial/tools directory and install an executable named mdPp in the simpatico/bin directory.
 
-The default value of MPI_LIB is MPI_LIB=mpicxx. This choice selects settings designed for use with systems that use linux <a http://www.open-mpi.org>environment modules</a> to manage user environments, and that use the "mpicxx" wrapper script to simplify the process of compiling and linking MPI programs.  On systems that use linux environment modules, each user must use the "module load" command to select default choices for both a compiler and an mpi library before attempting to compile or run any code.  After appropriate modules have been loaded, the "mpicxx" script can then usually be used to invoke the selected compiler with options that specify appropriate paths for the selected mpi library. This module system is used on all of the machines of the University of Minnesota Supercomputing Institute that were used for development. When using environment modules, the user must make sure that the choice of compiler specified by the simpatico build system, in the simpatico config.mk configuration file, is consistent with the choices of compiler and MPI library that are chosen by loading appropriate linux modules.
+\section compile_mpi_section Using an MPI library
 
-Setting COMPILER=gcc and MPI_LIB=openmpi selects a set of compiler options that we have used to compile simpatico on a multi-core Mac laptop, using a copy of the <a http://www.open-mpi.org>openmpi</a> library that was compiled from source using the gcc compiler. 
+The ddSim program and the multi-processor versions of mcSim and mdSim require an MPI library for interprocessor communication. Users must thus confirm that an MPI library is installed on the machine they are using, or install an MPI library, before attempting to compile any of these parallel programs. 
 
-If you are compiling the code on a system that does not use environment modules, and the settings provided for gcc with openmpi do not work, you may have to edit the variables INCLUDES and/or LDFLAGS variables to specify paths for the header and/or library files for an MPI library on your machine. If you have never compiled an MPI program on a particular machine, you may need to either do a bit of searching to identify the appropriate paths, or ask for help from a local guru.
+Before compiling any code that uses MPI in a particular build directory, MPI must be enabled in the build system used in that directory.  The use of MPI in a particular build directory is enabled if the main config.mk file in that directory contains a line that defines "UTIL_MPI=1", and is disabled if this line is commented out. 
 
-When simpatico is build by invoking make from the simpatico/ root directory (as we recommend), MPI will be automatically enabled in the bld/parallel directory and disabled in the bld/serial directory before any code is compiled. For standard out-of-source builds, there is thus no need for users to explicitly enable or disable MPI in different build directories.
+When simpatico is built by invoking make from the simpatico/ root directory (as we recommend), programs that require MPI will be built in the bld/parallel directory, and MPI will automatically enabled in that directory. Conversely, MPI is automatically disabled in the bld/serial directory that is used to build serial code. For standard out-of-source builds, there is thus no need for users to explicitly enable or disable MPI in different build directories. (It just works).
 
-When make is invoked from the src/ directory in order to execute an in-source build, however, users are responsible for disabling MPI before compiling serial programs (serial versions of mcSim and mdSim, or the mdPp postprocessor) and enabling MPI before compiling parallel programs (ddSim and parallel versions of mcSim and mdSim). The use of MPI in a particular build directory is enabled if the main config.mk file in that directory contains a line that defines "UTIL_MPI=1", and is disabled if this line is commented out. The simplest way to enable or disable is to invoke the configure script with the "-m" option, by entering "./configure -m0" from the src/ directory to enable MPI, or "./configure -m1" to disable MPI. The configure script is discussed in more detail below. 
+When simpatico is built in the src/ directory by invoking make from within that directory, however, users are responsible for enabling MPI before compiling parallel programs (ddSim and parallel versions of mcSim and mdSim), and disabling MPI before compiling serial programs (serial versions of mcSim and mdSim, or the mdPp postprocessor).  The simplest way to enable or disable MPI is to invoke the configure script with the "-m" option, by entering 
+\code
+ > ./configure -m0
+\endcode
+from the src/ directory to enable MPI for code built in src/, or 
+\code
+ > ./configure -m1
+\endcode 
+from within the src/ directory to disable MPI. The configure script is discussed in more detail below. 
+
+The default version of the main config.mk file in a build directory uses the "mpicxx" wrapper to invoke the compiler when compiling when MPI enabled (i.e., when UTIL_MPI is defined). The command "mpicxx" is a standard name for an executable file, which is provided by the most common MPI libraries (e.g., openmpi and mpich), that is used to compile and link C++ MPI programs. The mpicxx script works by invoking the compiler while passing the compiler the locations for any mpi include files or libraries that are needed on a particular system. The use of this wrapper avoids or minimizes the need for the user to pass explicit paths for these files, which can be installed in different places on different systems, depending on how the MPI library was installed. This use of the "mpicxx" script is enabled by setting CXX=mpicxx in the main config.mk file if UTIL_MPI is defined, thus replacing the name of compiler command (e.g., gcc) by the name "mpicxx". 
+
+The simpatico programs that require MPI have been built and tested on linux systems, and on MacIntosh laptop and desktop computers. On linux systems, and on mac systems on which openmpi was installed using the homebrew package management system, the mpicxx script seems to properly take care of providing paths for MPI specific files. On these platforms, simpatico can can be compiled using the default settings, for which the makefile variable OS is assigned a value OS=generic. 
+
+We encountered run into some trouble attempting to compile on a MacIntosh on which open-mpi was installed using the MacPort manager. On this system, mpicxx was unable to find the required MPI files. A work-around was developed for this case that explicitly passes the compiler the required paths for MPI header and library files on this system. This solution can be invoked by setting OS=mac-port in the main config.mk file, or by invoking ">./configure -o mac-port" from the build directory. It remains unclear, however, why this was necessary or whether the same paths will work on other systems.
 
 \section compile_ddMd_section Compiling ddSim
 
-To compile the ddSim parallel MD program, after choosing a compiler and MPI library (as discussed above), simply enter 
+To compile the ddSim parallel MD program, after choosing a compiler and checking paths to the MPI files (as discussed above), simply enter 
 \code
 > make ddMd
 \endcode
-from the simpatico/ root directory.  If successful, this will create an executable named ddSim in the simpatico/bin directory. 
+from the simpatico/ root directory.  If successful, this will build the program in the simpatico/bld/parallel directory tree and install an executable named ddSim in the simpatico/bin directory. 
 
 \section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
 
@@ -173,12 +192,6 @@ Invoking the configure script with the -h ("help") option gives a list of all co
 \section compile_configureroot_section The configure script (root directory)
 
 The simpatico/ root directory also contains a bash script named "configure" that can be used to apply changes simultaneously to the bld/serial and bld/parallel directories. This version of the script must be invoked from the root directory. It accepts the same options as the configure scripts in the build directories, with one exception: It does not accept the "-m" option, which enables or disables MPI, because MPI should normally be enabled bld/parallel and disabled in bld/serial. The root directory configure script works by simply invoking the ./configure scripts in the bld/serial and bld/parallel directories. It does not effect the configuration of in-source builds. The output of this script echoes the outputs produced by the build-directory configure scripts. The "-q" option can be used to show the current configuration in both subdirectories of bld/.
-
-\section compile_suffix_section Executable File Name Suffixes
-
-Users may want to maintain several versions of a program with different features enabled or disabled. To make this possible, the simpatico build system uses a system of file name suffixes to distinguish different versions of a program. Whenever a feature that is disabled by default is enabled, the build system adds a suffix to the name of all affected executable files to indicate the change. For example, the executable file for a version of mcSim that was compiled with debugging enabled, but no other non-default features, would be called mcSim_g. The suffix "_g" is used indicate that debugging is enabled in that executable. The same convention is used in the names "mcSim_m" and "mdSim_m" of the multi-processor versions of mcSim and mdSim, in which the suffix "_m" is used to indicate that these programs were compiled with MPI enabled. In most cases, the file name suffix associated with an optional feature is a underscore followed by a single letter that is the same as the letter in the command line option of the configure script that is used to enable or disable that feature. 
-
-The use of this convention requires users to understand the relationship between features and file name suffixes in order to invoke the correct executable name when running a simulation. For example, a user needs to know to invoke "mdSim_g" to run a version of mdSim with debugging enabled (which can be helpful during development) but to invoke "mdSim" to run the faster "production" version. We recommend that users read page \ref user_options_page before compiling programs with any non-default features enabled. We also recommend that users get in the habit of listing the contents of the simpatico/bin directory before and after building programs with non-default features enabled, to make sure they know the names of the executable files that they have created, and so can invoke them correctly to run simulations.
 
 \section compile_doc_section Generating html documentation
 
