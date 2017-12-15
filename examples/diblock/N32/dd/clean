@@ -1,6 +1,5 @@
 #!/bin/bash
-rm -f log
-rm -f restart
 rm -f out/*
-rm -Rf out.rst
-rm -Rf tmp
+rm -Rf rst
+rm -f restart
+rm -f log
