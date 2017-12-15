@@ -6,8 +6,6 @@ branches:
   only:
    - master
    - devel
-   - test
-   - boundary
 
 matrix:
   include:
