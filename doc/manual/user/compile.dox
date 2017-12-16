@@ -16,7 +16,7 @@ Here is a brief summary of instructions for compiling all of the simpatico progr
 
    - make mcMd
 
-   - Check/modify MPI settings in bld/parallel build directory
+   - Check/modify MPI settings
 
    - make mcMd-mpi
 
@@ -82,7 +82,10 @@ If you prefer to use the intel compiler (and if it is installed on your computer
 \endcode
 from the simpatico root/ directory and/or the simpatico/src directory. Entering this command from the simpatico/ directory selects the intel compiler for use in all out-of-source builds, in both the bld/serial and bld/parallel directories. Entering this command from the simpatico/src directory selects the intel compiler for use in in-source builds. To explicitly choose the gcc compiler (e.g., after choosing the intel compiler and then changing your mind), instead enter "./configure -j gcc".
 
-Details: The choice of compiler for use in each build directory is specified by the value of a makefile variable named COMPILER that is defined the main config.mk configuration file in that directory. Thus far, the only valid values for this identifier are "gcc" or "intel". The default value, COMPILER=gcc, selects the gnu C++ compiler, for which the compiler command name is "g++". Setting COMPILER=intel selects the intel C++ compiler, for which the compiler command is "icpc".  
+Details: 
+
+The choice of compiler for use in each build directory is specified by the value of a makefile variable named COMPILER that is defined the main config.mk configuration file in that directory. Thus far, the only valid values for this identifier are "gcc" or "intel". The default value, COMPILER=gcc, selects the gnu C++ compiler, for which the compiler command name is "g++". Setting COMPILER=intel selects the intel C++ compiler, for which the compiler command is "icpc".  
+
 The value of the COMPILER variable is used to select definitions of other variables in the main config.mk file that define the command line options that will be passed to the compiler. To change the options passed to a particular compiler, one must manually edit the main config.mk file in the build directory. Users who wish to do this should read the documentation in config.mk file, which explains the purpose of each of the relevant makefile variables. Experienced users should find it straightforward to extend this file as needed to allow use of other compilers or modify compiler options.
 
 \section compile_mcMd_section Compiling mcSim and mdSim
@@ -101,7 +104,7 @@ The mdPp post-processor program is another a simple single-processor program tha
 \endcode
 This will place *.o and *.d files in the simpatico/bld/serial/tools directory and install an executable named mdPp in the simpatico/bin directory.
 
-\section compile_mpi_section Using an MPI library
+\section compile_util_mpi_section Enabling use of MPI in Simpatico
 
 The ddSim program and the multi-processor versions of mcSim and mdSim require an MPI library for interprocessor communication. Users must thus confirm that an MPI library is installed on the machine they are using, or install an MPI library, before attempting to compile any of these parallel programs. 
 
@@ -121,9 +124,50 @@ from within the src/ directory to disable MPI. The configure script is discussed
 
 The default version of the main config.mk file in a build directory uses the "mpicxx" wrapper to invoke the compiler when compiling when MPI enabled (i.e., when UTIL_MPI is defined). The command "mpicxx" is a standard name for an executable file, which is provided by the most common MPI libraries (e.g., openmpi and mpich), that is used to compile and link C++ MPI programs. The mpicxx script works by invoking the compiler while passing the compiler the locations for any mpi include files or libraries that are needed on a particular system. The use of this wrapper avoids or minimizes the need for the user to pass explicit paths for these files, which can be installed in different places on different systems, depending on how the MPI library was installed. This use of the "mpicxx" script is enabled by setting CXX=mpicxx in the main config.mk file if UTIL_MPI is defined, thus replacing the name of compiler command (e.g., gcc) by the name "mpicxx". 
 
-The simpatico programs that require MPI have been built and tested on linux systems, and on MacIntosh laptop and desktop computers. On linux systems, and on mac systems on which openmpi was installed using the homebrew package management system, the mpicxx script seems to properly take care of providing paths for MPI specific files. On these platforms, simpatico can can be compiled using the default settings, for which the makefile variable OS is assigned a value OS=generic. 
+\section compile_mpi_section Accessing or Installing an MPI Library
 
-We encountered run into some trouble attempting to compile on a MacIntosh on which open-mpi was installed using the MacPort manager. On this system, mpicxx was unable to find the required MPI files. A work-around was developed for this case that explicitly passes the compiler the required paths for MPI header and library files on this system. This solution can be invoked by setting OS=mac-port in the main config.mk file, or by invoking ">./configure -o mac-port" from the build directory. It remains unclear, however, why this was necessary or whether the same paths will work on other systems.
+The simpatico programs that require MPI have been built and tested on several linux systems, include multi-user clusters and deskop computers, and on MacIntosh laptop and desktop computers.  It is often useful to be able to compile the simpatico parallel programs on desktop or laptop, primarily for purposes of development and testing. Here are a few comments about how to enable or (if necessary) install MPI on different systems before attempting to compile the simpatico programs that require MPI.
+
+\subsection compile_mpi_cluster Multi-User Linux Clusters
+
+If you are attempting to use simpatico on a well-maintained multi-user linux cluster that is used for computational research, MPI is almost certainly already installed. At the University of Minnesota, simpatico is often run on several clusters of the Minnesota Supercomputer Institute (MSI). The clusters at MSI, like many others, use a linux "module" system that requires users to load modules that provide access to software they wish to use. In this sort of environment, you often need to load an appropriate module or modules to enable usage of a particular compiler and/or a particular MPI library. Site-specific documentation of the available modules is needed. 
+
+\subsection compile_mpi_Ubuntu Ubuntu Linux
+
+To install the OpenMPI MPI library on Ubuntu linux using the apt-get package manager, enter\code
+> sudo apt-get --yes install openmpi-bin
+> sudo apt-get --yes install libopenmpi-dev
+> sudo apt-get --yes install libopenmpi1.6
+\endcode
+This should installs MPI-specific files in standard locations, for which the default configuration settings for simpatico are sufficient.
+
+\subsection compile_mpi_MacBrew Mac OS X / Homebrew
+
+To install the OpenMpi library on a MacIntosh by using the Homebrew package manager, enter
+\code
+ > brew install openmpi
+\endcode
+After OpenMPI is installed by this route, we have had no trouble compiling simpatico programs that use MPI using the gcc compiler and default configuration settings. 
+
+\subsection compile_mpi_MacBrew Mac OS X / MacPort
+
+To install OpenMpi on a Mac OS X system on which the MacPorts system is being used to
+manage linux packages, simply enter
+\code
+> sudo port install openmpi
+\endcode
+We have successfully installed openmpi on a iMac desktop by this method, but then
+encountered unexpected trouble when attempting to compile simpatico files that use 
+MPI. On that system, mpicxx was unable to find the required MPI header and library 
+files without additional information. A work-around was developed for this by 
+adding code to the main config.mk file that explicitly passes the required paths 
+for MPI header and library files on this system to the compiler if the makefile
+variable OS is set to the falue "mac-port" rather than the default value of 
+OS="generic". This solution can be enabled by manually setting OS=mac-port in the 
+main config.mk file, or by invoking the command ">./configure -o mac-port" from 
+the build directory. It remains unclear, however, why this workaround was necessary, 
+since a mpicxx should be able to find these paths automatically if the mpicxx wrapper
+were installed correctly.
 
 \section compile_ddMd_section Compiling ddSim
 

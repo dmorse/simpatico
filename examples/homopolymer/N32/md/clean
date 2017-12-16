@@ -1,4 +1,5 @@
 #!/bin/bash
 rm -f out/*
+rm -Rf rst
 rm -f log
 rm -f restart
