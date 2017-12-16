@@ -8,16 +8,23 @@ fi
 PARAM=param.$MODE
 echo "Parameter file : " $PARAM
 
-mpirun -np 6 ddSim -e -p "$PARAM" -c commands
-if [ ! -d "tmp" ]; then
-   mkdir tmp
+# Make or clean directory out
+if [ ! -d "out" ]; then
+   mkdir out
+else
+   rm -f out/*
 fi
-mv -f out/* tmp
-mpirun -np 6 ddSim -e -r restart -c commands.rst
-if [ ! -d "out.rst" ]; then
-   mkdir out.rst
+
+# Run simulation, write output to out/
+mpirun -np 6 ddSim -q -e -p $PARAM -c commands 
+
+# Make or clean directory rst, if necessary
+if [ ! -d "rst" ]; then
+   mkdir rst
+else
+   rm -f rst/*
 fi
-mv -f out/* out.rst
-mv -f tmp/* out
-rmdir tmp
+
+# Restart simulation, write outputs to rst/
+mpirun -np 6 ddSim -q -e -r restart -c commands.rst -o rst/
 

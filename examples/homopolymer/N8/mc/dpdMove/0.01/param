@@ -121,7 +121,8 @@ McSimulation{
     }
 
   }
-  saveInterval                0
+  saveInterval                100
+  saveFileName                restart
 }
 
     RDF{
