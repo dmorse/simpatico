@@ -17,12 +17,17 @@ Every simpatico simulation requires three types of input file:
 </ul>
 The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.
 
-When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the command file is specified within the parameter file.  The command file is read after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution.
+When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the parameter file is specified as an argument of a command line option.
+
+The command file is read and interpreted after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The name of the command file may be be specified either as a command line argument or as a parameter within the the parameter file, as discussed in more detail \ref usage_path_section "below" . 
+
+The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution. The name of the input configuration file must thus be contained with the command file.
 
 \section usage_run_serial_section Running a simulation 
-The names of the parameter and command files required to run a simpatico simulation are passed to the program as arguments of the "-p" and "-c" command line options, respectively. 
 
-To run a single-processor simulation, one thus invokes the nane of the binary executable file with the -p and -c options followed by appropriate input file names. For example, to run the default version of the single-processor mdSim MD simulation, using a parameter file named "param" and command file named "commands" that are both in the current working directory, one would enter:
+The names of the parameter and command files required to run a simpatico simulation are usually passed to the program as arguments of the "-p" and "-c" command line options, respectively. 
+
+To run a single-processor simulation, one thus invokes the mdSim or mcSim executable with the -p and -c options followed by appropriate input file names. For example, to run the default version of the single-processor mdSim MD simulation, using a parameter file named "param" and command file named "commands" that are both in the current working directory, one would enter:
 \code
    mdSim -p param -c commands
 \endcode
@@ -36,24 +41,29 @@ During execution, some log information is written to standard output (i.e., the 
 \endcode
 Standard output should normally be redirected to a file when a job is run in background or in a queue. 
 
-\section usage_run_parallel_section Running a parallel simulation 
-The syntax for executing the parallel ddSim program is almost identical, except for the need to launch the program as a multi-processor MPI program. The syntax for starting an MPI job depends on the system configuration and choice of library, but often involves a script called "mpirun". To use mpirun to start a ddSim program on 32 processors, using parameter and command files in the working directory named param and commands, one would enter
+\section usage_run_parallel_section Running a parallel MD simulation 
+
+The syntax for executing the parallel ddSim molecular dynamics program is similar to that used for mdSim or mcSim, except for the need to launch the program as a multi-processor MPI program. The syntax for launching an MPI program depends on the system configuration and choice of library, but usually involves a script called "mpirun". Normally mpirun accept an option -np that takes the required number of processors as a argument. 
+
+To use mpirun to start a ddSim program on 32 processors, using parameter and command files in the working directory named param and commands, and redirect log output to a file named log, one would enter
 \code
    mpirun -np 32 ddSim -p param -c commands > log
 \endcode
 For a ddSim job, the number of processors declared in the command line (e.g., 32 in this example) must be consistent with the number of processors in the processor grid defined in the Domain block of the parameter file (e.g., a 4 x 4 x 2 grid for a simulation with 32 processors).
 
 \section usage_echo_section The "echo" option
-All simpatico programs accept a command line option "-e" that causes the contents of each line of the parameter file to be echoed to standard output as the file is being read. For example, to invoke a "ddSim" simulation of 32 processors with echoing to a log file, one could enter
+
+All simpatico programs accept a command line option "-e" that causes the contents of each line of the parameter file to be echoed as the file is being read. For example, to invoke a "ddSim" simulation of 32 processors with echoing to a log file, one could enter
 \code
    mpirun -np 32 ddSim -e -p param -c commands> log
 \endcode
 The same option is also accepted by mdSim and mcSim. This option is useful for locating errors in the parameter file, because the echoed output ends immediately before the line at which an error in the parameter file is detected, and is followed by an error message that explains the nature of the error. 
 
-Other available command line options are discussed \ref section_options "below". 
+Other available command line options are discussed \ref usage_options_section "below".
+
 \section usage_program_section Program structure
 
-To understand the program flow, it may help to look briefly at the structure of a main program. The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/ddSim.cpp. All three programs have a similar structure.  
+To understand the program flow, it may help to look briefly at the structure of a main program, which is similar for all of the simpatico simulation programs. The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/ddSim.cpp. All three programs have a similar structure.  
 
 Here is a slightly simplified version of the main program src/mcMd/mcSim.cpp for MC simulations:
 \code
@@ -78,7 +88,7 @@ This simplified (but functional) version of the program has only four executable
 
   - The first line creates an object named "simulation" that is an instance of the class McMd::McSimulation.  An McMd::McSimulation object represents a complete Monte Carlo (MC) simulation. 
 
-  - The second line invokes the McMd::McSimulation::setOptions() member function. This function processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref section_options "below".
+  - The second line invokes the McMd::McSimulation::setOptions() member function. This function processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref usage_options_section "below".
 
   - The third line invokes the readParam() member function. This function reads the parameter file that was specified as an argument to the -p command line option and initializes the simulation.  
 
@@ -130,7 +140,7 @@ all analyzer output files in a single directory.
 
 The list of analyzers in a parameter file may contain one that specifies that the system configuration be dumped to file periodically during the course of the simulation for later post-processing.
 
-\section section_options Command line options
+\section usage_options_section Command line options
 
 All simpatico simulations of single systems can be invoked with any of the following command line options:
 <ul>
@@ -150,15 +160,30 @@ The -r (restart) option takes a required parameter "filename". This is the name 
 
 The -p (parameter) option takes a required string parameter, which is the name of a parameter file.  The -p and -r options are incompatible: The simulation must be initialized with either a parameter or a restart file, but not both.
 
-The -c (command) option takes a required string parameter, which is the name of a command file. If this file name is not specified as a command line option, it can be specified as the first argument of the FileMaster parameter block in the parameter file. 
+The -c (command) option takes a required string parameter, which is the name of a command file. 
+
+If this file name is not specified as a command line option, it can be specified as the first argument of the FileMaster parameter block in the parameter file. 
 
 The -i (input prefix) option takes a required string parameter, which is a prefix that will be prepended to the names of all input data files. 
 
 The -o (output prefix) option takes a required string parameter, which is a prefix that will be prepended to the names of all output data files. 
 
-If the name of the command file is not specified as a command line option (option -c), it must be specified as the first parameter in the FileMaster block of the parameter file. The input and output prefix strings may also be specified as optional parameters of the FileMaster parameter file block. Values that are specified in the parameter file block will override any values specified as command line arguments. 
-
 Other command line options that are relevant only to multi-system simulations are discussed separately \ref user_multi_page "here". 
+
+\section usage_paths_section Specifying File Names and Path Prefixes
+
+When a simulation program is executed, several file names or file paths must provided before the simulation can run. One of these must be provided as a command line argument, while others can provided either as command line arguments or in the parameter file. When a program is executed, the name of either a parameter file or a restart file (but not both) must be specified as an argument of the -p or -r command line option. In addition, the program needs the name of a command file and (optionally) values for the input and output prefix strings that are prepended to names of input and output files. The name of an input configuration file (excluding the input prefix, if any) must be specified in the command file, as an argument to a READ_CONFIG command.
+
+The arguments of the -c, -i and -o command line options are all strings that represent file names or path prefixes, and that can be specified either as command line option arguments or as parameter in a parameter file. Specifically, the name of the command file can be specified either as an argument of the -o command line option or as the value of an optional commandFile parameter in the FileMaster block of a parameter file. Similarly, the input and and output prefix strings that are prepended to names of input and output data files can be specified either as arguments of the -i or -o command line options or as values of optional inputPrefix and outputPrefix parameters in the parameter file. If a program is restarted, by invoking the program with the -r option, values of the command file name and input and output prefixes that were used in the previous simulation are also contained in the restart file.
+
+If a value for a command file name, input prefix or output prefix is provided both as a command line option argument and in a parameter or restart file, the following precedence rules apply:
+
+If a simulation program is initialized from a parameter file, by invoking the executable with the -p option, a value for any one of these three strings that is provided in the parameter file will be used in preference to a value provided as a command line argument.  If a value for one of these strings is given both in the command line and in the parameter file, the value given in the command line will be silently ignored.  When a program is invoked with the -p option, a value provided on the command line will thus be used if and only if no corresponding value is given in the parameter file. If one wishes to use a command line option to specify a value for one of these strings, one must thus use a parameter file that does not contain a value for the corresponding parameter.
+
+If a simulation is restarted, by invoking the program with the -r option, however, a command file name or prefix string given as a command line option will instead be used in preference to a value given in the parameter file. In this case, if a value for one of these strings is given in the command line, the value that was used in the previous simulation will be replaced and silently ignored. 
+
+The precedence given to path names provided as command line options when a program is restarted is necessary in order to allow a user to redirect output files to a different directory than that used in the original simulation. Analyzers that create data files during a simulation generally open new files with names that begin with the output prefix when a program is restarted. When one restarts a simulation by invokes a program with the -r option, the -o option should normally be used in the restarted program to redirect output of the restarted simulation to a different output directory than that used in the original run. If the output is not redirected in this way, output files that are created during the restarted will be placed in the same locations as those created during the original run, and will thus overwrite files created during the original run. See the discussing of restarting for a more complete discussion.
+
 
 <BR>
 \ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
