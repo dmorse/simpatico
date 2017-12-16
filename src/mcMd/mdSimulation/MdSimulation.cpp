@@ -146,39 +146,41 @@ namespace McMd
       while ((c = getopt(argc, argv, "qer:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'q':
-           qflag = true;
-           break;
+            qflag = true;
+            break;
          case 'e':
-           eflag = true;
-           break;
+            eflag = true;
+            break;
          case 'r':
-           rFlag = true;
-           rarg  = optarg;
-           break;
+            rFlag = true;
+            rarg  = optarg;
+            break;
          case 'p': // parameter file
-           pFlag = true;
-           pArg  = optarg;
-           break;
+            pFlag = true;
+            pArg  = optarg;
+            break;
          case 'c': // command file
-           cFlag = true;
-           cArg  = optarg;
-           break;
+            cFlag = true;
+            cArg  = optarg;
+            break;
          case 'i': // input prefix
-           iFlag = true;
-           iArg  = optarg;
-           break;
+            iFlag = true;
+            iArg  = optarg;
+            break;
          case 'o': // output prefix
-           oFlag = true;
-           oArg  = optarg;
+            oFlag = true;
+            oArg  = optarg;
            break;
          #ifdef MCMD_PERTURB
          case 'f':
-           fflag = true;
-           break;
+            fflag = true;
+            break;
          #endif
-         case '?':
-           std::cout << "Unknown option -" << optopt << std::endl;
-           UTIL_THROW("Invalid command line option");
+         case '?': {
+              char optChar = optopt;
+              std::cout << "Unknown option -" << optChar << std::endl;
+              UTIL_THROW("Invalid command line option");
+            }
          }
       }
  

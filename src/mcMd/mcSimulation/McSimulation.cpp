@@ -71,7 +71,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
-      setClassName("McSimulation"); 
+      setClassName("McSimulation");
 
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
@@ -99,7 +99,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
-      setClassName("McSimulation"); 
+      setClassName("McSimulation");
 
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
@@ -125,8 +125,8 @@ namespace McMd
       bool qflag = false;  // query compile time options
       bool eflag = false;  // echo parameter file
       bool rFlag = false;  // read restart file
-      bool pFlag = false;  // param file 
-      bool cFlag = false;  // command file 
+      bool pFlag = false;  // param file
+      bool cFlag = false;  // command file
       bool iFlag = false;  // input prefix
       bool oFlag = false;  // output prefix
       #ifdef MCMD_PERTURB
@@ -137,15 +137,15 @@ namespace McMd
       char* cArg = 0;
       char* iArg = 0;
       char* oArg = 0;
-   
+
       // Read and store all command line arguments
       int c;
       opterr = 0;
       while ((c = getopt(argc, argv, "qer:p:c:i:o:f")) != -1) {
          switch (c) {
          case 'q':
-           qflag = true;
-           break;
+            qflag = true;
+            break;
          case 'e':
             eflag = true;
             break;
@@ -171,23 +171,25 @@ namespace McMd
             break;
          #ifdef MCMD_PERTURB
          case 'f':
-           fflag = true;
-           break;
+            fflag = true;
+            break;
          #endif
-         case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
-           UTIL_THROW("Invalid command line option");
+         case '?': {
+               char optChar = optopt;
+               Log::file() << "Unknown option -" << optChar << std::endl;
+               UTIL_THROW("Invalid command line option");
+            }
          }
       }
-  
-      // Apply all command line options 
-  
+
+      // Apply all command line options
+
       #ifndef UTIL_MPI
       if (qflag) {
          outputOptions(Log::file());
       }
       #endif
- 
+
       // Set flag to echo parameters as they are read.
       if (eflag) {
          Util::ParamComponent::setEcho(true);
@@ -196,22 +198,22 @@ namespace McMd
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
       if (fflag) {
-   
+
          if (rFlag) {
             std::string msg("Error: Options -r and -f are incompatible. ");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
          }
-   
+
          // Set to expect perturbation in the param file.
          system().setExpectPerturbation();
-   
+
          #ifdef UTIL_MPI
-         Util::Log::file() << "Set to read parameters from a single file" 
+         Util::Log::file() << "Set to read parameters from a single file"
                            << std::endl;
          setIoCommunicator();
          #endif
-   
+
       }
       #endif
 
@@ -225,14 +227,14 @@ namespace McMd
 
       // If option -r, restart
       if (rFlag) {
-         //Log::file() << "Reading restart file " 
+         //Log::file() << "Reading restart file "
          //            << std::string(rarg) << std::endl;
-         isRestarting_ = true; 
+         isRestarting_ = true;
          load(std::string(rarg));
       }
 
       // The -c, -i, and -o options are applied after the -r option
-      // so that they override any paths set in the restart file. 
+      // so that they override any paths set in the restart file.
 
       // If option -c, set command file name
       if (cFlag) {
@@ -378,7 +380,7 @@ namespace McMd
       #ifdef MCMD_PERTURB
       if (system().hasPerturbation()) {
          // Read one command file, after reading multiple restart files.
-         Util::Log::file() << "Set to use a single command file" 
+         Util::Log::file() << "Set to use a single command file"
                            << std::endl;
          setIoCommunicator();
       }
@@ -448,7 +450,7 @@ namespace McMd
             if (command == "RESTART") {
                int endStep;
                inBuffer >> endStep;
-               Log::file() << "  " << iStep_ << " to " 
+               Log::file() << "  " << iStep_ << " to "
                            << endStep << std::endl;
                simulate(endStep, isRestarting_);
                isRestarting_ = false;
@@ -478,11 +480,11 @@ namespace McMd
    * Read and execute commands from the default command file.
    */
    void McSimulation::readCommands()
-   {  
+   {
       if (fileMaster().commandFileName().empty()) {
          UTIL_THROW("Empty command file name");
       }
-      readCommands(fileMaster().commandFile()); 
+      readCommands(fileMaster().commandFile());
    }
 
    /*
@@ -502,7 +504,7 @@ namespace McMd
 
       // Setup before main loop
       if (isContinuation) {
-         Log::file() << "Continuing from iStep = " 
+         Log::file() << "Continuing from iStep = "
                      << iStep_ << std::endl;
       } else {
          iStep_ = 0;
@@ -518,7 +520,7 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Call analyzers 
+         // Call analyzers
          if (Analyzer::baseInterval != 0) {
             if (iStep_ % Analyzer::baseInterval == 0) {
                if (analyzerManager().size() > 0) {
@@ -562,7 +564,7 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final analyzers 
+      // Final analyzers
       assert(iStep_ == endStep);
       if (Analyzer::baseInterval > 0) {
          if (iStep_ % Analyzer::baseInterval == 0) {
@@ -614,7 +616,7 @@ namespace McMd
       for (int iMove = 0; iMove < nMove; ++iMove) {
          attempt = mcMoveManager()[iMove].nAttempt();
          accept  = mcMoveManager()[iMove].nAccept();
-         Log::file() << setw(32) << left 
+         Log::file() << setw(32) << left
               << mcMoveManager().className(iMove)
               << setw(12) << right << attempt
               << setw(12) << accept
@@ -629,10 +631,10 @@ namespace McMd
       // Print replica-exchange acceptance statistics
       if (system().hasPerturbation()) {
          if (system().hasReplicaMove()) {
-  
-            double ratio; 
+
+            double ratio;
             int    nAttempt, nAccept;
-   
+
             nAttempt = system().replicaMove().nAttempt();
             nAccept = system().replicaMove().nAccept();
             ratio = nAttempt == 0 ? 0.0 : double(nAccept)/double(nAttempt);
@@ -649,7 +651,7 @@ namespace McMd
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void 
+   void
    McSimulation::analyzeConfigs(int min, int max, std::string basename)
    {
       // Preconditions
@@ -721,8 +723,8 @@ namespace McMd
    /*
    * Open, read and analyze a trajectory file
    */
-   void McSimulation::analyzeTrajectory(int min, int max, 
-                                        std::string classname, 
+   void McSimulation::analyzeTrajectory(int min, int max,
+                                        std::string classname,
                                         std::string filename)
    {
       // Preconditions
@@ -774,12 +776,12 @@ namespace McMd
       // Output results of all analyzers to output files
       analyzerManager().output();
 
-      // Output time 
+      // Output time
       Log::file() << std::endl;
       Log::file() << "# of frames   " << nFrames << std::endl;
-      Log::file() << "run time      " << timer.time() 
+      Log::file() << "run time      " << timer.time()
                   << "  sec" << std::endl;
-      Log::file() << "time / frame " << timer.time()/double(nFrames) 
+      Log::file() << "time / frame " << timer.time()/double(nFrames)
                   << "  sec" << std::endl;
       Log::file() << std::endl;
    }
