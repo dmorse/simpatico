@@ -16,7 +16,7 @@ else
 fi
 
 # Run simulation, write output to out/
-mpirun -np 6 ddSim -q -e -p $PARAM -c commands 
+mpirun -np 6 ddSim -e -p $PARAM -c commands 
 
 # Make or clean directory rst, if necessary
 if [ ! -d "rst" ]; then

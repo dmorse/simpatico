@@ -299,13 +299,14 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char * const * argv)
    {
-      bool sFlag = false; // split communicator
+      bool qFlag = false; // output compile time options
       bool eFlag = false; // echo
+      bool sFlag = false; // split communicator
       bool pFlag = false; // param file name
       bool rFlag = false; // restart file name
       bool cFlag = false; // command file name
-      bool iFlag = false; // input prefix
-      bool oFlag = false; // output prefix
+      bool iFlag = false; // input prefix string
+      bool oFlag = false; // output prefix string
       char* sArg = 0;
       char* rArg = 0;
       char* pArg = 0;
@@ -317,8 +318,11 @@ namespace DdMd
       // Read and store all command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "es:p:r:c:i:o:")) != -1) {
+      while ((c = getopt(argc, argv, "qes:p:r:c:i:o:")) != -1) {
          switch (c) {
+         case 'q': // output compile time options
+            qFlag = true;
+            break;
          case 'e': // echo parameters
             eFlag = true;
             break;
@@ -347,8 +351,10 @@ namespace DdMd
             oFlag = true;
             oArg  = optarg;
             break;
-         case '?':
-            Log::file() << "Unknown option -" << optopt << std::endl;
+         case '?': {
+               char optChar = optopt;
+               Log::file() << "Unknown option -" << optChar << std::endl;
+            }
          }
       }
 
@@ -377,6 +383,13 @@ namespace DdMd
          // Relies on initialization of outputPrefix to empty string "".
          fileMaster().openOutputFile("log", logFile_);
          Log::setFile(logFile_);
+      }
+
+      // If option -q, output compile time options to log 
+      if (qFlag) {
+         if (communicator_.Get_rank() == 0) {
+            outputOptions(Log::file());
+         }
       }
 
       // If option -e, enable echoing of parameters as they are read
@@ -2265,7 +2278,59 @@ namespace DdMd
       }
    }
 
-   // --- Validation ---------------------------------------------------
+   // --- Miscellaneous ----------------------------------------------
+
+   /*
+   * Output a list of enabled and disabled compile time options.
+   */
+   void Simulation::outputOptions(std::ostream& out) const
+   {
+      #ifdef UTIL_DEBUG
+      out << "-g Debugging   ON " << std::endl;
+      #else
+      out << "-g Debugging   OFF" << std::endl;
+      #endif
+      #ifdef UTIL_MPI
+      out << "-m MPI         ON " << std::endl;
+      #else
+      out << "-m MPI         OFF" << std::endl;
+      #endif
+      #ifdef SIMP_COULOMB
+      out << "-c Coulomb     ON " << std::endl;
+      #else
+      out << "-c Coulomb     OFF" << std::endl;
+      #endif
+      #ifndef SIMP_NOPAIR
+      out << "-np Pairs      ON " << std::endl;
+      #else
+      out << "-np Pairs      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_BOND
+      out << "-b Bonds       ON " << std::endl;
+      #else
+      out << "-b Bonds       OFF" << std::endl;
+      #endif
+      #ifdef SIMP_ANGLE
+      out << "-a Angles      ON " << std::endl;
+      #else
+      out << "-a Angles      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      out << "-d Dihedrals   ON " << std::endl;
+      #else
+      out << "-d Dihedrals   OFF" << std::endl;
+      #endif
+      #ifdef SIMP_EXTERNAL
+      out << "-e External    ON " << std::endl;
+      #else
+      out << "-e External    OFF" << std::endl;
+      #endif
+      #ifdef SIMP_SPECIAL
+      out << "-s Special     ON " << std::endl;
+      #else
+      out << "-s Special     OFF" << std::endl;
+      #endif
+   }
 
    /*
    * Return true if this Simulation is valid, or throw an Exception.

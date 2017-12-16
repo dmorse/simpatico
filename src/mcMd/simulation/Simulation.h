@@ -398,6 +398,8 @@ namespace McMd
 
       /**
       * Output a list of options enabled and disabled during compilation.
+      *
+      * \param out output stream
       */
       void outputOptions(std::ostream& out) const;
 

@@ -790,6 +790,13 @@ namespace DdMd
       //@}
 
       /**
+      * Output a list of options enabled & disabled during compilation.
+      * 
+      * \param out output stream
+      */
+      void outputOptions(std::ostream& out) const;
+
+      /**
       * Return true if this Simulation is valid, or throw an Exception.
       */
       bool isValid();
