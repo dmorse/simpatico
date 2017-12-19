@@ -28,6 +28,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    // Constructor
    SliplinkMove::SliplinkMove(McSystem& system) :

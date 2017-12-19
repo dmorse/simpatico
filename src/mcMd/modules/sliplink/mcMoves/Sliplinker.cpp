@@ -13,9 +13,9 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#include <simp/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/space/Dimension.h>
 #include <util/global.h>
@@ -25,6 +25,7 @@ namespace McMd
 {
   
    using namespace Util;
+   using namespace Simp;
 
    // Constructor
    Sliplinker::Sliplinker(McSystem& system) :
