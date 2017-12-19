@@ -22,7 +22,9 @@
 
 namespace DdMd
 {
+
    using namespace Util;
+   using namespace Simp; 
 
    /*
    * Constructor.

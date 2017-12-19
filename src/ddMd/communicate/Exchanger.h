@@ -25,6 +25,7 @@ namespace DdMd
    class GroupExchanger;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Class for exchanging Atoms, Ghosts and Groups between processors.

@@ -19,6 +19,7 @@ namespace McMd
    class System;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * MixIn class for implementation of CoulombPotential subclasses.

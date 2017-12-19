@@ -13,14 +13,15 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/boundary/Boundary.h>
 #include <simp/species/Species.h>
+
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
-
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/misc/ioUtil.h>
-#include <simp/boundary/Boundary.h>
 #include <util/space/Tensor.h>
 #include <util/containers/DArray.h>
 #include <sstream>
@@ -181,7 +182,6 @@ namespace McMd
          //Calculate, store, and write the micelle center of mass
          fileMaster().openOutputFile(outputFileName(".COMs"+toString(iStep)),outputFile_);
          //comArray;
-         int nAtomsInCluster;
          Vector clusterCOM;
          Vector r0;
          Vector dr;

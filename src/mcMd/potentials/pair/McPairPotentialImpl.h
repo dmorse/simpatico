@@ -9,7 +9,6 @@
 */
 
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace Util
@@ -199,6 +198,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.

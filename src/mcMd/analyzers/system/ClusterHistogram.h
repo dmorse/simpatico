@@ -11,13 +11,13 @@
 #include <mcMd/analyzers/SystemAnalyzer.h>           // base class templ
 #include <mcMd/simulation/System.h>                  // class templ param
 #include <mcMd/analyzers/system/ClusterIdentifier.h> // member
-#include <simp/boundary/Boundary.h>                  // member (typedef)
 #include <util/accumulators/IntDistribution.h>       // member
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Identify micelle clusters in polymeric systems.
