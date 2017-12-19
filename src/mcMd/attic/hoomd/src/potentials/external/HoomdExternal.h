@@ -12,9 +12,10 @@
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 
+#include <simp/boundary/Boundary.h>
+
 #include <util/space/Dimension.h>
 #include <util/param/ParamComposite.h>
-#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <math.h>
@@ -34,6 +35,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * A potential encapsulating a HOOMD evaluator.

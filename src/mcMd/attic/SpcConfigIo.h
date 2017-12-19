@@ -18,6 +18,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class System;
    class Atom;
