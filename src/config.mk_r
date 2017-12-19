@@ -3,21 +3,52 @@
 #
 # A copy of this makefile fragment is included by all other makefiles. 
 # The copy of this file named config.mk_r in the src/ directory is a
-# default version that is kept under repository control (the suffix _r 
-# denotes "repository"), but is not used by the makefile system. The 
-# makefile system uses copies of this file named config.mk in the src/, 
-# bld/parallel, and bld/serial directories, which will be referred to 
-# as user copies. Initial versions of these three user copies are 
-# created by the setup setup script by copying the repository version
-# src/config.mk_r and modifying a few lines to set paths correctly for 
-# each location.  The contents of each user copy effect only libraries 
-# and programs that are compiled in the directory tree rooted at the 
-# directory containing the config.mk file.
+# default version that is kept under repository control, but that is
+# not used by the makefile system. (The suffix _r denotes "repository"). 
+# The makefile system uses copies of this file named config.mk in the 
+# src/, bld/parallel, and bld/serial directories. These will be referred 
+# to as user copies, or user configuration files. The three directories 
+# containing these user configuration files (src/, bld/parallel, and 
+# bld/serial) will be referred to as build directories. The bld/serial 
+# and bld/parallel directories are standard build directories for 
+# "out-of-source" builds of serial and MPI parallel programs, respectively. 
+# The src/ directory is used for "in-sources" builds, in which the *.o 
+# and *.d files created by compiling a source file is placed in the same 
+# directory as the source file, rather than in a separate build 
+# directory tree. Out-of-source builds may be performed either by 
+# invoking make with appropriate targets from the root simpatico/ 
+# directory, or by invoking make directly from the relevant build 
+# directory. In source builds are performed by invoking make from the 
+# src/ directory, or from some subdirectory of the src/ directory. 
+# Values for makefile variables that are defined in a specific user 
+# configuration file (i.e., in src/config.mk, bld/serial/config.mk, 
+# or bld/parallel/config.mk) only effect compilation of code that 
+# is built in the build directory containing that config.mk file. 
+# 
+# Default versions of the three user main configuration files are 
+# created by the "setup" script, by copying the repository version 
+# src/config.mk_r # and modifying a few lines to set values of the 
+# ROOT_DIR and BLD_DIR makefile variables, which define absolute 
+# paths to the simpatico root directory and to the relevant build 
+# directory. The default user configuration in the bld/parallel 
+# directory has UTIL_MPI defined by default, to enable use of MPI 
+# by default in this build directory. The default user configuration 
+# files in the three build directories are otherwise identical. 
 #
-# Users may edit any of the user copies of this file to configure 
-# the build process, either manually or by using the configure script 
-# in the same directory as the relevant config.mk file. Users should,
-# however, normally avoid modifying the repository file src/config.mk_r.
+# Users may edit any of the user config.mk configuration files in
+# any build directory or its subdirectories, but should normally
+# avoid modifying repository versions of configuration files, 
+# which are named config.mk_r rather than config.mk. Makefile 
+# definitions in any user config.mk file may be modified or 
+# commented out, as needed, either by manually editing the file,
+# or by using the "configure" script that will be found in each
+# build directory after the "setup" script has been invoked.
+# The "configure" script takes command line options that enable
+# or disable particular compile time features, which it applies
+# by programmatically modifying the user configuration files in
+# the build directory. Changes applied by using the configure
+# script in a particular build directory only effect the 
+# configuration of code built in that build directory.
 #-----------------------------------------------------------------------
 # Summary of contents:
 #
