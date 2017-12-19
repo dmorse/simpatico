@@ -52,12 +52,11 @@ namespace McMd
       /**
       * Read parameters from file, and allocate data array.
       *
-      * Input format:
+      * Parameter file format:
       *
       *   - int    interval        : sampling interval
       *   - string outputFileName  : base name for output file(s)
       *   - int    nSamplePerBlock : interval for output of block averages
-      *   - int    speciesId       : integer id for Species of interest
       *
       * No block averages are output if nSamplePerBlock = 0. Otherwise,
       * block averages are output to a file named (outputFileName).dat. 
@@ -94,9 +93,6 @@ namespace McMd
       /// Number of samples per block average output.
       int nSamplePerBlock_;
 
-      /// Pointer to relevant Species.
-      int     speciesId_;
-   
    };
 
 }

@@ -10,9 +10,9 @@
 
 #include "LinkMSD.h"
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/species/Species.h>
 #include <simp/boundary/Boundary.h>
 #include <util/misc/FileMaster.h>        
 
@@ -21,6 +21,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    LinkMSD::LinkMSD(System& system) 

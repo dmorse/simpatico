@@ -23,6 +23,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    LinkLifeTime::LinkLifeTime(System& system) 
