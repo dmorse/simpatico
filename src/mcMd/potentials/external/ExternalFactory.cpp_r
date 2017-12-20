@@ -19,7 +19,6 @@
 #include <simp/interaction/external/OrthoBoxExternal.h>
 #include <simp/interaction/external/SlitExternal.h>
 #include <simp/interaction/external/LamellarOrderingExternal.h>
-#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
 #include <simp/interaction/external/SimplePeriodicExternal.h>
 #include <simp/interaction/external/PeriodicExternal.h>
 #include <simp/interaction/external/GeneralPeriodicExternal.h>
@@ -59,9 +58,6 @@ namespace McMd
       } else
       if (name == "LamellarOrderingExternal") {
          ptr = new ExternalPotentialImpl<LamellarOrderingExternal>(*systemPtr_);
-      } else
-      if (name == "LocalLamellarOrderingExternal") {
-         ptr = new ExternalPotentialImpl<LocalLamellarOrderingExternal>(*systemPtr_);
       } else
       if (name == "SimplePeriodicExternal") {
          ptr = new ExternalPotentialImpl<SimplePeriodicExternal>(*systemPtr_);
