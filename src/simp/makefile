@@ -22,10 +22,11 @@ all: $(simp_OBJS) $(simp_LIB)
 clean:
 	rm -f $(simp_OBJS) $(simp_OBJS:.o=.d) $(simp_LIB)
 	cd tests; $(MAKE) clean
+	rm -f *.o */*.o */*/*.o */*/*/*.o
+	rm -f *.d */*.d */*/*.d */*/*/*.d
 
 veryclean:
 	$(MAKE) clean
-	rm -f */*.o */*.d
 	rm -f lib*.a
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f boundary/Boundary.h

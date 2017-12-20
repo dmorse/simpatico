@@ -33,8 +33,8 @@ clean:
 	rm -f $(MDSIM).o $(MDSIM).d
 	rm -f $(MCSIM).o $(MCSIM).d
 	cd tests; $(MAKE) clean
-	rm -f *.o */*.o */*/*.o
-	rm -f *.d */*.d */*/*.d
+	rm -f *.o */*.o */*/*.o */*/*/*.o */*/*/*/*.o */*/*/*/*/*.o
+	rm -f *.d */*.d */*/*.d */*/*/*.d */*/*/*/*.d */*/*/*/*/*.d
 
 veryclean:
 	$(MAKE) clean
