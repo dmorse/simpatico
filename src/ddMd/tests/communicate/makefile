@@ -9,12 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/communicate/sources.mk
 
-all: $(ddMd_tests_communicate_OBJS)
+all: $(ddMd_tests_communicate_EXES)
 
 clean:
+	rm -f $(ddMd_tests_communicate_EXES)
 	rm -f $(ddMd_tests_communicate_OBJS) 
 	rm -f $(ddMd_tests_communicate_OBJS:.o=.d)
-	rm -f $(ddMd_tests_communicate_OBJS:.o=)
 
 -include $(ddMd_tests_communicate_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

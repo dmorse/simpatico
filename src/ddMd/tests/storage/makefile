@@ -9,12 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/storage/sources.mk
 
-all: $(ddMd_tests_storage_OBJS)
+all: $(ddMd_tests_storage_EXES)
 
 clean:
+	rm -f $(ddMd_tests_storage_EXES)
 	rm -f $(ddMd_tests_storage_OBJS) 
 	rm -f $(ddMd_tests_storage_OBJS:.o=.d)
-	rm -f $(ddMd_tests_storage_OBJS:.o=)
 
 -include $(ddMd_tests_storage_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

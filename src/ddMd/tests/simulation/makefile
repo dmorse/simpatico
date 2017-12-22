@@ -9,11 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/simulation/sources.mk
 
-all: $(ddMd_tests_simulation_OBJS) $(ddMd_tests_simulation_OBJS:.o=)
+all: $(ddMd_tests_simulation_EXES) 
 
 clean:
-	rm -f $(ddMd_tests_simulation_OBJS) $(ddMd_tests_simulation_OBJS:.o=.d)
-	rm -f $(ddMd_tests_simulation_OBJS:.o=)
+	rm -f $(ddMd_tests_simulation_EXES)
+	rm -f $(ddMd_tests_simulation_OBJS) 
+	rm -f $(ddMd_tests_simulation_OBJS:.o=.d)
 
 -include $(ddMd_tests_simulation_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

@@ -9,11 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/configIos/sources.mk
 
-all: $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=)
+all: $(ddMd_tests_configIos_EXES) 
 
 clean:
-	rm -f $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=.d)
-	rm -f $(ddMd_tests_configIos_OBJS:.o=)
+	rm -f $(ddMd_tests_configIos_EXES)
+	rm -f $(ddMd_tests_configIos_OBJS) 
+	rm -f $(ddMd_tests_configIos_OBJS:.o=.d)
 	rm -f tmp/*
 
 clean-outputs:

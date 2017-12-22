@@ -9,13 +9,13 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/chemistry/sources.mk
 
-all: $(ddMd_tests_chemistry_OBJS) $(ddMd_tests_chemistry_OBJS:.o=) 
+all: $(ddMd_tests_chemistry_EXES) 
 
 clean:
+	rm -f $(ddMd_tests_chemistry_EXES)
 	rm -f $(ddMd_tests_chemistry_OBJS) 
 	rm -f $(ddMd_tests_chemistry_OBJS:.o=.d)
-	rm -f $(ddMd_tests_chemistry_OBJS:.o=)
-	rm -f tmp/*
+	make clean-outputs
 
 clean-outputs:
 	@rm -f tmp/*

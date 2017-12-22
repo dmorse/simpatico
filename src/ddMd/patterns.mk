@@ -31,10 +31,10 @@ ifdef MAKEDEP
 	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
-# Pattern rule to compile all *.cc test programs in src/ddMd
-$(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)
+# Pattern rule to compile all *.cc test programs in src/ddMd/tests
+$(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
+	$(CXX) $(TESTFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@.o $<
+	$(CXX) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -o $@ $@.o $(LIBS) $(LDFLAGS)
 ifdef MAKEDEP
 	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
