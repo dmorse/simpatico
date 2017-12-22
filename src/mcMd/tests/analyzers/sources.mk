@@ -4,4 +4,6 @@ mcMd_tests_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_tests_analyzers_))
 mcMd_tests_analyzers_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mcMd_tests_analyzers_:.cc=.o))
+mcMd_tests_analyzers_EXES=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_tests_analyzers_:.cc=))
 

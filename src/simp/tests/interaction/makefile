@@ -7,18 +7,20 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/interaction/sources.mk
 
-TEST=simp/tests/interaction/Test
+TEST=$(BLD_DIR)/simp/tests/interaction/Test
 
-all: $(simp_tests_interaction_OBJS) $(BLD_DIR)/$(TEST)
+all: $(simp_tests_interaction_EXES) 
 
-run: $(simp_tests_interaction_OBJS)
-	$(BLD_DIR)/$(TEST) $(SRC_DIR)/simp/tests/interaction/ > log
+run: $(TEST)
+	$(TEST) $(SRC_DIR)/simp/tests/interaction/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in simp/tests/interaction/log" > count
 	@cat count
 
 clean:
-	rm -f $(simp_tests_interaction_OBJS) $(simp_tests_interaction_OBJS:.o=.d) $(BLD_DIR)/$(TEST)
+	rm -f $(simp_tests_interaction_EXES)
+	rm -f $(simp_tests_interaction_OBJS)
+	rm -f $(simp_tests_interaction_OBJS:.o=.d) 
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd pair; $(MAKE) clean

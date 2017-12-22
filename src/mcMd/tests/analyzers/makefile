@@ -9,14 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/analyzers/sources.mk
 
-TEST=mcMd/tests/analyzers/Test
-
-all: $(mcMd_tests_analyzers_OBJS) 
+all: $(mcMd_tests_analyzers_EXES) 
 
 clean:
+	rm -f $(mcMd_tests_analyzers_EXES)
 	rm -f $(mcMd_tests_analyzers_OBJS)
 	rm -f $(mcMd_tests_analyzers_OBJS:.o=.d)
-	rm -f $(mcMd_tests_analyzers_OBJS:.o=)
 	$(MAKE) clean-outputs
 
 clean-outputs:

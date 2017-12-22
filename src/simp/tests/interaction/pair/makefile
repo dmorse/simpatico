@@ -7,12 +7,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/interaction/pair/sources.mk
 
-all: $(simp_tests_interaction_pair_OBJS) 
+all: $(simp_tests_interaction_pair_EXES) 
 
 clean:
+	rm -f $(simp_tests_interaction_pair_EXES)
 	rm -f $(simp_tests_interaction_pair_OBJS)
 	rm -f $(simp_tests_interaction_pair_OBJS:.o=.d)
-	rm -f $(simp_tests_interaction_pair_OBJS:.o=)
 	$(MAKE) clean-outputs
 
 clean-outputs:

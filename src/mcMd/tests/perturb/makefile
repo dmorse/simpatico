@@ -9,10 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include sources.mk
 
-all: $(mcMd_tests_perturb_OBJS) Test
+all: $(mcMd_tests_perturb_EXES) Test
 
 clean:
-	rm -f $(mcMd_tests_perturb_OBJS) Test $(tests_mcMd_perturb_OBJS:.o=.d)
+	rm -f $(mcMd_tests_perturb_EXES) 
+	rm -f $(mcMd_tests_perturb_OBJS) 
+	rm -f $(mcMd_tests_perturb_OBJS:.o=.d)
 
 clean-deps:
 	rm -f $(mcMd_tests_perturb_OBJS:.o=.d)

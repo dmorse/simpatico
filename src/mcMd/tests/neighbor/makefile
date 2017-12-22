@@ -9,12 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/neighbor/sources.mk
 
-all: $(mcMd_tests_neighbor_OBJS)
+all: $(mcMd_tests_neighbor_EXES)
 
 clean:
+	rm -f $(mcMd_tests_neighbor_EXES)
 	rm -f $(mcMd_tests_neighbor_OBJS) 
 	rm -f $(mcMd_tests_neighbor_OBJS:.o=.d)
-	rm -f $(mcMd_tests_neighbor_OBJS:.o=)
 
 -include $(mcMd_tests_neighbor_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

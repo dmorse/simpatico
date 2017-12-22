@@ -26,15 +26,16 @@ MAKE_DEPS+= -A$(BLD_DIR)/mcMd/config.mk
 
 # Pattern rule to compile all *.cpp class source files in src/mcMd
 $(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cc test programs in src/mcMd/tests
-$(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
-	$(CXX) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS) $(LDFLAGS)
+$(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
+	$(CXX) $(TESTFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@.o $<
+	$(CXX) $(TESTFLAGS) $(CPPFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
+	rm -f $@.o
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
