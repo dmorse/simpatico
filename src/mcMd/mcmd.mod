@@ -1,4 +1,3 @@
-
 /**
 * Single-processor Monte Carlo (MC) and molecular dynamics (MD).
 */

@@ -19,7 +19,7 @@ The contents and formats of these different types of file are discussed briefly 
 
 When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the parameter file is specified as an argument of a command line option.
 
-The command file is read and interpreted after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The name of the command file may be be specified either as a command line argument or as a parameter within the the parameter file, as discussed in more detail \ref usage_path_section "below" . 
+The command file is read and interpreted after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The name of the command file may be be specified either as a command line argument or as a parameter within the the parameter file, as discussed in more detail \ref usage_paths_section "below" . 
 
 The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution. The name of the input configuration file must thus be contained with the command file.
 

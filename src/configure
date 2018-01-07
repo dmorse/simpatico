@@ -158,9 +158,9 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
          echo "-g  OFF - debugging" >&2
       fi
       if [ `grep "^ *SIMP_NOPAIR *= *1" simp/config.mk` ]; then
-         echo "-np OFF - pair potential" >&2
+         echo "-p  OFF - pair potential" >&2
       else
-         echo "-np ON  - pair potential" >&2
+         echo "-p  ON  - pair potential" >&2
       fi
       if [ `grep "^ *SIMP_BOND *= *1" simp/config.mk` ]; then
          echo "-b  ON  - bond potential" >&2
