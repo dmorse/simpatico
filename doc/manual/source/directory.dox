@@ -1,5 +1,3 @@
-namespace McMd
-{
 
 /*! \page source_directory_page 3.1 Directory Structure
 
@@ -10,7 +8,7 @@ The following list explains the contents of the subdirectories of the root simpa
 \code
   src/        - contains all C++ header (*.h) and source (*.cpp) files
      util/    - Util namespace
-     simp/   - Simp namespace
+     simp/    - Simp namespace
      mcMd/    - McMd namespace
      ddMd/    - DdMd namespace
      tools/   - Tools namespace
@@ -33,4 +31,3 @@ The purposes of the code in each of the namespace level subdirectories of the sr
 \ref source_namespace_page   (Next)  
 
 */
-}

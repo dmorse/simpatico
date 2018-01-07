@@ -267,7 +267,7 @@ The configure script in the root simpatico/ directory works by invoking
 the configure scripts in the bld/parallel and bld/serial with the same
 options, thus applying the same changes to both directories.
 
-\subsection compiler_configure_query_sub The "query" option
+\subsection compile_configure_query_sub The "query" option
 
 The -q command line option of a configure script may be used to query 
 which optional features are currently set to be enabled or disabled, and
@@ -326,7 +326,7 @@ using the configure script in the root directory, the settings in
 these two directories should be the same, except that MPI should 
 be disabled in bld/serial and enabled in bld/parallel. 
 
-\subsection compiler_configure_query_sub Changing configuration
+\subsection compile_configure_change_sub Changing configuration
 
 In the output produced by invoking "./configure -q" option, each 
 line of the output before the last two begins with the name of the 
@@ -373,11 +373,11 @@ an argument. The only allowed options are "gcc" or "intel". The
 is set to "generic" by default. 
 
 Invoking the configure script with the -h ("help") option gives a
-list of all command line options accepted by command, along with some 
-information about what C++ preprocessor macros are defined or undefined 
-by specific commands.  All of the available optional features of the
-various simpatico programs are also discussed \ref user_options_page 
-"elsewhere" in the web documentation.
+list of all command line options accepted by the configure command, 
+along with some information about what C++ preprocessor macros are 
+defined or undefined by specific commands.  All of the available 
+optional features of the various simpatico programs are also 
+discussed \ref user_options_page "elsewhere" in the web documentation.
 
 The configure script in the simpatico/ root directory can be used to 
 apply the same set of changes simultaneously to configuration files
