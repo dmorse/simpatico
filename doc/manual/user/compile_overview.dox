@@ -1,0 +1,69 @@
+/*! \page user_compile_overview_page 2.2.1 Compilation - Overview
+
+\ref user_compile_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_compile_setup_page (Next) 
+<BR>
+
+Here is a brief summary of instructions for compiling all of the simpatico 
+programs:
+
+   - Add paths to environment variables: Add the path simpatico/bin to the 
+     users PATH environment variable, and add simpatico/scripts/python to 
+     the PYTHONPATH variable (as discussed \ref compile_environment_section 
+     "here").
+
+   - Change directory (cd) to the simpatico root directory.
+
+   - From the simpatico root directory, run the setup script, by invoking
+     \code 
+     > ./setup
+     \endcode
+
+   - (Optional) Use the configure script in the simpatico/ directory to 
+     enable any optional compile-time features that are disabled by 
+     default (as discussed \ref user_compile_configure_page "here").
+
+   - Compile and install the single-processor mcSim and mdSim MC and MD 
+     programs, by invoking
+     \code
+     > make mcMd
+     \endcode
+     from the simpatico root directory. This will install executables 
+     named "mdSim" and "mcSim" in the simpatico/bin directory.
+
+   - Compile and install the "mdPp" MD post-processing analysis program, 
+     by invoking
+     \code
+     > make tools
+     \endcode
+     from the simpatico root directory. This will install the ppMd 
+     executable in the simpatico/bin directory.
+
+   - Set up your environment to allow compilation of MPI programs (as 
+     discussed \ref user_compile_mpi_page "here"), if not already done.
+
+   - Compile and install the multi-processor versions of "mcSim" and 
+     "mdSim", which allow embarassingly parallel simulations of 
+     different systems on different processors, by invoking
+     \code
+     > make mcMd-mpi
+     \endcode
+     from the simpatico/ directory. If compilation succeeds (i.e., if 
+     MPI is configured correctly), this will install executables named 
+     "mcSim_m" and "mdSim_m" in the simpatico/bin directory. 
+
+   - Compile and install the ddSim parallel domain decomposition MD 
+     program, by invoking
+     \code
+     > make ddMd
+     \endcode
+     from the simpatico/ directory. This will install the "ddSim" 
+     executable in the simpatico/bin directory.
+
+Note that all commands should be issued from the simpatico/ root directory. Each of the above steps is discussed in more detail below. 
+
+<BR>
+\ref user_compile_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_compile_setup_page (Next) 
+
+*/

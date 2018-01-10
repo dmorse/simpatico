@@ -1,0 +1,61 @@
+/*! \page user_compile_compile_page 2.2.5 Compiling 
+
+\ref user_compile_mpi_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_usage_page (Next) 
+<BR>
+
+\section compile_mcMd_section Compiling mcSim and mdSim
+
+As a first step, try compiling the single-processor versions of the mcSim and mdSim programs. Because these programs are standard C++ with no external dependencies, they usually compile with no difficulties. After running the setup script (see above), and choosing a compiler (or accepting the default choice), simply cd to the simpatico/ root directory and then enter:
+\code
+> make mcMd
+\endcode
+This will compile a large number of *.cpp files from the simpatico/src/ directory, placing corresponding object (*.o) and dependency (*.d) files in the simpatico/bld/serial directory, and then install executable files named mcSim and mdSim in the simpatico/bin directory. 
+
+\section compile_mdPp_section Compiling the mdPp post-processor
+
+The mdPp post-processor program is also a single-processor program that you can compile before attempting to compile any parallel programs. To do so, cd to the simpatico/ root directory and enter:
+\code
+> make tools
+\endcode
+This will place *.o and *.d files in the simpatico/bld/serial/tools directory and install an executable named mdPp in the simpatico/bin directory.
+
+\section compile_ddMd_section Compiling ddSim
+
+To compile the ddSim parallel MD program, after choosing a compiler and 
+checking paths to the MPI files (as discussed above), simply enter 
+\code
+> make ddMd
+\endcode
+from the simpatico/ root directory.  If successful, this will build the 
+program in the simpatico/bld/parallel directory tree and install an 
+executable named ddSim in the simpatico/bin directory. 
+
+\section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
+
+Multi-processor versions of mcSim and mdSim can be used to run:
+
+  - Multiple independent single-processor simulations as an MPI job, with 
+    completely separate input and output files
+
+  - Multiple simulations with a sequence of parameter values specified in 
+    a single parameter file, using the perturbation feature.
+
+  - Replica exchange simulations
+
+To compile multi-processor versions of mcSim and mdSim, enter:
+\code
+> make mcMd-mpi
+\endcode
+from the simpatico/ root directory.  This should create executable files 
+named mcSim_m and mdSim_m in the simpatico/bin/ directory. The suffix "_m" 
+on these executable names denotes "MPI", and is used to distinguish 
+multi-processor versions of the mcSim and mdSim executables from 
+single processor versions.
+
+<BR>
+\ref user_compile_mpi_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_compile_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_usage_page (Next) 
+
+*/

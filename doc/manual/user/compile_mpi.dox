@@ -1,0 +1,84 @@
+/*! \page user_compile_mpi_page 2.2.4 Accessing or Installing an MPI Library
+
+\ref user_compile_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_compile_compile_page (Next) 
+<BR>
+
+The simpatico package contains code for several programs that are parallelized with MPI (the Message Passing Interface). Specifically, the ddSim parallel domain decomposition program and the embarassingly parallel versions of the mcSim and mdSim single processor programs all require MPI. The user must thus make sure that an MPI library is installed and accessible on a particular system before attempting to compile these programs on that system. 
+
+The choice of an MPI library is related to the choice of compiler used to compile simpatico: Generally, simpatico should be compiled using the same compiler as that used to compile the MPI library to which simpatico will be linked.
+
+The simpatico programs that require MPI are designed to be used linux clustersthat contain many processor cores spread over multiple nodes, but can also be compiled on a desktop or laptop computer with a unix-like operating system if an MPI library is installed. The main reason to compile the parallel simpatico on a desktop or laptop computer is to simplify initial testing during development of new features. The parallel simpatico programs have been developed and tested on several linux systems, including multi-user clusters and deskop computers, and on Macintosh laptop and desktop computers.  On the remainder of this page, we make a few comments about how to enable or (if necessary) install an MPI on different types of systems.
+
+\section compile_mpi_cluster Multi-User Linux Clusters
+
+On any well-maintained multi-user linux cluster that is designed for computational research, at least one MPI library is almost certainly already installed. At the University of Minnesota, Simpatico is often run on several clusters of the Minnesota Supercomputer Institute (MSI), which allow the users to choose from among two different MPI libraries, several different choices of compiler.
+
+The computer clusters at MSI, like many similar clusters, use the linux "module" command to allow users to load particular software packages, including both compilers and MPI libraries. The "module" command is the user interface to the "Modules" package, which is a system for automating changes in a users shell environment that are required in order to use particular software packages. The syntax for the command to load a package is
+\code
+  > module load  package-name
+\endcode
+where package-name represents the name of a package that is available on the cluster. The names of the available software packages are, of course, different on different systems, so users will have consult documentation of available software for a particular system.
+
+At MSI, the following command loads a version of the OpenMPI library that was compiled with the intel compiler
+\code
+    module load openMPI/intel
+\endcode
+ This command also makes the intel compiler the default compiler for use when compiling code that uses MPI. 
+
+\section compile_mpi_Ubuntu Ubuntu Linux
+
+To install the OpenMPI MPI library on Ubuntu linux computer using the apt-get package manager, enter:
+\code
+> sudo apt-get --yes install openmpi-bin
+> sudo apt-get --yes install libopenmpi-dev
+> sudo apt-get --yes install libopenmpi1.6
+\endcode
+This should installs MPI-specific files in standard locations, for which the default configuration settings for simpatico are sufficient. This MPI library should be used in conjunction with the gcc C++ compiler and default configuration setting (COMPILER=gcc, OS=generic).
+
+\section compile_mpi_Mac Mac OS X 
+Below we describe how to install openMPI library on a macIntosh running OS X using either of two different systems for managing unix software packages on OS X. 
+
+\subsection compile_mpi_MacBrew Mac OS X / Homebrew Package Manager
+
+To install the OpenMpi library on a MacIntosh desktop computer by using the Homebrew package manager, enter
+\code
+ > brew install openmpi
+\endcode
+After installing OpenMPI by this route, we have had no trouble compiling 
+simpatico programs that use MPI using the gcc compiler and default 
+configuration settings (COMPILER=gcc, OS=generic).
+
+\subsection compile_mpi_MacPort Mac OS X / MacPort Package Manager
+
+To install OpenMpi on a Mac OS X system on which the MacPorts system is 
+being used to manage linux packages, simply enter
+\code
+> sudo port install openmpi
+\endcode
+In order to add changes compiler options that we find are necessary
+to compile and link with the resulting configuration, set the makefile 
+variable OS to OS-mac-port in the main config.mk file, either by 
+invoking the command
+\code
+">./configure -o mac-port" 
+\endcode
+from the simpatico/ root directory or from the relevant build directory, 
+or by manually the main config.mk configuration file in the relevant 
+build directory.
+
+Setting OS=mac-port changes the options that are passed to the compiler
+so as to explicitly pass the paths for MPI header and library files to
+the compiler. This appeared to be necessary on the iMac on which we 
+tested this because the MacPorts system installs header and library 
+files in non-standard locations within the /opt/ directory, and because 
+the configuration of the "mpicxx" script created by MacPorts does not 
+seem to automatically invoke the compiler with options that specify 
+these paths (as it should). 
+
+<BR>
+\ref user_compile_configure_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_compile_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_usage_page   (Next) 
+
+*/
