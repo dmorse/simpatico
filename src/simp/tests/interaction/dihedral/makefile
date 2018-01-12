@@ -7,12 +7,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/interaction/dihedral/sources.mk
 
-all: $(simp_tests_interaction_dihedral_OBJS)
+all: $(simp_tests_interaction_dihedral_EXES)
 
 clean:
+	rm -f $(simp_tests_interaction_dihedral_EXES)
 	rm -f $(simp_tests_interaction_dihedral_OBJS)
 	rm -f $(simp_tests_interaction_dihedral_OBJS:.o=.d)
-	rm -f $(simp_tests_interaction_dihedral_OBJS:.o=)
 
 -include $(simp_tests_interaction_dihedral_OBJS:.o=.d)
 -include $(simp_OBJS:.o=.d)

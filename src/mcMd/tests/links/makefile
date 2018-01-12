@@ -9,17 +9,19 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/links/sources.mk
 
-all: $(mcMd_tests_links_OBJS) Test
+all: $(mcMd_tests_links_EXES)
 
 clean:
-	rm -f $(mcMd_tests_links_OBJS) Test $(mcMd_tests_links_OBJS:.o=.d)
+	rm -f $(mcMd_tests_links_EXES) 
+	rm -f $(mcMd_tests_links_OBJS) 
+	rm -f $(mcMd_tests_links_OBJS:.o=.d)
 
 clean-deps:
 	rm -f $(mcMd_tests_links_OBJS:.o=.d)
 
-Test: Test.o $(mcMd_LIB) $(simp_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(mcMd_LIB) $(simp_LIB) $(util_LIB)
+#Test: Test.o $(mcMd_LIB) $(simp_LIB) $(util_LIB)
+#	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
+#	       $(mcMd_LIB) $(simp_LIB) $(util_LIB)
 
 -include $(mcMd_tests_links_OBJS:.o=.d)
 

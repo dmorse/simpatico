@@ -5,4 +5,6 @@ simp_tests_interaction_SRCS=\
      $(addprefix $(SRC_DIR)/, $(simp_tests_interaction_))
 simp_tests_interaction_OBJS=\
      $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_:.cc=.o))
+simp_tests_interaction_EXES=\
+     $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_:.cc=))
 

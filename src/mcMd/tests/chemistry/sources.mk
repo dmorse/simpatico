@@ -8,4 +8,6 @@ mcMd_tests_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_tests_chemistry_))
 mcMd_tests_chemistry_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mcMd_tests_chemistry_:.cc=.o))
+mcMd_tests_chemistry_EXES=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_tests_chemistry_:.cc=))
 

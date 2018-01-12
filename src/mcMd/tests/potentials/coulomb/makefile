@@ -10,12 +10,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/mcMd/tests/potentials/coulomb/sources.mk
 
-all: $(mcMd_tests_potentials_coulomb_OBJS)
+all: $(mcMd_tests_potentials_coulomb_EXES)
 
 clean:
 	rm -f $(mcMd_tests_potentials_coulomb_OBJS)
 	rm -f $(mcMd_tests_potentials_coulomb_OBJS:.o=.d)
-	rm -f $(mcMd_tests_potentials_coulomb_OBJS:.o=)
+	rm -f $(mcMd_tests_potentials_coulomb_EXES)
 	rm -f *.o
 	rm -f *.d
 

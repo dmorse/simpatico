@@ -7,12 +7,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/species/sources.mk
 
-all: $(simp_tests_species_OBJS)
+all: $(simp_tests_species_EXES)
 
 clean:
 	rm -f $(simp_tests_species_OBJS) 
-	rm -f $(simp_tests_species_OBJS:.o=.d)
 	rm -f $(simp_tests_species_OBJS:.o=)
+	rm -f $(simp_tests_species_OBJS:.o=.d)
 	$(MAKE) clean-outputs
 
 clean-outputs:

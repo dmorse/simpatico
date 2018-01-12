@@ -7,12 +7,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/interaction/bond/sources.mk
 
-all: $(simp_tests_interaction_bond_OBJS)
+all: $(simp_tests_interaction_bond_EXES)
 
 clean:
+	rm -f $(simp_tests_interaction_bond_EXES)
 	rm -f $(simp_tests_interaction_bond_OBJS)
 	rm -f $(simp_tests_interaction_bond_OBJS:.o=.d)
-	rm -f $(simp_tests_interaction_bond_OBJS:.o=)
 	rm -f *.rst
 	rm -f out/*
 

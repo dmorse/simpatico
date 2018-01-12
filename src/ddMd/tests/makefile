@@ -9,24 +9,25 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/sources.mk
 
-TEST=ddMd/tests/Test
+TEST=$(BLD_DIR)/ddMd/tests/Test
 
-all: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
+all: $(ddMd_tests_EXES) 
 
-run: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
-	$(MPIRUN) 6 $(BLD_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ 
+run: $(TEST)
+	$(MPIRUN) 6 $(TEST) $(SRC_DIR)/ddMd/tests/ 
 	cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
 
-quiet: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
-	$(MPIRUN) 6 $(BLD_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log
+quiet: $(TEST)
+	$(MPIRUN) 6 $(TEST) $(SRC_DIR)/ddMd/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in ddMd/tests/log" > count
 	@cat count
 	@cd $(SRC_DIR)/ddMd/tests; $(MAKE) clean-outputs
 
 clean:
-	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
-	rm -f $(BLD_DIR)/$(TEST)
+	rm -f $(ddMd_tests_EXES)
+	rm -f $(ddMd_tests_OBJS)
+	rm -f $(ddMd_tests_OBJS:.o=.d)
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd chemistry; $(MAKE) clean

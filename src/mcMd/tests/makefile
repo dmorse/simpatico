@@ -9,25 +9,25 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/sources.mk
 
-TEST=mcMd/tests/Test
+TEST=$(BLD_DIR)/mcMd/tests/Test
 
-all: $(mcMd_tests_OBJS) $(BLD_DIR)/$(TEST)
+all: $(mcMd_tests_EXES) 
 
-run: $(mcMd_tests_OBJS)
-	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/
+run: $(TEST)
+	$(TEST) $(SRC_DIR)/mcMd/tests/
 	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
-quiet: $(mcMd_tests_OBJS)
-	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
+quiet: $(TEST)
+	$(TEST) $(SRC_DIR)/mcMd/tests/ > log
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
 	@cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
 clean:
+	rm -f $(mcMd_tests_EXES)
 	rm -f $(mcMd_tests_OBJS)
 	rm -f $(mcMd_tests_OBJS:.o=.d)
-	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd analyzers; $(MAKE) clean

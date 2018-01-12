@@ -15,7 +15,7 @@ else
 TEST=mcMd/tests/chemistry/Test
 endif
 
-all: $(mcMd_tests_chemistry_OBJS) 
+all: $(mcMd_tests_chemistry_EXES) 
 
 clean:
 	rm -f $(mcMd_tests_chemistry_OBJS)

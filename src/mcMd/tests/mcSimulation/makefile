@@ -9,14 +9,12 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/mcSimulation/sources.mk
 
-TEST=mcMd/tests/mcSimulation/Test
-
-all: $(mcMd_tests_mcSimulation_OBJS)
+all: $(mcMd_tests_mcSimulation_EXES)
 
 clean:
 	rm -f $(mcMd_tests_mcSimulation_OBJS) 
 	rm -f $(mcMd_tests_mcSimulation_OBJS:.o=.d)
-	rm -f $(mcMd_tests_mcSimulation_OBJS:.o=)
+	rm -f $(mcMd_tests_mcSimulation_EXES)
 	$(MAKE) clean-outputs
 
 clean-outputs:
