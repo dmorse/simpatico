@@ -6,27 +6,63 @@
 
 \section compile_short_section Short Instructions
 
-Here is a brief summary of instructions for compiling all of the simpatico programs:
+Here is a brief summary of instructions for compiling all of the simpatico 
+programs:
 
-   - Add simpatico/bin to the users PATH, and add simpatico/scripts/python to PYTHONPATH (as discussed \ref compile_environment_section "here").
+   - Add paths to environment variables: Add the path simpatico/bin to the 
+     users PATH environment variable, and add simpatico/scripts/python to 
+     the PYTHONPATH variable (as discussed \ref compile_environment_section 
+     "here").
 
-   - cd simpatico/ (i.e., cd to the simpatico root directory)
+   - Change directory (cd) to the simpatico root directory.
 
-   - ./setup
+   - From the simpatico root directory, run the setup script, by invoking
+     \code 
+     > ./setup
+     \endcode
 
-   - make mcMd
+   - Use the configure script in the simpatico/ directory to enable any 
+     optional compile-time features that are not enabled by default (as 
+     discussed \ref compile_configure_section "here").
 
-   - Check/modify MPI settings
+   - Compile and install the single-processor mcSim and mdSim MC and MD 
+     programs, by invoking
+     \code
+     > make mcMd
+     \endcode
+     from the simpatico root directory. This will install executables named
+     "mdSim" and "mcSim" in the simpatico/bin directory.
 
-   - make mcMd-mpi
+   - Compile and install the "mdPp" MD post-processing analysis program, 
+     by invoking
+     \code
+     > make tools
+     \endcode
+     from the simpatico root directory. This will install the ppMd 
+     executable in the simpatico/bin directory.
 
-   - make ddMd
+   - Set up your environment to allow compilation of MPI programs (as 
+     discussed \ref compile_mpi_section "here"), if not already done.
 
-   - make tools
+   - Compile and install the multi-processor versions of "mcSim" and 
+     "mdSim", which allow embarassingly parallel simulations of 
+     different systems on different processors, by invoking
+     \code
+     > make mcMd-mpi
+     \endcode
+     from the simpatico/ directory. If compilation succeeds (i.e., if 
+     MPI is configured correctly), this will install executables named 
+     "mcSim_m" and "mdSim_m" in the simpatico/bin directory. 
 
-The setup script and all three main make commands must be executed from the simpatico/ root directory. The command "make mcMd" builds the single-processor programs mcSim and mdSim. The command "make mcMd-mpi" builds multi-processor versions of mcSim and mdSim. The command "make ddMd" builds the parallel molecular dynamics program ddSim, and "make tools" builds a single-procssor program mdPp that can analyze and process MD trajectories created by ddSim.
+   - Compile and install the ddSim parallel domain decomposition MD 
+     program, by invoking
+     \code
+     > make ddMd
+     \endcode
+     from the simpatico/ directory. This will install the "ddSim" 
+     executable in the simpatico/bin directory.
 
-Each of the above steps is discussed in more detail below. 
+Note that all commands should be issued from the simpatico/ root directory. Each of the above steps is discussed in more detail below. 
 
 \section compile_environment_section Setting environment variables
 
@@ -143,47 +179,61 @@ This should installs MPI-specific files in standard locations, for which the def
 
 \subsection compile_mpi_MacBrew Mac OS X / Homebrew
 
-To install the OpenMpi library on a MacIntosh by using the Homebrew package manager, enter
+To install the OpenMpi library on a MacIntosh by using the Homebrew package 
+manager, enter
 \code
  > brew install openmpi
 \endcode
-After OpenMPI is installed by this route, we have had no trouble compiling simpatico programs that use MPI using the gcc compiler and default configuration settings. 
+After installing OpenMPI by this route, we have had no trouble compiling 
+simpatico programs that use MPI using the gcc compiler and default 
+configuration settings (COMPILER=gcc, OS=generic).
 
-\subsection compile_mpi_MacBrew Mac OS X / MacPort
+\subsection compile_mpi_MacPort Mac OS X / MacPort
 
-To install OpenMpi on a Mac OS X system on which the MacPorts system is being used to
-manage linux packages, simply enter
+To install OpenMpi on a Mac OS X system on which the MacPorts system is 
+being used to manage linux packages, simply enter
 \code
 > sudo port install openmpi
 \endcode
-We have successfully installed openmpi on a iMac desktop by this method, but then
-encountered unexpected trouble when attempting to compile simpatico files that use 
-MPI. On that system, mpicxx was unable to find the required MPI header and library 
-files without additional information. A work-around was developed for this by 
-adding code to the main config.mk file that explicitly passes the required paths 
-for MPI header and library files on this system to the compiler if the makefile
-variable OS is set to the falue "mac-port" rather than the default value of 
-OS="generic". This solution can be enabled by manually setting OS=mac-port in the 
-main config.mk file, or by invoking the command ">./configure -o mac-port" from 
-the build directory. It remains unclear, however, why this workaround was necessary, 
-since a mpicxx should be able to find these paths automatically if the mpicxx wrapper
-were installed correctly.
+We have successfully installed openmpi on a iMac desktop by this method, 
+but then encountered unexpected trouble when attempting to compile simpatico 
+files that use MPI. On that system, mpicxx was unable to find the required 
+MPI header and library files without additional information. A work-around 
+was developed for this by adding code to the main config.mk file that 
+explicitly passes the required paths for MPI header and library files to
+the compiler if the makefile variable OS is set to the value "mac-port".
+To enable this work-around, set OS=mac-port in the main config.mk file
+either by invoking the command 
+\code
+">./configure -o mac-port" 
+\endcode
+from the simpatico/ root directory or a specific build directory, or by
+manually the main config.mk configuration file in the relevant build
+directory. It remains unclear to us (the simpatico developers) why this 
+workaround was necessary, since it seems to us that a properly configured 
+mpicxx script should have automatically invoked the compiler with options 
+that added these paths to the search paths.
 
 \section compile_ddMd_section Compiling ddSim
 
-To compile the ddSim parallel MD program, after choosing a compiler and checking paths to the MPI files (as discussed above), simply enter 
+To compile the ddSim parallel MD program, after choosing a compiler and 
+checking paths to the MPI files (as discussed above), simply enter 
 \code
 > make ddMd
 \endcode
-from the simpatico/ root directory.  If successful, this will build the program in the simpatico/bld/parallel directory tree and install an executable named ddSim in the simpatico/bin directory. 
+from the simpatico/ root directory.  If successful, this will build the 
+program in the simpatico/bld/parallel directory tree and install an 
+executable named ddSim in the simpatico/bin directory. 
 
 \section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
 
 Multi-processor versions of mcSim and mdSim can be used to run:
 
-  - Multiple independent single-processor simulations as an MPI job, with completely separate input and output files
+  - Multiple independent single-processor simulations as an MPI job, with 
+    completely separate input and output files
 
-  - Multiple simulations with a sequence of parameter values specified in a single parameter file
+  - Multiple simulations with a sequence of parameter values specified in 
+    a single parameter file, using the perturbation feature.
 
   - Replica exchange simulations
 
@@ -191,51 +241,155 @@ To compile multi-processor versions of mcSim and mdSim, enter:
 \code
 > make mcMd-mpi
 \endcode
-from the simpatico/ root directory.  This should create executable files named mcSim_m and mdSim_m in the simpatico/bin/ directory. The suffix "_m" on these executable names denotes "MPI", and is used to distinguish multi-processor versions of the mcSim and mdSim executables from single processor versions.
+from the simpatico/ root directory.  This should create executable files 
+named mcSim_m and mdSim_m in the simpatico/bin/ directory. The suffix "_m" 
+on these executable names denotes "MPI", and is used to distinguish 
+multi-processor versions of the mcSim and mdSim executables from 
+single processor versions.
  
-\section compile_configure_section The configure script (build directories)
+\section compile_configure_section The configure script
 
-Each build directory (i.e., bld/serial, bld/parallel, and src/) contains a bash script named "configure" that can be used enabled or disable specific compile time features. The configure script does its work by editing the build configuration files, which control what options will be passed to the compiler during any subsequent compilation. The configure script in each build directory must be invoked from the directory that contains the script (i.e., from bld/serial, bld/parallel, and src/), and only affects the configuration of code that is compiled in that build directory.
+Each build directory (i.e., bld/serial, bld/parallel, and src/) contains 
+a bash script named "configure" that can be used enabled or disable 
+specific compile time features. There is also an analogous script in the
+simpatico root directory which can be used to apply the same set of changes
+simultaneously to configuration files in the bld/serial and bld/parallel
+directories.
 
-The -q command line option of the configure script may be used to query which optional features are currently set to be enabled or disabled. To see how this works, after the setup script has been run, cd to the bld/serial directory and enter
+The configure script in each build directory does its work by editing the 
+build configuration files, which control what options will be passed to 
+the compiler during any subsequent compilation. The configure script in 
+each build directory must be invoked from the directory that contains 
+the script (i.e., from bld/serial, bld/parallel, and src/), and only 
+affects the configuration of code that is compiled in that build directory.
+
+The configure script in the root simpatico/ directory works by invoking
+the configure scripts in the bld/parallel and bld/serial with the same
+options, thus applying the same changes to both directories.
+
+\subsection compile_configure_query_sub The "query" option
+
+The -q command line option of a configure script may be used to query 
+which optional features are currently set to be enabled or disabled, and
+the current values of variables that specify the choice of compiler and
+environment. To see how this works, after the setup script has been run, 
+cd to the bld/serial directory and enter
 \code
 > ./configure -q
 \endcode
-The -q command line option cause the script to print a list of which optional features are currently enabled, and the name of the current choice of compiler. The resulting output for the default configuration should look something like this:
+The -q command line option cause the script to print a list of which 
+optional features are currently enabled, and the name of the current 
+choice of compiler. The resulting output for the default configuration 
+should look something like this:
 \code
--m OFF - MPI
--g OFF - debugging
--b ON  - bond potential
--a OFF - angle potential
--d OFF - dihedral potential
--e OFF - external potential
--l OFF - McMd links (mutable bonds)
--s OFF - McMd shift
--u OFF - DdMd modifiers
--k ON  - automatic dependency tracking
-COMPILER:=gcc
+-m  OFF - MPI
+-g  OFF - debugging
+-p  ON  - pair potential
+-b  ON  - bond potential
+-a  OFF - angle potential
+-d  OFF - dihedral potential
+-e  OFF - external potential
+-s  OFF - special potential
+-l  OFF - McMd links (mutable bonds)
+-s  OFF - McMd shift
+-u  OFF - DdMd modifiers
+-k  ON  - automatic dependency tracking
+COMPILER=gcc
+OS=generic
 \endcode
-Each line of this output except the last shows whether an optional feature is currently set to be enabled (ON) or disabled (OFF). The last line gives an identifier (the value of COMPILER) for the current compiler (gcc, by default). The output produced by running the configure script in the bld/parallel directory looks similiar, except that it should indicate that MPI is ON (enabled).
 
-Each line of this output except the last begins with the name of the command line option for the configure script (a dash followed by a letter) that can be used to enable or disable an associated feature. For example, the "debugging" feature is enabled or disabled using the "-g" option. Each feature can be enabled by using the associated command line option followed by "1" (ON), or disabled by using the option followed by "0" (OFF). 
+Each line of this output before the last two shows whether an optional 
+feature is currently set to be enabled (ON) or disabled (OFF). Note 
+that only the nonbonded pair potential and bond potential are enabled 
+by default, and that the angle, dihedral and other potentials are
+disabled by default. If you need to run a simulation that uses any 
+of these other types of potential, you will need to use the configure
+script to enable the relevant features before compiling.
 
-For example, to enable debugging (which enables extensive run-time sanity checks, at some cost in speed) in code built in one build directory, one would enter
+The last two line of the query output give the value of a makefile
+variable named COMPILER that is an identifier for the choice of 
+compiler (gcc, by default), and an identifier OS for the environment 
+(generic, by default). 
+
+The output produced by running the configure script in the bld/parallel 
+directory after setup looks similiar to that shown above, except that 
+it should indicate that MPI is ON (enabled) by default in that 
+directory.
+
+Invoking the configure script from the simpatico/ root directory
+with the -q option produces a output that first shows the current 
+settings in both the bld/serial directory, which control the 
+configuration of single-processor programs, and then the current
+setting in the bld/parallel directory, which control the 
+configuration of MPI programs.  If all changes have been applied
+using the configure script in the root directory, the settings in
+these two directories should be the same, except that MPI should 
+be disabled in bld/serial and enabled in bld/parallel. 
+
+\subsection compile_configure_change_sub Changing configuration
+
+In the output produced by invoking "./configure -q" option, each 
+line of the output before the last two begins with the name of the 
+command line option for the configure script (a dash followed by 
+a letter) that can be used to enable or disable an associated feature. 
+For example, the "debugging" feature is enabled or disabled using the 
+"-g" option. Each feature can be enabled by using the associated 
+command line option followed by "1" (ON), or disabled by using the 
+option followed by "0" (OFF).  
+
+For example, to enable debugging (which enables extensive run-time sanity 
+checks, at a slight cost in speed) in code built in one build directory, 
+one would enter
 \code 
 > ./configure -g1
 \endcode
-from the root of the relevant build directory. Running "./configure -q" again after this change would show that debugging is now enabled. This and any other desired changes must be made before invoking make to compile a program. To disable debugging, one would instead enter
+either from the root of the relevant build directory or from the
+simpatico/ root directory. Invoking this command from a build directory
+enables debugging in that build directory, whereas invoking it from
+the simpatico/ root directory enables debugging in both the bld/serial 
+and bld/parallel directories, thus applying the change to all code
+that compiled out of source. Running "./configure -q" again after 
+this change would show that debugging is now enabled.  To disable 
+debugging before compiling, one would instead enter
 \code 
 > ./configure -g0
 \endcode
-and then recompile. All of the available optional features are discussed \ref user_options_page "here". 
+These and any other desired changes in compile-time configuration must 
+be made before invoking make to compile a program.  
 
-As noted above, configure script may invoked with the -j option to set the value of the COMPILER identifier string, which chooses a compiler. This option takes the desired value of the COMPILER identifier (gcc or intel) as an argument. 
+Several features may be enabled and/or disabled in a single command.
+For example, to enable the use of angle and dihedral potentials, which 
+are disabled by default, one would invoke
+\code
+> ./configure -a1 -d1
+\endcode
+either from a build directory or the simpatico root directory.
 
-Invoking the configure script with the -h ("help") option gives a list of all command line options accepted by command, along with some information about relationships what preprocessor macros are defined or undefined by specific commands.
+The -j option option of the configure script may be used to set the 
+value of the COMPILER identifier string, which chooses a compiler. 
+This option takes the desired value of the COMPILER identifier as
+an argument. The only allowed options are "gcc" or "intel". The
+-o option can be used to set the value of the OS identifier, which
+is set to "generic" by default. 
 
-\section compile_configureroot_section The configure script (root directory)
+Invoking the configure script with the -h ("help") option gives a
+list of all command line options accepted by the configure command, 
+along with some information about what C++ preprocessor macros are 
+defined or undefined by specific commands.  All of the available 
+optional features of the various simpatico programs are also 
+discussed \ref user_options_page "elsewhere" in the web documentation.
 
-The simpatico/ root directory also contains a bash script named "configure" that can be used to apply changes simultaneously to the bld/serial and bld/parallel directories. This version of the script must be invoked from the root directory. It accepts the same options as the configure scripts in the build directories, with one exception: It does not accept the "-m" option, which enables or disables MPI, because MPI should normally be enabled bld/parallel and disabled in bld/serial. The root directory configure script works by simply invoking the ./configure scripts in the bld/serial and bld/parallel directories. It does not effect the configuration of in-source builds. The output of this script echoes the outputs produced by the build-directory configure scripts. The "-q" option can be used to show the current configuration in both subdirectories of bld/.
+The configure script in the simpatico/ root directory can be used to 
+apply the same set of changes simultaneously to configuration files
+in the bld/serial and bld/parallel directories. This version of the 
+script should be invoked from the root directory. It accepts the same 
+options as the configure scripts in the build directories, with one 
+exception: It does not accept the "-m" option, which enables or 
+disables MPI, because MPI should normally be enabled bld/parallel 
+and disabled in bld/serial. The root directory configure script 
+works by simply invoking the ./configure scripts in the bld/serial 
+and bld/parallel directories. Changes made with this script do not 
+effect the configuration of in-source builds. 
 
 \section compile_doc_section Generating html documentation
 

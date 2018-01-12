@@ -13,48 +13,9 @@
 
 using namespace Util;
 
-/**
-* \page ddSim_page ddSim - parallel molecular dynamics program
-*
-* Parallel domain-decomposition molecular dynamics simulation program.
-*
-* Usage:
-*
-*    mpirun -np P ddSim [-e] [-s nSystem] 
-*                       [-p paramFile] [-r restartFile] [-c command] 
-*
-*    Here, P is the number of processors and paramFile is a parameter 
-*    file that is read from standard input. The -p and -r options are
-*    incompatible: It is illegal to invoke both. 
-*
-* Options:
-*
-*   -e  
-*
-*    Enable echoing of parameter file to log file as it is read. This
-*    option is often useful for debugging the parameter file.
-*
-*  -s nSystem 
-*
-*   Split communicator into nSystem partitions, each of which is assigned
-*   to a different physical system to allow nSystem independent simulations. 
-*   The total communicator rank must be a multiple of nSystem.
-*
-*  -p paramFile
-*
-*   Specifies the name of parameter file used for initialization.
-*
-*  -r restartFile
-*
-*   Specifies the name of a restart file that was written by a previous
-*   simulation, which is used to restart and complete or extend the 
-*   earlier run. It is illegal to set both the -p and -r options.
-*
-*  -c commandFile
-*
-*   Specifies the name of a command file. 
+/*
+* Main program for parallel domain-decomposition program (ddSim).
 */
-
 int main(int argc, char **argv)
 {
 
