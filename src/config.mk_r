@@ -1,118 +1,168 @@
-#-----------------------------------------------------------------------
+#=========================================================================
 # file: $(BLD_DIR)/config.mk
 #
-# A copy of this makefile fragment is included by all other makefiles. 
+# This file is a makefile fragment, which is the main configuration file 
+# for the makefile-based build system.  A copy of this file is included 
+# by all other makefiles. 
+#
 # The copy of this file named config.mk_r in the src/ directory is a
 # default version that is kept under repository control, but that is
 # not used by the makefile system. (The suffix _r denotes "repository"). 
-# The makefile system uses copies of this file named config.mk in the 
-# src/, bld/parallel, and bld/serial directories. These will be referred 
-# to as user copies, or user configuration files. The three directories 
-# containing these user configuration files (src/, bld/parallel, and 
-# bld/serial) will be referred to as build directories. The bld/serial 
-# and bld/parallel directories are standard build directories for 
-# "out-of-source" builds of serial and MPI parallel programs, respectively. 
-# The src/ directory is used for "in-sources" builds, in which the *.o 
-# and *.d files created by compiling a source file is placed in the same 
-# directory as the source file, rather than in a separate build 
-# directory tree. Out-of-source builds may be performed either by 
-# invoking make with appropriate targets from the root simpatico/ 
-# directory, or by invoking make directly from the relevant build 
-# directory. In source builds are performed by invoking make from the 
-# src/ directory, or from some subdirectory of the src/ directory. 
-# Values for makefile variables that are defined in a specific user 
-# configuration file (i.e., in src/config.mk, bld/serial/config.mk, 
-# or bld/parallel/config.mk) only effect compilation of code that 
-# is built in the build directory containing that config.mk file. 
-# 
-# Default versions of the three user main configuration files are 
-# created by the "setup" script, by copying the repository version 
-# src/config.mk_r # and modifying a few lines to set values of the 
-# ROOT_DIR and BLD_DIR makefile variables, which define absolute 
-# paths to the simpatico root directory and to the relevant build 
-# directory. The default user configuration in the bld/parallel 
-# directory has UTIL_MPI defined by default, to enable use of MPI 
-# by default in this build directory. The default user configuration 
-# files in the three build directories are otherwise identical. 
+# When a user runs the "./setup" command, that command creates slightly
+# modified copies of this file, with the file name config.mk, in the
+# src/, bld/parallel, and bld/serial directories. The file src/config.mk
+# controls the configuration of code that is built "in source", in the
+# src/ directory, by invoking "make" from the src/ directory. The 
+# files bld/serial/config.mk and bld/parallel/config.mk controls 
+# configuration of serial and parallel versions of the code that are 
+# built "out-of-source" in the bld/serial and bld/parallel directories, 
+# respectively. Code is built out-of-source when make is invoked from
+# the root simpatico/ directory.
 #
-# Users may edit any of the user config.mk configuration files in
-# any build directory or its subdirectories, but should normally
-# avoid modifying repository versions of configuration files, 
-# which are named config.mk_r rather than config.mk. Makefile 
-# definitions in any user config.mk file may be modified or 
-# commented out, as needed, either by manually editing the file,
-# or by using the "configure" script that will be found in each
-# build directory after the "setup" script has been invoked.
-# The "configure" script takes command line options that enable
-# or disable particular compile time features, which it applies
-# by programmatically modifying the user configuration files in
-# the build directory. Changes applied by using the configure
-# script in a particular build directory only effect the 
-# configuration of code built in that build directory.
-#-----------------------------------------------------------------------
+#=========================================================================
 # Summary of contents:
 #
 # This file contains definitions of makefile variables that specify:
 # 
 #  - Absolute paths for the simpatico directory and some subdirectories
-#  - A variable UTIL_MPI that, if defined, enables MPI
 #  - A variable UTIL_DEBUG that, if defined, enables debugging checks
+#  - A variable UTIL_MPI that, if defined, enables MPI
 #  - A variable UTIL_CXX11 that, if defined, enables use of C++11
 #  - Identifiers for the choice of compiler and os/package manager
 #  - Compiler options and flags for specific compilers (gcc & intel)
 #  - A variable MAKEDEP that enables automatic dependency generation
 #
-# After setup, some common changes to this file may be made by invoking 
-# configure script from the directory that contains the config.mk file 
-# with appropriate options.  Specifically, this script may be used to 
-# enable (option -m1) or disable (-m0) MPI, to enable (-g1) or disable
-# (-g1) debugging, to enable (-k1) or disable (-k0) automatic dependency 
-# generation, to choose the compiler identifier string (the -j option), 
-# or to choose the operating system / package manager identifier 
-# (the -o option). For example, the command:
+# After setup, common changes to this file may be made by invoking the
+# configure script from the build directory that contains this config.mk 
+# file with appropriate options.  Specifically, this script may be used 
+# to enable (option -m1) or disable (-m0) MPI, to enable (-g1) or 
+# disable (-g1) debugging, to to choose the compiler identifier string 
+# (the -j option), or to choose the operating system / package manager 
+# identifier (the -o option). For example, the command:
 #
-# ./configure -m1 -j gcc
+# ./configure -m1 -g0 -j gcc
 #
-# would enable MPI and select the gcc compiler prior to compilation.
-#-----------------------------------------------------------------------
+# would enable MPI, disable debugging and select the gcc compiler prior 
+# to compilation.
+#=========================================================================
+# Build Directories and Configuration Files (Discussion)
+#
+# All C++ source code for simpatico is contained in the simpatico/src
+# directory. When this code is compiled, the object (*.o) files, 
+# dependency (*.d) files, and static library (*.a) files that are 
+# generated by compilation are installed in a "build" directory,
+# which may or may not be the same as the src/ directory. When the 
+# code is build "in-source", the build directory is the same as the 
+# src directory, and the *.o and *.d files created by compiling a 
+# *.cpp source file are placed in the same directory as the source 
+# file.  When code is built "out-of-source", these generated files 
+# are placed in an equivalent location in a separate build directory,
+# which must have the same directory tree structure as the src/ 
+# directory. The bld/serial and bld/parallel directory trees are
+# the standard build directories for "out-of-source" builds of
+# single-processor and MPI parallel programs, respectively. 
+#
+# Out-of-source builds may be performed by invoking make with 
+# appropriate targets from the root simpatico/ directory. Invoking
+# make from the simpatico/ directory builds code that does not 
+# require MPI in the bld/serial directory and code that uses
+# MPI in the bld/parallel directory. In-source builds are 
+# performed by invoking make from within the src/ directory.
+#
+# Each of the three standard build directories (src/, bld/serial,
+# and bld/parallel) has a similar directory structure. Each build
+# directory has five directories names util/, simp/, mcMd/, ddMd/,
+# and tools/ that each contain the source code for all classes
+# defined in a corresponding C++ namespace. We thus refer to 
+# these five directories as namespace level directories.
+#
+# After the setup script has been called, each of the build
+# directories contains a set of six configuration files that 
+# can be modified by users, all of which are files named 
+# "config.mk". Each build directory has a main configuration 
+# named config.mk in the root of the build directory, and a
+# a namespace level configuration file, also named config.mk,
+# in each of the namespace-level subdirectories. This file 
+# (the one you are reading) is a copy of the main configuration
+# file. The "setup" script creates each of these config.mk by
+# copying corresponding repository version of the file, and
+# sometimes modifying a few lines. The repository version of
+# each config.mk file is a file named config.mk_r that is 
+# located in the same directory of the src/ directory as the 
+# corresponding config.mk file. The contents of the config.mk
+# configuration files in each build directory control the 
+# configuration of code in that directory.
+#
+# The setup script creates initial versions of the main config.mk
+# configuration files in each build directory by creating a copy
+# of the repository file src/config.mk_r and modifying a few lines
+# that define directory paths. Specifically, the setup script uses 
+# the unix "sed" utility to set appropriate values for the ROOT_DIR 
+# and BLD_DIR makefile variables, which define absolute paths to the 
+# simpatico/ root directory and to the relevant build directory. The 
+# setup script also uncomments the definition of the variable UTIL_MPI 
+# in the file bld/parallel/config.mk, to enable use of MPI by default 
+# in this build directory, but leaves the definition of UTIL_MPI
+# commented out in the files bld/serial/config.mk and src/config.mk,
+# thus disabling MPI by default in these directories. The configuration 
+# files in the three build directories are otherwise identical. 
+#
+# Users may edit any of the main or namespace level config.mk 
+# configuration files in any build directory or its namespace level
+# subdirectories, but should normally avoid modifying the repository 
+# versions of configuration files, which are named config.mk_r.
+# Definitions of makefile variables in any config.mk file may be 
+# modified or commented out, as needed, either by manually editing 
+# the file, or by using the "configure" script in the same build 
+# directory.
+#
+# After setup, each build directory contains a bash script named 
+# "configure" that can be used to enable or disable particular
+# compile time features before compiling. The "configure" script 
+# takes command line options that allow a user to specify that 
+# particular compile-time features should be enabled or disabled.
+# The script applies these changes by using linux utilities to
+# modify the relevant config.mk files in the same build directory. 
+#
+#=======================================================================
 # Absolute directory paths
 #
-# The setup script should set the value of ROOT_DIR in config.mk to 
-# the absolute path to the root simpatico/ directory, and BLD_DIR 
-# should be set to the path to the directory that contains this 
-# config.mk file. The value of BLD_DIR is the root of the directory 
-# in which object *.o files will be placed during compilation. 
+# The setup script should set the value of ROOT_DIR in this config.mk 
+# file to the absolute path to the root simpatico/ directory, and should 
+# set BLD_DIR to the absolute path to the build directory that contains 
+# this config.mk file. 
 #
-# In the repository file config.mk_r, the absolute path for ROOT_DIR 
-# and the relative path to BLD_DIR are assigned placeholder values of 
-# "PWD" and "OWD", respectively. These placeholders are replaced by 
-# actual # paths by the setup script when it creates user copies of 
-# the config.mk file in the src/, bld/parallel and bld/serial 
-# directories.
-# 
-# BLD_DIR = path to the object directory that will contain *.o files
-# SRC_DIR = path to the src/ directory, which contains source files
-# BIN_DIR = path to the directory in which executables are installed
+# In the repository version, named src/config.mk_r, the absolute path 
+# for ROOT_DIR and the relative path to BLD_DIR are assigned placeholder 
+# values of "PWD" and "OWD", respectively. These placeholders are replaced 
+# by actual paths by the setup script when it creates copies of this
+# file. 
 #
-# For the config.mk file in the src/ directory, BLD_DIR and SRC_DIR
-# will be the same, and will both point to the src/ directory. This
-# copy of config.mk is used for in-source builds.
+# Variables that define directory paths:
+#
+# ROOT_DIR = path to the simpatico/ root directory 
+# BLD_DIR  = path to the build directory that will contain *.o files
+# SRC_DIR  = path to the src/ directory, which contains source files
+# BIN_DIR  = path to the directory in which executables are installed
+#
+# For the config.mk file in the src/ directory, values of BLD_DIR and 
+# SRC_DIR will be the same, and will both point to the src/ directory. 
 
 ROOT_DIR=PWD
 BLD_DIR=$(ROOT_DIR)/=OWD
 SRC_DIR=$(ROOT_DIR)/src
 BIN_DIR=$(ROOT_DIR)/bin
 
-#-----------------------------------------------------------------------
-# Flags that control compile time options:
-
-# Defining UTIL_MPI enables linking to an MPI library. MPI must be
-# enabled by uncommenting this line to build a parallel program.
-#UTIL_MPI=1
+#======================================================================
+# Variables that enable compile time options:
 
 # Defining UTIL_DEBUG enables a variety of extra sanity checks, at some
 # cost in speed. Debugging is disabled (commented out) by default.
 #UTIL_DEBUG=1
+
+# Defining UTIL_MPI enables linking to an MPI library. MPI must be
+# enabled by uncommenting this line to build a parallel program.
+#UTIL_MPI=1
 
 # Defining UTIL_CXX11 enables the use of features of the C++11 standard.
 # C+11 is disabled (commented out) by default. If C++11 is disabled, 
@@ -120,7 +170,11 @@ BIN_DIR=$(ROOT_DIR)/bin
 # standard.
 #UTIL_CXX11=1
 
-#-----------------------------------------------------------------------
+# Comment: Thus far, very little of the code uses features of C++11,
+# and equivalent replacements from C++ 1998 are used in these few cases. 
+# There is thus no harm in leaving UTIL_CXX11 undefined.
+ 
+#======================================================================
 # Compiler and Operating System Identifier Strings:
 #
 # Users may select a compiler and a MPI library implementation by 
@@ -134,54 +188,183 @@ BIN_DIR=$(ROOT_DIR)/bin
 # COMPILER : gcc (default), intel
 # OS       : generic (default), mac-port
 #
-# Each valid combination of these strings selects a block of definitions 
-# for variables that define the name of the compiler and the strings of 
-# options that should be passed to the compiler and linker. 
-#
-# The value OS=generic works for most generic unix-like systems in which 
-# all include files and libraries are placed in standard locations, for
-# which no explicit paths need to be added to the compiler search paths 
-# for header files or libraries. This can be used both for standard linux 
-# distributions and the Mac OS X # operating system if MPI library was 
-# installed either by compiling from source and installing in standard
-# locations or by using the Homebrew package manager.
-#
-# The value OS=mac-port should be used to compile on Mac OSX using an
-# open-mpi MPI library installed by the MacPort system. The MacPort 
-# manager places header and library files in non-standard locations 
-# within the /opt/local directory tree.
+# Each valid combination of these strings selects a set of definitions 
+# for variables used to define makefile recipes for the compiler, 
+# archiver, and linker.
 
 COMPILER=gcc
 OS=generic
 
-# ------------------------------------------------------------------------
-# The following variables are used directly in makefile pattern rules.
+# Comments:
 #
-# CXX         - C++ compiler executable name (must be in the users PATH)
-# CXXFLAGS    - flags used to compile source files, without linking
+# The value OS=generic works for most generic unix-like systems in 
+# which all include files and libraries are placed in standard 
+# locations, and in which no explicit paths thus need to be added 
+# to the compiler search paths for header files or libraries. We
+# find that this setting is suffiicent both for standard linux 
+# distributions and for Mac OS X operating system if an MPI library 
+# was installed either (1) by compiling from source and installing 
+# in standard locations, or (2) by using the "Homebrew" package 
+# manager.
+#
+# The value OS=mac-port should be used to compile on Mac OSX using 
+# an open-mpi MPI library that was installed by the MacPort system. 
+# The MacPort manager places header and library files in 
+# non-standard locations within the /opt/local directory tree, and
+# these locations do not seem to be found by the mpicxx script. We
+# found that this required us to add some explicit search paths to
+# compiler and linker recipes.
+
+#======================================================================
+# Compiler Pattern Rules (Discussion)
+#
+# Variables used in makefile compiler pattern rules:
+#
+# CXX         - C++ compiler executable name 
 # INCLUDES    - Directories to search for included header files
+# DEFINES     - Definitions of C preprocessor macros
 # CXXSTD      - flag to define C++ language standard (c++98 or c++11)
+# CXXFLAGS    - flags used to compile individual source files
 # TESTFLAGS   - flags used to compile unit test programs
-# LDFLAGS     - flags used to compile and link a main program
-# AR          - path to archiver executable, to create library (*.a) files
-# ARFLAGS     - flags used by archiver
-# MPIRUN      - command to run mpi, including -np option, e.g. "mpirun -np"
 #
-# Pattern rules for compiling source files in the util/, simp/, mcMd/ and 
-# ddMd/ directories are defined in the patterns.mk files in each of these 
-# namespace-level directories. In each of these, the basic pattern is
+# Pattern Rules:
 #
-# %.o:%.cpp
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+# Pattern rules for compiling source files in the util/, simp/, mcMd/ 
+# and ddMd/ directories are defined in the patterns.mk files in each 
+# of these namespace-level directories. In each of these, the basic 
+# compiler pattern rule is of the form:
 #
-# The variable $(DEFINES), which contains a list of C preprocessor
-# macro definitions, is not defined in this file. Instead, it is assigned 
-# a different value in each namespace level patterns.mk file. The 
-# value of $(DEFINES) for each namespace contains a string of compiler
-# options that use the compiler "-D" option to define the preprocessor 
-# macro definitions used in that namespace.
-# ------------------------------------------------------------------------
-# Definitions for specific combinations of COMPILER and OS:
+# $(BLD_DIR)%.o:$(SRC_DIR)/%.cpp
+#	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c -o $@ $<
+#
+# This pattern compiles a *.cpp file in a subdirectory of the source 
+# directory $(SRC_DIR) and creates a *.o object file in a corresponding
+# subdirectory of the build directory, $(BLD_DIR). 
+#
+# The variable $(CXX) gives the name of the compiler executable, e.g.,
+# gcc for the gnu compiler or icpc for intel, for serial programs. For 
+# code compiled with MPI enabled (i.e., with UTIL_MPI defined) this 
+# variable is usually set ro CXX=mpicxx. The value mpicxx is the name
+# of a standard script for compiling MPI C++ programs that should 
+# invoke the compiler that was used to compile the mpi library with 
+# any system-specific options required to specify locations of header 
+# and/or library files. Use of the mpicxx script in a properly 
+# installed MPI system enormously simplifies compilation and linking 
+# of MPI programs.
+#
+# The variable $(INCLUDES) defines compiler options used to specify 
+# paths to directories that contain any C++ header files that are 
+# included by other C++ files. The value of $(INCLUDES) must specify 
+# the path $(SRC_DIR) to the simpatico/src/ directory, to allow the 
+# compiler to find header files that are part of the simpatico 
+# package. Within all simpatico C++ files, include statements for 
+# all simpatico header files use paths defined relative to this src/ 
+# directory. If necessary, another directory path can be specified 
+# in the $(INCLUDES) string for code that is compiled with MPI 
+# enabled to allow the compiler to find the "mpi.h" MPI header file.  
+# This should not be necessary if the mpi header file is installed 
+# in a standard location such as /usr/include or /usr/local/include, 
+# or if the mpicxx script automatically adds the correct path (as
+# it should). 
+#
+# The variable $(DEFINES) specifies a list of C preprocessor macro 
+# definitions.  This variable is not defined in this file, i.e., in 
+# the main configuration file. Instead, it is assigned a different 
+# value in each namespace level patterns.mk file. The value of 
+# $(DEFINES) for each namespace contains a string of compiler 
+# options that use the compiler "-D" option to define the set of
+# preprocessor macro definitions used in that namespace.
+#
+# The variable $(CXX_FLAGS) specifies all flags that are used by the
+# compiler, rather than only the preprocessor. This normally contains 
+# the $(CXX_STD) string as a substring, as well as options that 
+# specify the optimization level (e.g., -O3) and any desired 
+# compiler warnings (e.g., "-Wall").
+#
+#======================================================================
+# Archiver Recipes (Discussion):
+#
+# Makefile variable:
+#
+# AR          - path to archiver executable (AR = ar by default)
+#
+# Recipes:
+#
+# The simpatico build system creates a static library in each namespace
+# level subdirectory of the build directory that contains all of the 
+# *.o object files created in that namespace level directory. The path
+# to that library is specified in the config.mk file in each namespace
+# level directory, by the value of the variable with a name of the form
+# dir_LIB, where dir is the name of the namespace level directory. For 
+# example, the file src/mcMd/config.mk defines a variable mcMd_LIB that
+# contains the path to the mcMd library file. This value of this
+# variable is an absolute path to a file in the relevant namespace 
+# level directory of the build directory, with a base name of the form
+# dirlib (e.g., mcMdlib) followed by an optional suffix and a .a file
+# extension.  By default, the suffix "_m" is used to indicate that the
+# library contains code compiled with MPI enabled. The library for the 
+# mcMd directory is a file in the mcMd directory of the build 
+# directory, which is named mcMdlib.a for a library compiled with MPI 
+# disabled and mcMdlib_m.a for a library compiled with MPI enabled.
+#
+# The sources.mk file in each namespace level directory contains a 
+# recipe to create this static library file. For example, the recipe 
+# to create the static library $(mcMd_LIB) is given in the file 
+# src/mcMd/sources.mk, and is given by
+#
+# $(AR) rcs $(mcMd_LIB) $(mcMd_OBJS)
+#
+# Here, $(mcMd_OBJS) is a string that contains absolute paths for all of
+# the *.o object files created by compiling source files in the src/mcMd
+# directory.
+#
+#======================================================================
+# Linker Recipes:
+#
+# Makefile variable:
+#
+# LDFLAGS     - flags passed to linker (empty by default)
+#
+# Recipes:
+#
+# The main makefile in the src/mcMd, src/ddMd, and src/tools namespace
+# level directories each contains one or more recipes to create 
+# executable program files. The makefile in the src/mcMd directory 
+# contains recipes for both the mdSim MD simulation program and the 
+# mcSim MC program, and the makefile in src/ddMd contains a recipe
+# for the ddSim executable. As an example, the recipe for the mdSim 
+# program is as follows:
+#
+#	$(CXX) -o $(MDSIM_EXE) $(MDSIM).o $(LIBS) $(LDFLAGS)
+#
+# Here $(MDSIM_EXE) is the path to the executable, which is installed 
+# in the bin/ directory by default, $(MDSIM).o is the path to the 
+# object file created by compiling the src/mcMd/mdSim.cpp source 
+# file, which is created using the pattern used for all *.cpp source 
+# files, and $(LIBS) is a list of all libraries that must be linked 
+# to create the this executable.
+#
+# The values of variables such as $(MDSIM_EXE) that define the path for
+# the executable are defined in namespace level config.mk configuration
+# files, so that users can edit the configuration files to change the 
+# locations in which the executable is installed.
+#
+# The variable $(LDFLAGS) is usually empty, but can, if necessary, 
+# be used to specify a non-standard path to a directory containing 
+# the MPI library.  This variable can be left emtpy if the MPI 
+# library is installed in a standard location such as /usr/lib or 
+# /usr/local/lib, or if mpcixx is configured correctly.
+# 
+#======================================================================
+# Miscellaneous Variables:
+#
+# MPIRUN  - command to run mpi, including -np option, e.g. "mpirun -np"
+#
+# This variable is used in recipes for some targets that run tests,
+# for tests that require MPI.
+#
+#======================================================================
+# Variable Definitions for Specific Compiler/OS combinations
 
 # Global default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
@@ -225,7 +408,7 @@ ifeq ($(COMPILER),intel)
    endif
 endif
 
-# ---- Explicit Paths for MPI Library ----
+# --- Explicit Paths for MPI Library for MacPort OSX Package Manager ----
 ifeq ($(UTIL_MPI),1)
    ifeq ($(OS),mac-port)
       INCLUDES+= -I/opt/local/include/openmpi-mp
@@ -240,14 +423,22 @@ endif
 # left enabled. Automatic dependency generation allows the build system
 # to correctly decide what needs to be recompiled if you modify any 
 # compile time option, config.mk file or source file after compiling 
-# once and before recompiling. You should consider disabling it only 
-# if you are having trouble with the system for generating dependency 
-# files (e.g., because of trouble with the python module it requires) 
-# and cannot figure out how to get it to work. If automatic dependency 
-# generation is disabled, you should invoke "make clean" from the 
-# object directory (the directory containing the relevant user copy 
-# of this file) before re-compiling after using the configure script
-# to change compile time options or manually modifying any config.mk 
-# or C++ source file, in order to force a clean rebuild.
- 
+# once and before recompiling. 
+
 MAKEDEP=$(ROOT_DIR)/bin/makeDep
+
+# Comment: You should consider disabling automatic dependency 
+# generation only as an act of desperation if you are having trouble 
+# with the system for generating dependency files, and simply cannot 
+# get it to work. The automatic dependency generation system used by 
+# simpatico relies on an executable python script named makeDep in 
+# the bin/ directory that uses a python module named makeDepend to 
+# process dependency files that are generated by the compiler. The 
+# most common problem with this system is a failure of the python 
+# interpreter to find the makeDepend module, which is defined in the 
+# file $(ROOT_DIR)/scripts/python/makeDepend.py.  If you run into 
+# this problem, you probably just need to add the absolute path to
+# the simpatico/scripts/python directory to the PYTHON_PATH 
+# environment variable, as described in the web documentation for 
+# how to compile.
+#

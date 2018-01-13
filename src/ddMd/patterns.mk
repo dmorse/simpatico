@@ -26,16 +26,17 @@ MAKE_DEPS+= -A$(BLD_DIR)/ddMd/config.mk
 
 # Pattern rule to compile all *.cpp class source files in src/ddMd
 $(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cc test programs in src/ddMd/tests
 $(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(TESTFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@.o $<
-	$(CXX) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -o $@ $@.o $(LIBS) $(LDFLAGS)
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@.o $<
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
+	rm -f $@.o
 ifdef MAKEDEP
-	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 

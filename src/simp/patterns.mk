@@ -22,18 +22,18 @@ MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/simp/config.mk
 
 # Pattern rule to compile all *.cpp class source files in src/simp
-$(BLD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+$(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
+	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_FLAGS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cc test programs in src/simp/tests
 $(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(TESTFLAGS) $(CPPFLAGS) $(INCLUDES) $(DEFINES) -c -o $@.o $<
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $@.o $(LIBS)
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@.o $<
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
 	rm -f $@.o
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_FLAGS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
