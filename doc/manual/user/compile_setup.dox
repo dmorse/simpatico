@@ -5,7 +5,11 @@
 <BR>
 
 This page describes the two initial steps that must be carried out
-before compiling any simpatico source code. These are
+before compiling any simpatico source code. These are:
+
+  - Setting unix shell environment variables
+
+  - Running the "setup" shell script
 
 \section compile_environment_section Setting environment variables
 

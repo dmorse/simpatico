@@ -1,4 +1,4 @@
-/*! \page user_compile_mpi_page 2.2.4 Accessing or Installing an MPI Library
+/*! \page user_compile_mpi_page 2.2.4 Configure or Install MPI 
 
 \ref user_compile_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_compile_compile_page (Next) 
@@ -39,7 +39,7 @@ This should installs MPI-specific files in standard locations, for which the def
 \section compile_mpi_Mac Mac OS X 
 Below we describe how to install openMPI library on a macIntosh running OS X using either of two different systems for managing unix software packages on OS X. 
 
-\subsection compile_mpi_MacBrew Mac OS X / Homebrew Package Manager
+\subsection compile_mpi_MacBrew Mac OS X - Homebrew Package Manager
 
 To install the OpenMpi library on a MacIntosh desktop computer by using the Homebrew package manager, enter
 \code
@@ -49,7 +49,7 @@ After installing OpenMPI by this route, we have had no trouble compiling
 simpatico programs that use MPI using the gcc compiler and default 
 configuration settings (COMPILER=gcc, OS=generic).
 
-\subsection compile_mpi_MacPort Mac OS X / MacPort Package Manager
+\subsection compile_mpi_MacPort Mac OS X - MacPort Package Manager
 
 To install OpenMpi on a Mac OS X system on which the MacPorts system is 
 being used to manage linux packages, simply enter
@@ -58,14 +58,14 @@ being used to manage linux packages, simply enter
 \endcode
 In order to add changes compiler options that we find are necessary
 to compile and link with the resulting configuration, set the makefile 
-variable OS to OS-mac-port in the main config.mk file, either by 
+variable OS to OS=mac-port in the main config.mk file, either by 
 invoking the command
 \code
-">./configure -o mac-port" 
+>./configure -o mac-port
 \endcode
-from the simpatico/ root directory or from the relevant build directory, 
-or by manually the main config.mk configuration file in the relevant 
-build directory.
+from the simpatico/ root directory or the relevant build directory, 
+or by manually editing the main config.mk configuration file in the 
+relevant build directory.
 
 Setting OS=mac-port changes the options that are passed to the compiler
 so as to explicitly pass the paths for MPI header and library files to
@@ -79,6 +79,6 @@ these paths (as it should).
 <BR>
 \ref user_compile_configure_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_compile_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_usage_page   (Next) 
+\ref user_compile_compile_page (Next) 
 
 */
