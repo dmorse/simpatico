@@ -1,7 +1,7 @@
-/*! \page user_compile_compile_page 2.2.5 Program Compilation
+/*! \page user_compile_compile_page 2.2.5 Compiling
 
 \ref user_compile_mpi_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_usage_page (Next) 
+\ref user_compile_doc_page (Next) 
 <BR>
 
 \section compile_mcMd_section Compiling mcSim and mdSim
@@ -127,6 +127,6 @@ the use of separate build directories for serial and parallel code.
 <BR>
 \ref user_compile_mpi_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_compile_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_usage_page (Next) 
+\ref user_compile_doc_page (Next) 
 
 */

@@ -3,6 +3,7 @@
 \ref user_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_usage_page (Next) 
 <BR>
+
 The following pages give instructions for compiling simpatico. The
 \ref user_compile_overview_page "first" page gives a brief overview 
 of the required steps, followed by more detailed discussions of 
@@ -10,11 +11,13 @@ each step in subsequent pages.
 
 <h2> Contents:</h2>
    <ul style="list-style: none;">
-   <li> \subpage user_compile_overview_page "2.4.1 Overview" </li>
-   <li> \subpage user_compile_setup_page    "2.4.2 Initial Setup" </li>
-   <li> \subpage user_compile_configure_page "2.4.3 Configuration" </li>
-   <li> \subpage user_compile_mpi_page      "2.4.4 Configuring MPI" </li>
-   <li> \subpage user_compile_compile_page  "2.4.5 Program Compilation"</li>
+   <li> \subpage user_compile_overview_page  "2.4.1 Overview" </li>
+   <li> \subpage user_compile_setup_page     "2.4.2 Initial setup" </li>
+   <li> \subpage user_compile_configure_page "2.4.3 Configuring simpatico" </li>
+   <li> \subpage user_compile_mpi_page       "2.4.4 Configuring MPI" </li>
+   <li> \subpage user_compile_outsource_page "2.4.5 Compiling (out-of-source)"</li>
+   <li> \subpage user_compile_insource_page  "2.4.5 Compiling (in-source)"</li>
+   <li> \subpage user_compile_doc_page       "2.4.6 Generating local html documentation"</li>
    </ul>
 
 <BR>

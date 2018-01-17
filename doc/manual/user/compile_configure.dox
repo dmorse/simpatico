@@ -1,4 +1,4 @@
-/*! \page user_compile_configure_page 2.2.3 Configuration
+/*! \page user_compile_configure_page 2.2.3 Configuring simpatico
 
 \ref user_compile_setup_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_compile_mpi_page (Next) 
@@ -67,24 +67,9 @@ the simpatico/ root directory. The same commands are used as those used to
 build out-of-source from the root directory: Invoking "make mcMd" from the 
 src/ directory performs an in-source build of mcSim and mdSim.  Invoking 
 "make ddMd" from src/ builds ddSim. Invoking "make mcMd-mpi" builds 
-multi-processor versions of mcSim and mdSim. 
-
-The ability to perform an in-source build is provided as a convenience for
-developers. The system of makefiles in the src/ directory is designed so 
-that invoking 
-\code
- > make all
-\endcode
-from any subdirectory of the src/ directory tree will compile all C++ files 
-in the tree rooted at that directory, without attempting to compile anything 
-else. This allows a developer who is working on one or two C++ files in a 
-single directory (e.g., a header and source file for the same class) to 
-compile the code in that directory after modifying and closing a file without 
-leaving the directory or attempting to compile code in other directories. 
-If all the files in a directory except the ones that are being actively
-worked on have already been successfully compiled, invoking "make all" from
-a directory in which one is working will attempt to recompile just the files 
-that have recently been modified.
+multi-processor versions of mcSim and mdSim. The ability to perform an 
+in-source build is provided as a convenience for developers, and is discussed
+in greater detail \ref user_compiler_insource_page "here".
  
 Hereafter, when not otherwise stated, we will assume that all programs 
 are built out-of-source, by invoking the make utility from the simpatico/ 

@@ -1,7 +1,7 @@
-/*! \page user_compile_mpi_page 2.2.4 Configure or Install MPI 
+/*! \page user_compile_mpi_page 2.2.4 Configuring MPI 
 
 \ref user_compile_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_compile_compile_page (Next) 
+\ref user_compile_outsource_page (Next) 
 <BR>
 
 The simpatico package contains code for several programs that are parallelized with MPI (the Message Passing Interface). Specifically, the ddSim parallel domain decomposition program and the embarassingly parallel versions of the mcSim and mdSim single processor programs all require MPI. The user must thus make sure that an MPI library is installed and accessible on a particular system before attempting to compile these programs on that system. 
@@ -18,13 +18,21 @@ The computer clusters at MSI, like many similar clusters, use the linux "module"
 \code
   > module load  package-name
 \endcode
-where package-name represents the name of a package that is available on the cluster. The names of the available software packages are, of course, different on different systems, so users will have consult documentation of available software for a particular system.
-
-At MSI, the following command loads a version of the OpenMPI library that was compiled with the intel compiler
+where package-name represents the name of a package that is available on the cluster. The names of the available software packages are, of course, different on different systems, so users will have consult documentation of available software for a particular system. The command
 \code
-    module load openMPI/intel
+  > module avail
 \endcode
- This command also makes the intel compiler the default compiler for use when compiling code that uses MPI. 
+gives a listing of all softwared modules available for use on a particular system.
+
+On the mesabi cluster at MSI, the following command loads a version of the OpenMPI library that was compiled with the curent default version of the intel compiler
+\code
+    module load ompi/intel
+\endcode
+This command also makes the intel compiler the default compiler for use when compiling code that uses MPI.  To instead use OpenMPI with the gnu gcc compiler, and make the gcc compiler the default for MPI code, instead load
+\code
+    module load ompi/gnu
+\endcode
+There are also many modules on mesabi to load specific versions of OpenMPI with specific versions of either compiler, as well as modules to load the mpich MPI library compiled with either compiler.
 
 \section compile_mpi_Ubuntu Ubuntu Linux
 
@@ -79,6 +87,6 @@ these paths (as it should).
 <BR>
 \ref user_compile_configure_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_compile_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_compile_compile_page (Next) 
+\ref user_compile_outsource_page (Next) 
 
 */
