@@ -28,16 +28,16 @@ and then enter:
 This will:
 
   - C compile a large number *.cpp files from the util/, 
-    simp/ and mcMd/ namespace-level subdirectories of the 
-    simpatico/src/ directory.
+    simp/ and mcMd/ namespace-level subdirectories from 
+    the simpatico/src/ source code directory.
 
   - Install corresponding object (*.o) and dependency (*.d) 
     files in corresponding subdiectories of the 
-    simpatico/bld/serial 
+    simpatico/bld/serial build directory.
 
   - Create a static library (with file extension *.a) in each
     of these three namespace-level subdirectories of the
-    bld/serial directory
+    bld/serial directory.
 
   - Install executable files named mcSim and mdSim in the 
     simpatico/bin directory. 
@@ -45,9 +45,10 @@ This will:
 To recompile these programs after changing the configuration
 (e.g., after using the configure script to enable or disable
 compilation of particular features), simply reissue the
-"make mcMd" command. The build system detects when you have
-changed any of the relevant configuration files, and will
-recompile any file that might be effected by the change.
+"make mcMd" command. The build system will detect if you 
+have changed any of the relevant configuration files, and 
+will recompile any file that might be effected by such 
+changes.
 
 \section compile_mdPp_section Compiling the mdPp post-processor
 
