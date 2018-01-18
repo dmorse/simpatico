@@ -21,6 +21,10 @@ cd $SCRIPT_DIR/homopolymer/N8/mc/combine
 ./run
 ./clean
 
+cd $SCRIPT_DIR/semigrand
+./run
+./clean
+
 cd $SCRIPT_DIR/homopolymer/N8/mdMulti
 ./run
 ./clean

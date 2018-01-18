@@ -104,7 +104,7 @@ McSimulation{
     }
 
   }
-  saveInterval                 2000
+  saveInterval                20000
   saveFileName              restart
 }
 WRITE_PARAM      param
