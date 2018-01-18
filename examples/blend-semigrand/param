@@ -13,6 +13,7 @@ McSimulation{
     HomopolymerSG{
       moleculeCapacity                     100
       nAtom                                  8
+      bondType                               0
       typeIds                                0  1
       weightRatio                            1.0
     }
@@ -103,7 +104,7 @@ McSimulation{
     }
 
   }
-  saveInterval                10000
+  saveInterval                 2000
   saveFileName              restart
 }
 WRITE_PARAM      param
