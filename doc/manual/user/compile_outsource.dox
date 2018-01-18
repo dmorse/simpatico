@@ -4,13 +4,14 @@
 \ref user_compile_insource_page (Next) 
 <BR>
 
+We recommend that most users perform an out-of-source build of simpatico.
 To compile simpatico out-of-source, after completing all of the required 
 setup and configuration steps, one simply invokes the "make" utility 
 with appropriate targets from the simpatico/ root directory. The 
-\ref compile_overview_page "overview of instructions" given previously
-included instructions for compilng simpatico out-of-source.  On this
-page, we simply repeat these instructions with a bit more commentary 
-about what each makefile target should do.
+\ref compile_overview_page "overview of instructions" given on a
+previous page included instructions for compilng simpatico out-of-source.  
+On this page, we simply repeat these instructions with a bit more 
+commentary about what each makefile target should do.
 
 \section compile_mcMd_section Compiling mcSim and mdSim
 
@@ -65,8 +66,8 @@ named mdPp in the simpatico/bin directory.
 
 \section compile_ddMd_section Compiling ddSim
 
-To compile the ddSim parallel MD program, after setup, configuration,
-and configuration of MPI, simply enter 
+To compile the ddSim parallel MD program, after setup, configuration
+of simpatico, and configuration of MPI, simply enter 
 \code
 > make ddMd
 \endcode

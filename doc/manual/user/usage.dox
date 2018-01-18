@@ -17,15 +17,15 @@ Every simpatico simulation requires three types of input file:
 </ul>
 The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.
 
-When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the parameter file is specified as an argument of a command line option.
+When a program simulation is executed, the parameter file is read first. The parameter file is used to initialize the state of the program and allocate memory. The name of the parameter file is specified when a program is invoked as a argument of a command line option.
 
-The command file is read and interpreted after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The name of the command file may be be specified either as a command line argument or as a parameter within the the parameter file, as discussed in more detail \ref usage_paths_section "below" . 
+The command file is read and interpreted after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence. This script controls the program flow after initialization. The name of the command file is specified as an argument of a command line option.
 
-The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution. The name of the input configuration file must thus be contained with the command file.
+The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution. The name of the input configuration file must thus be contained within the command file.
 
 \section usage_run_serial_section Running a simulation 
 
-The names of the parameter and command files required to run a simpatico simulation are usually passed to the program as arguments of the "-p" and "-c" command line options, respectively. 
+The names of the parameter and command files required to run a simpatico simulation are passed to the program as arguments of the "-p" and "-c" command line options, respectively. 
 
 To run a single-processor simulation, one thus invokes the mdSim or mcSim executable with the -p and -c options followed by appropriate input file names. For example, to run the default version of the single-processor mdSim MD simulation, using a parameter file named "param" and command file named "commands" that are both in the current working directory, one would enter:
 \code
@@ -55,7 +55,7 @@ For a ddSim job, the number of processors declared in the command line (e.g., 32
 
 All simpatico programs accept a command line option "-e" that causes the contents of each line of the parameter file to be echoed as the file is being read. For example, to invoke a "ddSim" simulation of 32 processors with echoing to a log file, one could enter
 \code
-   mpirun -np 32 ddSim -e -p param -c commands> log
+   mpirun -np 32 ddSim -e -p param -c commands > log
 \endcode
 The same option is also accepted by mdSim and mcSim. This option is useful for locating errors in the parameter file, because the echoed output ends immediately before the line at which an error in the parameter file is detected, and is followed by an error message that explains the nature of the error. 
 
@@ -75,10 +75,10 @@ int main(int argc, char** argv)
    \\ Process command line options
    simulation.setOptions(argc, argv);
   
-   \\ Read the parameter file from standard input
+   \\ Read the parameter file8
    simulation.readParam();
   
-   \\ Read the command file.
+   \\ Read the command file
    simulation.readCommands();
   
 }
@@ -94,7 +94,7 @@ This simplified (but functional) version of the program has only four executable
 
   - The fourth line invokes the readCommands() member function. This function reads the command file that was specified as an argument to -c command line option and executes each command in sequence, until it encounters a command that tells it to stop execution.
 
-The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of class McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of class DdMd::Simulation. McMd is the name of a C++ namespace that contains the code for single-processor MC and MD simulations. DdMd is a namespace that contains code for parallel domain decomposition MD simulations.
+The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of class McMd::MdSimulation, and the main object in ddSim.cpp is an instance of class DdMd::Simulation. McMd is the name of a C++ namespace that contains code for single-processor MC and MD simulations. DdMd is a namespace that contains code for parallel domain decomposition MD simulations.
 
 \section usage_parameter_section Parameter file
 
