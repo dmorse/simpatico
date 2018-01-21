@@ -1,13 +1,13 @@
 /*! \page user_compile_page 2.2 Compiling 
 
 \ref user_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_usage_page (Next) 
+\ref user_compile_overview_page (Next) 
 <BR>
 
 The following pages give instructions for compiling simpatico. The
-\ref user_compile_overview_page "first" page gives a brief overview 
-of the required steps, followed by more detailed discussions of 
-each step in subsequent pages. 
+\ref user_compile_overview_page "Overview" page gives a brief overview 
+of these instructions, followed by more detailed discussions of each 
+step in subsequent pages. 
 
 <h2> Contents:</h2>
    <ul style="list-style: none;">
