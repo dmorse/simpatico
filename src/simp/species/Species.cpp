@@ -247,6 +247,48 @@ namespace Simp
       #endif
    }
 
+   /*
+   * Write molecule structure in config/topo file format.
+   */
+   void Species::writeStructure(std::ostream& out, std::string indent)
+   {
+      using std::endl;
+
+      // Atom type Ids
+      out << endl << indent << "nAtom  " << nAtom_;
+      for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
+         out << endl << indent << iAtom << "  " << atomTypeIds_[iAtom];
+      }
+
+      #ifdef SIMP_BOND
+      if (nBond_ > 0) {
+         out << endl << indent << "nBond  " << nBond_;
+         for (int iBond = 0; iBond < nBond_; iBond++) {
+            out << endl << indent << iBond << "  " << speciesBonds_[iBond];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      if (nAngle_ > 0) {
+         out << endl << indent << "nAngle  " << nAngle_;
+         for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
+            out << endl << indent << iAngle << "  " << speciesAngles_[iAngle];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      if (nDihedral_ > 0) {
+         out << endl << indent << "nDihedral  " << nDihedral_;
+         for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
+            out << endl << indent << iDihedral << "  " << speciesDihedrals_[iDihedral];
+         }
+      }
+      #endif
+   }
+
+
    // Setters
 
    /*
@@ -357,7 +399,7 @@ namespace Simp
 
       atomBondIdArrays_.allocate(nAtom_);
       if (nBond_ > 0) {
-         UTIL_CHECK(speciesBonds_.isAllocated());
+         UTIL_CHECK(!speciesBonds_.isAllocated());
          speciesBonds_.allocate(nBond_);
       }
    }
@@ -400,7 +442,7 @@ namespace Simp
 
       atomAngleIdArrays_.allocate(nAtom_);
       if (nAngle_ > 0) {
-         UTIL_CHECK(speciesAngles_.isAllocated());
+         UTIL_CHECK(!speciesAngles_.isAllocated());
          speciesAngles_.allocate(nAngle_);
       }
    }
@@ -447,7 +489,7 @@ namespace Simp
       atomDihedralIdArrays_.allocate(nAtom_);
 
       if (nDihedral_ > 0) {
-         UTIL_CHECK(speciesDihedrals_.isAllocated());
+         UTIL_CHECK(!speciesDihedrals_.isAllocated());
          speciesDihedrals_.allocate(nDihedral_);
       }
    }

@@ -139,6 +139,17 @@ namespace Simp
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
+      * Set integer id for this Species.
+      *
+      * \param id integer id
+      */
+      void setId(int id);
+      
+      //@}
+      /// \name Output to File
+      //@{
+
+      /**
       * Save internal state to an archive.
       *
       * \param ar output/saving archive
@@ -146,12 +157,13 @@ namespace Simp
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Set integer id for this Species.
+      * Write molecular structure in config/topology file format.
       *
-      * \param id integer id
+      * \param ar  input/loading archive
+      * \param indent  indentation string (sequence of spaces)
       */
-      void setId(int id);
-      
+      void writeStructure(std::ostream& out, std::string indent = std::string() );
+
       //@}
       /// \name Chemical Structure Accessors
       //@{

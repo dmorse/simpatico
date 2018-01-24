@@ -41,14 +41,10 @@ namespace Simp
    operator << (std::ostream& out, const SpeciesGroup<NAtom>& speciesGroup) 
    {
       for (int i = 0; i < NAtom; ++i) {
-         if (i == 0) {
-            out.width(Parameter::Width);
-         } else {
-            out.width(10);
-         }
+         out.width(5);
          out << speciesGroup.atomIds_[i];
       }
-      out.width(10);
+      out.width(6);
       out << speciesGroup.typeId_;
       return out;
    }

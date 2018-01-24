@@ -25,6 +25,7 @@ public:
 
    void setUp() 
    { 
+      setVerbose(2);
       species.setId(speciesId); 
    } 
 
@@ -33,6 +34,7 @@ public:
   
    void testConstructor();
    void testReadParam();
+   void testWriteStructure();
 
 };
 
@@ -68,9 +70,38 @@ void SpeciesTest::testReadParam()
 
 }
 
+void SpeciesTest::testWriteStructure()
+{
+   printMethod(TEST_FUNC);
+
+   std::ifstream in;
+   #ifdef SIMP_ANGLE
+   #ifdef SIMP_DIHEDRAL
+   openInputFile("in/SpeciesAngleDihedral", in);
+   #else
+   openInputFile("in/SpeciesAngle", in);
+   #endif
+   #else
+   openInputFile("in/Species", in);
+   #endif
+   species.readParam(in);
+   in.close();
+
+   if (verbose() > 1) {
+      species.writeParam(std::cout);
+   }
+   TEST_ASSERT(species.isValid());
+
+   //std::ostream out;
+   //openOutputFile("structure", out);
+   species.writeStructure(std::cout, "  ");
+
+}
+
 TEST_BEGIN(SpeciesTest)
 TEST_ADD(SpeciesTest, testConstructor)
 TEST_ADD(SpeciesTest, testReadParam)
+TEST_ADD(SpeciesTest, testWriteStructure)
 TEST_END(SpeciesTest)
 
 #endif
