@@ -381,10 +381,17 @@ namespace Simp
       * chemical structure of a generic molecule, such as atomTypeIds_, 
       * speciesBonds_, atomBondIdArrays_, speciesAngles_, etc.
       * 
-      * Precondition: nAtom_, nBond_, nAngles_, etc. must have nonzero
-      * values on entry.
+      * Precondition: nAtom_, nBond_, nAngles_, etc. must have been
+      * assigned final values on entry.
       */
       void allocate();
+
+      /**
+      * Allocate and initialize array of atom type Ids.
+      *
+      * \pre nAtom_ must be assigned a positive value
+      */
+      void allocateAtoms();
 
       /**
       * Set the type for one atom in a generic molecule of this Species.
@@ -395,6 +402,13 @@ namespace Simp
       void setAtomType(int atomId, int atomType);
 
       #ifdef SIMP_BOND
+      /**
+      * Allocate arrays associated with Bonds.
+      *
+      * \pre nAtom_ > 0 and nBond_ >= 0.
+      */
+      void allocateBonds();
+
       /**
       * Add a bond to the chemical structure of a generic molecule.
       *
@@ -410,6 +424,13 @@ namespace Simp
       #endif
 
       #ifdef SIMP_ANGLE
+      /**
+      * Allocate arrays associated with angles.
+      *
+      * \pre nAtom_ > 0 and nAngle_ >= 0.
+      */
+      void allocateAngles();
+
       /**
       * Add an angle to the chemical structure of a generic molecule.
       *
@@ -428,6 +449,11 @@ namespace Simp
 
       #ifdef SIMP_DIHEDRAL
       /**
+      * Allocate arrays associated with dihedrals
+      */
+      void allocateDihedrals();
+
+      /**
       * Add a dihedral to the chemical structure of a generic molecule.
       *
       * This function creates and adds a SpeciesDihedral object, and also adds 
@@ -445,7 +471,7 @@ namespace Simp
       #endif
 
       /**
-      * Set a pointer to an associated McMd::SpeciesMutator for a mutable species.
+      * Set pointer to associated McMd::SpeciesMutator for a mutable species.
       *
       * A mutable subclass of Species must have an associated SpeciesMutator 
       * object. The constructor of each such subclass should pass a pointer

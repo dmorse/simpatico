@@ -267,6 +267,7 @@ namespace Simp
    void Species::setMutatorPtr(McMd::SpeciesMutator* mutatorPtr)
    {  mutatorPtr_ = mutatorPtr; }
 
+   #if 0
    /*
    * Allocate memory for arrays that describe chemical structure.
    */
@@ -282,6 +283,7 @@ namespace Simp
          speciesBonds_.allocate(nBond_);
       } 
       #endif
+
       #ifdef SIMP_ANGLE
       atomAngleIdArrays_.allocate(nAtom_);
       assert(nAngle_ >= 0);
@@ -302,20 +304,69 @@ namespace Simp
          atomTypeIds_[i] = -1;
       }
    }
+   #endif
+
+   /*
+   * Allocate memory for arrays that describe chemical structure.
+   */
+   void Species::allocate() 
+   {
+      allocateAtoms();
+      #ifdef SIMP_BOND
+      allocateBonds();
+      #endif
+      #ifdef SIMP_ANGLE
+      allocateAngles();
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      allocateDihedrals();
+      #endif
+   }
+
+   /*
+   * Allocate and initialize atomTypeId array.
+   */
+   void Species::allocateAtoms() 
+   {
+      UTIL_CHECK(nAtom_ >  0);
+      UTIL_CHECK(!atomTypeIds_.isAllocated());
+
+      atomTypeIds_.allocate(nAtom_);
+
+      // Initialize atom type Ids to null/invalid values
+      for (int i = 0; i < nAtom_; ++i) {
+         atomTypeIds_[i] = -1;
+      }
+   }
 
    /*
    * Set the atom type for one atom
    */
    void Species::setAtomType(int atomId, int atomType)
-   {  
-      atomTypeIds_[atomId] = atomType;
-   }
+   {  atomTypeIds_[atomId] = atomType; }
 
    #ifdef SIMP_BOND
    /*
+   * Allocate memory for arrays that involve bonds.
+   */
+   void Species::allocateBonds() 
+   {
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(nBond_ >= 0);
+      UTIL_CHECK(!atomBondIdArrays_.isAllocated());
+
+      atomBondIdArrays_.allocate(nAtom_);
+      if (nBond_ > 0) {
+         UTIL_CHECK(speciesBonds_.isAllocated());
+         speciesBonds_.allocate(nBond_);
+      }
+   }
+
+   /*
    * Add a bond to the species chemical structure.
    */
-   void Species::makeBond(int bondId, int atomId1, int atomId2, int bondType)
+   void Species::makeBond(int bondId, int atomId1, int atomId2, 
+                          int bondType)
    {
       // Preconditions
       assert(bondId  >= 0);
@@ -338,6 +389,22 @@ namespace Simp
    #endif
 
    #ifdef SIMP_ANGLE
+   /*
+   * Allocate memory for arrays that involve angles.
+   */
+   void Species::allocateAngles() 
+   {
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(nAngle_ >= 0);
+      UTIL_CHECK(!atomAngleIdArrays_.isAllocated());
+
+      atomAngleIdArrays_.allocate(nAtom_);
+      if (nAngle_ > 0) {
+         UTIL_CHECK(speciesAngles_.isAllocated());
+         speciesAngles_.allocate(nAngle_);
+      }
+   }
+
    /*
    * Add an angle to the species chemical structure.
    */
@@ -369,10 +436,27 @@ namespace Simp
 
    #ifdef SIMP_DIHEDRAL
    /*
+   * Allocate memory for arrays that involve dihedrals
+   */
+   void Species::allocateDihedrals() 
+   {
+      UTIL_CHECK(nAtom_ >  0);
+      UTIL_CHECK(nDihedral_ >= 0);
+      UTIL_CHECK(!atomDihedralIdArrays_.isAllocated());
+
+      atomDihedralIdArrays_.allocate(nAtom_);
+
+      if (nDihedral_ > 0) {
+         UTIL_CHECK(speciesDihedrals_.isAllocated());
+         speciesDihedrals_.allocate(nDihedral_);
+      }
+   }
+
+   /*
    * Add a dihedral to the species chemical structure.
    */
    void Species::makeDihedral(int dihedralId, int atomId1, int atomId2,
-                             int atomId3, int atomId4, int dihedralType)
+                              int atomId3, int atomId4, int dihedralType)
    {
       // Preconditions.
       assert(dihedralId >= 0);
