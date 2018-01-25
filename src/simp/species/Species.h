@@ -159,10 +159,19 @@ namespace Simp
       /**
       * Write molecular structure in config/topology file format.
       *
-      * \param ar  input/loading archive
+      * \param out file to which to write structure.
       * \param indent  indentation string (sequence of spaces)
       */
       void writeStructure(std::ostream& out, std::string indent = std::string() );
+
+      /**
+      * Read structure and return true if it matches existing structure.
+      *
+      * Throw exception if unparseable. Return false if not match.
+      *
+      * \param in file from which to read structure.
+      */
+      bool matchStructure(std::istream& out);
 
       //@}
       /// \name Chemical Structure Accessors

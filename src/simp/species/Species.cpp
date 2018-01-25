@@ -247,6 +247,7 @@ namespace Simp
       #endif
    }
 
+
    /*
    * Write molecule structure in config/topo file format.
    */
@@ -282,10 +283,77 @@ namespace Simp
       if (nDihedral_ > 0) {
          out << endl << indent << "nDihedral  " << nDihedral_;
          for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
-            out << endl << indent << iDihedral << "  " << speciesDihedrals_[iDihedral];
+            out << endl << indent 
+                << iDihedral << "  " << speciesDihedrals_[iDihedral];
          }
       }
       #endif
+   }
+
+   /*
+   * Compare molecule structure in structure from file. 
+   */
+   bool Species::matchStructure(std::istream& in)
+   {
+      using std::endl;
+      bool match = true;
+
+      // Atom type Ids
+      int index, count, typeId;
+      in >> Label("nAtom") >> count;
+      if (count != nAtom()) match = false;
+      for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
+         in >> index >> typeId;
+         if (index != iAtom) match = false;
+         if (typeId != atomTypeIds_[iAtom]) match = false;
+      }
+
+      #ifdef SIMP_BOND
+      in >> Label("nBond", false);
+      if (Label::isClear()) {
+         in >> count;
+         if (count != nBond()) match = false;
+         int i0, i1;
+         for (int iBond = 0; iBond < nBond_; iBond++) {
+            in >> index >> i0 >> i1 >> typeId;
+            if (i0 != speciesBonds_[iBond].atomId(0)) match = false;
+            if (i1 != speciesBonds_[iBond].atomId(1)) match = false;
+         }
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      in >> Label("nAngle", false);
+      if (Label::isClear()) {
+         in >> count;
+         if (count != nAngle()) match = false;
+         int i0, i1, i2;
+         for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
+            in >> index >> i0 >> i1 >> i2 >> typeId;
+            if (i0 != speciesAngles_[iAngle].atomId(0)) match = false;
+            if (i1 != speciesAngles_[iAngle].atomId(1)) match = false;
+            if (i2 != speciesDihedrals_[iAngle].atomId(2)) match = false;
+         }
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      in >> Label("nDihedral", false);
+      if (Label::isClear()) {
+         in >> count;
+         if (count != nDihedral()) match = false;
+         int i0, i1, i2, i3;
+         for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
+            in >> index >> i0 >> i1 >> i2 >> i3 >> typeId;
+            if (i0 != speciesDihedrals_[iDihedral].atomId(0)) match = false;
+            if (i1 != speciesDihedrals_[iDihedral].atomId(1)) match = false;
+            if (i2 != speciesDihedrals_[iDihedral].atomId(2)) match = false;
+            if (i3 != speciesDihedrals_[iDihedral].atomId(3)) match = false;
+         }
+      }
+      #endif
+
+      return match;
    }
 
 
