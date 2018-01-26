@@ -357,7 +357,7 @@ namespace Simp
 
       atomBondIdArrays_.allocate(nAtom_);
       if (nBond_ > 0) {
-         UTIL_CHECK(speciesBonds_.isAllocated());
+         UTIL_CHECK(!speciesBonds_.isAllocated());
          speciesBonds_.allocate(nBond_);
       }
    }
@@ -400,7 +400,7 @@ namespace Simp
 
       atomAngleIdArrays_.allocate(nAtom_);
       if (nAngle_ > 0) {
-         UTIL_CHECK(speciesAngles_.isAllocated());
+         UTIL_CHECK(!speciesAngles_.isAllocated());
          speciesAngles_.allocate(nAngle_);
       }
    }
@@ -447,7 +447,7 @@ namespace Simp
       atomDihedralIdArrays_.allocate(nAtom_);
 
       if (nDihedral_ > 0) {
-         UTIL_CHECK(speciesDihedrals_.isAllocated());
+         UTIL_CHECK(!speciesDihedrals_.isAllocated());
          speciesDihedrals_.allocate(nDihedral_);
       }
    }
