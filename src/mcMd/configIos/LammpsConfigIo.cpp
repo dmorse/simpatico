@@ -44,7 +44,8 @@ namespace McMd
 
    void LammpsConfigIo::read(std::istream &in)
    {
-      // UTIL_CHECK(system().simulation().hasSpecies());
+      // Precondition 
+      UTIL_CHECK(system().simulation().hasSpecies());
 
       // Calculate atomCapacity for entire simulation
       int atomCapacity = 0;

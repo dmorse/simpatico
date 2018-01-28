@@ -75,6 +75,7 @@ namespace McMd
       #ifdef SIMP_SPECIAL
       , hasSpecial_(-1)
       #endif
+      , hasSpecies_(false)
       , communicatorPtr_(&communicator)
    {
       setClassName("Simulation");
@@ -141,6 +142,7 @@ namespace McMd
       #ifdef SIMP_SPECIAL
       , hasSpecial_(-1)
       #endif
+      , hasSpecies_(false)
       #ifdef UTIL_MPI
       , communicatorPtr_(0)
       #endif
@@ -297,10 +299,12 @@ namespace McMd
 
       readParamComposite(in, random_);
 
-      // Allocate and initialize all private arrays.
-      initialize();
+      // Allocate, initialize arrays that require Species data.
+      initializeSpeciesData();
 
+      UTIL_ASSERT(hasSpecies());
    }
+
 
    /*
    * Open, write and close a parameter file.
@@ -370,7 +374,9 @@ namespace McMd
       loadParamComposite(ar, random_);
 
       // Allocate and initialize all private arrays.
-      initialize();
+      initializeSpeciesData();
+
+      UTIL_ASSERT(hasSpecies());
    }
 
    /*
@@ -415,7 +421,7 @@ namespace McMd
    }
 
    /*
-   * Allocate and initialize all private data (private function).
+   * Allocate, initialize private arrays that require Species data (private).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -425,7 +431,7 @@ namespace McMd
    *   - Pointers between Species, Molecule, and Atom objects
    *   - Atom typeIds and all Bond and Angle objects.
    */
-   void Simulation::initialize()
+   void Simulation::initializeSpeciesData()
    {
       //Preconditions
       assert(nSpecies() > 0);
@@ -452,6 +458,9 @@ namespace McMd
          UTIL_THROW("Error: nLinkType_ < 0 in Simulation::initialize()");
       }
       #endif
+      if (hasSpecies_) {
+         UTIL_THROW("Attempt to re-initialize species data arrays");
+      }
 
       Species *speciesPtr;
       int nAtom, iSpecies;
@@ -560,10 +569,10 @@ namespace McMd
       // Allocate other global arrays (members of Simulation).
       molecules_.allocate(moleculeCapacity_);
 
-      // Initialize all Atoms and Molecule objects.
+      // Initialize all Molecule and atom objects.
       for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
          speciesPtr = &species(iSpecies);
-         initializeSpecies(iSpecies);
+         initializeSpeciesMolecules(iSpecies);
       }
 
       #ifdef SIMP_BOND
@@ -608,6 +617,8 @@ namespace McMd
       }
       #endif
 
+      // Assert: arrays that depends on Species info are initialized
+      hasSpecies_ = true;
    }
 
    /*
@@ -624,7 +635,7 @@ namespace McMd
    * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
-   void Simulation::initializeSpecies(int iSpecies)
+   void Simulation::initializeSpeciesMolecules(int iSpecies)
    {
 
       Species* speciesPtr;

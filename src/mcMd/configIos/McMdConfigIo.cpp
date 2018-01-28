@@ -45,7 +45,8 @@ namespace McMd
    */
    void McMdConfigIo::read(std::istream &in)
    {
-      // UTIL_CHECK(system().simulation().hasSpecies());
+      // Precondition
+      UTIL_CHECK(system().simulation().hasSpecies());
 
       // Read and set dimensions of simulation Boundary.
       in >> Label("BOUNDARY");

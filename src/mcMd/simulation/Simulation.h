@@ -312,6 +312,11 @@ namespace McMd
       */
       virtual bool isValid() const;
 
+      /**
+      * Has data for all species structures and capacities.
+      */
+      bool hasSpecies() const;
+
       #ifndef SIMP_NOPAIR
       /**
       * Return the value of the mask policy (MaskNone or MaskBonded).
@@ -688,6 +693,9 @@ namespace McMd
       int hasSpecial_;
       #endif 
 
+      /// Has completely initialized Species data
+      bool hasSpecies_;
+
       #ifdef UTIL_MPI
       /**
       * Stream for log file output (serial jobs use std::cout).
@@ -703,16 +711,18 @@ namespace McMd
       //@}
 
       /**
-      * Initialize all private data structures.
+      * Initialize all private data structures that require Species data.
+      *
+      * Calls other private "initialize..." functions.
       */
-      void initialize();
+      void initializeSpeciesData();
 
       /**
       * Initialize all Molecule and Atom objects for one Species.
       *
       * \param speciesId integer Id of the Species.
       */
-      void initializeSpecies(int speciesId);
+      void initializeSpeciesMolecules(int speciesId);
    
       #ifdef SIMP_BOND
       /**
@@ -820,6 +830,9 @@ namespace McMd
 
    inline Random& Simulation::random()
    {  return random_; }
+
+   inline bool Simulation::hasSpecies() const
+   {  return hasSpecies_; }
 
    #ifdef UTIL_MPI
    inline MPI::Intracomm& Simulation::communicator()
