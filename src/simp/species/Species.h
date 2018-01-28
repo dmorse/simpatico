@@ -492,6 +492,14 @@ namespace Simp
       #endif
 
       /**
+      * Initialize all atom groupId arrays (point from atoms to groups).
+      *
+      * \pre Species::allocate() function must have been invoked.
+      * \pre All speciesGroup arrays (speciesBonds, etc.) must be initialized.
+      */
+      void initializeAtomGroupIdArrays();
+
+      /**
       * Set pointer to associated McMd::SpeciesMutator for a mutable species.
       *
       * A mutable subclass of Species must have an associated SpeciesMutator 
