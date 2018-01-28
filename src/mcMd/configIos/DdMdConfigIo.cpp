@@ -43,6 +43,9 @@ namespace McMd
 
    void DdMdConfigIo::read(std::istream &in)
    {
+      // Precondition
+      // UTIL_CHECK(system().simulation().hasSpecies());
+
       // Calculate atom and bond capacities for entire simulation
       int atomCapacity = 0;
       int bondCapacity = 0;

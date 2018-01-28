@@ -1107,6 +1107,9 @@ namespace McMd
    */
    bool System::isEmpty() const
    {
+      // if (!simulation().hasSpecies()) {
+      //   return true;
+      // }
       for (int i = 0; i < simulation().nSpecies(); ++i) {
          if (nMolecule(i) != 0) return false;
       }
