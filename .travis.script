@@ -8,6 +8,7 @@ if [ "$SMP_PROG" == "mcMd" ]; then
    cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run
    cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run && ./clean
    cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean
+   cd $TRAVIS_BUILD_DIR/examples/semigrand && ./run && ./clean
 fi
 
 if [ "$SMP_PROG" == "ddMd" ]; then
