@@ -91,11 +91,11 @@ A Simulation object is the top level object in a DdMd simulation.  There is no d
 
    - a set of potential energy classes for nonbonded, bonded, and external potentials
 
-   - a Util::Boundary object, which defines periodic boundary conditions
+   - a Simp::Boundary object, which defines periodic boundary conditions
 
-   - a Util::EnergyEnsemble object, which defines the energy ensemble
+   - a Simp::EnergyEnsemble object, which defines the energy ensemble
 
-   - a Util::BoundaryEnsemble object, which defines the volume/pressure ensemble
+   - a Simp::BoundaryEnsemble object, which defines the volume/pressure ensemble
 
    - an Integrator, which integrates the equations of motion
 
