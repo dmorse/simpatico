@@ -162,12 +162,14 @@ namespace Simp
       * \param out file to which to write structure.
       * \param indent  indentation string (sequence of spaces)
       */
-      void writeStructure(std::ostream& out, std::string indent = std::string() );
+      void writeStructure(std::ostream& out, 
+                          std::string indent = std::string());
 
       /**
-      * Read structure and return true if it matches existing structure.
+      * Read structure, return true iff it matches existing structure.
       *
-      * Throw exception if unparseable. Return false if not match.
+      * Throw exception if structure is not parseable.
+      * Return false if it is parseable but does not match.
       *
       * \param in file from which to read structure.
       */
