@@ -1,22 +1,20 @@
-
 For configuration files:
 
-   1) SmpConfigIo for McMd. (Done)
-      to be generated. 
-
-   2) Add functions for the base Simp::Species class to write
-      structure for a species to file in format used by SmpConfigIo.
+   1) Add Simp::Species::writeStructure function to write structure 
+      for a species to file in format used by SmpConfigIo.
       (Done)
 
-   3) Add function to Simp::Species to read information in the
-      same format and initialize a new species.
+   2) SmpConfigIo for McMd. (Done)
+
+   3) Add Simp::Species::readStructure function to read information 
+      in the same format and initialize a new species.
 
    4) Add an array of Simp::Species objects to DdMd::Simulation, and
       int nSpecies() and bool hasSpecies() functions.
 
    5) Write SmpConfigReader in DdMd that optionally reads Species
       information. This class should also generate bond information
-      from the Species information.
+      from the Species information and send this all processors.
 
    6) Write a SmpConfigWriter in DdMd that writes Species information
       if available.
@@ -27,20 +25,33 @@ For trajectory files:
 
    2) Write trajectory file reader and writer classes for McMd.
 
-For topology file, if any:
+   Issues: How to deal with molecular format that only includes
+   a subset of the atoms in the simulation.
 
-   Proposal: Topology file is identical to SPECIES block of a config file.
+For topology / species structure file, if any:
+
+   Proposal: Topology file format is identical to that used in SPECIES 
+   block of a configuration file.
 
 Force field file:
 
-    Consider creating another ForceField file format to allow 
-    communication of potential energy parameters and atom labelling 
-    schemes between programs.
+   Consider creating another ForceField file format to allow 
+   communication of potential energy parameters and atom labelling 
+   schemes between programs.
 
-    Provide mechanism for McMd and DdMd programs to read in the force 
-    field before reading in remaining parameters of the potential energy.
+   The force field would have to contain names of the styles used
+   for each type of interaction.
 
-    Create or reuse a standard container for passing parameters for a
-    bond, etc. to a potential or interaction class. Could use an existing
-    array type or a new class.
+   Provide mechanism for McMd and DdMd programs to read in the 
+   force field before reading in remaining parameters of the 
+   potential energy, and then use the stored force field information
+   to initialize parameters.
+
+   Create or reuse a standard container for passing parameters for 
+   a bond, etc. to a potential or interaction class. The information
+   is just an array of numbers, so it could use an existing array 
+   type or a new class. The potential problems are when a style
+   requires information that is common to all group type Ids and
+   is not contained in the name, or when it requires per groupId
+   information that is not naturally encoded as a real number.
     

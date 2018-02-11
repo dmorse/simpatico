@@ -78,33 +78,33 @@ namespace Simp
    void Species::readSpeciesParam(std::istream &in)
    {
       read<int>(in, "nAtom", nAtom_);
-      #ifdef SIMP_BOND
-      read<int>(in, "nBond", nBond_);
-      #endif
-      #ifdef SIMP_ANGLE
-      read<int>(in, "nAngle", nAngle_);
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      read<int>(in, "nDihedral", nDihedral_);
-      #endif
-      allocate();
-
+      allocateAtoms();
       readDArray<int>(in, "atomTypeIds", atomTypeIds_, nAtom_);
 
-      // Read covalent group data
       #ifdef SIMP_BOND
+      nBond_ = 0;
+      readOptional<int>(in, "nBond", nBond_);
+      allocateBonds();
       if (nBond_ > 0) {
          readDArray<SpeciesBond>(in, "speciesBonds", speciesBonds_, 
                                  nBond_);
       }
       #endif
+
       #ifdef SIMP_ANGLE
+      nAngle_ = 0;
+      readOptional<int>(in, "nAngle", nAngle_);
+      allocateAngles();
       if (nAngle_ > 0) {
          readDArray<SpeciesAngle>(in, "speciesAngles", speciesAngles_,
                                   nAngle_);
       }
       #endif
+
       #ifdef SIMP_DIHEDRAL
+      nDihedral_ = 0;
+      readOptional<int>(in, "nDihedral", nDihedral_);
+      allocateDihedrals();
       if (nDihedral_ > 0) {
          readDArray<SpeciesDihedral>(in, "speciesDihedrals", 
                                      speciesDihedrals_, nDihedral_);
@@ -112,7 +112,6 @@ namespace Simp
       #endif
 
       initializeAtomGroupIdArrays();
-
    }
 
    /*
