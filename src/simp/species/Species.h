@@ -171,7 +171,7 @@ namespace Simp
       *
       * \param in file from which to read structure.
       */
-      bool matchStructure(std::istream& out);
+      bool matchStructure(std::istream& in);
 
       //@}
       /// \name Chemical Structure Accessors
