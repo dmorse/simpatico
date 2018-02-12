@@ -55,10 +55,10 @@ namespace McMd
       int nSpecies = simulation().nSpecies();
       UTIL_CHECK(nSpecies > 0);
       DArray<int> nMoleculeSpecies;
-      DArray<int> firstAtomIndex;
+      DArray<int> firstAtomIds;
       nMoleculeSpecies.allocate(nSpecies);
-      firstAtomIndex.allocate(nSpecies);
-      firstAtomIndex[0] = 0;
+      firstAtomIds.allocate(nSpecies);
+      firstAtomIds[0] = 0;
 
       // Read SPECIES block
       Species* speciesPtr;
@@ -66,6 +66,14 @@ namespace McMd
       int nAtomTot = 0;
       in >> Label("SPECIES");
       if (Label::isClear()) {
+
+         /*
+         * If SPECIES block is present, check consistency with data
+         * in Species objects, which was read from a parameter file
+         * or loaded from an archive upon a restart. Initialize the
+         * arrays nMoleculeSpecies and firstAtomIds.
+         */
+
          int nSpeciesIn, iSpeciesIn;
          in >> Label("nSpecies") >> nSpeciesIn;
          UTIL_CHECK(nSpeciesIn > 0);
@@ -84,25 +92,28 @@ namespace McMd
             if (!match) {
                UTIL_THROW("Structure mismatch");
             }
+            firstAtomIds[iSpecies] = nAtomTot;
             nAtomMolecule = speciesPtr->nAtom();
             nAtomSpecies = nMoleculeSpecies[iSpecies]*nAtomMolecule;
             nAtomTot += nAtomSpecies;
-            if (iSpecies < nSpecies - 1) {
-               firstAtomIndex[iSpecies+1] = firstAtomIndex[iSpecies] 
-                                          + nAtomSpecies;
-            }
          }
+
       } else {
+
+         /*
+         * If the SPECIES block is absent, use the structures already 
+         * defined in the Species objects, and set the nMoleculeSpecies
+         * for each species equal to Species::capacity(). Also initialize
+         * firstAtomIds array.
+         */
+
          for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             speciesPtr = &simulation().species(iSpecies);
             nMoleculeSpecies[iSpecies] = speciesPtr->capacity();
+            firstAtomIds[iSpecies+1] = nAtomTot;
             nAtomMolecule = speciesPtr->nAtom();
             nAtomSpecies = nMoleculeSpecies[iSpecies]*nAtomMolecule;
             nAtomTot += nAtomSpecies;
-            if (iSpecies < nSpecies - 1) {
-               firstAtomIndex[iSpecies+1] = firstAtomIndex[iSpecies] 
-                                          + nAtomSpecies;
-            }
          }
       }
 
