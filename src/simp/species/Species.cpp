@@ -173,8 +173,12 @@ namespace Simp
       }
 
       #ifdef SIMP_BOND
-      in >> Label("nBond");
-      in >> nBond_;
+      nBond_ = 0;
+      Label nBondLabel("nBond", false);
+      in >> nBondLabel;
+      if (Label::isClear()) {
+         in >> nBond_;
+      }
       allocateBonds();
       if (nBond_ > 0) {
          for (int j = 0; j < nBond_; j++) {
@@ -185,8 +189,12 @@ namespace Simp
       #endif
 
       #ifdef SIMP_ANGLE
-      in >> Label("nAngle");
-      in >> nAngle_;
+      nAngle_ = 0;
+      Label nAngleLabel("nAngle", false);
+      in >> nAngleLabel;
+      if (Label::isClear()) {
+         in >> nAngle_;
+      }
       allocateAngles();
       if (nAngle_ > 0) {
          for (int j = 0; j < nAngle_; j++) {
@@ -197,8 +205,12 @@ namespace Simp
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      in >> Label("nDihedral");
-      in >> nDihedral_;
+      nDihedral_ = 0;
+      Label nDihedralLabel("nDihedral", false);
+      in >> nDihedralLabel;
+      if (Label::isClear()) {
+         in >> nDihedral_;
+      }
       allocateDihedrals();
       if (nDihedral_ > 0) {
          for (int j = 0; j < nDihedral_; j++) {
@@ -209,6 +221,8 @@ namespace Simp
       #endif
 
       initializeAtomGroupIdArrays();
+
+      UTIL_CHECK(Label::isClear());
    }
 
    /*
@@ -384,7 +398,8 @@ namespace Simp
       }
 
       #ifdef SIMP_BOND
-      in >> Label("nBond", false);
+      Label nBondLabel("nBond", false);
+      in >> nBondLabel;
       if (Label::isClear()) {
          in >> count;
          if (count != nBond()) match = false;
@@ -398,7 +413,8 @@ namespace Simp
       #endif
 
       #ifdef SIMP_ANGLE
-      in >> Label("nAngle", false);
+      Label nAngleLabel("nAngle", false);
+      in >> nAngleLabel;
       if (Label::isClear()) {
          in >> count;
          if (count != nAngle()) match = false;
@@ -413,7 +429,8 @@ namespace Simp
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      in >> Label("nDihedral", false);
+      Label nDihedralLabel("nDihedral", false);
+      in >> nDihedralLabel;
       if (Label::isClear()) {
          in >> count;
          if (count != nDihedral()) match = false;
