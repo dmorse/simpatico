@@ -120,6 +120,13 @@ namespace Simp
       //@{
 
       /**
+      * Set integer id for this Species.
+      *
+      * \param id integer id
+      */
+      void setId(int id);
+      
+      /**
       * Read parameters and initialize structure for this species.
       *
       * This function reads the parameter moleculeCapacity (the maximum 
@@ -139,12 +146,12 @@ namespace Simp
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
-      * Set integer id for this Species.
+      * Read structure from config/topology file format.
       *
-      * \param id integer id
+      * \param in file from which to read structure.
       */
-      void setId(int id);
-      
+      void readStructure(std::istream& in);
+
       //@}
       /// \name Output to File
       //@{

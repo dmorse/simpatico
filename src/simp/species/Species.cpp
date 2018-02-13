@@ -157,6 +157,61 @@ namespace Simp
    }
 
    /*
+   * Read molecule structure from config/topo file format.
+   */
+   void Species::readStructure(std::istream& in)
+   {
+      using std::endl;
+      int k; 
+
+      // Atom type Ids
+      in >>  Label("nAtom") >> nAtom_;
+      allocateAtoms();
+      for (int j = 0; j < nAtom_; j++) {
+         in >>  k;
+         in >> atomTypeIds_[j];
+      }
+
+      #ifdef SIMP_BOND
+      in >> Label("nBond");
+      in >> nBond_;
+      allocateBonds();
+      if (nBond_ > 0) {
+         for (int j = 0; j < nBond_; j++) {
+            in >> k;
+            in >> speciesBonds_[j];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      in >> Label("nAngle");
+      in >> nAngle_;
+      allocateAngles();
+      if (nAngle_ > 0) {
+         for (int j = 0; j < nAngle_; j++) {
+            in >> k;
+            in >> speciesAngles_[j];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      in >> Label("nDihedral");
+      in >> nDihedral_;
+      allocateDihedrals();
+      if (nDihedral_ > 0) {
+         for (int j = 0; j < nDihedral_; j++) {
+            in >> k;
+            in >> speciesDihedrals_[j];
+         }
+      }
+      #endif
+
+      initializeAtomGroupIdArrays();
+   }
+
+   /*
    * Initialize atom group id arrays (references from atoms to groups).
    */
    void Species::initializeAtomGroupIdArrays()
@@ -282,8 +337,8 @@ namespace Simp
       }
 
       #ifdef SIMP_BOND
+      out << endl << indent << "nBond  " << nBond_;
       if (nBond_ > 0) {
-         out << endl << indent << "nBond  " << nBond_;
          for (int iBond = 0; iBond < nBond_; iBond++) {
             out << endl << indent << iBond << "  " << speciesBonds_[iBond];
          }
@@ -291,8 +346,8 @@ namespace Simp
       #endif
 
       #ifdef SIMP_ANGLE
+      out << endl << indent << "nAngle  " << nAngle_;
       if (nAngle_ > 0) {
-         out << endl << indent << "nAngle  " << nAngle_;
          for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
             out << endl << indent << iAngle << "  " << speciesAngles_[iAngle];
          }
@@ -300,8 +355,8 @@ namespace Simp
       #endif
 
       #ifdef SIMP_DIHEDRAL
+      out << endl << indent << "nDihedral  " << nDihedral_;
       if (nDihedral_ > 0) {
-         out << endl << indent << "nDihedral  " << nDihedral_;
          for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
             out << endl << indent 
                 << iDihedral << "  " << speciesDihedrals_[iDihedral];
