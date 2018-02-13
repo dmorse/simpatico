@@ -5,35 +5,42 @@ namespace Simp
 
 \section simp_species_Species_synopsis_sec Synopsis
 
-A species of molecule.
+A species of molecule (base class).
 
 A Species object contains a description of the molecular
 structure of a species of molecule within a mixture, as
 well the number of molecules of that species for which 
 space is allocated in the simulation. The class Species
 is a base class that is flexible enough to describe any
-molecule, whereas subclasses of Species (e.g., Homopolymer
-or Diblock) describe more specific types of molecule. 
+molecule. Subclasses of Species (e.g., Homopolymer or 
+Diblock) describe more specific types of molecule. 
 
 \sa Simp::Species
 
 \section simp_species_Species_param_sec Parameters
-Specieshe parameter file format is:
+The default parameter file format for an instance of the
+Species base class is:
 \code
   Species{
     moleculeCapcacity  int
     nAtom              int
-    nBond              int
-    nAngle             int
-    nDihedral          int
     atomTypeIds        Array int[nAtom]
+    [nBond              int]
     (speciesBonds      Array SpeciesGroup<2>[nBond])
+    [nAngle             int]
     (speciesAngles     Array SpeciesGroup<3>[nAngle])
+    [nDihedral          int]
     (speciesDihedrals  Array SpeciesGroup<4>[nAngle])
   }
 \endcode
-Parentheses indicate conditional parameters, which are required 
-if and only if a particular condition is satisfied. Specifically:
+Square brackets indicate optional paramters. 
+The parameters nBond, nAngle, and nDihedral are all optional 
+parameters, as indicated by the use of square brackets. These 
+parameters are each set to zero by default (i.e., if not present),
+to indicate that there are no bonds, angles, or dihedrals, 
+respectively.  Parentheses indicate conditional parameters, which 
+are required if and only if one an associated optional parameters 
+is present and is assigned a positive value. Specifically:
 
  - Parameter speciesBonds is required if and only if (iff) nBond > 0.
 
@@ -47,11 +54,11 @@ Parameter speciesBonds, if present, is an array of nBond
 SpeciesGroup<2> objects, with one such object per line. The text 
 format for each SpeciesGroup<2> object contains integer identifiers 
 for the two atoms in a bond followed by a corresponding bond type 
-id, separated by spaces. Similarly, the parameter speciesAngles,
-if present, is an an array of nAngle SpeciesGroups<3> objects, 
-one per line, each of which describes an angle group of three atoms 
-in a file format containing the three atom ids for the atoms in the
-group followed by an angle type id.
+id, separated by spaces. Similarly, the parameter speciesAngles, if 
+present, is an an array of nAngle SpeciesGroups<3> objects, one per 
+line, each of which describes an angle group of three atoms in a 
+file format containing the three atom ids for the atoms in the group 
+followed by an angle type id.
 
 For example, the following parameter file block describes a species 
 of linear trimer molecules containing three atoms (atom ids 0,1, and 
