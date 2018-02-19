@@ -1,15 +1,16 @@
 SRC_DIR_REL =../../..
 include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR)/util/config.mk
-include $(SRC_DIR)/simp/config.mk
-include $(SRC_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
-include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/mcMd/sources.mk
 include sources.mk
 
-all: $(mcMd_tests_perturb_EXES) Test
+TEST=$(BLD_DIR)/mcMd/tests/perturb/Test
+
+.Secondary: $(mcMd_tests_perturb_OBJS) 
+
+all: $(mcMd_tests_perturb_EXES) 
+
+run: $(TEST)
+	$(TEST)
 
 clean:
 	rm -f $(mcMd_tests_perturb_EXES) 

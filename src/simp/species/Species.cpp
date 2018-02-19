@@ -120,33 +120,30 @@ namespace Simp
    void Species::loadSpeciesParam(Serializable::IArchive &ar)
    {
       loadParameter<int>(ar, "nAtom", nAtom_);
-      #ifdef SIMP_BOND
-      loadParameter<int>(ar, "nBond", nBond_);
-      #endif
-      #ifdef SIMP_ANGLE
-      loadParameter<int>(ar, "nAngle", nAngle_);
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      loadParameter<int>(ar, "nDihedral", nDihedral_);
-      #endif
-      allocate();
-
+      allocateAtoms();
       loadDArray<int>(ar, "atomTypeIds", atomTypeIds_, nAtom_);
 
-      // Load covalent group data
       #ifdef SIMP_BOND
+      loadParameter<int>(ar, "nBond", nBond_);
+      allocateBonds();
       if (nBond_ > 0) {
          loadDArray<SpeciesBond>(ar, "speciesBonds", speciesBonds_, 
                                  nBond_);
       }
       #endif
+
       #ifdef SIMP_ANGLE
+      loadParameter<int>(ar, "nAngle", nAngle_);
+      allocateAngles();
       if (nAngle_ > 0) {
          loadDArray<SpeciesAngle>(ar, "speciesAngles", speciesAngles_,
                                   nAngle_);
       }
       #endif
+
       #ifdef SIMP_DIHEDRAL
+      loadParameter<int>(ar, "nDihedral", nDihedral_);
+      allocateDihedrals();
       if (nDihedral_ > 0) {
          loadDArray<SpeciesDihedral>(ar, "speciesDihedrals", 
                                      speciesDihedrals_, nDihedral_);
@@ -162,7 +159,7 @@ namespace Simp
    void Species::readStructure(std::istream& in)
    {
       using std::endl;
-      int k; 
+      int k;
 
       // Atom type Ids
       in >>  Label("nAtom") >> nAtom_;
@@ -181,6 +178,7 @@ namespace Simp
       if (nBond_ > 0) {
          for (int j = 0; j < nBond_; j++) {
             in >> k;
+            UTIL_CHECK(j == k);
             in >> speciesBonds_[j];
          }
       }
@@ -195,6 +193,7 @@ namespace Simp
       if (nAngle_ > 0) {
          for (int j = 0; j < nAngle_; j++) {
             in >> k;
+            UTIL_CHECK(j == k);
             in >> speciesAngles_[j];
          }
       }
@@ -209,6 +208,7 @@ namespace Simp
       if (nDihedral_ > 0) {
          for (int j = 0; j < nDihedral_; j++) {
             in >> k;
+            UTIL_CHECK(j == k);
             in >> speciesDihedrals_[j];
          }
       }
@@ -307,27 +307,26 @@ namespace Simp
    */
    void Species::save(Serializable::OArchive &ar)
    {
-      ar << id_;
       ar << moleculeCapacity_;
       ar << nAtom_;
+      ar << atomTypeIds_;
       #ifdef SIMP_BOND
       ar << nBond_;
+      if (nBond_ > 0) {
+         ar << speciesBonds_;
+      }
       #endif
       #ifdef SIMP_ANGLE
       ar << nAngle_;
+      if (nAngle_ > 0) {
+         ar << speciesAngles_;
+      }
       #endif
       #ifdef SIMP_DIHEDRAL
       ar << nDihedral_;
-      #endif
-      ar << atomTypeIds_;
-      #ifdef SIMP_BOND
-      ar << speciesBonds_;
-      #endif
-      #ifdef SIMP_ANGLE
-      ar << speciesAngles_;
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      ar << speciesDihedrals_;
+      if (nDihedral_ > 0) {
+         ar << speciesDihedrals_;
+      }
       #endif
    }
 
@@ -337,18 +336,21 @@ namespace Simp
    void Species::writeStructure(std::ostream& out, std::string indent)
    {
       using std::endl;
+      std::string xIndent = indent;
+      xIndent += "  ";
 
       // Atom type Ids
       out << endl << indent << "nAtom  " << nAtom_;
       for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
-         out << endl << indent << iAtom << "  " << atomTypeIds_[iAtom];
+         out << endl << xIndent << iAtom << "  " << atomTypeIds_[iAtom];
       }
 
       #ifdef SIMP_BOND
       out << endl << indent << "nBond  " << nBond_;
       if (nBond_ > 0) {
          for (int iBond = 0; iBond < nBond_; iBond++) {
-            out << endl << indent << iBond << "  " << speciesBonds_[iBond];
+            out << endl << xIndent 
+                << iBond << "  " << speciesBonds_[iBond];
          }
       }
       #endif
@@ -357,7 +359,8 @@ namespace Simp
       out << endl << indent << "nAngle  " << nAngle_;
       if (nAngle_ > 0) {
          for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
-            out << endl << indent << iAngle << "  " << speciesAngles_[iAngle];
+            out << endl << xIndent 
+                << iAngle << "  " << speciesAngles_[iAngle];
          }
       }
       #endif
@@ -366,7 +369,7 @@ namespace Simp
       out << endl << indent << "nDihedral  " << nDihedral_;
       if (nDihedral_ > 0) {
          for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
-            out << endl << indent 
+            out << endl << xIndent 
                 << iDihedral << "  " << speciesDihedrals_[iDihedral];
          }
       }

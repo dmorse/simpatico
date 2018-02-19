@@ -139,9 +139,11 @@ void SpeciesTest::testWriteStructure()
    }
    TEST_ASSERT(species.isValid());
 
-   //std::ostream out;
-   //openOutputFile("structure", out);
    species.writeStructure(std::cout, "  ");
+
+   std::ofstream out;
+   openOutputFile("structure", out);
+   species.writeStructure(out, "  ");
 
 }
 

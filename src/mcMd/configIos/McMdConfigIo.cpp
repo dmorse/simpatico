@@ -19,6 +19,7 @@
 #endif
 #include <simp/species/Species.h>
 #include <util/param/Label.h>
+#include <util/param/OptionalLabel.h>
 #include <util/format/Int.h>
 
 namespace McMd
@@ -95,13 +96,14 @@ namespace McMd
       }
 
       #ifdef SIMP_TETHER
-      {  // Scope block for variables 
+      if (OptionalLabel("TETHERS").match(in)) 
+      {  
 
-         // Read Tethers
          Vector anchor;
          Atom*  atomPtr;
          int    iTether, nTether, iAtom;
-         in >> Label("TETHERS");
+
+         // Read Tethers
          in >> Label("nTether") >> nTether;
          for (iTether = 0; iTether < nTether; ++iTether) {
             in >> iSpecies >> iMol >> iAtom >> anchor;
@@ -124,14 +126,13 @@ namespace McMd
       #endif
 
       #ifdef MCMD_LINK
-      { // Scope block for variables
+      if (OptionalLabel("LINKS").match(in)) { 
 
          // Read Links
          Atom*  atom0Ptr;
          Atom*  atom1Ptr;
          int    iLink, nLink, iAtom, linkType;
 
-         in >> Label("LINKS");
          in >> Label("nLink") >> nLink;
          for (iLink = 0; iLink < nLink; ++iLink) {
 

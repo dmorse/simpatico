@@ -1,15 +1,16 @@
 BLD_DIR_REL =../../..
 include $(BLD_DIR_REL)/config.mk
-include $(BLD_DIR)/mcMd/config.mk
-include $(BLD_DIR)/simp/config.mk
-include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
-include $(SRC_DIR)/mcMd/sources.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/mcSimulation/sources.mk
 
+TEST=$(BLD_DIR)/mcMd/tests/mcSimulation/Test
+
+.Secondary: $(mcMd_tests_mcSimulation_OBJS)
+
 all: $(mcMd_tests_mcSimulation_EXES)
+
+run: $(TEST)
+	$(TEST)
 
 clean:
 	rm -f $(mcMd_tests_mcSimulation_OBJS) 
