@@ -1,15 +1,16 @@
 # ---------------------------------------------------------------------
 # File: src/tools/patterns.mk
 #
-# This makefile contains the pattern rule used to compile all sources
-# files in the directory tree rooted at directory src/tools, which
-# contains the source code for the Tools namespace. It is included by
-# all makefile files in this directory tree. 
+# This makefile fragment contains the pattern rule used to compile all 
+# C++ sources files in the src/tools directory tree. The src/tools 
+# directory contains all the source code for the Tools C++ namespace. 
 #
-# This file should be included in other makefiles after inclusion of
-# the files src/config.mk, src/util/config.mk, src/simp/config.mk, 
-# and src/tools/config.mk, because this file uses makefile variables
-# defined in those files.
+# This file is included by all makefile files in the tools/ directory.
+# This pattern file should be included in other makefiles after 
+# inclusion of the main config.mk file, and the namespace level config 
+# files named util/config.mk, simp/config.mk, and tools/config.mk,
+# because the patterns defined in this file use makefile variables
+# defined in these configuration files.
 #-----------------------------------------------------------------------
 
 # All libraries needed by files in src/tools
@@ -28,14 +29,17 @@ MAKE_DEPS+= -A$(BLD_DIR)/tools/config.mk
 $(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cc test programs in src/tools
-$(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)
+$(BLD_DIR)/tools/tests/%.o: $(SRC_DIR)/tools/tests/%.cc
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
+
+# Pattern rule to compile link *.cc test programs in src/tools
+$(BLD_DIR)/tools/tests/%: $(BLD_DIR)/tools/tests/%.o $(LIBS)
+	$(CXX) $(INCLUDES) $(DEFINES) -o $@ $< $(LIBS) $(LDFLAGS)
 

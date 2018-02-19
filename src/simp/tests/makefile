@@ -7,9 +7,11 @@ include $(SRC_DIR)/simp/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/sources.mk
 
-all: $(simp_tests_EXES)
 
+.SECONDARY: $(simp_tests_OBJS)
 TEST=$(BLD_DIR)/simp/tests/Test
+
+all: $(simp_tests_EXES)
 
 run: $(TEST)
 	$(TEST) $(SRC_DIR)/simp/tests/ 
@@ -24,6 +26,7 @@ quiet: $(TEST)
 
 clean:
 	rm -f $(simp_tests_EXES)
+	rm -f $(simp_tests_OBJS) 
 	rm -f $(simp_tests_OBJS:.o=.d) 
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
@@ -35,5 +38,7 @@ endif
 
 clean-outputs:
 	@cd species; $(MAKE) clean-outputs
+
+   
 
 -include $(simp_tests_OBJS:.o=.d)

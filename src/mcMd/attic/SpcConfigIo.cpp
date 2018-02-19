@@ -58,7 +58,7 @@ namespace McMd
       if (hasBonds) {
          Label label("hasBonds", false);
          in >> label;
-         hasBonds = label.isClear();
+         hasBonds = Label::isMatched();
       }
       #endif
       #ifdef SIMP_ANGLE
@@ -66,7 +66,7 @@ namespace McMd
       if (hasAngles) {
          Label label("hasAngles", false);
          in >> label;
-         hasAngles = label.isClear();
+         hasAngles = Label::isMatched();
       }
       #endif
       #ifdef SIMP_DIHEDRAL
@@ -74,7 +74,7 @@ namespace McMd
       if (hasDihedrals) {
          Label label("hasDihedrals", false);
          in >> label;
-         hasDihedrals = label.isClear();
+         hasDihedrals = Label.isMatched();
       }
       #endif
       int nSpecies = simulation().nSpecies();
@@ -129,7 +129,7 @@ namespace McMd
       in >> Label("ATOMS");
       Label orderedLabel("ordered", false);
       in >> orderedLabel;
-      bool isOrdered = orderedLabel.isClear();
+      bool isOrdered = Label::isMatched();
       std::string format;
       in >> Label("format") >> format;
       FlagSet flags("imtpvsc");

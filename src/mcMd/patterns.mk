@@ -32,11 +32,13 @@ ifdef MAKEDEP
 endif
 
 # Pattern rule to compile all *.cc test programs in src/mcMd/tests
-$(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@.o $<
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
-	rm -f $@.o
+$(BLD_DIR)/mcMd/tests/%.o: $(SRC_DIR)/mcMd/tests/%.cc 
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
+
+# Pattern rule to link all *.cc test programs in src/mcMd/tests
+$(BLD_DIR)/mcMd/tests/%: $(BLD_DIR)/mcMd/tests/%.o $(LIBS)
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
 

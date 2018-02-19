@@ -2,14 +2,14 @@
 # File: src/ddMd/patterns.mk
 #
 # This makefile contains the pattern rule used to compile all sources
-# files in the directory tree rooted at directory src/ddMd, which
-# contains the source code for the DdMd namespace. It is included by
-# all makefile files in this directory tree. 
+# files in the directory tree rooted at directory src/ddMd. This
+# directory contains the source code for the DdMd namespace. This file
+# is included by all makefile files in the src/ddMd directory tree. 
 #
 # This file should be included in other makefiles after inclusion of
 # the files src/config.mk, src/util/config.mk, src/simp/config.mk, 
-# and src/ddMd/config.mk, because this file uses makefile variables
-# defined in those files.
+# and src/ddMd/config.mk, because pattern defined in this file uses 
+# makefile variables defined in those other makefile fragments.
 #-----------------------------------------------------------------------
 
 # All libraries needed by files in src/ddMd
@@ -32,11 +32,13 @@ ifdef MAKEDEP
 endif
 
 # Pattern rule to compile all *.cc test programs in src/ddMd/tests
-$(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@.o $<
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
-	rm -f $@.o
+$(BLD_DIR)/ddMd/tests/%.o: $(SRC_DIR)/ddMd/tests/%.cc 
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
+
+# Pattern rule to link all *.cc test programs in src/ddMd/tests
+$(BLD_DIR)/ddMd/tests/%: $(BLD_DIR)/ddMd/tests/%.o $(LIBS)
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
 

@@ -11,6 +11,8 @@ include $(SRC_DIR)/ddMd/tests/sources.mk
 
 TEST=$(BLD_DIR)/ddMd/tests/Test
 
+.SECONDARY:$(ddMd_tests_OBJS)
+
 all: $(ddMd_tests_EXES) 
 
 run: $(TEST)

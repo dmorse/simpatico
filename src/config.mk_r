@@ -223,7 +223,7 @@ OS=generic
 # CXX         - C++ compiler executable name 
 # INCLUDES    - Directories to search for included header files
 # DEFINES     - Definitions of C preprocessor macros
-# CXXSTD      - flag to define C++ language standard (c++98 or c++11)
+# CXX_STD     - flag to define C++ language standard (c++98 or c++11)
 # CXXFLAGS    - flags used to compile individual source files
 # TESTFLAGS   - flags used to compile unit test programs
 #
@@ -275,7 +275,7 @@ OS=generic
 # options that use the compiler "-D" option to define the set of
 # preprocessor macro definitions used in that namespace.
 #
-# The variable $(CXX_FLAGS) specifies all flags that are used by the
+# The variable $(CXXFLAGS) specifies all flags that are used by the
 # compiler, rather than only the preprocessor. This normally contains 
 # the $(CXX_STD) string as a substring, as well as options that 
 # specify the optimization level (e.g., -O3) and any desired 

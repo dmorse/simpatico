@@ -10,6 +10,7 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/sources.mk
 
 TEST=$(BLD_DIR)/mcMd/tests/Test
+.SECONDARY: $(mcMd_tests_OBJS)
 
 all: $(mcMd_tests_EXES) 
 

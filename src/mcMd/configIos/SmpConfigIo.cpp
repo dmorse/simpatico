@@ -64,8 +64,8 @@ namespace McMd
       Species* speciesPtr;
       int nAtomSpecies, nAtomMolecule;
       int nAtomTot = 0;
-      in >> Label("SPECIES");
-      if (Label::isClear()) {
+      Label speciesLabel("SPECIES", false); // optional label
+      if (speciesLabel.match(in)) {
 
          /*
          * If SPECIES block is present, check consistency with data
@@ -123,11 +123,10 @@ namespace McMd
 
       // Read ATOM block header
       in >> Label("ATOM");
-      in >> Label("ordered");
-      bool isOrdered = Label::isClear();
+      Label orderedLabel("ordered", false); // optional label
+      bool isOrdered = orderedLabel.match(in);
       std::string formatString;
-      in >> Label("format");
-      in >> formatString;
+      in >> Label("format") >> formatString;
       UTIL_CHECK(formatString.size() > 0);
       int nAtom;
       in >> Label("nAtom") >> nAtom;
@@ -227,22 +226,6 @@ namespace McMd
             }   // molecule loop
          }   // species loop
       }   // if (isOrdered)
-
-      #if 0
-      // Add all molecules
-      int nMolecule, iMol;
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
-         nMolecule = nMoleculeSpecies[iSpecies];
-         for (int iMol = 0; iMol < nMolecule; ++iMol) {
-            molPtr = &(simulation().getMolecule(iSpecies));
-            system().addMolecule(*molPtr);
-            if (molPtr != &system().molecule(iSpecies, iMol)) {
-               UTIL_THROW("Molecule index error");
-            }
-         }
-      }
-      #endif
 
       // Make sure static Label buffer is clean on exit
       UTIL_CHECK(Label::isClear());

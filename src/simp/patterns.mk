@@ -1,13 +1,13 @@
 # ---------------------------------------------------------------------
 # File: src/simp/patterns.mk
 #
-# This makefile contains the pattern rule used to compile all sources
-# files in the directory tree rooted at directory src/simp. This file
-# is included by all makefile files in this directory tree. 
+# This makefile contains the pattern rule used to compile all source
+# files in the src/simp directory tree. This file is included by all 
+# makefile files in the src/simp directory tree. 
 #
-# This file should be included in other makefiles after inclusion of the 
-# files src/config.mk, src/util/config.mk and src/simp/config.mk, 
-# because this file uses makefile variables defined in those files.
+# This file should be included in other makefiles after inclusion of 
+# the main config.mk in the build directory, and the util/config.mk 
+# and simp/config.mk namespace level config files. 
 #-----------------------------------------------------------------------
 
 # All libraries needed in for files in src/simp
@@ -29,11 +29,12 @@ ifdef MAKEDEP
 endif
 
 # Pattern rule to compile all *.cc test programs in src/simp/tests
-$(BLD_DIR)/%: $(SRC_DIR)/%.cc $(LIBS)
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@.o $<
-	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)
-	rm -f $@.o
+$(BLD_DIR)/%.o: $(SRC_DIR)/%.cc
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_FLAGS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
+# Pattern rule to link all *.cc test programs in src/simp/tests
+$(BLD_DIR)/%: $(BLD_DIR)/%.o $(LIBS)
+	$(CXX) $(INCLUDES) $(DEFINES) $(TESTFLAGS) -o $@ $@.o $(LIBS) $(LDFLAGS)

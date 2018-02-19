@@ -330,7 +330,7 @@ namespace Simp
 
       #ifdef SIMP_BOND
       in >> Label("nBond", false);
-      if (Label::isClear()) {
+      if (Label::isMatched()) {
          in >> count;
          if (count != nBond()) match = false;
          int i0, i1;
@@ -344,7 +344,7 @@ namespace Simp
 
       #ifdef SIMP_ANGLE
       in >> Label("nAngle", false);
-      if (Label::isClear()) {
+      if (Label::isMatched()) {
          in >> count;
          if (count != nAngle()) match = false;
          int i0, i1, i2;
@@ -359,7 +359,7 @@ namespace Simp
 
       #ifdef SIMP_DIHEDRAL
       in >> Label("nDihedral", false);
-      if (Label::isClear()) {
+      if (Label::isMatched()) {
          in >> count;
          if (count != nDihedral()) match = false;
          int i0, i1, i2, i3;
