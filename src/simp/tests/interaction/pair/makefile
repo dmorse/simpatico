@@ -1,13 +1,15 @@
 BLD_DIR_REL =../../../..
 include $(BLD_DIR_REL)/config.mk
-include $(BLD_DIR)/simp/config.mk
-include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/simp/patterns.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/simp/tests/interaction/pair/sources.mk
 
+TEST=$(SRC_DIR)/simp/tests/interaction/pair/Test
+
+
 all: $(simp_tests_interaction_pair_EXES) 
+
+run: $(TEST)
+	$(TEST)
 
 clean:
 	rm -f $(simp_tests_interaction_pair_EXES)

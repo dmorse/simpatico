@@ -1,10 +1,6 @@
-SRC_DIR_REL =../../..
-
-include $(SRC_DIR_REL)/config.mk
-include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/simp/config.mk
+BLD_DIR_REL =../../..
+include $(BLD_DIR_REL)/config.mk
 include $(SRC_DIR)/simp/patterns.mk
-include $(SRC_DIR)/simp/interaction/angle/sources.mk
 
 all: $(simp_interaction_angle_OBJS)
 

@@ -1,11 +1,7 @@
-SRC_DIR_REL =../..
-
-include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR_REL)/util/config.mk
-include $(SRC_DIR_REL)/simp/config.mk
-include $(SRC_DIR_REL)/simp/config.mk
-include $(SRC_DIR_REL)/simp/patterns.mk
-include $(SRC_DIR_REL)/simp/user/sources.mk
+BLD_DIR_REL =../..
+include $(BLD_DIR_REL)/config.mk
+include $(SRC_DIR)/simp/patterns.mk
+include $(SRC_DIR)/simp/user/sources.mk
 
 all: $(simp_user_OBJS)
 
