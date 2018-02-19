@@ -12,6 +12,15 @@
 # because the patterns defined in this file use makefile variables
 # defined in these configuration files.
 #-----------------------------------------------------------------------
+# Makefile includes
+
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/simp/config.mk
+include $(BLD_DIR)/tools/config.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/simp/sources.mk
+include $(SRC_DIR)/tools/sources.mk
+#-----------------------------------------------------------------------
 
 # All libraries needed by files in src/tools
 LIBS=$(tools_LIB) $(simp_LIB) $(util_LIB)
