@@ -1,4 +1,12 @@
-The bld/serial and bld/parallel are separate build directories intended for use for building serial programs (without MPI) and 
-parallel programs (with MPI). The setup script installs a separate set of configuration and makefile files in each build directory.
+The bld/serial and bld/parallel are separate build directories intended 
+for use for building serial programs (without MPI) and parallel programs
+(with MPI). The setup script installs a separate set of configuration 
+and makefile files in each build directory.
 
-Compile time options for code built in each build directory may be set by cd'ing to a specific build directory (serial/ or parallel/) and invoking the configure script from that directory with appropriate command line options. Changes in the configuration of one build directory have no effect upon the other. See the html documentation for further information about how to use the configure script to enable or disable specific features. 
+Compile time options for code built in each build directory may be set 
+by cd'ing to a specific build directory (serial/ or parallel/) and 
+invoking the configure script from that directory with appropriate 
+command line options. Changes in the configuration of one build 
+directory have no effect upon the other. See the html documentation 
+for further information about how to use the configure script to 
+enable or disable specific features. 

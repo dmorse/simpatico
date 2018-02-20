@@ -1,3 +1,8 @@
+Species
+-------
+
+- Add mechanism to set moleculeCapacity programmatically, or read it from file. 
+
 Boundary classes - non-orthogonal
 ---------------------------------
 
