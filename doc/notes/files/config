@@ -21,18 +21,22 @@ Comments:
 the system is molecular.
 
 2) The BONDS, ANGLES, DIHEDRALS sections are each optional. These
-groups should normally be absent in a molecular system. They are 
-used in a non-molecular system to list all covalent groups. They
-can be used in a molecular system to list additional covalent groups 
-not listed in the SPECIES section (e.g., inter-molecular crosslinks).
+groups should normally be absent in a molecular system with a 
+SPECIES block. They are used in a non-molecular system to list 
+all covalent groups. They can be used in a molecular system to 
+list additional covalent groups not listed in the SPECIES section 
+(e.g., inter-molecular crosslinks).
 
 3) The single processor mdSim and mcSim programs will normally write
-config files in molecular format, with a SPECIES block. They will 
-also only read files with this format.
+config files in molecular format, with a SPECIES block, and no BOND,
+ANGLES, or DIHEDRALS blocks. They will also only read files with this 
+format. 
 
 4) The parallel ddSim program will read files in either molecular or
 non-molecular format, and will preserve all information present in a
-molecular input file, so that it can be written back to file.
+molecular input file, so that it can be written back to file. If 
+a SPECIES block is present, that will be used to generate Group
+objects for all molecules, to be broadcast to all processors.
 
 ---------------------------------------------------------------------
 SPECIES:
@@ -47,13 +51,13 @@ SPECIES:
        1 atomType [charge]
        ...
      [nBond int]
-       id  type atomId0 atomId1
+       id  atomId0 atomId1 typeId
        .....
      [nAngle int]
-       id  type atomId0 atomId1 atomId2
+       id  atomId0 atomId1 atomId2 typeId
        ...
      [nDihedral int]
-       id  type atomId0 atomId1 atomId2
+       id  atomId0 atomId1 atomId2 typeId
      ...
    }
 
@@ -66,19 +70,19 @@ SPECIES:
    Comments: 
    
    1) This section is optional. Its appearance is a declaration that 
-   the system is molecular. This means that the ATOMS section must be 
-   in molecular order, and that bonded groups that are declared in 
-   this section should not appear in separate BOND, ANGLE, or DIHEDRAL
-   sections.
+   the system is molecular. This means that the ids of atoms in the 
+   TOMS section must be in molecular order, and that bonded groups 
+   that are declared in this section should not appear in separate 
+   BOND, ANGLE, or DIHEDRAL sections.
 
-   2) The mcSim and mdSim programs will always output in molecular format,
-   and thus always output a SPECIES block.
+   2) The mcSim and mdSim programs will always output in molecular 
+   format, and thus always output a SPECIES block.
 
    3) The ddSim program will output in molecular format if the input file 
    was in molecular format. The program needs an isMolecular variable to
    preserve this information.
 
-   4) The mcSim and mdSim programs can cross information in the SPECIES
+   4) The mcSim and mdSim programs may check information in the SPECIES
    block with information in the parameter file for consistency (but 
    this choice is not part of the file format definition).
 
@@ -86,19 +90,15 @@ SPECIES:
    groups should normally not be present, since this information would 
    be redundant.
 
-   6) Parameters nBond, nAngle, nDihedral are optional arguments that are
-   presumed to be zero if absent. Lines describing individual groups must
-   be present iff nBond > 0, etc. 
+   6) The BONDS, ANGLES, or DIHEDRALS are optional. The absence of such
+   a label indicates that there is no such block. The Parameters nBond, 
+   nAngle, nDihedral must be present if the labels are present, and must
+   be assigned a non-negative value, but may be assigned a zero value.
+   Lines describing individual groups must be present iff nBond > 0, etc. 
 
    7) ddSim must be able to read a SPECIES block, and will replicate all 
    groups (bonds, angles, etc.) to create corresponding group objects for
    every molecule in each species. 
-
-   8) Note that inclusion of compact topology information in the config 
-   file makes it unnecssary to define a separate topology file format. 
-   The mdPp postprocessor can process a trajectory by reading a config 
-   file and a trajectory file, using the config file for topological 
-   information.
 
 BOUNDARY:
 

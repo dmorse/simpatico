@@ -2,14 +2,19 @@
 # File: src/ddMd/patterns.mk
 #
 # This makefile contains the pattern rule used to compile all sources
-# files in the directory tree rooted at directory src/ddMd. This
-# directory contains the source code for the DdMd namespace. This file
-# is included by all makefile files in the src/ddMd directory tree. 
-#
-# This file should be included in other makefiles after inclusion of
-# the files src/config.mk, src/util/config.mk, src/simp/config.mk, 
-# and src/ddMd/config.mk, because pattern defined in this file uses 
-# makefile variables defined in those other makefile fragments.
+# files in the src/ddMd directory tree, which contains the source code 
+# for the DdMd C++ namespace. This file is included by all makefile 
+# files in the src/ddMd directory tree. This file should be included 
+# after inclusion of the main config.mk file.
+#-----------------------------------------------------------------------
+# Makefile includes 
+
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/simp/config.mk
+include $(BLD_DIR)/ddMd/config.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/simp/sources.mk
+include $(SRC_DIR)/ddMd/sources.mk
 #-----------------------------------------------------------------------
 
 # All libraries needed by files in src/ddMd
