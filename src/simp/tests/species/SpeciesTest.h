@@ -48,6 +48,10 @@ public:
 
    void testWriteStructure();
 
+   void testReadStructure();
+
+   void testMatchStructure();
+
 };
 
 
@@ -142,8 +146,39 @@ void SpeciesTest::testWriteStructure()
    species.writeStructure(std::cout, "  ");
 
    std::ofstream out;
-   openOutputFile("structure", out);
+   openOutputFile("tmp/structure", out);
    species.writeStructure(out, "  ");
+
+}
+
+void SpeciesTest::testReadStructure()
+{
+   printMethod(TEST_FUNC);
+   std::ifstream in;
+   openInputFile("in/structure", in);
+   species.readStructure(in);
+   in.close();
+
+   TEST_ASSERT(species.isValid());
+   if (verbose() > 1) {
+      std::cout << std::endl;
+      species.writeStructure(std::cout, "  ");
+   }
+}
+
+void SpeciesTest::testMatchStructure()
+{
+   printMethod(TEST_FUNC);
+   std::ifstream in;
+   openInputFile("in/structure", in);
+   species.readStructure(in);
+   in.close();
+
+   TEST_ASSERT(species.isValid());
+
+   openInputFile("in/structure", in);
+   species.matchStructure(in);
+   in.close();
 
 }
 
@@ -159,6 +194,8 @@ TEST_ADD(SpeciesTest, testReadParamAngle)
 TEST_ADD(SpeciesTest, testReadParamDihedral)
 #endif
 TEST_ADD(SpeciesTest, testWriteStructure)
+TEST_ADD(SpeciesTest, testReadStructure)
+TEST_ADD(SpeciesTest, testMatchStructure)
 TEST_END(SpeciesTest)
 
 #endif

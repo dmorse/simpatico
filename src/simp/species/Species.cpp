@@ -9,6 +9,7 @@
 
 #include <util/global.h>                    
 #include <simp/species/SpeciesGroup.tpp>  
+#include <util/format/Int.h>  
 
 namespace Simp
 {
@@ -216,6 +217,9 @@ namespace Simp
 
       initializeAtomGroupIdArrays();
 
+      // Check validity, throw exception if not valid
+      isValid();
+
       UTIL_CHECK(Label::isClear());
    }
 
@@ -340,37 +344,38 @@ namespace Simp
       xIndent += "  ";
 
       // Atom type Ids
-      out << endl << indent << "nAtom  " << nAtom_;
+      out << indent << "nAtom  " << nAtom_;
       for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
-         out << endl << xIndent << iAtom << "  " << atomTypeIds_[iAtom];
+         out << endl << xIndent << Int(iAtom,2) << " " 
+             << atomTypeIds_[iAtom];
       }
 
       #ifdef SIMP_BOND
-      out << endl << indent << "nBond  " << nBond_;
       if (nBond_ > 0) {
+         out << endl << indent << "nBond  " << nBond_;
          for (int iBond = 0; iBond < nBond_; iBond++) {
-            out << endl << xIndent 
-                << iBond << "  " << speciesBonds_[iBond];
+            out << endl << xIndent << Int(iBond,2) << " " 
+                << speciesBonds_[iBond];
          }
       }
       #endif
 
       #ifdef SIMP_ANGLE
-      out << endl << indent << "nAngle  " << nAngle_;
       if (nAngle_ > 0) {
+         out << endl << indent << "nAngle  " << nAngle_;
          for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
-            out << endl << xIndent 
-                << iAngle << "  " << speciesAngles_[iAngle];
+            out << endl << xIndent << Int(iAngle,2) << " " 
+                << speciesAngles_[iAngle];
          }
       }
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      out << endl << indent << "nDihedral  " << nDihedral_;
       if (nDihedral_ > 0) {
+         out << endl << indent << "nDihedral  " << nDihedral_;
          for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
-            out << endl << xIndent 
-                << iDihedral << "  " << speciesDihedrals_[iDihedral];
+            out << endl << xIndent << Int(iDihedral,2) << " " 
+                << speciesDihedrals_[iDihedral];
          }
       }
       #endif

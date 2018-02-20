@@ -364,10 +364,11 @@ namespace Simp
       int nDihedral_;
 
       /**
-      * Array of SpeciesDihedrals for all dihedrals, indexed by local dihedral id.
+      * Array of SpeciesDihedrals, indexed by local dihedral id.
       * 
-      * Element speciesDihedrals_[id] is the SpeciesDihedral object for dihedral
-      * number id in any molecule of this Species, where 0 <= id < nAngle_.
+      * Element speciesDihedrals_[id] is the SpeciesDihedral object 
+      * for dihedral number id in any molecule of this Species, where 
+      * the index satisfies 0 <= id < nAngle_.
       */ 
       DArray<SpeciesDihedral> speciesDihedrals_;
       #endif

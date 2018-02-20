@@ -20,8 +20,6 @@ clean:
 
 clean-outputs:
 	@rm -f tmp/*
-	@rm -f binary
-	@rm -f structure
 
 -include $(simp_tests_species_OBJS:.o=.d)
 -include $(simp_OBJS:.o=.d)

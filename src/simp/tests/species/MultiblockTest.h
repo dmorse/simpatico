@@ -33,6 +33,7 @@ public:
 
    void testConstructor();
    void testReadParam();
+   void testWriteStructure();
 
 };
 
@@ -168,9 +169,30 @@ void MultiblockTest::testReadParam()
    #endif
 }
 
+void MultiblockTest::testWriteStructure()
+{
+   printMethod(TEST_FUNC);
+   using std::ifstream;
+   using std::cout;
+
+   ifstream in;
+   #ifndef SIMP_ANGLE
+   openInputFile("in/Multiblock", in);
+   #else
+   openInputFile("in/MultiblockAngle", in);
+   #endif
+   species.readParam(in);
+   in.close();
+   std::cout << std::endl;
+   species.writeStructure(std::cout);
+
+}
+
+
 TEST_BEGIN(MultiblockTest)
 TEST_ADD(MultiblockTest, testConstructor)
 TEST_ADD(MultiblockTest, testReadParam)
+TEST_ADD(MultiblockTest, testWriteStructure)
 TEST_END(MultiblockTest)
 
 #endif
