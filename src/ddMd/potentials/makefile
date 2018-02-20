@@ -1,6 +1,6 @@
-SRC_DIR_REL =../..
-include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR_REL)/ddMd/patterns.mk
+BLD_DIR_REL =../..
+include $(BLD_DIR_REL)/config.mk
+include $(SRC_DIR)/ddMd/patterns.mk
 
 all: $(ddMd_potentials_OBJS)
 

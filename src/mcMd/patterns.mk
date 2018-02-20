@@ -25,10 +25,8 @@ DEFINES=$(UTIL_DEFS) $(SIMP_DEFS) $(MCMD_DEFS)
 # Dependencies on config.mk build configuration files
 UTIL_CFGS= -A$(BLD_DIR)/config.mk
 UTIL_CFGS+= -A$(BLD_DIR)/util/config.mk
-
 SIMP_CFGS=$(UTIL_CFGS)
 SIMP_CFGS+= -A$(BLD_DIR)/simp/config.mk
-
 MCMD_CFGS=$(SIMP_CFGS)
 MCMD_CFGS+= -A$(BLD_DIR)/mcMd/config.mk
 
@@ -41,16 +39,16 @@ endif
 
 # Pattern rule to compile all *.cpp class source files in src/simp
 $(BLD_DIR)/simp/%.o: $(SRC_DIR)/simp/%.cpp
-	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(INCLUDES) $(UTIL_DEFS) $(SIMP_DEFS) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(SIMP_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(SIMP_DEFS) $(CXX_STD) $(SIMP_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cpp class source files in src/util
 $(BLD_DIR)/util/%.o: $(SRC_DIR)/util/%.cpp
-	$(CXX) $(INCLUDES) $(DEFINES) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(INCLUDES) $(UTIL_DEFS) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(CXX_STD) $(UTIL_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(CXX_STD) $(UTIL_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile all *.cc test programs in src/mcMd/tests

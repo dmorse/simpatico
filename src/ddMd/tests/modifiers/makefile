@@ -3,7 +3,14 @@ include $(BLD_DIR_REL)/config.mk
 include $(BLD_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/ddMd/tests/modifiers/sources.mk
 
-all: $(ddMd_tests_modifiers_OBJS)
+TEST= $(SRC_DIR)/ddMd/tests/modifiers/Test
+
+.Secondary: $(ddMd_tests_modifiers_OBJS)
+
+all: $(ddMd_tests_modifiers_EXES)
+
+run: $(TEST)
+	$(MPIRUN) 6 $(TEST)
 
 clean:
 	rm -f $(ddMd_tests_modifiers_OBJS) 

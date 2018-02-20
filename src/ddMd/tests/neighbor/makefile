@@ -3,7 +3,14 @@ include $(BLD_DIR_REL)/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/ddMd/tests/neighbor/sources.mk
 
+TEST=$(SRC_DIR)/ddMd/tests/neighbor/Test
+
+.Secondary: $(ddMd_tests_neighbor_OBJS)
+
 all: $(ddMd_tests_neighbor_EXES)
+
+run: $(TEST)
+	$(MPIRUN) 6 $(TEST)
 
 clean:
 	rm -f $(ddMd_tests_neighbor_EXES)

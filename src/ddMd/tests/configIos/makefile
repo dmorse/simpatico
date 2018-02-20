@@ -3,7 +3,14 @@ include $(BLD_DIR_REL)/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/ddMd/tests/configIos/sources.mk
 
+TEST= $(SRC_DIR)/ddMd/tests/configIos/ConfigIoTest
+
+.Secondary: $(ddMd_tests_configIos_OBJS) 
+
 all: $(ddMd_tests_configIos_EXES) 
+
+run: $(TEST)
+	$(MPIRUN) 6 $(TEST)
 
 clean:
 	rm -f $(ddMd_tests_configIos_EXES)
