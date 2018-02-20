@@ -139,7 +139,7 @@ SIMP_DEFS+= -DSIMP_SPECIAL
 endif
 
 #-----------------------------------------------------------------------
-# Name of static library for Simp namespace.
+# Path to static library for Simp namespace.
 
 SIMP_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(SIMP_SUFFIX)
 

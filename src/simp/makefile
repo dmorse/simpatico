@@ -13,7 +13,7 @@ include $(SRC_DIR)/simp/patterns.mk
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(simp_OBJS) $(simp_LIB)
+all: $(simp_LIB)
 
 clean:
 	rm -f $(simp_OBJS) $(simp_OBJS:.o=.d) $(simp_LIB)

@@ -14,22 +14,22 @@ include $(SRC_DIR)/ddMd/patterns.mk
 # Variable definition
 
 # Main program *.o and *.d location
-DDSIM=$(BLD_DIR)/ddMd/ddSim
+ddSim=$(BLD_DIR)/ddMd/ddSim
 
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
+all: $(ddMd_LIB) $(ddSim_EXE)
 
-$(DDSIM_EXE): $(DDSIM).o $(LIBS)
-	$(CXX) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS) $(LDFLAGS)
+$(ddSim_EXE): $(ddSim).o $(LIBS)
+	$(CXX) -o $(ddSim_EXE) $(ddSim).o $(LIBS) $(LDFLAGS)
 
 ddSim:
-	$(MAKE) $(DDSIM_EXE)
+	$(MAKE) $(ddSim_EXE)
 
 clean:
 	rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
-	rm -f $(DDSIM).o $(DDSIM).d
+	rm -f $(ddSim).o $(ddSim).d
 	cd tests; $(MAKE) clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d
@@ -55,5 +55,5 @@ endif
 -include $(util_OBJS:.o=.d)
 -include $(simp_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)
--include $(DDSIM).d
+-include $(ddSim).d
 

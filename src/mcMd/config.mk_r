@@ -82,6 +82,6 @@ mcMd_LIB=$(BLD_DIR)/mcMd/lib$(mcMd_LIBNAME).a
 #-----------------------------------------------------------------------
 # Paths to executable files
 
-MCSIM_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)
+mcSim_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
+mdSim_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------

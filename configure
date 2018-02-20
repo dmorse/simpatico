@@ -31,7 +31,6 @@
 # options takes 0 or 1 as a required argument, using 1 to denote "enable"
 # and 0 to denote "disable".
 #
-#   -m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)
 #   -g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)
 #   -b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)
 #   -a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)
@@ -47,6 +46,7 @@
 #
 #   -j compiler  Chooses a compiler, set COMPILER=compiler in config.mk
 #   -q           query: prints report of options that are enabled / disabled.
+#   -h           help: prints list of available options
 #
 # Examples:
 #
@@ -62,19 +62,65 @@
 ROOT=$PWD 
 opt=""
 OPTARG=""
-while getopts "g:b:a:d:e:f:l:s:u:k:c:j:o:q" opt; do
+while getopts "g:b:a:d:e:f:l:s:u:k:c:j:o:qh" opt; do
 
   if [[ "$opt" != "?" ]]; then
-    cd $ROOT
-    cd bld/serial; 
-    echo "In build directory $PWD":
-    ./configure -"$opt" "$OPTARG"
-    cd $ROOT
-    cd bld/parallel; 
-    echo "In build directory $PWD":
-    ./configure -"$opt" "$OPTARG"
-    opt=""
-    OPTARG=""
+    if [[ "$opt" != "h" ]]; then
+       cd $ROOT
+       cd bld/serial; 
+       echo "In build directory $PWD":
+       ./configure -"$opt" "$OPTARG"
+       cd $ROOT
+       cd bld/parallel; 
+       echo "In build directory $PWD":
+       ./configure -"$opt" "$OPTARG"
+       opt=""
+       OPTARG=""
+    else
+      echo "The configure script may be called prior to compiling to enable or"
+      echo "disable specific compile time features, to query which features are"
+      echo "currently set to be enabled (option -q) or to choose a compiler."
+      echo "This script must be called from the directory that contains the"
+      echo "script file. The copy in the simpatico/ root directory queries and"
+      echo "applies the same changes to configurations of serial code built in" 
+      echo "bld/serial and of parallel code built and in bld/parallel". 
+      echo " "
+      echo "Command Line Options:"
+      echo "-h           help: prints explanation of options (this command)"
+      echo "-q           query: lists options that are enabled / disabled."
+      echo "-j compiler  Choose a compiler: sets COMPILER=compiler in config.mk"
+      echo "-j os        Choose an operating system: sets OS=os in config.mk"
+      echo " "
+      echo "Each of the following options enables or disables a feature by defining"
+      echo "or undefining a corresponding preprocessor macro. Each such option"
+      echo "takes 0 or 1 as a required argument, using 1 to enable the feature"
+      echo "or 0 to disable." 
+      echo " "
+      echo "-g (0|1)   debugging                   (undefines/defines UTIL_DEBUG)"
+      echo "-p (0|1)   pair potentials             (defines/undefines SIMP_NOPAIR)"
+      echo "-b (0|1)   bond potentials             (undefines/defines SIMP_BOND)"
+      echo "-a (0|1)   angle potentials            (undefines/defines SIMP_ANGLE)"
+      echo "-d (0|1)   dihedral potentials         (undefines/defines SIMP_DIHEDRAL)"
+      echo "-c (0|1)   coulomb potentials          (undefines/defines SIMP_COULOMB)"
+      echo "-e (0|1)   external potentials         (undefines/defines SIMP_EXTERNAL)"
+      echo "-l (0|1)   McMd links (mutable bonds)  (undefines/defines MCMD_LINK)"
+      echo "-r (0|1)   McMd shift                  (undefines/defines MCMD_SHIFT)"
+      echo "-f (0|1)   McMd perturbation           (undefines/defines MCMD_PERTURB)"
+      echo "-u (0|1)   DdMd modifiers              (undefines/defines DDMD_MODIFIERS)"
+      echo "-k (0|1)   dependency generation       (undefines/defines MAKEDEP)"
+      echo " "
+      echo "Examples:"
+      echo " "
+      echo "To query which features are currently set to be enabled:"
+      echo ">  ./configure -q"
+      echo "To disable debugging and enable angle and dihedral potentials:"
+      echo ">  ./configure -g0 -a1 -d1"
+      echo "To set COMPILER=intel in config.mk"
+      echo ">  ./configure -j intel"
+      echo "To set OS=mac-port in config.mk"
+      echo ">  ./configure -o mac-port"
+      echo "  "
+    fi
   fi
 
 done
