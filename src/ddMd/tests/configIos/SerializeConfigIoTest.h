@@ -193,7 +193,9 @@ public:
       configIo.writeConfig(outFile);
       outFile.close();
 
+      communicator().Barrier();
       clearStorage();
+      communicator().Barrier();
 
       openInputFile("tmp/out2", inFile);
       configIo.readConfig(inFile, MaskBonded);
