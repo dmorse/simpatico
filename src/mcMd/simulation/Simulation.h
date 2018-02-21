@@ -399,6 +399,12 @@ namespace McMd
       int hasSpecial() const;
       #endif
 
+      #ifdef UTIL_MPI
+      /**
+      * Does the simulation have an associated MPI communicator?
+      */
+      bool hasCommunicator() const;
+      #endif
       //@}
 
       /**
@@ -835,6 +841,9 @@ namespace McMd
    {  return hasSpecies_; }
 
    #ifdef UTIL_MPI
+   inline bool Simulation::hasCommunicator() const
+   {  return communicatorPtr_ != 0; }
+
    inline MPI::Intracomm& Simulation::communicator()
    {
       assert(communicatorPtr_);  

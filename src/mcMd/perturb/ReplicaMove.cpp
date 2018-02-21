@@ -1,4 +1,3 @@
-#ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -335,4 +334,3 @@ namespace McMd
 
 }
 #endif // ifdef UTIL_MPI
-#endif // ifdef MCMD_PERTURB

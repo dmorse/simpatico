@@ -969,9 +969,15 @@ namespace McMd
    */
    void System::readPerturbation(std::istream& in) 
    {
-      if (!hasPerturbation() && expectPerturbationParam_) {
+      UTIL_CHECK(!hasPerturbation()) 
+      #ifdef UTIL_MPI
+      UTIL_CHECK(hasIoCommunicator());
+      #endif
+
+      if (expectPerturbationParam_) {
          std::string className;
-         bool        isEnd;
+         bool isEnd;
+         UTIL_CHECK(perturbationFactoryPtr_) 
          perturbationPtr_ = 
             perturbationFactoryPtr_->readObject(in, *this, className, isEnd);
          if (!perturbationPtr_) {
@@ -988,9 +994,10 @@ namespace McMd
    */
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-      if (hasIoCommunicator()) {
-         UTIL_THROW("System has ioCommunicator in loadPerturbation");
-      }
+      UTIL_CHECK(!hasPerturbation());
+      #ifdef UTIL_MPI
+      UTIL_CHECK(!hasIoCommunicator());
+      #endif
 
       bool savedPerturbation;
       ar >> savedPerturbation;

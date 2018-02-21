@@ -89,7 +89,8 @@ namespace McMd
       commitMpiTypes();
 
       // Set directory Id in FileMaster to MPI processor rank.
-      fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
+      int rank = communicatorPtr_->Get_rank();
+      fileMaster_.setDirectoryId(rank);
 
       // Set log file for processor n to a new file named "n/log"
       // Relies on initialization of FileMaster outputPrefix to "" (empty).
@@ -188,11 +189,11 @@ namespace McMd
    */
    void Simulation::setIoCommunicator(MPI::Intracomm& communicator)
    {
-      if (communicatorPtr_ == 0) {
+      if (!hasCommunicator()) {
          UTIL_THROW("No communicator was passed to constructor");
       } else 
       if (communicatorPtr_ != &communicator) {
-         UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
+         UTIL_THROW("ParamCommunicator must be the one passed to constructor");
       }
       fileMaster_.setCommonControl();
       ParamComponent::setIoCommunicator(communicator);
