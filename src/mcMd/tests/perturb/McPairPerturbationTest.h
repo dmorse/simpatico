@@ -28,10 +28,15 @@ public:
 
    virtual void setUp()
    {  
+      // ParamComponent::setEcho(true);
+      setVerbose(2);
+      system_.setExpectPerturbation();
+      #ifdef UTIL_MPI
+      setIoCommunicator();
+      #endif
       openFile("in/McSimulation"); 
       simulation_.readParam(file());
-      setVerbose(2);
-      ParamComponent::setEcho(true);
+      file().close();
    }
 
    void testReadParam();
@@ -40,7 +45,11 @@ public:
 
 private:
 
+   #ifdef UTIL_MPI
+   McSimulation  simulation_(MPI::COMM_WORLD);
+   #else
    McSimulation  simulation_;
+   #endif
    McSystem&  system_;
 
 };
@@ -64,13 +73,13 @@ void McPairPerturbationTest::testReadParam()
 
 }
 
-#if 0
 void McPairPerturbationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   simulation_.run();
+   system_.readConfig("config");
+   simulation_.simulate(100);
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
@@ -80,7 +89,7 @@ void McPairPerturbationTest::testPairEnergy()
    for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-            de = system_.atomPairEnergy(*atomIter);
+            de = system_.pairPotential().atomEnergy(*atomIter);
             //std::cout.width(5);
             //std::cout << atomIter->id() << "     " << de << std::endl;
             energy += de;
@@ -88,26 +97,22 @@ void McPairPerturbationTest::testPairEnergy()
       }
    }
    std::cout << "Total atomPairEnergy = " << 0.5*energy << std::endl;
-   std::cout << "TotalPairEnergy      = " << system_.pairEnergy() << std::endl;
+   std::cout << "TotalPairEnergy      = " << system_.pairPotential().energy() << std::endl;
 
 }
 
+#if 0
 void McPairPerturbationTest::testSetParameter()
 { 
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   simulation_.run();
+   simulation_.simulate();
 
    simulation_.system().perturbation().setParameter(2.0);
    std::cout << Dbl(simulation_.system().perturbation().parameter()) << std::endl;
    TEST_ASSERT( eq(simulation_.system().perturbation().parameter(), 2.0) );
    std::cout << Dbl(simulation_.system().perturbation().derivative()) << std::endl;
-
-   //simulation_.system().perturbation().setParameter(2.0);
-   //std::cout << Dbl(simulation_.system().perturbation().parameter()) << std::endl;
-   //TEST_ASSERT( eq(simulation_.system().perturbation().parameter(), 2.0) );
-   //std::cout << Dbl(simulation_.system().perturbation().derivative()) << std::endl;
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
@@ -132,7 +137,7 @@ void McPairPerturbationTest::testSetParameter()
 
 TEST_BEGIN(McPairPerturbationTest)
 TEST_ADD(McPairPerturbationTest, testReadParam)
-//TEST_ADD(McPairPerturbationTest, testPairEnergy)
+TEST_ADD(McPairPerturbationTest, testPairEnergy)
 //TEST_ADD(McPairPerturbationTest, testSetParameter)
 TEST_END(McPairPerturbationTest)
 

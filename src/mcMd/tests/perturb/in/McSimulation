@@ -26,18 +26,12 @@ McSimulation{
     
   }
   Random{
-    seed                -874615293
+    seed                 874615293
   }
   McSystem{
-    EnergyEnsemble{
-      type            isothermal
-      temperature     1.00000000
-    }
-    BoundaryEnsemble{
-      type                 rigid
-    }
-    maxBoundary  orthorhombic  10.5   10.5    10.5
-    LJPair{
+    pairStyle     LJPair
+    bondStyle     HarmonicBond
+    McPairPotential{
       epsilon             1.00         1.00  
                           1.00         1.00
       sigma               1.00         1.00
@@ -45,43 +39,56 @@ McSimulation{
       cutoff              1.12246      1.12246
                           1.12246      1.12246
     }
-    HarmonicBond{
+    BondPotential{
       kappa               100.00      
       length                1.00    
     }
+    EnergyEnsemble{
+      type            isothermal
+      temperature     1.00000000
+    }
+    BoundaryEnsemble{
+      type                 rigid
+    }
+    McPairPerturbation{
+       mode    0
+       nParameters   1
+       parameters    0.5 
+    }
   }
   McMoveManager{
-    capacity                     1
     
     HybridMdMove{
+      probability                 1.0
       nStep                       20
       MdSystem{
-        PairList{
-          atomCapacity                30
-          pairCapacity              1000
-          skin                       0.2
+        MdPairPotential{
+          PairList{
+            atomCapacity              1000
+            pairCapacity             10000
+            skin                       0.2
+          }
         }
-        NVEIntegrator{
-           dt                         0.00100
+        NveVvIntegrator{
+           dt                     0.00100
         }
       }
     }
-    probability                 1.0
 
   }
   AnalyzerManager{
     baseInterval           10
-    capacity                0
-
   }
 }
 READ_CONFIG    config
 FINISH
 
 
+      maxBoundary  orthorhombic  10.5   10.5    10.5
 
     DisplaceMove{
       delta                      0.05
     }
     probability                 0.9
+    capacity                     1
     

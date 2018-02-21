@@ -24,5 +24,5 @@ Test: Test.o $(mcMd_LIB) $(simp_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(mcMd_LIB) $(simp_LIB) $(util_LIB)
 
--include $(tests_mcMd_perturb_OBJS:.o=.d)
+-include $(mcMd_tests_perturb_OBJS:.o=.d)
 

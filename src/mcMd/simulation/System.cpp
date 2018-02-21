@@ -969,12 +969,11 @@ namespace McMd
    */
    void System::readPerturbation(std::istream& in) 
    {
-      UTIL_CHECK(!hasPerturbation()) 
       #ifdef UTIL_MPI
       UTIL_CHECK(hasIoCommunicator());
       #endif
 
-      if (expectPerturbationParam_) {
+      if (!hasPerturbation() && expectPerturbationParam_) {
          std::string className;
          bool isEnd;
          UTIL_CHECK(perturbationFactoryPtr_) 
