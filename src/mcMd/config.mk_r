@@ -19,7 +19,7 @@
 
 # Define MCMD_PERTURB, enable free energy perturbation
 ifeq ($(UTIL_MPI),1)
-MCMD_PERTURB=1
+#MCMD_PERTURB=1
 endif
 
 # Define MCMD_LINK, enable Link (mutable bond) potentials
