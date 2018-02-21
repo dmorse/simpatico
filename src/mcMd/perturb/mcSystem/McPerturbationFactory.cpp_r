@@ -23,7 +23,6 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <simp/interaction/external/LamellarOrderingExternal.h>
-#include <simp/interaction/external/LocalLamellarOrderingExternal.h>
 #include <simp/interaction/external/PeriodicExternal.h>
 #ifndef SIMP_NOPAIR
 #include "McPairExternalPerturbation.h"
@@ -83,8 +82,6 @@ namespace McMd
          if (pairInteractionClassName == "LJPair") {
             if (externalInteractionClassName == "LamellarOrderingExternal") {
                ptr = new McPairExternalPerturbation<LJPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
-            } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
-               ptr = new McPairExternalPerturbation<LJPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
             } else if (externalInteractionClassName == "PeriodicExternal") {
                ptr = new McPairExternalPerturbation<LJPair,PeriodicExternal> (*systemPtr_, size, rank);
             } else {
@@ -93,8 +90,6 @@ namespace McMd
          } else if (pairInteractionClassName == "DpdPair") {
             if (externalInteractionClassName == "LamellarOrderingExternal") {
                ptr = new McPairExternalPerturbation<DpdPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
-            } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
-               ptr = new McPairExternalPerturbation<DpdPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
             } else if (externalInteractionClassName == "PeriodicExternal") {
                ptr = new McPairExternalPerturbation<DpdPair,PeriodicExternal> (*systemPtr_, size, rank);
             } else {
@@ -112,8 +107,6 @@ namespace McMd
                             = systemPtr_->externalPotential().interactionClassName();
          if (interactionClassName == "LamellarOrderingExternal") {
             ptr = new McExternalPerturbation<LamellarOrderingExternal>(*systemPtr_, size, rank);
-         } else if (interactionClassName == "LocalLamellarOrderingExternal") {
-            ptr = new McExternalPerturbation<LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
          } else if (interactionClassName == "PeriodicExternal") {
             ptr = new McExternalPerturbation<PeriodicExternal> (*systemPtr_, size, rank);
          } else {

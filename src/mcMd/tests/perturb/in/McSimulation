@@ -9,18 +9,19 @@ McSimulation{
                                B     1.0
   maskedPairPolicy      MaskBonded
   SpeciesManager{
-    capacity                     2
     
     Homopolymer{
       moleculeCapacity            50
       nAtom                        8
-      type                         0
+      atomType                     0
+      bondType                     0
     }
     
     Homopolymer{
       moleculeCapacity            50
       nAtom                        8
-      type                         1
+      atomType                     1
+      bondType                     0
     }
     
   }

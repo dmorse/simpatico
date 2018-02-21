@@ -23,14 +23,15 @@ public:
 
    McPairPerturbationTest()
     : ParamFileTest(),
-      system_(simulation_.system()),
-      perturbation_(simulation_.system())
+      system_(simulation_.system())
    {}
 
    virtual void setUp()
    {  
       openFile("in/McSimulation"); 
       simulation_.readParam(file());
+      setVerbose(2);
+      ParamComponent::setEcho(true);
    }
 
    void testReadParam();
@@ -39,9 +40,8 @@ public:
 
 private:
 
-   McSimulation       simulation_;
-   McSystem&          system_;
-   McPairPerturbation perturbation_;
+   McSimulation  simulation_;
+   McSystem&  system_;
 
 };
 
@@ -64,7 +64,7 @@ void McPairPerturbationTest::testReadParam()
 
 }
 
-
+#if 0
 void McPairPerturbationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
@@ -128,13 +128,12 @@ void McPairPerturbationTest::testSetParameter()
    std::cout << "TotalPairEnergy      = " << system_.pairEnergy() << std::endl;
 
 }
-
-
+#endif
 
 TEST_BEGIN(McPairPerturbationTest)
 TEST_ADD(McPairPerturbationTest, testReadParam)
-TEST_ADD(McPairPerturbationTest, testPairEnergy)
-TEST_ADD(McPairPerturbationTest, testSetParameter)
+//TEST_ADD(McPairPerturbationTest, testPairEnergy)
+//TEST_ADD(McPairPerturbationTest, testSetParameter)
 TEST_END(McPairPerturbationTest)
 
 #endif
