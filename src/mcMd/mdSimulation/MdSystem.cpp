@@ -111,7 +111,7 @@ namespace McMd
    }
 
    /*
-   * Constructor, copy of an System.
+   * Constructor, copy of an McSystem.
    */
    MdSystem::MdSystem(McSystem& system)
     : System(system),
@@ -296,7 +296,6 @@ namespace McMd
          }
       }
       readParamComposite(in, *pairPotentialPtr_);
-      
       #endif
 
       if (!isCopy()) {
@@ -408,8 +407,10 @@ namespace McMd
       }
 
       #ifdef MCMD_PERTURB
-      // Read Perturbation object for free energy perturbation.
-      readPerturbation(in);
+      if (!isCopy()) {
+         // Read Perturbation object for free energy perturbation, if any.
+         readPerturbation(in);
+      }
       #endif
    }
 
@@ -559,8 +560,10 @@ namespace McMd
       }
 
       #ifdef MCMD_PERTURB
-      // Read Perturbation object for free energy perturbation.
-      loadPerturbation(ar);
+      if (!isCopy()) {
+         // Read Perturbation object for free energy perturbation.
+         loadPerturbation(ar);
+      }
       #endif
    }
 
