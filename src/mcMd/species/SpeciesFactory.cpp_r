@@ -14,6 +14,7 @@
 #include <simp/species/Multiblock.h>
 #include <simp/species/HomoRing.h>
 #include <mcMd/species/HomopolymerSG.h>
+#include <mcMd/species/LinearSG.h>
 
 namespace McMd
 {
@@ -55,6 +56,9 @@ namespace McMd
       } else 
       if (className == "HomopolymerSG") {
          ptr = new HomopolymerSG();
+      } else 
+      if (className == "LinearSG") {
+         ptr = new LinearSG();
       } 
       #endif
 
