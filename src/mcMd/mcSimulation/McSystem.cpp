@@ -85,7 +85,8 @@ namespace McMd
       #ifdef SIMP_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   { 
+   {
+      UTIL_CHECK(!isCopy()); 
       setClassName("McSystem"); 
 
       // Actions taken when particles are moved
@@ -215,10 +216,14 @@ namespace McMd
       readEnsembles(in);
 
       #ifdef MCMD_PERTURB
-      readPerturbation(in);
-      #ifdef UTIL_MPI
-      readReplicaMove(in);
-      #endif
+      if (expectPerturbation()) {
+         readPerturbation(in);
+         #ifdef UTIL_MPI
+         if (hasPerturbation()) {
+            readReplicaMove(in);
+         }
+         #endif
+      }
       #endif
    }
 
@@ -312,7 +317,9 @@ namespace McMd
       #ifdef MCMD_PERTURB
       loadPerturbation(ar);
       #ifdef UTIL_MPI
-      loadReplicaMove(ar);
+      if (hasPerturbation()) {
+         loadReplicaMove(ar);
+      }
       #endif
       #endif
 
@@ -370,7 +377,9 @@ namespace McMd
       #ifdef MCMD_PERTURB
       savePerturbation(ar);
       #ifdef UTIL_MPI
-      saveReplicaMove(ar);
+      if (hasPerturbation()) {
+         saveReplicaMove(ar);
+      }
       #endif
       #endif
    }

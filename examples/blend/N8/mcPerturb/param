@@ -193,7 +193,6 @@ McSimulation{
       nStep                                 20
       MdSystem{
         MdPairPotential{
-          maxBoundary             cubic  10.5 
           PairList{
             atomCapacity                        1000
             pairCapacity                       10000

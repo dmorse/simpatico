@@ -1,5 +1,4 @@
 #!/bin/bash
 rm -f */log
-rm -f */out/* 2> /dev/null
-rm -f */out/dump/*
+rm -f */out/* 
 rm -fR */rst

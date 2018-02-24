@@ -222,4 +222,3 @@ McSimulation{
       outputFileName                  energy
     }
 
-          maxBoundary             cubic  10.5 

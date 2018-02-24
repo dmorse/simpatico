@@ -420,7 +420,6 @@ namespace McMd
    void MdSystem::loadParameters(Serializable::IArchive& ar)
    {
       if (!isCopy()) {
-
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
@@ -561,7 +560,7 @@ namespace McMd
 
       #ifdef MCMD_PERTURB
       if (!isCopy()) {
-         // Read Perturbation object for free energy perturbation.
+         // Read Perturbation object if any
          loadPerturbation(ar);
       }
       #endif
@@ -632,8 +631,11 @@ namespace McMd
       std::string className = mdIntegratorPtr_->className();
       ar & className;
       mdIntegratorPtr_->save(ar);
+
       #ifdef MCMD_PERTURB
-      savePerturbation(ar);
+      if (!isCopy()) {
+         savePerturbation(ar);
+      }
       #endif
    }
 

@@ -58,7 +58,6 @@ McSimulation{
       nStep                                 20
       MdSystem{
         MdPairPotential{
-          maxBoundary cubic 10.5
           PairList{
             atomCapacity                        1000
             pairCapacity                       10000
@@ -90,11 +89,6 @@ McSimulation{
 
     LogProgress{
       interval                         10000
-    }
-
-    ConfigWriter{
-      interval                         1000
-      outputFileName            dump/config.
     }
 
     McEnergyOutput{
@@ -188,5 +182,10 @@ McSimulation{
       length21                             1.0
       length10                             1.0
       kappa10                            800.0
+    }
+
+    ConfigWriter{
+      interval                         1000
+      outputFileName            dump/config.
     }
 

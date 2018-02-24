@@ -2,17 +2,9 @@
 set -ev
 
 # Clean out */out/dump directories
-rm -f 0/out/dump/*
-rm -f 1/out/dump/*
-rm -f 2/out/dump/*
-
-# Remove files from */out
-#rm -f 0/out/* 2> 
-#rm -f 1/out/* 2> 
-#rm -f 2/out/* 2> 
-find 0/out/* -type f -delete
-find 1/out/* -type f -delete
-find 2/out/* -type f -delete
+rm -f 0/out/*
+rm -f 1/out/*
+rm -f 2/out/*
 
 # Run simulation, writing to out
 mpirun -np 3 mcSim_m -e -p param -c commands 

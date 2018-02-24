@@ -155,6 +155,7 @@ namespace McMd
       isCopy_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
+      , expectPerturbationParam_(false)
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
@@ -216,11 +217,11 @@ namespace McMd
       trajectoryReaderFactoryPtr_(other.trajectoryReaderFactoryPtr_),
       fileMasterPtr_(other.fileMasterPtr_),
       #ifdef MCMD_PERTURB
-      perturbationPtr_(other.perturbationPtr_),
-      perturbationFactoryPtr_(other.perturbationFactoryPtr_),
+      perturbationPtr_(0),
+      perturbationFactoryPtr_(0),
       #ifdef UTIL_MPI
-      replicaMovePtr_(other.replicaMovePtr_),
-      hasReplicaMove_(other.hasReplicaMove_),
+      replicaMovePtr_(0),
+      hasReplicaMove_(false),
       #endif // ifdef UTIL_MPI
       #endif // ifdef MCMD_PERTURB
       #ifndef SIMP_NOPAIR
@@ -254,6 +255,7 @@ namespace McMd
       isCopy_(true),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
+      , expectPerturbationParam_(false)
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
@@ -433,11 +435,11 @@ namespace McMd
    /*
    * If no FileMaster exists, create and load one. 
    *
-   * This is called by System::loadParameters(). Except during unit testing, 
-   * a FileMaster will normally already exist when this is called, either 
-   * because the FileMaster has been set to that of a paranet Simulation 
-   * by calling setFileMaster(), or because the System was constructed by 
-   * copying another, for HMC.
+   * This is called by System::loadParameters(). Except during unit 
+   * testing of System, a FileMaster will normally already exist when 
+   * this is called, either because the FileMaster has been set to 
+   * that of a parent Simulation by calling setFileMaster(), or 
+   * because the System was constructed by copying another, for HMC.
    */
    void System::loadFileMaster(Serializable::IArchive& ar)
    {
@@ -468,6 +470,7 @@ namespace McMd
    */
    void System::readPotentialStyles(std::istream &in)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
@@ -518,6 +521,7 @@ namespace McMd
    */
    void System::loadPotentialStyles(Serializable::IArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
@@ -568,6 +572,7 @@ namespace McMd
    */
    void System::savePotentialStyles(Serializable::OArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       ar << pairStyle_;
       #endif
@@ -618,6 +623,7 @@ namespace McMd
    */
    void System::readEnsembles(std::istream &in)
    {
+      UTIL_CHECK(!isCopy());
       readParamComposite(in, *energyEnsemblePtr_);
       readParamComposite(in, *boundaryEnsemblePtr_);
    }
@@ -627,6 +633,7 @@ namespace McMd
    */
    void System::loadEnsembles(Serializable::IArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       loadParamComposite(ar, *energyEnsemblePtr_);
       loadParamComposite(ar, *boundaryEnsemblePtr_);
    }
@@ -636,6 +643,7 @@ namespace McMd
    */
    void System::saveEnsembles(Serializable::OArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       energyEnsemblePtr_->save(ar);
       boundaryEnsemblePtr_->save(ar);
    }
@@ -969,11 +977,10 @@ namespace McMd
    */
    void System::readPerturbation(std::istream& in) 
    {
-      #ifdef UTIL_MPI
-      UTIL_CHECK(hasIoCommunicator());
-      #endif
-
       if (!hasPerturbation() && expectPerturbationParam_) {
+         #ifdef UTIL_MPI
+         UTIL_CHECK(hasIoCommunicator());
+         #endif
          std::string className;
          bool isEnd;
          UTIL_CHECK(perturbationFactoryPtr_) 
@@ -993,15 +1000,14 @@ namespace McMd
    */
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-      UTIL_CHECK(!hasPerturbation());
-      #ifdef UTIL_MPI
-      UTIL_CHECK(!hasIoCommunicator());
-      #endif
-
+      UTIL_CHECK(!isCopy());
       bool savedPerturbation;
       ar >> savedPerturbation;
       if (savedPerturbation) {
+         UTIL_CHECK(!hasPerturbation());
+         // Create the perturbationFactory
          setExpectPerturbation();
+         UTIL_CHECK(perturbationFactoryPtr_);
          std::string className = "unknown";
          perturbationPtr_ = 
             perturbationFactoryPtr_->loadObject(ar, *this, className);
@@ -1019,8 +1025,9 @@ namespace McMd
    */
    void System::savePerturbation(Serializable::OArchive& ar) 
    {
+      UTIL_CHECK(!isCopy());
       bool savingPerturbation = hasPerturbation();
-      ar << savingPerturbation;  
+      ar << savingPerturbation;
       if (savingPerturbation) {
          std::string className = perturbationPtr_->className();
          ar << className;
