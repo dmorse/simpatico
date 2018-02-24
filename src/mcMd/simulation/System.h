@@ -130,10 +130,27 @@ namespace McMd
 
       // Methods
 
-      /// Default constructor. 
+      /**
+      * Default constructor. 
+      */
       System();
- 
-      /// Copy constructor. 
+
+      /** 
+      * Copy constructor. 
+      *
+      * This is intended to be used to create the System subobject of
+      * an MdSystem that is created by a hybrid MD/MC move within a
+      * parent MC simulation. The constructor creates a shallow copy,
+      * in which the child has pointers to most of the same objects
+      * as those owned by the parent. Specifically, the child will 
+      * have pointers to the same molecule sets for each species, the
+      * same Boundary, and the same energy and boundary ensembles as 
+      * the parent system. A System created by copying a parent that
+      * has a Perturbation or Replica Exchange move will, however, 
+      * not have pointers to these objects.
+      *
+      * \param system System object being copied.
+      */
       System(const System& other);
  
       /// Destructor.   

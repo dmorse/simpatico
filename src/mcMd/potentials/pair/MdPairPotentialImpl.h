@@ -40,11 +40,22 @@ namespace McMd
 
       /**
       * Constructor.
+      *
+      * \param other parent System object.
       */
       MdPairPotentialImpl(System& system);
 
       /**
       * Constructor (copied from McPairPotentialImpl)
+      * 
+      * This constructor is intended to construct an MdPairPotential
+      * for use in a hybrid MC/MD simulation, in which it is owned by 
+      * an MdSystem that is created by the hybrid MC move to perform 
+      * short MD simulations. This constructor creates an instance 
+      * of MdPairPotentialImpl<Interaction> with a pointer to the 
+      * Interaction object owned by the parent McPairPotentialImpl.
+      *
+      * \param other parent Monte-Carlo pair potential object
       */
       MdPairPotentialImpl(McPairPotentialImpl<Interaction>& other);
 
@@ -85,9 +96,9 @@ namespace McMd
       /**
       * Return pair energy for a single pair.
       *
-      * \param rsq       square distance between atoms in pair
-      * \param iAtomType atom type index of 1st atom
-      * \param jAtomType atom type index of 2nd atom
+      * \param rsq  square distance between atoms in pair
+      * \param iAtomType  atom type index of 1st atom
+      * \param jAtomType  atom type index of 2nd atom
       * \return energy of pair
       */
       virtual
@@ -99,7 +110,7 @@ namespace McMd
       * \param rsq  square distance between atoms in pair
       * \param iAtomType  atom type index of 1st atom
       * \param jAtomType  atom type index of 2nd atom
-      * \return  repulsive force (< 0 if attractive) over distance
+      * \return  ratio of pair force (> 0 if repulsive) to distance
       */
       virtual
       double forceOverR(double rsq, int iAtomType, int jAtomType) const;
@@ -110,22 +121,23 @@ namespace McMd
       virtual double maxPairCutoff() const;
 
       /**
-      * Modify a parameter, identified by a string.
+      * Modify an interaction parameter, identified by a string.
       *
       * \param name  parameter name
       * \param i  type index of first atom
       * \param j  type index of first atom
-      * \param value  new value of parameter
+      * \param value  new value of parameter (input)
       */
       void set(std::string name, int i, int j, double value)
       {  interactionPtr_->set(name, i, j, value); }
 
       /**
-      * Get a parameter value, identified by a string.
+      * Get an interaction parameter value, identified by a string.
       *
       * \param name  parameter name
       * \param i  type index of first atom
       * \param j  type index of first atom
+      * \return parameter value
       */
       double get(std::string name, int i, int j) const
       {  return interactionPtr_->get(name, i, j); }

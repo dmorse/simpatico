@@ -71,14 +71,26 @@ namespace McMd
    public:
 
       /**
-      * Constructor.
+      * Default constructor.
+      *
+      * If an MdSystem was created by this constructor, the inherited 
+      * function System::isCopy() returns false.
       */
       MdSystem();
 
       /**
       * Constructor, copy from McSystem.
       *
-      * Used to create child MdSystem for Hybrid MD/MC move.
+      * Used to create child MdSystem for Hybrid MD/MC move. The resulting
+      * object has pointers to the same array of molecule sets for all
+      * species, the same Boundary, and the same set of potential energy 
+      * or (for pair potentials) interaction objects as those used by the 
+      * parent MdSystem. All computations by the child MdSystem thus 
+      * reflect the state of the parent McSystem, and can directly modify 
+      * the state of the parent system (e.g., my updating atomic positions).
+      *
+      * If an MdSystem was created by this constructor, the inherited 
+      * function System::isCopy() returns true.
       *
       * \param system System object to be cloned.
       */

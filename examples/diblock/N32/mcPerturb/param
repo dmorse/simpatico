@@ -1,8 +1,7 @@
 McSimulation{
   FileMaster{
-    commandFileName                paramfile
-    inputPrefix                          in/
-    outputPrefix                        out/
+    inputPrefix                         in/
+    outputPrefix                       out/
   }
   nAtomType                              2
   nBondType                              1
@@ -88,13 +87,14 @@ McSimulation{
     }
 
   }
-  saveInterval                  0
+  saveInterval                   100
+  saveFileName               restart
 }
-WRITE_PARAM       param
-READ_CONFIG      config
-SIMULATE           1000
-WRITE_CONFIG     config
-FINISH
+
+
+
+
+
 
     AtomDisplaceMove{
        speciesId            0

@@ -4,30 +4,7 @@ BUGS
 This file should only list known unresolved bugs. Bug descriptions 
 should be removed after they are resolved
 
---------------------------------------------------------------------------------
+---------------------------------------------------------------------------
 
 Bug: 
 
-Symptom: Restart of perturbation does not work in McSimulations with a
-HybridMd move. An error occurs when trying to load the perturbation
-because the pointer to the perturbation has already been copied by the 
-copy constructor. 
-
-Discussion: The bug is avoidable by allowing for the possible that a 
-System that is a copy already has a perturbation, or doesn't need one.
-It is not clear whether a dependent MdSystem needs a perturbation, 
-since it shares the potential energy and most other structures with 
-the parent McSystem. The dependent MdSystem does not need to adjust
-parameters when a perturbation is applied for potential energies that
-are passed as shared pointers - both systems are then using the same
-object, and so adjustment can be left to the parent. The difficult 
-case is the pair potential, because the MdSystem creates a copy of 
-the parent potential rather than using a shared pointer. Everything
-is okay as long the perturbation is applied before the hybrid MdMove
-is created, but we have not been intentional about guaranteeing that
-this happens. 
-
-Proposal: An MdSystem that is created by copying an McSystem should
-not have a perturbation or replica move, but we then need to introduce
-a separate mechanism for synchronizing the parameters of the 
-MdPairPotential of the dependent object.

@@ -12,10 +12,6 @@ Perturbation
 
 - Review design of Perturbation (it hasn't been used in a while)
 
-- See if perturbation can work without MPI, for testing purposes.
-
-- Check and update unit tests for Perturbation.
-
 - Revert perturbation to a function of one variable.
 
 Constant Pressure MD 

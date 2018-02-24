@@ -149,12 +149,23 @@ namespace McMd
       setClassName("MdSystem");
 
       #ifndef SIMP_NOPAIR
+      /*
+      * Create an MdPairPotential that is a clone of the McPairPotential
+      * of the parent McSystem. The resulting MdPairPotential is an 
+      * instance of MdPairPotentialImpl<Interaction> that has a pointer
+      * to the pair Interaction object owned by the parent McSystem,
+      * which it uses to compute pair forces and energies. 
+      */
       assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
       if (pairPotentialPtr_ == 0) {
          UTIL_THROW("Failed attempt to clone McPairPotential");
       }
       #endif
+
+      // Set pointers to non-pair potentials to point to the same potential
+      // objects as those used by the parent McSystem.
+
       #ifdef SIMP_BOND
       assert(bondPotentialPtr_ == 0);
       if (system.hasBondPotential()) {
@@ -202,7 +213,7 @@ namespace McMd
       }
       #endif
 
-      // Set actions taken when particles are moved
+      // Register actions taken when particles are moved
       positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
       positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
    }
@@ -246,7 +257,6 @@ namespace McMd
       if (mdIntegratorPtr_) {
          delete mdIntegratorPtr_;
       }
-
    }
 
    /*
