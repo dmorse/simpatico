@@ -7,14 +7,37 @@ Housekeeping:
 - Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
   accumulator_ used as name for pointer, not derived from AverageAnalyzer).
 
+Avoiding User Specified Memory Limits
+-------------------------------------
+
+- Change CellList to self-allocate and re-allocate as needed. This
+  is already implemented in McMd). Get rid of maxBoundary_ parameter.
+
+- Change PairList so that it can re-allocate on overflow, to avoid
+  crash on exceeding pairCapacity. Allow different processors to have
+  different capacities - no communication is needed. 
+
+- Change PairList so that if pairCapacity has not been set previously,
+  it does a dry run to count the number of pairs, allocates, and then
+  goes through again to actually file required data structures. 
+
+- Change AtomStorage so it can reallocate if atomCapacity is exceeded.
+  Then create a default based on an assumption of a homogeneous 
+  distribution. 
+
+- Apply similar changes to GroupStorage containers. 
+
 Species
 -------
 
 - Add an array of Species, which is optionally allocated. 
 
 - Add a SmpConfig read/writer that can read Species topology information.
+  This can simply call the readStructure method of Species, but will 
+  need to add code to read the moleculeCapacity.
 
-- Add a SmpTrajectory writer
+- Add a SmpTrajectory writer. Decide whether this should optionally
+  include a Species block in the header.
 
 Coulomb
 --------
