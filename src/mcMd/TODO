@@ -7,13 +7,6 @@ Housekeeping
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
 
-Perturbation
-------------
-
-- Review design of Perturbation (it hasn't been used in a while)
-
-- Revert perturbation to a function of one variable.
-
 Constant Pressure MD 
 --------------------
 
@@ -44,17 +37,15 @@ Deformable Boundaries
 Serialization
 -------------
 
-- Test save / load with perturbation
-- Test save / load with replica move
-- Test MD serialization after forcing pair list rebuild upon restart output
-- Move restart interval and file name, and isInitialized_  to Simulation base 
-  classs.
+- Test MD serialization after forcing pair list rebuild upon restart output.
+
+- Move restart interval and file name, and isInitialized_  to Simulation 
+  base classs.
 
 Perturbation
 ------------
 
-- Modify so that perturbation can be used without MPI, or change conditional 
-  compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
+- Revert perturbation to a function of one variable.
 
 Interactions (Design change):
 -----------------------------
