@@ -12,6 +12,13 @@ Constant Pressure MD
 
 - Port and test NptIntegrator subclass from DdMd.
 
+Coulomb Interactions 
+--------------------
+
+- Create PPPM Coulomb using spines of arbitrary order and error
+  checking. Carefully validate this, and use it as the basis of 
+  an implemenation in ddMd.
+
 Non-Orthorhombic (Rigid) Boundaries
 -----------------------------------
 

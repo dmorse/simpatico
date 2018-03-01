@@ -10,8 +10,9 @@ Housekeeping:
 Avoiding User Specified Memory Limits
 -------------------------------------
 
-- Change CellList to self-allocate and re-allocate as needed. This
-  is already implemented in McMd). Get rid of maxBoundary_ parameter.
+- Change CellList to self-allocate and de-allocate and re-allocate as 
+  needed. This is already implemented in McMd. Get rid of maxBoundary_ 
+  parameter.
 
 - Change PairList so that it can re-allocate on overflow, to avoid
   crash on exceeding pairCapacity. Allow different processors to have
@@ -19,22 +20,49 @@ Avoiding User Specified Memory Limits
 
 - Change PairList so that if pairCapacity has not been set previously,
   it does a dry run to count the number of pairs, allocates, and then
-  goes through again to actually file required data structures. 
+  goes through again to actually file required data structures. This
+  will allow initial initialization without an estimate of the number
+  of pairs, or repeated re-allocation.
 
-- Change AtomStorage so it can reallocate if atomCapacity is exceeded.
-  Then create a default based on an assumption of a homogeneous 
-  distribution. 
+- Create a function to reallocate AtomStorage, which will require the
+  data to be copied. 
 
-- Apply similar changes to GroupStorage containers. 
+- Create a modifyAtomPointers Signal within the AtomStorage, and create 
+  a public function of AtomStorage that allows functions to be registered 
+  as observers of this signal.
+
+- Create a function of the GroupStorage template that re-sets pointers
+  to atoms. Add code to register this with the modifyAtomPointers signal.
+
+- Register a function to either clear or clear and rebuild the pair 
+  list with the modifyAtomPointers signal. 
+
+- Create a function of atomStorage that can be called during configuration 
+  file reading that creates a default allocation for AtomStorage from 
+  knowledge of the total number of atoms on all processors, based 
+  on an assumption of a homogeneous distribution, with some margin 
+  for inhomogeneities.
+
+- Create a function of GroupStorage that can be used when reading the
+  configuration file to create an initial default allocation.
+
+- Note: Reallocation of the array of Atom objects re-quires resetting 
+  of pointers to atoms in groups, but the reverse is not true.  It 
+  appears that GroupStorage objects may be reallocated and copied to
+  a new array internally, as needed, without effecting any code 
+  outside the implementation.  This would cease to be true only if
+  other code stored pointers to groups. Provide a private Signal 
+  and a public function to register observers, in order to allow
+  outside code to react appropriately when this happens, if needed.
 
 Species
 -------
 
 - Add an array of Species, which is optionally allocated. 
 
-- Add a SmpConfig read/writer that can read Species topology information.
-  This can simply call the readStructure method of Species, but will 
-  need to add code to read the moleculeCapacity.
+- Add a SmpConfig read/writer that can read Species topology 
+  information.  This can simply call the readStructure method of 
+  Species, but will need to add code to read the moleculeCapacity.
 
 - Add a SmpTrajectory writer. Decide whether this should optionally
   include a Species block in the header.
@@ -42,11 +70,12 @@ Species
 Coulomb
 --------
 
-- Add framework for coulomb interactions
+- Add framework for coulomb interactions, similar to the one developed
+  for McMd.
 
-- Implement Ewald coulomb interactions
+- Implement Ewald coulomb interactions in DdMd.
 
-- Implement PPPM Ewald coulomb interactions
+- Implement PPPM Ewald coulomb interactions.
 
 Exchanger:
 ----------
@@ -58,13 +87,16 @@ Exchanger:
   exchange or ghost exchange) uses the most memory
 
 - Improve error checking of conditions that can lead to incomplete groups.
-  Under what conditions can a group span two boundaries in the same direction ?
-  Is there a bound to how far a ghost can move without causing a possible error ?
+  Under what conditions can a group span two boundaries in the same 
+  direction ?  Is there a bound to how far a ghost can move without 
+  causing a possible error ?
 
 Atom Sorting:
 -------------
 
-- Implement periodic sorting of atoms
+- Implement periodic sorting of atoms. Note: Like re-allocation, this will
+  require resetting of all pointers stored in Group objects, and rebuilding
+  of the pairlist. 
 
 Non-orthogonal boundaries:
 --------------------------
@@ -94,12 +126,6 @@ AtomStorage:
 
 - Consider adding mechanism to increase capacity as needed.
 
-GroupStorage
-------------
-
-- Consider adding mechanism to increase capacity as needed.
-
-
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
@@ -121,10 +147,12 @@ Hybrid MD
 - Add transactions to GroupStorage (in transactions branch)
 
 
-Single Processor Operation (necessary or pipe dream?)
+Single Processor Operation 
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes, to enable single 
-  processor operation with no MPI
+- Is this necessary or is it a pipe dream? We already have mdSim.
+
+- If we do this: Modify Distributor, Collector, ConfigIo, and Exchanger 
+  classes to work ifndef UTIL_MPI, continue with other classes, to enable 
+  single processor operation with no MPI
 
