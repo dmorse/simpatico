@@ -20,5 +20,5 @@ if [ "$SMP_PROG" == "mcMdMpi" ]; then
   cd $TRAVIS_BUILD_DIR/bld/parallel/mcMd/tests && make run 
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti   && ./run && ./clean
   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti   && ./run && ./clean
-  cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcPerturb && ./run && ./clean
+  cd $TRAVIS_BUILD_DIR/examples/blend/N8/mcPerturb && ./run && ./clean
 fi
