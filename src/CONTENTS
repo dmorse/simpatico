@@ -11,6 +11,9 @@ draft      unfinished or proposed classes
 
 Note: The contents of directories util/ and test/ are maintained in separate 
 git repositories on github.com, and are included in simpatico as git submodules.
+The directories will be populated if the simpatico directory is compiled using
+the -recursive option, but will initially be empty if simpatico is cloned 
+without this option.
 
 Files (before running the setup script):
 ----------------------------------------
@@ -18,6 +21,7 @@ Files (before running the setup script):
 makefile      main makefile for in-source builds
 config.mk_r   compiler settings (default repository version)
 configure     configure script (for en|dis-abling compile time options)
+programs.mod  doxygen module for documentation of complete programs
 CONTENTS      this file
 
 Setup and configuration:

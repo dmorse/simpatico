@@ -18,9 +18,10 @@ doc/            documentation
 Files:
 ------
 
-README          brief introduction to package 
+README.md       brief introduction to package 
 LICENSE         GPL license
 CONTENTS        this file
 setup           bash script for initial setup (see README and manual)
+configure       configuration script (see manual)
 makefile        top-level makefile
 
