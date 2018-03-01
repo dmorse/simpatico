@@ -32,6 +32,7 @@ install:
   - make tools
   - if [ "$SMP_PROG" == "mcMd" ]; then make mcMd; fi
   - if [ "$SMP_PROG" == "ddMd" ]; then make ddMd; fi
+  - if [ "$SMP_PROG" == "mcMdMpi" ]; then ./configure -f1; fi
   - if [ "$SMP_PROG" == "mcMdMpi" ]; then make mcMd-mpi; fi
 
 script:
