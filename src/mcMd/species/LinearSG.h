@@ -17,6 +17,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * A mutable linear polymer, for semigrand ensemble.
@@ -27,7 +28,7 @@ namespace McMd
    *
    * \ingroup McMd_Species_Module
    */
-   class LinearSG : public Linear, public SpeciesMutator
+   class LinearSG : public Simp::Linear, public McMd::SpeciesMutator
    {
    
    public:
@@ -45,7 +46,7 @@ namespace McMd
       /**
       * Read parameters and initialize.
       */ 
-      //virtual void readParameters(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Set the type of all atoms in the molecule.
@@ -54,19 +55,6 @@ namespace McMd
       * \param stateId  atom type id.
       */
       virtual void setMoleculeState(Molecule& molecule, int stateId);
-
-      /**
-      * Generate random molecules
-      *
-      * \param nMolecule number of molecules to genearte
-      * \param exclusionRadius array of exclusion radii for every atom type
-      * \param system the System
-      * \param bondPotentialPtr the bond potential
-      * \param boundary the boundary to generate atoms in
-      */
-      //virtual void generateMolecules(int nMolecule,
-      //   DArray<double> exclusionRadius, System &system,
-      //   BondPotential *bondPotentialPtr, const Boundary &boundary);
 
       /**
       * Save internal state to an archive.
@@ -108,7 +96,7 @@ namespace McMd
       */
       virtual int calculateBondTypeId(int index) const;
 
-      #ifdef INTER_ANGLE
+      #ifdef SIMP_ANGLE
       /**
       * Return same angle type for any angle in any chain.
       *
@@ -118,7 +106,7 @@ namespace McMd
       virtual int calculateAngleTypeId(int index) const;
       #endif
 
-      #ifdef INTER_DIHEDRAL
+      #ifdef SIMP_DIHEDRAL
       /**
       * Return same dihedral type for any dihedral in any chain.
       *
@@ -131,43 +119,31 @@ namespace McMd
 
    private:
 
+      //Type index for all bonds
+      int bondType_;
+
+      #ifdef SIMP_ANGLE
+      //Type index for all angles (if any)
+      int angleType_;
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      //Type index for all dihedrals (if any)
+      int dihedralType_;
+      #endif
+
       // A Pair of atom type indexes.
-      // Atoms in a molecule with stateId = i have type typeIds_[i]
       Pair<int> typeIds_;
 
-      /// Ratio of statistical weights for typeId[0]/typeId[1]
+      // Ratio of statistical weights for typeId[0]/typeId[1]
       double weightRatio_;
       
-      DArray<int> beadIdentities_;
+      // Array with the identity of each bead for subtype 0 
+      DArray<int> beadTypeIds0_;
 
-      DArray<int> beadTypeIds1_;
+      // Array with the identity of each bead for subtype 1 
+      DArray<int> beadTypeIds1_; 
 
-      DArray<int> beadTypeIds2_; 
-
-      static const int maxPlacementAttempts_ = 500;
-
-      /**
-      * Try to place an atom. If successful, recursively call tryPlace
-      * again to place next atom
-      *
-      * \param molecule reference to this molecule
-      * \param atomId index of current atom with molecule
-      * \param exclusionRadius array of exclusion radii, by atom type
-      * \param system the parent System
-      * \param cellList a cell list to find near neighbors
-      * \param bondPotential the bond potential
-      * \param boundary Boundary object defines periodic box
-      *
-      * \returns true if particle could be placed
-      */
-      /*bool tryPlaceAtom(Molecule &molecule, 
-      //                  int atomId,
-      //                  DArray<double> exclusionRadius, 
-                       System& system, 
-                        CellList &cellList,
-                        BondPotential *bondPotentialPtr, 
-                        const Boundary &boundary);
-       */
    };
    
 } 
