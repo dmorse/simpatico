@@ -1,14 +1,25 @@
-Housekeeping:
-------------
+Analyzers (housekeeping):
+------------------------
 
 - Move DdMd::Simulation::computePairEnergies() and pairEnergies()
   to PairPotential class, modify PairEnergy(ies) analyzer classes.
 
+     Closely related (equivalent?) functions:
+     ./simulation/Simulation.h:                void computePairEnergies();
+     ./potentials/pair/PairPotential.h:        virtual void computePairEnergies() = 0;
+     ./potentials/pair/PairPotentialImpl.h:    virtual void computePairEnergies();
+     
+     Called by:
+     ./analyzers/energy/OutputPairEnergies.cpp:   sys.computePairEnergies();
+     ./analyzers/energy/PairEnergyAverage.cpp:    simulation().computePairEnergies();
+
 - Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
   accumulator_ used as name for pointer, not derived from AverageAnalyzer).
 
-Avoiding User Specified Memory Limits
--------------------------------------
+- Review analyzers - try to further standardize outputs.
+
+Memory Management (avoiding user specified memory limits)
+----------------------------------------------------------
 
 - Change CellList to self-allocate and de-allocate and re-allocate as 
   needed. This is already implemented in McMd. Get rid of maxBoundary_ 
@@ -55,7 +66,7 @@ Avoiding User Specified Memory Limits
   and a public function to register observers, in order to allow
   outside code to react appropriately when this happens, if needed.
 
-Species
+Species:
 -------
 
 - Add an array of Species, which is optionally allocated. 
@@ -67,7 +78,7 @@ Species
 - Add a SmpTrajectory writer. Decide whether this should optionally
   include a Species block in the header.
 
-Coulomb
+Coulomb:
 --------
 
 - Add framework for coulomb interactions, similar to the one developed
@@ -136,8 +147,8 @@ Moving GroupStorage to Potential class:
 Perturbation:
 -------------
 
-- Add perturbation class and class hierarchy for use with multi-system
-  parallel simulations
+- Add perturbation class and class hierarchy for use with 
+  multi-system parallel simulations
 
 Hybrid MD
 ---------
@@ -150,7 +161,7 @@ Hybrid MD
 Single Processor Operation 
 --------------------------
 
-- Is this necessary or is it a pipe dream? We already have mdSim.
+- Is this necessary, or is it a pipe dream? We already have mdSim.
 
 - If we do this: Modify Distributor, Collector, ConfigIo, and Exchanger 
   classes to work ifndef UTIL_MPI, continue with other classes, to enable 

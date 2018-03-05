@@ -1,11 +1,13 @@
 Housekeeping
 ------------
 
-- Add *.dox files to document file format of all interaction classes
-  (done?), potential classes, and other ParamComposite subclasses.
+- Add *.dox files for all ParamComposite subclasses.
 
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
+
+- Review analyzers, try to create base classes and create more
+  standardized output formats.
 
 Constant Pressure MD 
 --------------------

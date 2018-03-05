@@ -1,3 +1,9 @@
+Housekeeping / Documentation
+----------------------------
+
+- Check if *.dox files exist to document param file formats for all
+  ParamComposite subclasses in Simp namespace
+
 Species
 -------
 
