@@ -72,6 +72,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf9ba7221315579826dfe3f88eb717c04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Math__Module.html#gaf9ba7221315579826dfe3f88eb717c04">Util::feq</a> (double x, double y, double eps=1.0E-10)</td></tr>
 <tr class="memdesc:gaf9ba7221315579826dfe3f88eb717c04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Are two floating point numbers equal to within round-off error?  <a href="group__Math__Module.html#gaf9ba7221315579826dfe3f88eb717c04">More...</a><br /></td></tr>
 <tr class="separator:gaf9ba7221315579826dfe3f88eb717c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9754693e721344ee74376e5bc0c8676b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Math__Module.html#ga9754693e721344ee74376e5bc0c8676b">Util::gcd</a> (int a, int b)</td></tr>
+<tr class="memdesc:ga9754693e721344ee74376e5bc0c8676b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute greatest common divisor (gcd) of two integers.  <a href="group__Math__Module.html#ga9754693e721344ee74376e5bc0c8676b">More...</a><br /></td></tr>
+<tr class="separator:ga9754693e721344ee74376e5bc0c8676b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gaf9ba7221315579826dfe3f88eb717c04"></a>
@@ -113,10 +116,69 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Are two floating point numbers equal to within round-off error? </p>
+<p>Returns true if eps &gt; fabs(x-y)*c/(fabs(x)+fabs(y)+c), c=1.05E-5.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>first real argument </td></tr>
+    <tr><td class="paramname">y</td><td>second real argument </td></tr>
+    <tr><td class="paramname">eps</td><td>maximum tolerance for nominally "equal" values </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if equal to within tolerance, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="feq_8h_source.html#l00021">21</a> of file <a class="el" href="feq_8h_source.html">feq.h</a>.</p>
+<p>Definition at line <a class="el" href="feq_8h_source.html#l00027">27</a> of file <a class="el" href="feq_8h_source.html">feq.h</a>.</p>
 
-<p>Referenced by <a class="el" href="OrthoRegion_8cpp_source.html#l00048">Util::OrthoRegion::isValid()</a>, <a class="el" href="MonoclinicBoundary_8cpp_source.html#l00118">Util::MonoclinicBoundary::isValid()</a>, <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00113">Util::OrthorhombicBoundary::isValid()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00055">McMd::BondLengthDist::loadParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00060">McMd::RDF::loadParameters()</a>, <a class="el" href="RadialDistribution_8cpp_source.html#l00081">Util::RadialDistribution::loadParameters()</a>, <a class="el" href="Distribution_8cpp_source.html#l00130">Util::Distribution::loadParameters()</a>, and <a class="el" href="Distribution_8h_source.html#l00198">Util::Distribution::serialize()</a>.</p>
+<p>Referenced by <a class="el" href="OrthoRegion_8cpp_source.html#l00050">Simp::OrthoRegion::isValid()</a>, <a class="el" href="MonoclinicBoundary_8cpp_source.html#l00118">Simp::MonoclinicBoundary::isValid()</a>, <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00115">Simp::OrthorhombicBoundary::isValid()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00056">McMd::BondLengthDist::loadParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00061">McMd::RDF::loadParameters()</a>, <a class="el" href="RadialDistribution_8cpp_source.html#l00081">Util::RadialDistribution::loadParameters()</a>, <a class="el" href="Distribution_8cpp_source.html#l00130">Util::Distribution::loadParameters()</a>, and <a class="el" href="Distribution_8h_source.html#l00198">Util::Distribution::serialize()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga9754693e721344ee74376e5bc0c8676b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Util::gcd </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute greatest common divisor (gcd) of two integers. </p>
+<p>Uses Euclidean algorithm to compute gcd. Always returns a non-negative integer. If one argument is zero, the absolute value of the other is returned. Returns zero if and only if both integers are zero.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>1st integer </td></tr>
+    <tr><td class="paramname">b</td><td>2nd integer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>greatest common divisor of a and b </dd></dl>
+
+<p>Definition at line <a class="el" href="gcd_8h_source.html#l00030">30</a> of file <a class="el" href="gcd_8h_source.html">gcd.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Rational_8h_source.html#l00454">Util::Rational::serialize()</a>.</p>
 
 </div>
 </div>
@@ -124,7 +186,7 @@ Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

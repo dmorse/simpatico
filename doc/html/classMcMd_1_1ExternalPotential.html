@@ -71,10 +71,11 @@ Inheritance diagram for McMd::ExternalPotential:</div>
   <img src="classMcMd_1_1ExternalPotential.png" usemap="#McMd::ExternalPotential_map" alt=""/>
   <map id="McMd::ExternalPotential_map" name="McMd::ExternalPotential_map">
 <area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="131,112,384,136"/>
+<area href="classMcMd_1_1EnergyCalculator.html" title="Interface for a class that calculates a total energy. " alt="McMd::EnergyCalculator" shape="rect" coords="394,112,647,136"/>
 <area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="131,56,384,80"/>
 <area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="0,0,253,24"/>
 <area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="263,0,516,24"/>
-<area href="classMcMd_1_1ExternalPotentialImpl.html" title="Template implementation of ExternalPotential. " alt="McMd::ExternalPotentialImpl&lt; Interaction &gt;" shape="rect" coords="131,224,384,248"/>
+<area href="classMcMd_1_1ExternalPotentialImpl.html" title="Template implementation of ExternalPotential. " alt="McMd::ExternalPotentialImpl&lt; Interaction &gt;" shape="rect" coords="263,224,516,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -86,25 +87,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b0cbab9956229c93276e9ebe8f45260"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a3b0cbab9956229c93276e9ebe8f45260">~ExternalPotential</a> ()</td></tr>
 <tr class="memdesc:a3b0cbab9956229c93276e9ebe8f45260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor (does nothing)  <a href="#a3b0cbab9956229c93276e9ebe8f45260">More...</a><br /></td></tr>
 <tr class="separator:a3b0cbab9956229c93276e9ebe8f45260"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13c89076210d5b5726ef552f8ee969ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a13c89076210d5b5726ef552f8ee969ab">addForces</a> ()=0</td></tr>
-<tr class="memdesc:a13c89076210d5b5726ef552f8ee969ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external force of an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a> to the total force acting on it.  <a href="#a13c89076210d5b5726ef552f8ee969ab">More...</a><br /></td></tr>
-<tr class="separator:a13c89076210d5b5726ef552f8ee969ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e4e534e57d36b0fdf44976b88e2e73"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a09e4e534e57d36b0fdf44976b88e2e73">energy</a> () const  =0</td></tr>
-<tr class="memdesc:a09e4e534e57d36b0fdf44976b88e2e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total external energy of this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#a09e4e534e57d36b0fdf44976b88e2e73">More...</a><br /></td></tr>
-<tr class="separator:a09e4e534e57d36b0fdf44976b88e2e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76b69aa953af1984e8e6034571cd0b62"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">atomEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const  =0</td></tr>
-<tr class="memdesc:a76b69aa953af1984e8e6034571cd0b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the external energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>.  <a href="#a76b69aa953af1984e8e6034571cd0b62">More...</a><br /></td></tr>
-<tr class="separator:a76b69aa953af1984e8e6034571cd0b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab05a4a5a9728143638f5aadd2add72b9"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#ab05a4a5a9728143638f5aadd2add72b9">interactionClassName</a> () const  =0</td></tr>
-<tr class="memdesc:ab05a4a5a9728143638f5aadd2add72b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of external interaction class (e.g., "LamellarOrderingExternal").  <a href="#ab05a4a5a9728143638f5aadd2add72b9">More...</a><br /></td></tr>
-<tr class="separator:ab05a4a5a9728143638f5aadd2add72b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">External Interaction Interface</div></td></tr>
 <tr class="memitem:ae75b8771fb654938268f6c0876df88a0"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#ae75b8771fb654938268f6c0876df88a0">energy</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position, int i) const  =0</td></tr>
 <tr class="memdesc:ae75b8771fb654938268f6c0876df88a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns external potential energy of a single particle.  <a href="#ae75b8771fb654938268f6c0876df88a0">More...</a><br /></td></tr>
 <tr class="separator:ae75b8771fb654938268f6c0876df88a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe727982d52ae7401099bd03b9307883"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#abe727982d52ae7401099bd03b9307883">getForce</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position, int type, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;force) const  =0</td></tr>
 <tr class="memdesc:abe727982d52ae7401099bd03b9307883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns force caused by the external potential.  <a href="#abe727982d52ae7401099bd03b9307883">More...</a><br /></td></tr>
 <tr class="separator:abe727982d52ae7401099bd03b9307883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab05a4a5a9728143638f5aadd2add72b9"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#ab05a4a5a9728143638f5aadd2add72b9">interactionClassName</a> () const  =0</td></tr>
+<tr class="memdesc:ab05a4a5a9728143638f5aadd2add72b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of external interaction class (e.g., "LamellarOrderingExternal").  <a href="#ab05a4a5a9728143638f5aadd2add72b9">More...</a><br /></td></tr>
+<tr class="separator:ab05a4a5a9728143638f5aadd2add72b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">System Force and Energy</div></td></tr>
+<tr class="memitem:a13c89076210d5b5726ef552f8ee969ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a13c89076210d5b5726ef552f8ee969ab">addForces</a> ()=0</td></tr>
+<tr class="memdesc:a13c89076210d5b5726ef552f8ee969ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external force of an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a> to the total force acting on it.  <a href="#a13c89076210d5b5726ef552f8ee969ab">More...</a><br /></td></tr>
+<tr class="separator:a13c89076210d5b5726ef552f8ee969ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76b69aa953af1984e8e6034571cd0b62"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ExternalPotential.html#a76b69aa953af1984e8e6034571cd0b62">atomEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const  =0</td></tr>
+<tr class="memdesc:a76b69aa953af1984e8e6034571cd0b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the external energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>.  <a href="#a76b69aa953af1984e8e6034571cd0b62">More...</a><br /></td></tr>
+<tr class="separator:a76b69aa953af1984e8e6034571cd0b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classUtil_1_1ParamComposite"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classUtil_1_1ParamComposite')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classUtil_1_1ParamComposite.html">Util::ParamComposite</a></td></tr>
 <tr class="memitem:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a873eea7d2dbc19cde816d1bef602496c">ParamComposite</a> ()</td></tr>
 <tr class="memdesc:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a873eea7d2dbc19cde816d1bef602496c">More...</a><br /></td></tr>
@@ -188,7 +187,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1890a33d6049597e65bebfdeedcf0249 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a56014258b358c1199253b35da6ebe788">readCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
-<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array parameter.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
+<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
 <tr class="separator:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#af935dd640065219665505094ef0ace20">readOptionalCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
@@ -196,11 +195,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a33a1a1a323f812538e59639e1f01d0b3">readDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
+<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
 <tr class="separator:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae1c1d685198f71875ba8a31371582c3d">readOptionalDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
+<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
 <tr class="separator:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DSymmMatrixParam.html">DSymmMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a0f9f731e59f4e06ebcccfde67fa3cf5c">readDSymmMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int n)</td></tr>
@@ -285,10 +284,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> object to the format array.  <a href="#a2aed32d4ef18bc05a4bc6f02f0ce7010">More...</a><br /></td></tr>
 <tr class="separator:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Begin.html">Begin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8">addBegin</a> (const char *label)</td></tr>
-<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
+<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
 <tr class="separator:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1End.html">End</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8">addEnd</a> ()</td></tr>
-<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
+<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
 <tr class="separator:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Blank.html">Blank</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2">addBlank</a> ()</td></tr>
 <tr class="memdesc:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a new <a class="el" href="classUtil_1_1Blank.html" title="An empty line within a parameter file. ">Blank</a> object, representing a blank line.  <a href="#a72bfd2aef18ed296a2959a2d2020d3d2">More...</a><br /></td></tr>
@@ -342,6 +341,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#aeadef78f34eee3090a34dd5b6373b8b6">ioCommunicator</a> () const </td></tr>
 <tr class="memdesc:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the MPI communicator by reference.  <a href="#aeadef78f34eee3090a34dd5b6373b8b6">More...</a><br /></td></tr>
 <tr class="separator:aeadef78f34eee3090a34dd5b6373b8b6 inherit pub_methods_classUtil_1_1MpiFileIo"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMcMd_1_1EnergyCalculator"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMcMd_1_1EnergyCalculator')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMcMd_1_1EnergyCalculator.html">McMd::EnergyCalculator</a></td></tr>
+<tr class="memitem:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#ad4f878f06098473b7c42671b5c6cb904">computeEnergy</a> ()=0</td></tr>
+<tr class="memdesc:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>.  <a href="#ad4f878f06098473b7c42671b5c6cb904">More...</a><br /></td></tr>
+<tr class="separator:ad4f878f06098473b7c42671b5c6cb904 inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#afc97619737d45ab11a8126618979d76b">unsetEnergy</a> ()</td></tr>
+<tr class="memdesc:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark the energy as unknown.  <a href="#afc97619737d45ab11a8126618979d76b">More...</a><br /></td></tr>
+<tr class="separator:afc97619737d45ab11a8126618979d76b inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1EnergyCalculator.html#a6ad7b79b1b2cc43e85434cfb186e1fab">energy</a> ()</td></tr>
+<tr class="memdesc:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the energy contribution, compute if necessary.  <a href="#a6ad7b79b1b2cc43e85434cfb186e1fab">More...</a><br /></td></tr>
+<tr class="separator:a6ad7b79b1b2cc43e85434cfb186e1fab inherit pub_methods_classMcMd_1_1EnergyCalculator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -378,6 +387,30 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae01a90ae0958b05574e258ce730b1fe9">addComponent</a> (<a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;param, bool isLeaf=true)</td></tr>
 <tr class="memdesc:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. ">ParamComponent</a> object to the format array.  <a href="#ae01a90ae0958b05574e258ce730b1fe9">More...</a><br /></td></tr>
 <tr class="separator:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ScalarParam.html">ScalarParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a05738b050c32951151bcac1c62f908ff">add</a> (std::istream &amp;in, const char *label, Type &amp;value, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new required <a class="el" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable. ">ScalarParam</a> &lt; Type &gt; object.  <a href="#a05738b050c32951151bcac1c62f908ff">More...</a><br /></td></tr>
+<tr class="separator:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArrayParam.html">CArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a654d7f0ca5dc877e09070901d33c3365">addCArray</a> (std::istream &amp;in, const char *label, Type *value, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a required C array parameter.  <a href="#a654d7f0ca5dc877e09070901d33c3365">More...</a><br /></td></tr>
+<tr class="separator:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArrayParam.html">DArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a5678fa4c9664e87979c758184d46d727">addDArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; Type &gt; &amp;array, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable contiguous array template. ">DArray</a> &lt; Type &gt; parameter.  <a href="#a5678fa4c9664e87979c758184d46d727">More...</a><br /></td></tr>
+<tr class="separator:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type , int N&gt; </td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FArrayParam.html">FArrayParam</a>&lt; Type, N &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a7aabaa7835e994678d3c3225df0d7d7a">addFArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1FArray.html">FArray</a>&lt; Type, N &gt; &amp;array, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt; Type, N &gt; array parameter.  <a href="#a7aabaa7835e994678d3c3225df0d7d7a">More...</a><br /></td></tr>
+<tr class="separator:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a9d3774e149a843917646064159a75831">addCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a9d3774e149a843917646064159a75831">More...</a><br /></td></tr>
+<tr class="separator:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ab3fb7b30311e09e54ff86682a8102372">addDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ab3fb7b30311e09e54ff86682a8102372">More...</a><br /></td></tr>
+<tr class="separator:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classUtil_1_1ParamComponent"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classUtil_1_1ParamComponent')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td></tr>
 <tr class="memitem:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">ParamComponent</a> ()</td></tr>
 <tr class="memdesc:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f859f325ca7d36747d28c9677fe0bfc">More...</a><br /></td></tr>
@@ -486,6 +519,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#afa960cb17a672de8b85024495c63c023">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
 
+<p>Referenced by <a class="el" href="McPairExternalPerturbation_8h_source.html#l00216">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McSystem_8cpp_source.html#l00503">McMd::McSystem::potentialEnergy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00910">McMd::MdSystem::potentialEnergy()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00034">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00055">McMd::MdEnergyOutput::sample()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00053">McMd::McEnergyOutput::sample()</a>, <a class="el" href="MdEnergyAnalyzer_8cpp_source.html#l00394">McMd::MdEnergyAnalyzer::sample()</a>, and <a class="el" href="McEnergyAnalyzer_8cpp_source.html#l00309">McMd::McEnergyAnalyzer::sample()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abe727982d52ae7401099bd03b9307883"></a>
@@ -540,6 +575,35 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab05a4a5a9728143638f5aadd2add72b9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string McMd::ExternalPotential::interactionClassName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return name of external interaction class (e.g., "LamellarOrderingExternal"). </p>
+
+<p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#a8fe18459a7066eccc39c0d8f1bfed49f">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
+
+<p>Referenced by <a class="el" href="McPerturbationFactory_8cpp_source.html#l00048">McMd::McPerturbationFactory::factory()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a13c89076210d5b5726ef552f8ee969ab"></a>
 <div class="memitem">
 <div class="memproto">
@@ -565,32 +629,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#acef02fbf9e69068efc058ae2bf52a98b">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-</div>
-</div>
-<a class="anchor" id="a09e4e534e57d36b0fdf44976b88e2e73"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual double McMd::ExternalPotential::energy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return total external energy of this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#a42e38f5fd482d4f8bfbf1370a90e047a">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00857">McMd::MdSystem::calculateForces()</a>.</p>
 
 </div>
 </div>
@@ -617,37 +656,16 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculate the external energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">atom</td><td>reference to <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule. ">Atom</a> of interest </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#a6fdda10e0268f55eab66343be29380d9">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbLinear_8cpp_source.html#l00240">McMd::CfbLinear::addAtom()</a>, and <a class="el" href="CfbLinear_8cpp_source.html#l00122">McMd::CfbLinear::deleteAtom()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab05a4a5a9728143638f5aadd2add72b9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::string McMd::ExternalPotential::interactionClassName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return name of external interaction class (e.g., "LamellarOrderingExternal"). </p>
-
-<p>Implemented in <a class="el" href="classMcMd_1_1ExternalPotentialImpl.html#a8fe18459a7066eccc39c0d8f1bfed49f">McMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Referenced by <a class="el" href="CfbLinear_8cpp_source.html#l00240">McMd::CfbLinear::addAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00189">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00268">McMd::CfbRebridgeBase::addMiddleAtom()</a>, <a class="el" href="McSystem_8cpp_source.html#l00459">McMd::McSystem::atomPotentialEnergy()</a>, <a class="el" href="CfbLinear_8cpp_source.html#l00122">McMd::CfbLinear::deleteAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00062">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00151">McMd::CfbRebridgeBase::deleteMiddleAtom()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00406">McMd::McNVTChemicalPotential::load()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00197">McMd::CfbReptationMove::move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00125">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00169">McMd::CfbReptateMove::move()</a>, <a class="el" href="RigidDisplaceMove_8cpp_source.html#l00079">McMd::RigidDisplaceMove::move()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00119">McMd::McNVTChemicalPotential::sample()</a>.</p>
 
 </div>
 </div>
@@ -658,7 +676,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:50 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -86,9 +86,9 @@ Inheritance diagram for Util::Manager&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a03f6a21677eadced2f6f1427a7f10c33"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a03f6a21677eadced2f6f1427a7f10c33">Manager</a> ()</td></tr>
-<tr class="memdesc:a03f6a21677eadced2f6f1427a7f10c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a03f6a21677eadced2f6f1427a7f10c33">More...</a><br /></td></tr>
-<tr class="separator:a03f6a21677eadced2f6f1427a7f10c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af247bb22b6c9c624ee7acf19186d7f3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#af247bb22b6c9c624ee7acf19186d7f3a">Manager</a> (bool uniqueNames=false)</td></tr>
+<tr class="memdesc:af247bb22b6c9c624ee7acf19186d7f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af247bb22b6c9c624ee7acf19186d7f3a">More...</a><br /></td></tr>
+<tr class="separator:af247bb22b6c9c624ee7acf19186d7f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cea09e1ebc29426b743cac062ceeb51"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a3cea09e1ebc29426b743cac062ceeb51">~Manager</a> ()</td></tr>
 <tr class="memdesc:a3cea09e1ebc29426b743cac062ceeb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a3cea09e1ebc29426b743cac062ceeb51">More...</a><br /></td></tr>
 <tr class="separator:a3cea09e1ebc29426b743cac062ceeb51"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a115f9d62a9e538f20660683eb0eb3a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and create a set of objects.  <a href="#a115f9d62a9e538f20660683eb0eb3a10">More...</a><br /></td></tr>
 <tr class="separator:a115f9d62a9e538f20660683eb0eb3a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901abf6562a55d743ee848a959e32b43"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a901abf6562a55d743ee848a959e32b43">readParamOptional</a> (std::istream &amp;in)</td></tr>
-<tr class="memdesc:a901abf6562a55d743ee848a959e32b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optioanlly read and create a set of objects.  <a href="#a901abf6562a55d743ee848a959e32b43">More...</a><br /></td></tr>
+<tr class="memdesc:a901abf6562a55d743ee848a959e32b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optionally read and create a set of objects.  <a href="#a901abf6562a55d743ee848a959e32b43">More...</a><br /></td></tr>
 <tr class="separator:a901abf6562a55d743ee848a959e32b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b2ac54cc08ef23b910cef70be60d6d3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a5b2ac54cc08ef23b910cef70be60d6d3">readParameters</a> (std::istream &amp;in)</td></tr>
 <tr class="memdesc:a5b2ac54cc08ef23b910cef70be60d6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read child blocks, return when closing bracket encountered.  <a href="#a5b2ac54cc08ef23b910cef70be60d6d3">More...</a><br /></td></tr>
@@ -134,6 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa8181a050f974d07764f4362eee77496"><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#aa8181a050f974d07764f4362eee77496">operator[]</a> (int i) const </td></tr>
 <tr class="memdesc:aa8181a050f974d07764f4362eee77496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#aa8181a050f974d07764f4362eee77496">More...</a><br /></td></tr>
 <tr class="separator:aa8181a050f974d07764f4362eee77496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b2dfaa9ef292a1964f0f15da20e4eb"><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a21b2dfaa9ef292a1964f0f15da20e4eb">findFirst</a> (std::string const &amp;<a class="el" href="classUtil_1_1Manager.html#a40cb1b41c1d1b5f9321ea9d03ef5fa76">className</a>)</td></tr>
+<tr class="memdesc:a21b2dfaa9ef292a1964f0f15da20e4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to first object with specified class name.  <a href="#a21b2dfaa9ef292a1964f0f15da20e4eb">More...</a><br /></td></tr>
+<tr class="separator:a21b2dfaa9ef292a1964f0f15da20e4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classUtil_1_1ParamComposite"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classUtil_1_1ParamComposite')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classUtil_1_1ParamComposite.html">Util::ParamComposite</a></td></tr>
 <tr class="memitem:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a873eea7d2dbc19cde816d1bef602496c">ParamComposite</a> ()</td></tr>
 <tr class="memdesc:a873eea7d2dbc19cde816d1bef602496c inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a873eea7d2dbc19cde816d1bef602496c">More...</a><br /></td></tr>
@@ -202,7 +205,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1890a33d6049597e65bebfdeedcf0249 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a56014258b358c1199253b35da6ebe788">readCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
-<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array parameter.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
+<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
 <tr class="separator:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#af935dd640065219665505094ef0ace20">readOptionalCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
@@ -210,11 +213,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a33a1a1a323f812538e59639e1f01d0b3">readDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
+<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
 <tr class="separator:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae1c1d685198f71875ba8a31371582c3d">readOptionalDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
+<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
 <tr class="separator:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DSymmMatrixParam.html">DSymmMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a0f9f731e59f4e06ebcccfde67fa3cf5c">readDSymmMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int n)</td></tr>
@@ -299,10 +302,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> object to the format array.  <a href="#a2aed32d4ef18bc05a4bc6f02f0ce7010">More...</a><br /></td></tr>
 <tr class="separator:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Begin.html">Begin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8">addBegin</a> (const char *label)</td></tr>
-<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
+<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
 <tr class="separator:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1End.html">End</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8">addEnd</a> ()</td></tr>
-<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
+<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
 <tr class="separator:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Blank.html">Blank</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2">addBlank</a> ()</td></tr>
 <tr class="memdesc:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a new <a class="el" href="classUtil_1_1Blank.html" title="An empty line within a parameter file. ">Blank</a> object, representing a blank line.  <a href="#a72bfd2aef18ed296a2959a2d2020d3d2">More...</a><br /></td></tr>
@@ -387,6 +390,30 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae01a90ae0958b05574e258ce730b1fe9">addComponent</a> (<a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;param, bool isLeaf=true)</td></tr>
 <tr class="memdesc:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. ">ParamComponent</a> object to the format array.  <a href="#ae01a90ae0958b05574e258ce730b1fe9">More...</a><br /></td></tr>
 <tr class="separator:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ScalarParam.html">ScalarParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a05738b050c32951151bcac1c62f908ff">add</a> (std::istream &amp;in, const char *label, Type &amp;value, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new required <a class="el" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable. ">ScalarParam</a> &lt; Type &gt; object.  <a href="#a05738b050c32951151bcac1c62f908ff">More...</a><br /></td></tr>
+<tr class="separator:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArrayParam.html">CArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a654d7f0ca5dc877e09070901d33c3365">addCArray</a> (std::istream &amp;in, const char *label, Type *value, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a required C array parameter.  <a href="#a654d7f0ca5dc877e09070901d33c3365">More...</a><br /></td></tr>
+<tr class="separator:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArrayParam.html">DArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a5678fa4c9664e87979c758184d46d727">addDArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; Type &gt; &amp;array, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable contiguous array template. ">DArray</a> &lt; Type &gt; parameter.  <a href="#a5678fa4c9664e87979c758184d46d727">More...</a><br /></td></tr>
+<tr class="separator:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type , int N&gt; </td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FArrayParam.html">FArrayParam</a>&lt; Type, N &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a7aabaa7835e994678d3c3225df0d7d7a">addFArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1FArray.html">FArray</a>&lt; Type, N &gt; &amp;array, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt; Type, N &gt; array parameter.  <a href="#a7aabaa7835e994678d3c3225df0d7d7a">More...</a><br /></td></tr>
+<tr class="separator:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a9d3774e149a843917646064159a75831">addCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a9d3774e149a843917646064159a75831">More...</a><br /></td></tr>
+<tr class="separator:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ab3fb7b30311e09e54ff86682a8102372">addDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ab3fb7b30311e09e54ff86682a8102372">More...</a><br /></td></tr>
+<tr class="separator:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classUtil_1_1ParamComponent"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classUtil_1_1ParamComponent')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td></tr>
 <tr class="memitem:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">ParamComponent</a> ()</td></tr>
 <tr class="memdesc:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f859f325ca7d36747d28c9677fe0bfc">More...</a><br /></td></tr>
@@ -422,7 +449,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:ac5808de278115409092e94f9c72362c2 inherit pub_static_methods_classUtil_1_1ParamComponent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a03f6a21677eadced2f6f1427a7f10c33"></a>
+<a class="anchor" id="af247bb22b6c9c624ee7acf19186d7f3a"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -431,15 +458,22 @@ template&lt;typename Data &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Manager.html">Manager</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>uniqueNames</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uniqueNames</td><td>set true to require unique element class names. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00222">222</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00232">232</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
 </div>
 </div>
@@ -468,9 +502,9 @@ template&lt;typename Data &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00236">236</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00246">246</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
 
 </div>
 </div>
@@ -499,9 +533,9 @@ template&lt;typename Data&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00265">265</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00275">275</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00255">Util::Manager&lt; Data &gt;::factory()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00265">Util::Manager&lt; Data &gt;::factory()</a>.</p>
 
 </div>
 </div>
@@ -529,9 +563,9 @@ template&lt;typename Data&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00274">274</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00284">284</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00255">Util::Manager&lt; Data &gt;::factory()</a>, and <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00265">Util::Manager&lt; Data &gt;::factory()</a>, and <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
 
 </div>
 </div>
@@ -559,9 +593,9 @@ template&lt;typename Data&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00287">287</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00297">297</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
 
 </div>
 </div>
@@ -606,9 +640,9 @@ template&lt;typename Data &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a6fc094b057fd9a21641b089f6f063b39">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00300">300</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00310">310</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00328">Util::Manager&lt; Data &gt;::beginReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00381">Util::Manager&lt; Data &gt;::endReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00346">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00383">Util::ParamComposite::setIsRequired()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00338">Util::Manager&lt; Data &gt;::beginReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00399">Util::Manager&lt; Data &gt;::endReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00383">Util::ParamComposite::setIsRequired()</a>.</p>
 
 </div>
 </div>
@@ -636,7 +670,7 @@ template&lt;typename Data &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Optioanlly read and create a set of objects. </p>
+<p>Optionally read and create a set of objects. </p>
 <p>Equivalent to <a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read and create a set of objects. ">readParam()</a>, except that this function does nothing if the first line does not match the expected label, whereas <a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read and create a set of objects. ">readParam()</a> throws an <a class="el" href="classUtil_1_1Exception.html" title="A user-defined exception. ">Exception</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -647,9 +681,9 @@ template&lt;typename Data &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#aba5de04c5db452000b044e0331ad5182">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00313">313</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00323">323</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00328">Util::Manager&lt; Data &gt;::beginReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00381">Util::Manager&lt; Data &gt;::endReadManager()</a>, <a class="el" href="ParamComposite_8h_source.html#l01024">Util::ParamComposite::isActive()</a>, <a class="el" href="Manager_8h_source.html#l00346">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00383">Util::ParamComposite::setIsRequired()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00338">Util::Manager&lt; Data &gt;::beginReadManager()</a>, <a class="el" href="Manager_8h_source.html#l00399">Util::Manager&lt; Data &gt;::endReadManager()</a>, <a class="el" href="ParamComposite_8h_source.html#l01115">Util::ParamComposite::isActive()</a>, <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00383">Util::ParamComposite::setIsRequired()</a>.</p>
 
 </div>
 </div>
@@ -689,11 +723,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classDdMd_1_1ModifierManager.html#a20f12ea858bcb575c48003b696e686c1">DdMd::ModifierManager</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#a069567f01b3968328c285c63ec859be5">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1AnalyzerManager.html#a2ef0b5e1acba3ddce2b39c88e1031917">McMd::AnalyzerManager</a>, <a class="el" href="classDdMd_1_1AnalyzerManager.html#addc2b1638e2747568d7b33311f5cc953">DdMd::AnalyzerManager</a>, and <a class="el" href="classTools_1_1AnalyzerManager.html#a71f0f0186ab124d116e31eae4b4648b5">Tools::AnalyzerManager</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00346">346</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00356">356</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00444">Util::Manager&lt; Data &gt;::append()</a>, <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00367">Util::ParamComposite::readBlank()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00462">Util::Manager&lt; Data &gt;::append()</a>, <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="Manager_8h_source.html#l00512">Util::Manager&lt; Data &gt;::findFirst()</a>, <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00367">Util::ParamComposite::readBlank()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00300">Util::Manager&lt; Data &gt;::readParam()</a>, <a class="el" href="tools_2analyzers_2AnalyzerManager_8cpp_source.html#l00033">Tools::AnalyzerManager::readParameters()</a>, <a class="el" href="ddMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00035">DdMd::AnalyzerManager::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00035">McMd::AnalyzerManager::readParameters()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00041">McMd::McMoveManager::readParameters()</a>, <a class="el" href="ModifierManager_8cpp_source.html#l00073">DdMd::ModifierManager::readParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00313">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00310">Util::Manager&lt; Data &gt;::readParam()</a>, <a class="el" href="tools_2analyzers_2AnalyzerManager_8cpp_source.html#l00033">Tools::AnalyzerManager::readParameters()</a>, <a class="el" href="ddMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00035">DdMd::AnalyzerManager::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00035">McMd::AnalyzerManager::readParameters()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00041">McMd::McMoveManager::readParameters()</a>, <a class="el" href="ModifierManager_8cpp_source.html#l00073">DdMd::ModifierManager::readParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00323">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
 
 </div>
 </div>
@@ -733,9 +767,9 @@ template&lt;typename Data &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1McMoveManager.html#a00d2afcc3547fd8194e54d7ae59df2d0">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1AnalyzerManager.html#adc6101b6c4e52ab62d4a00808fa0f6ba">McMd::AnalyzerManager</a>, and <a class="el" href="classDdMd_1_1AnalyzerManager.html#a82600944df159c8a5cead140b83e3e3b">DdMd::AnalyzerManager</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00393">393</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00411">411</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00356">Util::ParamComposite::addBlank()</a>, <a class="el" href="Manager_8h_source.html#l00444">Util::Manager&lt; Data &gt;::append()</a>, <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="MpiFileIo_8h_source.html#l00099">Util::MpiFileIo::hasIoCommunicator()</a>, <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00105">Util::MpiFileIo::ioCommunicator()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00092">Util::MpiFileIo::isIoProcessor()</a>, <a class="el" href="Manager_8h_source.html#l00476">Util::Manager&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00356">Util::ParamComposite::addBlank()</a>, <a class="el" href="Manager_8h_source.html#l00462">Util::Manager&lt; Data &gt;::append()</a>, <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="MpiFileIo_8h_source.html#l00099">Util::MpiFileIo::hasIoCommunicator()</a>, <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00105">Util::MpiFileIo::ioCommunicator()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00092">Util::MpiFileIo::isIoProcessor()</a>, <a class="el" href="Manager_8h_source.html#l00494">Util::Manager&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 <p>Referenced by <a class="el" href="mcMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00076">McMd::AnalyzerManager::loadParameters()</a>, <a class="el" href="ddMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00044">DdMd::AnalyzerManager::loadParameters()</a>, and <a class="el" href="McMoveManager_8cpp_source.html#l00064">McMd::McMoveManager::loadParameters()</a>.</p>
 
@@ -777,11 +811,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1McMoveManager.html#a5d6c6873fa322b05b38e828c786029cf">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1AnalyzerManager.html#a481134f94bc1557b4d6e74e667468a82">McMd::AnalyzerManager</a>, and <a class="el" href="classDdMd_1_1AnalyzerManager.html#a4f0e426af9744354c456229c80db9bcb">DdMd::AnalyzerManager</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00430">430</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00448">448</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00476">Util::Manager&lt; Data &gt;::size()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00494">Util::Manager&lt; Data &gt;::size()</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00085">McMd::AnalyzerManager::save()</a>, <a class="el" href="ddMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00053">DdMd::AnalyzerManager::save()</a>, and <a class="el" href="McMoveManager_8cpp_source.html#l00073">McMd::McMoveManager::save()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00085">McMd::AnalyzerManager::save()</a>, <a class="el" href="ddMd_2analyzers_2AnalyzerManager_8cpp_source.html#l00053">DdMd::AnalyzerManager::save()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00073">McMd::McMoveManager::save()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00347">McMd::McSimulation::save()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00337">McMd::MdSimulation::save()</a>.</p>
 
 </div>
 </div>
@@ -820,9 +854,9 @@ template&lt;typename Data&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00444">444</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00462">462</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00393">Util::Manager&lt; Data &gt;::loadParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00346">Util::Manager&lt; Data &gt;::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00411">Util::Manager&lt; Data &gt;::loadParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -852,9 +886,9 @@ template&lt;typename Data &gt; </div>
 <p>Get logical size. </p>
 <dl class="section return"><dt>Returns</dt><dd>logical size of this array. </dd></dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00476">476</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00494">494</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00393">Util::Manager&lt; Data &gt;::loadParameters()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00874">McMd::Simulation::nSpecies()</a>, and <a class="el" href="Manager_8h_source.html#l00430">Util::Manager&lt; Data &gt;::save()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00411">Util::Manager&lt; Data &gt;::loadParameters()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00933">McMd::Simulation::nSpecies()</a>, <a class="el" href="Manager_8h_source.html#l00448">Util::Manager&lt; Data &gt;::save()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00499">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
@@ -883,9 +917,11 @@ template&lt;typename Data &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>class name of managed object </dd></dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00455">455</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00473">473</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00499">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
@@ -906,11 +942,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Return a reference to the factory. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00255">255</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00265">265</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>, and <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>, and <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00265">Util::Manager&lt; Data &gt;::addSubfactory()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l01212">McMd::Simulation::analyzerFactory()</a>, <a class="el" href="Manager_8h_source.html#l00274">Util::Manager&lt; Data &gt;::setFactory()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l01203">McMd::Simulation::speciesFactory()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00275">Util::Manager&lt; Data &gt;::addSubfactory()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l01330">McMd::Simulation::analyzerFactory()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00792">McMd::McSimulation::mcMoveFactory()</a>, <a class="el" href="Manager_8h_source.html#l00284">Util::Manager&lt; Data &gt;::setFactory()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l01321">McMd::Simulation::speciesFactory()</a>.</p>
 
 </div>
 </div>
@@ -931,11 +967,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Return true if this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class. ">Manager</a> has a <a class="el" href="classUtil_1_1Factory.html" title="Factory template. ">Factory</a>, false otherwise. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00467">467</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00485">485</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
 
 </div>
 </div>
@@ -972,7 +1008,38 @@ template&lt;typename Data &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to element i </dd></dl>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00486">486</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00501">501</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21b2dfaa9ef292a1964f0f15da20e4eb"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Data * <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::findFirst </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>className</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return pointer to first object with specified class name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">className</td><td>desired class name string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to specified objectd, or null if not found. </dd></dl>
+
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00512">512</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1002,11 +1069,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Read (or attempt to read) opening line: "ManagerName{". </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00328">328</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00338">338</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8h_source.html#l01012">Util::ParamComposite::className()</a>, <a class="el" href="Begin_8h_source.html#l00084">Util::Begin::isActive()</a>, <a class="el" href="ParamComposite_8h_source.html#l01018">Util::ParamComposite::isRequired()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00316">Util::ParamComposite::readBegin()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8h_source.html#l01103">Util::ParamComposite::className()</a>, <a class="el" href="Begin_8h_source.html#l00084">Util::Begin::isActive()</a>, <a class="el" href="ParamComposite_8h_source.html#l01109">Util::ParamComposite::isRequired()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00316">Util::ParamComposite::readBegin()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00394">Util::ParamComposite::setIsActive()</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00300">Util::Manager&lt; Data &gt;::readParam()</a>, and <a class="el" href="Manager_8h_source.html#l00313">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00310">Util::Manager&lt; Data &gt;::readParam()</a>, and <a class="el" href="Manager_8h_source.html#l00323">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
 
 </div>
 </div>
@@ -1035,11 +1102,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Add closing bracket to output format. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00381">381</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00399">399</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00333">Util::ParamComposite::addEnd()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00068">Util::ParamComponent::echo()</a>, <a class="el" href="Log_8cpp_source.html#l00057">Util::Log::file()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00092">Util::MpiFileIo::isIoProcessor()</a>, and <a class="el" href="End_8cpp_source.html#l00043">Util::End::writeParam()</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00300">Util::Manager&lt; Data &gt;::readParam()</a>, and <a class="el" href="Manager_8h_source.html#l00313">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00310">Util::Manager&lt; Data &gt;::readParam()</a>, and <a class="el" href="Manager_8h_source.html#l00323">Util::Manager&lt; Data &gt;::readParamOptional()</a>.</p>
 
 </div>
 </div>
@@ -1068,11 +1135,11 @@ template&lt;typename Data &gt; </div>
 
 <p>Create factory if necessary. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00499">499</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00528">528</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00172">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="Manager_8h_source.html#l00467">Util::Manager&lt; Data &gt;::hasFactory()</a>, and <a class="el" href="Manager_8h_source.html#l00512">Util::Manager&lt; Data &gt;::newDefaultFactory()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00182">Util::Manager&lt; Data &gt;::factoryPtr_</a>, <a class="el" href="Manager_8h_source.html#l00485">Util::Manager&lt; Data &gt;::hasFactory()</a>, and <a class="el" href="Manager_8h_source.html#l00541">Util::Manager&lt; Data &gt;::newDefaultFactory()</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00255">Util::Manager&lt; Data &gt;::factory()</a>, <a class="el" href="Manager_8h_source.html#l00393">Util::Manager&lt; Data &gt;::loadParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00346">Util::Manager&lt; Data &gt;::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00265">Util::Manager&lt; Data &gt;::factory()</a>, <a class="el" href="Manager_8h_source.html#l00411">Util::Manager&lt; Data &gt;::loadParameters()</a>, and <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1102,13 +1169,13 @@ template&lt;typename Data &gt; </div>
 <p>Create an instance of the default Factory&lt;Data&gt; class. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to a new Factory&lt;Data&gt; object. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1AnalyzerManager.html#a83c9d59189fbe4d76740defa0c7d1123">DdMd::AnalyzerManager</a>, <a class="el" href="classDdMd_1_1ModifierManager.html#a647f81b50e79edd37b0ed1d15fa0db5f">DdMd::ModifierManager</a>, <a class="el" href="classMcMd_1_1MdAnalyzerManager.html#ab2819403435ceb31cb9793b492b09a16">McMd::MdAnalyzerManager</a>, <a class="el" href="classMcMd_1_1McAnalyzerManager.html#af422ed1ec1f5012bf9a215f4b0035b17">McMd::McAnalyzerManager</a>, <a class="el" href="classTools_1_1ProcessorAnalyzerManager.html#a209a15dee37843b2632180ab1c924cc3">Tools::ProcessorAnalyzerManager</a>, and <a class="el" href="classMcMd_1_1SpeciesManager.html#a776d8e5ede7cbe1cd111a69cee5bf020">McMd::SpeciesManager</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1AnalyzerManager.html#a83c9d59189fbe4d76740defa0c7d1123">DdMd::AnalyzerManager</a>, <a class="el" href="classMcMd_1_1MdCommandManager.html#af7c78a2c155a249d0e13381da478f834">McMd::MdCommandManager</a>, <a class="el" href="classMcMd_1_1McCommandManager.html#a64738710a5a242e67d5f31be77e396c2">McMd::McCommandManager</a>, <a class="el" href="classDdMd_1_1ModifierManager.html#a647f81b50e79edd37b0ed1d15fa0db5f">DdMd::ModifierManager</a>, <a class="el" href="classMcMd_1_1MdAnalyzerManager.html#ab2819403435ceb31cb9793b492b09a16">McMd::MdAnalyzerManager</a>, <a class="el" href="classMcMd_1_1McAnalyzerManager.html#af422ed1ec1f5012bf9a215f4b0035b17">McMd::McAnalyzerManager</a>, <a class="el" href="classTools_1_1ProcessorAnalyzerManager.html#a209a15dee37843b2632180ab1c924cc3">Tools::ProcessorAnalyzerManager</a>, and <a class="el" href="classMcMd_1_1SpeciesManager.html#a776d8e5ede7cbe1cd111a69cee5bf020">McMd::SpeciesManager</a>.</p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00512">512</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00541">541</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>.</p>
 
 </div>
 </div>
@@ -1135,9 +1202,9 @@ template&lt;typename Data&gt; </div>
 
 <p>Pointer to an associated Factory&lt;Data&gt; object. </p>
 
-<p>Definition at line <a class="el" href="Manager_8h_source.html#l00172">172</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
+<p>Definition at line <a class="el" href="Manager_8h_source.html#l00182">182</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Manager_8h_source.html#l00255">Util::Manager&lt; Data &gt;::factory()</a>, <a class="el" href="Manager_8h_source.html#l00467">Util::Manager&lt; Data &gt;::hasFactory()</a>, <a class="el" href="Manager_8h_source.html#l00499">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="Manager_8h_source.html#l00393">Util::Manager&lt; Data &gt;::loadParameters()</a>, <a class="el" href="Manager_8h_source.html#l00346">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="Manager_8h_source.html#l00274">Util::Manager&lt; Data &gt;::setFactory()</a>, and <a class="el" href="Manager_8h_source.html#l00236">Util::Manager&lt; Data &gt;::~Manager()</a>.</p>
+<p>Referenced by <a class="el" href="Manager_8h_source.html#l00265">Util::Manager&lt; Data &gt;::factory()</a>, <a class="el" href="Manager_8h_source.html#l00485">Util::Manager&lt; Data &gt;::hasFactory()</a>, <a class="el" href="Manager_8h_source.html#l00528">Util::Manager&lt; Data &gt;::initFactory()</a>, <a class="el" href="Manager_8h_source.html#l00411">Util::Manager&lt; Data &gt;::loadParameters()</a>, <a class="el" href="Manager_8h_source.html#l00356">Util::Manager&lt; Data &gt;::readParameters()</a>, <a class="el" href="Manager_8h_source.html#l00284">Util::Manager&lt; Data &gt;::setFactory()</a>, and <a class="el" href="Manager_8h_source.html#l00246">Util::Manager&lt; Data &gt;::~Manager()</a>.</p>
 
 </div>
 </div>
@@ -1148,7 +1215,7 @@ template&lt;typename Data&gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:43 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 13:00:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

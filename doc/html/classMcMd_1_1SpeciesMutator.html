@@ -75,6 +75,7 @@ Inheritance diagram for McMd::SpeciesMutator:</div>
   <img src="classMcMd_1_1SpeciesMutator.png" usemap="#McMd::SpeciesMutator_map" alt=""/>
   <map id="McMd::SpeciesMutator_map" name="McMd::SpeciesMutator_map">
 <area href="classMcMd_1_1HomopolymerSG.html" title="A Homopolymer with a mutable type, for semigrand ensemble. " alt="McMd::HomopolymerSG" shape="rect" coords="0,56,148,80"/>
+<area href="classMcMd_1_1LinearSG.html" title="A mutable linear polymer, for semigrand ensemble. " alt="McMd::LinearSG" shape="rect" coords="158,56,306,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -221,7 +222,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="classMcMd_1_1SpeciesMutator.html#a1a51a86513e252896453feb55083098c">setMoleculeState()</a>.</p>
 
-<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00046">McMd::McMdConfigIo::read()</a>.</p>
+<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00047">McMd::McMdConfigIo::read()</a>.</p>
 
 </div>
 </div>
@@ -270,7 +271,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="SpeciesMutator_8h_source.html#l00201">moleculeStateId()</a>.</p>
 
-<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00183">McMd::McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -316,9 +317,9 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80">McMd::HomopolymerSG</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1LinearSG.html#a142a6eae38fec47ab9649664176e3790">McMd::LinearSG</a>, and <a class="el" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80">McMd::HomopolymerSG</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00085">McMd::Generator::generate()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00084">readMoleculeState()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00087">McMd::Generator::generate()</a>, <a class="el" href="System_8cpp_source.html#l00706">McMd::System::loadConfig()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00084">readMoleculeState()</a>.</p>
 
 </div>
 </div>
@@ -365,7 +366,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SpeciesMutator_8h_source.html#l00229">229</a> of file <a class="el" href="SpeciesMutator_8h_source.html">SpeciesMutator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00046">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00102">McMd::HomopolymerSG::loadSpeciesParam()</a>, <a class="el" href="LinearSG_8cpp_source.html#l00102">McMd::LinearSG::loadSpeciesParam()</a>, <a class="el" href="HomopolymerSG_8cpp_source.html#l00054">McMd::HomopolymerSG::readSpeciesParam()</a>, and <a class="el" href="LinearSG_8cpp_source.html#l00055">McMd::LinearSG::readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -403,7 +404,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00075">writeMoleculeState()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, <a class="el" href="System_8cpp_source.html#l00756">McMd::System::saveConfig()</a>, and <a class="el" href="SpeciesMutator_8cpp_source.html#l00075">writeMoleculeState()</a>.</p>
 
 </div>
 </div>
@@ -553,7 +554,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="SpeciesMutator_8h_source.html#l00215">nState()</a>, and <a class="el" href="SpeciesMutator_8h_source.html#l00133">NullStateId</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00046">McMd::HomopolymerSG::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00102">McMd::HomopolymerSG::loadSpeciesParam()</a>, <a class="el" href="LinearSG_8cpp_source.html#l00102">McMd::LinearSG::loadSpeciesParam()</a>, <a class="el" href="HomopolymerSG_8cpp_source.html#l00054">McMd::HomopolymerSG::readSpeciesParam()</a>, and <a class="el" href="LinearSG_8cpp_source.html#l00055">McMd::LinearSG::readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -604,7 +605,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00560">McMd::Molecule::id()</a>, <a class="el" href="SpeciesMutator_8h_source.html#l00133">NullStateId</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00111">McMd::HomopolymerSG::setMoleculeState()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00214">McMd::HomopolymerSG::setMoleculeState()</a>, and <a class="el" href="LinearSG_8cpp_source.html#l00219">McMd::LinearSG::setMoleculeState()</a>.</p>
 
 </div>
 </div>
@@ -643,7 +644,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

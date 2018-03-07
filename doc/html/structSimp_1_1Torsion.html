@@ -56,7 +56,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">Simp::Torsion Struct Reference<div class="ingroups"><a class="el" href="group__Simp__Module.html">Simp namespace</a> &raquo; <a class="el" href="group__Simp__Interaction__Module.html">Interaction Module</a> &raquo; <a class="el" href="group__Simp__Interaction__Dihedral__Module.html">Dihedral Interactions</a></div></div>  </div>
+<div class="title">Simp::Torsion Struct Reference<div class="ingroups"><a class="el" href="group__Simp__Module.html">Simp namespace</a> &raquo; <a class="el" href="group__Simp__Interaction__Module.html">Interactions</a> &raquo; <a class="el" href="group__Simp__Interaction__Dihedral__Module.html">Dihedral Interactions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -147,7 +147,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Torsion_8h_source.html#l00075">75</a> of file <a class="el" href="Torsion_8h_source.html">Torsion.h</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00714">Util::Vector::cross()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, and <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>.</p>
+<p>References <a class="el" href="Torsion_8h_source.html#l00042">cosPhi</a>, <a class="el" href="Vector_8h_source.html#l00714">Util::Vector::cross()</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, and <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>.</p>
 
 <p>Referenced by <a class="el" href="CosineDihedral_8h_source.html#l00164">Simp::CosineDihedral::energy()</a>, and <a class="el" href="MultiHarmonicDihedral_8h_source.html#l00206">Simp::MultiHarmonicDihedral::energy()</a>.</p>
 
@@ -178,6 +178,8 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Torsion_8h_source.html#l00102">102</a> of file <a class="el" href="Torsion_8h_source.html">Torsion.h</a>.</p>
 
+<p>References <a class="el" href="Torsion_8h_source.html#l00042">cosPhi</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a34d6fd6fda9d4ff7521332dd0c7e3a13"></a>
@@ -206,6 +208,8 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Torsion_8h_source.html#l00109">109</a> of file <a class="el" href="Torsion_8h_source.html">Torsion.h</a>.</p>
 
+<p>References <a class="el" href="Torsion_8h_source.html#l00042">cosPhi</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -223,7 +227,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Torsion_8h_source.html#l00042">42</a> of file <a class="el" href="Torsion_8h_source.html">Torsion.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CosineDihedral_8h_source.html#l00164">Simp::CosineDihedral::energy()</a>, <a class="el" href="MultiHarmonicDihedral_8h_source.html#l00206">Simp::MultiHarmonicDihedral::energy()</a>, and <a class="el" href="MultiHarmonicDihedral_8h_source.html#l00231">Simp::MultiHarmonicDihedral::force()</a>.</p>
+<p>Referenced by <a class="el" href="Torsion_8h_source.html#l00075">computeAngle()</a>, <a class="el" href="TorsionForce_8h_source.html#l00083">Simp::TorsionForce::computeDerivatives()</a>, <a class="el" href="CosineDihedral_8h_source.html#l00164">Simp::CosineDihedral::energy()</a>, <a class="el" href="MultiHarmonicDihedral_8h_source.html#l00206">Simp::MultiHarmonicDihedral::energy()</a>, <a class="el" href="MultiHarmonicDihedral_8h_source.html#l00231">Simp::MultiHarmonicDihedral::force()</a>, <a class="el" href="Torsion_8h_source.html#l00109">phi()</a>, and <a class="el" href="Torsion_8h_source.html#l00102">sinPhi()</a>.</p>
 
 </div>
 </div>
@@ -234,7 +238,7 @@ Public Attributes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:41 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -82,7 +82,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a86c573665a03b02e175fe5c7b289f04b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> as a child, and accept ownership.  <a href="#a86c573665a03b02e175fe5c7b289f04b">More...</a><br /></td></tr>
 <tr class="separator:a86c573665a03b02e175fe5c7b289f04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4c103c260f6e64f8128137645992909"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompositeTestRunner.html#ad4c103c260f6e64f8128137645992909">addChild</a> (<a class="el" href="classTestRunner.html">TestRunner</a> *childPtr, const std::string &amp;prefix)</td></tr>
-<tr class="memdesc:ad4c103c260f6e64f8128137645992909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> as a child, accept ownership, and set file prefix.  <a href="#ad4c103c260f6e64f8128137645992909">More...</a><br /></td></tr>
+<tr class="memdesc:ad4c103c260f6e64f8128137645992909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> as a child, accept ownership, and initialize filePrefix.  <a href="#ad4c103c260f6e64f8128137645992909">More...</a><br /></td></tr>
 <tr class="separator:ad4c103c260f6e64f8128137645992909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82bcc97f1d88455c6d1d5f3a88041a5f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCompositeTestRunner.html#a82bcc97f1d88455c6d1d5f3a88041a5f">addFilePrefix</a> (const std::string &amp;prefix)</td></tr>
 <tr class="memdesc:a82bcc97f1d88455c6d1d5f3a88041a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepend argument prefix to existing filePrefix.  <a href="#a82bcc97f1d88455c6d1d5f3a88041a5f">More...</a><br /></td></tr>
@@ -159,7 +159,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00089">89</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00097">97</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
 </div>
 </div>
@@ -187,11 +187,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00100">100</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00108">108</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
-<p>References <a class="el" href="TestRunner_8h_source.html#l00187">TestRunner::setParent()</a>.</p>
+<p>References <a class="el" href="TestRunner_8h_source.html#l00199">TestRunner::setParent()</a>.</p>
 
-<p>Referenced by <a class="el" href="CompositeTestRunner_8h_source.html#l00119">addChild()</a>.</p>
+<p>Referenced by <a class="el" href="CompositeTestRunner_8h_source.html#l00127">addChild()</a>.</p>
 
 </div>
 </div>
@@ -218,9 +218,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00109">109</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00117">117</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
-<p>References <a class="el" href="TestRunner_8h_source.html#l00187">TestRunner::setParent()</a>.</p>
+<p>References <a class="el" href="TestRunner_8h_source.html#l00199">TestRunner::setParent()</a>.</p>
 
 </div>
 </div>
@@ -248,8 +248,8 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add a <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> as a child, accept ownership, and set file prefix. </p>
-<p>Children added by this method are owned by the parent <a class="el" href="classCompositeTestRunner.html" title="A TestRunner comprised of one or more child TestRunners. ">CompositeTestRunner</a>, and so are destroyed by its destructor.</p>
+<p>Add a <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> as a child, accept ownership, and initialize filePrefix. </p>
+<p>Children added by this method are owned by the parent <a class="el" href="classCompositeTestRunner.html" title="A TestRunner comprised of one or more child TestRunners. ">CompositeTestRunner</a>, and so are destroyed by its destructor. The file prefix argument should normally be a path for a particular child defined relative to any common prefix used by all tests in this composite. The common prefix can then be prepended by calling addFilePrefix at run time.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">childPtr</td><td>pointer to child <a class="el" href="classTestRunner.html" title="Abstract base class for classes that run tests. ">TestRunner</a> </td></tr>
@@ -258,9 +258,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00119">119</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00127">127</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
-<p>References <a class="el" href="CompositeTestRunner_8h_source.html#l00100">addChild()</a>, and <a class="el" href="TestRunner_8h_source.html#l00311">TestRunner::addFilePrefix()</a>.</p>
+<p>References <a class="el" href="CompositeTestRunner_8h_source.html#l00108">addChild()</a>, and <a class="el" href="TestRunner_8h_source.html#l00323">TestRunner::addFilePrefix()</a>.</p>
 
 </div>
 </div>
@@ -287,6 +287,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Prepend argument prefix to existing filePrefix. </p>
+<p>This function also prepends prefix to all children. If this function is called at run-time for the highest level composite in a hierarchy, the prefix is thus propagated to all TestRunners in the hierarchy, and thus also used in the methods of <a class="el" href="classUnitTest.html" title="UnitTest is a base class for classes that define unit tests. ">UnitTest</a> that are used to open files.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">prefix</td><td>string to prepend to existing filePrefix. </td></tr>
@@ -296,9 +297,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classTestRunner.html#ae977948edaf2121faa85af96b7aefdcf">TestRunner</a>.</p>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00129">129</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00137">137</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
-<p>References <a class="el" href="TestRunner_8h_source.html#l00311">TestRunner::addFilePrefix()</a>.</p>
+<p>References <a class="el" href="TestRunner_8h_source.html#l00323">TestRunner::addFilePrefix()</a>.</p>
 
 </div>
 </div>
@@ -327,9 +328,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classTestRunner.html#a3216b1149a6e1f207253c1659a617e77">TestRunner</a>.</p>
 
-<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00140">140</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
+<p>Definition at line <a class="el" href="CompositeTestRunner_8h_source.html#l00148">148</a> of file <a class="el" href="CompositeTestRunner_8h_source.html">CompositeTestRunner.h</a>.</p>
 
-<p>References <a class="el" href="TestRunner_8h_source.html#l00211">TestRunner::nFailure()</a>, and <a class="el" href="TestRunner_8h_source.html#l00298">TestRunner::report()</a>.</p>
+<p>References <a class="el" href="TestRunner_8h_source.html#l00223">TestRunner::nFailure()</a>, and <a class="el" href="TestRunner_8h_source.html#l00310">TestRunner::report()</a>.</p>
 
 </div>
 </div>
@@ -340,7 +341,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

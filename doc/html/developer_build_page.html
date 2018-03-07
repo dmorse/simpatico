@@ -69,7 +69,7 @@ Source directory</h1>
 <li>namespace <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> depend on <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> and <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a>, but not on each other.</li>
 </ul>
 <p>The build system assumes that these are the only inter-namespace dependencies. These conventions must thus be respected by any new code added to the system.</p>
-<p>The src/mcMd, src/ddMd, and src/tools directories each also contain one or more main program source files. The main programs mdSim.cpp and mcSim.cpp for single processor simulations are both in the src/mcMd directory. The main program <a class="el" href="ddSim_8cpp_source.html">ddSim.cpp</a> for parallel MD simulations is in the src/ddMd directory. The main program <a class="el" href="mdPp_8cpp_source.html">mdPp.cpp</a> for single-processor analysis is in the src/tools directory.</p>
+<p>The src/mcMd, src/ddMd, and src/tools directories each also contain one or more main program source files. The main programs mdSim.cpp and mcSim.cpp for single processor simulations are both in the src/mcMd directory. The main program <a class="el" href="ddSim_8cpp_source.html">ddSim.cpp</a> for parallel MD simulations is in the src/ddMd directory. The main program <a class="el" href="mdPp_8cpp.html">mdPp.cpp</a> for single-processor analysis is in the src/tools directory.</p>
 <p>Each namespace level source directory contains a subdirectory named tests/ that contains unit tests for classes in the associated name space. These unit tests are not automatically compiled or run by the build system that compiles the source code.</p>
 <h1><a class="anchor" id="make_blddir"></a>
 Build directories</h1>
@@ -197,7 +197,7 @@ Subdirectory Makefiles</h1>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:44 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

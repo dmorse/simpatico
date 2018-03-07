@@ -67,7 +67,7 @@
 <p>In this implementation, each cell is represented by a <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region. ">Cell</a> object. Each cell contains an small array of pointers to all all atoms in the associated volume. This implementation is designed to allow fast addition and removal of individual atoms. This implementation also wastes some memory, compared to a linked list implementation, because the dimension <a class="el" href="classMcMd_1_1Cell.html#a7cc8c945fc6918e225cc8d6d2d2c0843" title="Maximum number of atoms per cell. ">Cell::MaxAtomCell</a> of the array of pointers in each <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region. ">Cell</a> must be large enough to accomodate the maximum number of atoms that will ever be encountered in an individual cell.</p>
 <p><a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary. ">CellList</a> is a non-polymorphic class, with no virtual functions, and a non-virtual destructor. Do not derive subclasses from it. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00055">55</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00056">56</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">CellList.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -92,7 +92,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0a4c5eb178bc5046c3a25978972f95e3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a0a4c5eb178bc5046c3a25978972f95e3">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
 <tr class="memdesc:a0a4c5eb178bc5046c3a25978972f95e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an Archive.  <a href="#a0a4c5eb178bc5046c3a25978972f95e3">More...</a><br /></td></tr>
 <tr class="separator:a0a4c5eb178bc5046c3a25978972f95e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a211474dafb0729b117e5fa1f291ce626"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a211474dafb0729b117e5fa1f291ce626">setup</a> (const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;boundary, double cutoff)</td></tr>
+<tr class="memitem:a211474dafb0729b117e5fa1f291ce626"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a211474dafb0729b117e5fa1f291ce626">setup</a> (const <a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;boundary, double cutoff)</td></tr>
 <tr class="memdesc:a211474dafb0729b117e5fa1f291ce626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup grid of empty cells.  <a href="#a211474dafb0729b117e5fa1f291ce626">More...</a><br /></td></tr>
 <tr class="separator:a211474dafb0729b117e5fa1f291ce626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3377b5bae7ae8c760bddc2e87dc00d81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a3377b5bae7ae8c760bddc2e87dc00d81">clear</a> ()</td></tr>
@@ -222,7 +222,7 @@ Friends</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00088">McMd::PairList::initialize()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00240">McMd::McPairPotentialImpl&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00222">McMd::McPairPotentialImpl&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00042">McMd::Crosslinker::setup()</a>, and <a class="el" href="Generator_8cpp_source.html#l00129">McMd::Generator::setupCellList()</a>.</p>
+<p>Referenced by <a class="el" href="ClusterIdentifier_8cpp_source.html#l00049">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00088">McMd::PairList::initialize()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00240">McMd::McPairPotentialImpl&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00222">McMd::McPairPotentialImpl&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00042">McMd::Crosslinker::setup()</a>, and <a class="el" href="Generator_8cpp_source.html#l00131">McMd::Generator::setupCellList()</a>.</p>
 
 </div>
 </div>
@@ -261,7 +261,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00472">472</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00473">473</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>.</p>
 
@@ -274,7 +274,7 @@ template&lt;class Archive &gt; </div>
         <tr>
           <td class="memname">void McMd::CellList::setup </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;&#160;</td>
           <td class="paramname"><em>boundary</em>, </td>
         </tr>
         <tr>
@@ -304,9 +304,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00114">114</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
-<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00392">Util::OrthorhombicBoundary::lengths()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00396">Simp::OrthorhombicBoundary::lengths()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairPotential_8cpp_source.html#l00041">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00042">McMd::Crosslinker::setup()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00147">McMd::PairList::setup()</a>, and <a class="el" href="Generator_8cpp_source.html#l00129">McMd::Generator::setupCellList()</a>.</p>
+<p>Referenced by <a class="el" href="McPairPotential_8cpp_source.html#l00041">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00129">McMd::ClusterIdentifier::identifyClusters()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00042">McMd::Crosslinker::setup()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00147">McMd::PairList::setup()</a>, and <a class="el" href="Generator_8cpp_source.html#l00131">McMd::Generator::setupCellList()</a>.</p>
 
 </div>
 </div>
@@ -363,9 +363,9 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>index of cell that contains position pos </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00360">360</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00361">361</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
-<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00587">Util::OrthorhombicBoundary::transformCartToGen()</a>.</p>
+<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00591">Simp::OrthorhombicBoundary::transformCartToGen()</a>.</p>
 
 </div>
 </div>
@@ -399,11 +399,11 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00396">396</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00397">397</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00270">McMd::Atom::id()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00278">McMd::Atom::position()</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00050">McMd::Generator::attemptPlaceAtom()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00041">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00128">McMd::ClusterIdentifier::identifyClusters()</a>, and <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00052">McMd::Generator::attemptPlaceAtom()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00041">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00129">McMd::ClusterIdentifier::identifyClusters()</a>, and <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>.</p>
 
 </div>
 </div>
@@ -437,7 +437,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00385">385</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00386">386</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="CellTag_8h_source.html#l00036">McMd::CellTag::cellId</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00270">McMd::Atom::id()</a>.</p>
 
@@ -488,7 +488,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00408">408</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00409">409</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="CellTag_8h_source.html#l00036">McMd::CellTag::cellId</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00270">McMd::Atom::id()</a>.</p>
 
@@ -537,9 +537,9 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">425</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00426">426</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairPotentialImpl_8h_source.html#l00297">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="Generator_8cpp_source.html#l00050">McMd::Generator::attemptPlaceAtom()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00048">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00334">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="SliplinkMove_8cpp_source.html#l00048">McMd::SliplinkMove::move()</a>, <a class="el" href="SliplinkerAll_8cpp_source.html#l00051">McMd::SliplinkerAll::move()</a>, <a class="el" href="GcSliplinkMove_8cpp_source.html#l00060">McMd::GcSliplinkMove::move()</a>, <a class="el" href="SliplinkerEnd_8cpp_source.html#l00049">McMd::SliplinkerEnd::move()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00106">McMd::McMuExchange::sample()</a>, and <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00175">McMd::RingOctaRebridgeMove::scanBridge()</a>.</p>
+<p>Referenced by <a class="el" href="McPairPotentialImpl_8h_source.html#l00297">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="Generator_8cpp_source.html#l00052">McMd::Generator::attemptPlaceAtom()</a>, <a class="el" href="ClusterIdentifier_8cpp_source.html#l00049">McMd::ClusterIdentifier::initialize()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00334">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="SliplinkMove_8cpp_source.html#l00049">McMd::SliplinkMove::move()</a>, <a class="el" href="SliplinkerAll_8cpp_source.html#l00052">McMd::SliplinkerAll::move()</a>, <a class="el" href="GcSliplinkMove_8cpp_source.html#l00061">McMd::GcSliplinkMove::move()</a>, <a class="el" href="SliplinkerEnd_8cpp_source.html#l00050">McMd::SliplinkerEnd::move()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00108">McMd::McMuExchange::sample()</a>, and <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00176">McMd::RingOctaRebridgeMove::scanBridge()</a>.</p>
 
 </div>
 </div>
@@ -588,7 +588,7 @@ template&lt;class Archive &gt; </div>
 
 <p>References <a class="el" href="FSArray_8h_source.html#l00258">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="mcMd_2neighbor_2Cell_8h_source.html#l00241">McMd::Cell::atomPtr()</a>, <a class="el" href="FSArray_8h_source.html#l00271">Util::FSArray&lt; Data, Capacity &gt;::clear()</a>, and <a class="el" href="mcMd_2neighbor_2Cell_8h_source.html#l00238">McMd::Cell::firstClearPos()</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00173">McMd::PairList::build()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00380">McMd::McPairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00195">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00095">McMd::McPairEnergyAverage::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00173">McMd::PairList::build()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00380">McMd::McPairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00196">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00216">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00095">McMd::McPairEnergyAverage::sample()</a>.</p>
 
 </div>
 </div>
@@ -622,7 +622,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00465">465</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00466">466</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -649,9 +649,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Get total number of cells in this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary. ">CellList</a>. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00354">354</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00355">355</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00173">McMd::PairList::build()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00380">McMd::McPairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00195">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00095">McMd::McPairEnergyAverage::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00173">McMd::PairList::build()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00380">McMd::McPairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00196">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00216">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="Crosslinker_8cpp_source.html#l00051">McMd::Crosslinker::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00095">McMd::McPairEnergyAverage::sample()</a>.</p>
 
 </div>
 </div>
@@ -693,7 +693,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00216">216</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00085">McMd::Generator::generate()</a>.</p>
+<p>Referenced by <a class="el" href="Generator_8cpp_source.html#l00087">McMd::Generator::generate()</a>.</p>
 
 </div>
 </div>
@@ -725,7 +725,7 @@ template&lt;class Archive &gt; </div>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00359">McMd::PairList::isValid()</a>, and <a class="el" href="McSystem_8cpp_source.html#l00710">McMd::McSystem::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00359">McMd::PairList::isValid()</a>, and <a class="el" href="McSystem_8cpp_source.html#l00721">McMd::McSystem::isValid()</a>.</p>
 
 </div>
 </div>
@@ -750,7 +750,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Grant access to unit test class. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00344">344</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00345">345</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -776,9 +776,9 @@ template&lt;class Archive &gt; </div>
 <p>Maximum possible number of neighboring atoms. </p>
 <p>Use as dimension of the array neighbor passed to <a class="el" href="classMcMd_1_1CellList.html#a5170b4abd47e6070d447408b2e0e8b5d" title="Fill a NeighborArray with pointers to atoms near a specified position. ">getNeighbors()</a> and <a class="el" href="classMcMd_1_1CellList.html#af17127e060f6a75699d92d55b5d89ad2" title="Fill an array with pointers to atoms in a cell and neighboring cells. ">getCellNeighbors()</a>. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00068">68</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00069">69</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="GcSliplinkMove_8cpp_source.html#l00060">McMd::GcSliplinkMove::move()</a>, <a class="el" href="SliplinkMove_8cpp_source.html#l00048">McMd::SliplinkMove::move()</a>, <a class="el" href="SliplinkerEnd_8cpp_source.html#l00049">McMd::SliplinkerEnd::move()</a>, <a class="el" href="SliplinkerAll_8cpp_source.html#l00051">McMd::SliplinkerAll::move()</a>, and <a class="el" href="Sliplinker_8cpp_source.html#l00046">McMd::Sliplinker::move()</a>.</p>
+<p>Referenced by <a class="el" href="GcSliplinkMove_8cpp_source.html#l00061">McMd::GcSliplinkMove::move()</a>, <a class="el" href="SliplinkMove_8cpp_source.html#l00049">McMd::SliplinkMove::move()</a>, <a class="el" href="SliplinkerEnd_8cpp_source.html#l00050">McMd::SliplinkerEnd::move()</a>, <a class="el" href="SliplinkerAll_8cpp_source.html#l00052">McMd::SliplinkerAll::move()</a>, and <a class="el" href="Sliplinker_8cpp_source.html#l00047">McMd::Sliplinker::move()</a>.</p>
 
 </div>
 </div>
@@ -790,7 +790,7 @@ template&lt;class Archive &gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:34 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:49 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

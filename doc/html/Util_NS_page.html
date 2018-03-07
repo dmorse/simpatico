@@ -67,19 +67,11 @@ Container templates</h1>
 <p>The decision to use this set of "home made" containers in preference to heavy use of std::vector was based in part on a desire for two "safety" features that std::vector lacks. The first is ability to conveniently turn index bounds checking on or off for debugging, as described above. The second is a guarantee that the underlying C-array will not be resized and reallocated during use, which invalidates any pointers to elements of an array. Because a std::vector is designed to grow as needed as elements are added, the C-array underlying a std::vector can be automatically reallocated and copied to a new location in response to addition of new elements. This makes std::vector containers unsuitable for designs in which objects are allocated in arrays, but are accessed via pointers, which is a common pattern in Simpatico.</p>
 <p>See also: <a class="el" href="group__Container__Module.html">Container Module</a></p>
 <h1><a class="anchor" id="param_sec"></a>
-Parameter file io</h1>
+Parameter File IO</h1>
 <p>The src/util/containers directory contains a set of classes that are used to read and write parameter file blocks. Every class that needs to read data from the parameter file during initialization must be derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> base class. This class defines a pure virtual method <a class="el" href="classUtil_1_1ParamComposite.html#a6fc094b057fd9a21641b089f6f063b39" title="Read the parameter file block. ">ParamComposite::readParam()</a> method. Every subclass of <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> must implement this method, which should read a parameter file block that contains the data required to initialize of that subclass. The <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> class also provides a set of methods and method templates that are used to read and write individual parameters.</p>
 <p>See also: <a class="el" href="user_param_page.html">Parameter Files</a></p>
 <p>See also: <a class="el" href="developer_param_page.html">readParam() Methods</a></p>
 <p>See also: <a class="el" href="group__Param__Module.html">Parameter File IO Module</a></p>
-<h1><a class="anchor" id="boundary_sec"></a>
-Boundary</h1>
-<p>A <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c" title="Boundary is an alias for the periodic boundary condition class. ">Util::Boundary</a> object defines periodic boundary conditions for a simulation. A Boundary contains the dimensions of periodic simulation unit cell, and provides methods to calculate separation vectors and distances using the nearest image convention, and to shift a position <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector. ">Vector</a> into the primary unit cell.</p>
-<p>In the current implementation, the name Boundary is a typedef for the class <a class="el" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell. ">OrthorhombicBoundary</a>. The use of a typedef is intended to make it easier to later develop versions of the code with more general boundaries (e.g., non-orthogonal axes).</p>
-<h1><a class="anchor" id="ensemble_sec"></a>
-Statistical ensembles</h1>
-<p><a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">EnergyEnsemble</a>, <a class="el" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size. ">BoundaryEnsemble</a>, and <a class="el" href="classUtil_1_1SpeciesEnsemble.html" title="An ensemble for the number of molecules of one Species. ">SpeciesEnsemble</a> are simple classes that specify the statistical ensemble to be used to sample fluctuations in energy, boundary volume and/or shape, and number of molecules of each species, respectively. Each such ensemble has a type, to specify whether the associated macroscopic variable is constrained or has a Boltzmann weight, and can also store for an intensive parameter or parameters required to define the Boltzmann weight. For example, the <a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">EnergyEnsemble</a> type can be "adiabatic" or "isothermal", and stores a value of the temperature if the type is isothermal. Each System has one associated <a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">EnergyEnsemble</a> object and one associated <a class="el" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size. ">BoundaryEnsemble</a> object. Each Species object will have [not yet implemented] one associated <a class="el" href="classUtil_1_1SpeciesEnsemble.html" title="An ensemble for the number of molecules of one Species. ">SpeciesEnsemble</a> object.</p>
-<p>See also: <a class="el" href="group__Ensemble__Module.html">Ensemble Module</a></p>
 <h1><a class="anchor" id="random_sec"></a>
 Random</h1>
 <p>A <a class="el" href="classUtil_1_1Random.html" title="Random number generator. ">Random</a> object represents a random number generator (RNG). The implementation uses a Mersenne-Twister RNG.</p>
@@ -90,7 +82,7 @@ Random</h1>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

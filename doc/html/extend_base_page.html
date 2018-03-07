@@ -47,13 +47,13 @@
 <div class="title">4.2 Base Classes </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="extend_overview_page.html">4.1 Source File Locations</a> (Prev) <a class="el" href="extend_build_page.html">4.3 Build system</a> (Next) <br />
+<div class="textblock"><p><a class="el" href="extend_overview_page.html">4.1 Source Files: Directories and Namespaces</a> (Prev) <a class="el" href="extend_build_page.html">4.3 Build system</a> (Next) <br />
 </p>
 <h1><a class="anchor" id="extend_base_mcMd_section"></a>
 Base classes for mcSim and mdSim</h1>
-<p>The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace. Among these are: </p><ul>
+<p>The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> or <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace. Among these are: </p><ul>
 <li>
-McMd::Species, a molecular species  </li>
+<a class="el" href="classSimp_1_1Species.html" title="A Species represents a set of chemically similar molecules. ">Simp::Species</a>, a molecular species  </li>
 <li>
 <a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves. ">McMd::McMove</a>, a MC Markov move  </li>
 <li>
@@ -61,9 +61,9 @@ McMd::Species, a molecular species  </li>
 <li>
 <a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions. ">McMd::Analyzer</a>, a data analysis or output operation  </li>
 <li>
-<a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer. ">McMd::ConfigIo</a>, a configuration file format </li>
+<a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer. ">McMd::ConfigIo</a>, a configuration file reader and writer  </li>
 <li>
-McMd::TrajectoryIo, an MD trajectory file format </li>
+<a class="el" href="classMcMd_1_1TrajectoryReader.html" title="Trajectory file reader (base class). ">McMd::TrajectoryReader</a>, an MD trajectory file reader </li>
 <li>
 <a class="el" href="classMcMd_1_1Perturbation.html" title="Model of parameter dependence in a free energy perturbation theory. ">McMd::Perturbation</a>, which defines a free energy perturbation </li>
 </ul>
@@ -81,7 +81,7 @@ McMd::TrajectoryIo, an MD trajectory file format </li>
 <li>
 <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class. ">McMd::ExternalPotential</a>, an external one-body potential </li>
 </ul>
-<p>The <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a>, <a class="el" href="classMcMd_1_1AnglePotential.html" title="Interface for a Angle Interaction. ">AnglePotential</a>, <a class="el" href="classMcMd_1_1DihedralPotential.html" title="Interface for a Dihedral Potential. ">DihedralPotential</a>, and <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class. ">ExternalPotential</a> classes are used in both MC and MD simulations. Two different classes, <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a>, are provided for nonbonded interations in MC and MD simulations, respectively, because of differences in the algorithms and calculations required in these two contexts.</p>
+<p>The <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class. ">BondPotential</a>, <a class="el" href="classMcMd_1_1AnglePotential.html" title="Interface for a Angle Interaction. ">AnglePotential</a>, <a class="el" href="classMcMd_1_1DihedralPotential.html" title="Interface for a Dihedral Potential. ">DihedralPotential</a>, and <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class. ">ExternalPotential</a> classes are used in both MC and MD simulations. Two different classes, <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract). ">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation. ">MdPairPotential</a>, are provided for nonbonded interations in MC and MD simulations, because of differences in the algorithms and types of calculations required in MC and MD simulations</p>
 <h1><a class="anchor" id="extend_base_ddMd_section"></a>
 Base classes for ddSim</h1>
 <p>The base classes used by the ddSim parallel MD program are defined in the <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> namespace. Several have names identical to names of analogous classes in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace. These base classes include: </p><ul>
@@ -111,12 +111,12 @@ Base classes for ddSim</h1>
 Potential energy classes</h1>
 <p>Subclasses of the potential energy classes in either the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> or <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> namespaces are implemented differently than the other base classes discussed above. Each subclass of a "potential" classes is implemented as an instantiation of a class template that takes a simpler "interaction" class as an argument. Consequences of this peculiarity are discussed in more detail <a class="el" href="extend_potential_page.html">here</a>.</p>
 <p><br />
- <a class="el" href="extend_overview_page.html">4.1 Source File Locations</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="extend_page.html">4 Extending Simpatico</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="extend_build_page.html">4.3 Build system</a> (Next) </p>
+ <a class="el" href="extend_overview_page.html">4.1 Source Files: Directories and Namespaces</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="extend_page.html">4 Extending Simpatico</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="extend_build_page.html">4.3 Build system</a> (Next) </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

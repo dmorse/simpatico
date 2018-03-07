@@ -47,12 +47,22 @@
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p><a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace. </p>
-<p>The <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace contains classes that are more specific to molecular simulation than those in the <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> namespace but that (like those in <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a>) are avaialable for use in any of (1) the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace for use in the single-processor mcSim and mdSim programs, (2) the <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> for use in the ddSim parallel Md program, or (3) the <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> namespace for use in postprocessing analysis tools.</p>
-<p>Currently, this namespace includes only interaction classes that were previously in the Inter namespace. The intent is to migrate some other classes into this namespace. </p>
+<p>The <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace contains classes that are more specific to molecular simulation than those in the <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a> namespace but that (like those in <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a>) are avaialable for use in any simpatico program. Classes defined in this namespace are available for use in the:</p>
+<ul>
+<li>The <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace for use in the single-processor mcSim and mdSim programs</li>
+<li>The <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> for use in the ddSim * parallel Md program</li>
+<li>The <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> namespace for use in postprocessing analysis tools </li>
+</ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:group__Simp__Interaction__Module"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Simp__Interaction__Module.html">Interaction Module</a></td></tr>
+<tr class="memitem:group__Boundary__Module"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Boundary__Module.html">Boundary</a></td></tr>
+<tr class="memdesc:group__Boundary__Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit cells for periodic boundary conditions. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__Ensemble__Module"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Ensemble__Module.html">Statistical Ensembles</a></td></tr>
+<tr class="memdesc:group__Ensemble__Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Statistical mechanical ensembles for specific macro-variables. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__Simp__Interaction__Module"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Simp__Interaction__Module.html">Interactions</a></td></tr>
 <tr class="memdesc:group__Simp__Interaction__Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Potential energy functions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__Simp__Species__Module"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Simp__Species__Module.html">Species</a></td></tr>
@@ -63,7 +73,7 @@ Modules</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

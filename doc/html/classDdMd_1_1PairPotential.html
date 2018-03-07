@@ -64,7 +64,7 @@
 <div class="textblock"><p>Abstract base class for computing nonbonded pair forces and energies. </p>
 <p>A <a class="el" href="classDdMd_1_1PairPotential.html" title="Abstract base class for computing nonbonded pair forces and energies. ">PairPotential</a> has a private <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs. ">CellList</a> and <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> which it can use to calculate nonbonded pair forces. Concrete subclasses of <a class="el" href="classDdMd_1_1PairPotential.html" title="Abstract base class for computing nonbonded pair forces and energies. ">PairPotential</a> are constructed as instances of the <a class="el" href="classDdMd_1_1PairPotentialImpl.html" title="Implementation template for a PairPotential. ">PairPotentialImpl</a> class template. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00042">42</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00044">44</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">PairPotential.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -103,13 +103,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af8947a8dd9ac30674493b913a9860048"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ)  <a href="#af8947a8dd9ac30674493b913a9860048">More...</a><br /></td></tr>
 <tr class="separator:af8947a8dd9ac30674493b913a9860048"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Initialization and Serialization</div></td></tr>
-<tr class="memitem:a8bc85f16129cfb7dca61fda2145af92a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8bc85f16129cfb7dca61fda2145af92a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#aa0f5c4632d3db1f9fa0aab12abba34d7">domain</a>, <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#a1b5ab415000e7c262e611cb25d355a13">boundary</a>, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#afba961c8ddf4699908e0c23d883204a9">storage</a>)</td></tr>
+<tr class="memitem:a8bc85f16129cfb7dca61fda2145af92a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8bc85f16129cfb7dca61fda2145af92a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#aa0f5c4632d3db1f9fa0aab12abba34d7">domain</a>, <a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#a1b5ab415000e7c262e611cb25d355a13">boundary</a>, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;<a class="el" href="classDdMd_1_1PairPotential.html#afba961c8ddf4699908e0c23d883204a9">storage</a>)</td></tr>
 <tr class="memdesc:a8bc85f16129cfb7dca61fda2145af92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#a8bc85f16129cfb7dca61fda2145af92a">More...</a><br /></td></tr>
 <tr class="separator:a8bc85f16129cfb7dca61fda2145af92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0df5d6195d10bbcba48f89db827829d2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a0df5d6195d10bbcba48f89db827829d2">setNAtomType</a> (int nAtomType)=0</td></tr>
 <tr class="memdesc:a0df5d6195d10bbcba48f89db827829d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a0df5d6195d10bbcba48f89db827829d2">More...</a><br /></td></tr>
 <tr class="separator:a0df5d6195d10bbcba48f89db827829d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d676ea8c03c109e4964a06bf3740043"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8d676ea8c03c109e4964a06bf3740043">initialize</a> (const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;maxBoundary, double <a class="el" href="classDdMd_1_1PairPotential.html#aaeb3d40968c943469f58c54f27d2eeca">skin</a>, int pairCapacity)</td></tr>
+<tr class="memitem:a8d676ea8c03c109e4964a06bf3740043"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8d676ea8c03c109e4964a06bf3740043">initialize</a> (const <a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;maxBoundary, double <a class="el" href="classDdMd_1_1PairPotential.html#aaeb3d40968c943469f58c54f27d2eeca">skin</a>, int pairCapacity)</td></tr>
 <tr class="memdesc:a8d676ea8c03c109e4964a06bf3740043"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters and allocate memory.  <a href="#a8d676ea8c03c109e4964a06bf3740043">More...</a><br /></td></tr>
 <tr class="separator:a8d676ea8c03c109e4964a06bf3740043"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67051f54c0b62005bc0a52e95b11a934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a67051f54c0b62005bc0a52e95b11a934">readParameters</a> (std::istream &amp;in)</td></tr>
@@ -294,7 +294,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1890a33d6049597e65bebfdeedcf0249 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a56014258b358c1199253b35da6ebe788">readCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
-<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array parameter.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
+<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
 <tr class="separator:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#af935dd640065219665505094ef0ace20">readOptionalCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
@@ -302,11 +302,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a33a1a1a323f812538e59639e1f01d0b3">readDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
+<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
 <tr class="separator:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae1c1d685198f71875ba8a31371582c3d">readOptionalDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
+<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
 <tr class="separator:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DSymmMatrixParam.html">DSymmMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a0f9f731e59f4e06ebcccfde67fa3cf5c">readDSymmMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int n)</td></tr>
@@ -391,10 +391,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> object to the format array.  <a href="#a2aed32d4ef18bc05a4bc6f02f0ce7010">More...</a><br /></td></tr>
 <tr class="separator:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Begin.html">Begin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8">addBegin</a> (const char *label)</td></tr>
-<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
+<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
 <tr class="separator:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1End.html">End</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8">addEnd</a> ()</td></tr>
-<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
+<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
 <tr class="separator:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Blank.html">Blank</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2">addBlank</a> ()</td></tr>
 <tr class="memdesc:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a new <a class="el" href="classUtil_1_1Blank.html" title="An empty line within a parameter file. ">Blank</a> object, representing a blank line.  <a href="#a72bfd2aef18ed296a2959a2d2020d3d2">More...</a><br /></td></tr>
@@ -451,7 +451,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a1b5ab415000e7c262e611cb25d355a13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a1b5ab415000e7c262e611cb25d355a13">boundary</a> ()</td></tr>
+<tr class="memitem:a1b5ab415000e7c262e611cb25d355a13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a1b5ab415000e7c262e611cb25d355a13">boundary</a> ()</td></tr>
 <tr class="memdesc:a1b5ab415000e7c262e611cb25d355a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> by const reference.  <a href="#a1b5ab415000e7c262e611cb25d355a13">More...</a><br /></td></tr>
 <tr class="separator:a1b5ab415000e7c262e611cb25d355a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f5c4632d3db1f9fa0aab12abba34d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aa0f5c4632d3db1f9fa0aab12abba34d7">domain</a> ()</td></tr>
@@ -495,6 +495,30 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae01a90ae0958b05574e258ce730b1fe9">addComponent</a> (<a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;param, bool isLeaf=true)</td></tr>
 <tr class="memdesc:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. ">ParamComponent</a> object to the format array.  <a href="#ae01a90ae0958b05574e258ce730b1fe9">More...</a><br /></td></tr>
 <tr class="separator:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ScalarParam.html">ScalarParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a05738b050c32951151bcac1c62f908ff">add</a> (std::istream &amp;in, const char *label, Type &amp;value, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new required <a class="el" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable. ">ScalarParam</a> &lt; Type &gt; object.  <a href="#a05738b050c32951151bcac1c62f908ff">More...</a><br /></td></tr>
+<tr class="separator:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArrayParam.html">CArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a654d7f0ca5dc877e09070901d33c3365">addCArray</a> (std::istream &amp;in, const char *label, Type *value, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a required C array parameter.  <a href="#a654d7f0ca5dc877e09070901d33c3365">More...</a><br /></td></tr>
+<tr class="separator:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArrayParam.html">DArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a5678fa4c9664e87979c758184d46d727">addDArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; Type &gt; &amp;array, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable contiguous array template. ">DArray</a> &lt; Type &gt; parameter.  <a href="#a5678fa4c9664e87979c758184d46d727">More...</a><br /></td></tr>
+<tr class="separator:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type , int N&gt; </td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FArrayParam.html">FArrayParam</a>&lt; Type, N &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a7aabaa7835e994678d3c3225df0d7d7a">addFArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1FArray.html">FArray</a>&lt; Type, N &gt; &amp;array, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt; Type, N &gt; array parameter.  <a href="#a7aabaa7835e994678d3c3225df0d7d7a">More...</a><br /></td></tr>
+<tr class="separator:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a9d3774e149a843917646064159a75831">addCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a9d3774e149a843917646064159a75831">More...</a><br /></td></tr>
+<tr class="separator:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ab3fb7b30311e09e54ff86682a8102372">addDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ab3fb7b30311e09e54ff86682a8102372">More...</a><br /></td></tr>
+<tr class="separator:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classUtil_1_1ParamComponent"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classUtil_1_1ParamComponent')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td></tr>
 <tr class="memitem:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">ParamComponent</a> ()</td></tr>
 <tr class="memdesc:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f859f325ca7d36747d28c9677fe0bfc">More...</a><br /></td></tr>
@@ -511,7 +535,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a02111f539f05f30e2671d473d5c95d71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairList.html">PairList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a02111f539f05f30e2671d473d5c95d71">pairList_</a></td></tr>
 <tr class="memdesc:a02111f539f05f30e2671d473d5c95d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verlet pair list, to calculate nonbonded pair forces.  <a href="#a02111f539f05f30e2671d473d5c95d71">More...</a><br /></td></tr>
 <tr class="separator:a02111f539f05f30e2671d473d5c95d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7f351559bba75838b7e962b723ca12a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aa7f351559bba75838b7e962b723ca12a">maxBoundary_</a></td></tr>
+<tr class="memitem:aa7f351559bba75838b7e962b723ca12a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aa7f351559bba75838b7e962b723ca12a">maxBoundary_</a></td></tr>
 <tr class="memdesc:aa7f351559bba75838b7e962b723ca12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boundary used to allocate space for the cell list.  <a href="#aa7f351559bba75838b7e962b723ca12a">More...</a><br /></td></tr>
 <tr class="separator:aa7f351559bba75838b7e962b723ca12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c83a310ea63eda2384c52ed50f3246f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a1c83a310ea63eda2384c52ed50f3246f">skin_</a></td></tr>
@@ -640,7 +664,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;&#160;</td>
           <td class="paramname"><em>boundary</em>, </td>
         </tr>
         <tr>
@@ -670,7 +694,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00058">58</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">boundary()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00388">domain()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">storage()</a>.</p>
+<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00387">boundary()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00390">domain()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">storage()</a>.</p>
 
 </div>
 </div>
@@ -716,7 +740,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void DdMd::PairPotential::initialize </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;&#160;</td>
           <td class="paramname"><em>maxBoundary</em>, </td>
         </tr>
         <tr>
@@ -752,7 +776,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00075">75</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00307">maxBoundary_</a>, <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">pairCapacity_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00379">skin()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">skin_</a>.</p>
+<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00309">maxBoundary_</a>, <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00321">pairCapacity_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00381">skin()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00312">skin_</a>.</p>
 
 </div>
 </div>
@@ -792,7 +816,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00089">89</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00307">maxBoundary_</a>, <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">pairCapacity_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">skin_</a>.</p>
+<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00309">maxBoundary_</a>, <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00318">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00321">pairCapacity_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00312">skin_</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00383">DdMd::PairPotentialImpl&lt; Interaction &gt;::readParameters()</a>.</p>
 
@@ -834,7 +858,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00103">103</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00307">maxBoundary_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">pairCapacity_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">skin_</a>.</p>
+<p>References <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">cutoff_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00309">maxBoundary_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00318">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00321">pairCapacity_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00312">skin_</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00403">DdMd::PairPotentialImpl&lt; Interaction &gt;::loadParameters()</a>.</p>
 
@@ -877,7 +901,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00120">120</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00047">DdMd::PairList::allocate()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00044">DdMd::CellList::allocate()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00623">DdMd::AtomStorage::atomCapacity()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">cellList_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">cutoff_</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00388">domain()</a>, <a class="el" href="Domain_8cpp_source.html#l00190">DdMd::Domain::domainBound()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00626">DdMd::AtomStorage::ghostCapacity()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00398">Util::OrthorhombicBoundary::length()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00307">maxBoundary_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">pairCapacity_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">pairList_</a>, <a class="el" href="Parameter_8h_source.html#l00224">Util::Parameter::saveOptional()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">skin_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">storage()</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00047">DdMd::PairList::allocate()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00044">DdMd::CellList::allocate()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00625">DdMd::AtomStorage::atomCapacity()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">cellList_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">cutoff_</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00390">domain()</a>, <a class="el" href="Domain_8cpp_source.html#l00190">DdMd::Domain::domainBound()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00628">DdMd::AtomStorage::ghostCapacity()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00402">Simp::OrthorhombicBoundary::length()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00309">maxBoundary_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00318">nCellCut_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00321">pairCapacity_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00306">pairList_</a>, <a class="el" href="Parameter_8h_source.html#l00224">Util::Parameter::saveOptional()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00312">skin_</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">storage()</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00419">DdMd::PairPotentialImpl&lt; Interaction &gt;::save()</a>.</p>
 
@@ -914,7 +938,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00394">394</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00396">396</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -1209,9 +1233,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00159">159</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00277">DdMd::CellList::build()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">cellList_</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00256">DdMd::CellList::clear()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">cutoff_</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00388">domain()</a>, <a class="el" href="Domain_8cpp_source.html#l00190">DdMd::Domain::domainBound()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00632">DdMd::AtomStorage::isCartesian()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00358">DdMd::CellList::isValid()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00398">Util::OrthorhombicBoundary::length()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00158">DdMd::CellList::makeGrid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00609">DdMd::AtomStorage::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00320">DdMd::CellList::nAtom()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">nCellCut_</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00612">DdMd::AtomStorage::nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00326">DdMd::CellList::nReject()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00401">DdMd::CellList::placeAtom()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">storage()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00277">DdMd::CellList::build()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">cellList_</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00256">DdMd::CellList::clear()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">cutoff_</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00390">domain()</a>, <a class="el" href="Domain_8cpp_source.html#l00190">DdMd::Domain::domainBound()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00634">DdMd::AtomStorage::isCartesian()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00358">DdMd::CellList::isValid()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00402">Simp::OrthorhombicBoundary::length()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00158">DdMd::CellList::makeGrid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00611">DdMd::AtomStorage::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00320">DdMd::CellList::nAtom()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00318">nCellCut_</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00614">DdMd::AtomStorage::nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00326">DdMd::CellList::nReject()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00402">DdMd::CellList::placeAtom()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">storage()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00114">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00046">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00118">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -1236,9 +1260,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00206">206</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00073">DdMd::PairList::build()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">cellList_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">pairList_</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">storage()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00073">DdMd::PairList::build()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">cellList_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00306">pairList_</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">storage()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00114">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00046">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00118">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -1336,7 +1360,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00236">236</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00397">methodId()</a>.</p>
+<p>References <a class="el" href="classDdMd_1_1PairPotential.html#a277e66194d977cff96704f4e36d16beb">maxPairCutoff()</a>, and <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00399">methodId()</a>.</p>
 
 </div>
 </div>
@@ -1358,7 +1382,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00266">266</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00447">DdMd::CellList::begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">cellList_</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00046">DdMd::Cell::getNeighbors()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00301">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00317">DdMd::Cell::nextCellPtr()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">storage()</a>, and <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00168">DdMd::PairList::begin()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00448">DdMd::CellList::begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">cellList_</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00046">DdMd::Cell::getNeighbors()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00159">DdMd::PairIterator::getPair()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00459">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00301">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00317">DdMd::Cell::nextCellPtr()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00194">DdMd::PairIterator::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00306">pairList_</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00468">DdMd::Atom::position()</a>, <a class="el" href="Potential_8h_source.html#l00228">DdMd::Potential::reverseUpdateFlag()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">storage()</a>, and <a class="el" href="Vector_8h_source.html#l00672">Util::Vector::subtract()</a>.</p>
 
 </div>
 </div>
@@ -1385,7 +1409,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs. ">CellList</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00373">373</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00375">375</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -1412,9 +1436,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00376">376</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00378">378</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00535">DdMd::Integrator::clear()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00325">DdMd::Integrator::outputStatistics()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00539">DdMd::Integrator::clear()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00329">DdMd::Integrator::outputStatistics()</a>.</p>
 
 </div>
 </div>
@@ -1441,7 +1465,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get value of the pair list skin. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00379">379</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00381">381</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00075">initialize()</a>.</p>
 
@@ -1470,7 +1494,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get value of the pair list cutoff (maxPairCutoff + skin). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00382">382</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00384">384</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -1497,7 +1521,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ) </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00397">397</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00399">399</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00483">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00465">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForces()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00236">computeNPair()</a>.</p>
 
@@ -1511,7 +1535,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp; DdMd::PairPotential::boundary </td>
+          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp; DdMd::PairPotential::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1526,7 +1550,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00385">385</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00387">387</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00058">associate()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01023">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, and <a class="el" href="PairPotentialImpl_8h_source.html#l00956">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>.</p>
 
@@ -1555,7 +1579,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00388">388</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00390">390</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00058">associate()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00159">buildCellList()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1584,7 +1608,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor. ">AtomStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00391">391</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00393">393</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00058">associate()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00159">buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00206">buildPairList()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00483">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00266">nPair()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1641,7 +1665,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs. ">CellList</a> to construct <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list. ">PairList</a> or calculate nonbonded pair forces. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00301">301</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">303</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00206">buildPairList()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00483">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00266">nPair()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1667,7 +1691,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Verlet pair list, to calculate nonbonded pair forces. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00304">304</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00306">306</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00206">buildPairList()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00483">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01023">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01098">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00956">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00266">nPair()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1681,7 +1705,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> DdMd::PairPotential::maxBoundary_</td>
+          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> DdMd::PairPotential::maxBoundary_</td>
         </tr>
       </table>
   </td>
@@ -1693,7 +1717,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Boundary used to allocate space for the cell list. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00307">307</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00309">309</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00075">initialize()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">loadParameters()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">readParameters()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1719,7 +1743,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Difference between pairlist cutoff and pair potential cutoff. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">310</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00312">312</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00075">initialize()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">loadParameters()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">readParameters()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1745,7 +1769,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Minimum cell size = pair potential cutoff + skin. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">313</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00315">315</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00075">initialize()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">loadParameters()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">readParameters()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1771,7 +1795,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Approximate number of cells per cutoff distance in each direction. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">316</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00318">318</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">loadParameters()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">readParameters()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1797,7 +1821,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Maximum number of nonbonded pairs in pair list. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">319</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00321">321</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 <p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00075">initialize()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00103">loadParameters()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00089">readParameters()</a>, and <a class="el" href="PairPotential_8cpp_source.html#l00120">save()</a>.</p>
 
@@ -1811,7 +1835,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:33 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:47 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

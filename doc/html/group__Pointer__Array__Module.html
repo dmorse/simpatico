@@ -46,7 +46,8 @@
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>One-dimensional array containers that store pointers, and associated iterators. </p>
+<p><a class="el" href="classUtil_1_1Array.html" title="Array container class template. ">Array</a> containers that store pointers to objects, and related iterators. </p>
+<p>The one-dimensional array with names that contain a prefix "P" all store pointers to objects. This module also includes associated iterators.</p>
 <p>The <a class="el" href="classUtil_1_1DPArray.html" title="A dynamic array that only holds pointers to its elements. ">DPArray</a> and <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array. ">FPArray</a> class templates are dynamically and statically allocated pointer arrays, respectively. A <a class="el" href="classUtil_1_1GPArray.html" title="An automatically growable PArray. ">GPArray</a> is a growable pointer array.</p>
 <p>Each <a class="el" href="classUtil_1_1DPArray.html" title="A dynamic array that only holds pointers to its elements. ">DPArray</a> &lt; T &gt;, <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt;T, N&gt;, or GPArray&lt;T&gt; container has a private C array of T* pointers. These containers all overload the the [] operator so as to return a T&amp; reference, rather than a T* pointer. The append method takes a T&amp; reference as a parameter. The destructor for a pointer array deletes the underlying array of T* pointers, but not the T objects to which they point.</p>
 <p>An <a class="el" href="classUtil_1_1ArrayStack.html" title="A stack of fixed capacity. ">ArrayStack</a> &lt; T &gt; container is a finite capacity stack that is implemented as a dynamically allocated array of T* pointers. Objects can be pushed onto or popped off the top of the stack using the push(T&amp;) and pop() methods. An <a class="el" href="classUtil_1_1ArrayStack.html" title="A stack of fixed capacity. ">ArrayStack</a> can be allocated only once, and cannot be resized.</p>
@@ -90,7 +91,7 @@ Classes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

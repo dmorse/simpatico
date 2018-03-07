@@ -124,7 +124,7 @@ External Potential (optional)</h2>
 <p>An external potential is a potential energy that acts on each atom independently, and that depends only on the position and type of the atom. External potentials are disabled by default by may be enabled in either an MC or MD simulation by explicitly assigning a true (1) to the optional parameter hasExternal in the main McSimulation or MdSimulation block. The externalStyle parameter and ExternalPotential parameter block should be present within the McSystem or MdSystem block if and only if hasExternal has been explicitly set to true. The value of the externalStyle string gives the name of an external interaction class that is chosen from among those defined in the simp/interaction/external directory. The ExternalPotential parameter file block contains only parameters required to define an external potential, in a format that is different for different external potential styles, and is defined by the readParameters() function of the specified external interaction class.</p>
 <h2><a class="anchor" id="user_param_mcmd_energy_ensemble_subsection"></a>
 Energy Ensemble</h2>
-<p>The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of <a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">Util::EnergyEnsemble</a> and <a class="el" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size. ">Util::BoundaryEnsemble</a> respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter.</p>
+<p>The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of Util::EnergyEnsemble and Util::BoundaryEnsemble respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter.</p>
 <p>Only an "isothermal" ensemble makes sense for an MC simulation, but an "adiabatic" ensemble is used for MD integrators that conserve energy or (for isobaric boundary ensembles) enthalpy. For isothermal simulations, temperature is specified as a value for kT, in units of energy.</p>
 <h2><a class="anchor" id="user_param_mcmd_boundary_ensemble_subsection"></a>
 Boundary Ensemble</h2>
@@ -138,7 +138,7 @@ AnalyzerManager</h1>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:31 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

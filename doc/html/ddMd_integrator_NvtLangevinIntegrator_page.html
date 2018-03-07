@@ -50,7 +50,7 @@
 <div class="textblock"><h1><a class="anchor" id="ddMd_integrator_NvtLangevinIntegrator_overview_sec"></a>
 Synopsis</h1>
 <p><a class="el" href="classDdMd_1_1NvtLangevinIntegrator.html" title="A NVT molecular dynamics integrator with a Langevin thermostat. ">NvtLangevinIntegrator</a> implements an NVT velocity-Verlet integrator using a stochastic Langevin thermostat.</p>
-<p>This integrator requires that the <a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">Util::EnergyEnsemble</a> object of the associated System must be set to "isothermal". The target temperature is the temperature returned by the function <a class="el" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature. ">Util::EnergyEnsemble::temperature()</a>.</p>
+<p>This integrator requires that the Util::EnergyEnsemble object of the associated System must be set to "isothermal". The target temperature is the temperature returned by the function <a class="el" href="classSimp_1_1EnergyEnsemble.html#ab070db30fee51670e592b95500f44579" title="Return the temperature. ">Util::EnergyEnsemble::temperature()</a>.</p>
 <p>The integrator approximates the Langevin equations of motion, given for each particle by: </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ m\frac{d{\bf v}}{dt} = -\frac{\partial U}{\partial {\bf r}} - m\gamma {\bf v} + {\bf f}^{\rm (r)} , \]" src="form_118.png"/>
 </p>
@@ -62,7 +62,7 @@ Synopsis</h1>
 <p>For a detailed discussion of the time stepping algorithm, see: <a class="el" href="algorithms_Langevin_page.html">algorithm</a></p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classDdMd_1_1NvtLangevinIntegrator.html" title="A NVT molecular dynamics integrator with a Langevin thermostat. ">DdMd::NvtLangevinIntegrator</a> </dd>
 <dd>
-<a class="el" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy. ">Util::EnergyEnsemble</a></dd></dl>
+Util::EnergyEnsemble</dd></dl>
 <h1><a class="anchor" id="ddMd_integrator_NvtLangevinIntegrator_param_sec"></a>
 Parameters</h1>
 <p>The parameter file format is: </p><div class="fragment"><div class="line">NvtLangevinIntegrator{ </div><div class="line">  dt                 <span class="keywordtype">double</span></div><div class="line">  gamma              <span class="keywordtype">double</span> </div><div class="line">}</div></div><!-- fragment --><p> with parameters </p><table class="doxtable">
@@ -75,7 +75,7 @@ Parameters</h1>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:44 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

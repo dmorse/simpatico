@@ -276,7 +276,7 @@ template&lt;int NAtom&gt; </div>
 
 <p>Definition at line <a class="el" href="SpeciesGroup_8h_source.html#l00182">182</a> of file <a class="el" href="SpeciesGroup_8h_source.html">SpeciesGroup.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SpeciesGroup_8h_source.html#l00168">Simp::SpeciesGroup&lt; NAtom &gt;::setAtomId()</a>.</p>
+<p>Referenced by <a class="el" href="simp_2species_2Species_8cpp_source.html#l00229">Simp::Species::initializeAtomGroupIdArrays()</a>, <a class="el" href="simp_2species_2Species_8cpp_source.html#l00649">Simp::Species::isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00951">McMd::Simulation::isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00386">McMd::Simulation::save()</a>, and <a class="el" href="SpeciesGroup_8h_source.html#l00168">Simp::SpeciesGroup&lt; NAtom &gt;::setAtomId()</a>.</p>
 
 </div>
 </div>
@@ -309,7 +309,7 @@ template&lt;int NAtom&gt; </div>
 
 <p>References <a class="el" href="SpeciesGroup_8tpp_source.html#l00027">Simp::SpeciesGroup&lt; NAtom &gt;::operator&gt;&gt;</a>, and <a class="el" href="classSimp_1_1SpeciesGroup.html#af8d02577a1521f086fa4f455f032611f">Simp::SpeciesGroup&lt; NAtom &gt;::serialize</a>.</p>
 
-<p>Referenced by <a class="el" href="SpeciesGroup_8h_source.html#l00175">Simp::SpeciesGroup&lt; NAtom &gt;::setTypeId()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00951">McMd::Simulation::isValid()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00129">McMd::CfbReptationMove::loadParameters()</a>, <a class="el" href="CfbReptateMove_8cpp_source.html#l00110">McMd::CfbReptateMove::loadParameters()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00051">McMd::CfbReptationMove::readParameters()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00386">McMd::Simulation::save()</a>, and <a class="el" href="SpeciesGroup_8h_source.html#l00175">Simp::SpeciesGroup&lt; NAtom &gt;::setTypeId()</a>.</p>
 
 </div>
 </div>
@@ -339,9 +339,11 @@ template&lt;int NAtom&gt; </div>
 <p>Commit associated MPI DataType. </p>
 <p>Commit MPI Datatype. </p>
 
-<p>Definition at line <a class="el" href="SpeciesGroup_8tpp_source.html#l00061">61</a> of file <a class="el" href="SpeciesGroup_8tpp_source.html">SpeciesGroup.tpp</a>.</p>
+<p>Definition at line <a class="el" href="SpeciesGroup_8tpp_source.html#l00057">57</a> of file <a class="el" href="SpeciesGroup_8tpp_source.html">SpeciesGroup.tpp</a>.</p>
 
 <p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00026">Util::MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00039">Util::MpiStructBuilder::commit()</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00018">Util::MpiStructBuilder::setBase()</a>.</p>
+
+<p>Referenced by <a class="el" href="SpeciesGroup_8cpp_source.html#l00038">Simp::commitMpiSpeciesGroupTypes()</a>.</p>
 
 </div>
 </div>
@@ -595,7 +597,7 @@ template&lt;int NAtom&gt; </div>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:41 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

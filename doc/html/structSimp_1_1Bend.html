@@ -56,7 +56,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">Simp::Bend Struct Reference<div class="ingroups"><a class="el" href="group__Simp__Module.html">Simp namespace</a> &raquo; <a class="el" href="group__Simp__Interaction__Module.html">Interaction Module</a> &raquo; <a class="el" href="group__Simp__Interaction__Angle__Module.html">Angle Interactions</a></div></div>  </div>
+<div class="title">Simp::Bend Struct Reference<div class="ingroups"><a class="el" href="group__Simp__Module.html">Simp namespace</a> &raquo; <a class="el" href="group__Simp__Interaction__Module.html">Interactions</a> &raquo; <a class="el" href="group__Simp__Interaction__Angle__Module.html">Angle Interactions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -139,7 +139,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Bend_8h_source.html#l00068">68</a> of file <a class="el" href="Bend_8h_source.html">Bend.h</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, and <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>.</p>
+<p>References <a class="el" href="Bend_8h_source.html#l00038">cosTheta</a>, <a class="el" href="Vector_8h_source.html#l00632">Util::Vector::dot()</a>, and <a class="el" href="Vector_8h_source.html#l00616">Util::Vector::square()</a>.</p>
 
 </div>
 </div>
@@ -167,6 +167,8 @@ Public Attributes</h2></td></tr>
 <p>Return value of sin(theta) for precomputed cos(theta). </p>
 
 <p>Definition at line <a class="el" href="Bend_8h_source.html#l00080">80</a> of file <a class="el" href="Bend_8h_source.html">Bend.h</a>.</p>
+
+<p>References <a class="el" href="Bend_8h_source.html#l00038">cosTheta</a>.</p>
 
 <p>Referenced by <a class="el" href="HarmonicAngle_8h_source.html#l00196">Simp::HarmonicAngle::force()</a>.</p>
 
@@ -198,6 +200,8 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Bend_8h_source.html#l00087">87</a> of file <a class="el" href="Bend_8h_source.html">Bend.h</a>.</p>
 
+<p>References <a class="el" href="Bend_8h_source.html#l00038">cosTheta</a>.</p>
+
 <p>Referenced by <a class="el" href="HarmonicAngle_8h_source.html#l00196">Simp::HarmonicAngle::force()</a>.</p>
 
 </div>
@@ -217,6 +221,8 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Bend_8h_source.html#l00038">38</a> of file <a class="el" href="Bend_8h_source.html">Bend.h</a>.</p>
 
+<p>Referenced by <a class="el" href="Bend_8h_source.html#l00068">computeAngle()</a>, <a class="el" href="BendForce_8h_source.html#l00064">Simp::BendForce::computeDerivatives()</a>, <a class="el" href="Bend_8h_source.html#l00080">sinTheta()</a>, and <a class="el" href="Bend_8h_source.html#l00087">theta()</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
@@ -226,7 +232,7 @@ Public Attributes</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:40 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:57 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

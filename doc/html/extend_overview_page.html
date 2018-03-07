@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Simpatico: 4.1 Source File Locations</title>
+<title>Simpatico: 4.1 Source Files: Directories and Namespaces</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,40 +44,40 @@
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">4.1 Source File Locations </div>  </div>
+<div class="title">4.1 Source Files: Directories and Namespaces </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="el" href="extend_page.html">4 Extending Simpatico</a> (Prev/Up) &#160; &#160; &#160; &#160; <a class="el" href="extend_base_page.html">4.2 Base Classes</a> (Next) &#160; &#160; &#160; &#160; <br />
 </p>
-<p>Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined.</p>
+<p>Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined, and where the code should be placed within a directory tree.</p>
 <h1><a class="anchor" id="extend_overview_namespace"></a>
-Namespaces</h1>
+Namespaces and Directories</h1>
 <p>Every class and function in the simpatico source code is defined within one of five C++ namespaces, named <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a>, <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>, <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a>. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table: </p><table class="doxtable">
 <tr>
 <td><b>Namespace</b>  </td><td><b>directory </b>  </td><td><b>purpose </b>   </td></tr>
 <tr>
 <td><a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation. ">Util</a>  </td><td>src/util  </td><td>General scientific computing utilities   </td></tr>
 <tr>
-<td><a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>  </td><td>src/simp  </td><td>General classes for simpatico simulation and analysis programs.   </td></tr>
+<td><a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>  </td><td>src/simp  </td><td>Classes available in all simpatico programs.   </td></tr>
 <tr>
-<td><a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>  </td><td>src/mcMd  </td><td>Classes used in mcSim and/or mdSim single-processor simulation programs.   </td></tr>
+<td><a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>  </td><td>src/mcMd  </td><td>Classes used by mcSim and/or mdSim single-processor programs.   </td></tr>
 <tr>
 <td><a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>  </td><td>src/ddMd  </td><td>Classes used in ddSim parallel MD simulation program.   </td></tr>
 <tr>
-<td><a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a>  </td><td>src/tools  </td><td>Classes used in ppMd postprocessing analysis program (under development).   </td></tr>
+<td><a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a>  </td><td>src/tools  </td><td>Classes used in ppMd analysis program (under development).   </td></tr>
 </table>
 <p>The subdirectories of the src/ directory that each contain the source code for a namespace, such as src/util or src/mcMd, are referred to in what follows as a "namespace level" directories.</p>
 <p>Every new user class must also be defined within one of these namespaces. The choice of namespace depends on the intended purpose of the class: </p><ul>
 <li>
-Classes that provide new features for the ddSim parallel program should be in namespace <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>.  </li>
+Classes that provide new simulation algorithms, analysis algorithms or file formats for use with the ddSim parallel program should be in namespace <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>.  </li>
 <li>
-Classes that provide new features for the mdSim and/or mcSim program should be in namespace <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>.  </li>
+Classes that provide new simulation algorithms (MC moves or Monte Carlo integrators), analysis algorithms, or file formats for the mdSim and/or mcSim program should be in namespace <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>.  </li>
 <li>
-Classes that define new potential energy functions, should be defined in namespace <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>.  </li>
+Classes that define potential energy functions or molecular species definitions should be placed namespace <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a>.  </li>
 <li>
-Classes that provide new features for postprocessor program should be defined in namespace <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a>.  </li>
+Classes that provide new features for the ppMd postprocessor should be defined in namespace <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a>.  </li>
 </ul>
-<p>The <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> and <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespaces are mutually exclusive. Classes defined in the <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs. Classes defined in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace are accessible for use in either mcSim or mdSim, but not in ddSim. Potential energy classes defined in the <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace can, however, be made accessible for use in any simulation or analysis program.</p>
+<p>The <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a>, <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a>, and <a class="el" href="namespaceTools.html" title="Single-processor classes for pre- and post-processing MD trajectories. ">Tools</a> namespaces are mutually exclusive. Classes defined in the <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation. ">DdMd</a> namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs, or the ppMd postprocessor. Classes defined in the <a class="el" href="namespaceMcMd.html" title="Single-processor Monte Carlo (MC) and molecular dynamics (MD). ">McMd</a> namespace are accessible for use in either mcSim or mdSim, but not in ddSim in ppMd. Classes defined in the <a class="el" href="namespaceSimp.html" title="Classes used by all simpatico molecular simulations. ">Simp</a> namespace can, however, be made accessible for use in any simulation or analysis program.</p>
 <p>As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next <a class="el" href="extend_base_page.html">page</a>.</p>
 <h1><a class="anchor" id="extend_overview_location"></a>
 User File Directories</h1>
@@ -103,7 +103,7 @@ Modules that are intended for distribution (method 2) should be placed in the re
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:45 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

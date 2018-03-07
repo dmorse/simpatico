@@ -65,7 +65,7 @@
 <p>A <a class="el" href="classMcMd_1_1Perturbation.html" title="Model of parameter dependence in a free energy perturbation theory. ">Perturbation</a> object defines a parameter dependent statistical weight of the type used in free energy perturbation theory, replica exchange, and extended ensemble algorithms. In all of these applications, the probability of a microstate X is given by an exponential exp(-W(X,p)), where W(X,p) = beta*H depends upon a perturbation parameter p, H is the system Hamiltonian and beta = 1/kT is inverse temperature. Either the Hamiltonian or the inverse temperature may depend upon the perturbation parameter.</p>
 <p>This class provides a method to modify the system parameters (beta and/or the potential energy parameters) so as to correspond to a given value of p, and methods to evaluate the derivative dW(X,p)/dp and difference W(X, p') - W(X, p) for a given system configuration. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00040">40</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00039">39</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -74,14 +74,16 @@ Inheritance diagram for McMd::Perturbation:</div>
  <div class="center">
   <img src="classMcMd_1_1Perturbation.png" usemap="#McMd::Perturbation_map" alt=""/>
   <map id="McMd::Perturbation_map" name="McMd::Perturbation_map">
-<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="261,112,512,136"/>
-<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="261,56,512,80"/>
-<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="130,0,381,24"/>
-<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="391,0,642,24"/>
-<area href="classMcMd_1_1LinearPerturbation.html" alt="McMd::LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="130,224,381,248"/>
-<area href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter. " alt="McMd::LinearPerturbation&lt; SystemType &gt;" shape="rect" coords="391,224,642,248"/>
-<area href="classMcMd_1_1McEnergyPerturbation.html" title="A Perturbation with a variable inverse temperature. " alt="McMd::McEnergyPerturbation" shape="rect" coords="0,280,251,304"/>
-<area href="classMcMd_1_1McPairPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon()..." alt="McMd::McPairPerturbation&lt; Interaction &gt;" shape="rect" coords="261,280,512,304"/>
+<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. " alt="Util::ParamComposite" shape="rect" coords="880,112,1310,136"/>
+<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. " alt="Util::ParamComponent" shape="rect" coords="880,56,1310,80"/>
+<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects. " alt="Util::Serializable" shape="rect" coords="660,0,1090,24"/>
+<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O. " alt="Util::MpiFileIo" shape="rect" coords="1100,0,1530,24"/>
+<area href="classMcMd_1_1LinearPerturbation.html" alt="McMd::LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="660,224,1090,248"/>
+<area href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter. " alt="McMd::LinearPerturbation&lt; SystemType &gt;" shape="rect" coords="1100,224,1530,248"/>
+<area href="classMcMd_1_1McEnergyPerturbation.html" title="A Perturbation with a variable inverse temperature. " alt="McMd::McEnergyPerturbation" shape="rect" coords="0,280,430,304"/>
+<area href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter. " alt="McMd::McExternalPerturbation&lt; Interaction &gt;" shape="rect" coords="440,280,870,304"/>
+<area href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an..." alt="McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;" shape="rect" coords="880,280,1310,304"/>
+<area href="classMcMd_1_1McPairPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon()..." alt="McMd::McPairPerturbation&lt; Interaction &gt;" shape="rect" coords="1320,280,1750,304"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -196,7 +198,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1890a33d6049597e65bebfdeedcf0249 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a56014258b358c1199253b35da6ebe788">readCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
-<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array parameter.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
+<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
 <tr class="separator:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#af935dd640065219665505094ef0ace20">readOptionalCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
@@ -204,11 +206,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a33a1a1a323f812538e59639e1f01d0b3">readDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
+<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
 <tr class="separator:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae1c1d685198f71875ba8a31371582c3d">readOptionalDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
+<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
 <tr class="separator:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DSymmMatrixParam.html">DSymmMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a0f9f731e59f4e06ebcccfde67fa3cf5c">readDSymmMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int n)</td></tr>
@@ -293,10 +295,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> object to the format array.  <a href="#a2aed32d4ef18bc05a4bc6f02f0ce7010">More...</a><br /></td></tr>
 <tr class="separator:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Begin.html">Begin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8">addBegin</a> (const char *label)</td></tr>
-<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
+<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
 <tr class="separator:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1End.html">End</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8">addEnd</a> ()</td></tr>
-<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
+<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
 <tr class="separator:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Blank.html">Blank</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2">addBlank</a> ()</td></tr>
 <tr class="memdesc:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a new <a class="el" href="classUtil_1_1Blank.html" title="An empty line within a parameter file. ">Blank</a> object, representing a blank line.  <a href="#a72bfd2aef18ed296a2959a2d2020d3d2">More...</a><br /></td></tr>
@@ -372,6 +374,30 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae01a90ae0958b05574e258ce730b1fe9">addComponent</a> (<a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;param, bool isLeaf=true)</td></tr>
 <tr class="memdesc:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. ">ParamComponent</a> object to the format array.  <a href="#ae01a90ae0958b05574e258ce730b1fe9">More...</a><br /></td></tr>
 <tr class="separator:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ScalarParam.html">ScalarParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a05738b050c32951151bcac1c62f908ff">add</a> (std::istream &amp;in, const char *label, Type &amp;value, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new required <a class="el" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable. ">ScalarParam</a> &lt; Type &gt; object.  <a href="#a05738b050c32951151bcac1c62f908ff">More...</a><br /></td></tr>
+<tr class="separator:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArrayParam.html">CArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a654d7f0ca5dc877e09070901d33c3365">addCArray</a> (std::istream &amp;in, const char *label, Type *value, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a required C array parameter.  <a href="#a654d7f0ca5dc877e09070901d33c3365">More...</a><br /></td></tr>
+<tr class="separator:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArrayParam.html">DArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a5678fa4c9664e87979c758184d46d727">addDArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; Type &gt; &amp;array, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable contiguous array template. ">DArray</a> &lt; Type &gt; parameter.  <a href="#a5678fa4c9664e87979c758184d46d727">More...</a><br /></td></tr>
+<tr class="separator:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type , int N&gt; </td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FArrayParam.html">FArrayParam</a>&lt; Type, N &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a7aabaa7835e994678d3c3225df0d7d7a">addFArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1FArray.html">FArray</a>&lt; Type, N &gt; &amp;array, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt; Type, N &gt; array parameter.  <a href="#a7aabaa7835e994678d3c3225df0d7d7a">More...</a><br /></td></tr>
+<tr class="separator:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a9d3774e149a843917646064159a75831">addCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a9d3774e149a843917646064159a75831">More...</a><br /></td></tr>
+<tr class="separator:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ab3fb7b30311e09e54ff86682a8102372">addDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ab3fb7b30311e09e54ff86682a8102372">More...</a><br /></td></tr>
+<tr class="separator:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classUtil_1_1ParamComponent"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classUtil_1_1ParamComponent')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td></tr>
 <tr class="memitem:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">ParamComponent</a> ()</td></tr>
 <tr class="memdesc:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f859f325ca7d36747d28c9677fe0bfc">More...</a><br /></td></tr>
@@ -461,7 +487,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00017">17</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00016">16</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
@@ -490,7 +516,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00028">28</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00027">27</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
 </div>
 </div>
@@ -527,11 +553,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00034">34</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00033">33</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00156">rank_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00184">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00178">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00166">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00160">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00172">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00190">parameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00155">rank_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00150">size_</a>.</p>
 
-<p>Referenced by <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, and <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00030">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00044">McMd::McExternalPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00139">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, and <a class="el" href="McPairExternalPerturbation_8h_source.html#l00141">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -569,11 +595,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#af2821fa816c3caba695839900f797314">McMd::McPairPerturbation&lt; Interaction &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00070">70</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00069">69</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00151">size_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00170">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00191">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Perturbation_8h_source.html#l00184">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00178">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00166">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00160">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00172">parameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00190">parameters_</a>, <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>, and <a class="el" href="Perturbation_8h_source.html#l00150">size_</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairPerturbation_8h_source.html#l00148">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McPairPerturbation_8h_source.html#l00149">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -609,11 +635,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a3c430a4e31a9573eadb06ab89d3bf780">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00092">92</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00091">91</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="Perturbation_8h_source.html#l00185">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00179">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00167">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, and <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>.</p>
+<p>References <a class="el" href="Perturbation_8h_source.html#l00184">finalParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00178">initialParameter_</a>, <a class="el" href="Perturbation_8h_source.html#l00166">mode_</a>, <a class="el" href="Perturbation_8h_source.html#l00160">nParameters_</a>, <a class="el" href="Perturbation_8h_source.html#l00172">parameter_</a>, and <a class="el" href="Perturbation_8h_source.html#l00190">parameters_</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00936">McMd::System::savePerturbation()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l01028">McMd::System::savePerturbation()</a>.</p>
 
 </div>
 </div>
@@ -640,9 +666,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00111">111</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00110">110</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="Perturbation_8cpp_source.html#l00120">parameter()</a>, <a class="el" href="Perturbation_8h_source.html#l00173">parameter_</a>, and <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>.</p>
+<p>References <a class="el" href="Perturbation_8cpp_source.html#l00119">parameter()</a>, <a class="el" href="Perturbation_8h_source.html#l00172">parameter_</a>, and <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">setParameter()</a>.</p>
 
 </div>
 </div>
@@ -680,11 +706,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <p>Returns the value of the perturbation parameter p[i]. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00120">120</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00119">119</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="Perturbation_8h_source.html#l00191">parameters_</a>.</p>
+<p>References <a class="el" href="Perturbation_8h_source.html#l00190">parameters_</a>.</p>
 
-<p>Referenced by <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00184">McMd::BennettsMethod::sample()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
+<p>Referenced by <a class="el" href="LinearPerturbation_8h_source.html#l00093">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00184">McMd::BennettsMethod::sample()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00110">setParameter()</a>.</p>
 
 </div>
 </div>
@@ -704,11 +730,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the number of parameters per system. </p>
 <p>Returns the number of perturbation parameters for this system. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00126">126</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8cpp_source.html#l00125">125</a> of file <a class="el" href="Perturbation_8cpp_source.html">Perturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="Perturbation_8h_source.html#l00161">nParameters_</a>.</p>
+<p>References <a class="el" href="Perturbation_8h_source.html#l00160">nParameters_</a>.</p>
 
-<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00148">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00029">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00138">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>.</p>
+<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="LinearPerturbation_8h_source.html#l00093">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00149">McMd::McPairPerturbation&lt; Interaction &gt;::loadParameters()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00030">McMd::McEnergyPerturbation::readParameters()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00044">McMd::McExternalPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00139">McMd::McPairPerturbation&lt; Interaction &gt;::readParameters()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00141">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::readParameters()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>.</p>
 
 </div>
 </div>
@@ -737,7 +763,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Get perturbation parameter p[i] of index i for this system. </p>
 <p>Returns the value of the perturbation parameter p[i]. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#a77da364af1d74130348dcc0fe21d0112">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#add7292fa260a4568a9f1cc2871eaac2f">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#ad1ffd1462bd055f37dfdba3783d9b041">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#a77da364af1d74130348dcc0fe21d0112">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#aeeb771eeb2bbb9d109ce1849548c5141">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#add7292fa260a4568a9f1cc2871eaac2f">McMd::McEnergyPerturbation</a>.</p>
 
 </div>
 </div>
@@ -766,9 +792,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Get derivative of the Boltzmann weight W(X,p) with respect to the perturbation parameter p[i] of index i. </p>
 <p>For a system in which W(X,p) = beta*H depends on a microstate X and a parameter p, this method returns the value of dW(X, p)/dp[i] for the current system microstate (i.e., for the current particle positions). </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab88b42a0fdf0167212f7ec344ddba6fe">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a83e5657cb9f9c93b1e800d7e697b792f">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#a81b7765cacdd1cefd671c90f20a6bae6">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab88b42a0fdf0167212f7ec344ddba6fe">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#ae83f2ee3c92df467ece9e0e1c6c813d0">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a83e5657cb9f9c93b1e800d7e697b792f">McMd::McEnergyPerturbation</a>.</p>
 
-<p>Referenced by <a class="el" href="LinearPerturbation_8h_source.html#l00094">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="LinearPerturbation_8h_source.html#l00093">McMd::LinearPerturbation&lt; SystemType &gt;::difference()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>.</p>
 
 </div>
 </div>
@@ -833,9 +859,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Sets the perturbation parameter in the associated system. </p>
 <p>This method modifies the parameters of the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a> so as to correspond to the value of the parameter member variable. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab66e56b4de777e867a5e8116432906f2">McMd::McPairPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#af5d2a104e1f17c0886e14f185f86de09">McMd::McEnergyPerturbation</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairExternalPerturbation.html#a95faf0c3ae1af02709f8f1ef959adf01">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;</a>, <a class="el" href="classMcMd_1_1McPairPerturbation.html#ab66e56b4de777e867a5e8116432906f2">McMd::McPairPerturbation&lt; Interaction &gt;</a>, <a class="el" href="classMcMd_1_1McExternalPerturbation.html#a0a119cff727b402b7129c88cc777a3cf">McMd::McExternalPerturbation&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1McEnergyPerturbation.html#af5d2a104e1f17c0886e14f185f86de09">McMd::McEnergyPerturbation</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00110">setParameter()</a>.</p>
 
 </div>
 </div>
@@ -860,9 +886,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Number of systems (e.g., communicator size) </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00151">151</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00150">150</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -886,9 +912,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Index for this system (e.g., communicator size) </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00156">156</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00155">155</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -912,9 +938,9 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Number of perturbation parameters associated with a <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00161">161</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00160">160</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00126">getNParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00125">getNParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>.</p>
 
 </div>
 </div>
@@ -939,9 +965,9 @@ Additional Inherited Members</h2></td></tr>
 <p>mode 0: parameters of all replica systems are specified. </p>
 <p>mode 1: parameters of first and last replica systems are specified. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00167">167</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00166">166</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>.</p>
 
 </div>
 </div>
@@ -966,9 +992,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Value of the perturbation parameter for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
 <p>parameter is a DMatrix of dimensions 1xnParameters. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00173">173</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00172">172</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairPerturbation_8h_source.html#l00195">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00040">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00176">McMd::McPairPerturbation&lt; Interaction &gt;::setParameter()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00111">setParameter()</a>.</p>
+<p>Referenced by <a class="el" href="McExternalPerturbation_8cpp_source.html#l00092">McMd::McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00216">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00196">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00041">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00071">McMd::McExternalPerturbation&lt; Interaction &gt;::setParameter()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00177">McMd::McPairPerturbation&lt; Interaction &gt;::setParameter()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00186">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::setParameter()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00110">setParameter()</a>.</p>
 
 </div>
 </div>
@@ -993,9 +1019,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Value of the perturbation parameter for the first replica <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
 <p>initialParameter is a DMatrix of dimensions 1xnParameters. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00179">179</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00178">178</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>.</p>
 
 </div>
 </div>
@@ -1020,9 +1046,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Value of the perturbation parameter for the last replica <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary. ">System</a>. </p>
 <p>finalParameter is a DMatrix of dimensions 1xnParameters. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00185">185</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00184">184</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>.</p>
 
 </div>
 </div>
@@ -1047,9 +1073,9 @@ Additional Inherited Members</h2></td></tr>
 <p>Value of the perturbation parameter for all the replica Systems. </p>
 <p>parameters is a DMatrix of dimensions nProcsxnParameters. </p>
 
-<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00191">191</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
+<p>Definition at line <a class="el" href="Perturbation_8h_source.html#l00190">190</a> of file <a class="el" href="Perturbation_8h_source.html">Perturbation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00120">parameter()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00034">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">save()</a>.</p>
+<p>Referenced by <a class="el" href="Perturbation_8cpp_source.html#l00069">loadParameters()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00119">parameter()</a>, <a class="el" href="Perturbation_8cpp_source.html#l00033">readParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00091">save()</a>.</p>
 
 </div>
 </div>
@@ -1061,7 +1087,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:39 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -61,7 +61,7 @@
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An instantaneous molecular dynamics configuration. </p>
 <p>A <a class="el" href="classTools_1_1Configuration.html" title="An instantaneous molecular dynamics configuration. ">Configuration</a> has:</p><ul>
-<li>a <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c" title="Boundary is an alias for the periodic boundary condition class. ">Util::Boundary</a></li>
+<li>a Util::Boundary</li>
 <li>an <a class="el" href="classTools_1_1AtomStorage.html" title="Container for a set of atoms. ">AtomStorage</a> container for atoms</li>
 <li>a <a class="el" href="classTools_1_1GroupStorage.html" title="A container for Group&lt;N&gt; objects. ">GroupStorage</a> for each type of covalent group </li>
 </ul>
@@ -100,12 +100,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a00649731fd23eaa63ef05383ea5e6543"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a00649731fd23eaa63ef05383ea5e6543">clear</a> ()</td></tr>
 <tr class="memdesc:a00649731fd23eaa63ef05383ea5e6543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all atoms and groups.  <a href="#a00649731fd23eaa63ef05383ea5e6543">More...</a><br /></td></tr>
 <tr class="separator:a00649731fd23eaa63ef05383ea5e6543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab847bc929c2f1ba2e50e3fc28a2c796"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#aab847bc929c2f1ba2e50e3fc28a2c796">boundary</a> ()</td></tr>
+<tr class="memitem:aab847bc929c2f1ba2e50e3fc28a2c796"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#aab847bc929c2f1ba2e50e3fc28a2c796">boundary</a> ()</td></tr>
 <tr class="memdesc:aab847bc929c2f1ba2e50e3fc28a2c796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary by non-const reference.  <a href="#aab847bc929c2f1ba2e50e3fc28a2c796">More...</a><br /></td></tr>
 <tr class="separator:aab847bc929c2f1ba2e50e3fc28a2c796"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a099cd8e0fcd4349f5f5d9ea8389f8b79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTools_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a099cd8e0fcd4349f5f5d9ea8389f8b79">atoms</a> ()</td></tr>
 <tr class="memdesc:a099cd8e0fcd4349f5f5d9ea8389f8b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classTools_1_1AtomStorage.html" title="Container for a set of atoms. ">AtomStorage</a>.  <a href="#a099cd8e0fcd4349f5f5d9ea8389f8b79">More...</a><br /></td></tr>
 <tr class="separator:a099cd8e0fcd4349f5f5d9ea8389f8b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7608f2c0f46a007b2057b5bd65511af4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a7608f2c0f46a007b2057b5bd65511af4">bonds</a> ()</td></tr>
+<tr class="memdesc:a7608f2c0f46a007b2057b5bd65511af4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Bond storage.  <a href="#a7608f2c0f46a007b2057b5bd65511af4">More...</a><br /></td></tr>
+<tr class="separator:a7608f2c0f46a007b2057b5bd65511af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acea3a7c1a36522c6fc14660befcff913"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 3 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#acea3a7c1a36522c6fc14660befcff913">angles</a> ()</td></tr>
+<tr class="memdesc:acea3a7c1a36522c6fc14660befcff913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Angle storage.  <a href="#acea3a7c1a36522c6fc14660befcff913">More...</a><br /></td></tr>
+<tr class="separator:acea3a7c1a36522c6fc14660befcff913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9710f903030dfca92f6ea82bf62622ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 4 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a9710f903030dfca92f6ea82bf62622ad">dihedrals</a> ()</td></tr>
+<tr class="memdesc:a9710f903030dfca92f6ea82bf62622ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Dihedral storage.  <a href="#a9710f903030dfca92f6ea82bf62622ad">More...</a><br /></td></tr>
+<tr class="separator:a9710f903030dfca92f6ea82bf62622ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073f030fbbb8100fe38890a1a0364d9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 4 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a073f030fbbb8100fe38890a1a0364d9e">impropers</a> ()</td></tr>
+<tr class="memdesc:a073f030fbbb8100fe38890a1a0364d9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Improper dihedral storage.  <a href="#a073f030fbbb8100fe38890a1a0364d9e">More...</a><br /></td></tr>
+<tr class="separator:a073f030fbbb8100fe38890a1a0364d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03fc49ed765aa81d8a8485afd5972071"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTools_1_1Configuration.html#a03fc49ed765aa81d8a8485afd5972071">nSpecies</a> () const </td></tr>
 <tr class="memdesc:a03fc49ed765aa81d8a8485afd5972071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of species.  <a href="#a03fc49ed765aa81d8a8485afd5972071">More...</a><br /></td></tr>
 <tr class="separator:a03fc49ed765aa81d8a8485afd5972071"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,7 +204,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1890a33d6049597e65bebfdeedcf0249 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a56014258b358c1199253b35da6ebe788">readCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
-<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array parameter.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
+<tr class="memdesc:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a56014258b358c1199253b35da6ebe788">More...</a><br /></td></tr>
 <tr class="separator:a56014258b358c1199253b35da6ebe788 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#af935dd640065219665505094ef0ace20">readOptionalCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np)</td></tr>
@@ -200,11 +212,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af935dd640065219665505094ef0ace20 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a33a1a1a323f812538e59639e1f01d0b3">readDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
+<tr class="memdesc:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#a33a1a1a323f812538e59639e1f01d0b3">More...</a><br /></td></tr>
 <tr class="separator:a33a1a1a323f812538e59639e1f01d0b3 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae1c1d685198f71875ba8a31371582c3d">readOptionalDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n)</td></tr>
-<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; C matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
+<tr class="memdesc:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read an optional <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ae1c1d685198f71875ba8a31371582c3d">More...</a><br /></td></tr>
 <tr class="separator:ae1c1d685198f71875ba8a31371582c3d inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a0f9f731e59f4e06ebcccfde67fa3cf5c inherit pub_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DSymmMatrixParam.html">DSymmMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a0f9f731e59f4e06ebcccfde67fa3cf5c">readDSymmMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int n)</td></tr>
@@ -289,10 +301,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a child <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file. ">ParamComposite</a> object to the format array.  <a href="#a2aed32d4ef18bc05a4bc6f02f0ce7010">More...</a><br /></td></tr>
 <tr class="separator:a2aed32d4ef18bc05a4bc6f02f0ce7010 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Begin.html">Begin</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8">addBegin</a> (const char *label)</td></tr>
-<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
+<tr class="memdesc:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block. ">Begin</a> object representing a class name and bracket.  <a href="#a416792811b4e1c8348203934a95167f8">More...</a><br /></td></tr>
 <tr class="separator:a416792811b4e1c8348203934a95167f8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1End.html">End</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8">addEnd</a> ()</td></tr>
-<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
+<tr class="memdesc:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a closing bracket.  <a href="#a8678701878ef3dfc27ce3bedf403aff8">More...</a><br /></td></tr>
 <tr class="separator:a8678701878ef3dfc27ce3bedf403aff8 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Blank.html">Blank</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2">addBlank</a> ()</td></tr>
 <tr class="memdesc:a72bfd2aef18ed296a2959a2d2020d3d2 inherit pub_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and add a new <a class="el" href="classUtil_1_1Blank.html" title="An empty line within a parameter file. ">Blank</a> object, representing a blank line.  <a href="#a72bfd2aef18ed296a2959a2d2020d3d2">More...</a><br /></td></tr>
@@ -382,6 +394,30 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ae01a90ae0958b05574e258ce730b1fe9">addComponent</a> (<a class="el" href="classUtil_1_1ParamComponent.html">ParamComponent</a> &amp;param, bool isLeaf=true)</td></tr>
 <tr class="memdesc:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file. ">ParamComponent</a> object to the format array.  <a href="#ae01a90ae0958b05574e258ce730b1fe9">More...</a><br /></td></tr>
 <tr class="separator:ae01a90ae0958b05574e258ce730b1fe9 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ScalarParam.html">ScalarParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a05738b050c32951151bcac1c62f908ff">add</a> (std::istream &amp;in, const char *label, Type &amp;value, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new required <a class="el" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable. ">ScalarParam</a> &lt; Type &gt; object.  <a href="#a05738b050c32951151bcac1c62f908ff">More...</a><br /></td></tr>
+<tr class="separator:a05738b050c32951151bcac1c62f908ff inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArrayParam.html">CArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a654d7f0ca5dc877e09070901d33c3365">addCArray</a> (std::istream &amp;in, const char *label, Type *value, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a required C array parameter.  <a href="#a654d7f0ca5dc877e09070901d33c3365">More...</a><br /></td></tr>
+<tr class="separator:a654d7f0ca5dc877e09070901d33c3365 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArrayParam.html">DArrayParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a5678fa4c9664e87979c758184d46d727">addDArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; Type &gt; &amp;array, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable contiguous array template. ">DArray</a> &lt; Type &gt; parameter.  <a href="#a5678fa4c9664e87979c758184d46d727">More...</a><br /></td></tr>
+<tr class="separator:a5678fa4c9664e87979c758184d46d727 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type , int N&gt; </td></tr>
+<tr class="memitem:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FArrayParam.html">FArrayParam</a>&lt; Type, N &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a7aabaa7835e994678d3c3225df0d7d7a">addFArray</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1FArray.html">FArray</a>&lt; Type, N &gt; &amp;array, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1FArray.html" title="A fixed size (static) contiguous array template. ">FArray</a> &lt; Type, N &gt; array parameter.  <a href="#a7aabaa7835e994678d3c3225df0d7d7a">More...</a><br /></td></tr>
+<tr class="separator:a7aabaa7835e994678d3c3225df0d7d7a inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1CArray2DParam.html">CArray2DParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#a9d3774e149a843917646064159a75831">addCArray2D</a> (std::istream &amp;in, const char *label, Type *value, int m, int n, int np, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add (but do not read) a <a class="el" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array. ">CArray2DParam</a> &lt; Type &gt; 2D C-array.  <a href="#a9d3774e149a843917646064159a75831">More...</a><br /></td></tr>
+<tr class="separator:a9d3774e149a843917646064159a75831 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrixParam.html">DMatrixParam</a>&lt; Type &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComposite.html#ab3fb7b30311e09e54ff86682a8102372">addDMatrix</a> (std::istream &amp;in, const char *label, <a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; Type &gt; &amp;matrix, int m, int n, bool <a class="el" href="classUtil_1_1ParamComposite.html#a94c3774a4736ed9c2bf96b0a124c7187">isRequired</a>=true)</td></tr>
+<tr class="memdesc:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add and read a required <a class="el" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix. ">DMatrix</a> &lt; Type &gt; matrix parameter.  <a href="#ab3fb7b30311e09e54ff86682a8102372">More...</a><br /></td></tr>
+<tr class="separator:ab3fb7b30311e09e54ff86682a8102372 inherit pro_methods_classUtil_1_1ParamComposite"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classUtil_1_1ParamComponent"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classUtil_1_1ParamComponent')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td></tr>
 <tr class="memitem:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">ParamComponent</a> ()</td></tr>
 <tr class="memdesc:a6f859f325ca7d36747d28c9677fe0bfc inherit pro_methods_classUtil_1_1ParamComponent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f859f325ca7d36747d28c9677fe0bfc">More...</a><br /></td></tr>
@@ -480,7 +516,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Configuration_8cpp_source.html#l00051">51</a> of file <a class="el" href="Configuration_8cpp_source.html">Configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="tools_2storage_2AtomStorage_8cpp_source.html#l00029">Tools::AtomStorage::allocate()</a>.</p>
+<p>References <a class="el" href="tools_2storage_2AtomStorage_8cpp_source.html#l00029">Tools::AtomStorage::allocate()</a>, and <a class="el" href="DSArray_8h_source.html#l00247">Util::DSArray&lt; Data &gt;::allocate()</a>.</p>
 
 <p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00098">Tools::Processor::readParameters()</a>.</p>
 
@@ -503,7 +539,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Configuration_8cpp_source.html#l00104">104</a> of file <a class="el" href="Configuration_8cpp_source.html">Configuration.cpp</a>.</p>
 
-<p>References <a class="el" href="tools_2storage_2AtomStorage_8cpp_source.html#l00066">Tools::AtomStorage::clear()</a>.</p>
+<p>References <a class="el" href="tools_2storage_2AtomStorage_8cpp_source.html#l00066">Tools::AtomStorage::clear()</a>, and <a class="el" href="DSArray_8h_source.html#l00374">Util::DSArray&lt; Data &gt;::clear()</a>.</p>
 
 <p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00259">Tools::Processor::analyzeConfigs()</a>, and <a class="el" href="Processor_8cpp_source.html#l00239">Tools::Processor::readConfig()</a>.</p>
 
@@ -517,7 +553,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp; Tools::Configuration::boundary </td>
+          <td class="memname"><a class="el" href="group__Boundary__Module.html#ga92e171f9a625eaf7df3fa8ddc794e4dc">Boundary</a> &amp; Tools::Configuration::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -534,7 +570,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Configuration_8h_source.html#l00180">180</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DdMdConfigReader_8cpp_source.html#l00056">Tools::DdMdConfigReader::readConfig()</a>, <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, <a class="el" href="tools_2trajectory_2DdMdTrajectoryReader_8cpp_source.html#l00044">Tools::DdMdTrajectoryReader::readFrame()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00138">Tools::AtomMSD::sample()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00092">Tools::PairEnergy::sample()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00106">Tools::AtomMSD::setup()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00075">Tools::PairEnergy::setup()</a>, <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>, <a class="el" href="DdMdConfigWriter_8cpp_source.html#l00055">Tools::DdMdConfigWriter::writeConfig()</a>, and <a class="el" href="HoomdConfigWriter_8cpp_source.html#l00096">Tools::HoomdConfigWriter::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="DdMdConfigReader_8cpp_source.html#l00056">Tools::DdMdConfigReader::readConfig()</a>, <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, <a class="el" href="tools_2trajectory_2DdMdTrajectoryReader_8cpp_source.html#l00046">Tools::DdMdTrajectoryReader::readFrame()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00139">Tools::AtomMSD::sample()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00092">Tools::PairEnergy::sample()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00107">Tools::AtomMSD::setup()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00075">Tools::PairEnergy::setup()</a>, <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>, <a class="el" href="DdMdConfigWriter_8cpp_source.html#l00055">Tools::DdMdConfigWriter::writeConfig()</a>, and <a class="el" href="HoomdConfigWriter_8cpp_source.html#l00096">Tools::HoomdConfigWriter::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -563,7 +599,123 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Configuration_8h_source.html#l00183">183</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ConfigReader_8cpp_source.html#l00094">Tools::ConfigReader::addAtomsToSpecies()</a>, <a class="el" href="DdMdConfigReader_8cpp_source.html#l00056">Tools::DdMdConfigReader::readConfig()</a>, <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, <a class="el" href="tools_2trajectory_2LammpsDumpReader_8cpp_source.html#l00034">Tools::LammpsDumpReader::readFrame()</a>, <a class="el" href="tools_2trajectory_2DdMdTrajectoryReader_8cpp_source.html#l00044">Tools::DdMdTrajectoryReader::readFrame()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00092">Tools::PairEnergy::sample()</a>, <a class="el" href="ConfigReader_8cpp_source.html#l00043">Tools::ConfigReader::setAtomContexts()</a>, <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>, <a class="el" href="DdMdConfigWriter_8cpp_source.html#l00055">Tools::DdMdConfigWriter::writeConfig()</a>, and <a class="el" href="HoomdConfigWriter_8cpp_source.html#l00096">Tools::HoomdConfigWriter::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ConfigReader_8cpp_source.html#l00094">Tools::ConfigReader::addAtomsToSpecies()</a>, <a class="el" href="DdMdConfigReader_8cpp_source.html#l00056">Tools::DdMdConfigReader::readConfig()</a>, <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, <a class="el" href="tools_2trajectory_2LammpsDumpReader_8cpp_source.html#l00034">Tools::LammpsDumpReader::readFrame()</a>, <a class="el" href="tools_2trajectory_2DdMdTrajectoryReader_8cpp_source.html#l00046">Tools::DdMdTrajectoryReader::readFrame()</a>, <a class="el" href="PairEnergy_8cpp_source.html#l00092">Tools::PairEnergy::sample()</a>, <a class="el" href="ConfigReader_8cpp_source.html#l00043">Tools::ConfigReader::setAtomContexts()</a>, <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>, <a class="el" href="DdMdConfigWriter_8cpp_source.html#l00055">Tools::DdMdConfigWriter::writeConfig()</a>, and <a class="el" href="HoomdConfigWriter_8cpp_source.html#l00096">Tools::HoomdConfigWriter::writeConfig()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7608f2c0f46a007b2057b5bd65511af4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 2 &gt; &amp; Tools::Configuration::bonds </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Bond storage. </p>
+
+<p>Definition at line <a class="el" href="Configuration_8h_source.html#l00187">187</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
+
+<p>Referenced by <a class="el" href="DdMdConfigWriter_8cpp_source.html#l00028">Tools::DdMdConfigWriter::DdMdConfigWriter()</a>, <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, and <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acea3a7c1a36522c6fc14660befcff913"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 3 &gt; &amp; Tools::Configuration::angles </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Angle storage. </p>
+
+<p>Definition at line <a class="el" href="Configuration_8h_source.html#l00192">192</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
+
+<p>Referenced by <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, and <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9710f903030dfca92f6ea82bf62622ad"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 4 &gt; &amp; Tools::Configuration::dihedrals </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Dihedral storage. </p>
+
+<p>Definition at line <a class="el" href="Configuration_8h_source.html#l00197">197</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
+
+<p>Referenced by <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>, and <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00026">Tools::TrajectoryWriter::TrajectoryWriter()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a073f030fbbb8100fe38890a1a0364d9e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classTools_1_1GroupStorage.html">GroupStorage</a>&lt; 4 &gt; &amp; Tools::Configuration::impropers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Improper dihedral storage. </p>
+
+<p>Definition at line <a class="el" href="Configuration_8h_source.html#l00200">200</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
+
+<p>Referenced by <a class="el" href="HoomdConfigReader_8cpp_source.html#l00071">Tools::HoomdConfigReader::readConfig()</a>.</p>
 
 </div>
 </div>
@@ -629,7 +781,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Configuration_8h_source.html#l00207">207</a> of file <a class="el" href="Configuration_8h_source.html">Configuration.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ConfigReader_8cpp_source.html#l00094">Tools::ConfigReader::addAtomsToSpecies()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00061">Tools::AtomMSD::readParameters()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00138">Tools::AtomMSD::sample()</a>, <a class="el" href="ConfigReader_8cpp_source.html#l00043">Tools::ConfigReader::setAtomContexts()</a>, and <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00106">Tools::AtomMSD::setup()</a>.</p>
+<p>Referenced by <a class="el" href="ConfigReader_8cpp_source.html#l00094">Tools::ConfigReader::addAtomsToSpecies()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00062">Tools::AtomMSD::readParameters()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00139">Tools::AtomMSD::sample()</a>, <a class="el" href="ConfigReader_8cpp_source.html#l00043">Tools::ConfigReader::setAtomContexts()</a>, and <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00107">Tools::AtomMSD::setup()</a>.</p>
 
 </div>
 </div>
@@ -641,7 +793,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 6 2017 17:05:41 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2018 12:59:59 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
