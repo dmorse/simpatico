@@ -1,25 +1,49 @@
 Housekeeping
 ------------
 
-- Add *.dox files for all ParamComposite subclasses.
+- Add *.dox files to document file format of all interaction classes
+  (done?), potential classes, and other ParamComposite subclasses.
 
+- Add guide to class-level documentation to end of user manual. 
+  
+- Add pages listing *.dox files to namespace level discussions in
+  source code guide in manual.
+
+- Existing classes requiring param file documentation:
+
+   McSimulation {
+      Util::FileMaster
+      SpeciesManager
+      Random
+      MdSystem{
+        PairPotential
+        BondPotential
+        AnglePotential
+        DihedralPotential
+        ExternalPotential
+        EnergyEnsemble
+        BoundaryEnsemble
+        Integrators
+        AnalyzerManager
+      }
+    }
+
+    McSimulation {
+       McSystem{ 
+          (most of above, as well as...)
+          McMoveManager
+       }
+    }
+
+     
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
 
-- Review analyzers, try to create base classes and create more
-  standardized output formats.
 
 Constant Pressure MD 
 --------------------
 
 - Port and test NptIntegrator subclass from DdMd.
-
-Coulomb Interactions 
---------------------
-
-- Create PPPM Coulomb using spines of arbitrary order and error
-  checking. Carefully validate this, and use it as the basis of 
-  an implemenation in ddMd.
 
 Non-Orthorhombic (Rigid) Boundaries
 -----------------------------------
