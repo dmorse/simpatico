@@ -1971,6 +1971,7 @@ namespace DdMd
       return pressure;
    }
 
+   #if 0
    #ifdef UTIL_MPI
    /*
    * Compute all pair energy contributions.
@@ -1995,6 +1996,7 @@ namespace DdMd
       pairEnergies = pairPotential().pairEnergies();
       return pairEnergies;
    }
+   #endif
 
    /*
    * Mark all potential energies as unknown.

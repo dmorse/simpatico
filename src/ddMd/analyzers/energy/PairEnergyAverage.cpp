@@ -108,16 +108,20 @@ namespace DdMd
    void PairEnergyAverage::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         simulation().computePairEnergies();
-         if (simulation().domain().isMaster()) {
-            DMatrix<double> pair = simulation().pairEnergies();
-            for (int i = 0; i < simulation().nAtomType(); ++i){
-               for (int j = 0; j < simulation().nAtomType(); ++j){
+         Simulation& sim = simulation();
+         PairPotential& potential = sim.pairPotential();
+         MPI::Intracomm& communicator = sim.domain().communicator();
+         potential.computePairEnergies(communicator);
+         //sim.computePairEnergies();
+         if (sim.domain().isMaster()) {
+            DMatrix<double> pair = potential.pairEnergies();
+            for (int i = 0; i < sim.nAtomType(); ++i){
+               for (int j = 0; j < sim.nAtomType(); ++j){
                   pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
                   pair(j,i) = pair(i,j);
                }
             }
-            accumulator_->sample(pair(pairs_[0],pairs_[1]));
+            accumulator_->sample(pair(pairs_[0], pairs_[1]));
          }
       }
    }
