@@ -40,7 +40,7 @@ namespace DdMd
       virtual ~PairEnergyAnalyzer(); 
    
       /**
-      * Read dumpPrefix and interval.
+      * Read interval, outputFileName and typeIdPair. 
       *
       * \param in input parameter file
       */
