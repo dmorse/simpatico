@@ -1,8 +1,8 @@
 Housekeeping
 ------------
 
-- Add *.dox files to document file format of interaction classes,
-  potential classes, and other ParamComposite subclasses.
+- Add *.dox files to document file format of all interaction classes
+  (done?), potential classes, and other ParamComposite subclasses.
 
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
@@ -34,37 +34,18 @@ Deformable Boundaries
 - Generalize snapshot and obsolete pair list methods to use 
   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
-AtomType
---------
-
-- Add static bool hasAtomDiameters_ and non-static double diameter_ members
-
-- Simulation a friend of AtomType, so that static hasAtomDiameters
-  variable can be read in Simulation block of the param file. Alternatively,
-  provide a static function to optionall read this parameter.
-
-- Add code to read diameter_ member if hasAtomDiametrers_. 
-
-Species
--------
-
-- Move Species, SpeciesGroup etc. to a new Topo namespace, so the Species
-  class heirarchy can be used for analysis in the Tool namespace.
-
 Serialization
 -------------
 
-- Test save / load with perturbation
-- Test save / load with replica move
-- Test MD serialization after forcing pair list rebuild upon restart output
-- Move restart interval and file name, and isInitialized_  to Simulation base 
-  classs.
+- Test MD serialization after forcing pair list rebuild upon restart output.
+
+- Move restart interval and file name, and isInitialized_  to Simulation 
+  base classs.
 
 Perturbation
 ------------
 
-- Modify so that perturbation can be used without MPI, or change conditional 
-  compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
+- Revert perturbation to a function of one variable.
 
 Interactions (Design change):
 -----------------------------
@@ -76,15 +57,26 @@ Interactions (Design change):
 
 - Change file format to read typeId (ids) << Interaction.
 
-SystemAccess base classes
--------------------------
+SystemInterface base classes
+----------------------------
 
-- Rename SubSystem SystemAccess
-- Define (Mc|Md)SystemAccess classes with potential energy accessors
-- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess
+- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemInterface
 - Remove replace system().typePotential() by typePotential() in analyzers
-- Derive SystemMcMove from a protected McSystemAccess
+- Derive SystemMcMove from a protected McSystemInterface
 - Remove replace system().typePotential() by typePotential() in mcMoves
-- Derive MdIntegrator from a protected MdSystemAccess
+- Derive MdIntegrator from a protected MdSystemInterface
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
+
+AtomType Diameters
+------------------
+
+Idea: Provide atom diameters for use by generators:
+
+- Add static bool hasAtomDiameters_ and non-static double diameter_ members
+
+- Simulation a friend of AtomType, so that static hasAtomDiameters
+  variable can be read in Simulation block of the param file. Alternatively,
+  provide a static function to optionally read this parameter.
+
+- Add code to read diameter_ member if AtomType::hasAtomDiameters_ is true. 
 

@@ -41,6 +41,7 @@ namespace McMd
       nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
+      commandManagerPtr_(0),
       moleculeCapacity_(0),
       nAtomType_(-1),
       atomCapacity_(0)
@@ -71,6 +72,10 @@ namespace McMd
       #ifdef SIMP_TETHER
       , hasTether_(-1)
       #endif
+      #ifdef SIMP_SPECIAL
+      , hasSpecial_(-1)
+      #endif
+      , hasSpecies_(false)
       , communicatorPtr_(&communicator)
    {
       setClassName("Simulation");
@@ -84,7 +89,8 @@ namespace McMd
       commitMpiTypes();
 
       // Set directory Id in FileMaster to MPI processor rank.
-      fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
+      int rank = communicatorPtr_->Get_rank();
+      fileMaster_.setDirectoryId(rank);
 
       // Set log file for processor n to a new file named "n/log"
       // Relies on initialization of FileMaster outputPrefix to "" (empty).
@@ -103,6 +109,7 @@ namespace McMd
       nSystem_(1),
       speciesManagerPtr_(0),
       analyzerManagerPtr_(0),
+      commandManagerPtr_(0),
       moleculeCapacity_(0),
       nAtomType_(-1),
       atomCapacity_(0)
@@ -133,6 +140,10 @@ namespace McMd
       #ifdef SIMP_TETHER
       , hasTether_(-1)
       #endif
+      #ifdef SIMP_SPECIAL
+      , hasSpecial_(-1)
+      #endif
+      , hasSpecies_(false)
       #ifdef UTIL_MPI
       , communicatorPtr_(0)
       #endif
@@ -160,17 +171,29 @@ namespace McMd
       #endif
    }
 
+   /*
+   * Set AnalyzerManager - protected, called by subclass constructor.
+   */
+   void Simulation::setAnalyzerManager(AnalyzerManager* ptr)
+   {  analyzerManagerPtr_ = ptr; }
+
+   /*
+   * Set CommandManager - protected, called by subclass constructor.
+   */
+   void Simulation::setCommandManager(CommandManager* ptr)
+   {  commandManagerPtr_ = ptr; }
+
    #ifdef UTIL_MPI
    /*
    * Set an MPI job to read a single parameter file, from std::cin.
    */
    void Simulation::setIoCommunicator(MPI::Intracomm& communicator)
    {
-      if (communicatorPtr_ == 0) {
+      if (!hasCommunicator()) {
          UTIL_THROW("No communicator was passed to constructor");
       } else 
       if (communicatorPtr_ != &communicator) {
-         UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
+         UTIL_THROW("ParamCommunicator must be the one passed to constructor");
       }
       fileMaster_.setCommonControl();
       ParamComponent::setIoCommunicator(communicator);
@@ -240,9 +263,17 @@ namespace McMd
       }
       #endif
       #ifdef SIMP_TETHER
-      read<int>(in, "hasTether", hasTether_);
+      hasTether_ = 0; // Default value 
+      readOptional<int>(in, "hasTether", hasTether_);
       if (hasTether_ < 0) {
          UTIL_THROW("hasTether must be >= 0");
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      hasSpecial_ = 0; // Default value 
+      readOptional<int>(in, "hasSpecial", hasSpecial_); 
+      if (hasSpecial_ < 0) {
+         UTIL_THROW("hasSpecial must be >= 0");
       }
       #endif
 
@@ -269,9 +300,22 @@ namespace McMd
 
       readParamComposite(in, random_);
 
-      // Allocate and initialize all private arrays.
-      initialize();
+      // Allocate, initialize arrays that require Species data.
+      initializeSpeciesData();
 
+      UTIL_ASSERT(hasSpecies());
+   }
+
+
+   /*
+   * Open, write and close a parameter file.
+   */
+   void Simulation::writeParam(std::string filename) 
+   {
+      std::ofstream file;
+      fileMaster().openOutputFile(filename, file);
+      writeParam(file);
+      file.close();
    }
 
    /*
@@ -309,6 +353,10 @@ namespace McMd
       hasTether_ = false;
       loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
+      #ifdef SIMP_SPECIAL
+      hasSpecial_ = 0;
+      loadParameter<int>(ar, "hasSpecial", hasSpecial_, false);
+      #endif
 
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
@@ -327,7 +375,9 @@ namespace McMd
       loadParamComposite(ar, random_);
 
       // Allocate and initialize all private arrays.
-      initialize();
+      initializeSpeciesData();
+
+      UTIL_ASSERT(hasSpecies());
    }
 
    /*
@@ -359,6 +409,9 @@ namespace McMd
       ar << hasTether_;
       Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
+      #ifdef SIMP_SPECIAL
+      Parameter::saveOptional(ar, hasSpecial_, hasSpecial_);
+      #endif
 
       ar << atomTypes_;
       #ifndef SIMP_NOPAIR
@@ -369,7 +422,7 @@ namespace McMd
    }
 
    /*
-   * Allocate and initialize all private data (private function).
+   * Allocate, initialize private arrays that require Species data (private).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -379,7 +432,7 @@ namespace McMd
    *   - Pointers between Species, Molecule, and Atom objects
    *   - Atom typeIds and all Bond and Angle objects.
    */
-   void Simulation::initialize()
+   void Simulation::initializeSpeciesData()
    {
       //Preconditions
       assert(nSpecies() > 0);
@@ -406,6 +459,9 @@ namespace McMd
          UTIL_THROW("Error: nLinkType_ < 0 in Simulation::initialize()");
       }
       #endif
+      if (hasSpecies_) {
+         UTIL_THROW("Attempt to re-initialize species data arrays");
+      }
 
       Species *speciesPtr;
       int nAtom, iSpecies;
@@ -514,10 +570,10 @@ namespace McMd
       // Allocate other global arrays (members of Simulation).
       molecules_.allocate(moleculeCapacity_);
 
-      // Initialize all Atoms and Molecule objects.
+      // Initialize all Molecule and atom objects.
       for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
          speciesPtr = &species(iSpecies);
-         initializeSpecies(iSpecies);
+         initializeSpeciesMolecules(iSpecies);
       }
 
       #ifdef SIMP_BOND
@@ -562,23 +618,25 @@ namespace McMd
       }
       #endif
 
+      // Assert: arrays that depends on Species info are initialized
+      hasSpecies_ = true;
    }
 
    /*
    * Initialize all Molecule and Atom objects for one Species (private).
    *
    * This function creates associations between Species, Molecule, and
-   * Atom objects for all molecules of one species, and sets atom typeIds.
+   * Atom objects for all molecules of one species, & sets atom typeIds.
    *
    * For each molecule, it sets the id, species pointer, nAtom, and the 
-   * firstAtom pointer. The molecule id is only unique within each species.
+   * firstAtom pointer. The molecule id is only unique within a species.
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
    * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
-   void Simulation::initializeSpecies(int iSpecies)
+   void Simulation::initializeSpeciesMolecules(int iSpecies)
    {
 
       Species* speciesPtr;
@@ -616,7 +674,8 @@ namespace McMd
 
       // Push all molecules of this species onto the reservoir stack
       // Push on in reverse order, so that they pop off in sequence
-      moleculePtr = &molecules_[firstMoleculeIds_[iSpecies] + capacity - 1];
+      moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]
+                  + capacity - 1];
       for (iMol = 0; iMol < capacity; ++iMol) {
          reservoirs_[iSpecies].push(*moleculePtr);
          --moleculePtr;
@@ -626,11 +685,11 @@ namespace McMd
 
    #ifdef SIMP_BOND
    /*
-   * Initialize all Bond objects for Molecules of one Species. (private)
+   * Initialize Bond objects for Molecules of one Species. (private)
    *
-   * This functions assigns pointers to Atoms and bond types ids within a
-   * contiguous block of Bond objects, and sets a pointer in each Molecule
-   * to the first Bond in the associated block.
+   * This functions assigns Atom pointers and bond types ids within 
+   * a contiguous block of Bond objects, and sets a pointer in each 
+   * Molecule to the first Bond in the associated block.
    */
    void Simulation::initializeSpeciesBonds(int iSpecies)
    {
@@ -681,7 +740,7 @@ namespace McMd
                bondPtr->setTypeId(type);
 
                #ifndef SIMP_NOPAIR
-               // If MaskBonded, add each bonded atom to its partners Mask
+               // If MaskBonded, add each atom to its partner's Mask
                if (maskedPairPolicy_ == MaskBonded) {
                   atom0Ptr->mask().append(*atom1Ptr);
                   atom1Ptr->mask().append(*atom0Ptr);
@@ -702,9 +761,9 @@ namespace McMd
    /*
    * Initialize all Angle objects for Molecules of one Species.
    *
-   * This functions assigns pointers to Atoms and angle types ids within a
-   * contiguous block of Angle objects, and sets a pointer in each Molecule
-   * to the first Angle in the associated block.
+   * This functions assigns Atom pointers and angle types ids within 
+   * a contiguous block of Angle objects, and sets a pointer in each 
+   * Molecule to the first Angle in the associated block.
    */
    void Simulation::initializeSpeciesAngles(int iSpecies)
    {
@@ -741,7 +800,7 @@ namespace McMd
             // Create angles for a molecule
             for (iAngle = 0; iAngle < nAngle; ++iAngle) {
 
-               // Get pointers to atoms spanning the angle and angle type
+               // Get pointers to 3 atoms and an angle type
                atom0Id  = speciesPtr->speciesAngle(iAngle).atomId(0);
                atom1Id  = speciesPtr->speciesAngle(iAngle).atomId(1);
                atom2Id  = speciesPtr->speciesAngle(iAngle).atomId(2);
@@ -772,9 +831,9 @@ namespace McMd
    /*
    * Initialize all Dihedral objects for Molecules of one Species.
    *
-   * This functions assigns pointers to Atoms and Dihedral types ids within
-   * a contiguous block of Dihedral objects, and sets a pointer in each 
-   * Molecule to the first Dihedral in the associated block.
+   * This functions assigns Atom pointers dihedral types ids within
+   * a contiguous block of Dihedral objects, and sets a pointer in 
+   * each Molecule to the first Dihedral in the associated block.
    */
    void Simulation::initializeSpeciesDihedrals(int iSpecies)
    {
@@ -808,13 +867,13 @@ namespace McMd
             for (iDihedral = 0; iDihedral < nDihedral; ++iDihedral) {
 
                // Get local indices for atoms and dihedral type
-               atom0Id  = speciesPtr->speciesDihedral(iDihedral).atomId(0);
-               atom1Id  = speciesPtr->speciesDihedral(iDihedral).atomId(1);
-               atom2Id  = speciesPtr->speciesDihedral(iDihedral).atomId(2);
-               atom3Id  = speciesPtr->speciesDihedral(iDihedral).atomId(3);
-               type     = speciesPtr->speciesDihedral(iDihedral).typeId();
+               atom0Id = speciesPtr->speciesDihedral(iDihedral).atomId(0);
+               atom1Id = speciesPtr->speciesDihedral(iDihedral).atomId(1);
+               atom2Id = speciesPtr->speciesDihedral(iDihedral).atomId(2);
+               atom3Id = speciesPtr->speciesDihedral(iDihedral).atomId(3);
+               type    = speciesPtr->speciesDihedral(iDihedral).typeId();
 
-               // Calculate atom pointers
+               // Compute atom pointers
                atom0Ptr = firstAtomPtr + atom0Id;
                atom1Ptr = firstAtomPtr + atom1Id;
                atom2Ptr = firstAtomPtr + atom2Id;
@@ -1195,6 +1254,65 @@ namespace McMd
       return true;
    }
 
+   void Simulation::outputOptions(std::ostream& out) const
+   {
+      #ifdef UTIL_DEBUG
+      out << "-g Debugging   ON " << std::endl;
+      #else
+      out << "-g Debugging   OFF" << std::endl;
+      #endif
+      #ifdef UTIL_MPI
+      out << "-m MPI         ON " << std::endl;
+      #else
+      out << "-m MPI         OFF" << std::endl;
+      #endif
+      #ifdef SIMP_COULOMB
+      out << "-c Coulomb     ON " << std::endl;
+      #else
+      out << "-c Coulomb     OFF" << std::endl;
+      #endif
+      #ifndef SIMP_NOPAIR
+      out << "-np Pairs      ON " << std::endl;
+      #else
+      out << "-np Pairs      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_BOND
+      out << "-b Bonds       ON " << std::endl;
+      #else
+      out << "-b Bonds       OFF" << std::endl;
+      #endif
+      #ifdef SIMP_ANGLE
+      out << "-a Angles      ON " << std::endl;
+      #else
+      out << "-a Angles      OFF" << std::endl;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      out << "-d Dihedrals   ON " << std::endl;
+      #else
+      out << "-d Dihedrals   OFF" << std::endl;
+      #endif
+      #ifdef SIMP_EXTERNAL
+      out << "-e External    ON " << std::endl;
+      #else
+      out << "-e External    OFF" << std::endl;
+      #endif
+      #ifdef SIMP_SPECIAL
+      out << "-s Special     ON " << std::endl;
+      #else
+      out << "-s Special     OFF" << std::endl;
+      #endif
+      #ifdef MCMD_LINK
+      out << "-l Link        ON " << std::endl;
+      #else
+      out << "-l Link        OFF" << std::endl;
+      #endif
+      #ifdef MCMD_SHIFT
+      out << "-i Shift       ON " << std::endl;
+      #else
+      out << "-i Shift       OFF" << std::endl;
+      #endif
+   }
+
    // Mutators / Setters
 
    /*
@@ -1202,7 +1320,7 @@ namespace McMd
    */
    Factory<Species>& Simulation::speciesFactory()
    {
-      assert(speciesManagerPtr_);
+      UTIL_CHECK(speciesManagerPtr_);
       return speciesManagerPtr_->factory();
    }
 
@@ -1211,7 +1329,7 @@ namespace McMd
    */
    Factory<Analyzer>& Simulation::analyzerFactory()
    {
-      assert(analyzerManagerPtr_);
+      UTIL_CHECK(analyzerManagerPtr_);
       return analyzerManagerPtr_->factory();
    }
 

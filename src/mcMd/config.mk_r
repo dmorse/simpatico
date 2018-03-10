@@ -19,7 +19,7 @@
 
 # Define MCMD_PERTURB, enable free energy perturbation
 ifeq ($(UTIL_MPI),1)
-MCMD_PERTURB=1
+#MCMD_PERTURB=1
 endif
 
 # Define MCMD_LINK, enable Link (mutable bond) potentials
@@ -52,23 +52,21 @@ MCMD_SUFFIX:=
 # extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
 
 # Enable free energy perturbation 
-ifdef UTIL_MPI
 ifdef MCMD_PERTURB
 MCMD_DEFS+= -DMCMD_PERTURB
-endif
 endif
 
 # Enable Link (mutable bond) potentials
 ifdef MCMD_LINK
 MCMD_DEFS+= -DMCMD_LINK
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
 endif
 
 # Enable recording of shifts of atomic coordinates into
 # primary periodic unit cell in MD simulations.
 ifdef MCMD_SHIFT
 MCMD_DEFS+= -DMCMD_SHIFT
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_s
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_r
 endif
 
 #-----------------------------------------------------------------------
@@ -82,6 +80,6 @@ mcMd_LIB=$(BLD_DIR)/mcMd/lib$(mcMd_LIBNAME).a
 #-----------------------------------------------------------------------
 # Paths to executable files
 
-MCSIM_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)
+mcSim_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
+mdSim_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------

@@ -65,8 +65,10 @@ namespace McMd
             }
          }
       }
-      if (firstClearPos_ > 0 && atoms_[firstClearPos_-1] < 0) {
-         UTIL_THROW("Error: firstClearPos_: atoms_[firstClearPos_-1] < 0");
+      if (firstClearPos_ > 0) {
+         if (atoms_[firstClearPos_-1] == 0) {
+            UTIL_THROW("Error: atoms_[firstClearPos_-1] == 0");
+         }
       }
       if (nAtomCellTest != nAtomCell_) {
          UTIL_THROW("Number of atoms in cell != nAtomCell_");

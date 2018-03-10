@@ -19,7 +19,7 @@
 #ifdef SIMP_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>
 #endif
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <ddMd/chemistry/MaskPolicy.h>
 #include <util/random/Random.h>
 #include <util/mpi/MpiLogger.h>
@@ -35,6 +35,7 @@
 #include <test/ParamFileTest.h>
 
 using namespace Util;
+using namespace Simp;
 using namespace DdMd;
 
 class ExchangerTest: public ParamFileTest

@@ -1,0 +1,44 @@
+New files and modified source files
+-----------------------------------
+
+ddMd/analyzers/energy/PairEnergySelector.h
+ddMd/analyzers/energy/PairEnergySelector.cpp
+ddMd/analyzers/energy/sources.mk -> Add PairEnergySelector.cpp
+
+ddMd/analyzers/util/PairSelector.h
+ddMd/analyzers/util/PairSelector.hcpp
+ddMd/analyzers/util/makefile
+ddMd/analyzers/util/sources.mk
+ddMd/analyzers/sources.mk -> Add util subdirectory
+
+mcMd/analyzers/mdSystem/MdPairEnergySelector.h
+mcMd/analyzers/mdSystem/MdPairEnergySelector.cpp
+mcMd/analyzers/mdSystem/sources.mk -> added MdPairEnergySelector
+
+Modified (Typos or Small Errors)
+---------------------------------
+
+ddMd/analyzers/scattering/StructureFactorGrid.cpp ("dat" -> "_ave.dat")
+
+ddMd/simulation/Simulation.cpp
+       Error ("msg.c_str()") line 605, when reading Integrator in readParameters
+
+util/mpi/MpiSendRecev.h
+       Cosmetic changes in spaces (blank lines and trailing spaces)
+
+Modified - Core Classes
+-----------------------
+ddMd/chemistry/Atom.cpp -> Add packing of AtomContext to packGhost
+ddMd/chemistry/Atom.h   -> Add copyLocalUpdate and copyLocalGhost
+
+      Function copyLocalGhost:  
+           Assign id, typeId, plan, position, AND context
+           Note: Copy of context is new, and unconditional (no if block)
+      Function copyLocalUpdate:
+           Just copies position (equivalent to old code, but encapsulated)
+
+ddMd/communicate/Exchanger.cpp -> use copyLocalUpdate and copyLocalGhost
+
+       Lines 699:702 -> replaces explicit copies by copyLocalGhost
+       Lines 875 -> replaces explicit copies by copyLocalUpdate
+

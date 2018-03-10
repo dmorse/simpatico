@@ -1,15 +1,15 @@
 namespace McMd
 {
 
-/*! \page extend_overview_page 4.1 Source File Locations
+/*! \page extend_overview_page 4.1 Source Files: Directories and Namespaces
 
 \ref extend_page  (Prev/Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined. 
+Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined, and where the code should be placed within a directory tree.
 
-\section extend_overview_namespace Namespaces
+\section extend_overview_namespace Namespaces and Directories
 Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Simp, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
 <table>
   <tr> 
@@ -25,12 +25,12 @@ Every class and function in the simpatico source code is defined within one of f
   <tr> 
     <td> Simp </td>
     <td> src/simp </td>
-    <td> General classes for simpatico simulation and analysis programs. </td>
+    <td> Classes available in all simpatico programs. </td>
   </tr>
   <tr> 
     <td> McMd </td>
     <td> src/mcMd </td>
-    <td> Classes used in mcSim and/or mdSim single-processor simulation programs. </td>
+    <td> Classes used by mcSim and/or mdSim single-processor programs. </td>
   </tr>
   <tr> 
     <td> DdMd </td>
@@ -40,19 +40,19 @@ Every class and function in the simpatico source code is defined within one of f
   <tr> 
     <td> Tools </td>
     <td> src/tools </td>
-    <td> Classes used in ppMd postprocessing analysis program (under development). </td>
+    <td> Classes used in ppMd analysis program (under development). </td>
   </tr>
 </table>
 The subdirectories of the src/ directory that each contain the source code for a namespace, such as src/util or src/mcMd, are referred to in what follows as a "namespace level" directories.
 
 Every new user class must also be defined within one of these namespaces. The choice of namespace depends on the intended purpose of the class:
 <ul>
-<li> Classes that provide new features for the ddSim parallel program should be in namespace DdMd. </li>
-<li> Classes that provide new features for the mdSim and/or mcSim program should be in namespace McMd. </li>
-<li> Classes that define new potential energy functions, should be defined in namespace Simp. </li>
-<li> Classes that provide new features for postprocessor program should be defined in namespace Tools. </li>
+<li> Classes that provide new simulation algorithms, analysis algorithms or file formats for use with the ddSim parallel program should be in namespace DdMd. </li>
+<li> Classes that provide new simulation algorithms (MC moves or Monte Carlo integrators), analysis algorithms, or file formats for the mdSim and/or mcSim program should be in namespace McMd. </li>
+<li> Classes that define potential energy functions or molecular species definitions should be placed namespace Simp. </li>
+<li> Classes that provide new features for the ppMd postprocessor should be defined in namespace Tools. </li>
 </ul>
-The DdMd and McMd namespaces are mutually exclusive. Classes defined in the DdMd namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs. Classes defined in the McMd namespace are accessible for use in either mcSim or mdSim, but not in ddSim. Potential energy classes defined in the Simp namespace can, however, be made accessible for use in any simulation or analysis program.
+The DdMd, McMd, and Tools namespaces are mutually exclusive. Classes defined in the DdMd namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs, or the ppMd postprocessor. Classes defined in the McMd namespace are accessible for use in either mcSim or mdSim, but not in ddSim in ppMd. Classes defined in the Simp namespace can, however, be made accessible for use in any simulation or analysis program.
 
 As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next \ref extend_base_page "page".
 

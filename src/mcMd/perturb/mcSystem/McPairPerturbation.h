@@ -11,18 +11,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/perturb/LinearPerturbation.h>      // base class
-#include <mcMd/neighbor/CellList.h>               // member
+#include <mcMd/perturb/LinearPerturbation.h>          // base class
+#include <mcMd/neighbor/CellList.h>                   // member
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class McSystem;
 

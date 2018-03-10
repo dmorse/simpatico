@@ -70,7 +70,8 @@ MdSimulation{
     }
 
   }
-  saveInterval                0
+  saveInterval                  10000
+  saveFileName                restart
 }
 
     DumpConfig{
@@ -133,4 +134,3 @@ MdSimulation{
     }
 
   hasCoulomb                             0
-      maxBoundary                 cubic  10.5 

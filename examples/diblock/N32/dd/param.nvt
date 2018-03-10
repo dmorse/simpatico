@@ -52,7 +52,7 @@ Simulation{
   NvtIntegrator{
     dt                0.005
     tauT              0.500
-    saveInterval      4000
+    saveInterval      2000
     saveFileName      restart
   }
   Random{

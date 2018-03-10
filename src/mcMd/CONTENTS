@@ -1,11 +1,13 @@
 The directory tree rooted at src/mcMd contains all of the classes in the 
-McMd namespace, which are used in single-processor MC and MD programs, as
-well as main programs mcSim.cpp and mdSim.cpp.
+McMd namespace, which are used to construct the single-processor MC and MD 
+main programs mcSim.cpp and mdSim.cpp, which are also in this directory.
 
-Source files in this directory tree, and in the McMd namespace, can use
+Source files in this directory tree are all in the McMd namespace. By
+convention, classes and functions defined in this namespace may use 
 classes and other names defined in the Util namespace (src/util directory) 
 and the Simp namespace (src/simp directory), but may not use any names
-defined in the DdMd namespace (src/ddMd directory). 
+defined in the DdMd namespace (src/ddMd directory) or the Tools namespace
+(src/tools).
 
 Subdirectories:
 ----------------------
@@ -13,14 +15,14 @@ Subdirectories:
 chemistry      atoms, molecules, and covalent groups (bonds, etc.)
 species        molecular species (i.e., molecular structures)
 potentials     classes to evaluate potential energies and forces
-  pair         nonbonded pair potentials
+  pair         short-range nonbonded pair potentials
   bond         covalent bond potentials 
   angle        covalent three-body angle potentials
   dihedral     covalent four-body dihedral potentials
-  link         mutable covalent bond potentials (e.g., crosslinks)
+  coulomb      long-range coulomb potentials
   external     external one-body potentials.
+  link         mutable covalent bond potentials (e.g., crosslinks)
 neighbor       cell list and Verlet pair list classes
-links          management of crosslinks (mutable covalent bonds).
 ensembles      classes that define statistical ensembles
 simulation     main classes for constructing simulations
 mcSimulation   Monte Carlo (MC) Simulation and System subclasses
@@ -33,6 +35,7 @@ trajectory     MD trajectory (multi-configuration) file IO
 generators     classes to generate initial configurations
 perturb        free energy perturbation theory
 misc           miscellaneous utilities
+links          management of crosslinks (mutable covalent bonds).
 user           space for user-defined classes
 tests          unit tests
 attic          obsolete or deprecated classes (not compiled)

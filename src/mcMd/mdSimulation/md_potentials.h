@@ -31,6 +31,9 @@
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
+#ifdef SIMP_SPECIAL
+#include <mcMd/potentials/special/SpecialPotential.h>
+#endif
 #ifdef SIMP_TETHER
 #include <mcMd/potentials/tether/MdTetherPotential.h>
 #endif

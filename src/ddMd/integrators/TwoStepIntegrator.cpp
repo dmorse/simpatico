@@ -14,7 +14,7 @@
 #endif
 #include <ddMd/analyzers/AnalyzerManager.h>
 #include <ddMd/potentials/pair/PairPotential.h>
-#include <util/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 #include <util/misc/Log.h>
 #include <util/global.h>
 
@@ -23,7 +23,9 @@
 
 namespace DdMd
 {
+
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

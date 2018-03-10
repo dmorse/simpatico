@@ -9,6 +9,7 @@
 
 #include <util/global.h>                    
 #include <simp/species/SpeciesGroup.tpp>  
+#include <util/format/Int.h>  
 
 namespace Simp
 {
@@ -78,71 +79,40 @@ namespace Simp
    void Species::readSpeciesParam(std::istream &in)
    {
       read<int>(in, "nAtom", nAtom_);
-      #ifdef SIMP_BOND
-      read<int>(in, "nBond", nBond_);
-      #endif
-      #ifdef SIMP_ANGLE
-      read<int>(in, "nAngle", nAngle_);
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      read<int>(in, "nDihedral", nDihedral_);
-      #endif
-      allocate();
-
+      allocateAtoms();
       readDArray<int>(in, "atomTypeIds", atomTypeIds_, nAtom_);
 
       #ifdef SIMP_BOND
+      nBond_ = 0;
+      readOptional<int>(in, "nBond", nBond_);
+      allocateBonds();
       if (nBond_ > 0) {
          readDArray<SpeciesBond>(in, "speciesBonds", speciesBonds_, 
                                  nBond_);
-         // Make atomBondIdArrays
-         int bondId, atomId1, atomId2;
-         for (bondId = 0; bondId < nBond_; ++bondId) {
-            atomId1 = speciesBond(bondId).atomId(0);
-            atomId2 = speciesBond(bondId).atomId(1);
-            atomBondIdArrays_[atomId1].append(bondId);
-            atomBondIdArrays_[atomId2].append(bondId);
-         }
       }
       #endif
 
       #ifdef SIMP_ANGLE
+      nAngle_ = 0;
+      readOptional<int>(in, "nAngle", nAngle_);
+      allocateAngles();
       if (nAngle_ > 0) {
          readDArray<SpeciesAngle>(in, "speciesAngles", speciesAngles_,
                                   nAngle_);
-         // Make atomAngleIdArrays
-         int angleId, atomId1, atomId2, atomId3;
-         for (angleId = 0; angleId < nAngle_; ++angleId) {
-            atomId1 = speciesAngle(angleId).atomId(0);
-            atomId2 = speciesAngle(angleId).atomId(1);
-            atomId3 = speciesAngle(angleId).atomId(2);
-            atomAngleIdArrays_[atomId1].append(angleId);
-            atomAngleIdArrays_[atomId2].append(angleId);
-            atomAngleIdArrays_[atomId3].append(angleId);
-         }
       }
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      // Make atomDihedralIdArrays
+      nDihedral_ = 0;
+      readOptional<int>(in, "nDihedral", nDihedral_);
+      allocateDihedrals();
       if (nDihedral_ > 0) {
-         readDArray<SpeciesDihedral>(in, "speciesDihedrals", speciesDihedrals_,
-                                     nDihedral_);
-         int dihedralId;
-         int tAtomId1, tAtomId2, tAtomId3, tAtomId4;
-         for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
-            tAtomId1 = speciesDihedral(dihedralId).atomId(0);
-            tAtomId2 = speciesDihedral(dihedralId).atomId(1);
-            tAtomId3 = speciesDihedral(dihedralId).atomId(2);
-            tAtomId4 = speciesDihedral(dihedralId).atomId(3);
-            atomDihedralIdArrays_[tAtomId1].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId2].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId3].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId4].append(dihedralId);
-         }
+         readDArray<SpeciesDihedral>(in, "speciesDihedrals", 
+                                     speciesDihedrals_, nDihedral_);
       }
       #endif
 
+      initializeAtomGroupIdArrays();
    }
 
    /*
@@ -151,68 +121,186 @@ namespace Simp
    void Species::loadSpeciesParam(Serializable::IArchive &ar)
    {
       loadParameter<int>(ar, "nAtom", nAtom_);
-      #ifdef SIMP_BOND
-      loadParameter<int>(ar, "nBond", nBond_);
-      #endif
-      #ifdef SIMP_ANGLE
-      loadParameter<int>(ar, "nAngle", nAngle_);
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      loadParameter<int>(ar, "nDihedral", nDihedral_);
-      #endif
-      allocate();
-
+      allocateAtoms();
       loadDArray<int>(ar, "atomTypeIds", atomTypeIds_, nAtom_);
 
       #ifdef SIMP_BOND
+      loadParameter<int>(ar, "nBond", nBond_);
+      allocateBonds();
       if (nBond_ > 0) {
          loadDArray<SpeciesBond>(ar, "speciesBonds", speciesBonds_, 
                                  nBond_);
-         // Make atomBondIdArrays
-         int bondId, atomId1, atomId2;
-         for (bondId = 0; bondId < nBond_; ++bondId) {
-            atomId1 = speciesBond(bondId).atomId(0);
-            atomId2 = speciesBond(bondId).atomId(1);
-            atomBondIdArrays_[atomId1].append(bondId);
-            atomBondIdArrays_[atomId2].append(bondId);
-         }
-
       }
       #endif
 
       #ifdef SIMP_ANGLE
+      loadParameter<int>(ar, "nAngle", nAngle_);
+      allocateAngles();
       if (nAngle_ > 0) {
          loadDArray<SpeciesAngle>(ar, "speciesAngles", speciesAngles_,
                                   nAngle_);
-         // Make atomAngleIdArrays
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      loadParameter<int>(ar, "nDihedral", nDihedral_);
+      allocateDihedrals();
+      if (nDihedral_ > 0) {
+         loadDArray<SpeciesDihedral>(ar, "speciesDihedrals", 
+                                     speciesDihedrals_, nDihedral_);
+      }
+      #endif
+
+      initializeAtomGroupIdArrays();
+   }
+
+   /*
+   * Read molecule structure from config/topo file format.
+   */
+   void Species::readStructure(std::istream& in)
+   {
+      using std::endl;
+      int k;
+
+      // Atom type Ids
+      in >>  Label("nAtom") >> nAtom_;
+      allocateAtoms();
+      for (int j = 0; j < nAtom_; j++) {
+         in >>  k;
+         in >> atomTypeIds_[j];
+      }
+
+      #ifdef SIMP_BOND
+      nBond_ = 0;
+      if (Label("nBond", false).match(in)) {
+         in >> nBond_;
+      }
+      allocateBonds();
+      if (nBond_ > 0) {
+         for (int j = 0; j < nBond_; j++) {
+            in >> k;
+            UTIL_CHECK(j == k);
+            in >> speciesBonds_[j];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      nAngle_ = 0;
+      if (Label("nAngle", false).match(in)) {
+         in >> nAngle_;
+      }
+      allocateAngles();
+      if (nAngle_ > 0) {
+         for (int j = 0; j < nAngle_; j++) {
+            in >> k;
+            UTIL_CHECK(j == k);
+            in >> speciesAngles_[j];
+         }
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      nDihedral_ = 0;
+      if (Label("nDihedral", false).match(in)) {
+         in >> nDihedral_;
+      }
+      allocateDihedrals();
+      if (nDihedral_ > 0) {
+         for (int j = 0; j < nDihedral_; j++) {
+            in >> k;
+            UTIL_CHECK(j == k);
+            in >> speciesDihedrals_[j];
+         }
+      }
+      #endif
+
+      initializeAtomGroupIdArrays();
+
+      // Check validity, throw exception if not valid
+      isValid();
+
+      UTIL_CHECK(Label::isClear());
+   }
+
+   /*
+   * Initialize atom group id arrays (references from atoms to groups).
+   */
+   void Species::initializeAtomGroupIdArrays()
+   {
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(atomTypeIds_.isAllocated());
+      UTIL_CHECK(atomTypeIds_.capacity() == nAtom_);
+      
+      #ifdef SIMP_BOND
+      UTIL_CHECK(nBond_ >= 0);
+      if (nBond_ > 0) {
+         UTIL_CHECK(speciesBonds_.isAllocated());
+         UTIL_CHECK(speciesBonds_.capacity() == nBond_);
+         UTIL_CHECK(atomBondIdArrays_.isAllocated());
+         UTIL_CHECK(atomBondIdArrays_.capacity() == nAtom_);
+         for (int atomId = 0; atomId < nAtom_; ++atomId) {
+            UTIL_CHECK(atomBondIdArrays_[atomId].size() == 0);
+         }
+         int bondId, atomId1, atomId2;
+         for (bondId = 0; bondId < nBond_; ++bondId) {
+            atomId1 = speciesBond(bondId).atomId(0);
+            atomId2 = speciesBond(bondId).atomId(1);
+            UTIL_CHECK(atomId1 >=0 && atomId1 < nAtom_);
+            UTIL_CHECK(atomId2 >=0 && atomId2 < nAtom_);
+            atomBondIdArrays_[atomId1].append(bondId);
+            atomBondIdArrays_[atomId2].append(bondId);
+         }
+      }
+      #endif
+      #ifdef SIMP_ANGLE
+      UTIL_CHECK(nAngle_ >= 0);
+      if (nAngle_ > 0) {
+         UTIL_CHECK(speciesAngles_.isAllocated());
+         UTIL_CHECK(speciesAngles_.capacity() == nAngle_);
+         UTIL_CHECK(atomAngleIdArrays_.isAllocated());
+         UTIL_CHECK(atomAngleIdArrays_.capacity() == nAtom_);
+         for (int atomId = 0; atomId < nAtom_; ++atomId) {
+            UTIL_CHECK(atomAngleIdArrays_[atomId].size() == 0);
+         }
          int angleId, atomId1, atomId2, atomId3;
          for (angleId = 0; angleId < nAngle_; ++angleId) {
             atomId1 = speciesAngle(angleId).atomId(0);
             atomId2 = speciesAngle(angleId).atomId(1);
             atomId3 = speciesAngle(angleId).atomId(2);
+            UTIL_CHECK(atomId1 >=0 && atomId1 < nAtom_);
+            UTIL_CHECK(atomId2 >=0 && atomId2 < nAtom_);
+            UTIL_CHECK(atomId3 >=0 && atomId3 < nAtom_);
             atomAngleIdArrays_[atomId1].append(angleId);
             atomAngleIdArrays_[atomId2].append(angleId);
             atomAngleIdArrays_[atomId3].append(angleId);
          }
       }
       #endif
-
       #ifdef SIMP_DIHEDRAL
-      // Make atomDihedralIdArrays
+      UTIL_CHECK(nDihedral_ >= 0);
       if (nDihedral_ > 0) {
-         loadDArray<SpeciesDihedral>(ar, "speciesDihedrals", speciesDihedrals_,
-                                     nDihedral_);
-         int dihedralId;
-         int tAtomId1, tAtomId2, tAtomId3, tAtomId4;
+         UTIL_CHECK(speciesDihedrals_.isAllocated());
+         UTIL_CHECK(speciesDihedrals_.capacity() == nDihedral_);
+         UTIL_CHECK(atomDihedralIdArrays_.isAllocated());
+         UTIL_CHECK(atomDihedralIdArrays_.capacity() == nAtom_);
+         for (int atomId = 0; atomId < nAtom_; ++atomId) {
+            UTIL_CHECK(atomDihedralIdArrays_[atomId].size() == 0);
+         }
+         int dihedralId, atomId1, atomId2, atomId3, atomId4;
          for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
-            tAtomId1 = speciesDihedral(dihedralId).atomId(0);
-            tAtomId2 = speciesDihedral(dihedralId).atomId(1);
-            tAtomId3 = speciesDihedral(dihedralId).atomId(2);
-            tAtomId4 = speciesDihedral(dihedralId).atomId(3);
-            atomDihedralIdArrays_[tAtomId1].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId2].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId3].append(dihedralId);
-            atomDihedralIdArrays_[tAtomId4].append(dihedralId);
+            atomId1 = speciesDihedral(dihedralId).atomId(0);
+            atomId2 = speciesDihedral(dihedralId).atomId(1);
+            atomId3 = speciesDihedral(dihedralId).atomId(2);
+            atomId4 = speciesDihedral(dihedralId).atomId(3);
+            UTIL_CHECK(atomId1 >=0 && atomId1 < nAtom_);
+            UTIL_CHECK(atomId2 >=0 && atomId2 < nAtom_);
+            UTIL_CHECK(atomId3 >=0 && atomId3 < nAtom_);
+            UTIL_CHECK(atomId4 >=0 && atomId4 < nAtom_);
+            atomDihedralIdArrays_[atomId1].append(dihedralId);
+            atomDihedralIdArrays_[atomId2].append(dihedralId);
+            atomDihedralIdArrays_[atomId3].append(dihedralId);
+            atomDihedralIdArrays_[atomId4].append(dihedralId);
          }
       }
       #endif
@@ -223,28 +311,137 @@ namespace Simp
    */
    void Species::save(Serializable::OArchive &ar)
    {
-      ar << id_;
       ar << moleculeCapacity_;
       ar << nAtom_;
+      ar << atomTypeIds_;
       #ifdef SIMP_BOND
       ar << nBond_;
+      if (nBond_ > 0) {
+         ar << speciesBonds_;
+      }
       #endif
       #ifdef SIMP_ANGLE
       ar << nAngle_;
+      if (nAngle_ > 0) {
+         ar << speciesAngles_;
+      }
       #endif
       #ifdef SIMP_DIHEDRAL
       ar << nDihedral_;
+      if (nDihedral_ > 0) {
+         ar << speciesDihedrals_;
+      }
       #endif
-      ar << atomTypeIds_;
+   }
+
+   /*
+   * Write molecule structure in config/topo file format.
+   */
+   void Species::writeStructure(std::ostream& out, std::string indent)
+   {
+      using std::endl;
+      std::string xIndent = indent;
+      xIndent += "  ";
+
+      // Atom type Ids
+      out << indent << "nAtom  " << nAtom_;
+      for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
+         out << endl << xIndent << Int(iAtom,2) << " " 
+             << atomTypeIds_[iAtom];
+      }
+
       #ifdef SIMP_BOND
-      ar << speciesBonds_;
+      if (nBond_ > 0) {
+         out << endl << indent << "nBond  " << nBond_;
+         for (int iBond = 0; iBond < nBond_; iBond++) {
+            out << endl << xIndent << Int(iBond,2) << " " 
+                << speciesBonds_[iBond];
+         }
+      }
       #endif
+
       #ifdef SIMP_ANGLE
-      ar << speciesAngles_;
+      if (nAngle_ > 0) {
+         out << endl << indent << "nAngle  " << nAngle_;
+         for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
+            out << endl << xIndent << Int(iAngle,2) << " " 
+                << speciesAngles_[iAngle];
+         }
+      }
       #endif
+
       #ifdef SIMP_DIHEDRAL
-      ar << speciesDihedrals_;
+      if (nDihedral_ > 0) {
+         out << endl << indent << "nDihedral  " << nDihedral_;
+         for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
+            out << endl << xIndent << Int(iDihedral,2) << " " 
+                << speciesDihedrals_[iDihedral];
+         }
+      }
       #endif
+   }
+
+   /*
+   * Compare molecule structure in structure from file. 
+   */
+   bool Species::matchStructure(std::istream& in)
+   {
+      using std::endl;
+      bool match = true;
+
+      // Atom type Ids
+      int index, count, typeId;
+      in >> Label("nAtom") >> count;
+      if (count != nAtom()) match = false;
+      for (int iAtom = 0; iAtom < nAtom_; iAtom++) {
+         in >> index >> typeId;
+         if (index != iAtom) match = false;
+         if (typeId != atomTypeIds_[iAtom]) match = false;
+      }
+
+      #ifdef SIMP_BOND
+      if (Label("nBond", false).match(in)) {
+         in >> count;
+         if (count != nBond()) match = false;
+         int i0, i1;
+         for (int iBond = 0; iBond < nBond_; iBond++) {
+            in >> index >> i0 >> i1 >> typeId;
+            if (i0 != speciesBonds_[iBond].atomId(0)) match = false;
+            if (i1 != speciesBonds_[iBond].atomId(1)) match = false;
+         }
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      if (Label("nAngle", false).match(in)) {
+         in >> count;
+         if (count != nAngle()) match = false;
+         int i0, i1, i2;
+         for (int iAngle = 0; iAngle < nAngle_; iAngle++) {
+            in >> index >> i0 >> i1 >> i2 >> typeId;
+            if (i0 != speciesAngles_[iAngle].atomId(0)) match = false;
+            if (i1 != speciesAngles_[iAngle].atomId(1)) match = false;
+            if (i2 != speciesDihedrals_[iAngle].atomId(2)) match = false;
+         }
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      if (Label("nDihedral", false).match(in)) {
+         in >> count;
+         if (count != nDihedral()) match = false;
+         int i0, i1, i2, i3;
+         for (int iDihedral = 0; iDihedral < nDihedral_; iDihedral++) {
+            in >> index >> i0 >> i1 >> i2 >> i3 >> typeId;
+            if (i0 != speciesDihedrals_[iDihedral].atomId(0)) match = false;
+            if (i1 != speciesDihedrals_[iDihedral].atomId(1)) match = false;
+            if (i2 != speciesDihedrals_[iDihedral].atomId(2)) match = false;
+            if (i3 != speciesDihedrals_[iDihedral].atomId(3)) match = false;
+         }
+      }
+      #endif
+
+      return match;
    }
 
    // Setters
@@ -272,30 +469,27 @@ namespace Simp
    */
    void Species::allocate() 
    {
-      assert(nAtom_ >  0);
-      atomTypeIds_.allocate(nAtom_);
-
+      allocateAtoms();
       #ifdef SIMP_BOND
-      atomBondIdArrays_.allocate(nAtom_);
-      assert(nBond_ >= 0);
-      if (nBond_ > 0) {
-         speciesBonds_.allocate(nBond_);
-      } 
+      allocateBonds();
       #endif
       #ifdef SIMP_ANGLE
-      atomAngleIdArrays_.allocate(nAtom_);
-      assert(nAngle_ >= 0);
-      if (nAngle_ > 0) {
-         speciesAngles_.allocate(nAngle_);
-      } 
+      allocateAngles();
       #endif
       #ifdef SIMP_DIHEDRAL
-      atomDihedralIdArrays_.allocate(nAtom_);
-      assert(nDihedral_ >= 0);
-      if (nDihedral_ > 0) {
-         speciesDihedrals_.allocate(nDihedral_);
-      } 
+      allocateDihedrals();
       #endif
+   }
+
+   /*
+   * Allocate and initialize atomTypeId array.
+   */
+   void Species::allocateAtoms() 
+   {
+      UTIL_CHECK(nAtom_ >  0);
+      UTIL_CHECK(!atomTypeIds_.isAllocated());
+
+      atomTypeIds_.allocate(nAtom_);
 
       // Initialize atom type Ids to null/invalid values
       for (int i = 0; i < nAtom_; ++i) {
@@ -307,15 +501,30 @@ namespace Simp
    * Set the atom type for one atom
    */
    void Species::setAtomType(int atomId, int atomType)
-   {  
-      atomTypeIds_[atomId] = atomType;
-   }
+   {  atomTypeIds_[atomId] = atomType; }
 
    #ifdef SIMP_BOND
    /*
+   * Allocate memory for arrays that involve bonds.
+   */
+   void Species::allocateBonds() 
+   {
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(nBond_ >= 0);
+      UTIL_CHECK(!atomBondIdArrays_.isAllocated());
+
+      atomBondIdArrays_.allocate(nAtom_);
+      if (nBond_ > 0) {
+         UTIL_CHECK(!speciesBonds_.isAllocated());
+         speciesBonds_.allocate(nBond_);
+      }
+   }
+
+   /*
    * Add a bond to the species chemical structure.
    */
-   void Species::makeBond(int bondId, int atomId1, int atomId2, int bondType)
+   void Species::makeBond(int bondId, int atomId1, int atomId2, 
+                          int bondType)
    {
       // Preconditions
       assert(bondId  >= 0);
@@ -338,6 +547,22 @@ namespace Simp
    #endif
 
    #ifdef SIMP_ANGLE
+   /*
+   * Allocate memory for arrays that involve angles.
+   */
+   void Species::allocateAngles() 
+   {
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(nAngle_ >= 0);
+      UTIL_CHECK(!atomAngleIdArrays_.isAllocated());
+
+      atomAngleIdArrays_.allocate(nAtom_);
+      if (nAngle_ > 0) {
+         UTIL_CHECK(!speciesAngles_.isAllocated());
+         speciesAngles_.allocate(nAngle_);
+      }
+   }
+
    /*
    * Add an angle to the species chemical structure.
    */
@@ -369,10 +594,27 @@ namespace Simp
 
    #ifdef SIMP_DIHEDRAL
    /*
+   * Allocate memory for arrays that involve dihedrals
+   */
+   void Species::allocateDihedrals() 
+   {
+      UTIL_CHECK(nAtom_ >  0);
+      UTIL_CHECK(nDihedral_ >= 0);
+      UTIL_CHECK(!atomDihedralIdArrays_.isAllocated());
+
+      atomDihedralIdArrays_.allocate(nAtom_);
+
+      if (nDihedral_ > 0) {
+         UTIL_CHECK(!speciesDihedrals_.isAllocated());
+         speciesDihedrals_.allocate(nDihedral_);
+      }
+   }
+
+   /*
    * Add a dihedral to the species chemical structure.
    */
    void Species::makeDihedral(int dihedralId, int atomId1, int atomId2,
-                             int atomId3, int atomId4, int dihedralType)
+                              int atomId3, int atomId4, int dihedralType)
    {
       // Preconditions.
       assert(dihedralId >= 0);
@@ -408,6 +650,8 @@ namespace Simp
    {
 
       if (atomTypeIds_.isAllocated()) {
+
+         UTIL_CHECK(atomTypeIds_.capacity() == nAtom_);
  
          // Check atomTypeIds array
          if (!isMutable()) {
@@ -419,7 +663,12 @@ namespace Simp
          }
 
          #ifdef SIMP_BOND
-         {
+         if (nBond_ > 0) {
+            UTIL_CHECK(speciesBonds_.isAllocated());
+            UTIL_CHECK(speciesBonds_.capacity() == nBond_);
+            UTIL_CHECK(atomBondIdArrays_.isAllocated());
+            UTIL_CHECK(atomBondIdArrays_.capacity() == nAtom_);
+
             // Loop over all bonds (if any) in speciesBonds_ array
             int  atomId, bondId, atomId0, atomId1, j;
             bool hasBond;
@@ -489,7 +738,12 @@ namespace Simp
          #endif
 
          #ifdef SIMP_ANGLE
-         {
+         if (nAngle_ > 0) {
+            UTIL_CHECK(speciesAngles_.isAllocated());
+            UTIL_CHECK(speciesAngles_.capacity() == nAngle_);
+            UTIL_CHECK(atomAngleIdArrays_.isAllocated());
+            UTIL_CHECK(atomAngleIdArrays_.capacity() == nAtom_);
+
             // Loop over all angles (if any) in speciesAngles_ array
             int  angleId, id, id2, atomId, atomId2(-1), j;
             bool hasAngles;
@@ -554,7 +808,12 @@ namespace Simp
          #endif
 
          #ifdef SIMP_DIHEDRAL
-         {
+         if (nDihedral_ > 0) {
+            UTIL_CHECK(speciesDihedrals_.isAllocated());
+            UTIL_CHECK(speciesDihedrals_.capacity() == nDihedral_);
+            UTIL_CHECK(atomDihedralIdArrays_.isAllocated());
+            UTIL_CHECK(atomDihedralIdArrays_.capacity() == nAtom_);
+
             // Loop over all dihedrals (if any) in speciesDihedrals_ array
             int  dihedralId, tId, tId2, tAtomId, tAtomId2, j;
             bool hasDihedral;

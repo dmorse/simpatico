@@ -58,13 +58,13 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::readGroups(std::ifstream& file, 
+   void DdMdConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
    {
-      int nGroup;  // Total number of groups in file
       if (domain().isMaster()) {  
+         int nGroup = 0;  // Total number of groups in file
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
@@ -80,7 +80,6 @@ namespace DdMd
          // Receive all groups into BondStorage
          distributor.receive();
       }
-      return nGroup;
    }
 
    /*

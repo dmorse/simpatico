@@ -55,6 +55,13 @@ namespace McMd
       */
       virtual void setMoleculeState(Molecule& molecule, int stateId);
 
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
    protected:
 
       /**
@@ -63,6 +70,13 @@ namespace McMd
       * \param in input stream
       */
       virtual void readSpeciesParam(std::istream &in);
+
+      /**
+      * Load species structure from an Archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadSpeciesParam(Serializable::IArchive &ar);
 
       /**
       * Return the same type for any particle in any chain.
@@ -101,6 +115,19 @@ namespace McMd
       #endif
 
    private:
+
+      // Type index for all bonds
+      int bondType_;
+
+      #ifdef SIMP_ANGLE
+      // Type index for all angles (if any)
+      int angleType_;
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      // Type index for all dihedrals (if any)
+      int dihedralType_;
+      #endif
 
       // A Pair of atom type indexes.
       // Atoms in a molecule with stateId = i have type typeIds_[i]

@@ -288,13 +288,11 @@ void MdSimulationTest::testSimulate()
    simulation_.readCommands();
    std::cout << std::endl;
 
-   //std::string baseFileName("simulate.0");
-   //simulation_.save(baseFileName);
+   //simulation_.save("simulate.0");
 
    simulation_.simulate(2000);
 
-   //baseFileName = "simulate.20";
-   //simulation_.save(baseFileName);
+   //simulation_.save("simulate.2000");
 }
 
 void MdSimulationTest::testWriteRestart()
@@ -309,22 +307,25 @@ void MdSimulationTest::testWriteRestart()
    simulation_.readCommands();
    std::cout << std::endl;
 
-   std::string baseFileName("begin");
-   simulation_.save(baseFileName);
+   // Save initial state to tmp/begin
+   simulation_.save("tmp/begin.rst");
 
+   // Run simulation of 10000 steps
    simulation_.simulate(10000);
 
-   baseFileName = "middle";
-   simulation_.save(baseFileName);
+   // Save state at iStep = 10000 to file middle.rst
+   simulation_.save("tmp/middle.rst");
 
-   std::ofstream configFile("middle.cfg");
+   // Write configuration at iStep = 1000 to middle.cfg
+   std::ofstream configFile("tmp/middle.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
    bool isContinuation = true;
    simulation_.simulate(10100, isContinuation);
 
-   configFile.open("end.cfg");
+   // Write configuration at iStep = 101000 
+   configFile.open("tmp/end.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
@@ -335,20 +336,22 @@ void MdSimulationTest::testReadRestart()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   std::string baseFileName("middle");
-   simulation_.load(baseFileName);
+   // Restart after iStep = 10000
+   simulation_.load("tmp/middle.rst");
 
-   baseFileName = "middle2";
-   simulation_.save(baseFileName);
+   // Save new restart file at iStep = 10000
+   simulation_.save("tmp/middle2.rst");
 
-   std::ofstream configFile("middle2.cfg");
+   // Save config file at iStep = 10000
+   std::ofstream configFile("tmp/middle2.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 
+   // Run to iStep = 10100
    bool isContinuation = true;
    simulation_.simulate(10100, isContinuation);
 
-   configFile.open("end2.cfg");
+   configFile.open("tmp/end2.cfg");
    simulation_.system().writeConfig(configFile);
    configFile.close();
 }

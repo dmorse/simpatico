@@ -2,7 +2,7 @@
 mcMd_simulation_= \
     mcMd/simulation/Simulation.cpp \
     mcMd/simulation/System.cpp \
-    mcMd/simulation/SubSystem.cpp \
+    mcMd/simulation/SystemInterface.cpp \
 
 ifdef UTIL_MPI
 mcMd_simulation_ += mcMd/simulation/McMd_mpi.cpp 

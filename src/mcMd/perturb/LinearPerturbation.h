@@ -1,4 +1,3 @@
-#ifdef  MCMD_PERTURB
 #ifndef MCMD_LINEAR_PERTURBATION_H
 #define MCMD_LINEAR_PERTURBATION_H
 
@@ -111,4 +110,3 @@ namespace McMd
 }
       
 #endif  // ifndef LINEAR_PERTURBATION_H
-#endif  // ifdef  MCMD_PERTURB

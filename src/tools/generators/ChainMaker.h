@@ -2,8 +2,8 @@
 #define TOOLS_CHAIN_MAKER_H
 
 #include   <simp/interaction/bond/HarmonicBond.h>
+#include   <simp/boundary/Boundary.h>
 #include   <util/param/ParamComposite.h>
-#include   <util/boundary/Boundary.h>
 #include   <util/random/Random.h>
 #include   <util/containers/DArray.h>
 
@@ -12,8 +12,8 @@
 namespace Tools 
 {
 
-   using namespace Simp;
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Generates a simulation box full of randomly generated linear polymers.

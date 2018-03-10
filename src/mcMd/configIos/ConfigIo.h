@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -16,11 +16,12 @@
 namespace McMd
 {
 
-   using namespace Util;
-
    class Simulation;
    class System;
    
+   using namespace Util;
+   using namespace Simp;
+
    /**
    * System configuration file reader and writer.
    *

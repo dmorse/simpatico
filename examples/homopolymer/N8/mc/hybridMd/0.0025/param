@@ -85,7 +85,7 @@ McSimulation{
       selector                           all  -1  -1
     }
 
-    MdPressureAverage{
+    McPressureAverage{
       interval                           100
       outputFileName             pressureAve
       nSamplePerBlock                     10
@@ -133,7 +133,8 @@ McSimulation{
     }
 
   }
-  saveInterval                  0
+  saveInterval                  100
+  saveFileName                  restart
 }
 
 

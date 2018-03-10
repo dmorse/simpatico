@@ -10,7 +10,7 @@
 
 #include <util/global.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-#include <mcMd/simulation/SubSystem.h>
+#include <mcMd/simulation/SystemInterface.h>
 
 namespace Util
 {
@@ -31,7 +31,7 @@ namespace McMd
    * \ingroup McMd_Bond_Module
    */
    template <class Interaction>
-   class BondPotentialImpl : public BondPotential, public SubSystem
+   class BondPotentialImpl : public BondPotential, private SystemInterface
    {
 
    public:
@@ -177,8 +177,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/chemistry/getAtomGroups.h>
-
-#include <util/boundary/Boundary.h> 
+#include <simp/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -190,6 +189,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.
@@ -197,7 +197,7 @@ namespace McMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl(System& system)
     : BondPotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    { interactionPtr_ = new Interaction(); }
@@ -209,7 +209,7 @@ namespace McMd
    BondPotentialImpl<Interaction>::BondPotentialImpl(
                          BondPotentialImpl<Interaction>& other)
     : BondPotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}

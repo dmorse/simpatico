@@ -12,12 +12,13 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

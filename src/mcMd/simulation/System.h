@@ -12,7 +12,7 @@
 
 #include <util/param/ParamComposite.h>        // base class
 
-#include <util/boundary/Boundary.h>           // member (typedef)
+#include <simp/boundary/Boundary.h>           // member (typedef)
 #include <mcMd/chemistry/Molecule.h>          // member template parameter
 
 #include <util/containers/DArray.h>           // member template
@@ -25,18 +25,21 @@
 
 class SystemTest;
 
-namespace Util 
-{ 
+namespace Util { 
    template <typename T> class Factory;
-   class EnergyEnsemble;
-   class BoundaryEnsemble;
    class FileMaster;
 }
 
+namespace Simp {
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
+}
+ 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
     * Observer interface. Classes that need to be notified
@@ -70,6 +73,9 @@ namespace McMd
    #endif
    #ifdef SIMP_EXTERNAL
    class ExternalPotential;
+   #endif
+   #ifdef SIMP_SPECIAL
+   class SpecialFactory;
    #endif
    #ifdef MCMD_LINK
    class LinkPotential;
@@ -124,10 +130,27 @@ namespace McMd
 
       // Methods
 
-      /// Default constructor. 
+      /**
+      * Default constructor. 
+      */
       System();
- 
-      /// Copy constructor. 
+
+      /** 
+      * Copy constructor. 
+      *
+      * This is intended to be used to create the System subobject of
+      * an MdSystem that is created by a hybrid MD/MC move within a
+      * parent MC simulation. The constructor creates a shallow copy,
+      * in which the child has pointers to most of the same objects
+      * as those owned by the parent. Specifically, the child will 
+      * have pointers to the same molecule sets for each species, the
+      * same Boundary, and the same energy and boundary ensembles as 
+      * the parent system. A System created by copying a parent that
+      * has a Perturbation or Replica Exchange move will, however, 
+      * not have pointers to these objects.
+      *
+      * \param system System object being copied.
+      */
       System(const System& other);
  
       /// Destructor.   
@@ -230,6 +253,17 @@ namespace McMd
       */
       virtual void readConfig(std::istream& in);
 
+      /** 
+      * Open, read and close configuration file.
+      *
+      * Uses FileMaster::openInputFile(filename) to open the file,
+      * which appends an input file prefix to the path. Calls the
+      * function readConfig(std::istream& ) internally. 
+      *
+      * \param filename configuration file name
+      */
+      void readConfig(std::string filename);
+
       /**
       * Write system configuration to a specified ostream.
       *
@@ -240,6 +274,17 @@ namespace McMd
       * \param out configuration file output stream
       */
       void writeConfig(std::ostream& out);
+
+      /** 
+      * Open, write and close a configuration file.
+      *
+      * Uses FileMaster::openOutputFile(filename) to open the file,
+      * which appends a output file prefix to the path. Calls the
+      * function readConfig(std::istream& ) internally. 
+      *
+      * \param filename configuration file name
+      */
+      void writeConfig(std::string filename);
 
       /**
       * Load configuration.
@@ -467,6 +512,18 @@ namespace McMd
       * Return external potential style string.
       */
       std::string externalStyle() const;
+      #endif
+
+      #ifdef SIMP_SPECIAL
+      /**
+      * Get the associated SpecialFactory by reference.
+      */
+      SpecialFactory& specialFactory();
+
+      /**
+      * Return special potential style string.
+      */
+      std::string specialStyle() const;
       #endif
 
       #ifdef MCMD_LINK
@@ -857,6 +914,11 @@ namespace McMd
       Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
   
+      #ifdef SIMP_SPECIAL
+      /// Pointer to SpecialFactory
+      SpecialFactory* specialFactoryPtr_;
+      #endif
+  
       #ifdef MCMD_LINK
       /// Pointer to Link Factory
       Factory<BondPotential>* linkFactoryPtr_;
@@ -925,6 +987,11 @@ namespace McMd
       std::string externalStyle_;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /// Name of special potential style.
+      std::string specialStyle_;
+      #endif
+
       #ifdef MCMD_LINK
       /// Name of link potential style.
       std::string linkStyle_;
@@ -968,7 +1035,7 @@ namespace McMd
 
    //friends:
 
-      friend class SubSystem;
+      friend class SystemInterface;
       friend class ::SystemTest;
 
    }; 

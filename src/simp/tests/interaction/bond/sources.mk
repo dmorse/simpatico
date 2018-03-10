@@ -5,4 +5,6 @@ simp_tests_interaction_bond_SRCS=\
      $(addprefix $(SRC_DIR)/, $(simp_tests_interaction_bond_))
 simp_tests_interaction_bond_OBJS=\
      $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_bond_:.cc=.o))
+simp_tests_interaction_bond_EXES=\
+     $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_bond_:.cc=))
 

@@ -57,5 +57,8 @@ tools_LIB=$(BLD_DIR)/tools/lib$(tools_LIBNAME).a
 # BIN_DIR is defined in src/config.mk.
 
 # Path to serial MD postprocessor (mdPp) program
-mdPp_BIN=$(BIN_DIR)/mdPp
+mdPp_EXE=$(BIN_DIR)/mdPp
+
+# Path to chainMaker program
+chainMaker_EXE=$(BIN_DIR)/chainMaker
 #-----------------------------------------------------------------------

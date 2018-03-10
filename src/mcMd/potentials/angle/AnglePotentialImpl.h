@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/potentials/angle/AnglePotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>             // base class
+#include <mcMd/simulation/SystemInterface.h>       // base class
 #include <util/global.h>
 
 namespace Util
@@ -21,9 +21,9 @@ namespace Util
 namespace McMd
 {
 
-   using namespace Util;
-
    class System;
+
+   using namespace Util;
 
    /**
    * Implementation template for an AnglePotential.
@@ -31,7 +31,7 @@ namespace McMd
    * \ingroup McMd_Angle_Module
    */
    template <class Interaction>
-   class AnglePotentialImpl : public AnglePotential, public SubSystem
+   class AnglePotentialImpl : public AnglePotential, private SystemInterface
    {
 
    public:
@@ -205,8 +205,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/chemistry/getAtomGroups.h>
-
-#include <util/boundary/Boundary.h> 
+#include <simp/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -218,6 +217,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Default constructor.
@@ -225,7 +225,7 @@ namespace McMd
    template <class Interaction>
    AnglePotentialImpl<Interaction>::AnglePotentialImpl(System& system)
     : AnglePotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    {  interactionPtr_ = new Interaction(); }
@@ -237,7 +237,7 @@ namespace McMd
    AnglePotentialImpl<Interaction>::AnglePotentialImpl(
                          AnglePotentialImpl<Interaction>& other)
     : AnglePotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}

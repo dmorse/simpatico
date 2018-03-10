@@ -6,12 +6,12 @@
 */
 
 #include "NvtIntegrator.h"
-#include <util/ensembles/EnergyEnsemble.h>
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/mpi/MpiLoader.h>
 #include <util/misc/Timer.h>
@@ -21,7 +21,9 @@
 
 namespace DdMd
 {
+
    using namespace Util;
+   using namespace Simp;
 
    /* 
    * Constructor.

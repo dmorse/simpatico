@@ -1,0 +1,7 @@
+#!/bin/bash
+md/clean
+mc/combine/clean
+mc/hybrid/clean
+mcMulti/clean
+mcPerturb/clean
+mcReplica/clean

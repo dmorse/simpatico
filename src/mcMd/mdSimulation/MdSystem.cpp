@@ -10,16 +10,14 @@
 #include "MdSimulation.h"
 #include <mcMd/configIos/MdConfigIo.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#include <util/ensembles/BoundaryEnsemble.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairIterator.h>
 #include <mcMd/neighbor/CellList.h>
 #include <mcMd/mdIntegrators/MdIntegratorFactory.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
-
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
+#include <mcMd/simulation/stress.h>
 
 #ifdef SIMP_BOND
 #include <mcMd/potentials/bond/BondPotential.h>
@@ -39,6 +37,10 @@
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
+#ifdef SIMP_SPECIAL
+#include <mcMd/potentials/special/SpecialPotential.h>
+#include <mcMd/potentials/special/SpecialFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>
 #endif
@@ -47,11 +49,13 @@
 #include <mcMd/tethers/TetherMaster.h>
 #endif
 
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
 #include <util/space/Dimension.h>
 
-#include <mcMd/simulation/stress.h>
 #include <util/space/Tensor.h>
 #include <util/accumulators/setToZero.h>
 
@@ -61,6 +65,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Default constructor.
@@ -85,6 +90,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalPotentialPtr_(0),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialPotentialPtr_(0),
+      #endif
       #ifdef MCMD_LINK
       linkPotentialPtr_(0),
       #endif
@@ -103,7 +111,7 @@ namespace McMd
    }
 
    /*
-   * Constructor, copy of a System.
+   * Constructor, copy of an McSystem.
    */
    MdSystem::MdSystem(McSystem& system)
     : System(system),
@@ -125,6 +133,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalPotentialPtr_(0),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialPotentialPtr_(0),
+      #endif
       #ifdef MCMD_LINK
       linkPotentialPtr_(0),
       #endif
@@ -138,12 +149,23 @@ namespace McMd
       setClassName("MdSystem");
 
       #ifndef SIMP_NOPAIR
+      /*
+      * Create an MdPairPotential that is a clone of the McPairPotential
+      * of the parent McSystem. The resulting MdPairPotential is an 
+      * instance of MdPairPotentialImpl<Interaction> that has a pointer
+      * to the pair Interaction object owned by the parent McSystem,
+      * which it uses to compute pair forces and energies. 
+      */
       assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
       if (pairPotentialPtr_ == 0) {
          UTIL_THROW("Failed attempt to clone McPairPotential");
       }
       #endif
+
+      // Set pointers to non-pair potentials to point to the same potential
+      // objects as those used by the parent McSystem.
+
       #ifdef SIMP_BOND
       assert(bondPotentialPtr_ == 0);
       if (system.hasBondPotential()) {
@@ -175,6 +197,11 @@ namespace McMd
          externalPotentialPtr_ = &system.externalPotential();
       }
       #endif
+      // #ifdef SIMP_SPECIAL
+      // if (system.hasSpecialPotential()) {
+      //   specialPotentialPtr_ = &system.specialPotential();
+      // }
+      // #endif
       #ifdef MCMD_LINK
       if (system.hasLinkPotential()) {
          linkPotentialPtr_ = &system.linkPotential();
@@ -186,7 +213,7 @@ namespace McMd
       }
       #endif
 
-      // Set actions taken when particles are moved
+      // Register actions taken when particles are moved
       positionSignal().addObserver(*this, &MdSystem::unsetPotentialEnergy);
       positionSignal().addObserver(*this, &MdSystem::unsetVirialStress);
    }
@@ -211,11 +238,14 @@ namespace McMd
       #ifdef SIMP_COULOMB
       if (!isCopy() && coulombPotentialPtr_) delete coulombPotentialPtr_;
       #endif
-      #ifdef MCMD_LINK
-      if (!isCopy() && linkPotentialPtr_) delete linkPotentialPtr_;
-      #endif
       #ifdef SIMP_EXTERNAL
       if (!isCopy() && externalPotentialPtr_) delete externalPotentialPtr_;
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (!isCopy() && specialPotentialPtr_) delete specialPotentialPtr_;
+      #endif
+      #ifdef MCMD_LINK
+      if (!isCopy() && linkPotentialPtr_) delete linkPotentialPtr_;
       #endif
       #ifdef SIMP_TETHER
       if (!isCopy() && tetherPotentialPtr_) delete tetherPotentialPtr_;
@@ -227,7 +257,6 @@ namespace McMd
       if (mdIntegratorPtr_) {
          delete mdIntegratorPtr_;
       }
-
    }
 
    /*
@@ -277,7 +306,6 @@ namespace McMd
          }
       }
       readParamComposite(in, *pairPotentialPtr_);
-      
       #endif
 
       if (!isCopy()) {
@@ -329,6 +357,18 @@ namespace McMd
          }
          #endif
 
+         #ifdef SIMP_SPECIAL
+         assert(specialPotentialPtr_ == 0);
+         if (simulation().hasSpecial() > 0) {
+            specialPotentialPtr_ =
+                       specialFactory().mdFactory(specialStyle(), *this);
+            if (specialPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create specialPotential");
+            }
+            readParamComposite(in, *specialPotentialPtr_);
+         }
+         #endif
+
          #ifdef MCMD_LINK
          assert(linkPotentialPtr_ == 0);
          if (simulation().nLinkType() > 0) {
@@ -377,8 +417,10 @@ namespace McMd
       }
 
       #ifdef MCMD_PERTURB
-      // Read Perturbation object for free energy perturbation.
-      readPerturbation(in);
+      if (!isCopy()) {
+         // Read Perturbation object for free energy perturbation, if any.
+         readPerturbation(in);
+      }
       #endif
    }
 
@@ -388,7 +430,6 @@ namespace McMd
    void MdSystem::loadParameters(Serializable::IArchive& ar)
    {
       if (!isCopy()) {
-
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
@@ -468,6 +509,18 @@ namespace McMd
          }
          #endif
 
+         #ifdef SIMP_SPECIAL
+         assert(specialPotentialPtr_ == 0);
+         if (simulation().hasSpecial() > 0) {
+            specialPotentialPtr_ =
+                       specialFactory().mdFactory(specialStyle(), *this);
+            if (specialPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create specialPotential");
+            }
+            loadParamComposite(ar, *specialPotentialPtr_);
+         }
+         #endif
+
          #ifdef MCMD_LINK
          assert(linkPotentialPtr_ == 0);
          if (simulation().nLinkType() > 0) {
@@ -516,8 +569,10 @@ namespace McMd
       }
 
       #ifdef MCMD_PERTURB
-      // Read Perturbation object for free energy perturbation.
-      loadPerturbation(ar);
+      if (!isCopy()) {
+         // Read Perturbation object if any
+         loadPerturbation(ar);
+      }
       #endif
    }
 
@@ -570,6 +625,11 @@ namespace McMd
             externalPotential().save(ar);
          }
          #endif
+         #ifdef SIMP_SPECIAL
+         if (simulation().hasSpecial()) {
+            specialPotential().save(ar);
+         }
+         #endif
          #ifdef SIMP_TETHER
          if (simulation().hasTether()) {
             saveTetherMaster(ar);
@@ -581,8 +641,11 @@ namespace McMd
       std::string className = mdIntegratorPtr_->className();
       ar & className;
       mdIntegratorPtr_->save(ar);
+
       #ifdef MCMD_PERTURB
-      savePerturbation(ar);
+      if (!isCopy()) {
+         savePerturbation(ar);
+      }
       #endif
    }
 
@@ -824,6 +887,11 @@ namespace McMd
          externalPotential().addForces();
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         specialPotential().addForces();
+      }
+      #endif
       #ifdef MCMD_LINK
       if (hasLinkPotential()) {
          linkPotential().addForces();
@@ -843,6 +911,7 @@ namespace McMd
    {
       double energy = 0.0;
       #ifndef SIMP_NOPAIR
+      // In charged system, this only returns non-Coulombic pair energy.
       energy += pairPotential().energy();
       #endif
       #ifdef SIMP_BOND
@@ -862,12 +931,17 @@ namespace McMd
       #endif
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
-         energy += coulombPotential().kSpaceEnergy();
+         energy += coulombPotential().energy();
       }
       #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().energy();
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         energy += specialPotential().energy();
       }
       #endif
       #ifdef MCMD_LINK
@@ -909,6 +983,16 @@ namespace McMd
       #ifdef SIMP_COULOMB
       if (hasCoulombPotential()) {
          coulombPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (hasExternalPotential()) {
+         externalPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         specialPotential().unsetEnergy();
       }
       #endif
    }
@@ -1016,6 +1100,14 @@ namespace McMd
          stress += dStress;
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         if (specialPotential().createsStress()) {
+            specialPotential().computeStress(dStress);
+            stress += dStress;
+         }
+      }
+      #endif
       #ifdef MCMD_LINK
       if (hasLinkPotential()) {
          linkPotential().computeStress(dStress);
@@ -1100,6 +1192,14 @@ namespace McMd
          coulombPotential().unsetStress();
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (hasSpecialPotential()) {
+         if (specialPotential().createsStress()) {
+            specialPotential().unsetStress();
+         }
+      }
+      #endif
+
    }
 
    // Miscellaneous member functions

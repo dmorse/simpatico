@@ -13,12 +13,13 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <util/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor

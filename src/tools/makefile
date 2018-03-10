@@ -6,44 +6,14 @@
 #-----------------------------------------------------------------------
 # Makefile includes 
 
-SRC_DIR_REL =..
-include $(SRC_DIR_REL)/config.mk
-include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/simp/config.mk
-include $(BLD_DIR)/tools/config.mk
+BLD_DIR_REL =..
+include $(BLD_DIR_REL)/config.mk
 include $(SRC_DIR)/tools/patterns.mk
-include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/tools/sources.mk
-
-#-----------------------------------------------------------------------
-# Executable program targets
-
-# MD postprocessor --------------------------------
-mdPp=$(BLD_DIR)/tools/mdPp
-
-$(mdPp_BIN): $(mdPp).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(mdPp_BIN) $(mdPp).o $(LIBS)
-
-mdPp:
-	$(MAKE) $(mdPp_BIN)
-
--include $(mdPp).d
-
-# ChainMaker --------------------------------------
-
-ChainMaker=$(BLD_DIR)/tools/generators/ChainMaker
-ChainMaker_BIN=$(BIN_DIR)/chainMaker
-
-$(ChainMaker_BIN): $(ChainMaker).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(ChainMaker_BIN) $(ChainMaker).o $(LIBS)
-
--include $(ChainMaker).d
 
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(tools_LIB) $(mdPp_BIN) $(ChainMaker_BIN)
+all: $(tools_LIB) $(mdPp_EXE) $(chainMaker_EXE)
 
 clean:
 	rm -f $(tools_OBJS) $(tools_OBJS:.o=.d) $(tools_LIB)
@@ -64,9 +34,34 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 endif
 
 #-----------------------------------------------------------------------
-# Include class dependency files
+# Executable program targets
+
+#--- Postprocessor --------------------------------
+# Note: mdPp_EXE is defined in tools/config.mk
+
+mdPp=$(BLD_DIR)/tools/mdPp
+
+$(mdPp_EXE): $(mdPp).o $(LIBS)
+	$(CXX) -o $(mdPp_EXE) $(mdPp).o $(LIBS) $(LDFLAGS)
+
+mdPp:
+	$(MAKE) $(mdPp_EXE)
+
+
+#--- ChainMaker -------------------------------------
+# Note: chainMaker_EXE is defined in tools/config.mk
+
+ChainMaker=$(BLD_DIR)/tools/generators/ChainMaker
+
+$(chainMaker_EXE): $(ChainMaker).o $(LIBS)
+	$(CXX) -o $(chainMaker_EXE) $(ChainMaker).o $(LIBS) $(LDFLAGS)
+
+#-----------------------------------------------------------------------
+# Include *.d dependency files
  
 -include $(util_OBJS:.o=.d)
 -include $(simp_OBJS:.o=.d)
 -include $(tools_OBJS:.o=.d)
+-include $(mdPp).d
+-include $(ChainMaker).d
 

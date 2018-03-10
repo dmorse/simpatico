@@ -28,7 +28,7 @@
 #
 # Call "./configure -h" to print a full list of command line options.
 #-----------------------------------------------------------------------
-while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
+while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
 
   if [ -n "$MACRO_ON" ]; then 
     MACRO_ON=""
@@ -49,7 +49,7 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
     g)
       MACRO_ON=UTIL_DEBUG
       VALUE=1
-      FILE=util/config.mk
+      FILE=config.mk
       ;;
     p)
       MACRO_OFF=SIMP_NOPAIR
@@ -81,6 +81,11 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       VALUE=1
       FILE=simp/config.mk
       ;;
+    s)
+      MACRO_ON=SIMP_SPECIAL
+      VALUE=1
+      FILE=simp/config.mk
+      ;;
     l)
       MACRO_ON=MCMD_LINK
       VALUE=1
@@ -91,7 +96,7 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       VALUE=1
       FILE=mcMd/config.mk
       ;;
-    s)
+    r)
       MACRO_ON=MCMD_SHIFT
       VALUE=1
       FILE=mcMd/config.mk
@@ -132,77 +137,90 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       echo "Setting COMPILER = $OPTARG in file $FILE" >&2
       rm temp
       ;;
+    o)
+      FILE=config.mk
+      cp "$FILE" temp
+      sed "s/OS=.*$/OS=$OPTARG/" temp > "$FILE"
+      echo "Setting OS = $OPTARG in file $FILE" >&2
+      rm temp
+      ;;
     q)
       if [ `grep "^ *UTIL_MPI *= *1" config.mk` ]; then
-         echo "-m ON  - MPI" >&2
+         echo "-m  ON  - MPI" >&2
          MPI=1
       else
-         echo "-m OFF - MPI" >&2
+         echo "-m  OFF - MPI" >&2
          MPI=
       fi
-      if [ `grep "^ *UTIL_DEBUG *= *1" util/config.mk` ]; then
-         echo "-g ON  - debugging" >&2
+      if [ `grep "^ *UTIL_DEBUG *= *1" config.mk` ]; then
+         echo "-g  ON  - debugging" >&2
       else
-         echo "-g OFF - debugging" >&2
+         echo "-g  OFF - debugging" >&2
       fi
       if [ `grep "^ *SIMP_NOPAIR *= *1" simp/config.mk` ]; then
-         echo "-b OFF - pair potential" >&2
+         echo "-p  OFF - pair potential" >&2
       else
-         echo "-b ON  - pair potential" >&2
+         echo "-p  ON  - pair potential" >&2
       fi
       if [ `grep "^ *SIMP_BOND *= *1" simp/config.mk` ]; then
-         echo "-b ON  - bond potential" >&2
+         echo "-b  ON  - bond potential" >&2
       else
-         echo "-b OFF - bond potential" >&2
+         echo "-b  OFF - bond potential" >&2
       fi
       if [ `grep "^ *SIMP_ANGLE *= *1" simp/config.mk` ]; then
-         echo "-a ON  - angle potential" >&2
+         echo "-a  ON  - angle potential" >&2
       else
-         echo "-a OFF - angle potential" >&2
+         echo "-a  OFF - angle potential" >&2
       fi
       if [ `grep "^ *SIMP_DIHEDRAL *= *1" simp/config.mk` ]; then
-         echo "-d ON  - dihedral potential" >&2
+         echo "-d  ON  - dihedral potential" >&2
       else
-         echo "-d OFF - dihedral potential" >&2
+         echo "-d  OFF - dihedral potential" >&2
       fi
       if [ `grep "^ *SIMP_COULOMB *= *1" simp/config.mk` ]; then
-         echo "-c ON  - coulomb potential" >&2
+         echo "-c  ON  - coulomb potential" >&2
       else
-         echo "-c OFF - coulomb potential" >&2
+         echo "-c  OFF - coulomb potential" >&2
       fi
       if [ `grep "^ *SIMP_EXTERNAL *= *1" simp/config.mk` ]; then
-         echo "-e ON  - external potential" >&2
+         echo "-e  ON  - external potential" >&2
       else
-         echo "-e OFF - external potential" >&2
+         echo "-e  OFF - external potential" >&2
+      fi
+      if [ `grep "^ *SIMP_SPECIAL *= *1" simp/config.mk` ]; then
+         echo "-s  ON  - special potential" >&2
+      else
+         echo "-s  OFF - special potential" >&2
       fi
       if [ `grep "^ *MCMD_LINK *= *1" mcMd/config.mk` ]; then
-         echo "-l ON  - McMd links (mutable bonds)" >&2
+         echo "-l  ON  - McMd links (mutable bonds)" >&2
       else
-         echo "-l OFF - McMd links (mutable bonds)" >&2
+         echo "-l  OFF - McMd links (mutable bonds)" >&2
       fi
       if [ `grep "^ *MCMD_SHIFT *= *1" mcMd/config.mk` ]; then
-         echo "-s ON  - McMd shift" >&2
+         echo "-r  ON  - McMd shift" >&2
       else
-         echo "-s OFF - McMd shift" >&2
+         echo "-r  OFF - McMd shift" >&2
       fi
       if [ -n "$MPI" ]; then
          if [ `grep "^ *MCMD_PERTURB *= *1" mcMd/config.mk` ]; then
-            echo "-f ON  - McMd free energy perturbation" >&2
+            echo "-f  ON  - McMd free energy perturbation" >&2
          else
-            echo "-f OFF - McMd free energy perturbation" >&2
+            echo "-f  OFF - McMd free energy perturbation" >&2
          fi
       fi
       if [ `grep "^ *DDMD_MODIFIERS *= *1" ddMd/config.mk` ]; then
-         echo "-u ON  - DdMd modifiers" >&2
+         echo "-u  ON  - DdMd modifiers" >&2
       else
-         echo "-u OFF - DdMd modifiers" >&2
+         echo "-u  OFF - DdMd modifiers" >&2
       fi
       if [ `grep "^ *MAKEDEP" config.mk` ]; then
-         echo "-k ON  - automatic dependency tracking" >&2
+         echo "-k  ON  - automatic dependency tracking" >&2
       else
-         echo "-k OFF - automatic dependency tracking" >&2
+         echo "-k  OFF - automatic dependency tracking" >&2
       fi
       echo `grep "^ *COMPILER *=" config.mk` >&2
+      echo `grep "^ *OS *=" config.mk` >&2
       ;;
     h)
       echo "The configure script may be called prior to compiling to enable or"
@@ -215,6 +233,7 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       echo "-h           help: prints explanation of options (this command)"
       echo "-q           query: lists options that are enabled / disabled."
       echo "-j compiler  Choose a compiler: sets COMPILER=compiler in config.mk"
+      echo "-j os        Choose an operating system: sets OS=os in config.mk"
       echo " "
       echo "Each of the following options enables or disables a feature by defining"
       echo "or undefining a corresponding preprocessor macro. Each such option"
@@ -230,7 +249,7 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       echo "-c (0|1)   coulomb potentials          (undefines/defines SIMP_COULOMB)"
       echo "-e (0|1)   external potentials         (undefines/defines SIMP_EXTERNAL)"
       echo "-l (0|1)   McMd links (mutable bonds)  (undefines/defines MCMD_LINK)"
-      echo "-s (0|1)   McMd shift                  (undefines/defines MCMD_SHIFT)"
+      echo "-r (0|1)   McMd shift                  (undefines/defines MCMD_SHIFT)"
       echo "-f (0|1)   McMd perturbation           (undefines/defines MCMD_PERTURB)"
       echo "-u (0|1)   DdMd modifiers              (undefines/defines DDMD_MODIFIERS)"
       echo "-k (0|1)   dependency generation       (undefines/defines MAKEDEP)"
@@ -243,6 +262,8 @@ while getopts "m:g:p:b:a:d:e:f:l:s:u:k:c:j:qh" opt; do
       echo ">  ./configure -g0 -a1 -d1"
       echo "To set COMPILER=intel in config.mk"
       echo ">  ./configure -j intel"
+      echo "To set OS=mac-port in config.mk"
+      echo ">  ./configure -o mac-port"
       echo "  "
       ;;
     esac

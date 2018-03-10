@@ -9,7 +9,6 @@
 */
 
 #include <mcMd/analyzers/SystemAnalyzer.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <util/space/Tensor.h>
 #include <util/accumulators/Average.h>     // member template
 

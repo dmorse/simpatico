@@ -2,7 +2,7 @@
 #define DDMD_EXTERNAL_POTENTIAL_H
 
 #include <ddMd/potentials/Potential.h>  // base class
-#include <util/boundary/Boundary.h>     // member (typedef)
+#include <simp/boundary/Boundary.h>     // member (typedef)
 #include <util/global.h>
 
 #include <iostream>
@@ -21,6 +21,7 @@ namespace DdMd
    class AtomStorage;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Calculates external forces and energies for a parent Simulation.

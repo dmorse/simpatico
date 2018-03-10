@@ -19,7 +19,6 @@ namespace McMd
     : simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
    {}
-   //{setClassName("MdAnalyzerManager"); }
 
    // Constructor.
    MdAnalyzerManager::MdAnalyzerManager(MdSimulation& simulation, 

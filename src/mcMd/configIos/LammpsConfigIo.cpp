@@ -44,6 +44,9 @@ namespace McMd
 
    void LammpsConfigIo::read(std::istream &in)
    {
+      // Precondition 
+      UTIL_CHECK(system().simulation().hasSpecies());
+
       // Calculate atomCapacity for entire simulation
       int atomCapacity = 0;
       int bondCapacity = 0;
@@ -59,7 +62,6 @@ namespace McMd
          bondCapacity += speciesCapacity*speciesPtr->nBond();
          #endif
       }
-
 
       // Read and discard title line
       std::string       line;

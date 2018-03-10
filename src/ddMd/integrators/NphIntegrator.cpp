@@ -11,9 +11,9 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
 #include <util/global.h>
@@ -22,7 +22,9 @@
 
 namespace DdMd
 {
+
    using namespace Util;
+   using namespace Simp; 
 
    /*
    * Constructor.
@@ -202,12 +204,12 @@ namespace DdMd
       Vector term_r = Vector(1.0,1.0,1.0);
 
       for (unsigned int i = 0; i < 6; i++) {
-         sinhx_fac_v_ += Vector(a[0]*term_v[0],
-                                a[1]*term_v[1],
-                                a[2]*term_v[2]);
-         sinhx_fac_r += Vector(a[0]*term_r[0],
-                               a[1]*term_r[1],
-                               a[2]*term_r[2]);
+         sinhx_fac_v_ += Vector(a[i]*term_v[0],
+                                a[i]*term_v[1],
+                                a[i]*term_v[2]);
+         sinhx_fac_r += Vector(a[i]*term_r[0],
+                               a[i]*term_r[1],
+                               a[i]*term_r[2]);
          term_v = Vector(term_v[0] * arg_v[0] * arg_v[0],
                          term_v[1] * arg_v[1] * arg_v[1],
                          term_v[2] * arg_v[2] * arg_v[2]);

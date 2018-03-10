@@ -1,13 +1,6 @@
-SRC_DIR_REL =../../..
-
-include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR_REL)/util/config.mk
-include $(SRC_DIR_REL)/simp/config.mk
-include $(SRC_DIR_REL)/ddMd/config.mk
-include $(SRC_DIR_REL)/ddMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/simp/sources.mk
-include $(SRC_DIR_REL)/ddMd/sources.mk
+BLD_DIR_REL =../../..
+include $(BLD_DIR_REL)/config.mk
+include $(SRC_DIR)/ddMd/patterns.mk
 
 all: $(ddMd_potentials_angle_OBJS)
 

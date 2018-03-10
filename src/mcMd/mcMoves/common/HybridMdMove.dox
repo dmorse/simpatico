@@ -26,7 +26,6 @@ The parameter file format is:
      nStep              int
      MdSytem{
        MdPairPotential{
-         maxBoundary         Util::Boundary
          PairList{
            atomCapacity      int
            pairCapacity      int

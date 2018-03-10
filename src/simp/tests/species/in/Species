@@ -1,0 +1,10 @@
+Species{
+  moleculeCapacity             5
+  nAtom                        3
+  atomTypeIds                  0
+                               1
+                               0
+  nBond                        2
+  speciesBonds                 0  1  0
+                               1  2  0
+}

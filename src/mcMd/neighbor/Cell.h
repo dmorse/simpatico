@@ -122,8 +122,8 @@ namespace McMd
       * firstEmptyPos_. All elements of atoms_[] with indices greater than 
       * or equal to firstClearPos_ are empty. An element atoms_[i] with 
       * i < firstEmptyPos_ may not be empty, one with i >= firstClearPos_ must 
-      * be empty, and one with firstEmptyPos_ < i and i < firstClearPos_ may or 
-      * may not be empty. When firstClearPos_ > 0, atoms_[firstClearPos_-1] may 
+      * be empty, and one with firstEmptyPos_ < i < firstClearPos_ may or may
+      * not be empty. When firstClearPos_ > 0, atoms_[firstClearPos_-1] may 
       * not be empty, since this would imply that firstClearPos_ is not the 
       * first in the contiguous block of empty elements. These conditions are 
       * checked in the isValid() method. 

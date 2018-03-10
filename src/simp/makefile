@@ -8,27 +8,29 @@
 
 BLD_DIR_REL =..
 include $(BLD_DIR_REL)/config.mk
-include $(BLD_DIR)/util/config.mk
-include $(BLD_DIR)/simp/config.mk
 include $(SRC_DIR)/simp/patterns.mk
-include $(SRC_DIR)/simp/sources.mk
 
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(simp_OBJS) $(simp_LIB)
+all: $(simp_LIB)
 
 clean:
 	rm -f $(simp_OBJS) $(simp_OBJS:.o=.d) $(simp_LIB)
-#cd tests; $(MAKE) clean
+	cd tests; $(MAKE) clean
+	rm -f *.o */*.o */*/*.o */*/*/*.o
+	rm -f *.d */*.d */*/*.d */*/*/*.d
 
 veryclean:
 	$(MAKE) clean
-	rm -f */*.o */*.d
 	rm -f lib*.a
+ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f boundary/Boundary.h
+endif
 
 #-----------------------------------------------------------------------
 # Include dependency files
 
 -include $(simp_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

@@ -8,9 +8,9 @@
 #include "CompositionProfile.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
@@ -20,6 +20,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    CompositionProfile::CompositionProfile(System& system) 

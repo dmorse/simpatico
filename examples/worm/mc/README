@@ -6,11 +6,11 @@ Usage - cd to an example subdirectory, then enter:
 
 MC simulation:
 
-    mcSim_a -e -p param -c commands
+    mcSim -e -p param -c commands
 
 Restart and extend previous simulation
 
-    mdcim_a -e -r restart -c restart.cmd
+    mdcim -e -r restart -c commands.rst
 
 ------------------------------------------------------
 

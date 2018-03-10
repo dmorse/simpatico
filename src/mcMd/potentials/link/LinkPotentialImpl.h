@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/potentials/bond/BondPotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>           // base class
+#include <mcMd/simulation/SystemInterface.h>           // base class
 #include <mcMd/links/LinkMaster.h>               // member
 #include <util/global.h>
 
@@ -36,7 +36,7 @@ namespace McMd
    * \ingroup McMd_Link_Module
    */
    template <class Interaction>
-   class LinkPotentialImpl : public BondPotential, public SubSystem
+   class LinkPotentialImpl : public BondPotential, public SystemInterface
    {
 
    public:
@@ -173,8 +173,8 @@ namespace McMd
 #include <mcMd/links/Link.h>
 
 #include <simp/species/Species.h>
+#include <simp/boundary/Boundary.h> 
 
-#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -194,7 +194,7 @@ namespace McMd
    template <class Interaction>
    LinkPotentialImpl<Interaction>::LinkPotentialImpl(System& system)
     : BondPotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       linkMasterPtr_(&system.linkMaster()),
       isCopy_(false)
@@ -210,7 +210,7 @@ namespace McMd
    LinkPotentialImpl<Interaction>::LinkPotentialImpl(
                          LinkPotentialImpl<Interaction>& other)
     : BondPotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       linkMasterPtr_(&other.system().linkMaster()),
       isCopy_(true)

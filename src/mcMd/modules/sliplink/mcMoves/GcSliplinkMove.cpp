@@ -15,9 +15,9 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -30,6 +30,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    // Constructor
    GcSliplinkMove::GcSliplinkMove(McSystem& system) :

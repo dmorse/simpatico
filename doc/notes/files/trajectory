@@ -16,7 +16,7 @@ SIMPATICO TRAJECTORY FILE FORMAT
    and/or config file to obtain information about mass and charge 
    associated with types, as well as topology information. (Though
    some analysis operations may not require this information). The
-   postprocessor needs bools variables to indicate whether it has
+   postprocessor needs bool variables to indicate whether it has
    atomType (mass and charge) and and topology information.
 
    4) Possibility: Make the entire header optional? The postprocessor

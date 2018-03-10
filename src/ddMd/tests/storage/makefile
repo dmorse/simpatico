@@ -1,20 +1,20 @@
 BLD_DIR_REL =../../..
 include $(BLD_DIR_REL)/config.mk
-include $(BLD_DIR)/ddMd/config.mk
-include $(BLD_DIR)/simp/config.mk
-include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
-include $(SRC_DIR)/ddMd/sources.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/storage/sources.mk
 
-all: $(ddMd_tests_storage_OBJS)
+TEST= $(SRC_DIR)/ddMd/tests/storage/Test
+.Secondary: $(ddMd_tests_storage_OBJS)
+
+all: $(ddMd_tests_storage_EXES)
+
+run: $(TEST)
+	$(MPIRUN) 6 $(TEST)
 
 clean:
+	rm -f $(ddMd_tests_storage_EXES)
 	rm -f $(ddMd_tests_storage_OBJS) 
 	rm -f $(ddMd_tests_storage_OBJS:.o=.d)
-	rm -f $(ddMd_tests_storage_OBJS:.o=)
 
 -include $(ddMd_tests_storage_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

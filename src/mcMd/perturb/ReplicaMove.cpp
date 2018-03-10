@@ -1,4 +1,3 @@
-#ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -13,7 +12,7 @@
 #include <mcMd/perturb/LinearPerturbation.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <util/boundary/OrthorhombicBoundary.h>
+#include <simp/boundary/OrthorhombicBoundary.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
@@ -28,6 +27,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    // Define static constant MPI message Tag.
 
@@ -334,4 +334,3 @@ namespace McMd
 
 }
 #endif // ifdef UTIL_MPI
-#endif // ifdef MCMD_PERTURB

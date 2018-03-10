@@ -1,4 +1,3 @@
-
 /**
 * Single-processor Monte Carlo (MC) and molecular dynamics (MD).
 */
@@ -10,7 +9,7 @@ namespace McMd
    /**
    * \defgroup McMd_Module McMd namespace
    *  
-   * Classes in the McMd namespace.
+   * McMd namespace (single-processor MC and MD)
    */
 
 }

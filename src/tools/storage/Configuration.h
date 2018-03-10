@@ -8,15 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>        // base class
+#include <util/param/ParamComposite.h>       // base class
 
-#include <tools/chemistry/Atom.h>              // member (template argument)
-#include <tools/chemistry/Group.h>             // member (template argument)
-#include <tools/chemistry/Species.h>           // member (template argument)
-#include <tools/storage/AtomStorage.h>         // member 
-#include <tools/storage/GroupStorage.h>        // member (template)
-
-#include <util/boundary/Boundary.h>           // member 
+#include <tools/chemistry/Atom.h>             // member (template argument)
+#include <tools/chemistry/Group.h>            // member (template argument)
+#include <tools/chemistry/Species.h>          // member (template argument)
+#include <tools/storage/AtomStorage.h>        // member 
+#include <tools/storage/GroupStorage.h>       // member (template)
+#include <simp/boundary/Boundary.h>           // member 
 #include <util/containers/DArray.h>           // member (template)
 #include <util/containers/DSArray.h>          // member (template)
 #include <util/containers/ArrayIterator.h>    // inline function
@@ -26,6 +25,7 @@ namespace Tools
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * An instantaneous molecular dynamics configuration.

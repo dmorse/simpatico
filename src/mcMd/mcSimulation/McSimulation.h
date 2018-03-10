@@ -8,8 +8,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/simulation/Simulation.h>   // base class
-#include <mcMd/mcSimulation/McSystem.h>   // class member
+#include <mcMd/simulation/Simulation.h>           // base class
+#include <mcMd/mcSimulation/McSystem.h>           // member
+#include <mcMd/mcSimulation/McAnalyzerManager.h>  // member
+#include <mcMd/mcSimulation/McCommandManager.h>   // member
+#include <mcMd/mcMoves/McMoveManager.h>           // member
 #include <util/global.h>
 
 namespace Util { template <typename T> class Factory; }
@@ -20,8 +23,6 @@ namespace McMd
    using namespace Util;
 
    class McMove;
-   class McMoveManager;
-   class McAnalyzerManager;
 
    /**
    * A Monte-Carlo simulation of one McSystem.
@@ -52,20 +53,31 @@ namespace McMd
       */
       virtual ~McSimulation();
 
+      /// \name Initialization
+      //@{
+
       /**
       * Process command line options.
       *
-      * Options:
+      * Main options:
+      *  
+      *   -q           Query: Print enabled/disabled features
       *
-      *   -e  Enable echoing of the parameter file to a file.
+      *   -e           Echo: Enable echoing of parameter file
       *
-      *   -p  Enable use of a free energy perturbation. 
+      *   -r filename  Restart: restart from specified file
       *
-      *   -r filename. Restart a simulation.
+      *   -p filename  Parameter: Specify a parameter file
       *
-      * When restarting a simulation, the required parameter "filename"
-      * is the base name for the 3 required input files: filename.prm, 
-      * filename.rst, and filename.cmd.
+      *   -c filename  Command: Specify a command file
+      * 
+      *   -i path      Input: Specify path prefix for input files
+      *
+      *   -o path      Input: Specify path prefix for output files
+      *
+      * The -p and -r options are mutually exclusive: When a
+      * simulation is restarted, all information required from
+      * a parameter file is in the restart file. 
       *
       * \param argc number of arguments
       * \param argv vector of pointers to char* string arguments
@@ -73,34 +85,71 @@ namespace McMd
       void setOptions(int argc, char **argv);
 
       /**
-      * Read parameter file.
+      * Read parameters from the default parameter istream.
+      *
+      * Calls readParam(std::istream&) internally, with a
+      * default parameter file istream given by the return
+      * value of FileMaster::paramFile(). 
+      *
+      * Single parameter file: If compiled as a serial program
+      * (ifndef UTIL_MPI) or as a parallel program in mode that
+      * uses a single parameter file (i.e., with option -f), 
+      * the parameter file name is the argument passed to the 
+      * -p command line option, if the main program is invoked 
+      * with the -p option, or the parameter file is read from
+      * standard input, std::cin, if not invoked with a -p
+      * option.
+      * 
+      * Multiple parameter files: If compiled as a parallel
+      * program (ifdef UITL_MPI) and used in a mode with 
+      * separate parameter files for independent simulations
+      * (i.e., without the -f option), then the parameter file
+      * for the simulation performed by processor number n is
+      * file named n/filename, where "filename" is either the
+      * argument of the -p command line option, if invoked with 
+      * that option, or the default string filename = "param".
+      *
+      * \pre: Call after setOptions().
+      */
+      void readParam();
+
+      /**
+      * Read specified parameter file.
+      *
+      * Returns and does nothing if in process of restarting
+      * (i.e., if the main program was invoked with -r option).
+      * This calls readParameters(std::istream& ) internally.
+      *
+      * \pre: Call after setOptions().
       *
       * \param in parameter file stream
       */
       virtual void readParam(std::istream &in);
    
       /**
-      * Read parameters from the default parameter stream.
-      *
-      * Default parameter istream is std::cin in serial mode 
-      * (ifndef UTIL_MPI) and the file "n/param" for 
-      * processor n in parallel mode (ifdef UTIL_MPI).
-      */
-      void readParam();
-
-      /**
-      * Read parameters from a specific stream.
+      * Read body of parameter block from a specific file.
       *
       * \param in parameter file input stream.
       */
       virtual void readParameters(std::istream &in);
 
+      //@}
+      /// \name Serialization and Restarting
+      //@{
+
       /**
-      * Load internal state from an archive.
+      * Load parameters from an archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Read restart file to continue simulation.
+      *
+      * \param filename name of input restart file
+      */
+      void load(const std::string& filename);
 
       /**
       * Save internal state to an archive.
@@ -110,9 +159,29 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Read and execute commands from a specific input stream.
+      * Write internal state to a restart file.
+      *
+      * \param filename name of output restart file
+      */
+      void save(const std::string& filename);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, unsigned int version);
+
+      //@}
+      /// \name Command Script Interface
+      //@{
+
+      /**
+      * Read and execute commands from a command file input stream.
       * 
-      * \param in command file input stream. 
+      * \param in  command file input stream
       */
       void readCommands(std::istream& in);
 
@@ -125,21 +194,42 @@ namespace McMd
       void readCommands();
 
       /**
+      * Read and execute a single command from an input stream.
+      *
+      * Usage: The capitalized command name string must have been 
+      * read from istream "in" and passed as the "command" argument. 
+      * If the command name is recognized, any additional arguments 
+      * are read from stream "in", the command is executed, and a
+      * value of true is returned. A value of false is returned
+      * iff the command name string is not recognized.
+      * 
+      * Implementation: Calls CommandManager::readCommand().
+      *
+      * \param command  command name string
+      * \param in  command input stream
+      */ 
+      bool readCommand(std::string command, std::istream& in);
+
+      //@}
+      /// \name Simulation and Analysis Operations
+      //@{
+
+      /**
       * Run an MC simulation of specified length.
       * 
-      * This method implements the main MC loop. The step counter iStep_
+      * This method implements the main MC loop. The step counter iStep
       * is incremented until it reaches endStep. Each step involves a
       * random selection and attempt of one Markov MC move. Upon exit,
       * iStep_ = endStep.
       *
-      * If isContinuation is false, the step counter iStep_ is initialized 
+      * If isContinuation is false, the step counter iStep is initialized 
       * to zero, and analyzers and mcmoves are set to default initial 
       * states before entering the main loop. If isContinuation is true, 
       * no such initialization is done for iStep_, analyzers, or the
       * MC moves.
       *  
-      * \param endStep        Final value of MC step counter iStep_.
-      * \param isContinuation Is this a continuation of a previous run?
+      * \param endStep  Final value of MC step counter iStep_.
+      * \param isContinuation  Is this a continuation of a previous run?
       */
       void simulate(int endStep, bool isContinuation = false);
 
@@ -147,22 +237,22 @@ namespace McMd
       * Read and analyze a sequence of configuration files.
       *
       * This method reads and analyzes a sequence of configuration files,
-      * which were normally generated by running a previous simulation using 
-      * DumpConfig, and applies the sample() method of every Analyzer to
-      * each such configuration. 
+      * which were normally generated by running a previous simulation 
+      * using ConfigWriter, and applies the sample() method of every 
+      * Analyzer to each such configuration. 
       *
-      * The method reads files with names of the form inputPrefix() + n for 
-      * integer suffixes min <= n <= max. This is consistent with the output
-      * format used by the DumpConfig class.
+      * The method reads a sequence of configuration files with names of 
+      * the form inputPrefix + basename + n for integer suffixes in the
+      * range min <= n <= max. This is consistent with the output format
+      * format used by the WriteConfig class. The inputPrefix used in 
+      * an analysis simulation is often a directory name, with a trailing
+      * directory separator "/", that is equal to the outputPrefix used
+      * in the earlier simulation run.
       *
-      * In serial mode, the inputPrefix should be given as a path relative
-      * to the directory in which the program is executed. The inputPrefix 
-      * of the simulation FileMaster is not prepended to the dump Prefix.  
-      *
-      * In parallel mode, for processor with MPI rank m, the path "m/" is 
-      * prepended to the basename, so that all files associated with this
-      * processor are in this directory, but no inputPrefix is added after
-      * the string "m/".
+      * In parallel mode, for processor with MPI rank m, the path "m/" 
+      * is prepended to the fileMaster input prefix, so that paths to 
+      * all files associated with processor m begin with the string
+      * "m/inputPrefix" + basename.
       *
       * \param min  integer suffix of first configuration file name
       * \param max  integer suffix of last configuration file name
@@ -173,6 +263,10 @@ namespace McMd
       /**
       * Read and analyze a trajectory file.
       * 
+      * This function uses an instance of the TrajectoryReader class
+      * specified by the "classname" argument to read a trajectory 
+      * file with a path of the form inputPrefix + filename. 
+      *
       * \param min  start at this frame number
       * \param max  end at this frame number
       * \param classname  name of the TrajectoryReader class to use
@@ -181,24 +275,9 @@ namespace McMd
       void analyzeTrajectory(int min, int max, 
                              std::string classname, std::string filename);
 
-      /**
-      * Write restart files.
-      */
-      void save(const std::string& filename);
-
-      /**
-      * Read restart files.
-      */
-      void load(const std::string& filename);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, unsigned int version);
+      //@}
+      /// \name Miscellaneous
+      //@{
 
       /**
       * Get the McSystem by reference.
@@ -220,6 +299,8 @@ namespace McMd
       */
       virtual bool isValid() const;
 
+      //@}
+
    protected:
 
       /**
@@ -230,16 +311,19 @@ namespace McMd
    private:
    
       /// System.
-      McSystem       system_;
+      McSystem system_;
    
-      /// Pointer to Manager for Monte Carlo moves.
-      McMoveManager* mcMoveManagerPtr_;
+      /// Manager for Monte Carlo moves.
+      McMoveManager mcMoveManager_;
 
-      /// Pointer to Manager for analyzers.
-      McAnalyzerManager* mcAnalyzerManagerPtr_;
+      /// Manager for Analyzer objects.
+      McAnalyzerManager mcAnalyzerManager_;
+
+      /// Manager for Command objects.
+      McCommandManager mcCommandManager_;
 
       /// Pointer to parameter file passed to readParameters(istream&)
-      std::istream*   paramFilePtr_;
+      std::istream* paramFilePtr_;
 
       /// Restart output file name
       std::string saveFileName_;
@@ -255,28 +339,26 @@ namespace McMd
 
    }; 
 
-   // Inline Methods
+   // Inline member functions
 
    /* 
-   * Get the McSystem.
+   * Get the McSystem by reference.
    */
    inline McSystem& McSimulation::system()
-   { return system_; }
+   {  return system_; }
 
    /* 
-   * Get a const ref to the McSystem.
+   * Get the McSystem by const reference.
    */
    inline const McSystem& McSimulation::system() const
-   { return system_; }
+   {  return system_; }
 
    /* 
    * Get the McMoveManager (protected).
    */
-   inline McMoveManager& McSimulation::mcMoveManager()
-   {
-      assert(mcMoveManagerPtr_);  
-      return *mcMoveManagerPtr_; 
-   }
+   inline 
+   McMoveManager& McSimulation::mcMoveManager()
+   {  return mcMoveManager_; }
 
 }    
 #endif

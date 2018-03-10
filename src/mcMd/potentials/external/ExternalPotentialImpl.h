@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/potentials/external/ExternalPotential.h>  // base class
-#include <mcMd/simulation/SubSystem.h>                   // base class
+#include <mcMd/simulation/SystemInterface.h>             // base class
 #include <util/global.h>
 
 namespace Util
@@ -21,10 +21,10 @@ namespace Util
 namespace McMd
 {
 
+   class System;
+
    using namespace Util;
    using namespace Simp;
-
-   class System;
 
    /**
    * Template implementation of ExternalPotential.
@@ -32,29 +32,30 @@ namespace McMd
    * \ingroup McMd_External_Module
    */
    template <class Interaction>
-   class ExternalPotentialImpl : public ExternalPotential, public SubSystem
+   class ExternalPotentialImpl : public ExternalPotential,
+                                 private SystemInterface
    {
 
    public:
 
-      /** 
+      /**
       * Constructor.
       */
       ExternalPotentialImpl(System& system);
 
-      /** 
+      /**
       * Constructor (copied from ExternalPotential)
       */
       ExternalPotentialImpl(ExternalPotentialImpl<Interaction>& other);
 
-      /** 
+      /**
       * Destructor.
       */
       virtual ~ExternalPotentialImpl();
 
       /**
       * Read param for external potential.
-      * 
+      *
       * This method reads the external potential Interaction parameter
       * block. Before calling Interaction::readParameters(), it passes
       * simulation().nExternalType() to Interaction::setNAtomType().
@@ -79,7 +80,7 @@ namespace McMd
       //@{
 
       /**
-      * Returns external potential energy of a single particle. 
+      * Returns external potential energy of a single particle.
       *
       * \param position atomic position Vector
       * \param typeId   atom type index
@@ -111,12 +112,14 @@ namespace McMd
       void addForces();
 
       /**
-      * Return total external energy of this System.
+      * Compute and store total external energy of this System.
       */
-      double energy() const;
+      void computeEnergy();
 
       /**
       * Calculate the external energy for one Atom.
+      *  
+      * \param atom reference to Atom of interest
       */
       double atomEnergy(const Atom& atom) const;
 
@@ -133,11 +136,11 @@ namespace McMd
       const Interaction& interaction() const;
 
    private:
-  
+
       Interaction* interactionPtr_;
 
       bool isCopy_;
- 
+
       template <typename T>
       void computeStressImpl(T& stress) const;
 
@@ -145,12 +148,12 @@ namespace McMd
 
 }
 
-#include <mcMd/simulation/System.h> 
-#include <mcMd/simulation/Simulation.h> 
+#include <mcMd/simulation/System.h>
+#include <mcMd/simulation/Simulation.h>
 
 #include <simp/species/Species.h>
+#include <simp/boundary/Boundary.h>
 
-#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 
@@ -162,41 +165,41 @@ namespace McMd
    using namespace Util;
    using namespace Simp;
 
-   /* 
+   /*
    * Default constructor.
    */
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(System& system)
     : ExternalPotential(),
-      SubSystem(system),
+      SystemInterface(system),
       interactionPtr_(0),
       isCopy_(false)
    {  interactionPtr_ = new Interaction(); }
- 
-   /* 
+
+   /*
    * Constructor, copy from ExternalPotentialImpl<Interaction>.
    */
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(
                          ExternalPotentialImpl<Interaction>& other)
     : ExternalPotential(),
-      SubSystem(other.system()),
+      SystemInterface(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
- 
-   /* 
-   * Destructor. 
+
+   /*
+   * Destructor.
    */
    template <class Interaction>
-   ExternalPotentialImpl<Interaction>::~ExternalPotentialImpl() 
+   ExternalPotentialImpl<Interaction>::~ExternalPotentialImpl()
    {}
 
-   /* 
+   /*
    * Read parameters from file.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
+   void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in)
    {
       // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
@@ -207,12 +210,12 @@ namespace McMd
          interaction().readParameters(in);
       }
    }
-  
+
    /*
    * Load internal state from an archive.
    */
    template <class Interaction>
-   void 
+   void
    ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
    {
       ar >> isCopy_;
@@ -221,7 +224,7 @@ namespace McMd
          bool nextIndent = false;
          addParamComposite(interaction(), nextIndent);
          interaction().loadParameters(ar);
-      } 
+      }
    }
 
    /*
@@ -240,24 +243,44 @@ namespace McMd
    * Return external energy of an atom.
    */
    template <class Interaction>
-   double 
-   ExternalPotentialImpl<Interaction>::energy(const Vector& position, int typeId) 
+   double
+   ExternalPotentialImpl<Interaction>::energy(const Vector& position, int typeId)
       const
-   { return interaction().energy(position, typeId); }
+   {  return interaction().energy(position, typeId); }
 
    /*
    * Return external force on an atom.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::getForce(const Vector& position, 
+   void ExternalPotentialImpl<Interaction>::getForce(const Vector& position,
                                                int typeId, Vector& force) const
-   { interaction().getForce(position, typeId, force); }
+   {  interaction().getForce(position, typeId, force); }
 
-   /* 
+   /*
+   * Add external forces to total forces on each atom.
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::addForces()
+   {
+      Vector  force;
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator   atomIter;
+      for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               interaction().getForce(atomIter->position(),
+                                            atomIter->typeId(), force);
+               atomIter->force() += force;
+            }
+         }
+      }
+   }
+
+   /*
    * Return total external potential energy.
    */
    template <class Interaction>
-   double ExternalPotentialImpl<Interaction>::energy() const
+   void ExternalPotentialImpl<Interaction>::computeEnergy()
    {
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator atomIter;
@@ -270,37 +293,17 @@ namespace McMd
             }
          }
       }
-      return energy;
+      energy_.set(energy);
+      //return energy;
    }
 
-   /* 
-   * Add external forces to total.
+   /*
+   * Compute and return external potential for one atom.
    */
-   template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::addForces()
-   {
-      Vector  force; 
-      System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
-      for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               interaction().getForce(atomIter->position(), 
-                                            atomIter->typeId(), force);
-               atomIter->force() += force;
-            }
-         }
-      }
-   }
-
    template <class Interaction>
    double ExternalPotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
-      double  energy;
-
-      energy = 0.0;
-      energy += interaction().energy(atom.position(), atom.typeId());
-      return energy;
+      return interaction().energy(atom.position(), atom.typeId());
    }
 
    template <class Interaction>

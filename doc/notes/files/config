@@ -8,75 +8,104 @@ configuration for starting any Simpatico simulation.
 ---------------------------------------------------------------------
 High level file structure (ascii):
 
-   BOUNDARY (same as current)
    [SPECIES]
+   BOUNDARY (same as current)
    ATOMS - format variable, indicated within block
-   [TOPOLOGY] 
    [BONDS] 
    [ANGLES] 
    [DIHEDRALS]
 
 Comments:
 
-1) The SPECIES and TOPOLOGY sections must both be present or both
-be absent. Their presence indicates that the system is molecular.
+1) The SPECIES section is optional. Its presence indicates that
+the system is molecular.
 
 2) The BONDS, ANGLES, DIHEDRALS sections are each optional. These
-groups should normally be absent in a molecular system. They are 
-used in a non-molecular system to list all covalent groups, and 
-can be used in a molecular system to list additional covalent groups 
+groups should normally be absent in a molecular system with a 
+SPECIES block. They are used in a non-molecular system to list 
+all covalent groups. They can be used in a molecular system to 
+list additional covalent groups not listed in the SPECIES section 
 (e.g., inter-molecular crosslinks).
 
 3) The single processor mdSim and mcSim programs will normally write
-config files in molecular format, with a SPECIES and TOPOLOGY block.
-They will also only read files with this format.
+config files in molecular format, with a SPECIES block, and no BOND,
+ANGLES, or DIHEDRALS blocks. They will also only read files with this 
+format. 
 
 4) The parallel ddSim program will read files in either molecular or
 non-molecular format, and will preserve all information present in a
-molecular input file, so that it can be written back to file.
+molecular input file, so that it can be written back to file. If 
+a SPECIES block is present, that will be used to generate Group
+objects for all molecules, to be broadcast to all processors.
 
 ---------------------------------------------------------------------
-BOUNDARY:
-
-   [Boundary]
-
-   Remark: This can use the existing file format, which is defiend by
-   the Boundary class.
-
 SPECIES:
 
    nSpecies int
-   format t[c]
+   [hasAtomCharge]
 
    species 1 {
-      nMolecule int
-      nAtom int
-      0 type
-      1 type
-      ...
+     nMolecule int
+     nAtom int
+       0 atomType [charge]
+       1 atomType [charge]
+       ...
+     [nBond int]
+       id  atomId0 atomId1 typeId
+       .....
+     [nAngle int]
+       id  atomId0 atomId1 atomId2 typeId
+       ...
+     [nDihedral int]
+       id  atomId0 atomId1 atomId2 typeId
+     ...
+   }
+
+   species 2 {
+     ....
    }
 
    ------------------
 
-   Format flags (i.e., allowed characters in format string):
-      t = atom type
-      c = charge
-
    Comments: 
    
    1) This section is optional. Its appearance is a declaration that 
-   the system is molecular. This means that the ATOMS section must be 
-   in molecular order, and a topology section must follow.
+   the system is molecular. This means that the ids of atoms in the 
+   TOMS section must be in molecular order, and that bonded groups 
+   that are declared in this section should not appear in separate 
+   BOND, ANGLE, or DIHEDRAL sections.
 
-   2) The mcSim and mdSim programs will always output in molecular format, 
-   and thus always output a SPECIES block.
+   2) The mcSim and mdSim programs will always output in molecular 
+   format, and thus always output a SPECIES block.
 
    3) The ddSim program will output in molecular format if the input file 
    was in molecular format. The program needs an isMolecular variable to
    preserve this information.
 
-   4) The mcSim and mdSim programs should validate type information in this 
-   block against that given in their parameter files.
+   4) The mcSim and mdSim programs may check information in the SPECIES
+   block with information in the parameter file for consistency (but 
+   this choice is not part of the file format definition).
+
+   5) If this block is present, corresponding BONDS, ANGLES, DIHEDRALS 
+   groups should normally not be present, since this information would 
+   be redundant.
+
+   6) The BONDS, ANGLES, or DIHEDRALS are optional. The absence of such
+   a label indicates that there is no such block. The Parameters nBond, 
+   nAngle, nDihedral must be present if the labels are present, and must
+   be assigned a non-negative value, but may be assigned a zero value.
+   Lines describing individual groups must be present iff nBond > 0, etc. 
+
+   7) ddSim must be able to read a SPECIES block, and will replicate all 
+   groups (bonds, angles, etc.) to create corresponding group objects for
+   every molecule in each species. 
+
+BOUNDARY:
+
+   [Boundary]
+
+   Remark: This can use the existing file format, which is defined by
+   the Boundary class.
 
 ATOMS:
 
@@ -98,12 +127,13 @@ ATOMS:
 
    Comments:
 
-   1) The presence of a SPECIES block before the atom block indicates that 
+   1) If a SPECIES block exists before the ATOM block, this declares that 
    atom ids are in molecular order, consecutive within each molecule, with 
    molecules of the same species consecutive within a block. This 
    precondition should be tested.
 
-   2) The ordered flag is optional, and is true if present, false if absent.
+   2) The ordered flag is optional, and is assumed false if absent, and
+   true if and only if present.
 
    3) All programs (mcSim, mdSim, ddSim an ppMd) should be able to handle 
    either ordered or unordered files.
@@ -118,55 +148,6 @@ ATOMS:
    7) Molecular dynamics programs (mdSim and ddSim) will outut velocities,
    and shifts if possible.
    
-TOPOLOGY
-
-   [hasBonds]
-   [hasAngles]
-   [hasDihedrals]
-
-   Species 1 {
-     nBond int
-     id  type atomId0 atomId1
-      .....
-     nAngle int
-     id  type atomId0 atomId1 atomId2
-     ...
-     nDihedral int
-     id  type atomId0 atomId1 atomId2
-     ...
-   }
-
-   Species 2 {
-     ...
-   }
-
-   Comments:
-   
-   1) This block must be present if and only if a SPECIES block is present
-
-   2) If this block is present, corresponding BONDS, ANGLES, DIHEDRALS groups 
-   should not be present, since this information would be redundant.
-
-   3) hasBonds, hasAngles, and hasDihedrals blocks are optional arguments 
-   that are false if absent, and true if present
-
-   4) Values of nBond, nAngle, nDihedral are must be present if and only 
-   [hasBonds], [hasAngles], or [hasDihedrals] is set, respectively. Lines
-   describing individual bonds must be present if nBond > 0, etc. 
-
-   5) ddSim must be able to read a TOPOLOGY block, and will replicate all 
-   groups (bonds, angles, etc.) to create corresponding group objects for
-   every molecule in each species. 
-
-   6) The mcSim and mdSim programs can ignore the topology block or cross 
-   check for consistency, since equivalent information is in the parameter 
-   file. (This choice is not part of the file format definition).
-
-   7) Note that inclusion of compact topology information in the config 
-   file makes it unnecssary to define a separate topology file format. The 
-   mdPp postprocessor can process a trajectory by reading a config file 
-   and a trajectory file, using the config file for topological information.
-
 BONDS, ANGLES, or DIHEDRALS:
    
    [ordered]

@@ -773,13 +773,13 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../src/util \
+INPUT                  = ../src/programs.mod \
+                         ../src/util \
                          ../src/simp \
                          ../src/mcMd \
                          ../src/ddMd \
                          ../src/tools \
                          ../src/test \
-                         ../src/programs.mod \
                          manual
 
 # This tag can be used to specify the character encoding of the source files
@@ -827,6 +827,8 @@ RECURSIVE              = YES
 EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
                          ../src/tools/hoomd/xmlParser.cpp \
                          ../src/tools/hoomd/ExtractTopologyMain.cpp \
+                         ../src/util/boundary \
+                         ../src/util/ensembles \
                          ../src/mcMd/attic \
                          ../src/ddMd/potentials/coulomb \
                          ../src/ddMd/attic
@@ -2037,11 +2039,11 @@ INCLUDE_FILE_PATTERNS  =
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
 PREDEFINED             = UTIL_MPI \
-                         INTER_BOND \
-                         INTER_ANGLE \
-                         INTER_DIHEDRAL \
-                         INTER_EXTERNAL \
-                         INTER_COULOMB \
+                         SIMP_BOND \
+                         SIMP_ANGLE \
+                         SIMP_DIHEDRAL \
+                         SIMP_EXTERNAL \
+                         SIMP_COULOMB \
                          MCMD_LINK \
                          MCMD_PERTURB \
                          DDMD_MODIFIERS

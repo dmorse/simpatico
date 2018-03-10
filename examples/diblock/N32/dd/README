@@ -10,5 +10,5 @@ To postprocess the resulting config and trajectory files:
 
 To restart the simulation and continue to 12000 steps
 
-   mpirun -np 6 ddSim -e -r restart -c restart.cmd
+   mpirun -np 6 ddSim -e -r restart -c commands.rst
 

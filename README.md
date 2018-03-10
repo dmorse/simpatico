@@ -60,7 +60,7 @@ in separate repositories.
 A recent copy of the web manual for simpatico is available online, 
 at
 
-   <http://dmorse.github.com/simpatico/index.html>.
+   <http://dmorse.github.com/simpatico/doc/html/index.html>.
 
 This manual provides both user and developer documentation in an
 integrated form.
@@ -102,10 +102,9 @@ MPI library. The build system requires the gnu version of
 the unix make utility and a python interpreter.
 
 Complete instructions for compiling various versions of simpatico 
-are given in the text file simpatico/doc/manual/user/compile.dox, 
-or in the corresponding html web page in the doc/html directory.
-Short instructions for compiling the default single-processor 
-versions of mcSim and mdSim (for the impatient) are:
+are given in Sec. 2.2 of the web documentation. Short instructions 
+for compiling the default single-processor versions of mcSim and 
+mdSim (for the impatient) are as follows:
 
 - Add the simpatico/bin directory to your linux command search
   PATH environment variable, and add the simpatico/scripts/python 
@@ -119,8 +118,8 @@ versions of mcSim and mdSim (for the impatient) are:
 
 The resulting executables, named "mcSim" and "mdSim", will 
 be installed in the simpatico bin/ directory. Please see the 
-text file and html documentation mentioned above for further 
-instructions for compiling multi-processor programs.
+html documentation mentioned above for further instructions 
+for compiling multi-processor programs that depend on MPI.
 
 Instructions for enabling or disabling a variety of optional 
 compile-time features are also given in the html documentation. 

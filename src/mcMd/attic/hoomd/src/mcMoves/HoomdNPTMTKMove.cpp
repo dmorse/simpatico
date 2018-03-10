@@ -12,16 +12,17 @@
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <util/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <simp/species/Species.h>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor

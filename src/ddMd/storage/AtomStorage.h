@@ -9,17 +9,18 @@
 */
 
 #include <util/param/ParamComposite.h>        // base class
+
 #include <ddMd/chemistry/AtomArray.h>         // member
 #include <ddMd/storage/AtomMap.h>             // member
 #include <ddMd/communicate/AtomDistributor.h> // member
 #include <ddMd/communicate/AtomCollector.h>   // member
 #include <ddMd/chemistry/Atom.h>              // member template argument
 #include <ddMd/chemistry/Group.h>             // in function templates
+#include <simp/boundary/Boundary.h>           // typedef
 #include <util/containers/DArray.h>           // member template
 #include <util/containers/ArraySet.h>         // member template
 #include <util/containers/ArrayStack.h>       // member template
 #include <util/misc/Setable.h>                // member template
-#include <util/boundary/Boundary.h>           // typedef
 #include <util/global.h>
 
 class AtomStorageTest;
@@ -27,12 +28,13 @@ class AtomStorageTest;
 namespace DdMd
 {
 
-   using namespace Util;
-
    class AtomIterator;
    class ConstAtomIterator;
    class GhostIterator;
    class ConstGhostIterator;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * A container for all the atoms and ghost atoms on this processor.

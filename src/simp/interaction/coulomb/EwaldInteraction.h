@@ -19,9 +19,13 @@ namespace Simp
    using namespace Util;
 
    /**
-   * Implementation of pairwise r- and k-space Ewald interaction.
+   * Implementation of r-space and k-space Ewald Coulomb interactions.
    *
-   * This class defines the standard Ewald potential.
+   * This class defines the standard Ewald decomposition of a coulomb
+   * potential. The total pair potential is 1/(4 pi epsilon r). The
+   * short-range part is erfc(alpha r)/(4 pi epsilon r). The Gaussian
+   * smeared k-space potential for square wavenumber kSq is given by
+   * V(k) = exp(-kSq/(4*alpha^2))/(epsilon kSq).
    *
    * \ingroup Simp_Coulomb_Module
    */
@@ -44,21 +48,21 @@ namespace Simp
       /**
       * Assignment.
       *
-      * \param other EwaldInteraction to be assigned.
+      * \param other EwaldInteraction from which data is copied.
       */
       EwaldInteraction& operator = (const EwaldInteraction& other);
-
 
       /**
       * Default destructor.
       */
-      ~EwaldInteraction() {}
+      ~EwaldInteraction() 
+      {}
 
       /// \name Mutators
       //@{ 
 
       /**
-      * Read epsilon, alpha, rCutoff, and kCutoff.
+      * Read epsilon, alpha, and rCutoff.
       *
       * \param in  input parameter stream 
       */
@@ -87,8 +91,8 @@ namespace Simp
       void set(std::string name, double value);
 
       //@}
-      /// \name Accessors
-      //@{ 
+      /// \name Energy and Force Computations
+      //@{
 
       /**
       * Returns r-space interaction energy for a single pair of atoms. 
@@ -100,14 +104,6 @@ namespace Simp
       * \return  short range part of pair energy 
       */
       double rSpaceEnergy(double rSq, double qProduct) const;
-
-      /**
-      * Return regularized Fourier-space potential.
-      *
-      * \param kSq square of wavenumber
-      * \return exp(-kSq/(4*alpha*alpha))/(epsilon*ksq)
-      */
-      double kSpacePotential(double kSq) const;
 
       /**
       * Return ratio of scalar pair interaction force to pair separation.
@@ -133,22 +129,17 @@ namespace Simp
       double rSpaceForceOverR(double rSq, double qProduct) const;
   
       /**
-      * Get real space cutoff squared.
-      */
-      double rSpaceCutoffSq() const;
-
-      /**
-      * Get real space cutoff.
-      */
-      double rSpaceCutoff() const;
-
-      /**
-      * Get Ewald parameter alpha (inverse length).
+      * Return regularized Fourier-space potential.
       *
-      * \return alpha
+      * \param kSq square of wavenumber
+      * \return exp(-kSq/(4*alpha*alpha))/(epsilon*ksq)
       */
-      double alpha() const;
- 
+      double kSpacePotential(double kSq) const;
+
+      //@}
+      /// \name Parameter Accessors
+      //@{ 
+
       /**
       * Get dielectric permittivity.
       *
@@ -156,6 +147,23 @@ namespace Simp
       */
       double epsilon() const;
  
+      /**
+      * Get Ewald smearing parameter alpha (inverse length).
+      *
+      * \return alpha
+      */
+      double alpha() const;
+ 
+      /**
+      * Get real space cutoff.
+      */
+      double rSpaceCutoff() const;
+
+      /**
+      * Get real space cutoff squared.
+      */
+      double rSpaceCutoffSq() const;
+
       /**
       * Get a parameter value, identified by a string.
       *
@@ -167,15 +175,17 @@ namespace Simp
 
    private:
 
-      /// Physical Parameters.
-      double epsilon_;          ///< Dielectric permittivity.
+      /// Dielectric permittivity (arbitrary units).
+      double epsilon_;          
 
-      // Algorithmic parameters for Ewald potential.
-      double alpha_;            ///< alpha = (1 / (sigma*sqrt(2)) ).
-      double rSpaceCutoff_;     ///< Ewald potential real space cutoff.
+      /// Ewald smearing parameter. Inverse length: 1/alpha = sigma*sqrt(2).
+      double alpha_; 
+
+      /// Real space cutoff for short range pair potential.
+      double rSpaceCutoff_;  
 
       // Derived constants
-      double rSpaceCutoffSq_;   ///< Real space cutoff squared.
+      double rSpaceCutoffSq_; 
       double ce_;
       double cf_;
       double cg_;
@@ -185,7 +195,7 @@ namespace Simp
       */
       bool isInitialized_;
 
-      /// Compute and set values of derived constants
+      /// Compute and set values of all derived constants
       void setDerivedConstants();
 
    };
@@ -199,27 +209,27 @@ namespace Simp
    {  return epsilon_; }
 
    /* 
-   * Return Ewald mearing parameter alpha.
+   * Return Ewald smearing parameter alpha.
    */
    inline double EwaldInteraction::alpha() const
    {  return alpha_; }
 
    /* 
-   * Return real space cutoff distance in Ewald method.
+   * Return real space cutoff distance.
    */
    inline 
    double EwaldInteraction::rSpaceCutoff() const
    {  return rSpaceCutoff_; }
 
   /* 
-   * Return real space cutoff distance squared in Ewald method.
+   * Return real space cutoff distance squared.
    */
    inline 
    double EwaldInteraction::rSpaceCutoffSq() const
    {  return rSpaceCutoffSq_; }
 
    /* 
-   * Calculate r-space energy for a pair of charges.
+   * Compute and return r-space energy for a pair of charges.
    */
    inline 
    double EwaldInteraction::rSpaceEnergy(double rSq, double qProduct) 
@@ -230,7 +240,7 @@ namespace Simp
    }
 
    /*
-   * Calculate r-space force/distance for a pair of charges.
+   * Compute and return (r-space force) / distance for a pair of charges.
    */
    inline 
    double EwaldInteraction::rSpaceForceOverR(double rSq, double qProduct) 
@@ -242,9 +252,10 @@ namespace Simp
    }
 
    /* 
-   * Calculate k-space potential from wavenumber kSq.
+   * Calculate k-space potential from squared wavenumber kSq.
    */
-   inline double EwaldInteraction::kSpacePotential(double kSq) const
+   inline
+   double EwaldInteraction::kSpacePotential(double kSq) const
    {  return exp(cg_*kSq)/(kSq*epsilon_); }
 
 }

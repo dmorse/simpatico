@@ -1,0 +1,48 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "McCommandFactory.h"                  // class header
+
+#include <mcMd/mcSimulation/McSimulation.h>
+#include <mcMd/mcSimulation/McSystem.h>
+
+// Commands
+#include <mcMd/commands/McDeformCommand.h>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   McCommandFactory::McCommandFactory(McSimulation& simulation, 
+                                            McSystem& system)
+    : simulationPtr_(&simulation),
+      systemPtr_(&system)
+   {}
+
+   /* 
+   * Return a pointer to a instance of Command subclass className.
+   */
+   Command* McCommandFactory::factory(const std::string &className) const
+   {
+      Command* ptr = 0;
+
+      // Try subfactories first (if any) 
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "McDeformCommand") {
+         ptr = new McDeformCommand(system());
+      } 
+
+      return ptr;
+   }
+
+}

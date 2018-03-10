@@ -8,13 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>       // base class
 #include <ddMd/chemistry/AtomArray.h>        // member
 #include <ddMd/chemistry/Atom.h>             // member
+#include <simp/boundary/Boundary.h>          // typedef
+#include <util/param/ParamComposite.h>       // base class
 #include <util/containers/ArrayStack.h>      // member
 #include <util/containers/DMatrix.h>         // member
 #include <util/containers/DArray.h>          // member
-#include <util/boundary/Boundary.h>          // typedef
 
 namespace DdMd
 {
@@ -24,6 +24,7 @@ namespace DdMd
    class AtomStorage;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Class for distributing Atoms among processors.

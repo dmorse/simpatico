@@ -34,7 +34,7 @@ namespace McMd
    */
    class DihedralPotential : public ParamComposite,
                              public EnergyCalculator, public StressCalculator
-   
+
    {
 
    public:
@@ -50,7 +50,7 @@ namespace McMd
       virtual ~DihedralPotential();
 
       /// \name Dihedral interaction interface
-      //@{ 
+      //@{
 
       /**
       * Returns potential energy for one dihedral.
@@ -58,8 +58,8 @@ namespace McMd
       *     0   2    3
       *     o   o----o
       *      \ /
-      *       o 
-      *       1 
+      *       o
+      *       1
       *
       * \param R1     bond vector r1 - r0 from atom 0 to 1
       * \param R2     bond vector r2 - r1 from atom 1 to 2
@@ -69,10 +69,7 @@ namespace McMd
       virtual
       double energy(const Vector& R1, const Vector& R2, const Vector& R3,
                     int type) const = 0;
- 
-      // Prevent hiding of inherited function energy();
-      using EnergyCalculator::energy;
-    
+
       /**
       * Returns derivatives of energy with respect to bond vectors.
       *
@@ -92,7 +89,7 @@ namespace McMd
       * Modify an interaction parameter, identified by a string.
       *
       * \param name  parameter name
-      * \param type  dihedral type index 
+      * \param type  dihedral type index
       * \param value new value of parameter
       */
       virtual void set(std::string name, int type, double value) = 0;
@@ -107,39 +104,40 @@ namespace McMd
       virtual double get(std::string name, int type) const = 0;
 
       /**
-      * Return name of pair interaction class (e.g., "HarmonicDihedral").
+      * Get name of pair interaction class (e.g., "HarmonicDihedral").
       */
       virtual std::string interactionClassName() const = 0;
 
       //@}
-      /// \name System energy, force, and stress
-      //@{ 
+      /// \name System Forces and Energy
+      //@{
+
+      /**
+      * Add dihedral potential forces to all atomic forces.
+      */
+      virtual void addForces() = 0;
 
       /**
       * Compute and return the dihedral potential energy for one Atom.
       *
-      * Default method throws an exception.This allows testing of subclasses 
-      * that only work for MD simulation, and crash gracefully if used for MC.
-
+      * Default implementation throws an exception.This allows testing of
+      * subclasses that only work for MD simulation, and crash gracefully
+      * if used for MC.
+      *
       * \param  atom Atom object of interest
       * \return bond potential energy of atom
       */
       virtual double atomEnergy(const Atom& atom) const
-      {  
-         UTIL_THROW("Unimplemented method"); 
+      {
+         UTIL_THROW("Unimplemented method");
          return 0.0; // Never reached, but avoids compiler warning.
       }
 
-      /**
-      * Add dihedral potential forces to all atomic forces.
-      *
-      * Default version throws an exception.This allows testing of subclasses 
-      * that only work for MC simulation, and crash gracefully if used for MD.
-      */
-      virtual void addForces()
-      {  UTIL_THROW("Unimplemented method"); }
-    
+      // Prevent hiding of inherited function energy();
+      using EnergyCalculator::energy;
+
+      //@}
    };
 
-} 
+}
 #endif

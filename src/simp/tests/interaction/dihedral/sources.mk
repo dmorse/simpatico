@@ -5,4 +5,6 @@ simp_tests_interaction_dihedral_SRCS=\
      $(addprefix $(SRC_DIR)/, $(simp_tests_interaction_dihedral_))
 simp_tests_interaction_dihedral_OBJS=\
      $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_dihedral_:.cc=.o))
+simp_tests_interaction_dihedral_EXES=\
+     $(addprefix $(BLD_DIR)/, $(simp_tests_interaction_dihedral_:.cc=))
 

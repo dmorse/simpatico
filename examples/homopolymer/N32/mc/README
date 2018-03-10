@@ -4,5 +4,5 @@ To run MC simulation, with log information to screen:
 
 To restart the simulation and continue to 25000 steps
 
-   mcSim -e -r restart -c restart.cmd
+   mcSim -e -r restart -c commands.rst
 

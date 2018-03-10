@@ -1,0 +1,39 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_coulomb_EwaldInteraction_page EwaldInteraction
+
+The EwaldInteraction interaction (coulombStyle Ewald) implements an
+Ewald decomposition of the Coulomb interaction into short-range and
+long range parts. The short range part of the pair potential energy 
+\f$V(r)\f$ for a pair of particles with charges \f$q_{1}\f$ and 
+\f$q_{2}\f$ separated by a distance \f$r\f$ is given 
+\f[
+   V(r) = \frac{1}{4 \pi \epsilon r } {\rm erfc}( \alpha r) 
+\f]
+for all \f$ r < r_{c} \f$, and vanishes (\f$V(r) = 0\f$) for all 
+\f$r\f$ greater than the cutoff distance \f$r_{c}\f$.  Here 
+\f$\epsilon\f$ is the electrical permittivity of the medium and
+\f$\alpha\f$ is an Ewald parameter with units of inverse length 
+that controls the width of the smeared charge distribution
+
+Values of the parameters \f$\epsilon\f$, \f$\alpha\f$, and \f$r_{c}\f$ 
+are denoted in the parameter file and source code by variables
+"epsilon", "sigma", and "cutoff", respectively. 
+
+The parameter file format is:
+\code
+   epsilon        float  
+   alpha          float
+   rSpaceCutoff   float
+\endcode
+Note that no Fourier-space cutoff is defined by this class. This is
+because the EwaldInteraction class is used by both traditional Ewald 
+and particle-mesh implementations of the Coulomb potential that may
+define the Fourier space cutoff differently (e.g., a cutoff wavenumber
+value or the dimensions of a Fourier-space grid used for Fast Fourier 
+Transform computations). Any parameters required to define a Fourier
+space cutoff are thus defined in the associated potential class.
+*/
+
+}

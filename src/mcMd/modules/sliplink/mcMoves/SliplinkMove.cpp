@@ -17,7 +17,7 @@
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 #include <cmath>
@@ -28,6 +28,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    // Constructor
    SliplinkMove::SliplinkMove(McSystem& system) :

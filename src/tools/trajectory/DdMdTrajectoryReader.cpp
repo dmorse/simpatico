@@ -7,6 +7,7 @@
 
 #include "DdMdTrajectoryReader.h" 
 #include <tools/storage/Configuration.h>
+#include <simp/boundary/Boundary.h>
 #include <util/archives/BinaryFileIArchive.h>
 #include <util/space/Vector.h>
 #include <util/misc/ioUtil.h>
@@ -17,6 +18,7 @@ namespace Tools
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.
@@ -55,7 +57,7 @@ namespace Tools
       }
 
       // Read boundary dimensions
-      Util::Boundary& boundary = configuration().boundary();
+      Boundary& boundary = configuration().boundary();
       ar >> boundary;
 
       // Loop over atoms, read atomic positions

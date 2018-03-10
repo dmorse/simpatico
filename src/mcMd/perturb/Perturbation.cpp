@@ -1,4 +1,3 @@
-#ifdef  MCMD_PERTURB
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -127,4 +126,3 @@ namespace McMd
    { return nParameters_; }
 
 }
-#endif  // ifdef  MCMD_PERTURB

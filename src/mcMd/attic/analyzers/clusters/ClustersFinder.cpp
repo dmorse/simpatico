@@ -11,10 +11,10 @@
 #include "ClustersFinder.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
+#include <simp/species/Species.h>
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
@@ -26,6 +26,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    ClustersFinder::ClustersFinder(System& system) 

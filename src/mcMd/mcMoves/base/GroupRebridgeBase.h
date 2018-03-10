@@ -9,20 +9,21 @@
 */
 
 #include <mcMd/mcMoves/SystemMove.h>  // base class
-#include <util/boundary/Boundary.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #ifdef SIMP_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
+#include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 
 namespace McMd
 {
 
-   using namespace Util;
-
    class Atom;
    class McSystem;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * Base class for rebridging a group of atoms forming a tetrahedron.

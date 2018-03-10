@@ -85,9 +85,9 @@ namespace DdMd
       * Read Group<N> objects from file. 
       */
       template <int N>
-      int readGroups(std::ifstream& file, 
-                     const char* sectionLabel, const char* nGroupLabel,
-                     GroupDistributor<N>& distributor);
+      void readGroups(std::ifstream& file, 
+                      const char* sectionLabel, const char* nGroupLabel,
+                      GroupDistributor<N>& distributor);
 
       /**
       * Write Group<N> objects to file. 

@@ -1,4 +1,0 @@
-RESTART        12000
-WRITE_CONFIG   config.12000
-FINISH
-

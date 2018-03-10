@@ -5,12 +5,24 @@
 */ 
 int main(int argc, char* argv[])
 {
-   ToolsTestComposite runner;
-   if (argc > 2) {
-      UTIL_THROW("Too many arguments");
+   try {
+
+      ToolsTestComposite runner;
+      if (argc > 2) {
+         UTIL_THROW("Too many arguments");
+      }
+      if (argc == 2) {
+         runner.addFilePrefix(argv[1]);
+      }
+
+      // Run unit tests, count failures
+      int failures = runner.run();
+
+      return (failures != 0);
+   } catch (...) {
+      std::cerr << "Uncaught exception in tools Test.cc" 
+                << std::endl;
+      return 1;
    }
-   if (argc == 2) {
-      runner.addFilePrefix(argv[1]);
-   }
-   runner.run();
+
 }

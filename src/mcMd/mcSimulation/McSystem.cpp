@@ -8,11 +8,8 @@
 #include "McSystem.h"
 #include "McSimulation.h"
 #include <mcMd/simulation/stress.h>
-#include <util/ensembles/BoundaryEnsemble.h>
-#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/generators/Generator.h>
 #include <mcMd/generators/generatorFactory.h>
-
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -26,23 +23,23 @@
 #ifdef SIMP_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef MCMD_LINK
-#include <mcMd/links/LinkMaster.h>
-#endif
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
-#include <mcMd/potentials/external/ExternalPotential.h>
+#endif
+#ifdef MCMD_LINK
+#include <mcMd/links/LinkMaster.h>
 #endif
 #ifdef SIMP_TETHER
 #include <mcMd/tethers/TetherMaster.h>
 #include <mcMd/potentials/tether/TetherPotential.h>
 #endif
-
 #ifdef MCMD_PERTURB
 #include <mcMd/perturb/mcSystem/McPerturbationFactory.h>
 #endif
 
 #include <simp/species/Species.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
+#include <simp/ensembles/EnergyEnsemble.h>
 
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
@@ -79,16 +76,17 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       , dihedralPotentialPtr_(0)
       #endif
-      #ifdef MCMD_LINK
-      , linkPotentialPtr_(0)
-      #endif
       #ifdef SIMP_EXTERNAL
       , externalPotentialPtr_(0)
+      #endif
+      #ifdef MCMD_LINK
+      , linkPotentialPtr_(0)
       #endif
       #ifdef SIMP_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   { 
+   {
+      UTIL_CHECK(!isCopy()); 
       setClassName("McSystem"); 
 
       // Actions taken when particles are moved
@@ -114,11 +112,11 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       if (dihedralPotentialPtr_) delete dihedralPotentialPtr_;
       #endif
-      #ifdef MCMD_LINK
-      if (linkPotentialPtr_) delete linkPotentialPtr_;
-      #endif
       #ifdef SIMP_EXTERNAL
       if (externalPotentialPtr_) delete externalPotentialPtr_;
+      #endif
+      #ifdef MCMD_LINK
+      if (linkPotentialPtr_) delete linkPotentialPtr_;
       #endif
       #ifdef SIMP_TETHER
       if (tetherPotentialPtr_) delete tetherPotentialPtr_;
@@ -179,18 +177,6 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_LINK
-      assert(linkPotentialPtr_ == 0);
-      if (simulation().nLinkType() > 0) {
-         readLinkMaster(in);
-         linkPotentialPtr_ = linkFactory().factory(linkStyle());
-         if (linkPotentialPtr_ == 0) {
-            UTIL_THROW("Failed attempt to create BondPotential for links");
-         }
-         readParamComposite(in, *linkPotentialPtr_);
-      }
-      #endif
-
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal()) {
@@ -200,6 +186,18 @@ namespace McMd
             UTIL_THROW("Failed attempt to create ExternalPotential");
          }
          readParamComposite(in, *externalPotentialPtr_);
+      }
+      #endif
+
+      #ifdef MCMD_LINK
+      assert(linkPotentialPtr_ == 0);
+      if (simulation().nLinkType() > 0) {
+         readLinkMaster(in);
+         linkPotentialPtr_ = linkFactory().factory(linkStyle());
+         if (linkPotentialPtr_ == 0) {
+            UTIL_THROW("Failed attempt to create BondPotential for links");
+         }
+         readParamComposite(in, *linkPotentialPtr_);
       }
       #endif
 
@@ -218,10 +216,14 @@ namespace McMd
       readEnsembles(in);
 
       #ifdef MCMD_PERTURB
-      readPerturbation(in);
-      #ifdef UTIL_MPI
-      readReplicaMove(in);
-      #endif
+      if (expectPerturbation()) {
+         readPerturbation(in);
+         #ifdef UTIL_MPI
+         if (hasPerturbation()) {
+            readReplicaMove(in);
+         }
+         #endif
+      }
       #endif
    }
 
@@ -275,18 +277,6 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_LINK
-      assert(linkPotentialPtr_ == 0);
-      if (simulation().nLinkType() > 0) {
-         loadLinkMaster(ar);
-         linkPotentialPtr_ = linkFactory().factory(linkStyle());
-         if (linkPotentialPtr_ == 0) {
-            UTIL_THROW("Failed attempt to create BondPotential for links");
-         }
-         loadParamComposite(ar, *linkPotentialPtr_);
-      }
-      #endif
-
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal()) {
@@ -296,6 +286,18 @@ namespace McMd
             UTIL_THROW("Failed attempt to create ExternalPotential");
          }
          loadParamComposite(ar, *externalPotentialPtr_);
+      }
+      #endif
+
+      #ifdef MCMD_LINK
+      assert(linkPotentialPtr_ == 0);
+      if (simulation().nLinkType() > 0) {
+         loadLinkMaster(ar);
+         linkPotentialPtr_ = linkFactory().factory(linkStyle());
+         if (linkPotentialPtr_ == 0) {
+            UTIL_THROW("Failed attempt to create BondPotential for links");
+         }
+         loadParamComposite(ar, *linkPotentialPtr_);
       }
       #endif
 
@@ -315,7 +317,9 @@ namespace McMd
       #ifdef MCMD_PERTURB
       loadPerturbation(ar);
       #ifdef UTIL_MPI
-      loadReplicaMove(ar);
+      if (hasPerturbation()) {
+         loadReplicaMove(ar);
+      }
       #endif
       #endif
 
@@ -346,18 +350,18 @@ namespace McMd
          dihedralPotential().save(ar); 
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         saveLinkMaster(ar);
-         assert(linkPotentialPtr_);
-         linkPotentialPtr_->save(ar); 
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal() > 0) {
          assert(externalPotentialPtr_);
          externalPotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         saveLinkMaster(ar);
+         assert(linkPotentialPtr_);
+         linkPotentialPtr_->save(ar); 
       }
       #endif
       #ifdef SIMP_TETHER
@@ -373,7 +377,9 @@ namespace McMd
       #ifdef MCMD_PERTURB
       savePerturbation(ar);
       #ifdef UTIL_MPI
-      saveReplicaMove(ar);
+      if (hasPerturbation()) {
+         saveReplicaMove(ar);
+      }
       #endif
       #endif
    }
@@ -471,14 +477,14 @@ namespace McMd
          energy += dihedralPotential().atomEnergy(atom);
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         energy += linkPotential().atomEnergy(atom);
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().atomEnergy(atom);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         energy += linkPotential().atomEnergy(atom);
       }
       #endif
       #ifdef SIMP_TETHER
@@ -515,14 +521,14 @@ namespace McMd
          energy += dihedralPotential().energy();
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         energy += linkPotential().energy();
-      }
-      #endif
       #ifdef SIMP_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().energy();
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         energy += linkPotential().energy();
       }
       #endif
       #ifdef SIMP_TETHER
@@ -554,6 +560,11 @@ namespace McMd
       #ifdef SIMP_DIHEDRAL
       if (hasDihedralPotential()) {
           dihedralPotential().unsetEnergy();
+      }
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (hasExternalPotential()) {
+          externalPotential().unsetEnergy();
       }
       #endif
    }

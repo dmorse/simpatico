@@ -1,4 +1,3 @@
-#ifdef  MCMD_PERTURB
 #ifndef MCMD_PERTURBATION_H
 #define MCMD_PERTURBATION_H
 
@@ -203,4 +202,3 @@ namespace McMd
 }
 
 #endif  // ifndef PERTURBATION_H
-#endif  // ifdef  MCMD_PERTURB

@@ -120,6 +120,13 @@ namespace Simp
       //@{
 
       /**
+      * Set integer id for this Species.
+      *
+      * \param id integer id
+      */
+      void setId(int id);
+      
+      /**
       * Read parameters and initialize structure for this species.
       *
       * This function reads the parameter moleculeCapacity (the maximum 
@@ -139,6 +146,17 @@ namespace Simp
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
+      * Read structure from config/topology file format.
+      *
+      * \param in file from which to read structure.
+      */
+      void readStructure(std::istream& in);
+
+      //@}
+      /// \name Output to File
+      //@{
+
+      /**
       * Save internal state to an archive.
       *
       * \param ar output/saving archive
@@ -146,12 +164,24 @@ namespace Simp
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Set integer id for this Species.
+      * Write molecular structure in config/topology file format.
       *
-      * \param id integer id
+      * \param out file to which to write structure.
+      * \param indent  indentation string (sequence of spaces)
       */
-      void setId(int id);
-      
+      void writeStructure(std::ostream& out, 
+                          std::string indent = std::string());
+
+      /**
+      * Read structure, return true iff it matches existing structure.
+      *
+      * Throw exception if structure is not parseable.
+      * Return false if it is parseable but does not match.
+      *
+      * \param in file from which to read structure.
+      */
+      bool matchStructure(std::istream& in);
+
       //@}
       /// \name Chemical Structure Accessors
       //@{
@@ -334,10 +364,11 @@ namespace Simp
       int nDihedral_;
 
       /**
-      * Array of SpeciesDihedrals for all dihedrals, indexed by local dihedral id.
+      * Array of SpeciesDihedrals, indexed by local dihedral id.
       * 
-      * Element speciesDihedrals_[id] is the SpeciesDihedral object for dihedral
-      * number id in any molecule of this Species, where 0 <= id < nAngle_.
+      * Element speciesDihedrals_[id] is the SpeciesDihedral object 
+      * for dihedral number id in any molecule of this Species, where 
+      * the index satisfies 0 <= id < nAngle_.
       */ 
       DArray<SpeciesDihedral> speciesDihedrals_;
       #endif
@@ -381,10 +412,17 @@ namespace Simp
       * chemical structure of a generic molecule, such as atomTypeIds_, 
       * speciesBonds_, atomBondIdArrays_, speciesAngles_, etc.
       * 
-      * Precondition: nAtom_, nBond_, nAngles_, etc. must have nonzero
-      * values on entry.
+      * Precondition: nAtom_, nBond_, nAngles_, etc. must have been
+      * assigned final values on entry.
       */
       void allocate();
+
+      /**
+      * Allocate and initialize array of atom type Ids.
+      *
+      * \pre nAtom_ must be assigned a positive value
+      */
+      void allocateAtoms();
 
       /**
       * Set the type for one atom in a generic molecule of this Species.
@@ -395,6 +433,13 @@ namespace Simp
       void setAtomType(int atomId, int atomType);
 
       #ifdef SIMP_BOND
+      /**
+      * Allocate arrays associated with Bonds.
+      *
+      * \pre nAtom_ > 0 and nBond_ >= 0.
+      */
+      void allocateBonds();
+
       /**
       * Add a bond to the chemical structure of a generic molecule.
       *
@@ -410,6 +455,13 @@ namespace Simp
       #endif
 
       #ifdef SIMP_ANGLE
+      /**
+      * Allocate arrays associated with angles.
+      *
+      * \pre nAtom_ > 0 and nAngle_ >= 0.
+      */
+      void allocateAngles();
+
       /**
       * Add an angle to the chemical structure of a generic molecule.
       *
@@ -428,6 +480,11 @@ namespace Simp
 
       #ifdef SIMP_DIHEDRAL
       /**
+      * Allocate arrays associated with dihedrals
+      */
+      void allocateDihedrals();
+
+      /**
       * Add a dihedral to the chemical structure of a generic molecule.
       *
       * This function creates and adds a SpeciesDihedral object, and also adds 
@@ -445,7 +502,15 @@ namespace Simp
       #endif
 
       /**
-      * Set a pointer to an associated McMd::SpeciesMutator for a mutable species.
+      * Initialize all atom groupId arrays (point from atoms to groups).
+      *
+      * \pre Species::allocate() function must have been invoked.
+      * \pre All speciesGroup arrays (speciesBonds, etc.) must be initialized.
+      */
+      void initializeAtomGroupIdArrays();
+
+      /**
+      * Set pointer to associated McMd::SpeciesMutator for a mutable species.
       *
       * A mutable subclass of Species must have an associated SpeciesMutator 
       * object. The constructor of each such subclass should pass a pointer
@@ -587,14 +652,16 @@ namespace Simp
    * Get a specific SpeciesDihedral object by local index.
    */
    inline 
-   const Species::SpeciesDihedral& Species::speciesDihedral(int iDihedral) const
+   const Species::SpeciesDihedral& Species::speciesDihedral(int iDihedral) 
+   const
    {  return speciesDihedrals_[iDihedral]; }
 
    /*
    * Get array of ids for dihedrals that contain one Atom.
    */
    inline 
-   const Species::AtomDihedralIdArray& Species::atomDihedralIds(int atomId) const
+   const Species::AtomDihedralIdArray& Species::atomDihedralIds(int atomId) 
+   const
    {  return atomDihedralIdArrays_[atomId]; }
    #endif
 

@@ -1,6 +1,6 @@
 System:
 
-    8 atoms with WCA (repulsive Lennard-Jones) interactions
+    800 atoms with WCA (repulsive Lennard-Jones) interactions
 
 Usage:
 
@@ -10,4 +10,4 @@ NVE md simulation:
 
 Restarting NVE or NVT MD simulations
 
-    mdSim -e -r restart -c restart.cmd
+    mdSim -e -r restart -c commands.rst

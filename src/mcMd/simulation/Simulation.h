@@ -46,9 +46,10 @@ namespace Simp {
 namespace McMd
 {
 
+   class SpeciesManager;
    class Analyzer;
    class AnalyzerManager;
-   class SpeciesManager;
+   class CommandManager;
 
    using namespace Util;
    using namespace Simp;
@@ -68,6 +69,8 @@ namespace McMd
    *  - A SpeciesManager, which has one or more Species objects.
    *
    *  - An AnalyzerManager, which has one or more Analyzer objects.
+   *
+   *  - A CommandManager, which has one or more Command objects.
    *
    *  - A FileMaster to manage associated input and output files.
    *
@@ -117,27 +120,6 @@ namespace McMd
       */
       virtual ~Simulation();
 
-      /**
-      * Read parameter file and initialize.
-      *
-      * \param in parameter input stream
-      */
-      virtual void readParameters(std::istream &in);
-
-      /**
-      * Load internal state from an archive.
-      *
-      * \param ar input/loading archive
-      */
-      virtual void loadParameters(Serializable::IArchive &ar);
-
-      /**
-      * Save internal state to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchive &ar);
-
       /// \name Initialization 
       //@{
 
@@ -164,6 +146,26 @@ namespace McMd
       #endif
 
       /**
+      * Read parameter file block and initialize simulation.
+      *
+      * \param in parameter input stream
+      */
+      virtual void readParameters(std::istream &in);
+
+      using ParamComposite::writeParam;
+
+      /**
+      * Open output, write and close an output parameter file.
+      *
+      * Calls ParamComposite::writeParam internally. Opens file
+      * using FileMaster::openOutputFile function, with adds 
+      * output prefix to filename. 
+      *
+      * \param filename name of output parameter file
+      */
+      void writeParam(std::string filename);
+
+      /**
       * Allocate and initialize a molecule set for one Species.
       * 
       * This function is called during initialization by the readParam()
@@ -174,6 +176,24 @@ namespace McMd
       */
       void 
       allocateMoleculeSet(Util::ArraySet<Molecule> &set, int speciesId) const;
+
+      //@}
+      /// \name Serialization (Load / Save)
+      //@{
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       //@}
       /// \name Molecule Management
@@ -292,6 +312,11 @@ namespace McMd
       */
       virtual bool isValid() const;
 
+      /**
+      * Has data for all species structures and capacities.
+      */
+      bool hasSpecies() const;
+
       #ifndef SIMP_NOPAIR
       /**
       * Return the value of the mask policy (MaskNone or MaskBonded).
@@ -363,30 +388,53 @@ namespace McMd
       int hasTether() const;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /**
+      * Does a special potential exist?
+      *
+      * A special potential is a specialized potential defined
+      * by a user, e.g., for biased MD sampling of a collective 
+      * variable. 
+      */
+      int hasSpecial() const;
+      #endif
+
+      #ifdef UTIL_MPI
+      /**
+      * Does the simulation have an associated MPI communicator?
+      */
+      bool hasCommunicator() const;
+      #endif
       //@}
+
+      /**
+      * Output a list of options enabled and disabled during compilation.
+      *
+      * \param out output stream
+      */
+      void outputOptions(std::ostream& out) const;
 
    protected:
 
       /**
       * Step index for main MC or MD loop.
       */
-      int  iStep_;
+      int iStep_;
 
       /**
       * Number of Systems of interacting molecules (> 1 in Gibbs ensemble).
       *
-      * Protected so it can be read from file and modified by a Gibbs subclass.
-      * Note that nSystem_ is initialized to 1 in the Simulation constructor.
+      * Protected so it can be read from file and modified by a Gibbs 
+      * ensemble subclass. Initialized to nSystem_ = 1 in constructor.
       */
-      int  nSystem_;
+      int nSystem_;
 
       /**
       * Set the associated AnalyzerManager.
       *
-      * This is used in the constructor for each subclass of Simulation
-      * (e.g., in McSimulation and MdSimulation) by register an instance 
-      * of an appropriate subclass of AnalyzerManager (e.g, either a
-      * McAnalyzerManager or a MdAnalyzerManager). 
+      * This should be called in the constructor for each subclass of 
+      * Simulation (e.g., in McSimulation and MdSimulation) by register 
+      * an instance of an appropriate subclass of AnalyzerManager.
       */
       void setAnalyzerManager(AnalyzerManager* ptr);
 
@@ -394,6 +442,16 @@ namespace McMd
       * Get the associated AnalyzerManager by reference.
       */
       AnalyzerManager& analyzerManager();
+
+      /**
+      * Set the associated CommandManager.
+      */
+      void setCommandManager(CommandManager* ptr);
+
+      /**
+      * Get the associated CommandManager by reference.
+      */
+      CommandManager& commandManager();
 
    private:
 
@@ -422,6 +480,14 @@ namespace McMd
       */
       AnalyzerManager* analyzerManagerPtr_;
 
+      /**
+      * Manager for data analysis and output classes.
+      *
+      * An instance of a default subclass of CommandManager must be 
+      * instantiated by each subclass of Simulation.
+      */
+      CommandManager* commandManagerPtr_;
+
       /** 
       * Array of all Molecule objects, for all Species.
       */
@@ -430,8 +496,8 @@ namespace McMd
       /**
       * Array containing indices to the first Molecule of each species.
       *
-      * Element firstAtomIds[i] is an integer index for the first Molecule of the
-      * block of the molecules_ Array associated with species number i.
+      * Element firstAtomIds[i] is an integer index for the first Molecule 
+      * of the block of the molecules_ Array associated with species i.
       */
       DArray<int> firstMoleculeIds_;
 
@@ -520,8 +586,8 @@ namespace McMd
       /**
       * Array containing indices to the first Bond of each species.
       *
-      * Element firstBondIds[i] is an integer index for the first Bond of the
-      * block of the bonds_ Array associated with species number i.
+      * Element firstBondIds[i] is an integer index for the first Bond of
+      * the block of the bonds_ Array associated with species number i.
       */
       DArray<int> firstBondIds_;
 
@@ -533,8 +599,8 @@ namespace McMd
       /**
       * Number of bonds allocated.
       *
-      * The number of Bond objects allocated in the DArray bonds_ , for all
-      * Species in all Systems.
+      * The number of Bond objects allocated in the DArray bonds_ , for 
+      * all Species in all Systems.
       */
       int bondCapacity_;
       #endif
@@ -543,8 +609,8 @@ namespace McMd
       /**
       * Array of all Angle objects.
       *
-      * The organization of angles_ is closely anologous to that of bonds_: The 
-      * Angles associated with a Molecule are stored in a contiguous block, 
+      * The organization of angles_ is analogous to that of bonds_: The 
+      * angle associated with a Molecule are stored in a contiguous block, 
       * and blocks associated with molecules are of the same Species are 
       * stored sequentially within a larger block.
       */
@@ -553,8 +619,8 @@ namespace McMd
       /**
       * Array containing indices to the first Angle of each species.
       *
-      * Element firstAngleIds[i] is an integer index for the first Angle of the
-      * block of the angles_ Array associated with species number i.
+      * Element firstAngleIds[i] is an integer index for the first Angle 
+      * of the block of the angles_ Array associated with species number i.
       */
       DArray<int> firstAngleIds_;
 
@@ -576,18 +642,19 @@ namespace McMd
       /**
       * Array of all Dihedral objects.
       *
-      * The organization of dihedrals_ is closely anologous to that of angles_:
+      * The organization of dihedrals_ is anologous to that of angles_:
       * The Dihedrals associated with a Molecule are stored in a contiguous
-      * block, and blocks associated with molecules are of the same Species are
-      * stored sequentially within a larger block.
+      * block, and blocks associated with molecules are of the same Species 
+      * are stored sequentially within a larger block.
       */
       DArray<Dihedral> dihedrals_;
 
       /**
       * Array containing indices to the first Dihedral of each species.
       *
-      * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
-      * block of the dihedrals_ Array associated with species number i.
+      * Element firstDihedralIds[i] is an integer index for the first 
+      * Dihedral of the block of the dihedrals_ Array associated with 
+      * species number i.
       */
       DArray<int> firstDihedralIds_;
 
@@ -599,8 +666,8 @@ namespace McMd
       /**
       * Number of dihedrals allocated.
       *
-      * The number of Dihedral objects allocated in the DArray dihedrals_, for all
-      * Species in all Systems.
+      * The number of Dihedral objects allocated in the DArray dihedrals_, 
+      * for all Species in all Systems.
       */
       int dihedralCapacity_;
       #endif
@@ -627,6 +694,14 @@ namespace McMd
       int hasTether_;
       #endif
 
+      #ifdef SIMP_SPECIAL
+      /// Does a specialized potential exist? (0 false or 1 true)
+      int hasSpecial_;
+      #endif 
+
+      /// Has completely initialized Species data
+      bool hasSpecies_;
+
       #ifdef UTIL_MPI
       /**
       * Stream for log file output (serial jobs use std::cout).
@@ -642,16 +717,18 @@ namespace McMd
       //@}
 
       /**
-      * Initialize all private data structures.
+      * Initialize all private data structures that require Species data.
+      *
+      * Calls other private "initialize..." functions.
       */
-      void initialize();
+      void initializeSpeciesData();
 
       /**
       * Initialize all Molecule and Atom objects for one Species.
       *
       * \param speciesId integer Id of the Species.
       */
-      void initializeSpecies(int speciesId);
+      void initializeSpeciesMolecules(int speciesId);
    
       #ifdef SIMP_BOND
       /**
@@ -685,22 +762,46 @@ namespace McMd
 
    // Public inline accessor member functions
 
+   inline int Simulation::nSystem() const
+   {  return nSystem_; }
+
    inline int Simulation::nAtomType() const
    {  return nAtomType_; }
+
+   inline int Simulation::moleculeCapacity() const
+   {  return moleculeCapacity_; }
+
+   inline int Simulation::atomCapacity() const
+   {  return atomCapacity_; }
+
+   inline const Array<AtomType>& Simulation::atomTypes() const
+   {  return atomTypes_; }
+
+   inline const AtomType& Simulation::atomType(int i) const
+   {  return atomTypes_[i]; }
 
    #ifdef SIMP_BOND
    inline int Simulation::nBondType() const
    {  return nBondType_; }
+
+   inline int Simulation::bondCapacity() const
+   {  return bondCapacity_; }
    #endif
 
    #ifdef SIMP_ANGLE
    inline int Simulation::nAngleType() const
    {  return nAngleType_; }
+
+   inline int Simulation::angleCapacity() const
+   {  return angleCapacity_; }
    #endif
 
    #ifdef SIMP_DIHEDRAL
    inline int Simulation::nDihedralType() const
    {  return nDihedralType_; }
+
+   inline int Simulation::dihedralCapacity() const
+   {  return dihedralCapacity_; }
    #endif
 
    #ifdef SIMP_COULOMB
@@ -723,28 +824,9 @@ namespace McMd
    {  return hasTether_; }
    #endif
 
-   inline int Simulation::nSystem() const
-   {  return nSystem_; }
-
-   inline int Simulation::moleculeCapacity() const
-   {  return moleculeCapacity_; }
-
-   inline int Simulation::atomCapacity() const
-   {  return atomCapacity_; }
-
-   #ifdef SIMP_BOND
-   inline int Simulation::bondCapacity() const
-   {  return bondCapacity_; }
-   #endif
-
-   #ifdef SIMP_ANGLE
-   inline int Simulation::angleCapacity() const
-   {  return angleCapacity_; }
-   #endif
-
-   #ifdef SIMP_DIHEDRAL
-   inline int Simulation::dihedralCapacity() const
-   {  return dihedralCapacity_; }
+   #ifdef SIMP_SPECIAL
+   inline int Simulation::hasSpecial() const
+   {  return hasSpecial_; }
    #endif
 
    #ifndef SIMP_NOPAIR
@@ -755,13 +837,13 @@ namespace McMd
    inline Random& Simulation::random()
    {  return random_; }
 
-   inline const Array<AtomType>& Simulation::atomTypes() const
-   {  return atomTypes_; }
-
-   inline const AtomType& Simulation::atomType(int i) const
-   {  return atomTypes_[i]; }
+   inline bool Simulation::hasSpecies() const
+   {  return hasSpecies_; }
 
    #ifdef UTIL_MPI
+   inline bool Simulation::hasCommunicator() const
+   {  return communicatorPtr_ != 0; }
+
    inline MPI::Intracomm& Simulation::communicator()
    {
       assert(communicatorPtr_);  
@@ -771,20 +853,23 @@ namespace McMd
 
    // Protected inline member functions
    
+   inline int Simulation::iStep() const
+   {  return iStep_; }
+
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }
 
-   inline void Simulation::setAnalyzerManager(AnalyzerManager* ptr)
-   {  analyzerManagerPtr_ = ptr; }
-
    inline AnalyzerManager& Simulation::analyzerManager()
    {  
-      assert(analyzerManagerPtr_);
+      UTIL_CHECK(analyzerManagerPtr_);
       return *analyzerManagerPtr_; 
    }
 
-   inline int Simulation::iStep() const
-   {  return iStep_; }
+   inline CommandManager& Simulation::commandManager()
+   {
+      UTIL_CHECK(commandManagerPtr_);
+      return *commandManagerPtr_; 
+   }
 
 }
 #endif

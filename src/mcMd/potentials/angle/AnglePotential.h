@@ -34,7 +34,7 @@ namespace McMd
    * \ingroup McMd_Angle_Module
    */
    class AnglePotential : public ParamComposite,
-                         public EnergyCalculator, public StressCalculator
+                          public EnergyCalculator, public StressCalculator
    
    {
 
@@ -61,9 +61,6 @@ namespace McMd
       */
       virtual double energy(double cosTheta, int type) const = 0;
  
-      // Prevent hiding of inherited function energy();
-      using EnergyCalculator::energy;
-    
       /**
       * Returns forces along two bonds at the angle, for use in MD and stress
       * calculation.
@@ -134,11 +131,16 @@ namespace McMd
       virtual std::string interactionClassName() const = 0;
 
       //@}
-      /// \name System energy, force, and stress.
+      /// \name System Forces and Energy
       //@{
 
       /**
-      * Calculate the covalent bond energy for one Atom.
+      * Add angle forces to all atomic forces.
+      */
+      virtual void addForces() = 0;
+
+      /**
+      * Calculate the covalent angle energy for one Atom.
       *
       * Default implementation throws an exception. This allows testing of 
       * subclasses that only work for MD simulation, and crash gracefully 
@@ -153,16 +155,11 @@ namespace McMd
          return 0.0; // Never reached, but avoids compiler warning.
       }
 
-      /**
-      * Add bond forces to all atomic forces.
-      *
-      * Default version throws an exception.This allows testing of subclasses 
-      * that only work for MC simulation, and crash gracefully if used for MD.
-      */
-      virtual void addForces()
-      {  UTIL_THROW("Unimplemented method"); }
-
+      // Prevent hiding of inherited function energy();
+      using EnergyCalculator::energy;
+    
       //@}
+
    };
 
 }

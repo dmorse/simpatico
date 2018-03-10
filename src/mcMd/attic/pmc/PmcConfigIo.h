@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/configIos/ConfigIo.h>  // base class
-#include <util/boundary/Boundary.h>   // typedef
+#include <simp/boundary/Boundary.h>   // typedef
 
 namespace Util {
    class Vector; 
@@ -20,6 +20,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    class Simulation;
    class System;

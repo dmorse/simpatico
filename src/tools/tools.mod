@@ -9,7 +9,7 @@ namespace Tools
    /**
    * \defgroup Tools_Module Tools namespace
    *
-   * \brief Tools for pre- and post-processing MD trajectories.
+   * \brief Tools namespace (post-processing for MD trajectories)
    */
 
 }

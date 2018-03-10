@@ -7,8 +7,10 @@ in src/tools.
 Subdirectories:
 ---------------
 
-interactions   potential energy functions
-species        molecular species
+boundary       periodic unit cell boundary
+ensembles      statistical ensembles for energy, boundary, etc.
+interactions   potential energy functions for nonbonded, bonds, etc.
+species        molecular species (topology)
 user           user defined classes in namespace Simp
 tests          unit tests of classes in namespace Simp
 

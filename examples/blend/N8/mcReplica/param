@@ -38,7 +38,6 @@ McSimulation{
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
                             1.122460000000e+00  1.122460000000e+00
-      maxBoundary             cubic  10.5 
     }
     BondPotential{
       kappa                 2.000000000000e+03
@@ -66,12 +65,18 @@ McSimulation{
   }
   McMoveManager{
 
+    CfbReptationMove{
+      probability           0.990000000000e+00
+      speciesId                              0
+      nTrial                                20
+      hasAutoCorr 0
+    }
+
     HybridMdMove{
       probability           0.010000000000e+00
       nStep                                100
       MdSystem{
         MdPairPotential{
-          maxBoundary             cubic  10.5 
           PairList{
             atomCapacity                        1000
             pairCapacity                       10000
@@ -82,13 +87,6 @@ McSimulation{
           dt                    5.000000000000e-03
         }
       }
-    }
-
-    CfbReptationMove{
-      probability           0.990000000000e+00
-      speciesId                              0
-      nTrial                                20
-      hasAutoCorr 0
     }
 
   }
@@ -175,14 +173,9 @@ McSimulation{
     }
 
   }
-  saveInterval              0
+  saveInterval            10000
+  saveFileName          restart
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         200000
-WRITE_CONFIG     config
-FINISH
-
 
 
     HarmonicTether{
@@ -191,10 +184,10 @@ FINISH
     }
 
     AtomDisplaceMove{
+      probability           0.990000000000e+00
       speciesId                              0
       delta                               0.04
     }
-    probability           0.908000000000e+00
 
     CfbEndMove{
       speciesId                              0

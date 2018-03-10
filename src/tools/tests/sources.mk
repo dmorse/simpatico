@@ -15,4 +15,6 @@ tools_tests_SRCS=\
      $(addprefix $(SRC_DIR)/, $(tools_tests_))
 tools_tests_OBJS=\
      $(addprefix $(BLD_DIR)/, $(tools_tests_:.cc=.o))
+tools_tests_EXES=\
+     $(addprefix $(BLD_DIR)/, $(tools_tests_:.cc=))
 

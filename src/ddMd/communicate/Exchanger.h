@@ -10,7 +10,7 @@
 
 #include <ddMd/misc/DdTimer.h>
 #include <util/space/IntVector.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
 #include <util/containers/GPArray.h>
 
@@ -25,6 +25,7 @@ namespace DdMd
    class GroupExchanger;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Class for exchanging Atoms, Ghosts and Groups between processors.

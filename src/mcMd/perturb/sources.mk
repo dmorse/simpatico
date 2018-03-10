@@ -1,9 +1,8 @@
 include $(SRC_DIR)/mcMd/perturb/mcSystem/sources.mk
 
-mcMd_perturb_=\
+mcMd_perturb_= \
     $(mcMd_perturb_mcSystem_) \
     mcMd/perturb/Perturbation.cpp 
-
 ifdef UTIL_MPI
 mcMd_perturb_+=\
     mcMd/perturb/ReplicaMove.cpp 

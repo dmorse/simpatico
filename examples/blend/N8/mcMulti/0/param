@@ -38,7 +38,6 @@ McSimulation{
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
                             1.122460000000e+00  1.122460000000e+00
-      maxBoundary             cubic  10.5 
     }
     BondPotential{
       kappa                 2.000000000000e+03
@@ -59,7 +58,6 @@ McSimulation{
       nStep                                 20
       MdSystem{
         MdPairPotential{
-          maxBoundary cubic 10.5
           PairList{
             atomCapacity                        1000
             pairCapacity                       10000
@@ -91,11 +89,6 @@ McSimulation{
 
     LogProgress{
       interval                         10000
-    }
-
-    ConfigWriter{
-      interval                         1000
-      outputFileName            dump/config.
     }
 
     McEnergyOutput{
@@ -188,5 +181,10 @@ McSimulation{
       length21                             1.0
       length10                             1.0
       kappa10                            800.0
+    }
+
+    ConfigWriter{
+      interval                         1000
+      outputFileName            dump/config.
     }
 

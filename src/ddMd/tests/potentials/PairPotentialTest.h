@@ -9,7 +9,7 @@
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/chemistry/Atom.h>
 #include <simp/interaction/pair/DpdPair.h>
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/random/Random.h>
 
 #ifdef UTIL_MPI

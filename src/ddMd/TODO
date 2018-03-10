@@ -4,24 +4,49 @@ Housekeeping:
 - Move DdMd::Simulation::computePairEnergies() and pairEnergies()
   to PairPotential class, modify PairEnergy(ies) analyzer classes.
 
-- Remove DdMd::Simulation computeExternalEnergy() and externalEnergy()
-  functions to ExternalEnergy (if not already there).
-
 - Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
   accumulator_ used as name for pointer, not derived from AverageAnalyzer).
 
-Atom Sorting:
--------------
+Avoiding User Specified Memory Limits
+-------------------------------------
 
-- Implement periodic sorting of atoms
+- Change CellList to self-allocate and re-allocate as needed. This
+  is already implemented in McMd). Get rid of maxBoundary_ parameter.
+
+- Change PairList so that it can re-allocate on overflow, to avoid
+  crash on exceeding pairCapacity. Allow different processors to have
+  different capacities - no communication is needed. 
+
+- Change PairList so that if pairCapacity has not been set previously,
+  it does a dry run to count the number of pairs, allocates, and then
+  goes through again to actually file required data structures. 
+
+- Change AtomStorage so it can reallocate if atomCapacity is exceeded.
+  Then create a default based on an assumption of a homogeneous 
+  distribution. 
+
+- Apply similar changes to GroupStorage containers. 
 
 Species
 -------
 
-- Introduce simple data structures to keep track of molecular species
-  (of atoms per molecule and molecules per species)
+- Add an array of Species, which is optionally allocated. 
 
-- Modify configIo and trajectory formats to read and write this info
+- Add a SmpConfig read/writer that can read Species topology information.
+  This can simply call the readStructure method of Species, but will 
+  need to add code to read the moleculeCapacity.
+
+- Add a SmpTrajectory writer. Decide whether this should optionally
+  include a Species block in the header.
+
+Coulomb
+--------
+
+- Add framework for coulomb interactions
+
+- Implement Ewald coulomb interactions
+
+- Implement PPPM Ewald coulomb interactions
 
 Exchanger:
 ----------
@@ -36,7 +61,11 @@ Exchanger:
   Under what conditions can a group span two boundaries in the same direction ?
   Is there a bound to how far a ghost can move without causing a possible error ?
 
-=======
+Atom Sorting:
+-------------
+
+- Implement periodic sorting of atoms
+
 Non-orthogonal boundaries:
 --------------------------
 
@@ -61,13 +90,15 @@ AtomStorage:
 
 - Make sure memory statistics include all usage, including setup, so
   that the user has a better indication of when the ghost capacity 
-  needs to be increased
+  needs to be increased.
 
-Perturbation:
--------------
+- Consider adding mechanism to increase capacity as needed.
 
-- Add perturbation class and class hierarchy for use with multi-system
-  parallel simulations
+GroupStorage
+------------
+
+- Consider adding mechanism to increase capacity as needed.
+
 
 Moving GroupStorage to Potential class:
 ---------------------------------------
@@ -76,12 +107,11 @@ Moving GroupStorage to Potential class:
 
 - Make each GroupStorage a member of the associated potential
 
-Single Processor Operation
---------------------------
+Perturbation:
+-------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes, to enable single 
-  processor operation with no MPI
+- Add perturbation class and class hierarchy for use with multi-system
+  parallel simulations
 
 Hybrid MD
 ---------
@@ -89,4 +119,12 @@ Hybrid MD
 - Finish and test transactions in AtomStorage (in transactions branch)
 
 - Add transactions to GroupStorage (in transactions branch)
+
+
+Single Processor Operation (necessary or pipe dream?)
+--------------------------
+
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
+  work ifndef UTIL_MPI, continue with other classes, to enable single 
+  processor operation with no MPI
 

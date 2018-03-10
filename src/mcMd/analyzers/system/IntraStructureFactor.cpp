@@ -8,9 +8,9 @@
 #include "IntraStructureFactor.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <simp/boundary/Boundary.h>
 #include <util/math/Constants.h>
 #include <util/space/Dimension.h>
 #include <util/misc/FileMaster.h>
@@ -23,6 +23,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

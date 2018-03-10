@@ -26,14 +26,14 @@ namespace McMd
    public:
 
       /**
-      * Mark the energy as unknown.
-      */
-      virtual void unsetEnergy();
-
-      /**
       * Calculate the total nonBonded pair energy for the associated System.
       */
       virtual void computeEnergy() = 0;
+
+      /**
+      * Mark the energy as unknown.
+      */
+      virtual void unsetEnergy();
 
       /**
       * Return the energy contribution, compute if necessary.

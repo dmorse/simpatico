@@ -2,7 +2,7 @@ namespace Simp
 {
 
    /**
-   * \defgroup Simp_Interaction_Module Interaction Module
+   * \defgroup Simp_Interaction_Module Interactions
    * \ingroup Simp_Module
    *
    * \brief Potential energy functions.

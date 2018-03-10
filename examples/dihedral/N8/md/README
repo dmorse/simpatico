@@ -11,7 +11,7 @@ Usage
 
 Serial NVE MD simulation:
 
-    mdSim_a_d -e -p param.nve -c commands
+    mdSim -e -p param.nve -c commands
 
 Serial NVT MD simulation:
 
@@ -19,4 +19,4 @@ Serial NVT MD simulation:
 
 Restarting and extending previous simulation
 
-    mdSim_a_d -e -r restart -c restart.cmd
+    mdSim -e -r restart -c commands.rst

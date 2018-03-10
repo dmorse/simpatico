@@ -16,8 +16,8 @@
 #include <mcMd/chemistry/Atom.h>
 
 #include <simp/species/Linear.h>
+#include <simp/boundary/Boundary.h>
 
-#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace McMd

@@ -13,7 +13,5 @@ programs, or bld/serial, for serial programs, and entering
 before recompiling these programs. To compile in source (within
 the src/ directory), cd to the src/ directory enter the same
 command, and enter make commands ("make mcMd and/or make ddMd")
-from there.  The names of the resulting executable names, such 
-as mdSim_a_d, will then include a string "_a_d" to indicate that 
-these features have been enabled. 
+from there.  
 

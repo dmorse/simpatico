@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/boundary/Boundary.h>
+#include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/param/ParamComposite.h>
 #include <util/global.h>
@@ -22,19 +22,20 @@ namespace Simp
    /**
    * A repulsive 9-3 potential confining particles within a box.
    *
+   * The walls of the box correspond to the boundaries of the periodic unit 
+   * cell.  Each wall exerts a potential that depends on the distance d from 
+   * that wall, which is zero for d greater than a cutoff length given by
+   * cutoff = 0.4^(1/6) = 0.85837422 sigma, and which 
+   *
    *      4 epsilon pi rho   / sigma^9        sigma^6       25     \
    *  u = ----------------- | --------- - 7.5 -------- + ---------- |
-   *       45 sigma^(-3)     \   r^9            r^6       sqrt(10) /
+   *       45 sigma^(-3)     \   d^9            d^6       sqrt(10) /
    *
-   * The coefficients are obtained by integrating the repulsive LJPair
-   * potential in a half space with default density rho = 0.7. Member variables
-   * include strength of the potential epsilon, the range of interaction sigma,
-   * and the cutoff length 0.4^(1/6) = 0.85837422. Member functions evaluate
-   * energy and force for individual particles. The internal cutoff 0.506079 =
-   * 0.129615^(1/3) is set to yield a cutoff potential of 80 for the default
-   * density 0.7.
-   *
-   * The potential is independent on the type of atoms.
+   * for r < cutoff.  Potentials arising from different walls are additive 
+   * near the edges and corners. The divergence of the potential is cutoff 
+   * at small d at an inner cutoff 0.506079 = 0.129615^(1/3), which is set 
+   * to yield a cutoff potential of positive 80 epsilon.  The potential is 
+   * independent of the atom type.
    * 
    * \ingroup Simp_Interaction_External_Module
    */

@@ -1,4 +1,3 @@
-#ifdef  MCMD_PERTURB
 #ifndef MCMD_MC_PERTURBATION_FACTORY_H
 #define MCMD_MC_PERTURBATION_FACTORY_H
 
@@ -54,4 +53,3 @@ namespace McMd
 }
 
 #endif
-#endif  // #ifdef  MCMD_PERTURB

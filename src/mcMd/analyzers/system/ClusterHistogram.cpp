@@ -11,21 +11,26 @@
 #include "ClusterHistogram.h"
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <simp/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <simp/boundary/Boundary.h>
+#include <simp/species/Species.h>
+
 #include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
-
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/misc/ioUtil.h>
+#include <util/space/Tensor.h>
+#include <util/containers/DArray.h>
 #include <sstream>
 
 namespace McMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /// Constructor.
    ClusterHistogram::ClusterHistogram(System& system) 
@@ -145,11 +150,67 @@ namespace McMd
    void ClusterHistogram::sample(long iStep) 
    { 
       if (isAtInterval(iStep)) {
+         //Identifies all clusters
          identifier_.identifyClusters();
+         //Adds each cluster to the histogram of all clusters
          for (int i = 0; i < identifier_.nCluster(); i++) {
              hist_.sample(identifier_.cluster(i).size());
          }
          ++nSample_;
+         fileMaster().openOutputFile(outputFileName(".clusters"+toString(iStep)),outputFile_);
+         //Writes all of the clusters and their component molecules
+         Cluster thisCluster;
+         ClusterLink* thisClusterStart;
+         ClusterLink* next;
+         Molecule thisMolecule;
+         //Loop over each cluster
+         for (int i = 0; i < identifier_.nCluster(); i++) {
+             thisCluster = identifier_.cluster(i);
+             thisClusterStart = thisCluster.head();
+             outputFile_ << i << "	" ;
+             //List out every molecule in that cluster
+             while (thisClusterStart) {
+                next = thisClusterStart->next();
+                thisMolecule = thisClusterStart->molecule();
+                outputFile_ << thisMolecule.id() << "  ";
+                thisClusterStart = next;
+             }
+             outputFile_ << "\n";
+         }
+         outputFile_.close();
+
+         //Calculate, store, and write the micelle center of mass
+         fileMaster().openOutputFile(outputFileName(".COMs"+toString(iStep)),outputFile_);
+         //comArray;
+         Vector clusterCOM;
+         Vector r0;
+         Vector dr;
+         Tensor moment;
+         Tensor rgDyad;
+         DArray<Vector> allCOMs;
+         DArray<Tensor> allMoments;
+         allCOMs.allocate(identifier_.nCluster());
+         allMoments.allocate(identifier_.nCluster());
+         Molecule::ConstAtomIterator atomIter;
+         for (int i = 0; i < identifier_.nCluster(); i++) {
+             thisCluster = identifier_.cluster(i);
+             outputFile_ << i << "	" ;
+             //For that cluster, calculate the center of mass
+             clusterCOM = thisCluster.clusterCOM(atomTypeId_, system().boundary());
+             outputFile_ << clusterCOM;
+             outputFile_ << "\n";
+             allCOMs[i] = clusterCOM;
+             //Calculate Rg
+             moment = thisCluster.momentTensor(atomTypeId_, system().boundary());
+             allMoments[i] = moment;
+         }
+         outputFile_.close();
+         fileMaster().openOutputFile(outputFileName(".momentTensors"+toString(iStep)),outputFile_);
+         for (int i = 0; i < identifier_.nCluster(); i++) {
+             outputFile_ << i << "	" << allMoments[i] << "\n";
+           
+         }
+         outputFile_.close();
       }
    }
 

@@ -19,19 +19,19 @@
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/global.h>              
+#include <simp/ensembles/EnergyEnsemble.h>
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template
-#include <util/containers/Pair.h>                 // member template parameter
-
+#include <util/containers/Pair.h>                 // template parameter
+#include <util/global.h>              
 
 namespace McMd
 {
 
-   using namespace Util;
-
    class McSystem;
+
+   using namespace Util;
+   using namespace Simp;
 
    /**
    * A Perturbation in the pair interaction epsilon(0,1) for any pair

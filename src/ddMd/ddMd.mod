@@ -10,7 +10,7 @@ namespace DdMd
    /**
    * \defgroup DdMd_Module DdMd namespace
    *  
-   * Classes in the DdMd namespace.
+   * DdMd namespace (parallel domain-decomposition MD)
    */
 
 }

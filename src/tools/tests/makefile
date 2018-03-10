@@ -1,21 +1,19 @@
 BLD_DIR_REL =../..
 include $(BLD_DIR_REL)/config.mk
-include $(BLD_DIR)/tools/config.mk
-include $(BLD_DIR)/simp/config.mk
-include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/tools/patterns.mk
-include $(SRC_DIR)/simp/sources.mk
-include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/tools/sources.mk
 include $(SRC_DIR)/tools/tests/sources.mk
 
+TEST=$(BLD_DIR)/tools/tests/Test
 
-TEST=tools/tests/Test
+.Secondary: $(tools_tests_OBJS)
 
-all: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
+all: $(tools_tests_EXES)
 
-run: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
-	$(BLD_DIR)/$(TEST) $(SRC_DIR)/tools/tests/ > log
+run: $(TEST)
+	$(TEST) $(SRC_DIR)/tools/tests/ 
+
+quiet: $(TEST)
+	$(TEST) $(SRC_DIR)/tools/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in tools/tests/log" > count
 	@cat count

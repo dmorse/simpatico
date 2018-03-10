@@ -13,6 +13,7 @@
 #include <mcMd/configIos/ConfigIoFactory.h>
 #include <mcMd/trajectory/TrajectoryReader.h>
 #include <mcMd/trajectory/TrajectoryReaderFactory.h>
+#include <mcMd/species/SpeciesMutator.h>
 
 #ifndef SIMP_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -32,6 +33,9 @@
 #ifdef SIMP_EXTERNAL
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif
+#ifdef SIMP_SPECIAL
+#include <mcMd/potentials/special/SpecialFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
@@ -40,7 +44,6 @@
 #include <mcMd/potentials/tether/tetherFactory.h>
 #include <mcMd/tethers/TetherMaster.h>
 #endif
-
 #ifdef MCMD_PERTURB
 #include <mcMd/perturb/Perturbation.h>
 #ifdef UTIL_MPI
@@ -50,15 +53,16 @@
 
 // namespace Simp
 #include <simp/species/Species.h>
+#include <simp/ensembles/EnergyEnsemble.h>
+#include <simp/ensembles/BoundaryEnsemble.h>
 
 // namespace Util
-#include <util/ensembles/EnergyEnsemble.h>
-#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/archives/serialize.h>
 
+// C++ standard library
 #include <fstream>
 #include <string>
 
@@ -101,6 +105,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(0),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialFactoryPtr_(0),
+      #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(0),
       #endif
@@ -137,6 +144,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalStyle_(),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialStyle_(),
+      #endif
       #ifdef MCMD_LINK
       linkStyle_(),
       #endif
@@ -147,6 +157,7 @@ namespace McMd
       isCopy_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
+      , expectPerturbationParam_(false)
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
@@ -194,6 +205,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialFactoryPtr_(other.specialFactoryPtr_),
+      #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
@@ -205,11 +219,11 @@ namespace McMd
       trajectoryReaderFactoryPtr_(other.trajectoryReaderFactoryPtr_),
       fileMasterPtr_(other.fileMasterPtr_),
       #ifdef MCMD_PERTURB
-      perturbationPtr_(other.perturbationPtr_),
-      perturbationFactoryPtr_(other.perturbationFactoryPtr_),
+      perturbationPtr_(0),
+      perturbationFactoryPtr_(0),
       #ifdef UTIL_MPI
-      replicaMovePtr_(other.replicaMovePtr_),
-      hasReplicaMove_(other.hasReplicaMove_),
+      replicaMovePtr_(0),
+      hasReplicaMove_(false),
       #endif // ifdef UTIL_MPI
       #endif // ifdef MCMD_PERTURB
       #ifndef SIMP_NOPAIR
@@ -230,6 +244,9 @@ namespace McMd
       #ifdef SIMP_EXTERNAL
       externalStyle_(other.externalStyle_),
       #endif
+      #ifdef SIMP_SPECIAL
+      specialStyle_(other.specialStyle_),
+      #endif
       #ifdef MCMD_LINK
       linkStyle_(other.linkStyle_),
       #endif
@@ -240,6 +257,7 @@ namespace McMd
       isCopy_(true),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
+      , expectPerturbationParam_(false)
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
@@ -288,6 +306,11 @@ namespace McMd
          #ifdef SIMP_EXTERNAL
          if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
+         }
+         #endif
+         #ifdef SIMP_SPECIAL
+         if (specialFactoryPtr_) {
+            delete specialFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
@@ -414,11 +437,11 @@ namespace McMd
    /*
    * If no FileMaster exists, create and load one. 
    *
-   * This is called by System::loadParameters(). Except during unit testing, 
-   * a FileMaster will normally already exist when this is called, either 
-   * because the FileMaster has been set to that of a paranet Simulation 
-   * by calling setFileMaster(), or because the System was constructed by 
-   * copying another, for HMC.
+   * This is called by System::loadParameters(). Except during unit 
+   * testing of System, a FileMaster will normally already exist when 
+   * this is called, either because the FileMaster has been set to 
+   * that of a parent Simulation by calling setFileMaster(), or 
+   * because the System was constructed by copying another, for HMC.
    */
    void System::loadFileMaster(Serializable::IArchive& ar)
    {
@@ -449,6 +472,7 @@ namespace McMd
    */
    void System::readPotentialStyles(std::istream &in)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
@@ -477,6 +501,11 @@ namespace McMd
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         read<std::string>(in, "specialStyle", specialStyle_);
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          read<std::string>(in, "linkStyle", linkStyle_);
@@ -494,6 +523,7 @@ namespace McMd
    */
    void System::loadPotentialStyles(Serializable::IArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
@@ -522,6 +552,11 @@ namespace McMd
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         loadParameter<std::string>(ar, "specialStyle", specialStyle_);
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          loadParameter<std::string>(ar, "linkStyle", linkStyle_);
@@ -539,6 +574,7 @@ namespace McMd
    */
    void System::savePotentialStyles(Serializable::OArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       #ifndef SIMP_NOPAIR
       ar << pairStyle_;
       #endif
@@ -567,6 +603,11 @@ namespace McMd
          ar << externalStyle_;
       }
       #endif
+      #ifdef SIMP_SPECIAL
+      if (simulation().hasSpecial()) {
+         ar << specialStyle_;
+      }
+      #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          ar << linkStyle_;
@@ -584,6 +625,7 @@ namespace McMd
    */
    void System::readEnsembles(std::istream &in)
    {
+      UTIL_CHECK(!isCopy());
       readParamComposite(in, *energyEnsemblePtr_);
       readParamComposite(in, *boundaryEnsemblePtr_);
    }
@@ -593,6 +635,7 @@ namespace McMd
    */
    void System::loadEnsembles(Serializable::IArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       loadParamComposite(ar, *energyEnsemblePtr_);
       loadParamComposite(ar, *boundaryEnsemblePtr_);
    }
@@ -602,6 +645,7 @@ namespace McMd
    */
    void System::saveEnsembles(Serializable::OArchive& ar)
    {
+      UTIL_CHECK(!isCopy());
       energyEnsemblePtr_->save(ar);
       boundaryEnsemblePtr_->save(ar);
    }
@@ -663,6 +707,8 @@ namespace McMd
    {
       ar >> boundary();
 
+      int subType;
+      bool isMutable = false; 
       Molecule* molPtr;
       Molecule::AtomIterator atomIter;
       int iSpeciesIn, nMoleculeIn;
@@ -670,6 +716,11 @@ namespace McMd
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          ar >> iSpeciesIn;
+         if (simulation().species(iSpecies).isMutable()) {
+           isMutable = true;
+         } else {
+           isMutable = false;
+         }         
          if (iSpeciesIn != iSpecies) {
             UTIL_THROW("Error: iSpeciesIn != iSpecies");
          }
@@ -679,6 +730,10 @@ namespace McMd
             addMolecule(*molPtr);
             if (molPtr != &molecule(iSpecies, iMol)) {
                UTIL_THROW("Molecule index error");
+            }
+            if (isMutable) {
+              ar >> subType;
+              simulation().species(iSpecies).mutator().setMoleculeState(*molPtr, subType);
             }
             molPtr->begin(atomIter); 
             for ( ; atomIter.notEnd(); ++atomIter) {
@@ -702,6 +757,8 @@ namespace McMd
    {
       ar << boundary();
 
+      int subType;
+      bool isMutable = false;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       int nMoleculeOut;
@@ -709,10 +766,19 @@ namespace McMd
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          ar << iSpecies;
+         if (simulation().species(iSpecies).isMutable()) {
+           isMutable = true;
+         } else {
+           isMutable = false;
+         }
          nMoleculeOut = nMolecule(iSpecies);
          ar << nMoleculeOut;
          begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
+            if (isMutable) {
+              subType = simulation().species(iSpecies).mutator().moleculeStateId(*molIter);
+              ar << subType;
+            }
             molIter->begin(atomIter); 
             for ( ; atomIter.notEnd(); ++atomIter) {
                #ifdef MCMD_SHIFT
@@ -754,6 +820,17 @@ namespace McMd
    }
 
    /*
+   * Open, read, and close a configuration file.
+   */
+   void System::readConfig(std::string filename)
+   {
+      std::ifstream file;
+      fileMaster().openInputFile(filename, file);
+      readConfig(file);
+      file.close();
+   }
+
+   /*
    * Write configuration to specified output stream.
    */
    void System::writeConfig(std::ostream &out)
@@ -762,6 +839,17 @@ namespace McMd
          configIoPtr_ = newDefaultConfigIo();
       }
       configIoPtr_->write(out);
+   }
+
+   /*
+   * Open, write, and close a configuration file.
+   */
+   void System::writeConfig(std::string filename)
+   {
+      std::ofstream file;
+      fileMaster().openOutputFile(filename, file);
+      writeConfig(file);
+      file.close();
    }
 
    /*
@@ -892,8 +980,12 @@ namespace McMd
    void System::readPerturbation(std::istream& in) 
    {
       if (!hasPerturbation() && expectPerturbationParam_) {
+         #ifdef UTIL_MPI
+         UTIL_CHECK(hasIoCommunicator());
+         #endif
          std::string className;
-         bool        isEnd;
+         bool isEnd;
+         UTIL_CHECK(perturbationFactoryPtr_) 
          perturbationPtr_ = 
             perturbationFactoryPtr_->readObject(in, *this, className, isEnd);
          if (!perturbationPtr_) {
@@ -910,14 +1002,14 @@ namespace McMd
    */
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-      if (hasIoCommunicator()) {
-         UTIL_THROW("System has ioCommunicator in loadPerturbation");
-      }
-
+      UTIL_CHECK(!isCopy());
       bool savedPerturbation;
       ar >> savedPerturbation;
       if (savedPerturbation) {
+         UTIL_CHECK(!hasPerturbation());
+         // Create the perturbationFactory
          setExpectPerturbation();
+         UTIL_CHECK(perturbationFactoryPtr_);
          std::string className = "unknown";
          perturbationPtr_ = 
             perturbationFactoryPtr_->loadObject(ar, *this, className);
@@ -935,8 +1027,9 @@ namespace McMd
    */
    void System::savePerturbation(Serializable::OArchive& ar) 
    {
+      UTIL_CHECK(!isCopy());
       bool savingPerturbation = hasPerturbation();
-      ar << savingPerturbation;  
+      ar << savingPerturbation;
       if (savingPerturbation) {
          std::string className = perturbationPtr_->className();
          ar << className;
@@ -1053,6 +1146,9 @@ namespace McMd
    */
    bool System::isEmpty() const
    {
+      if (!simulation().hasSpecies()) {
+         return true;
+      }
       for (int i = 0; i < simulation().nSpecies(); ++i) {
          if (nMolecule(i) != 0) return false;
       }
@@ -1244,6 +1340,23 @@ namespace McMd
    */
    std::string System::externalStyle() const
    {  return externalStyle_;  }
+   #endif
+
+   #ifdef SIMP_SPECIAL
+   SpecialFactory& System::specialFactory()
+   {
+      if (specialFactoryPtr_ == 0) {
+         specialFactoryPtr_ = new SpecialFactory;
+      }
+      assert(specialFactoryPtr_);
+      return *specialFactoryPtr_;
+   }
+
+   /*
+   * Get the special style string.
+   */
+   std::string System::specialStyle() const
+   {  return specialStyle_;  }
    #endif
 
    #ifdef MCMD_LINK
