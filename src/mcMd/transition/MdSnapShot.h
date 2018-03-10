@@ -9,14 +9,15 @@
 */
 
 #include <mcMd/transition/MdParticle.h>
+#include <simp/boundary/Boundary.h>
 #include <util/containers/DArray.h>
-#include <util/boundary/Boundary.h>
 
 namespace McMd {
 
    class MdSystem;
 
    using namespace Util;
+   using namespace Simp;
 
    class MdSnapShot
    {
