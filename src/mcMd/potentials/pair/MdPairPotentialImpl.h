@@ -41,7 +41,7 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param other parent System object.
+      * \param system parent System object.
       */
       MdPairPotentialImpl(System& system);
 

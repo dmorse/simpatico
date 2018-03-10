@@ -4,55 +4,78 @@ Analyzers (housekeeping):
 - Move DdMd::Simulation::computePairEnergies() and pairEnergies()
   to PairPotential class, modify PairEnergy(ies) analyzer classes.
 
-     Closely related (equivalent?) functions:
-     ./simulation/Simulation.h:                void computePairEnergies();
-     ./potentials/pair/PairPotential.h:        virtual void computePairEnergies() = 0;
-     ./potentials/pair/PairPotentialImpl.h:    virtual void computePairEnergies();
-     
-     Called by:
-     ./analyzers/energy/OutputPairEnergies.cpp:   sys.computePairEnergies();
-     ./analyzers/energy/PairEnergyAverage.cpp:    simulation().computePairEnergies();
+  Closely related (equivalent?) functions:
+     Simulation.h:         void computePairEnergies();
+     PairPotential.h:      virtual void computePairEnergies() = 0;
+     PairPotentialImpl.h:  virtual void computePairEnergies();
+ 
+     Called by analyzers:
+     OutputPairEnergies.cpp:  sys.computePairEnergies();
+     PairEnergyAverage.cpp:   simulation().computePairEnergies();
 
-- Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
-  accumulator_ used as name for pointer, not derived from AverageAnalyzer).
+- Clean up PairEnergyAverage class (e.g., pairs_ class apears to 
+  be one pair, accumulator_ used as name for pointer, not derived 
+  from AverageAnalyzer).
 
 - Review analyzers - try to further standardize outputs.
 
+Communicators in Potential Energies
+-----------------------------------
+
+  Consider: All computeEnergy and computeStress operations on 
+  potential energies (reduce operations) require a communicator
+  as an argument. Because the potential energies don't store 
+  the address of a communicator, they can't throw exceptions if 
+  energy(), pressure(), or stress() query functions are called 
+  on slave processors. The BondPotential class (for example) does 
+  store pointers to the boundary and associated GroupStorage<2>. 
+  Why not have it also store a pointer to the appropriate 
+  communicator? The implementation has a pointer to the parent
+  Simulation, and thus could get a pointer to the domain, and 
+  from that the communicator. Why not have the potential energy 
+  object also store a pointer to the associated communicator, 
+  when compiled with MPI? Admittedly, this is not needed to 
+  compute forces, without reverse communication, but it is 
+  needed to compute energy or stress.
+  
+   
 Memory Management (avoiding user specified memory limits)
 ----------------------------------------------------------
 
-- Change CellList to self-allocate and de-allocate and re-allocate as 
-  needed. This is already implemented in McMd. Get rid of maxBoundary_ 
-  parameter.
+- Change CellList to self-allocate and de-allocate and re-allocate 
+  as needed. This is already implemented in McMd. Get rid of 
+  maxBoundary_ parameter.
 
-- Change PairList so that it can re-allocate on overflow, to avoid
-  crash on exceeding pairCapacity. Allow different processors to have
-  different capacities - no communication is needed. 
+- Change PairList so that it can re-allocate on overflow, to 
+  avoid crash on exceeding pairCapacity. Allow different processors
+  to have different capacities - no communication is needed. 
 
-- Change PairList so that if pairCapacity has not been set previously,
-  it does a dry run to count the number of pairs, allocates, and then
-  goes through again to actually file required data structures. This
-  will allow initial initialization without an estimate of the number
-  of pairs, or repeated re-allocation.
+- Change PairList so that if pairCapacity has not been set 
+  previously, it does a dry run to count the number of pairs, 
+  allocates, and then goes through again to actually file 
+  required data structures. This will allow initial 
+  initialization without an estimate of the number of pairs, 
+  or repeated re-allocation.
 
-- Create a function to reallocate AtomStorage, which will require the
-  data to be copied. 
+- Create a function to reallocate AtomStorage, which will require 
+  the data to be copied. 
 
-- Create a modifyAtomPointers Signal within the AtomStorage, and create 
-  a public function of AtomStorage that allows functions to be registered 
-  as observers of this signal.
+- Create a modifyAtomPointers Signal within the AtomStorage, and 
+  create a public function of AtomStorage that allows functions 
+  to be registered as observers of this signal.
 
-- Create a function of the GroupStorage template that re-sets pointers
-  to atoms. Add code to register this with the modifyAtomPointers signal.
+- Create a function of the GroupStorage template that re-sets 
+  pointers to atoms. Add code to register this with the 
+  modifyAtomPointers signal.
 
-- Register a function to either clear or clear and rebuild the pair 
-  list with the modifyAtomPointers signal. 
+- Register a function to either clear or clear and rebuild 
+  the pair list with the modifyAtomPointers signal. 
 
-- Create a function of atomStorage that can be called during configuration 
-  file reading that creates a default allocation for AtomStorage from 
-  knowledge of the total number of atoms on all processors, based 
-  on an assumption of a homogeneous distribution, with some margin 
-  for inhomogeneities.
+- Create a function of atomStorage that can be called during 
+  configuration file reading that creates a default allocation 
+  for AtomStorage from knowledge of the total number of atoms 
+  on all processors, based on an assumption of a homogeneous 
+  distribution, with some margin for inhomogeneities.
 
 - Create a function of GroupStorage that can be used when reading the
   configuration file to create an initial default allocation.
