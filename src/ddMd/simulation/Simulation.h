@@ -400,24 +400,6 @@ namespace DdMd
       */
       void unsetPotentialEnergies();
 
-      #if 0
-      /**
-      * Compute pair energies for each pair of atom types.
-      *
-      * Reduce operation: Must be called on all nodes.
-      */
-      void computePairEnergies();
-
-      /**
-      * Return precomputed pair energies.
-      *
-      * Call only on master processor, after computePairEnergies.
-      *
-      * \return total pair energies (only correct on master node).
-      */
-      DMatrix<double> pairEnergies() const;
-      #endif
-
       /**
       * Calculate and store kinetic stress.
       *

@@ -1,18 +1,6 @@
 Analyzers (housekeeping):
 ------------------------
 
-- Move DdMd::Simulation::computePairEnergies() and pairEnergies()
-  to PairPotential class, modify PairEnergy(ies) analyzer classes.
-
-  Closely related (equivalent?) functions:
-     Simulation.h:         void computePairEnergies();
-     PairPotential.h:      virtual void computePairEnergies() = 0;
-     PairPotentialImpl.h:  virtual void computePairEnergies();
- 
-     Called by analyzers:
-     OutputPairEnergies.cpp:  sys.computePairEnergies();
-     PairEnergyAverage.cpp:   simulation().computePairEnergies();
-
 - Clean up PairEnergyAverage class (e.g., pairs_ class apears to 
   be one pair, accumulator_ used as name for pointer, not derived 
   from AverageAnalyzer).
