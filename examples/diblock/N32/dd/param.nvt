@@ -59,20 +59,33 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1000
+     baseInterval      100
 
      LogEnergy{
-        interval  1000
+        interval   200
      }
  
      OutputEnergy{
-        interval        2000
+        interval         100
         outputFileName  energy
      }
 
      OutputPressure{
-        interval        4000
+        interval         100
         outputFileName  pressure
+     }
+
+     PairEnergyAverage{
+        interval          100
+        outputFileName   pairEnergy
+        pairs            0    1
+        nSamplePerBlock  0
+     }
+
+     PairEnergyAnalyzer{
+        interval          100
+        outputFileName   pairEnergy.01
+        typeIdPair       0    1
      }
 
   }

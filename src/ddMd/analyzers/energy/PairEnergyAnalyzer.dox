@@ -35,7 +35,8 @@ in which
   </tr>
   <tr> 
      <td>typeIdPair</td>
-     <td>An array of two elements containing two atom type ids for the pairs of interest</td>
+     <td>An array of two elements containing two atom type ids for 
+         the pairs of interest</td>
   </tr>
 </table>
 If nSamplePerBlock > 0, this analyzer outputs block average values every interval*nSamplePerBlock time steps. For nSamplePerBlock > 1, each such block average is an average of the most recent nSamplePerBlock sampled values, which are sampled every interval time steps. Setting nSamplePerBlock = 1 causes every sampled value to be output, with no averaging. Setting nSamplePerBlock = 0 disables computation and output of block averages.

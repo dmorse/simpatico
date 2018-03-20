@@ -17,8 +17,8 @@ The parameter file format is:
    PairEnergyAverage{
      interval           int
      outputFileName     string
-     nSamplePerBlock    int
      pairs              Array<int> [2]
+     nSamplePerBlock    int
    }
 \endcode
 in which
@@ -32,12 +32,12 @@ in which
     <td> name of output file </td>
   </tr>
   <tr> 
-    <td>nSamplePerBlock</td>
-    <td>number of samples per block average</td>
-  </tr>
-  <tr> 
     <td>pairs</td>
     <td>pairs is an array that stores two atom type indices</td>
+  </tr>
+  <tr> 
+    <td>nSamplePerBlock</td>
+    <td>number of samples per block average</td>
   </tr>
 </table>
 
