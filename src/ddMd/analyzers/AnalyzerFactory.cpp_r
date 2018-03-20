@@ -23,7 +23,6 @@
 #include "energy/OutputTemperature.h"
 #include "energy/PairEnergyAnalyzer.h"
 #include "energy/OutputPairEnergies.h"
-#include "energy/PairEnergyAverage.h"
 #ifdef SIMP_EXTERNAL
 #include "energy/ExternalEnergyAnalyzer.h"
 #include "energy/ExternalEnergyAverage.h"
@@ -92,9 +91,6 @@ namespace DdMd
       } else
       if (className == "PairEnergyAnalyzer") {
          ptr = new PairEnergyAnalyzer(simulation());
-      } else
-      if (className == "PairEnergyAverage") {
-         ptr = new PairEnergyAverage(simulation());
       } else
       if (className == "OutputPairEnergies") {
          ptr = new OutputPairEnergies(simulation());

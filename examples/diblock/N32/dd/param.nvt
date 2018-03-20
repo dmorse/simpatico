@@ -75,13 +75,6 @@ Simulation{
         outputFileName  pressure
      }
 
-     PairEnergyAverage{
-        interval          100
-        outputFileName   pairEnergy
-        pairs            0    1
-        nSamplePerBlock  0
-     }
-
      PairEnergyAnalyzer{
         interval          100
         outputFileName   pairEnergy.01

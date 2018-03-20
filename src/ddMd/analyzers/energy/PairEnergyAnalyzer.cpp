@@ -61,7 +61,6 @@ namespace DdMd
    */
    void PairEnergyAnalyzer::compute() 
    {  
-      //simulation().computePairEnergies(); 
       MPI::Intracomm& communicator = simulation().domain().communicator();  
       simulation().pairPotential().computePairEnergies(communicator); 
    }
