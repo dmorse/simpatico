@@ -1,10 +1,6 @@
 Analyzers (housekeeping):
 ------------------------
 
-- Clean up PairEnergyAverage class (e.g., pairs_ class apears to 
-  be one pair, accumulator_ used as name for pointer, not derived 
-  from AverageAnalyzer).
-
 - Review analyzers - try to further standardize outputs.
 
 Communicators in Potential Energies
