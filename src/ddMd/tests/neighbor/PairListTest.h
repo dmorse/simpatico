@@ -73,7 +73,8 @@ public:
       }
 
       // Setup CellList
-      cellList.allocate(nAtom, lower, upper, cutoffs, nCutCell);
+      cellList.setAtomCapacity(nAtom);
+      //cellList.allocate(nAtom, lower, upper, cutoffs, nCutCell);
       cellList.makeGrid(lower, upper, cutoffs, nCutCell);
       pairList.allocate(nAtom, pairCapacity, cutoff);
 

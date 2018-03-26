@@ -43,24 +43,19 @@ namespace DdMd
    */
    void CellList::setAtomCapacity(int atomCapacity)
    {
-      tags_.allocate(atomCapacity);
-      atoms_.allocate(atomCapacity);
-   }
-
-   /*
-   * Allocate memory for this CellList (generalized coordinates).
-   */
-   void CellList::allocate(int atomCapacity, const Vector& lower,
-                           const Vector& upper, const Vector& cutoffs,
-                           int nCellCut)
-   {
-
-      // Allocate arrays of tag and handle objects
-      tags_.allocate(atomCapacity);
-      atoms_.allocate(atomCapacity);
-
-      // Set grid dimensions and allocate an array of Cell objects
-      setGridDimensions(lower, upper, cutoffs, nCellCut);
+      if (tags_.capacity() == 0) {
+         UTIL_CHECK(atoms_.capacity() == 0);
+         tags_.allocate(atomCapacity);
+         atoms_.allocate(atomCapacity);
+      } else {
+         UTIL_CHECK(tags_.capacity() == atoms_.capacity());
+         if (atomCapacity > tags_.capacity()) {
+            tags_.deallocate();
+            atoms_.deallocate();
+            tags_.allocate(atomCapacity);
+            atoms_.allocate(atomCapacity);
+         }
+      }
    }
 
    /*

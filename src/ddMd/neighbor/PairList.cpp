@@ -42,7 +42,7 @@ namespace DdMd
    {}
    
    /*
-   * Allocate CellList and PairList arrays, initialize to empty state.
+   * Allocate PairList arrays, initialize to empty state.
    */
    void PairList::allocate(int atomCapacity, int pairCapacity , double cutoff) 
    {

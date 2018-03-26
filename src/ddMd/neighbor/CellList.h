@@ -37,18 +37,18 @@ namespace DdMd
    * \code
    *
    *    AtomStorage storage;
+   *    Boundary boundary;
    *    CellList cellList;
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    int      atomCapacity  // max number of atoms on this processor
    *
-   *    // Bounds on lower and upper used here to allocate memory.
    *    cellList.setAtomCapacity(atomCapacity);
    *  
    *    // Set elements of cutoffs vector to same value
    *    for (int i = 0; i < Dimension; ++i) {
-   *       cutoffs[i] = cutoff;
+   *       cutoffs[i] = cutoff/boundary.length(i);
    *    } 
    *
    *    // Make the actual grid and clear it.
@@ -108,65 +108,16 @@ namespace DdMd
       virtual ~CellList();
 
       /**
-      * Set atomCapacity, and allocate arrays indexed by atomId.
+      * Set atomCapacity, and allocate arrays that hold atoms.
       *
       * This function:
       *
       *   - Allocates an array of atomCapacity CellList::Tag objects.
       *   - Allocates an array of atomCapacity CellAtom objects.
       *
-      * \param atomCapacity dimension of global array of atoms
+      * \param atomCapacity maximum number of atoms on this processor
       */
       void setAtomCapacity(int atomCapacity);
-
-      /**
-      * Allocate memory for this CellList (generalized coordinates).
-      *
-      * This function:
-      *
-      *   - Allocates an array of atomCapacity CellList::Tag objects.
-      *   - Allocates an array of atomCapacity CellAtom objects.
-      *
-      * The elements of the lower, upper, and cutoffs parameters should 
-      * contain the lower and upper coordinate bounds for this processor, 
-      * and cutoff values in each direction, for a boundary was chosen to
-      * be larger than any that will be encountered during the simulation
-      * These parameters are used only to allocate memory.
-      *
-      * This version of the function is designed for use with generalized
-      * coordinates. See the makeGrid() method for a discussion of the
-      * parameter values in generalized coordinates.
-      *
-      * \param atomCapacity dimension of global array of atoms
-      * \param lower        lower coordinate bounds for this processor
-      * \param upper        upper coordinate bounds for this processor
-      * \param cutoffs      pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
-      */
-      void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs, int nCellCut = 1);
-
-      /**
-      * Allocate memory for this CellList (Cartesian coordinates).
-      *
-      * This function is designed for use with Cartesian coordinates and
-      * an orthorhombic boundary, for which the cutoff length is a scalar, 
-      * and for which upper, lower, cutoff parameters all have dimensions 
-      * of length.
-      *
-      * The function calls the allocate() method with a Vector of cutoffs
-      * internally, after setting every element of the Vector to the same 
-      * value.
-      *
-      * \param atomCapacity  dimension of global array of atoms
-      * \param lower  lower bound for this processor in maximum boundary
-      * \param upper  upper bound for this processor in maximum boundary
-      * \param cutoff  pair cutoff distance in each direction
-      * \param nCellCut  number of cells per cutoff length
-      */
-      void allocate(int atomCapacity, 
-                    const Vector& lower, const Vector& upper, 
-                    double cutoff, int nCellCut = 1);
 
       /**
       * Make the cell grid (using generalized coordinates).
