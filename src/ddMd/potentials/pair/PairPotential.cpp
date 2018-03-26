@@ -138,6 +138,10 @@ namespace DdMd
       int localCapacity = storage().atomCapacity();
       pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
 
+      // Set CellList atomCapacity
+      int totalCapacity = localCapacity + storage().ghostCapacity();
+      cellList_.setAtomCapacity(totalCapacity);
+
       // Calculate cell list cutoff lengths for all directions
       Vector cutoffs;
       Vector lower;
@@ -147,10 +151,7 @@ namespace DdMd
          upper[i] = domain().domainBound(i, 1);
          cutoffs[i] = cutoff_/maxBoundary_.length(i);
       }
-
-      // Allocate CellList
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs, nCellCut_);
+      cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
    }
 
    /*

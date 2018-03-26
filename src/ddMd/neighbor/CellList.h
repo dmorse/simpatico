@@ -43,14 +43,14 @@ namespace DdMd
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    int      atomCapacity  // max number of atoms on this processor
    *
+   *    // Bounds on lower and upper used here to allocate memory.
+   *    cellList.setAtomCapacity(atomCapacity);
+   *  
    *    // Set elements of cutoffs vector to same value
    *    for (int i = 0; i < Dimension; ++i) {
    *       cutoffs[i] = cutoff;
    *    } 
    *
-   *    // Bounds on lower and upper used here to allocate memory.
-   *    cellList.allocate(atomCapacity, lower, upper, cutoffs);
-   *  
    *    // Make the actual grid and clear it.
    *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
@@ -108,13 +108,24 @@ namespace DdMd
       virtual ~CellList();
 
       /**
+      * Set atomCapacity, and allocate arrays indexed by atomId.
+      *
+      * This function:
+      *
+      *   - Allocates an array of atomCapacity CellList::Tag objects.
+      *   - Allocates an array of atomCapacity CellAtom objects.
+      *
+      * \param atomCapacity dimension of global array of atoms
+      */
+      void setAtomCapacity(int atomCapacity);
+
+      /**
       * Allocate memory for this CellList (generalized coordinates).
       *
       * This function:
       *
       *   - Allocates an array of atomCapacity CellList::Tag objects.
       *   - Allocates an array of atomCapacity CellAtom objects.
-      *   - Allocates an array of Cell objects sized for this boundary.
       *
       * The elements of the lower, upper, and cutoffs parameters should 
       * contain the lower and upper coordinate bounds for this processor, 
@@ -379,8 +390,8 @@ namespace DdMd
       /**
       * Calculate required dimensions for cell grid and resize cells_ array.
       *
-      * Called internally by allocate and makeGrid. Resizes cells_ array to 
-      * match size of new grid. Does not link cells or calculate offsets to 
+      * Called internally by and public makeGrid function. Resizes cells_ array 
+      * to match size of new grid. Does not link cells or calculate offsets to 
       * neighbors.
       *
       * \param lower  lower bound used to allocate array of cells.
@@ -398,7 +409,7 @@ namespace DdMd
 
    }; 
 
-   // Public inline method definitions:
+   // Public inline member function definitions
 
    /*
    * Identify the cell for an Atom, based on its position.
@@ -420,7 +431,7 @@ namespace DdMd
    }
 
    /*
-   * Add an Atom to the appropriate cell, based on its position.
+   * Compute atomic cell index, append pointer and index to tags_ array.
    */
    inline void CellList::placeAtom(Atom &atom)
    {
@@ -437,12 +448,6 @@ namespace DdMd
          ++nReject_;
       }
    }
-
-   /*
-   * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
-   */
-   inline bool CellList::isValidAtomId(int atomId)
-   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
 
    /*
    * Return associated Grid object.
@@ -476,6 +481,14 @@ namespace DdMd
    */
    inline bool CellList::isAllocated() const
    {  return (cells_.capacity() > 0); }
+
+   // Private inline member function definitions
+
+   /*
+   * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
+   */
+   inline bool CellList::isValidAtomId(int atomId)
+   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
 
 }
 #endif

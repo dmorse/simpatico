@@ -41,6 +41,15 @@ namespace DdMd
    /*
    * Allocate memory for this CellList (generalized coordinates).
    */
+   void CellList::setAtomCapacity(int atomCapacity)
+   {
+      tags_.allocate(atomCapacity);
+      atoms_.allocate(atomCapacity);
+   }
+
+   /*
+   * Allocate memory for this CellList (generalized coordinates).
+   */
    void CellList::allocate(int atomCapacity, const Vector& lower,
                            const Vector& upper, const Vector& cutoffs,
                            int nCellCut)
