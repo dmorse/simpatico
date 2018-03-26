@@ -77,11 +77,11 @@ namespace DdMd
    * total number of atoms that can exist on this processor.
    *
    * If the upper and lower bounds and atom coordinates are all expressed in
-   * generalized coordinates, which span 0.0 - 1.0 over the primitive periodic
-   * cell in each direction, each element of the cutoffs vector is given by a
-   * ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
-   * distance across the unit cell along a direciton parallel to reciprocal 
-   * basis vector i. 
+   * generalized coordinates, which span [0,1] over the primitive periodic
+   * cell in each direction, each element of the cutoffs vector is given by
+   * a ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
+   * distance across the unit cell along a direction parallel to reciprocal 
+   * basis vector i, or perpendicular to a surface of the unit cell.
    *
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
@@ -138,18 +138,23 @@ namespace DdMd
       /**
       * Allocate memory for this CellList (Cartesian coordinates).
       *
-      * This function is designed for use with Cartesian coordinates, for which
-      * the lower, upper and cutoff parameters all have dimensions of length.
-      * The function calls the allocate() method with a Vector of cutoffs
-      * internally, after setting every element of the Vector to the same value.
+      * This function is designed for use with Cartesian coordinates and
+      * an orthorhombic boundary, for which the cutoff length is a scalar, 
+      * and for which upper, lower, cutoff parameters all have dimensions 
+      * of length.
       *
-      * \param atomCapacity dimension of global array of atoms
-      * \param lower        lower bound for this processor in maximum boundary
-      * \param upper        upper bound for this processor in maximum boundary
-      * \param cutoff       pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
+      * The function calls the allocate() method with a Vector of cutoffs
+      * internally, after setting every element of the Vector to the same 
+      * value.
+      *
+      * \param atomCapacity  dimension of global array of atoms
+      * \param lower  lower bound for this processor in maximum boundary
+      * \param upper  upper bound for this processor in maximum boundary
+      * \param cutoff  pair cutoff distance in each direction
+      * \param nCellCut  number of cells per cutoff length
       */
-      void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
+      void allocate(int atomCapacity, 
+                    const Vector& lower, const Vector& upper, 
                     double cutoff, int nCellCut = 1);
 
       /**
@@ -166,28 +171,38 @@ namespace DdMd
       * cell length in direction i in generalized coordinates. This is given
       * by the ratio cutoff[i] = pairCutoff/length[i], where pairCutoff is 
       * the maximum range of nonbonded interactions, and length[i] is the 
-      * distance across the primitive unit cell along the direction parallel 
-      * to reciprocal lattice basis vector i.
+      * distance across the primitive unit cell along the direction 
+      * parallel to reciprocal lattice basis vector i.
       *
-      * \param lower    lower bound of local atom coordinates.
-      * \param upper    upper bound of local atom coordinates.
+      * \param lower  lower bound of local atom coordinates.
+      * \param upper  upper bound of local atom coordinates.
       * \param cutoffs  pair cutoff length in each direction
-      * \param nCellCut number of cells per cutoff length
+      * \param nCellCut  number of cells per cutoff length
       */
-      void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
-               int nCellCut = 1);
+      void makeGrid(const Vector& lower, 
+                    const Vector& upper, const Vector& cutoffs, 
+                    int nCellCut = 1);
 
       /**
       * Determine the appropriate cell for an Atom, based on its position.
       *
-      * This method does not place the atom in a cell, but calculates a cell
-      * index and retains the value, which is used to place atoms in the build() 
-      * method.
+      * This function should be called within a loop over all atoms in the
+      * system, which should be completed before invoking the build()
+      * function. The placeAtom function does not actually place the atom 
+      * in a cell, but calculates and retains a record of the cell index.
+      * Computing indices for all atoms before placing them in cells
+      * allows the class to compute the amount of memory required for 
+      * each cell. The stored cell index for each atom is used to build 
+      * the cell list in the build() method. 
       *
-      * The method quietly does nothing if the atom is outside the expanded 
+      * The method quietly does nothing if the atom is outside the expanded
       * domain for nonbonded ghosts, which extends one cutoff length beyond
       * the domain boundaries the domain boundaries in each direction.
+      *
+      * Implementation: This function stores the cell index and a pointer 
+      * to the Atom in the appropriate element of the tags_ array, and 
+      * calls Cell:incrementCapacity() to increment a counter for the
+      * number of atoms in the associated Cell. 
       *
       * \param atom  Atom object to be added.
       */
@@ -196,10 +211,18 @@ namespace DdMd
       /**
       * Build the cell list.
       *
-      * This method must be called after completing a loop over atoms,
-      * in which placeAtom() is called for each atom. The build() method
+      * This function must be called after completing a loop over atoms,
+      * in which placeAtom() is called for each atom. The build() function
       * uses information gathered in this loop to build and fill all of
       * the cells. 
+      *
+      * Implementation details: This function adds every atom to a Cell,
+      * but does not call the CellAtom::update() function to set values 
+      * for the position and id. The CellAtom::update() function is 
+      * instead later called by CellList::update(). This allows the
+      * CellList::build() to be called when atomic coordinates are in
+      * scaled [0,1] form, and update() to be called after the positions
+      * positions are transformed back to Cartesian coordinates.
       */
       void build();
 

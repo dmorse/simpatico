@@ -169,12 +169,14 @@ namespace DdMd
       void incrementCapacity();
 
       /**
-      * Associate the Cell with an array of CellAtom objects.
+      * Associate this Cell with an array block of CellAtom objects.
       *
-      * The final capacity of the cell must be known when this method
-      * is called. It associate the Cell with a C array of capacity 
-      * Atom* pointers, starting at position begin. It returns a 
-      * pointer to an element one past the end of this array segment. 
+      * The final atomCapacity of the cell must be known when this function
+      * is called. It associates the Cell with a C array of capacity Atom*
+      * pointers, with the first element at position given by the pointer
+      * parameter "begin". This function returns a pointer to an element 
+      * one past the end of the associated array segment, which can be used 
+      * as the first element of the next Cell. 
       *
       * \param begin first element in associated array segment.
       * \return end of array segment (element one past the end)
@@ -183,6 +185,9 @@ namespace DdMd
 
       /**
       * Append an Atom to an initialized cell.
+      *
+      * This function should be called once per atom, after the cell has
+      * been initialized by calling CellAtom::initialize.
       */
       void append(Atom* atomPtr);
 
@@ -241,10 +246,10 @@ namespace DdMd
       /// Pointer to next local Cell.
       Cell* nextCellPtr_;
 
-      /// Number of atoms in this cell.
+      /// Number of atoms currently in this cell.
       int nAtom_;
 
-      /// Maximum number of atoms in cell.
+      /// Number of atoms for which space is assigned.
       int atomCapacity_;  
 
       /// Id of cell in grid.
@@ -252,6 +257,12 @@ namespace DdMd
 
       /// Is this a ghost cell?
       bool isGhostCell_;
+
+      // Note: The atomCapacity_ should be incremented during the initial
+      // loop over atoms by calling Cell::incrementCapacity() each time 
+      // an atom is found to be in this Cell. The nAtom_ member is 
+      // incremented by the Cell:append method each time an atoms is
+      // actually added to this cell.
 
    };
 

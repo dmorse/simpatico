@@ -33,7 +33,7 @@ namespace DdMd
    }
 
    /*
-   * Destructor. 
+   * Destructor.
    */
    CellList::~CellList()
    {}
@@ -41,8 +41,9 @@ namespace DdMd
    /*
    * Allocate memory for this CellList (generalized coordinates).
    */
-   void CellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, const Vector& cutoffs, int nCellCut)
+   void CellList::allocate(int atomCapacity, const Vector& lower,
+                           const Vector& upper, const Vector& cutoffs,
+                           int nCellCut)
    {
 
       // Allocate arrays of tag and handle objects
@@ -54,10 +55,12 @@ namespace DdMd
    }
 
    /*
-   * Calculate number of cells in each direction of grid, resize cells_ array if needed.
+   * Calculate number of cells in each direction of grid, resize
+   * cells_ array if needed.
    */
-   void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
-                                    const Vector& cutoffs, int nCellCut)
+   void 
+   CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
+                               const Vector& cutoffs, int nCellCut)
    {
       if (nCellCut < 1) {
          UTIL_THROW("Error: nCellCut < 1");
@@ -78,7 +81,7 @@ namespace DdMd
       Vector lengths;
       IntVector gridDimensions;
       for (int i = 0; i < Dimension; ++i) {
- 
+
          lengths[i] = upper_[i] - lower_[i];
          if (lengths[i] < 0) {
             UTIL_THROW("Processor length[i] < 0.0");
@@ -95,7 +98,7 @@ namespace DdMd
          gridDimensions[i] += 2*nCellCut;
 
          if (gridDimensions[i] != grid_.dimension(i)) {
-            isNewGrid = true;   
+            isNewGrid = true;
          }
       }
 
@@ -116,7 +119,7 @@ namespace DdMd
             }
          }
          // Indicate that cell list must be rebuilt
-         isNewGrid = true; 
+         isNewGrid = true;
       }
       assert(newSize >= 27);
       assert(newSize == cells_.size());
@@ -130,11 +133,15 @@ namespace DdMd
          }
          // Loop over local cells, linking and marking each as a local cell.
          IntVector p;
+         IntVector d = grid_.dimensions();
          Cell* prevPtr = 0;
          Cell* cellPtr = 0;
-         for (p[0] = nCellCut; p[0] < grid_.dimension(0) - nCellCut; ++p[0]) {
-            for (p[1] = nCellCut; p[1] < grid_.dimension(1) - nCellCut; ++p[1]) {
-               for (p[2] = nCellCut; p[2] < grid_.dimension(2) - nCellCut; ++p[2]) {
+         //for (p[0] = nCellCut; p[0] < grid_.dimension(0) - nCellCut; ++p[0]) {
+         for (p[0] = nCellCut; p[0] < d[0] - nCellCut; ++p[0]) {
+            //for (p[1] = nCellCut; p[1]<grid_.dimension(1)-nCellCut;++p[1]){
+            for (p[1]=nCellCut; p[1] < d[1] - nCellCut; ++p[1]) {
+               //for (p[2]=nCellCut; p[2]<grid_.dimension(2)-nCellCut;++p[2]){
+               for (p[2]=nCellCut; p[2]<d[2] - nCellCut; ++p[2]) {
                   ic = grid_.rank(p);
                   cellPtr = &cells_[ic];
                   cellPtr->setIsGhostCell(false);
@@ -148,23 +155,23 @@ namespace DdMd
             }
          }
          cellPtr->setLastCell();
-      } 
-      
+      }
+
    }
 
    /*
    * Construct grid of cells, build linked list and identify neighbors.
    */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, 
+   void CellList::makeGrid(const Vector& lower, const Vector& upper,
                            const Vector& cutoffs, int nCellCut)
    {
 
-      // Calculate required grid dimensions, reinitialize cells_ array if needed.
+      // Calculate grid dimensions, reinitialize cells_ array if needed.
       setGridDimensions(lower, upper, cutoffs, nCellCut);
 
       // Construct e array, to help identify cells within the cutoff.
       // Definition: For i in the range -nCellCut <= i <= nCellCut,
-      // let e[i+nCellCut][j] = ( m[i]*celllengths_[j]/cutoffs[j] )**2, 
+      // let e[i+nCellCut][j] = ( m[i]*celllengths_[j]/cutoffs[j] )**2,
       // where m[i] = abs(i) - 1 for abs(i) > 0, and m[0] = 0.
       FArray<Vector, 17> e;
       {
@@ -182,7 +189,7 @@ namespace DdMd
          }
       }
 
-      // Construct Cell::OffsetArray offsets_ of integer offset strips 
+      // Construct Cell::OffsetArray offsets_ of integer offset strips
       // Each element strip contains the cell index for the first cell
       // strip.first and the cell index strip.second for the last cell
       // in a contiguous strip of cells for which at least some of the
@@ -191,16 +198,16 @@ namespace DdMd
       std::pair<int, int> strip;
 
       // Add strip (0,0) (self) as the first element of offsets_ array.
-      // This guarantees that first nAtom elements in neighborArray are 
+      // This guarantees that first nAtom elements in neighborArray are
       // in the primary cell, allowing for simple self-interaction check.
       strip.first  = 0;
       strip.second = 0;
-      offsets_.append(strip); 
+      offsets_.append(strip);
 
       // Loop over all cells within box -nCellCut <= i, j, k <= nCellCut
-      double e0, e1, e2;              // Partial sums of distance^2/cutoff^2
-      int offset0, offset1, offset;   // Partial sums for cell id offset
-      int i, j, k;                    // relative cell coordinates
+      double e0, e1, e2;             // Partial sums of distance^2/cutoff^2
+      int offset0, offset1, offset;  // Partial sums for cell id offset
+      int i, j, k;                   // relative cell coordinates
       const int span0 = grid_.dimension(2)*grid_.dimension(1);
       const int span1 = grid_.dimension(2);
       bool isActive = false; // True iff this cell is within a valid strip
@@ -276,9 +283,7 @@ namespace DdMd
    */
    void CellList::build()
    {
-      // Initialize all cells, by associating each with a
-      // block of the atoms_ array.
-
+      // Associate each cell with a block of the atoms_ array.
       CellAtom* cellAtomPtr = &atoms_[0];
       for (int i = 0; i < grid_.size(); ++i) {
          cellAtomPtr = cells_[i].initialize(cellAtomPtr);
@@ -289,12 +294,18 @@ namespace DdMd
          cells_[tags_[i].cellRank].append(tags_[i].ptr);
       }
 
+      // Note: Cell::append() calls CellAtom::setPtr() to set the pointer
+      // to the appropriate atom, but does not call CellAtom::update(). 
+
       #ifdef UTIL_DEBUG
       // Calculate maxNAtomCell_
       int nAtomCell;
       maxNAtomCell_ = 0;
       for (int i = 0; i < grid_.size(); ++i) {
          nAtomCell = cells_[i].nAtom();
+         if (nAtomCell != cells_[i].atomCapacity()) {
+            UTIL_THROW("Cell nAtom != atomCapacity");
+         }
          if (nAtomCell > maxNAtomCell_) {
             maxNAtomCell_ = nAtomCell;
          }
@@ -373,7 +384,7 @@ namespace DdMd
             UTIL_THROW("CellList is built but not allocated");
          }
 
-         // Check validity of all cells individually. 
+         // Check validity of all cells individually.
          // const CellAtom* atomPtr;
          const Cell* cellPtr;
          int   nAtomCell;
@@ -396,7 +407,7 @@ namespace DdMd
             #endif
             nAtomSum += nAtomCell;
          }
-   
+
          // Check that total number of atoms in all cells equals nAtom.
          // Note: nAtom is incremented by the placeAtom() method.
          if (nAtom_ >= 0) {

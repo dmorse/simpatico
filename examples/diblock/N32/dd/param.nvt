@@ -67,18 +67,18 @@ Simulation{
  
      OutputEnergy{
         interval         100
-        outputFileName  energy
+        outputFileName   energy
      }
 
      OutputPressure{
         interval         100
-        outputFileName  pressure
+        outputFileName   pressure
      }
 
      PairEnergyAnalyzer{
-        interval          100
-        outputFileName   pairEnergy.01
-        typeIdPair       0    1
+        interval         100
+        outputFileName   pairEnergy_01
+        typeIdPair       0  1
      }
 
   }
