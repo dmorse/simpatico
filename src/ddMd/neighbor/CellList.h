@@ -29,11 +29,12 @@ namespace DdMd
    * containing ghost particles, into a grid of cells, such that the length
    * of each cell in each direction is greater than a specified cutoff
    * distance. The algorithm works with either generalized or Cartesian
-   * coordinates, if used consistently.
+   * coordinates, if used consistently. The usage example given below
+   * assumes atomic coordinates are in generalized/scaled form on entry.
    *
    * All operations of this class are local (no MPI).
    *
-   * Building a CellList (Cartesian coordinates);
+   * Usage: 
    * \code
    *
    *    AtomStorage storage;
@@ -44,18 +45,19 @@ namespace DdMd
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    int      atomCapacity  // max number of atoms on this processor
    *
+   *    // Allocate space for structures that store atom info
    *    cellList.setAtomCapacity(atomCapacity);
    *  
-   *    // Set elements of cutoffs vector to same value
+   *    // Set elements of cutoffs vector (scaled coordinate)
    *    for (int i = 0; i < Dimension; ++i) {
    *       cutoffs[i] = cutoff/boundary.length(i);
    *    } 
    *
-   *    // Make the actual grid and clear it.
+   *    // Setup the grid of cells, and clear all cells
    *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
    *
-   *    // Place all local atoms.
+   *    // Place all local atoms (compute and store cell indices)
    *    AtomStorage::AtomIterator  atomIter;
    *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
@@ -69,6 +71,12 @@ namespace DdMd
    *    
    *    // Build cell list
    *    cellList.build();
+   *
+   *    // Transform atomic positions back to Cartesian coordinates
+   *    storage.transformGenToCart(boundary);
+   *
+   *    // Update atomic positions stored in CellList.
+   *    cellList.update();
    *
    * \endcode
    *
@@ -214,6 +222,11 @@ namespace DdMd
       double cellLength(int i) const;
 
       /**
+      * Return number of cells that span the cutoff length.
+      */
+      int nCellCut() const;
+
+      /**
       * Return the index of the cell that contains a position Vector. 
       *
       * Returns a null value of -1 if the position is outside the 
@@ -261,11 +274,6 @@ namespace DdMd
       * Number of cells for which space has been allocated.
       */
       int cellCapacity() const;
-
-      /**
-      * Has memory been allocated for this CellList?
-      */
-      bool isAllocated() const;
 
       /**
       * Has this CellList been built?
@@ -330,6 +338,9 @@ namespace DdMd
       /// Number of atoms that were not placed in cells.
       int nReject_;
 
+      /// Number of cells to span cutoff length
+      int nCellCut_;
+
       #ifdef UTIL_DEBUG
       /// Maximum number of atoms in one cell. 
       int maxNAtomCell_;
@@ -337,26 +348,6 @@ namespace DdMd
 
       /// Has this CellList been built?
       bool isBuilt_;
-
-      /**
-      * Calculate required dimensions for cell grid and resize cells_ array.
-      *
-      * Called internally by and public makeGrid function. Resizes cells_ array 
-      * to match size of new grid. Does not link cells or calculate offsets to 
-      * neighbors.
-      *
-      * \param lower  lower bound used to allocate array of cells.
-      * \param uppper  upper bound used to allocate array of cells.
-      * \param cutoffs  minimum dimension of a cell in each direction
-      * \param nCellCut  number of cells per cutoff length
-      */
-      void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs, int nCellCut);
-
-      /**
-      * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
-      */
-      bool isValidAtomId(int atomId);
 
    }; 
 
@@ -428,18 +419,22 @@ namespace DdMd
    {  return begin_; }
 
    /*
-   * Is this CellList allocated?
+   * Get the maximum number of atoms for which space has been allocated.
    */
-   inline bool CellList::isAllocated() const
-   {  return (cells_.capacity() > 0); }
-
-   // Private inline member function definitions
+   inline int CellList::atomCapacity() const
+   {  return atoms_.capacity(); }
 
    /*
-   * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
+   * Get the number of cells for which space has been allocated.
    */
-   inline bool CellList::isValidAtomId(int atomId)
-   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
+   inline int CellList::cellCapacity() const
+   {  return cells_.capacity(); }
+
+   /*
+   * Is this CellList built (i.e., full of atoms)?
+   */
+   inline bool CellList::isBuilt() const
+   {  return isBuilt_; }
 
 }
 #endif

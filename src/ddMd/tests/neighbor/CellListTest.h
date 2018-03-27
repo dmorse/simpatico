@@ -673,11 +673,17 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
       }
 
-      // Setup cell list grid
-      const int nAtom = 200;
+      // Setup incorrect cell list array dimensions
+      cellList.makeGrid(lower, upper, cutoffs, 1);
+      cellList.setAtomCapacity(10);
+
+      // Setup correct cell list grid
       int nCellCut = 3;
-      cellList.setAtomCapacity(nAtom);
       cellList.makeGrid(lower, upper, cutoffs, nCellCut);
+
+      // Set correct atomCapacity
+      const int nAtom = 200;
+      cellList.setAtomCapacity(nAtom);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 11);
       TEST_ASSERT(cellList.grid().dimension(1) == 13);
@@ -795,7 +801,8 @@ public:
             for (j = 0; j < na; ++j) {
                cellAtomPtr2 = neighbors[j];
                if (cellAtomPtr2 > cellAtomPtr1) {
-                  dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
+                  dr.subtract(cellAtomPtr2->position(), 
+                              cellAtomPtr1->position()); 
                   if (dr.square() < pairCutoffSq) {
                      ++np;
                   }

@@ -163,6 +163,13 @@ namespace DdMd
          UTIL_THROW("Coordinates are Cartesian entering buildCellList");
       }
 
+      // Check CellList atomCapacity - resize if necessary.
+      int totalCapacity = storage().atomCapacity() 
+                        + storage().ghostCapacity();
+      if (totalCapacity > cellList().atomCapacity()) {
+         cellList().setAtomCapacity(totalCapacity);
+      }
+
       // Set cutoff and domain bounds.
       Vector cutoffs;
       Vector lower;
@@ -172,24 +179,26 @@ namespace DdMd
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
       }
+
+      // Make and clear cell list grid.
       cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
       cellList_.clear();
 
-      // Add all atoms to the cell list. 
+      // Compute cell indices for all local atoms.
       AtomIterator atomIter;
       storage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
-      // Add all ghosts to the cell list. 
+      // Compute cell indices for all ghost atoms.
       GhostIterator ghostIter;
       storage().begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
 
-      // Finalize cell list
+      // Build cell list
       cellList_.build();
      
       // Postconditions
@@ -197,7 +206,7 @@ namespace DdMd
       assert(cellList_.nAtom() + cellList_.nReject() 
              == storage().nAtom() + storage().nGhost());
       if (storage().isCartesian()) {
-        UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
+         UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
       }
    }
 
