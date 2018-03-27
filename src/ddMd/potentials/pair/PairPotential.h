@@ -351,14 +351,17 @@ namespace DdMd
       /// Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
 
+      /// Pair energies.
+      Setable< DMatrix<double> > pairEnergies_;
+
       /// Index for method used to calculate forces / energies.
       int methodId_;
 
       /// Number of pairs within specified cutoff.
       int nPair_;
 
-      /// Pair energies.
-      Setable< DMatrix<double> > pairEnergies_;
+      /// Does this potential have a stored maxBoundary?
+      bool hasMaxBoundary_;
 
       /// Private methods used to compute number of pairs
       int nPairList(double cutoffSq);

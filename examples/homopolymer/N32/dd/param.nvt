@@ -32,7 +32,6 @@ Simulation{
     cutoff            1.122462048
     skin              0.4
     pairCapacity      40000
-    maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
     kappa             400.0
@@ -48,7 +47,7 @@ Simulation{
   NvtIntegrator{
     dt                0.005
     tauT              1.000
-    saveInterval      5000
+    saveInterval      1000
     saveFileName      restart
   }
   Random{
@@ -58,16 +57,18 @@ Simulation{
      baseInterval     100
 
      LogEnergy{
-        interval        1000
+        interval        2000
      }
 
      DdMdTrajectoryWriter{
-        interval        2000
+        interval         500
         outputFileName  trajectory.trj
      }
 
   }
 }
+
+    maxBoundary       orthorhombic   30.0   30.0   30.0
 
      OutputEnergy{
         interval         1000

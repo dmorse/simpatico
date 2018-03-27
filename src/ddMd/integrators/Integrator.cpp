@@ -117,10 +117,8 @@ namespace DdMd
    */
    void Integrator::setupAtoms()
    {
-      // Precondition
-      if (atomStorage().isCartesian()) {
-         UTIL_THROW("Atom coordinates are Cartesian");
-      }
+      // Precondition - atomic coordinates are generalized
+      UTIL_CHECK(!atomStorage().isCartesian()) 
 
       atomStorage().clearSnapshot();
       exchanger().exchange();
@@ -135,9 +133,7 @@ namespace DdMd
       }
 
       // Postcondition - coordinates are Cartesian
-      if (!atomStorage().isCartesian()) {
-         UTIL_THROW("Atom coordinates are not Cartesian");
-      }
+      UTIL_CHECK(atomStorage().isCartesian());
    }
 
    /*

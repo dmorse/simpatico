@@ -51,7 +51,7 @@ Simulation{
     tauT              0.5
     tauP              0.5
     mode              cubic
-    saveInterval      10000
+    saveInterval      1000
     saveFileName      restart
   }
   Random{
@@ -61,26 +61,26 @@ Simulation{
      baseInterval     100
 
      LogEnergy{
-        interval        1000
+        interval         200
      }
 
      DdMdTrajectoryWriter{
-        interval        2000
+        interval        1000
         outputFileName  trajectory.trj
      }
 
      OutputEnergy{
-        interval         1000
+        interval          100
         outputFileName   energy
      }
 
      OutputPressure{
-        interval         1000
+        interval          100
         outputFileName   pressure
      }
 
      OutputBoxdim{
-        interval         1000
+        interval          100
         outputFileName   boxdim
      }
 
@@ -91,7 +91,7 @@ Simulation{
      }
 
      OutputTemperature{
-        interval         1000
+        interval          100
         outputFileName   temperature
      }
 

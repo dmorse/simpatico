@@ -32,9 +32,10 @@ namespace DdMd
       domainPtr_(0),
       boundaryPtr_(0),
       storagePtr_(0),
+      pairEnergies_(),
       methodId_(0),
       nPair_(0),
-      pairEnergies_()
+      hasMaxBoundary_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -47,9 +48,10 @@ namespace DdMd
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
+      pairEnergies_(),
       methodId_(0),
       nPair_(0),
-      pairEnergies_()
+      hasMaxBoundary_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -92,8 +94,9 @@ namespace DdMd
       nCellCut_ = 1; // Default value for optional parameter
       readOptional<int>(in, "nCellCut", nCellCut_); 
       read<int>(in, "pairCapacity", pairCapacity_);
-      read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
+      hasMaxBoundary_ = 
+        readOptional<Boundary>(in, "maxBoundary", maxBoundary_).isActive();
       allocate();
    }
 
@@ -102,13 +105,15 @@ namespace DdMd
    */
    void PairPotential::loadParameters(Serializable::IArchive& ar)
    {
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
   
       loadParameter<double>(ar, "skin", skin_);
       loadParameter<int>(ar, "nCellCut", nCellCut_, false);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
-      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(hasMaxBoundary_);
+      if (hasMaxBoundary_) {
+         loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+      }
       loader.load(cutoff_);
       loader.load(methodId_);
       allocate();
@@ -122,7 +127,10 @@ namespace DdMd
       ar << skin_;
       Parameter::saveOptional(ar, nCellCut_, true);
       ar << pairCapacity_;
-      ar << maxBoundary_;
+      ar << hasMaxBoundary_;
+      if (hasMaxBoundary_) {
+         ar << maxBoundary_;
+      }
       ar << cutoff_;
       ar << methodId_;
    }
@@ -142,16 +150,18 @@ namespace DdMd
       int totalCapacity = localCapacity + storage().ghostCapacity();
       cellList_.setAtomCapacity(totalCapacity);
 
-      // Calculate cell list cutoff lengths for all directions
-      Vector cutoffs;
-      Vector lower;
-      Vector upper;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         cutoffs[i] = cutoff_/maxBoundary_.length(i);
+      if (hasMaxBoundary_) {
+         // Calculate cell list cutoff lengths for all directions
+         Vector cutoffs;
+         Vector lower;
+         Vector upper;
+         for (int i = 0; i < Dimension; ++i) {
+            lower[i] = domain().domainBound(i, 0);
+            upper[i] = domain().domainBound(i, 1);
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
+         }
+         cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
       }
-      cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
    }
 
    /*
