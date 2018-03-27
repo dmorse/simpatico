@@ -369,9 +369,9 @@ namespace DdMd
       int nPairNSq(double cutoffSq);
 
       /**
-      * Allocate memory for the cell list and pair list.
+      * Reserve memory for the cell list and pair list.
       */
-      void allocate();
+      void reserve();
 
    };
 

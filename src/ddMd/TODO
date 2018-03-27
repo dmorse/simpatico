@@ -26,23 +26,19 @@ Communicators in Potential Energies
 Memory Management (avoiding user specified memory limits)
 ----------------------------------------------------------
 
-- Change CellList to self-allocate and de-allocate and re-allocate 
-  as needed. This is already implemented in McMd. Get rid of 
-  maxBoundary_ parameter.
+- Finish getting rid of maxBoundary_ parameter of PairPotential.
 
-- Change PairList so that it can re-allocate on overflow, to 
-  avoid crash on exceeding pairCapacity. Allow different processors
-  to have different capacities - no communication is needed. 
+- Change PairList so that it can re-allocate on overflow, to avoid 
+  crash on exceeding pairCapacity. Allow different processors to 
+  have different capacities - no communication is needed. 
 
-- Change PairList so that if pairCapacity has not been set 
-  previously, it does a dry run to count the number of pairs, 
-  allocates, and then goes through again to actually file 
-  required data structures. This will allow initial 
-  initialization without an estimate of the number of pairs, 
-  or repeated re-allocation.
+- Add a function to PairList that counts the number of pairs. 
+  Call this in Integrator::atomSetup() and use this to set an
+  initial value for the number of pairs before running a 
+  simulation, or to resize if necessary.
 
-- Create a function to reallocate AtomStorage, which will require 
-  the data to be copied. 
+- Create a function to resize the AtomStorage, which will require 
+  data to be copied into new arrays.
 
 - Create a modifyAtomPointers Signal within the AtomStorage, and 
   create a public function of AtomStorage that allows functions 
@@ -52,8 +48,8 @@ Memory Management (avoiding user specified memory limits)
   pointers to atoms. Add code to register this with the 
   modifyAtomPointers signal.
 
-- Register a function to either clear or clear and rebuild 
-  the pair list with the modifyAtomPointers signal. 
+- Register a function to either clear or clear and rebuild the 
+  pair list with the modifyAtomPointers signal. 
 
 - Create a function of atomStorage that can be called during 
   configuration file reading that creates a default allocation 
@@ -61,8 +57,8 @@ Memory Management (avoiding user specified memory limits)
   on all processors, based on an assumption of a homogeneous 
   distribution, with some margin for inhomogeneities.
 
-- Create a function of GroupStorage that can be used when reading the
-  configuration file to create an initial default allocation.
+- Create a function of GroupStorage that can be used when reading 
+  the configuration file to create an initial default allocation.
 
 - Note: Reallocation of the array of Atom objects re-quires resetting 
   of pointers to atoms in groups, but the reverse is not true.  It 

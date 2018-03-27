@@ -30,8 +30,8 @@ namespace DdMd
    * The allocate() method must be called once before use.
    *
    * To build or rebuild a PairList, after it has been allocated, one must 
-   * first build the associated CellList, and then call PairList::build() to 
-   * build the actual PairList. 
+   * first build the associated CellList, and then call PairList::build() 
+   * to build the actual PairList. 
    *
    * A PairIterator object must be used to iterate over all of the pairs in
    * in completed PairList (see documentation of PairIterator for usage).
@@ -60,6 +60,20 @@ namespace DdMd
       //@{
 
       /**
+      * Set the pair list cutoff distance
+      * \param cutoff pair list cutoff = potential cutoff + skin
+      */
+      void setCutoff(double cutoff);
+
+      /**
+      * Reserve memory.
+      *
+      * \param atomCapacity maximum number of primary atoms
+      * \param pairCapacity maximum number of pairs
+      */
+      void reserve(int atomCapacity, int pairCapacity);
+
+      /**
       * Allocate memory and set cutoff.
       *
       * \param atomCapacity maximum number of primary atoms
@@ -72,6 +86,21 @@ namespace DdMd
       * Reset this to empty state.
       */  
       void clear();
+
+      /**
+      * Count and return the number of pairs.
+      *
+      * This function can be use to count the number of pairs before 
+      * a simulation is begun, so that invoking code can choose an 
+      * appropriate initial value for pairCapacity. The implementation
+      * is basically a dry run of the algorithm used in the build()
+      * function.
+      *
+      * \param cellList  CellList object that was just built.
+      * \param reverseUpdateFlag  True if reverse communication is enabled
+      * \return number of pairs within the pair list cutoff
+      */
+      int countPairs(CellList& cellList, bool reverseUpdateFlag = false);
 
       /**
       * Use a CellList to build a new PairList.
@@ -113,7 +142,7 @@ namespace DdMd
       int atomCapacity() const;
 
       /**
-      * Has memory been allocated for this PairList?
+      * Has any memory been allocated for this PairList?
       */
       bool isAllocated() const;
  
