@@ -25,14 +25,11 @@ namespace DdMd
       atom2Ptrs_(),
       first_(),
       cutoff_(0.0),
-      atomCapacity_(0),
-      pairCapacity_(0),
       maxNAtomLocal_(0),
       maxNPairLocal_(0),
       buildCounter_(0),
       maxNAtom_(0),
-      maxNPair_(0),
-      isAllocated_(false)
+      maxNPair_(0)
    {}
 
    /*
@@ -44,20 +41,22 @@ namespace DdMd
    void PairList::setCutoff(double cutoff)
    {  cutoff_  = cutoff; }
 
-   void PairList::reserve(int atomCapacity, int pairCapacity)
+   void PairList::reserveAtoms(int atomCapacity)
    {
-      if (atomCapacity > atomCapacity_) {
-         atomCapacity_ = atomCapacity;
-         atom1Ptrs_.reserve(atomCapacity_);
-         first_.reserve(atomCapacity_ + 1);
+      if (atomCapacity > atom1Ptrs_.capacity()) {
+         atom1Ptrs_.reserve(atomCapacity);
+         first_.reserve(atomCapacity + 1);
       }
-      if (pairCapacity > pairCapacity_) { 
-         pairCapacity_ = pairCapacity;
-         atom2Ptrs_.reserve(pairCapacity_);
-      }
-      isAllocated_ = true;
    }
 
+   void PairList::reservePairs(int pairCapacity)
+   {
+      if (pairCapacity > atom2Ptrs_.capacity()) { 
+         atom2Ptrs_.reserve(pairCapacity);
+      }
+   }
+
+   #if 0
    /*
    * Allocate PairList arrays, initialize to empty state.
    */
@@ -67,6 +66,7 @@ namespace DdMd
       reserve(atomCapacity, pairCapacity);
       setCutoff(cutoff);
    }
+   #endif
 
    /*
    * Clear the PairList.
@@ -86,7 +86,7 @@ namespace DdMd
       // Precondition
       UTIL_CHECK(cellList.isBuilt());
 
-      // Copy positions and ids into cell list
+      // Make copies of atomic positions and ids in cell list
       cellList.update();
 
       Cell::NeighborArray neighbors;
@@ -143,8 +143,9 @@ namespace DdMd
    void PairList::build(CellList& cellList, bool reverseUpdateFlag)
    {
       // Precondition
-      UTIL_CHECK(isAllocated());
       UTIL_CHECK(cellList.isBuilt());
+      UTIL_CHECK(atomCapacity() > 0);
+      UTIL_CHECK(pairCapacity() > 0);
 
       Cell::NeighborArray neighbors;
       double cutoffSq;
@@ -297,11 +298,11 @@ namespace DdMd
       out << "PairList" << std::endl;
       out << "NPair: max, capacity     "
                   << Int(maxNPair_.value(), 10)
-                  << Int(pairCapacity_, 10)
+                  << Int(pairCapacity(), 10)
                   << std::endl;
       out << "NAtom: max, capacity     "
                   << Int(maxNAtom_.value(), 10)
-                  << Int(atomCapacity_, 10)
+                  << Int(atomCapacity(), 10)
                   << std::endl;
    }
 

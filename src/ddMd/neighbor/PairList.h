@@ -27,8 +27,6 @@ namespace DdMd
    * A PairList (or Verlet list) is a list of neighboring pairs of Atoms that 
    * are separated by a distance less than a specified cutoff. 
    *
-   * The allocate() method must be called once before use.
-   *
    * To build or rebuild a PairList, after it has been allocated, one must 
    * first build the associated CellList, and then call PairList::build() 
    * to build the actual PairList. 
@@ -60,19 +58,29 @@ namespace DdMd
       //@{
 
       /**
-      * Set the pair list cutoff distance
+      * Set the pair list cutoff distance.
+      *
+      * May be called more than once, to reset the cutoff.
+      *
       * \param cutoff pair list cutoff = potential cutoff + skin
       */
       void setCutoff(double cutoff);
 
       /**
-      * Reserve memory.
+      * Reserve space for atomCapacity atoms.
       *
       * \param atomCapacity maximum number of primary atoms
+      */
+      void reserveAtoms(int atomCapacity);
+
+      /**
+      * Reserve space for pairCapacity pairs.
+      *
       * \param pairCapacity maximum number of pairs
       */
-      void reserve(int atomCapacity, int pairCapacity);
+      void reservePairs(int pairCapacity);
 
+      #if 0
       /**
       * Allocate memory and set cutoff.
       *
@@ -81,6 +89,7 @@ namespace DdMd
       * \param cutoff       pair list cutoff = potential cutoff  + skin
       */
       void allocate(int atomCapacity, int pairCapacity, double cutoff);
+      #endif
 
       /**
       * Reset this to empty state.
@@ -141,11 +150,6 @@ namespace DdMd
       */
       int atomCapacity() const;
 
-      /**
-      * Has any memory been allocated for this PairList?
-      */
-      bool isAllocated() const;
- 
       //@}
       /// \name Statistics
       //@{
@@ -210,12 +214,6 @@ namespace DdMd
       /// Pair list cutoff radius (pair potential cutoff + skin_).
       double cutoff_;
    
-      /// Maximum number of atoms (dimension of atom1Ptrs_).
-      int  atomCapacity_;     
-   
-      /// Maximum number of distinct pairs (dimension of atom2Ptrs_).
-      int  pairCapacity_;     
-   
       /// Maximum number of primary atoms on this proc since stats cleared.
       int  maxNAtomLocal_;     
    
@@ -231,9 +229,6 @@ namespace DdMd
       /// Maximum of number of pairs on all procs (defined only on master).
       Setable<int>  maxNPair_;     
    
-      /// Has memory been allocated?
-      bool  isAllocated_;
-  
       /* 
       * Implementation Notes:
       *
@@ -290,17 +285,17 @@ namespace DdMd
    inline int PairList::nPair() const
    {  return atom2Ptrs_.size(); }
 
-   /**
+   /*
    * Get the maximum number of pairs. 
    */
    inline int PairList::pairCapacity() const
-   {  return pairCapacity_; }
+   {  return atom2Ptrs_.capacity(); }
 
-   /**
+   /*
    * Get the maximum number of primary atoms.
    */
    inline int PairList::atomCapacity() const
-   {  return atomCapacity_; }
+   {  return atom1Ptrs_.capacity(); }
 
    /*
    * Get the maximum value of aAtom() since instantiation.
@@ -319,12 +314,6 @@ namespace DdMd
    */ 
    inline int PairList::buildCounter() const
    { return buildCounter_; }
-
-   /*
-   * Has memory been allocated for this PairList?
-   */ 
-   inline bool PairList::isAllocated() const
-   { return isAllocated_; }
 
 } 
 #endif

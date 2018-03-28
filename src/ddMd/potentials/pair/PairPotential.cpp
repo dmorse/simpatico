@@ -97,11 +97,11 @@ namespace DdMd
       pairList_.setCutoff(cutoff_);
 
       // Optionally read nCellCut
-      nCellCut_ = 1; // Default value for optional parameter
+      nCellCut_ = 1; // Default value 
       readOptional<int>(in, "nCellCut", nCellCut_); 
 
       // Optionally read pairCapacity
-      pairCapacity_ = 0;
+      pairCapacity_ = 0; // Default value
       readOptional<int>(in, "pairCapacity", pairCapacity_);
 
       // Optionally read maxBoundary
@@ -140,6 +140,7 @@ namespace DdMd
    {
       ar << skin_;
       Parameter::saveOptional(ar, nCellCut_, true);
+      pairCapacity_ = pairList_.pairCapacity();
       ar << pairCapacity_;
       ar << hasMaxBoundary_;
       if (hasMaxBoundary_) {
@@ -154,11 +155,13 @@ namespace DdMd
    */
    void PairPotential::reserve()
    {
-
-      // Set CellList atomCapacity
       int localCapacity = storage().atomCapacity();
       int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.setAtomCapacity(totalCapacity);
+
+      // Set CellList atomCapacity
+      if (totalCapacity > 0) {
+         cellList_.setAtomCapacity(totalCapacity);
+      }
 
       // Optionally make cell list grid
       if (hasMaxBoundary_) {
@@ -175,8 +178,12 @@ namespace DdMd
       }
 
       // Optionally reserve memory for PairList
+      if (localCapacity > 0) {
+         pairList_.reserveAtoms(localCapacity);
+      }
       if (pairCapacity_ > 0) {
-         pairList_.reserve(localCapacity, pairCapacity_);
+         pairList_.reservePairs(pairCapacity_);
+         pairCapacity_ = pairList_.pairCapacity();
       }
 
    }
@@ -243,23 +250,24 @@ namespace DdMd
    void PairPotential::buildPairList()
    {
       // Precondition
+      UTIL_CHECK(storage().atomCapacity() > 0);
       UTIL_CHECK(storage().isCartesian());
       UTIL_CHECK(cellList_.isBuilt());
       pairList_.setCutoff(cutoff_);
 
       // Check arrays, resize if necessary.
       int localCapacity = storage().atomCapacity();
-      if (pairList_.atomCapacity() == 0 || pairList_.pairCapacity() == 0) {
-         int nPair = pairList_.countPairs(cellList_, reverseUpdateFlag());
-         if (nPair > pairList_.atomCapacity()) {
-            pairCapacity_ = 1.5*nPair;
-         }
-         pairList_.reserve(localCapacity, pairCapacity_);
-      } else 
       if (localCapacity > pairList_.atomCapacity()) {
-         UTIL_CHECK(pairCapacity_ == pairList_.pairCapacity()); 
-         pairList_.reserve(localCapacity, pairCapacity_);
+         pairList_.reserveAtoms(localCapacity);
       }
+      if (pairList_.pairCapacity() == 0) {
+         int nPair = pairList_.countPairs(cellList_, reverseUpdateFlag());
+         if (nPair > 0) {
+            nPair = 1.5*nPair;
+            pairList_.reservePairs(nPair);
+            pairCapacity_ = pairList_.pairCapacity();
+         }
+      } 
 
       // Build the pair list.
       pairList_.build(cellList_, reverseUpdateFlag());
