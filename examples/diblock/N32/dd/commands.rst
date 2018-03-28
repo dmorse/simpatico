@@ -1,4 +1,4 @@
-RESTART        8000
-WRITE_CONFIG   config.8000
+RESTART        6000
+WRITE_CONFIG   config.6000
 FINISH
 

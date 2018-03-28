@@ -31,8 +31,6 @@ Simulation{
     sigma             1.0
     cutoff            1.122462048
     skin              0.4
-    pairCapacity      40000
-    maxBoundary       orthorhombic   40.0   40.0   40.0
   }
   BondPotential{
     kappa             400.0
@@ -99,6 +97,8 @@ Simulation{
 }
 
 
+    pairCapacity      40000
+    maxBoundary       orthorhombic   40.0   40.0   40.0
 
      WriteConfig{
         interval         2000

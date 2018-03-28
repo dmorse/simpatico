@@ -31,7 +31,6 @@ Simulation{
     sigma             1.0
     cutoff            1.122462048
     skin              0.4
-    pairCapacity      40000
   }
   BondPotential{
     kappa             400.0
@@ -57,7 +56,7 @@ Simulation{
      baseInterval     100
 
      LogEnergy{
-        interval        2000
+        interval        200
      }
 
      DdMdTrajectoryWriter{
@@ -68,6 +67,10 @@ Simulation{
   }
 }
 
+
+
+-------------------------------------------------------
+    pairCapacity      40000
     maxBoundary       orthorhombic   30.0   30.0   30.0
 
      OutputEnergy{

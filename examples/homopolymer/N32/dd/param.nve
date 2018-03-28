@@ -31,9 +31,6 @@ Simulation{
     sigma             1.0
     cutoff            1.122462048
     skin              0.4
-    nCellCut          1
-    pairCapacity      20000
-    maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
     kappa             400.0
@@ -70,6 +67,10 @@ Simulation{
 
 ---------------------------------------
 Blocks for unused analyzers:
+
+    nCellCut          1
+    pairCapacity      20000
+    maxBoundary       orthorhombic   30.0   30.0   30.0
 
      OutputEnergy{
         interval        1000

@@ -35,8 +35,6 @@ Simulation{
     cutoff            1.122462048 1.122462048
                       1.122462048 1.122462048
     skin              0.4
-    pairCapacity      40000
-    maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
     kappa             400.0
@@ -62,15 +60,19 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1000
+     baseInterval     100
+
+     LogEnergy{
+        interval         100
+     }
 
      OutputEnergy{
-        interval        2000
+        interval        200
         outputFileName  energy
      }
 
      OutputPressure{
-        interval        2000
+        interval        200
         outputFileName  pressure
      }
 
@@ -100,8 +102,8 @@ Simulation{
   }
 }
 
-
-
+    pairCapacity      40000
+    maxBoundary       orthorhombic   30.0   30.0   30.0
 
      WriteConfig{
         interval         2000

@@ -31,8 +31,6 @@ Simulation{
     sigma             1.0
     cutoff            1.122462048
     skin              0.4
-    pairCapacity      40000
-    maxBoundary       orthorhombic   40.0   40.0   40.0
   }
   BondPotential{
     kappa             400.0
@@ -50,6 +48,8 @@ Simulation{
     dt                0.005
     W                 20000
     mode              cubic
+    saveInterval        500
+    saveFileName        restart
   }
   Random{
     seed              8012457890
@@ -57,31 +57,41 @@ Simulation{
   AnalyzerManager{
      baseInterval     100
 
-     DdMdTrajectoryWriter{
-        interval        2000
-        outputFileName  trajectory.trj
+     LogEnergy{
+        interval          200
      }
 
      OutputEnergy{
-        interval         1000
+        interval          200
         outputFileName   energy
      }
 
      OutputPressure{
-        interval         1000
+        interval          200
         outputFileName   pressure
      }
 
      OutputBoxdim{
-        interval         1000
+        interval          200
         outputFileName   boxdim
      }
 
      OutputTemperature{
-        interval         1000
+        interval          200
         outputFileName   temperature
+     }
+
+     DdMdTrajectoryWriter{
+        interval        500
+        outputFileName  trajectory.trj
      }
 
   }
 }
 
+
+
+------------------------------------------
+
+    pairCapacity      40000
+    maxBoundary       orthorhombic   40.0   40.0   40.0
