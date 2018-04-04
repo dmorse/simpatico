@@ -6,16 +6,18 @@ Analyzers (housekeeping):
 Memory Management (avoiding user specified memory limits)
 ----------------------------------------------------------
 
-- Delay allocation of all storage objects until a configuration
-  file is read. User supplied capacities can be stored and used 
-  later iff greater than estimates obtained by examining the 
-  input file. 
-
-- Create a function that can be called during configuration 
-  file reading that creates a default allocation for AtomStorage 
-  from knowledge of the total number of atoms on all processors, 
-  based on an assumption of a homogeneous distribution, with some 
-  margin for inhomogeneities.
+- Add public allocate(int nTotal) function to ech storage class.
+  It can call the current private function internally. This 
+  should decide how much memory to allocate, based on any
+  information provided in the parameter file along with knownledge
+  of the number of processors and total number of atoms or groups.
+  Decision can be based on homogeneous distribution along with 
+  some generous room for error. 
+ 
+- Modify all configIo objects so as to allocate storage objects
+  if not allocated previously. Then comment out, and ultimately
+  remove, invocation of private allocate() function in readParam
+  and loadParam.  
 
 - Create a function that can be used create a default allocation
   of a GroupStorage when reading the configuration file.
@@ -30,18 +32,23 @@ Memory Management (avoiding user specified memory limits)
   public function of AtomStorage that allows functions to be 
   registered as observers of this signal.
 
-- Create a function of the GroupStorage template that re-sets pointers 
-  to atoms. Add code to register this with the reallocateSignal of the
-  AtomStorage. 
+- Create a function of the GroupStorage template that re-sets 
+  pointers to atoms. Add code to register this with the 
+  reallocateSignal of the AtomStorage. 
 
-- Register a function to clear and rebuild the pair list with the 
-  modifyAtomPointers signal. 
+- Register a function to clear and rebuild the pair list with 
+  the modifyAtomPointers signal. 
+
+- Add code to reallocate AtomArray when the number of atoms is
+  too large.
 
 - Finish getting rid of maxBoundary_ parameter of PairPotential
   (currently optional)
 
 - Finish getting rid of atomCapacity_ and pairCapacity_ parameters 
   of PairPotential (currently optional)
+
+- Add code to increase buffer size as needed.
 
 Communicators in Potential Energies
 -----------------------------------

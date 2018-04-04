@@ -465,7 +465,7 @@ namespace DdMd
       *
       * An AtomStorage is initialized by calling readParam or setParam.
       */
-      bool isInitialized() const;
+      bool isAllocated() const;
 
       /**
       * Return true if the container is valid, or throw an Exception.
@@ -591,8 +591,8 @@ namespace DdMd
       // Is addition or removal of atoms forbidden?
       bool locked_;
 
-      // Is this object initialized (has memory been allocated?).
-      bool isInitialized_;
+      // Has memory been allocated to store atoms?
+      bool isAllocated_;
 
       // Are atomic coordinates Cartesian (true) or generalized (false)?
       bool isCartesian_;
@@ -636,6 +636,9 @@ namespace DdMd
 
    inline const AtomMap& AtomStorage::map() const
    { return map_; }
+
+   inline bool AtomStorage::isAllocated() const
+   {  return isAllocated_; }
 
    /*
    * On master processor (rank=0), stored value of total number of atoms.

@@ -44,7 +44,7 @@ namespace DdMd
       maxNGhost_(),
       #endif
       locked_(false),
-      isInitialized_(false),
+      isAllocated_(false),
       isCartesian_(false)
    {  setClassName("AtomStorage"); }
  
@@ -119,7 +119,7 @@ namespace DdMd
    void AtomStorage::allocate()
    {
       // Precondition
-      if (isInitialized_) {
+      if (isAllocated_) {
          UTIL_THROW("AtomStorage can only be initialized once");
       }
 
@@ -130,6 +130,7 @@ namespace DdMd
       for (i = atomCapacity_ - 1; i >=0; --i) {
           atomReservoir_.push(atoms_[i]);
       }
+      snapshot_.allocate(atomCapacity_);
 
       ghosts_.allocate(ghostCapacity_);
       ghostReservoir_.allocate(ghostCapacity_);
@@ -139,9 +140,8 @@ namespace DdMd
       }
 
       map_.allocate(totalAtomCapacity_);
-      snapshot_.allocate(atomCapacity_);
 
-      isInitialized_ = true;
+      isAllocated_ = true;
    }
 
    /*

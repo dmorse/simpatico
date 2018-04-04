@@ -109,6 +109,11 @@ namespace DdMd
       */
       virtual void save(Serializable::OArchive &ar);
   
+      /**
+      * Return true iff memory has been allocated for groups.
+      */
+      bool isAllocated() const;
+
       //@}
       /// \name Group Management
       //@{
@@ -462,6 +467,9 @@ namespace DdMd
 
       /// Maximum of nAtom1_ on this proc since stats cleared.
       int maxNGroupLocal_;     
+
+      // Has memory been allocated to store groups?
+      bool isAllocated_;
    
       /// Maximum of nAtom1_ on all procs (defined only on master).
       Setable<int> maxNGroup_;     
@@ -481,6 +489,10 @@ namespace DdMd
    };
 
    // Inline member function definitions
+
+   template <int N>
+   inline bool GroupStorage<N>::isAllocated() const
+   {  return isAllocated_; }
 
    template <int N>
    inline int GroupStorage<N>::size() const

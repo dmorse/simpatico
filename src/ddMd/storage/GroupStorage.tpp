@@ -34,6 +34,7 @@ namespace DdMd
       capacity_(0),
       totalCapacity_(0),
       maxNGroupLocal_(0),
+      isAllocated_(false),
       maxNGroup_(0),
       nTotal_(0)
    {  emptyGroups_.reserve(128); }
@@ -126,6 +127,7 @@ namespace DdMd
          groupPtrs_[i] = 0;
       }
 
+      isAllocated_ = true;
    }
 
    // Local group mutators
