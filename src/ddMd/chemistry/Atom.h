@@ -191,6 +191,7 @@ namespace DdMd
       */
       IntVector& shift();
       #endif
+
       //@}
       /// \name Accessors (return by value or const references).
       //@{
@@ -338,14 +339,14 @@ namespace DdMd
       #endif // ifdef UTIL_MPI
 
       /**
-      * Copies data from local atom to update this ghost atom.
+      * Copy data from a local atom to update this ghost atom.
       *
       * \param sendAtom Local atom to be copied to this atom.
       */
       void copyLocalGhost(Atom const & sendAtom);
 
       /**
-      * Copies position of local atom to update this ghost atom.
+      * Copy position of a local atom to update this ghost atom.
       * 
       * \param sendAtom Local atom to be copied to update this atom.
       */
@@ -355,10 +356,14 @@ namespace DdMd
 
    private:
 
+      // Static member variables
+
       /**
       * Static member determines if AtomContext is used.
       */ 
       static bool hasAtomContext_;
+
+      // Non-static member variables
 
       /**
       * Position of atom.
@@ -400,10 +405,10 @@ namespace DdMd
       int pad_;
       #endif
 
+      // Private member functions 
+
       /**
       * Constructor.
-      *
-      * Private and not implemented to prohibit instantiation.
       *
       * An Atom may be constructed only as an element of an AtomArray.
       * The AtomArray class is a friend of Atom, and may thus call this 
