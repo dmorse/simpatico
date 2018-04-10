@@ -116,12 +116,19 @@ namespace DdMd
       virtual ~CellList();
 
       /**
-      * Set atomCapacity, and allocate arrays that hold atoms.
+      * Set atomCapacity, and (re)allocate arrays that hold atoms.
       *
-      * This function:
+      * This function can be called more than once, and only allocates
+      * memory as necessary. When called the first time, the function:
       *
       *   - Allocates an array of atomCapacity CellList::Tag objects.
       *   - Allocates an array of atomCapacity CellAtom objects.
+      *
+      * Subsequent calls reallocate these arrays iff passed an
+      * atomCapacity parameter larger than the current value, and
+      * do nothing otherwise.  This function does not allocate
+      * the array of Cell objects, which is allocated and reallocated
+      * as needed by the makeGrid function.
       *
       * \param atomCapacity maximum number of atoms on this processor
       */
@@ -130,9 +137,13 @@ namespace DdMd
       /**
       * Make the cell grid (using generalized coordinates).
       *
-      * This method makes a Cell grid in which the number of cells in each
-      * direction i is chosen such that the dimension of each cell that 
-      * direction is greater than or equal to cutoff[i].
+      * This function makes a Cell grid in which the number of cells in 
+      * each direction i is chosen such that the dimension of each cell 
+      * that direction is greater than or equal to cutoff[i]. The 
+      * function may be called repeatedly to create grids of different
+      * dimensions, as required in simulations with flexible boundaries.
+      * Memory required for an array of Cell objects is reserved and
+      * resized as needed. 
       *
       * The elements of lower and upper should be upper and lower bounds 
       * for coordinates of local atoms on this processor, in generalized
@@ -142,7 +153,9 @@ namespace DdMd
       * by the ratio cutoff[i] = pairCutoff/length[i], where pairCutoff is 
       * the maximum range of nonbonded interactions, and length[i] is the 
       * distance across the primitive unit cell along the direction 
-      * parallel to reciprocal lattice basis vector i.
+      * parallel to reciprocal lattice basis vector i.  This function 
+      * creates a grid that includes nCellCut layers of cells for ghost
+      * atoms along each face of the region owned by this processor.
       *
       * \param lower  lower bound of local atom coordinates.
       * \param upper  upper bound of local atom coordinates.
@@ -163,7 +176,7 @@ namespace DdMd
       * Computing indices for all atoms before placing them in cells
       * allows the class to compute the amount of memory required for 
       * each cell. The stored cell index for each atom is used to build 
-      * the cell list in the build() method. 
+      * the cell list in the build() method.
       *
       * The method quietly does nothing if the atom is outside the expanded
       * domain for nonbonded ghosts, which extends one cutoff length beyond
@@ -188,8 +201,8 @@ namespace DdMd
       *
       * Implementation details: This function adds every atom to a Cell,
       * but does not call the CellAtom::update() function to set values 
-      * for the position and id. The CellAtom::update() function is 
-      * instead later called by CellList::update(). This allows the
+      * for the atom position and id. The CellAtom::update() function 
+      * is instead later called by CellList::update(). This allows the
       * CellList::build() to be called when atomic coordinates are in
       * scaled [0,1] form, and update() to be called after the positions
       * positions are transformed back to Cartesian coordinates.

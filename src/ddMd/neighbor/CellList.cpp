@@ -44,7 +44,7 @@ namespace DdMd
    {}
 
    /*
-   * Allocate memory for this CellList (generalized coordinates).
+   * Allocate or reallocate memory for atoms in this CellList.
    */
    void CellList::setAtomCapacity(int atomCapacity)
    {
