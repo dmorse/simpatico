@@ -336,7 +336,7 @@ namespace DdMd
       AtomStorage& storage();
 
       /**
-      * Set values for pair energies.
+      * Set values for the matrix of pair energies.
       */
       void setPairEnergies(DMatrix<double> pairEnergies);
 

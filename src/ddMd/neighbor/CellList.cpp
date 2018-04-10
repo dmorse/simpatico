@@ -10,6 +10,8 @@
 #include <util/space/IntVector.h>
 #include <util/containers/FArray.h>
 
+#include <sstream>
+
 namespace DdMd
 {
 
@@ -102,11 +104,16 @@ namespace DdMd
 
          lengths[i] = upper_[i] - lower_[i];
          if (lengths[i] < 0) {
-            UTIL_THROW("Processor length[i] < 0.0");
+            UTIL_THROW("Processor lengths[i] < 0.0");
          }
          if (lengths[i] < cutoffs[i]) {
             // Note: This would cause parallelization strategy to fail.
-            UTIL_THROW("Processor length[i] < cutoff[i]");
+            std::stringstream msg;
+            msg << "Processor length[i] < cutoff[i]: \n";
+            msg << "length[" << i << "] = " << lengths[i] << "\n";
+            msg << "cutoff[" << i << "] = " << cutoffs[i];
+            UTIL_THROW(msg.str().c_str());
+            //UTIL_THROW("Processor lengths[i] < cutoffs[i]");
          }
          gridDimensions[i] = int(lengths[i]*nCellCut_/cutoffs[i]);
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);

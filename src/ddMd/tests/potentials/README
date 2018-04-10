@@ -1,0 +1,8 @@
+BUG: The PairPotentialTest in this directory crashes in testRandom1, even 
+though the PairPotential appears to be working fine in simulations. The 
+test needs to be revisited to see if something has become outdated, e.g.,
+a convention about where to rescaled vs. Cartesian coordinates. It is not 
+used in the suite of tests defined in the parent directory. 
+
+Run: The test in this directory is designed to be used with 6 processors.
+Invoke ">make run" to run the test.

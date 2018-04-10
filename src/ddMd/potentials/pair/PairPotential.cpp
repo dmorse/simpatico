@@ -72,7 +72,7 @@ namespace DdMd
    {}
 
    /*
-   * Allocate memory for the cell list.
+   * Allocate memory for the cell list (for use during testing)
    */
    void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
                                   int pairCapacity)
@@ -204,7 +204,17 @@ namespace DdMd
          cellList().setAtomCapacity(totalCapacity);
       }
 
-      // Set cutoff and domain bounds.
+      /*
+      * Note: Components of the vectors lower, upper and cutoff are in 
+      * scaled [0,1] coordinates, while cutoff_ and boundaryPtr_-length(i)
+      * have dimensions of length. The length boundaryPtr_->length(i) 
+      * is the distance across the periodic unit cell along direction
+      * parallel to the reciprocal vector number i, so that length(i)
+      * is distance between planes corresponding to scaled coordinates
+      * position(i) = 0.0 and position(i) = 1.0
+      */
+
+      // Set vectors of cutoffs and domain bounds.
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -214,34 +224,33 @@ namespace DdMd
          upper[i] = domain().domainBound(i, 1);
       }
 
-      // Make and clear cell list grid.
+      // Make cell list grid and clear all cells.
+      // Note: Memory to store cells is allocated as needed.
       cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
       cellList_.clear();
 
-      // Compute cell indices for all local atoms.
+      // Compute and store cell indices for all local atoms.
       AtomIterator atomIter;
       storage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
-      // Compute cell indices for all ghost atoms.
+      // Compute and store cell indices for all ghost atoms.
       GhostIterator ghostIter;
       storage().begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
 
-      // Build cell list
+      // Build the cell list
       cellList_.build();
      
       // Postconditions
-      assert(cellList_.isValid());
-      assert(cellList_.nAtom() + cellList_.nReject() 
-             == storage().nAtom() + storage().nGhost());
-      if (storage().isCartesian()) {
-         UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
-      }
+      UTIL_ASSERT(cellList_.isValid());
+      UTIL_CHECK(cellList_.nAtom() + cellList_.nReject() 
+                 == storage().nAtom() + storage().nGhost());
+      UTIL_CHECK(!storage().isCartesian());
    }
 
    /*
@@ -255,15 +264,18 @@ namespace DdMd
       UTIL_CHECK(cellList_.isBuilt());
       pairList_.setCutoff(cutoff_);
 
-      // Check arrays, resize if necessary.
-      int localCapacity = storage().atomCapacity();
-      if (localCapacity > pairList_.atomCapacity()) {
-         pairList_.reserveAtoms(localCapacity);
+      // Reserve space in pairList_ to accomodate primary local atoms.
+      // Require that pairlist_.atomCapacity() >= storage.atomCapacity() 
+      if (storage().atomCapacity() > pairList_.atomCapacity()) {
+         pairList_.reserveAtoms(storage().atomCapacity());
       }
+
+      // If pairList_ has not been built previously, reserve memory for
+      // pairs by counting pairs, then reserving 50% more than needed.
       if (pairList_.pairCapacity() == 0) {
          int nPair = pairList_.countPairs(cellList_, reverseUpdateFlag());
          if (nPair > 0) {
-            nPair = 1.5*nPair;
+            nPair = 1.5*nPair;  // Note: Allocate 50% more than needed
             pairList_.reservePairs(nPair);
             pairCapacity_ = pairList_.pairCapacity();
          }
@@ -274,13 +286,13 @@ namespace DdMd
    }
 
    /*
-   * Return value of pair energies.
+   * Return the value of the pairEnergies matrix.
    */
    DMatrix<double> PairPotential::pairEnergies() const
    {  return pairEnergies_.value(); }
 
    /*
-   * Set a value for pair energies.
+   * Set a value for the pair energies matrix.
    */
    void PairPotential::setPairEnergies(DMatrix<double> pairEnergies)
    {  pairEnergies_.set(pairEnergies); }
@@ -320,7 +332,7 @@ namespace DdMd
    }
 
    /*
-   * Return twice the number of pairs within the specified cutoff.
+   * Return twice the global number of pairs, on all processors.
    * 
    * This method should only be called on the rank 0 processor. The
    * return value is computed by a previous call to computeNPair.
