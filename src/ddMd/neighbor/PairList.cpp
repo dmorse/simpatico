@@ -56,18 +56,6 @@ namespace DdMd
       }
    }
 
-   #if 0
-   /*
-   * Allocate PairList arrays, initialize to empty state.
-   */
-   void PairList::allocate(int atomCapacity, int pairCapacity , 
-                           double cutoff)
-   {
-      reserve(atomCapacity, pairCapacity);
-      setCutoff(cutoff);
-   }
-   #endif
-
    /*
    * Clear the PairList.
    */
