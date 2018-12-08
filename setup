@@ -68,15 +68,14 @@ if [ "$#" -gt 0 ]; then
 else
   VARFILE="generic"
 fi
-VARFILE="src/make/$VARFILE"
-echo "Using compiler settings file $VARFILE"
+VARFILE="src/make/compiler/$VARFILE"
 
 #=======================================================================
 # Setup src/ source file directory tree
 
 # Construct and install main configuration file src/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/make/config.1 > src/temp
-cat src/temp "$VARFILE" src/make/config.2 > src/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/make/config/config.1 > src/temp
+cat src/temp "$VARFILE" src/make/config/config.2 > src/config.mk
 rm src/temp
 
 # Note: Stream editor (sed) is used here to:
@@ -110,8 +109,8 @@ fi
 # Construct and install main config file in bld/serial directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/serial directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/make/config.1 > bld/serial/temp
-cat bld/serial/temp "$VARFILE" src/make/config.2 > bld/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/make/config/config.1 > bld/serial/temp
+cat bld/serial/temp "$VARFILE" src/make/config/config.2 > bld/serial/config.mk
 rm bld/serial/temp
 
 # Namespace level config.mk files 
@@ -151,8 +150,8 @@ cp src/configure bld/serial/configure
 # Construct and install main config file in bld/parallel directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/parallel directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/make/config.1 > bld/parallel/temp
-cat bld/parallel/temp "$VARFILE" src/make/config.2 > bld/parallel/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/make/config/config.1 > bld/parallel/temp
+cat bld/parallel/temp "$VARFILE" src/make/config/config.2 > bld/parallel/config.mk
 rm bld/parallel/temp
 
 # Namespace level config.mk files

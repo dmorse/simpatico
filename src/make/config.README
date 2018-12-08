@@ -49,15 +49,8 @@
  level subdirectories. This file (the one you are reading) is a copy of 
  the main build configuration file. 
 
- The "setup" script creates each of these config.mk files by making a
- copy of a corresponding repository version of each file, which is a
- file named config.mk_r rather than config.mk. In the case of the main 
- configuration file (the file you are reading), the setup script also 
- modifies a few lines so as to set appropriate values for the ROOT_DIR 
- and BLD_DIR variables, as discussed below.
-
- After setup, each build directory contains a bash script named 
- "configure" that can be used to enable or disable particular
+ After setup, each build directory will also contains a bash script 
+ named "configure" that can be used to enable or disable particular
  compile time features in the build directory before compiling. 
  The configure script applies these changes by modifying the relevant 
  config.mk file or files. There is also a configure script in the
