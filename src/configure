@@ -28,7 +28,7 @@
 #
 # Call "./configure -h" to print a full list of command line options.
 #-----------------------------------------------------------------------
-while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
+while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:qh" opt; do
 
   if [ -n "$MACRO_ON" ]; then 
     MACRO_ON=""
@@ -129,20 +129,6 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
         fi
         ;;
       esac
-      ;;
-    j)
-      FILE=config.mk
-      cp "$FILE" temp
-      sed "s/COMPILER=.*$/COMPILER=$OPTARG/" temp > "$FILE"
-      echo "Setting COMPILER = $OPTARG in file $FILE" >&2
-      rm temp
-      ;;
-    o)
-      FILE=config.mk
-      cp "$FILE" temp
-      sed "s/OS=.*$/OS=$OPTARG/" temp > "$FILE"
-      echo "Setting OS = $OPTARG in file $FILE" >&2
-      rm temp
       ;;
     q)
       if [ `grep "^ *UTIL_MPI *= *1" config.mk` ]; then

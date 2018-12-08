@@ -1,0 +1,75 @@
+#=========================================================================
+# file: $(BLD_DIR)/config.mk
+#
+# This config.mk file is a makefile fragment, which is the main configuration 
+# file for the makefile-based build system.  A copy of this file is included 
+# by all other makefiles.  A copy of this file is created in the src/
+# directory (which is used for in source compilation) and in the root of 
+# the bld/parallel and bld/serial build directories (for out of source
+# compilation). These files are created by invoking the "setup" script from
+# the root simpatico directory, and do not exist before this script is run.
+#
+#=========================================================================
+# Summary of contents:
+#
+# This file contains definitions of makefile variables that specify:
+# 
+#  - Absolute paths for the simpatico directory and some subdirectories
+#  - A variable UTIL_DEBUG that, if defined, enables debugging checks
+#  - A variable UTIL_MPI that, if defined, enables MPI
+#  - A variable UTIL_CXX11 that, if defined, enables use of C++11
+#  - Several variables that define compiler commands, options and flags 
+#  - A variable MAKEDEP that enables automatic dependency generation
+#
+# After setup, common changes to this file may be made either by editing
+# the file or by invoking the "configure" script from the build directory 
+# that contains this config.mk file with appropriate options.  Specifically, 
+# this script may be used to enable (option -m1) or disable (-m0) MPI, and
+# to enable (-g1) or disable (-g1) debugging. For example, the command:
+#
+# ./configure -m1 -g0 
+#
+# would enable MPI and disable debugging prior to compilation.
+#
+# Detailed documentation of the meaning of the variables defined in this
+# file is given in the file src/make/config.README.
+#=========================================================================
+# Absolute directory paths
+#
+# Variables that define directory paths (see src/make/config.README)
+
+ROOT_DIR=PWD
+BLD_DIR=$(ROOT_DIR)/=OWD
+SRC_DIR=$(ROOT_DIR)/src
+BIN_DIR=$(ROOT_DIR)/bin
+
+#======================================================================
+# Variables that enable compile time options:
+
+# Defining UTIL_DEBUG enables a variety of extra sanity checks, at some
+# cost in speed. Debugging is disabled (commented out) by default.
+#UTIL_DEBUG=1
+
+# Defining UTIL_MPI enables linking to an MPI library. MPI must be
+# enabled by uncommenting this line to build a parallel program.
+#UTIL_MPI=1
+
+# Defining UTIL_CXX11 enables the use of features of the C++11 standard.
+# Use of C++11 is disabled (commented out) by default. If C++11 is disabled, 
+# the code uses only syntax and features defined in the older 1998 C++ 
+# standard.
+#UTIL_CXX11=1
+
+# Comment: Thus far, very little of the code uses features of C++11.
+# Equivalent replacements from C++ 1998 are used in these few cases. 
+# There is thus no harm in leaving UTIL_CXX11 undefined.
+#======================================================================
+# Set INCLUDES to find header files in src/ directory
+
+INCLUDES= -I$(SRC_DIR)
+
+#======================================================================
+# Variable definitions for a specific compiler/MPI/OS combination
+#
+# See src/make/config.README for discussion of these makefile variables.
+

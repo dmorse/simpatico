@@ -1,0 +1,24 @@
+# -- Settings for Intel ICC compiler ---
+
+# Library archiver command
+AR=xiar
+ARFLAGS=rcs
+# Linker / loader 
+LDFLAGS=
+ifdef UTIL_CXX11
+   CXX_STD = --std=c++11
+else
+   CXX_STD = --std=c++98
+endif
+TESTFLAGS= -ansi $(CXX_STD)
+# Serial C++ compiler
+CXX_SER=icpc
+CXXFLAGS_SER_DEBUG= -ansi $(CXX_STD)
+CXXFLAGS_SER_FAST= -ansi $(CXX_STD) +fast
+# Parallel MPI C++ compiler
+CXX_PAR=mpicxx
+CXXFLAGS_PAR_DEBUG= -ansi $(CXX_STD)
+CXXFLAGS_PAR_FAST= -ansi $(CXX_STD) +fast
+# MPI execution command
+MPIRUN=mpirun -np
+

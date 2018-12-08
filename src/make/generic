@@ -1,0 +1,32 @@
+# -- Settings for Generic unix-like environment (gcc compiler, mpicxx mpi wrapper)
+#
+# The setting given in this file work for most generic unix-like systems, in which:
+#
+#   - All header files and libraries are placed in standard locations.
+#   - The command g++ can be used to call the C++ compiler
+#   - A command named "mpicxx" is used to call the compiler for MPI files
+#   - Compiler options are compatible with those used with gcc compiler
+#
+
+# Library archiver command
+AR=ar
+ARFLAGS=rcs
+# Linker / loader
+LDFLAGS=
+ifdef UTIL_CXX11
+   CXX_STD = --std=c++11
+else
+   CXX_STD = --std=c++98
+endif
+TESTFLAGS= -Wall $(CXX_STD)
+# Serial C++ compiler
+CXX_SER=g++
+CXXFLAGS_SER_DEBUG= -Wall $(CXX_STD)
+CXXFLAGS_SER_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
+# Parallel MPI C++ compiler
+CXX_PAR=mpicxx
+CXXFLAGS_PAR_DEBUG= -Wall $(CXX_STD)
+CXXFLAGS_PAR_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
+# MPI execution command
+MPIRUN=mpirun -np
+

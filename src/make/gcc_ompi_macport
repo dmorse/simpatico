@@ -1,0 +1,36 @@
+# Settings for Mac OS X and Open-MPI, with Open-MPI Installed by Mac-Ports
+
+# These settigns are designed to work for code that is compiled on Mac OS
+# using the gcc compiler and a copy of the Open-MPI library that was installed
+# using the MacPort package manager. The MacPort manager places header and 
+# library files in non-standard locations within the /opt/local directory 
+# tree, and these locations do not seem to be found by the mpicxx script
+# created by using MacPort to install open-mpi. We found that this required
+# us to add some explicit search paths to the variables INCLUDES and
+# LDFLAGS used by compiler and linker recipes.
+
+# Library archiver command
+AR=ar
+ARFLAGS=rcs
+# Linker / loader
+LDFLAGS=
+ifdef UTIL_CXX11
+   CXX_STD = --std=c++11
+else
+   CXX_STD = --std=c++98
+endif
+TESTFLAGS= -Wall $(CXX_STD)
+# Serial C++ compiler
+CXX_SER= g++
+CXXFLAGS_SER_DEBUG= -Wall $(CXX_STD)
+CXXFLAGS_SER_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
+# Parallel MPI C++ compiler
+CXX_PAR=mpicxx
+CXXFLAGS_PAR_DEBUG= -Wall $(CXX_STD)
+CXXFLAGS_PAR_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
+# MPI execution command
+MPIRUN=mpirun -np
+
+INCLUDES+= -I/opt/local/include/openmpi-mp
+LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
+

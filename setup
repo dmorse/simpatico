@@ -10,20 +10,20 @@
 # 
 # This script:
 #
-# 1) Copies default or repository versions of several build configuration 
-# files, named config.mk_r, to modifiable user versions, named config.mk. 
-# A separate set of build configuration files is created in the src/
-# directory (for in-source build) and in the bld/serial and bld/parallel
-# object directories. The makefile variables $(ROOT_DIR) and $(BLD_DIR)
-# are defined in the main config.mk file each build directory (i.e., in 
-# the src/, bld/serial and bld/parallel) are set to the absolute paths
-# of the simpatico root directory and of the specific build directory.
+# 1) Installs several build configuration files, all of which are named
+# config.mk  A separate set of build configuration files is created in 
+# the src/ directory (for in-source build) and in the bld/serial and 
+# bld/parallel build directories. The makefile variables $(ROOT_DIR) 
+# and $(BLD_DIR) are defined in the main config.mk file each build 
+# directory (i.e., in the src/, bld/serial and bld/parallel) are set 
+# to the absolute paths of the simpatico root directory and of the 
+# relevant build directory.
 #
-# 2) Installs all required makefiles in the bld/serial and bld/parallel 
-# directories, by copying corresponding makefiles from the src/ directory.
+# 2) Installs makefiles in the bld/serial and bld/parallel directories, 
+# by copying corresponding makefiles from the src/ directory.
 #
-# 3) Installs copies of the config configuration script in the bld/serial
-# and bld/parallel directories, by copying the file scr/config.
+# 3) Installs copies of the "configure" configuration script in the 
+# bld/serial and bld/parallel directories, by copying file scr/configure.
 #
 # 4) In the src/ file tree, the script installs user modifiable copies of 
 # default versions of some C++ source files and makefile fragments that 
@@ -39,12 +39,13 @@
 # the same name without the _r suffix that is created by copying the
 # default version.
 #
-# 5) Install the makeDep dependency-maker script in the bin/ directory
+# 5) Installs the makeDep dependency-maker script in the bin/ directory
 #
 # 6) Sets and exports the SIMPATICO_DIR shell environment variable
 #
 #========================================================================
-# Set working directory to directory containing script, if not already.
+# Set working directory to the directory containing this script, if not 
+# already set to this.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 if [ "$SCRIPT_DIR" != "$PWD" ]; then
@@ -60,11 +61,23 @@ SIMPATICO_DIR=$PWD
 export SIMPATICO_DIR
 
 #=======================================================================
+# Choose file to use for compiler settings
+
+if [ "$#" -gt 0 ]; then
+  VARFILE=$1
+else
+  VARFILE="generic"
+fi
+VARFILE="src/make/$VARFILE"
+echo "Using compiler settings file $VARFILE"
+
+#=======================================================================
 # Setup src/ source file directory tree
 
-
-# Install main configuration file src/config.mk, by copying src/config.mk_r
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
+# Construct and install main configuration file src/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/make/config.1 > src/temp
+cat src/temp "$VARFILE" src/make/config.2 > src/config.mk
+rm src/temp
 
 # Note: Stream editor (sed) is used here to:
 #   - Set $(ROOT_DIR) to absolute path of directory from which script invoked
@@ -94,10 +107,12 @@ fi
 #========================================================================
 # Setup bld/serial directory tree (out-of-source builds with MPI disabled)
 
-# Copy and edit config file in bld/serial
+# Construct and install main config file in bld/serial directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/serial directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/make/config.1 > bld/serial/temp
+cat bld/serial/temp "$VARFILE" src/make/config.2 > bld/serial/config.mk
+rm bld/serial/temp
 
 # Namespace level config.mk files 
 cp src/util/config.mk_r bld/serial/util/config.mk
@@ -133,10 +148,12 @@ cp src/configure bld/serial/configure
 #========================================================================
 # Setup bld/parallel (out-of-source builds with MPI enabled)
 
-# Copy and edit config file in bld/parallel
+# Construct and install main config file in bld/parallel directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/parallel directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/make/config.1 > bld/parallel/temp
+cat bld/parallel/temp "$VARFILE" src/make/config.2 > bld/parallel/config.mk
+rm bld/parallel/temp
 
 # Namespace level config.mk files
 cp src/util/config.mk_r bld/parallel/util/config.mk
