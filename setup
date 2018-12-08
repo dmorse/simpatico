@@ -66,7 +66,7 @@ export SIMPATICO_DIR
 if [ "$#" -gt 0 ]; then
   VARFILE=$1
 else
-  VARFILE="generic"
+  VARFILE="gcc"
 fi
 VARFILE="src/make/compiler/$VARFILE"
 
