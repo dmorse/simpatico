@@ -1,0 +1,153 @@
+/*! \page install_compile_in_page 2.7 Compiling (In-Source)
+
+\ref install_outsource_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_doc_page (Next) 
+<BR>
+
+The simpatico build system allows a user to perform in-source 
+compilation of some or all of the source code. This ability is 
+provided as a convenience to developers who prefer to be able to 
+compile some or all of the code from the unix command line without
+leaving the directory tree in which they are editing source code 
+files.
+
+\section install_insource_src_sec Invoking make from the src/ directory
+
+To peform an in-source build of any of the simpatico programs, one may 
+simply invoke the make utility from the src/ directory rather than from 
+the simpatico/ root directory, using the same makefile target name as
+that used to perform of an out-of-source build when invoking make from 
+the simpatico/ directory.  Thus for example, to peform an in-source 
+build of mcSim and mdSim, one may simply invoke "make mcMd" from the 
+src/ directory.  The relevant makefile targets, for either in-source 
+or out-of-source builds, are:
+
+   - "make mcMd" builds mcSim and mdSim
+
+   - "make mdPp" builds mdPp
+
+   - "make ddMd" builds ddSim
+
+   - "make mcMd-mpi" builds mcSim_m and mdSim_m
+
+Recall that mcSim_m and mdSim_m are the multiprocessor versions of the 
+mcSim and mdSim programs. When invoked from the src/ directory, each of 
+these targets will cause make to place object, dependency and library 
+files in the simpatico/src/ directory tree. Both in-source and out-of-source
+builds install the resulting executable program or programs in the 
+simpatico/bin directory by default. 
+
+\section install_insource_makeall_sec Invoking "make all" from a subdirectory of src/
+
+It is also possible to invoke make from a subdirectory of src/ in order 
+to compile a smaller set of source files. Invoking the command 
+\code
+ > make all
+\endcode
+from almost any subdirectory of the src/ directory tree that contains 
+C++ source code will compile all C++ files in the tree rooted at that 
+subdirectory, without compiling any code outside of that subdirectory.
+
+Invoking "make all" from any namespace level subdirectory of src/ 
+(i.e., from the src/util, src/simp, src/mcMd, src/ddMd or src/tools 
+directory) will cause make to compile all the *.cpp source files in
+the namespace level directory tree, create a library containing all
+of the resulting object code, and compile and install any main
+programs for which the source files are in that directory. 
+
+Invoking "make all" from any subdirectory of a namespace level 
+directory of src/ will cause make to compile all of the source files 
+in that subdirectory, including any in lower level subdirectories.
+
+The ability to invoke "make all" from any subdirectory of src/ is
+designed to allow developers to easily recompile a few files from
+the command line from within the directory in which they are working. 
+Typically, when a developer is adding a new feature or fixing a bug, 
+he or she will be actively editing only a few files within some 
+subdirectory of the source directory, while the other files in 
+that directory are left untouched. Under these circumstances, if 
+all files other than the ones that were recently modified have
+already been compiled, invoking "make all" from the directory 
+containing the files of interest will only recompile source files 
+that have recently been modified or that include header files 
+that have recently been modified. 
+
+\section install_insource_mpi_sec Managing MPI Settings
+
+One important complication of building in-source arises when both
+both serial and parallel programs are built in the same build 
+directory.  The simpatico package contains both a set of serial 
+programs that do not use MPI (the mcSim, mdSim and mdPp programs), 
+and a set of parallel programs that use MPI (the ddSim program 
+and the parallel versions of mcSim and mdSim). These two sets
+of programs use many of the same C++ classes, but must be 
+compiled with different compiler options in order to enable
+or disable conditional features of those that rely on MPI.
+
+All simpatico C++ files used by a parallel MPI program must be 
+compiled with MPI enabled in the makefile system.  When make is 
+invoked from the src/ directory with a target that compiles 
+parallel code (i.e., "make ddMd" or "make mcMd-mpi"), the
+makefile system automatically enables MPI before attempting to 
+MPI is enabled. MPI is enabled by defining the UTIL_MPI makefile 
+variable in the main configuration file, which can be 
+accomplished by invoking the configure script with the "-m1" 
+option.  Enabling MPI in the makefile system causes the 
+compiler to be passed a command line option ("-DUTIL_MPI") that 
+enables conditional compilation of segments of code that use MPI. 
+
+Source files used by any serial programs, which does not use MPI, 
+must instead compiled with MPI disabled. When make is invoked 
+from the the src/ directory with a target that builds serial
+code (e.g., "make mcMd"), the makefile system automatically
+disables MPI before compiling any code. This disables conditional
+conditional compilation of segments of code that use MPI.
+
+If a user invokes make from the src/ directory to first build a 
+serial program or and programs (e.g., by invoking "make mcMd" to
+build mdSim and mcSim) and then uses a different target to build
+a parallel program (e.g., by invoking "make ddMd" to build ddSim),
+the build system will compile a large number of files that are
+used by both serial and parallel programs twice, once with MPI
+disabled and once with MPI enabled. If both serial and parallel
+programs are built in the src/ directory, the set of object files
+created when these shared files were compiled with MPI enabled 
+will overwrite those created when the same files were compiled
+with MPI disabled, thus wasting all the effort that went into
+compiling the serial versions of these files. Similarly, if a 
+user then goes back to working on a serial program after 
+building a parallel program, all of those shared files will 
+need to be compiled again. All of the files in the util/ and
+simp/ directories are used by both serial and parallel programs,
+and the code in the mcMd/ directory can be compiled with or
+without MPI enabled to produce serial and parallel versions
+of mcSim and mdSim. To avoid unnecessary recompilation of the
+code in these directories, users who compile in-source should 
+thus avoid switching back and forth frequently between work on 
+parallel and serial programs.  The simpatico system for 
+out-of-source compilaton avoids this problem by compiling 
+serial and parallel programs in different build directories, 
+named bld/serial and bld/parallel. 
+
+When a user invokves make from the src/ directory with one of
+the main makefile targets (e.g., "mcmd", "mcMd-mpi", "ddMd", or
+"tools"), the makefile system automatically enables or disables
+MPI, as appropriate, before attempting to compile any code. If
+this leads to a change in the state of MPI, the makefile system
+will detect the resulting change in the main configuration file, 
+which will force the system to recompile any code that was 
+previously compiled with a different MPI setting. When "make all" 
+is invoked from a subdirectory of src/, however, the make utility 
+does not attempt to enable or disable MPI, and simply uses the 
+current setting. When a user invokes "make all" from a 
+subdirectory of src/, he or she is thus responsible for keeping 
+track of whether MPI is enabled or disabled in the src/ 
+directory, and invoking "./configure -m1" or "./configure -m0"
+as needed to enable or disable MPI.
+
+<BR>
+\ref install_compile_out_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_doc_page (Next) 
+
+*/

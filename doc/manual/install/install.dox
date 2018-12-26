@@ -1,0 +1,27 @@
+/*! \page install_page 2 Installation
+
+\ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_require_page (Next)
+<BR>
+
+The following pages give instructions for obtaining, configuring and compiling 
+simpatico.  
+
+<h2> Contents:</h2>
+  <ul style="list-style: none;">
+  <li> \subpage install_require_page      "2.1 Requirements" </li>
+  <li> \subpage install_source_page       "2.2 Obtaining the Source Code" </li>
+  <li> \subpage install_overview_page     "2.3 Compilation - Overview" </li>
+  <li> \subpage install_setup_page        "2.4 Initial setup" </li>
+  <li> \subpage install_configure_page    "2.5 Configuring simpatico" </li>
+  <li> \subpage install_compile_out_page  "2.6 Compiling (out-of-source)"</li>
+  <li> \subpage install_compile_in_page   "2.7 Compiling (in-source)"</li>
+  <li> \subpage install_doc_page          "2.8 Generating html documentation"</li>
+  </ul>
+
+<BR>
+\ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref index "Main Page" (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref install_require_page (Next)
+
+*/
