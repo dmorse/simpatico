@@ -1,10 +1,15 @@
-/*! \page user_usage_page 2.3 Running a simulation
+/*! \page user_usage_page 3.1 Running a simulation
 
-\ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_page (Next) 
 <BR>
 
-This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see \ref user_multi_page).
+This page describes how to run a simulation using any of the simpatico simulation 
+programs, mcSim, mdSim or ddSim.  The command line interface is similar for all three 
+programs. Differences among the three programs are discussed explicitly below.  This 
+page gives instructions for using any of these three programs to simulate a single 
+physical system. Multi-system simulations, such as those used for replica exchange 
+algorithms, are discussed separately (see \ref user_multi_page).
 
 \sa \subpage programs_page
 
@@ -186,7 +191,6 @@ The precedence given to path names provided as command line options when a progr
 
 
 <BR>
-\ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_page (Next) 
 

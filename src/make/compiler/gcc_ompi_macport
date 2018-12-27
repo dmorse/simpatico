@@ -1,36 +1,71 @@
-# Settings for Mac OS X and Open-MPI, with Open-MPI Installed by Mac-Ports
 
-# These settigns are designed to work for code that is compiled on Mac OS
-# using the gcc compiler and a copy of the Open-MPI library that was installed
-# using the MacPort package manager. The MacPort manager places header and 
-# library files in non-standard locations within the /opt/local directory 
-# tree, and these locations do not seem to be found by the mpicxx script
-# created by using MacPort to install open-mpi. We found that this required
-# us to add some explicit search paths to the variables INCLUDES and
-# LDFLAGS used by compiler and linker recipes.
+# -- Settings for Mac OS X + Open-MPI, Open-MPI Installed by MacPort --
 
-# Library archiver command
-AR=ar
-ARFLAGS=rcs
-# Linker / loader
-LDFLAGS=
+# These settigns are designed to work for code that is compiled on Mac
+# OS X using the gcc compiler and a copy of the Open-MPI library that 
+# was installed  using the MacPort package manager. The MacPort manager 
+# places header and  library files in non-standard locations within 
+# the /opt/local directory tree, and these locations do not seem to be 
+# found by the mpicxx script created by using MacPort to install 
+# open-mpi. We found that this required us to add some explicit search 
+# paths to the variables INCLUDES and LDFLAGS used by the compiler and 
+# linker recipes.
+
+# --------------------------------------------
+# Miscellaneous definitions
+
+# Compiler option to specify ANSI C++ standard
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
 else
    CXX_STD = --std=c++98
 endif
-TESTFLAGS= -Wall $(CXX_STD)
-# Serial C++ compiler
+
+# Directory to look for open-mpi header (*.h) files
+INCLUDES+= -I/opt/local/include/openmpi-mp
+
+# Directory to look for open-mpi library files
+LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
+
+# --------------------------------------------
+# Compiler used for serial programs 
+
+# Serial C++ compiler command
 CXX_SER= g++
+
+# Flags passed when debugging is enabled
 CXXFLAGS_SER_DEBUG= -Wall $(CXX_STD)
+
+# Flags passed when debugging is disabled (production code)
 CXXFLAGS_SER_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
-# Parallel MPI C++ compiler
+
+# Compiler flags used in unit tests
+TESTFLAGS= -Wall $(CXX_STD)
+
+# --------------------------------------------
+# Compiler and execution for parallel programs 
+
+# Parallel MPI C++ compiler command (or wrapper script)
 CXX_PAR=mpicxx
+
+# Flags passed to compiler when debugging is enabled
 CXXFLAGS_PAR_DEBUG= -Wall $(CXX_STD)
+
+# Flags passed when debugging is disabled (production code)
 CXXFLAGS_PAR_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
-# MPI execution command
+
+# MPI execution command (followed by integer number of processors)
 MPIRUN=mpirun -np
 
-INCLUDES+= -I/opt/local/include/openmpi-mp
-LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
+# --------------------------------------------
+# Linker / Loader and Archiver
+
+# Flags passed to compiler for linking and loading
+LDFLAGS=
+
+# Library archiver command (for creating static libraries)
+AR=ar
+
+# Flags (command line options) passed to archiver
+ARFLAGS=rcs
 

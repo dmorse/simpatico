@@ -8,14 +8,22 @@ Compilation and installation of simpatico is controlled by a system of unix
 makefiles. Some of these files, which we will refer to as configuration files,
 define makefile variables whose values control the options that are passed to 
 the compiler when the code is compiled. Among these are variables that control 
-which optional features of the source code will be enabled in the resulting 
-executable files, as well as others that control the name of the compiler 
-executable and various optimization or warning options that should be passed 
-to the compiler. Simpatico is distributed with a shell script, named 
-"configure", that can be used to modify the values of some of these makefile 
-variables, and thus control the configuration of the code from the command 
-line. Users may also change the configuration by manually editing the relevant 
-configuration files. 
+conditional compilation of some optional features of the source code, thus
+controlling which features will be enabled in the resulting executable files.
+Simpatico is distributed with a shell script, named "configure", that can be 
+used to modify the values of some of these makefile variables, and thus 
+control the configuration of the resulting executable (i.e., the choice of
+which features are enabled). 
+
+Users who would at least initially like to compile the default versions of 
+all of the simpatico programs, with the features that are enabled by default, 
+can skip the remainder of this page on first reading. After successfully 
+compiling the default versions of the code, one can always use the configure 
+script to change the configuration and recompile the code. The build systems 
+is designed to automatically note changes in the configuration files, and 
+will correctly choose which files need to be recompiled if the user invokes
+one of the main make targets (e.g., "make mcMd" or make "ddMd") after
+changing the configuration.
 
 The remainder of this page explains the two different possible ways of
 compiling simpatico ("out-of-source" vs. "in-source"), discusses some basic
@@ -23,17 +31,7 @@ information about the makefile system and configuration files, and explains
 how to use the "configure" script to control program configuration before 
 compiling.
 
-Users who would simply like to compile the default versions of all of the
-simpatico programs, with the features that are enabled by default, can 
-skip this page on first reading. After successfully compiling the default 
-versions of the code, one can always use the configure script to change 
-the configuration and recompile the code. The build systems is designed
-to automatically note changes in the configuration files, and will
-correctly choose which files need to be recompiled if the user invokes
-one of the main make targets (e.g., "make mcMd" or make "ddMd") after
-changing the configuration.
-
-\section compile_inoutsource_section Building "out-of-source" vs. "in-source"
+\section install_configure_inoutsource_section Building "out-of-source" vs. "in-source"
 
 The simpatico makefile system can build the package either "out-of-source" 
 or "in-source". When the package is built "in-source", object files, static 
@@ -69,13 +67,13 @@ as those used to build out-of-source from the root directory. For example,
 invoking "make mcMd" from the src/ directory performs an in-source build 
 of mcSim and mdSim, and invoking "make ddMd" from src/ performs an 
 in-source build of ddSim. In-source builds are discussed in greater
-detail \ref install_insource_page "here".
+detail \ref install_compile_in_page "here".
  
 Hereafter, when not otherwise stated, we will assume that all simpatico
 programs are built out-of-source, by invoking the make utility from the 
 simpatico/ root directory.
 
-\section compile_build_directories_section Build configuration files
+\section install_configure_build_directories_section Build configuration files
 
 The directories bld/serial, bld/parallel and src/ each contain the 
 directory structure and the set of makefiles required to build any version 
@@ -90,44 +88,37 @@ subdirectories as "namespace-level" subdirectories of a build directory.
 After setup (i.e., after the setup script has been run), each of these 
 three build directories will contains several makefiles and a set of 6
 build configuration files. The build configuration are all files named 
-"config.mk" that are located in the root of the build directory (i.e., 
-in bld/serial, bld/parallel, or src/) and in each of the 5 namespace-level 
+"config.mk" that are located either in the root of the build directory 
+(i.e., in bld/serial, bld/parallel, or src/) or in one the 5 namespace-level 
 subdirectories of the build directory (i.e., in the util/, simp/, mcMd/ 
-and ddMd/, and tools/ subdirectories). The config.mk file in the root
-directory of the build directory tree is the main build configuration 
-file. This controls the choice of compiler and options that are passed
-to the compiler when compiling all code. The config.mk files in the
-namespace level control options that are only relevant for code in 
-specific namespaces. The six config.mk files in each build directory 
-together specify the configuration of any code compiled in that directory. 
-Specifically, they specify the name of compiler executable, what command 
-line options will be passed to the compiler, and which optional features 
-will be enabled or disabled in any code built in that directory. The
-config.mk configuration files are all makefile fragments that are 
-included by the actual makefiles that are read by the make utility.
+and ddMd/, and tools/ subdirectories).  These config.mk configuration 
+files are makefile fragments that are included by other makefiles 
+during compilation process.
+
+The config.mk file in the root directory of the build directory tree 
+(e.g., in the src/ directory) is the main build configuration file. 
+This file controls the choice of compiler and general options that are 
+applied to all code.  The config.mk files in the namespace level control 
+more specialized options that are only relevant for code in specific 
+namespaces.  The six config.mk files in each build directory together 
+specify the configuration of any code compiled in that directory. 
 
 Users may change the configuration of code built in a particular build 
 directory before compiling either by: (1) manually editing the config.mk
 configuration files, or (2) by using a script named "configure" to enable 
 or disable specific features. We recommend using the configure script 
-(discussed in more detail \ref compile_configure_section "below") to 
-change configuration whenever possible, but some changes require manual 
+(discussed in more detail \ref install_configure_script_section "below") 
+to change configuration whenever possible, but some changes require manual 
 editing.
 
-The src/ directory also contains a corresponding set of 6 files named
-config.mk_r. Each of these is a default version of a corresponding 
-config.mk file. Only the files named "config.mk_r" are stored in the 
-git source-code repository.  (The suffix _r stands for "repository".) 
-The setup script creates a default version of each config.mk file by 
-making a copy of the corresponding config.mk_r files in the src/ 
-directory. In the process, the setup script also modifies a few lines 
-of the main configuration files to reflect the location of the build 
-directory and its purpose. For example, MPI is enabled by default in
-the bld/parallel directory and disabled by default in the bld/serial
-directory.  Users may modify the config.mk files as needed, but should 
-generally avoid modifying the config.mk_r default versions.
+The namespace level subirectories of the src/ directory also each contain
+a file named config.mk_r. Each of these is a default version of the 
+corresponding config.mk file. Only the files named "config.mk_r" are stored 
+in the git source-code repository.  (The suffix _r stands for "repository".) 
+The setup script creates a default version of each config.mk file by simply
+making copies of the corresponding config.mk_r file.  
 
-\section compile_configure_section The configure script
+\section install_configure_script_section The configure script
 
 Each build directory (i.e., bld/serial, bld/parallel, and src/) contains 
 a bash script named "configure" that can be used enabled or disable 
@@ -148,7 +139,7 @@ the configure scripts in the bld/parallel and bld/serial with the same
 options, thus applying the same changes to configuration files in both 
 of these directories.
 
-\subsection compile_configure_query_sub The "query" option
+\subsection install_configure_script_query_sub The "query" option
 
 The -q command line option of a configure script may be used to query 
 which optional features are currently set to be enabled or disabled, and
@@ -200,7 +191,7 @@ using the configure script in the root directory, the settings in
 these two directories should be the same, except that MPI should 
 be disabled in bld/serial and enabled in bld/parallel. 
 
-\subsection compile_configure_change_sub Enabling/Disabling optional features
+\subsection install_configure_script_change_sub Enabling/Disabling optional features
 
 In the output produced by invoking configure with the -q option, each line 
 of the output before the last two begins with the name of the command 
@@ -243,8 +234,8 @@ Invoking the configure script with the -h ("help") option gives a
 list of all command line options accepted by the configure command, 
 along with some information about what C++ preprocessor macros are 
 defined or undefined by specific commands.  All of the available 
-optional features of the various simpatico programs are also 
-discussed \ref user_options_page "elsewhere" in the web documentation.
+optional features of the various simpatico programs are also discussed 
+\ref user_options_page "elsewhere" in the web documentation.
 
 The configure script in the simpatico/ root directory can be used to 
 apply the same set of changes simultaneously to configuration files
@@ -258,45 +249,8 @@ works by simply invoking the ./configure scripts in the bld/serial
 and bld/parallel directories. Changes made with this script do not 
 effect the configuration of in-source builds. 
 
-\section compile_dependency_section Automatic dependency generation
-
-By default, the simpatico build system automatically generates a 
-"dependency" file, with a suffix *.d, whenever it compiles a *.cpp source 
-file. The dependency file is placed in the build directory tree in same 
-directory as the corresponding object *.o file. The dependency files are 
-used by the build system to decide what files need to be recompiled after 
-the user modifies either a C++ file or a configuration file.
-
-The system for generating dependency files uses the g++ compiler, which 
-does the actual analysis of dependencies among C++ files. It also uses
-a python script named simpatico/scripts/python/makeDepend.py to do some
-text processing on the list of dependencies produced by the compiler. 
-To function correctly, this system requires that:
- 
-  - A g++ compiler (or a link with this name) must be in the user's 
-    PATH environment variable
-
-  - A python interpreter must be in the user's PATH 
-
-  - The simpatico/scripts/python/ directory must be in the PYTHONPATH 
-    environment variable
-
-The build system requires that a g++ compiler is available because the g++
-compiler is used for dependency analysis even if another compiler (e.g., 
-the intel compiler) is used for compilation. A g++ compiler and python 
-interpreter is normally available on any modern linux distribution, and 
-on any Mac OS X environment that is correctly set up for C++ development.
-
-Automatic generation of dependency files is an essential feature for 
-developers - It makes it possible to safely rebuild a program after you 
-modify a few C++ files or configuration files, and have the build system 
-recompile only what needs to be recompiled.  It is possible to disable 
-automatic dependency generation in any build directory by entering 
-"./configure -k0" from the root of that build directory, but we strongly
-recommend against doing so.
-
 <BR>
 \ref install_setup_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref install_compile_page (Next) 
+\ref install_compile_out_page (Next) 
 */

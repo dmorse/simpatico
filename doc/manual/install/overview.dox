@@ -24,7 +24,7 @@ programs using default settings:
    - Configure optional features (optional): Use the configure script in 
      the simpatico/ root directory to enable any desired optional 
      compile-time features that are disabled by default (as discussed 
-     \ref install_compile_configure_page "here").
+     \ref install_configure_page "here").
 
    - Compile mcSim and mdSim: Compile and install the single-processor 
      mcSim and mdSim MC and MD programs, by invoking

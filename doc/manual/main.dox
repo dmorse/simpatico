@@ -38,7 +38,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref user_options_page  </li>
    </ul>
  </li>
- <li> \subpage source_page "3. Source Code Overview"
+ <li> \subpage source_page "4. Source Code Overview"
    <ul style="list-style: none;">
    <li> \subpage source_directory_page </li>
    <li> \subpage source_namespace_page </li>
@@ -49,7 +49,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage Tools_NS_page  </li>
    </ul>
  </li>
- <li> \subpage extend_page  "4. Extending Simpatico" </li>
+ <li> \subpage extend_page  "5. Extending Simpatico" </li>
    <ul style="list-style: none;">
    <li> \ref extend_overview_page  </li>
    <li> \ref extend_base_page  </li>
@@ -60,7 +60,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref extend_module_page   </li>
    </ul>
  </li>
- <li> \subpage developer_page "5. Developer Information"
+ <li> \subpage developer_page "6. Developer Information"
    <ul style="list-style: none;">
    <li> \ref developer_build_page </li>
    <li> \ref developer_standards_page </li>

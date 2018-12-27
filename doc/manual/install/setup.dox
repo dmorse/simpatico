@@ -32,7 +32,7 @@ The value of SIMPATICO_DIR should be set to the path to the simpatico root direc
 In the above fragment, as an example, it is assumed that the simpatico/ directory is a subdirectory of the users home directory. 
 
 After adding an appropriate variant of these lines to .profile or .bash_profile, log out, log back in, and then enter "echo $PATH" and "echo $PYTHONPATH" to make sure that these variables have been set correctly. 
-Rationale: The simpatico/bin directory is the default location for installing executable files created by the build system. This must be added to the users PATH to allow the operating system to find the executable files needed to run a simulation. The simpatico/scripts/python directory contains a python script that is used by the build system during compilation to generate information about dependencies among C++ files, as discussed in more detail \ref compile_dependency_section "here".
+Rationale: The simpatico/bin directory is the default location for installing executable files created by the build system. This must be added to the users PATH to allow the operating system to find the executable files needed to run a simulation. The simpatico/scripts/python directory contains a python script that is used by the build system during compilation to generate information about dependencies among C++ files, as discussed in more detail \ref install_configure_dependency_section "here".
 
 \section compile_setup_section Setup Script
 

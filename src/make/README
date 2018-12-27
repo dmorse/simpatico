@@ -1,5 +1,16 @@
  ========================================================================
- file: $(SRC_DIR)/make/config.README
+ file: $(SRC_DIR)/make/README
+
+ The files in this directory contain fragments of the main makefiles 
+ that are installed by the setup script in the src/, build/serial and 
+ build/parallel directories. This file describes how these makefiles are
+ used and the meaning of the variables that are defined in the resulting
+ makefiles. 
+
+ Each file in the src/make/compiler directory contains a set of definitions
+ that are appropriate to a particular combination of compiler, mpi library,
+ and operating system environment. 
+ 
 
  ========================================================================
  Build Directories: In-source and Out-of-source builds

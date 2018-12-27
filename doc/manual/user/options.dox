@@ -1,4 +1,4 @@
-/*! \page user_options_page 2.12 Compile Time Options
+/*! \page user_options_page 3.10 Compile Time Options
 
 \ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page        (Next) 
@@ -152,17 +152,6 @@ We now discuss each option in a bit more detail:
 The names of the makefile variables associated with different compile time options, such as UTIL_DEBUG, contain suffixes that identify which namespaces they may appear in or affect. The source code for simpatico simulation programs is divided into four namespaces named Util, Simp, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/simp, src/mcMd, and src/ddMd, respectively. Some of these namespaces depend on others: A namespace A is said to depend upon a second namespace B if some code in the namespace A uses classes or other names defined in the namespace B. There is a strict hierarchy of dependencies among namespaces: The Util namespace does not depend on any other namespace. The Simp namespace depends only upon Util. The McMd and DdMd namespaces each depend on Util and Simp, but not on each other. 
 
 The names of makefile variables that are used to enable optional features all have prefixes UTIL_, SIMP_, MCMD_ or DDMD_ that reflect their scope, using the same conventions as those used for dependencies among source code files in different namespaces. Preprocessor macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, only appear in the DdMd namespace (the src/ddMd directory).  Preprocessor macros whose names begin with MCMD_, which are defined in /src/mcMd/config.mk, only appear in the source code of the McMd namespace. Macros with names that begin with SIMP_ are defined in simp/config.mk, and may appear or be included in the source code of the Simp, McMd and DdMd namespaces (the src/simp/, src/mcMd/, and src/dMd/ directories), but not in the Util namespace (the src/util directory). Macros with names that begin with UTIL_ are global: They can appear or be included in the source code in any namespace.
-
-\section user_option_suffix File name suffixes 
-
-When an executable is built with one or more of these optional features enabled, the makefile system appends a set of suffixes to the names of the executable file that identify which features are enabled in that executable.  This convention is intended to make it easy for users to maintain different executables with different features enabled.  The suffix for each optional feature is listed in the above table. Each file name suffix consists of an underscore followed by a one or two character code.  In most cases, the suffix character is the same as the name of the command line option used by the configure script to enable or disable the feature.  
-
-For example, the suffix associated with the debugging feature is "_g".  A development version of the mcSim executable, which was compiled with debugging enabled, but no other optional features, would thus be named "mdSim_g". The default name version of a multi-processor MPI-enabled version of mcSim with angle and
-dihedral potentials would be "mcSim_m_a_d". 
-
-The same file name suffixes are also appended to the base names of libraries that contain code with particular features enabled. Thus, for example, a version of the libutil library that was compiled with MPI and debugging enabled would be called libutil_m_g.a by default. 
-
-Suffixes are added to executable and library names for optional non-default compile-time features that affect code in that executable or library. When MPI is enabled, however, no "_m" suffix is added to the name of the ddSim executable or the libddMd.a library, because MPI is not an optional feature, but is required for ddSim to function. 
  
 \section user_options_boundary Boundary Type
 
