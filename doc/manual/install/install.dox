@@ -17,8 +17,8 @@ simpatico.
   <li> \subpage install_inout_page        "2.6  In-source vs. Out-of-source" </li>
   <li> \subpage install_compile_out_page  "2.7  Compiling (out-of-source)"</li>
   <li> \subpage install_compile_in_page   "2.8  Compiling (in-source)"</li>
-  <li> \subpage install_configure_page    "2.9  Configuring Optional Features" </li>
-  <li> \subpage install_doc_page          "2.10 Generating html documentation"</li>
+  <li> \subpage install_configure_page    "2.9  Optional Compile-Time Features" </li>
+  <li> \subpage install_doc_page          "2.10 Generating html Documentation"</li>
   </ul>
 
 <BR>
