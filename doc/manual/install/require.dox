@@ -1,4 +1,4 @@
-/*! \page install_require_page 2.1 Requirements and Dependencies
+/*! \page install_require_page 2.1 System Requirements
 
 \ref install_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_source_page (Next) 
@@ -14,13 +14,15 @@ Mac OS X, the computer must first be configured for development by
 installing both the XCode integrated development environment and the 
 command line tools for XCode.
 
-Simpatico is distributed only as source code, and so must be compiled 
+Simpatico is distributed only as source code, and must be compiled 
 by the user.  All source code is written in ANSI standard C++.  By 
 default, the source code obeys the ANSI 1998 C++98 standard, though it 
-is also possible to compile a version that uses a few features from C+11. 
-The package has been developed and tested using the gcc and intel 
-compilers in a linux environment, and with the gcc compiler in Mac OS X.  
-It should compile with any modern, standards compliant C++ compiler.   
+is possible to compile a version that uses a few features from C+11. 
+Simpatico has been developed and tested using the gcc and intel 
+compilers in a linux environment, and with the clang compiler in Mac 
+OS X.  It should compile with any standard compliant C++ compiler.   
+
+\section require_overview_section Overview 
 
 In order to compile all of the programs in the simpatico package, the 
 system on which the code is compiled must have:
@@ -30,10 +32,11 @@ system on which the code is compiled must have:
    - A python interpreter
    - A Message Pasing Interface (MPI) library
 
-A git client is needed to acquire (clone) the source code, which is stored
-in a git repository. A python interpreter is needed during compilation,
-but not during execution, because the build system that compiles the 
-simpatico source codes uses a few python scripts.
+A git client is needed to obtain (clone) the source code, which is 
+maintained in a git repository. A python interpreter is needed during 
+compilation (but not during execution) because the build system that 
+compiles the simpatico source codes uses a few python scripts that
+are provided with the package.
 
 A Message Passing Interface (MPI) library is required to compile and 
 run parallel programs. The simpatico package contains code to construct 
@@ -78,6 +81,15 @@ XCode app and command line tools, which are needed for other purposes.
 Once you have confirmed that a git client is available, you may clone
 a copy of the source code.
 
+\section install_require_python Python interpreter
+
+Similarly, one can check if a python interpreter is accessible by checking
+if the command
+\code
+  \> which python
+\endcode
+returns a non-empty path.
+
 \section install_require_compiler_serial Compiler for serial programs
 
 By default, the simpatico build system invokes the compiler used to create 
@@ -95,24 +107,21 @@ setup process so as to use another compiler is invoked with a different
 command and may require different command line options, such as the intel 
 C++ compiler. When the gcc or clang compiler is not used for compilation, 
 however, the simpatico build system still invokes the "g++" command to 
-analyse dependencies among source files, and thus requires that this 
-command be available on the build system.
+analyse dependencies among source files. The simpatico build system thus
+always requires that the "g++" command be available on the build system.
 
 One can check if the command "g++" exists by entering
 \code
   \> which g++ 
-\endcode
+\endcode 
 from a terminal command line. If the "which" utility returns a nonempty 
 path, such as /usr/bin/g++, then the command "g++" exists.
 
-\section install_require_python Python interpreter
-
-Similarly, one can check if a python interpreter is accessible by checking
-if the command
-\code
-  \> which python
-\endcode
-returns a non-empty path.
+The name of the command used to invoke the compiler when compiling
+C++ files and the options passed to the compiler can be changed by 
+modifying a compiler setup file that is read during initial setup 
+of the build system. The setup process is described in more detail 
+\ref install_setup_page "here".
 
 \section install_require_compiler_parallel Compiler for parallel programs
 
@@ -120,8 +129,6 @@ The choice of an MPI library is related to the choice of compiler used
 to compile simpatico: Generally, simpatico should be compiled using the 
 same compiler as that used to compile the MPI library to which simpatico 
 will be linked.
-
-\subsection install_require_parallel_wrapper MPI compiler wrapper
 
 By default, when compiling programs that require MPI, the simpatico build 
 system invokes the C++ compiler through a wrapper script named "mpicxx". 
@@ -145,7 +152,11 @@ compile any parallel programs. If an MPI library is installed but not
 during initial setup so as to use a different command to invoke the 
 compiler when compiling parallel code. 
 
-\subsection install_require_parallel_cluster Multi-User linux clusters and modules
+The name of the command used to invoke the compiler when compiling
+C++ files for MPI programs can also be changed by modifying a compiler 
+setup file, as discussed \ref install_setup_page "here". 
+
+\section install_require_module Software Modules on Linux Clusters 
 
 On any multi-user linux cluster that is set up for use in computational 
 research, at least one MPI library should already be installed. At the 
@@ -190,7 +201,18 @@ There are also many modules on mesabi to load specific versions of
 OpenMPI and other MPI library implementations with specific versions of 
 several different compilers.
 
-\section install_mpi_Ubuntu Ubuntu Linux
+\section install_require_mpi Installing MPI on a Desktop or Laptop
+
+It is possible for a user to install an MPI library on a desktop or laptop
+computer in order to parallel programs provided with simpatico to compiled
+on such a system. The main reason for doing this is to allow development on 
+such computers, and small-scale use on computers with multiple cpu cores.
+Below we give instructions for using common package managers to install 
+the Open-MPI library on an Ubuntu linux system or an Macintosh running 
+Mac OS X using either of two common tools for managing unix software on 
+Mac OS X (the homebrew and macport package managers)
+
+\subsection install_require_mpi_Ubuntu Ubuntu Linux
 
 MPI is not normally installed by default on a linux desktop or laptop. To 
 install the OpenMPI MPI library on a computer that is running the Ubuntu 
@@ -204,12 +226,7 @@ After compiling MPI by this method, you should be able to compile parallel
 simpatico programs using the gcc compiler and default configuration 
 settings.
 
-\subsection install_mpi_Mac Mac OS X 
-Below we describe how to install an openMPI library on a MacIntosh 
-computer running OS X using either of two different systems for managing 
-unix software packages on OS X. 
-
-\subsubsection install_mpi_MacBrew Mac OS X - Homebrew Package Manager
+\subsection install_mpi_MacBrew Mac OS X - Homebrew Package Manager
 
 To install the OpenMpi library on Mac OS X by using the Homebrew package 
 manager, enter
@@ -218,34 +235,19 @@ manager, enter
 \endcode
 After installing OpenMPI by this route, we have had no trouble compiling 
 simpatico programs that use MPI using the gcc compiler and default 
-configuration settings (COMPILER=gcc, OS=generic).
+configuration settings (i.e., after invoking the "setup" script with no
+argument, as discussed \ref install_setup_page "here").
 
-\subsubsection install_mpi_MacPort Mac OS X - MacPort Package Manager
+\subsection install_mpi_MacPort Mac OS X - MacPort Package Manager
 
 To install OpenMpi on a Mac OS X system on which the MacPorts system is 
 being used to manage linux packages, simply enter
 \code
 > sudo port install openmpi
 \endcode
-In order to make changes to compiler options that we find are necessary
-to compile and link with the resulting configuration, set the makefile 
-variable OS to OS=mac-port in the main config.mk file, either by 
-invoking the command
-\code
->./configure -o mac-port
-\endcode
-from the simpatico/ root directory or the relevant build directory, 
-or by manually editing the main config.mk configuration file in the 
-relevant build directory.
-
-Setting OS=mac-port changes the options that are passed to the compiler
-so as to explicitly pass the paths for MPI header and library files to
-the compiler. This appeared to be necessary on the iMac on which we 
-tested this because the MacPorts system installs header and library 
-files in non-standard locations within the /opt/ directory, and because 
-the configuration of the "mpicxx" script created by MacPorts does not 
-seem to automatically invoke the compiler with options that specify 
-these paths (as it should). 
+See \ref install_setup_page "here" for special instructions for invoking 
+the setup script on a system on which OpenMPI was installed with the 
+MacPort package manager.
 
 <BR>
 \ref install_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 

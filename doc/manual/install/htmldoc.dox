@@ -1,20 +1,30 @@
-/*! \page install_doc_page 2.8 Generating html documentation
+/*! \page install_doc_page 2.10 Generating html documentation
 
-\ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Next) 
 <BR>
 
-The html documentation that you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility. The simpatico git repository contains all of the source files required to construct this docuentation (some of which is extracted from comments in the C++ source files), but does not contain the resulting html files. 
+The html documentation that you are reading was generated using the 
+<a href=http://www.doxygen.org> doxygen </a> documentation utility. The 
+simpatico git repository contains all of the source files required to 
+construct this documentation (some of which is extracted from comments 
+in the C++ source files), but does not retain the resulting html files. 
 
 \section install_doc_generate_sec Generating documentation
  
-If the doxygen program is installed on your machine, you can regenerate a local copy of the html documentation.  To check whether doxygen is installed, enter 
+If the doxygen program is installed on your machine, you can regenerate a 
+local copy of the html documentation.  To check whether doxygen is installed, 
+enter 
 \code
 > which doxygen
 \endcode
- from the command line. If a valid path to a file named doxygen is returned, then doxygen is already installed. If doxygen is not installed, install it before proceeding, either using an appropriate package manager or by downloading from the doxygen web page. 
+ from the command line. If a valid path to a file named doxygen is returned, 
+then doxygen is already installed. If doxygen is not installed, install it 
+before proceeding, either using an appropriate package manager or by 
+downloading from the doxygen web page. 
 
-Once doxygen is installed, simply change directory to the simpatico/ root directory and enter
+Once doxygen is installed, simply change directory to the simpatico/ root 
+directory and enter
 \code
 > make html 
 \endcode
@@ -23,9 +33,9 @@ The resulting html files will be installed in the simpatico/doc/html/ directory.
 \section install_doc_read_sec Reading the documentation
  
 The main page of the html documentation is a file named doc/html/index.html.
-To begin reading your local copy of the documentation, simply open this 
-file in any web browser. To read the documentation on a linux system 
-using the firefox browser, enter
+To begin reading your local copy of the documentation, simply open this file 
+in any web browser. To read the documentation on a linux system using the 
+firefox browser, enter
 \code
 > firefox doc/html/index.html
 \endcode
@@ -58,7 +68,7 @@ over, enter
 from the simpatico/ root directory.
 
 <BR>
-\ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_configure_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Next) 
 

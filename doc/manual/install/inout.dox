@@ -1,0 +1,55 @@
+/*! \page install_inout_page 2.6 Compiling In-source vs. Out-of-source
+
+\ref install_setup_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_compile_out_page (Next) 
+<BR>
+
+The simpatico makefile system can build the package either "out-of-source" 
+or "in-source". When the package is built "in-source", object files, static 
+library files and other non-executable files that are generated during 
+compilation are placed in the src/ directory tree, alongside the corresponding 
+C++ source files. When it is built "out-of-source", these generated files 
+are placed in a separate "build" directory tree, outside the source tree. 
+By default, during an out-of-source build, serial programs are built in
+the simpatico/bld/serial directory and parallel MPI programs are built in
+the simpatico/bld/parallel directory.  In all cases, however, executable 
+files for all programs are installed in the simpatico/bin directory by 
+default.
+
+We recommend that most users build simpatico out of source.  The overview
+of instructions given in a \ref install_overview_page "previous page" were
+actually instructions for performing an out-of-source build. Subsequent 
+pages give more detailed instructions for compiling either out-of-source or 
+in-source. A brief overview of the differences is given below.
+
+\section install_inout_out_section Compiling Out-of-source
+To perform a standard out-of-source build of any simpatico program, one 
+invokes "make" with an appropriate target (e.g., "make mcMd" or "make ddMd")
+from the simpatico/ root directory, as described in the short instructions. 
+That is, for example, to compile and install the mcSim and mdSim programs, 
+one invokes "make mcMd" from the simpatico/ root directory.  The makefile 
+in the root directory automatically builds out-of-source, and uses 
+different build directories for serial (single-processor) and parallel 
+(mpi-enabled) programs.  Specifically, the serial mcSim, mdSim, and mdPp 
+programs are built in the simpatico/bld/serial/ directory, whereas the 
+ddSim parallel MD program and the multi-processor versions of mcSim and 
+mdSim are built in the simpatico/bld/parallel directory.  Out-of-source 
+builds are discussed in greater detail \ref install_compile_in_page "here".
+
+\section install_inout_in_section Compiling In-source
+The ability to perform an in-source build is provided as a convenience for 
+developers.  To peform an in-source build of any program, one must first
+enable or disable the use of MPI, as appropriate for the program, and then 
+invoke "make" with an appropriate target from the simpatico/src/ directory, 
+rather than from the simpatico/ root directory. The same commands are used 
+as those used to build out-of-source from the root directory. For example,
+invoking "make mcMd" from the src/ directory performs an in-source build 
+of mcSim and mdSim, and invoking "make ddMd" from src/ performs an 
+in-source build of ddSim. In-source builds are discussed in greater detail 
+\ref install_compile_in_page "here".
+
+<BR>
+\ref install_setup_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_compile_out_page (Next) 
+*/
