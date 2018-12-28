@@ -1,4 +1,4 @@
-/*! \page install_configure_page 2.9 Optional Compile-Time Features
+/*! \page install_configure_page 2.9 Optional Features
 
 \ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_doc_page (Next) 
@@ -10,7 +10,7 @@ from the executable) when the program is compiled.  This page explains
 how a "configure" script may be used to enable or disable particular
 compile-time features before compiling or recompiling.
 
-\section install_configure_configure Configure script
+\section install_configure_configure The "configure" script
 
 The root simpatico/ directory and the three standard build directories 
 (bld/parallel, bld/serial or src/) each contain a unix bash script named 
@@ -145,7 +145,7 @@ thus completely equivalent to calling the configure scripts in
 bld/serial and bld/parallel with the same set of options. Changes 
 made by invoking this script have no effect on in-source builds. 
 
-\section install_configure_features Optional Features
+\section install_configure_features Optional features
 
 The following table lists information about the most important compile 
 time options. The configure script enables or disables each such optional

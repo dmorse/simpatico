@@ -4,7 +4,7 @@
 \ref Util_NS_page  (Next) 
 <BR>
 
-The classes used in simpatico are divided into five namespaces. The source code for each namespace is in a corresponding subdirectories of the src/directory: 
+The classes used in simpatico are divided into five namespaces. The source code for each namespace is in a corresponding subdirectory of the src/directory: 
 
  - namespace Util (directory src/util) contains general utilities for C++ programming and scientific computation. 
 

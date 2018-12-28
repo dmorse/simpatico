@@ -12,7 +12,6 @@ The following list explains the contents of the subdirectories of the root simpa
      mcMd/    - McMd namespace
      ddMd/    - DdMd namespace
      tools/   - Tools namespace
-     modules/ - modules for specific applications
      test/    - unit test framework
   bld/        - directories for object (*.o) files and libraries
      serial/  - build directory for serial programs (mcSim and mdSim)
