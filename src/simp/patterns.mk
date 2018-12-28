@@ -6,8 +6,8 @@
 # makefile files in the src/simp directory tree. 
 #
 # This file should be included in other makefiles after inclusion of 
-# the main config.mk in the build directory, and the util/config.mk 
-# and simp/config.mk namespace level config files. 
+# the main configuration file, which is the file named config.mk in 
+# the build directory.
 #-----------------------------------------------------------------------
 # Include makefile fragments
 

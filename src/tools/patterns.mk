@@ -1,16 +1,13 @@
 # ---------------------------------------------------------------------
 # File: src/tools/patterns.mk
 #
-# This makefile fragment contains the pattern rule used to compile all 
-# C++ sources files in the src/tools directory tree. The src/tools 
+# This makefile fragment contains the pattern rules used to compile
+# all C++ sources files in the src/tools directory tree. The src/tools 
 # directory contains all the source code for the Tools C++ namespace. 
 #
-# This file is included by all makefile files in the tools/ directory.
-# This pattern file should be included in other makefiles after 
-# inclusion of the main config.mk file, and the namespace level config 
-# files named util/config.mk, simp/config.mk, and tools/config.mk,
-# because the patterns defined in this file use makefile variables
-# defined in these configuration files.
+# This file should be included by all makefile files in the tools/ 
+# directory. This file should be included in other makefiles after 
+# inclusion of the main configuration file, src/config.mk.
 #-----------------------------------------------------------------------
 # Makefile fragment includes
 

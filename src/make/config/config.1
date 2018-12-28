@@ -1,13 +1,13 @@
 #=========================================================================
 # file: $(BLD_DIR)/config.mk
 #
-# This config.mk file is a makefile fragment, which is the main configuration 
-# file for the makefile-based build system.  A copy of this file is included 
-# by all other makefiles.  A copy of this file is created in the src/
-# directory (which is used for in source compilation) and in the root of 
-# the bld/parallel and bld/serial build directories (for out of source
-# compilation). These files are created by invoking the "setup" script from
-# the root simpatico directory, and do not exist before this script is run.
+# This makefile fragment is the main configuration file for the simpatico
+# build system.  A copy of this file is included by all other makefiles. 
+# This file is created and installed by "setup" script. One copy of this
+# this file is created in the src/ directory (which is used for in source 
+# compilation) and two others are created in the root directories of the
+# bld/parallel and bld/serial build directory trees (for out of source
+# compilation). 
 #
 #=========================================================================
 # Summary of contents:
@@ -18,7 +18,7 @@
 #  - A variable UTIL_DEBUG that, if defined, enables debugging checks
 #  - A variable UTIL_MPI that, if defined, enables MPI
 #  - A variable UTIL_CXX11 that, if defined, enables use of C++11
-#  - Several variables that define compiler commands, options and flags 
+#  - Variables that define compiler commands, options and flags 
 #  - A variable MAKEDEP that enables automatic dependency generation
 #
 # After setup, common changes to this file may be made either by editing
@@ -63,12 +63,8 @@ BIN_DIR=$(ROOT_DIR)/bin
 # Comment: Thus far, very little of the code uses features of C++11.
 # Equivalent replacements from C++ 1998 are used in these few cases. 
 # There is thus no harm in leaving UTIL_CXX11 undefined.
-#======================================================================
-# Set INCLUDES to find header files in src/ directory
-
-INCLUDES= -I$(SRC_DIR)
-
+ 
 #======================================================================
 # Variable definitions for a specific compiler/MPI/OS combination
-# See src/make/README for discussion of these makefile variables.
+# See src/make/README for discussion of some of these makefile variables.
 #

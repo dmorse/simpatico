@@ -1,5 +1,5 @@
 
-# -- Settings for Mac OS X + Open-MPI, Open-MPI Installed by MacPort --
+# -- Settings for Mac OS X + Open-MPI, Open-MPI Installed by MacPorts --
 
 # These settigns are designed to work for code that is compiled on Mac
 # OS X using the gcc compiler and a copy of the Open-MPI library that 
@@ -14,18 +14,18 @@
 # --------------------------------------------
 # Miscellaneous definitions
 
+# Search path for C++ header files (must include src/ directory)
+# Includes location of open-mpi header (*.h) files
+INCLUDES= -I$(SRC_DIR)
+INCLUDES+= -I/opt/local/include/openmpi-mp
+
+
 # Compiler option to specify ANSI C++ standard
 ifdef UTIL_CXX11
    CXX_STD = --std=c++11
 else
    CXX_STD = --std=c++98
 endif
-
-# Directory to look for open-mpi header (*.h) files
-INCLUDES+= -I/opt/local/include/openmpi-mp
-
-# Directory to look for open-mpi library files
-LDFLAGS+= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
 
 # --------------------------------------------
 # Compiler used for serial programs 
@@ -58,10 +58,14 @@ CXXFLAGS_PAR_FAST= -Wall $(CXX_STD) -O3 -ffast-math -Winline
 MPIRUN=mpirun -np
 
 # --------------------------------------------
-# Linker / Loader and Archiver
+# Linker / Loader 
 
 # Flags passed to compiler for linking and loading
-LDFLAGS=
+# Contains a search path and names for MPI library files. 
+LDFLAGS= -L/opt/local/lib/openmpi-mp -lmpi_cxx -lmpi
+
+# --------------------------------------------
+# Archiver
 
 # Library archiver command (for creating static libraries)
 AR=ar

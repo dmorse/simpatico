@@ -4,7 +4,7 @@
 # script to create the copies in those directories. Only the copy in
 # the src/ directory is stored in the repository.
 #-----------------------------------------------------------------------
-# Makefile includes 
+# Include makefile fragments
 
 BLD_DIR_REL =..
 include $(BLD_DIR_REL)/config.mk

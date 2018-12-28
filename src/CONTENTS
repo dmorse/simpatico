@@ -19,7 +19,6 @@ Files (before running the setup script):
 ----------------------------------------
 
 makefile      main makefile for in-source builds
-config.mk_r   compiler settings (default repository version)
 configure     configure script (for en|dis-abling compile time options)
 programs.mod  doxygen module for documentation of complete programs
 CONTENTS      this file
@@ -27,6 +26,5 @@ CONTENTS      this file
 Setup and configuration:
 ------------------------
 
-For compilation instructions, see the file doc/manual/user/compile.dox, 
-the README file in the root directory (the parent of this directory), or
-the user guide section of the web documentation in doc/html.
+For compilation instructions, see the README file in the root directory (the 
+parent of this directory) and the web documentation in doc/html.
