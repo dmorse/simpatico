@@ -1,20 +1,26 @@
 #-----------------------------------------------------------------------
-# Set values that depend on UTIL_MPI and UTIL_DEBUG
+# Set values values of CXX (compiler command) and CXX_FLAGS (general 
+# compiler options) whose values depend on UTIL_MPI and UTIL_DEBUG
+# (i.e., on whether MPI and/or debugging features are enabled).
 
 ifneq ($(UTIL_MPI),1)
-   # Serial compiler (no mpi)
+   # Serial compiler command (MPI disabled)
    CXX=$(CXX_SER)
    ifdef UTIL_DEBUG
+      # Flags for serial programs with debugging
       CXXFLAGS=$(CXXFLAGS_SER_DEBUG)
    else
+      # Flags for serial programs with no debugging
       CXXFLAGS=$(CXXFLAGS_SER_FAST)
    endif
 else
-   # Parallel compiler (Mpi-enabled)
+   # Parallel compiler command or wrapper script (MPI enabled)
    CXX=$(CXX_PAR)
    ifdef UTIL_DEBUG
+      # Flags for parallel programs with debugging
       CXXFLAGS=$(CXXFLAGS_PAR_DEBUG)
    else
+      # Flags for parallel programs with no debugging
       CXXFLAGS=$(CXXFLAGS_PAR_FAST)
    endif
 endif
