@@ -7,7 +7,6 @@ mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
 ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
 tools      pre- and postprocessing tools (namespace Tools)
 test       unit test framework
-make       files used by the build system
 draft      unfinished or proposed classes
 
 Note: The contents of directories util/ and test/ are maintained in separate 
