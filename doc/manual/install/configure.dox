@@ -308,16 +308,9 @@ namespaces.  The six config.mk files in each build directory together
 specify the configuration of any code compiled in that directory. 
 
 Users may change the configuration of code built in a particular build 
-directory before compiling either by: 
-
-   - Manually editing the config.mk configuration files 
-
-   - Using a script named "configure" to enable or disable specific 
-     features from the command line.
-
-We recommend using the configure script (discussed in more detail 
-\ref install_inout_script_section "below") to change configuration 
-whenever possible, but some changes require manual editing.
+directory before compiling either by using a text editor to edit the 
+config.mk configuration files , or by using the configure script to
+to enable or disable specific features from the command line.
 
 In addition to a configuration file named config.mk, each namespace level 
 subirectory of the src/ directory also contains a file named config.mk_r. 

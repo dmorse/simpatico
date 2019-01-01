@@ -10,10 +10,11 @@ scripts/        utilities in languages other than C++
   bash/         bash scripts
   python/       python modules and executable scripts
   mathematica/  mathematica notebooks
+make/           files used by the build system setup script
 examples/       example simulations
 doc/            documentation
-  manual/       text source files user/developer manual
-  html/         installation directory for *.html web manual pages
+  manual/       text source files for manual
+  html/         installation directory for *.html manual pages
 
 Files:
 ------
@@ -21,7 +22,7 @@ Files:
 README.md       brief introduction to package 
 LICENSE         GPL license
 CONTENTS        this file
-setup           bash script for initial setup (see README and manual)
+setup           bash script for initial setup (see README.md and manual)
 configure       configuration script (see manual)
 makefile        top-level makefile
 
