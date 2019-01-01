@@ -30,8 +30,8 @@ We recommend that most users build simpatico out of source. The overview
 of instructions given in a \ref install_overview_page "previous page" were
 actually instructions for performing an out-of-source build. Subsequent 
 pages give more detailed instructions for compiling either 
-\ref install_compile_out "out-of-source" or 
-\ref install_compile_in "in-source". A brief overview of the main 
+\ref install_compile_out_page "out-of-source" or 
+\ref install_compile_in_page "in-source". A brief overview of the main 
 differences is given below.
 
 \section install_inout_out_section Compiling Out-of-source
@@ -58,7 +58,7 @@ rather than from the simpatico/ root directory.  For example, invoking
 "make mcMd" from the src/ directory performs an in-source build of mcSim 
 and mdSim, and invoking "make ddMd" from src/ performs an in-source build 
 of ddSim. The make utility can also be invoked from any subdirectory of the src/ directory in order to compile only recently modified files in that 
-subdirectory, as discussed in more detail \ref install_compiler_in "here".
+subdirectory, as discussed in more detail \ref install_compile_in_page "here".
 
 \section install_inout_directories_section Build Directories
 
