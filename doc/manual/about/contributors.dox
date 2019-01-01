@@ -9,7 +9,7 @@ been:
 <ul style="list-style: none;">
   <li> David Morse (primary author) </li>
   <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
-  <li> Jens Glaser (HOOMD-blue integration, constant pressure MD integrators) </li>
+  <li> Jens Glaser (constant pressure MD integrators) </li>
   <li> Pavani Medapuram (replica exchange, perturbation theory, interactions) </li>
   <li> Taher Ghasimakbari (analyzers, interactions, improvements to ddMd) </li>
 </ul>
