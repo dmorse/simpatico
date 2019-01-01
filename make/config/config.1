@@ -3,16 +3,15 @@
 #
 # This makefile fragment is the main configuration file for the simpatico
 # build system.  A copy of this file is included by all other makefiles. 
-# This file is created and installed by "setup" script. One copy of this
-# this file is created in the src/ directory (which is used for in source 
-# compilation) and two others are created in the root directories of the
-# bld/parallel and bld/serial build directory trees (for out of source
-# compilation). 
+# This file is created and installed by the "setup" script. One copy of 
+# this file is installed in the src/ directory, which is used for in-source 
+# compilation. Two others copies are created in the root directories of 
+# the bld/parallel and bld/serial build directory trees, which are used for
+# out-of-source compilation of parallel and serial programs respectively.
 #
 #=========================================================================
-# Summary of contents:
-#
-# This file contains definitions of makefile variables that specify:
+# This file contains user-modifiable definitions of makefile variables that 
+# specify:
 # 
 #  - Absolute paths for the simpatico directory and some subdirectories
 #  - A variable UTIL_DEBUG that, if defined, enables debugging checks
@@ -23,28 +22,34 @@
 #
 # After setup, common changes to this file may be made either by editing
 # the file or by invoking the "configure" script from the build directory 
-# that contains this config.mk file with appropriate options.  Specifically, 
-# this script may be used to enable (option -m1) or disable (-m0) MPI, and
-# to enable (-g1) or disable (-g1) debugging. For example, the command:
+# that contains this config.mk file.  Specifically, the configure script 
+# may be used to enable (option -m1) or disable (-m0) MPI, and to enable 
+# (-g1) or disable (-g1) debugging. For example, the command:
 #
 # ./configure -m1 -g0 
 #
 # would enable MPI and disable debugging prior to compilation.
 #
-# Detailed documentation of the meaning of the variables defined in this
-# file is given in the file src/make/config.README.
 #=========================================================================
 # Absolute directory paths
 #
 # Variables that define directory paths (see src/make/config.README)
 
+# Absolute path to the root simpatico directory
 ROOT_DIR=PWD
+
+# Path to the build directory (location for intermediate generated files)
+# This should also be the directory that contains this script.
 BLD_DIR=$(ROOT_DIR)/=OWD
+
+# Path to the source directory (contains C++ source code files)
 SRC_DIR=$(ROOT_DIR)/src
+
+# Installation directory for binary executable program files
 BIN_DIR=$(ROOT_DIR)/bin
 
 #======================================================================
-# Variables that enable compile time options:
+# Makefile variables that enable compile time options:
 
 # Defining UTIL_DEBUG enables a variety of extra sanity checks, at some
 # cost in speed. Debugging is disabled (commented out) by default.
@@ -65,6 +70,11 @@ BIN_DIR=$(ROOT_DIR)/bin
 # There is thus no harm in leaving UTIL_CXX11 undefined.
  
 #======================================================================
-# Variable definitions for a specific compiler/MPI/OS combination
+# Environment-dependent makefile variables.
+#
+# The choice of values of variables defined in this block may be specific 
+# to a particular choice of compiler, MPI library and operating system. 
 # See src/make/README for discussion of some of these makefile variables.
+# Definitions of some variables are copied by the setup script from a 
+# compiler configuration file in the src/make/compiler directory.
 #
