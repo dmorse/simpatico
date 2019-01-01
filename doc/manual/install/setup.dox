@@ -1,7 +1,7 @@
 /*! \page install_setup_page 2.5 Setup Script
 
 \ref install_environment_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref install_configure_page (Next) 
+\ref install_inout_page (Next) 
 <BR>
 
 Before compiling any code, the user must run a bash script named "setup". 
@@ -10,7 +10,9 @@ executed from this directory.  The setup script installs default versions
 of a variety of files that users may need to modify in order configure or 
 extend the progam, and that are thus not stored in the repository.  It is 
 only necessary to invoke the setup script once, before the first time you 
-compile. 
+compile.
+
+\section install_setup_default_sec Default Configuration 
 
 To create configuration files appropriate for a generic unix-like 
 environment, in which it is assumed that you wil compile using the g++ 
@@ -24,6 +26,8 @@ shell to look for a script named setup in the current working directory,
 rather than searching the directories listed in the PATH environment 
 variable for a command with this name.
 
+\section install_setup_special_sec Specialized Configuration 
+
 To create a more specialized configuration, the setup script may also be 
 invoked with a single argument that gives the name of a file containing 
 definitions of variables appropriate to a particular choice of compiler 
@@ -33,47 +37,59 @@ and computing environment.  For example, invoking the command
 \endcode
 would instead create configuration files with settings appropriate to an 
 intel compiler. When the setup script is invoked with an argument, the
-argument (e.g. "intel") must be the name of a file in the directory 
-\code
-  simpatico/src/make/compiler
-\endcode
-that contains a set of variable definitions appropriate to a specific 
-combination of compiler, MPI library and operating system environment.
-We will refer to the files in this directory as compiler setup file.
-When the setup script is invoked with an argument, it reads the 
-associated compiler set file and incorporates the definitions given
-in this file into a configuration file that is created by the setup
-script and later used during compilation. 
+argument (e.g. "intel") must be the name of a file that exists in the 
+directory simpatico/make/compiler. Each file in that directory contains
+a set of variable definitions that specify compiler commands and options
+appropriate to a specific combination of compiler, MPI library and 
+operating system environment.  We will refer to these files as compiler 
+setup files. When the setup script is invoked with an argument, it reads 
+the associated compiler setup file and copies the definitions given in 
+the setup file into a new config.mk configuration file that is created 
+by the setup script, and that is later used during compilation. The file 
+simpatico/make/compiler/intel that is invoked in the above example is a 
+compiler setup file that is provided as part of the simpatico package.
 
-When the the setup script is invoked with no argument, this script reads
-the file named "gcc" by default. Invoking setup with no argument is thus 
-equivalent to invoking "./setup gcc". 
+When the the setup script is invoked with no argument, the script reads
+a file named "simpatico/make/gcc" by default. Invoking setup with no 
+argument is thus equivalent to invoking "./setup gcc". 
+
+\section install_setup_local_file_sec Creating a Custom Compiler Setup File
 
 The "simpatico/src/make/compiler" directory initially contains only a 
-few compiler configuration files, such "gcc" and "intel". If none of 
-these is exactly appropriate for a users system, the user should create
-a specialized version as follows:
+few compiler setup files, such "gcc" and "intel". If none of these is 
+exactly appropriate for a users system, the user should create a 
+specialized version as follows:
 
   - Create a copy of one of the files in the src/make compiler directory 
-    with a new name such as "local", e.g., by entering "cp gcc local" 
-    from within the src/make/compiler director.
+    with a new name such as "local", e.g., by entering 
+    \code
+    > cp gcc local
+    \endcode
+    from within the simpatico/make/compiler director.
 
-  - Modify the variable definitions in the resulting local compiler 
-    setup file as needed to accomodate a particular system.
+  - Use a text editor (e.g., vi or emacs) to modify the variable definitions 
+    in the new file as needed to accomodate a particular system.
 
-  - Rerun the "setup" script using the name of the new file as an 
-    argument, e.g., by entering
+  - Rerun the "setup" script using the name of the new file as an argument, 
+    e.g., by entering
     \code
     > ./setup local
     \endcode
+    from the simpatico/ root directory.
 
-Explanations of the meaning of the variables defined in the compiler
-setup files are given in comments within the "gcc" and "intel" files,
-and within the file simpatico/src/make/README. 
+In order to understand the meanings of the variables defined in the compiler 
+setup files, we recommend that you first run the setup script with no argument 
+and the read the comments in the file src/config.mk that is created by the 
+setup script, which briefly explain the meaning of each of the makefile 
+variables. If you compare the resulting file to the file make/compiler/gcc, 
+you will see that the "gcc" compiler setup file will have simply been copied 
+into the middle part of the config.mk file. Some further explanations of the 
+meaning of the variables defined in the compiler setup files are given in the 
+file simpatico/make/README. 
 
 <BR>
-\ref install_setup_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_environment_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref install_configure_page (Prev) 
+\ref install_inout_page (Next) 
 
 */

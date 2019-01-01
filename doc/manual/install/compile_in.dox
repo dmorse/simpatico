@@ -72,34 +72,34 @@ that have recently been modified.
 
 \section install_insource_mpi_sec Managing MPI Settings
 
-One complication of complication in-source arises when both serial 
+One complication of in-source compilation arises when both serial 
 and parallel programs are built in the same build directory.  The 
-simpatico package contains both a set of serial programs that do 
-not use MPI (the mcSim, mdSim and mdPp programs), and several
-parallel programs that use MPI (the ddSim program and the parallel 
-versions of mcSim and mdSim). These two sets of programs are 
-constructed from many of the same C++ classes, but must be 
-compiled with different compiler options for use in serial and
-parallel classes. All simpatico C++ files used by a parallel MPI 
-program must be compiled with MPI enabled in the makefile system. 
-Conversely, C++ files used by a serial program must be compiled 
+simpatico package contains both serial programs that do not use 
+MPI (the mcSim, mdSim and mdPp programs), and several parallel 
+programs that use MPI (the ddSim program and the parallel versions 
+of mcSim and mdSim). These two sets of programs are constructed from
+of the same C++ classes, but the source files for these classes must 
+be compiled with different compiler options for use in serial and 
+parallel programs. All simpatico C++ source files used by a parallel 
+MPI program must be compiled with MPI enabled by the build system. 
+Conversely, all C++ files used by a serial program must be compiled 
 with MPI disabled.
 
 When a user compiles part of the source code by invoking "make all" 
 from any subdirectory of the src/ directory, he or she is responsible
-for explicitly enabling or disabling MPI, as appropriate, before 
-attempting to compile. One can determine whether MPI is currently
+for explicitly making sure that MPI is enabled or disabled, as appropriate, 
+before attempting to compile. One can determine whether MPI is currently
 enabled or disabled, and enable or disable it as needed, by invoking
-the "configure" bash script from the src/ directory with appropriate
-options. To determine whether MPI is currently enabled, cd to the
-src/ directory and then enter
+the \ref_install_configure_page "configure" bash script from the src/ 
+directory with appropriate options. To determine whether MPI is currently 
+enabled, cd to the src/ directory and then enter
 \code
    > ./configure -q
 \endcode
-This should cause a list of optional compile time features to be
-listed, along with an indication of whether each is currently
-enabled (ON) or disabled (OFF). Among these features is "MPI".
-To disable MPI, if necessary, one may then enter
+This should cause a list of optional compile time features to be listed, 
+along with an indication of whether each is currently enabled (ON) or 
+disabled (OFF). Among the listed features is "MPI".  To disable MPI, 
+if necessary, one may then enter
 \code
    > ./configure -m0
 \endcode
@@ -108,22 +108,19 @@ To enable MPI, instead enter
 \code
    > ./configure -m1
 \endcode
-from the src/ directory. Invoking the configure script with the
--m option from the src/ directory enable or disable MPI for all
-code that is compiled by invoking make from within the src/
-directory tree (i.e., any code that is compiled in-source). 
+from the src/ directory. Invoking the configure script with the -m option 
+from the src/ directory enable or disable MPI for all code that is 
+compiled in-source (i.e., that is compiled by invoking make from within 
+the src/ directory tree). 
 
 It is generally not necessary for a user to explicitly enable or disable 
 MPI before compiling a program by invoking make from the src/ directory, 
 rather than from one of its subdirectories.  When the make utility is 
 invoked from the src/ directory with one of the main makefile targets 
 that build one or more executable programs (e.g., "mcmd", "mcMd-mpi", 
-"ddMd", or "tools"), the makefile system automatically disables MPI 
-before beginning to build any serial program and automatically disables 
-MPI before beginning to build any parallel program.  If this causes a 
-change in the state of MPI, the change may force the build system to 
-recompile any code that was previously compiled with a different MPI 
-setting.  
+"ddMd", or "tools"), the makefile system automatically disables MPI as
+the first step of attempting to build any serial program, and disables 
+MPI as the first step of building any parallel program.  
 
 The need to manage the MPI compile-time option can make in-source
 compilation inconvenient if one needs to switch frequently between 
@@ -133,20 +130,19 @@ by invoking "make mcMd" to build mdSim and mcSim) and then uses a
 different target to build a parallel program (e.g., by invoking 
 "make ddMd" to build ddSim), the build system will have to compile
 all the files are shared by both serial and parallel programs twice,
-once with MPI disabled and once when MPI is enabled. When this happens, 
+once with MPI disabled and once with MPI enabled. When this happens, 
 the object files created during compilation of the serial programs
 will be overwritten when they are recompiled during compilation of a
-parallel program, thus loosing all the effort that went into compiling 
+parallel program, thus losing all the effort that went into compiling 
 serial versions of these files. If one were to then recompile a serial 
-program, serial versions of these shared files would then have to 
-recompiled yet again, even if none of these files had been modified.
-This problem does not arise when code is compiled out-of-source, 
-because in this case object files created during compilation of serial 
-and parallel programs are stored in different directory trees.  To 
-avoid this problem, developers should either avoid going back and 
-forth frequently between work on serial and parallel programs when 
-compiling in-source, or use out-of source compilation even during
-development.
+program, all of these shared files would then have to recompiled once 
+again, even if none of the shared files had been modified.  This 
+problem does not arise when code is compiled out-of-source, because 
+in this case object files created during compilation of serial and 
+parallel programs are stored in different directory trees.  To avoid 
+this problem, developers should either avoid going back and forth 
+frequently between work on serial and parallel programs when compiling 
+in-source, or use out-of source compilation during development.
 
 <BR>
 \ref install_compile_out_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
