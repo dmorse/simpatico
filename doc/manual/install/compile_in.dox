@@ -90,7 +90,7 @@ from any subdirectory of the src/ directory, he or she is responsible
 for explicitly making sure that MPI is enabled or disabled, as appropriate, 
 before attempting to compile. One can determine whether MPI is currently
 enabled or disabled, and enable or disable it as needed, by invoking
-the \ref_install_configure_page "configure" bash script from the src/ 
+the \ref install_configure_page "configure" bash script from the src/ 
 directory with appropriate options. To determine whether MPI is currently 
 enabled, cd to the src/ directory and then enter
 \code
