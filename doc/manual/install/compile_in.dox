@@ -118,7 +118,7 @@ MPI before compiling a program by invoking make from the src/ directory,
 rather than from one of its subdirectories.  When the make utility is 
 invoked from the src/ directory with one of the main makefile targets 
 that build one or more executable programs (e.g., "mcmd", "mcMd-mpi", 
-"ddMd", or "tools"), the makefile system automatically disables MPI as
+"ddMd", or "mdPp"), the makefile system automatically disables MPI as
 the first step of attempting to build any serial program, and disables 
 MPI as the first step of building any parallel program.  
 

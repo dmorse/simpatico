@@ -57,7 +57,7 @@ The mdPp post-processor program is also a single-processor program that
 you can compile before setting up your system to compile MPI programs. 
 To do so, cd to the simpatico/ root directory and enter:
 \code
-> make tools
+> make mdPp
 \endcode
 If this is done after compiling mcSim and mdSim, this will compile 
 some additional code in src/mdPp directory, place *.o and *.d files 

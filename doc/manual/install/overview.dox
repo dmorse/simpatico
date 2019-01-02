@@ -33,7 +33,7 @@ programs using default settings:
    - Compile postprocessor: Compile and install the "mdPp" MD 
      post-processing analysis program, by invoking
      \code
-     > make tools
+     > make mdPp 
      \endcode
      from the simpatico root directory. This will install the mdPp
      executable in the simpatico/bin directory.
