@@ -24,7 +24,7 @@ fi
 # Create user-modifiable copies of default repository *_r files.
 
 # Namespace level config file
-cp config.mk_r config.mk
+# cp config.mk_r config.mk
 
 # Factory classes
 cp configIos/ConfigIoFactory.cpp_r configIos/ConfigIoFactory.cpp

@@ -1,4 +1,6 @@
 #-----------------------------------------------------------------------
+# Set values of CXX and CXX_FLAGS
+
 # Set values values of CXX (compiler command) and CXX_FLAGS (general 
 # compiler options) whose values depend on UTIL_MPI and UTIL_DEBUG
 # (i.e., on whether MPI and/or debugging features are enabled).
@@ -25,7 +27,7 @@ else
    endif
 endif
 
-#-----------------------------------------------------------------------
+#=======================================================================
 # Automatic dependency generation.
  
 # Executable file invoked to compute dependencies among header files.

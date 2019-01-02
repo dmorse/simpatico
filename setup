@@ -74,27 +74,36 @@ VARFILE="make/compiler/$VARFILE"
 # Setup src/ source file directory tree
 
 # Construct and install main configuration file src/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" make/config/config.1 > src/temp
-cat src/temp "$VARFILE" make/config/config.2 > src/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" make/config/main_config.1 > src/temp
+cat src/temp "$VARFILE" make/config/main_config.2 > src/config.mk
 rm src/temp
 
 # Note: Stream editor (sed) is used here to:
-#   - Set $(ROOT_DIR) to absolute path of directory from which script invoked
+#   - Set $(ROOT_DIR) to absolute path of directory from which this
+#      script is invoked (i.e., the simpatico root directory).
 #   - Set $(BLD_DIR) to absolute path to src/ directory (in-source-build)
 
-# Setup src/util/ directory
-
-# Namespace config.mk in src/ directory (for in-source builds)
+# Install namespace level configuration files
 cp ./src/util/config.mk_r src/util/config.mk
+cp make/config/simp_config src/simp/config.mk
+cp make/config/mcMd_config src/mcMd/config.mk
+cp make/config/ddMd_config src/ddMd/config.mk
+cp make/config/tools_config src/tools/config.mk
 
-# Copy typedef for the class that defines boundary conditions
+# Install typedef for the class that defines boundary conditions
 cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
+
+# Invoke namespace level setup scripts. These make changes to the
+# src/ directory that are not also applied to the bld/serial and
+# bld/parallel directories. Such changes include installation of 
+# default versions of factory classes and of sources.mk files in 
+# user/ subdirectories.
 
 (cd ./src/simp; ./setup)
 (cd ./src/mcMd; ./setup)
 (cd ./src/ddMd; ./setup)
 (cd ./src/tools; ./setup)
-
+ 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=src/util/config.mk
 if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
@@ -109,16 +118,16 @@ fi
 # Construct and install main config file in bld/serial directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/serial directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" make/config/config.1 > bld/serial/temp
-cat bld/serial/temp "$VARFILE" make/config/config.2 > bld/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" make/config/main_config.1 > bld/serial/temp
+cat bld/serial/temp "$VARFILE" make/config/main_config.2 > bld/serial/config.mk
 rm bld/serial/temp
 
-# Namespace level config.mk files 
+# Install namespace level config.mk files 
 cp src/util/config.mk_r bld/serial/util/config.mk
-cp src/simp/config.mk_r bld/serial/simp/config.mk
-cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
-cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
-cp src/tools/config.mk_r bld/serial/tools/config.mk
+cp make/config/simp_config bld/serial/simp/config.mk
+cp make/config/mcMd_config bld/serial/mcMd/config.mk
+cp make/config/ddMd_config bld/serial/ddMd/config.mk
+cp make/config/tools_config bld/serial/tools/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/serial/util/config.mk
@@ -128,20 +137,22 @@ if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
    rm temp
 fi
 
-# Makefiles
+# Install main and namespace level makefiles
 cp src/makefile bld/serial/makefile
 cp src/util/makefile bld/serial/util/makefile
 cp src/simp/makefile bld/serial/simp/makefile
 cp src/mcMd/makefile bld/serial/mcMd/makefile
 cp src/tools/makefile bld/serial/tools/makefile
 cp src/ddMd/makefile bld/serial/ddMd/makefile
+
+# Install makefiles in test directories
 cp src/util/tests/makefile bld/serial/util/tests/makefile
 cp src/simp/tests/makefile bld/serial/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
 cp src/tools/tests/makefile bld/serial/tools/tests/makefile
 cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
 
-# Configure script
+# Install configure script
 cp src/configure bld/serial/configure
 
 #========================================================================
@@ -150,16 +161,16 @@ cp src/configure bld/serial/configure
 # Construct and install main config file in bld/parallel directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/parallel directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" make/config/config.1 > bld/parallel/temp
-cat bld/parallel/temp "$VARFILE" make/config/config.2 > bld/parallel/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" make/config/main_config.1 > bld/parallel/temp
+cat bld/parallel/temp "$VARFILE" make/config/main_config.2 > bld/parallel/config.mk
 rm bld/parallel/temp
 
-# Namespace level config.mk files
+# Install namespace level config.mk files
 cp src/util/config.mk_r bld/parallel/util/config.mk
-cp src/simp/config.mk_r bld/parallel/simp/config.mk
-cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
-cp src/tools/config.mk_r bld/parallel/tools/config.mk
-cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+cp make/config/simp_config bld/parallel/simp/config.mk
+cp make/config/mcMd_config bld/parallel/mcMd/config.mk
+cp make/config/ddMd_config bld/parallel/ddMd/config.mk
+cp make/config/tools_config bld/parallel/tools/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/parallel/util/config.mk
@@ -169,7 +180,7 @@ if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
    rm temp
 fi
 
-# Makefiles 
+# Install main and namespace level makefiles 
 cp src/makefile bld/parallel/makefile
 cp src/util/makefile bld/parallel/util/makefile
 cp src/simp/makefile bld/parallel/simp/makefile
@@ -177,14 +188,14 @@ cp src/mcMd/makefile bld/parallel/mcMd/makefile
 cp src/ddMd/makefile bld/parallel/ddMd/makefile
 cp src/tools/makefile bld/parallel/tools/makefile
 
-# Makefiles in test directories
+# Install makefiles in test directories
 cp src/util/tests/makefile bld/parallel/util/tests/makefile
 cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
 cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
 cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 
-# Configure script
+# Install configure script
 cp src/configure bld/parallel/configure
 
 # Enable UTIL_MPI by default in bld/parallel (silently).

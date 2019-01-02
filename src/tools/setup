@@ -25,7 +25,7 @@ fi
 # Create user-modifiable copies of default *_r repository file versions.
 
 # Namespace level config file
-cp config.mk_r config.mk
+# cp config.mk_r config.mk
 
 # Factory classes
 cp config/ConfigReaderFactory.cpp_r config/ConfigReaderFactory.cpp

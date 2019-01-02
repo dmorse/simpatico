@@ -1,6 +1,15 @@
-This directory contains two files named config.1 and config.2. 
-These files contain the first and last segments of the makefiles 
-that are installed in the src/, build/serial and bld/parallel
-directories. The makefiles in these directories are constructed
-by concatenating first config.1, then a file from the directory
-src/make/compiler, and finally config.2. 
+This directory contains repository versions of configuration files
+that are copied to appropriate locations in the standard build
+directories (src/, bld/serial and bld/parallel) by the setup script.
+
+The files main_config.1 and main_config.2 are fragments of the main
+configuration file. These two files are concatenated with a compiler 
+setup file from the make/compiler directory to create the main config.mk
+configuration file that is installed in the root of each build 
+directory. 
+
+The files simp_config, mcMd_config, tools_config and ddMd_config are
+repository versions of namespace level configuration files, which are
+copied to create files named config.mk in each corresponding namespace
+level subdirectory.
+

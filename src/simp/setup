@@ -24,7 +24,7 @@ fi
 # Create user-modifiable copies of default repository *_r versions
 
 # Namepspace level config file
-cp config.mk_r config.mk
+# cp config.mk_r config.mk
 
 # Source file in user sub-directory (user-contributed files)
 cp user/sources.mk_r user/sources.mk
