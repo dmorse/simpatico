@@ -1,7 +1,7 @@
 /*! \page install_configure_page 2.9 Optional Features
 
 \ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref install_doc_page (Next) 
+\ref install_boundary_page (Next) 
 <BR>
 
 The source code for all of the simpatico programs contain some features 
@@ -331,5 +331,5 @@ The names of makefile variables that are used to enable optional features all ha
 <BR>
 \ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref install_doc_page (Next) 
+\ref install_boundary_page (Next) 
 */

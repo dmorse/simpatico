@@ -1,6 +1,6 @@
-/*! \page install_doc_page 2.10 Generating Documentation
+/*! \page install_doc_page 2.11 Generating Documentation
 
-\ref install_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_boundary_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Next) 
 <BR>
 
@@ -68,7 +68,7 @@ over, enter
 from the simpatico/ root directory.
 
 <BR>
-\ref install_configure_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_boundary_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Next) 
 
