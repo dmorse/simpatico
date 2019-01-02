@@ -12,7 +12,7 @@ Simpatico is compiled using a system of unix makefiles.  All development was don
 
 All C++ files for simpatico, including both header (*.h) and source (*.cpp) files, are in the simpatico/src/ directory tree.  The header and source file for each class are in the same directory. The name of each C++ file is the same as the class name, followed by the extension .h or .cpp.  All class names and corresponding file names are upper space camel (like Util::Vector or McMd::Species).  
 
-The src/util, src/simp, src/mcMd, src/ddMd, and src/tools directories each contain all the source and header files for a particular C++ namespace: 
+The src/util, src/simp, src/mcMd, src/ddMd, and src/mdPp directories each contain all the source and header files for a particular C++ namespace: 
 
  - src/util/ contains the Util namespace
 
@@ -22,7 +22,7 @@ The src/util, src/simp, src/mcMd, src/ddMd, and src/tools directories each conta
 
  - src/ddMd contains the DdMd namespace
 
- - src/tools contains the Tools namespace
+ - src/mdPp contains the MdPp namespace
 
 These five directories will be referred to in what follows as "namespace" level directories. 
 
@@ -32,11 +32,11 @@ When the implementation of one or more classes in one namespace use class names 
 
   - namespace Simp depends only on namespace Util
 
-  - namespace McMd, DdMd and Tools depend on Simp and Util, but not on each other.
+  - namespace McMd, DdMd and MdPp depend on Simp and Util, but not on each other.
 
 The build system assumes that these are the only inter-namespace dependencies. These conventions must thus be respected by any new code added to the system.
 
-The src/mcMd, src/ddMd, and src/tools directories each also contain one or more main program source files. The main programs mdSim.cpp and mcSim.cpp for single processor simulations are both in the src/mcMd directory.  The main program ddSim.cpp for parallel MD simulations is in the src/ddMd directory. The main program mdPp.cpp for single-processor analysis is in the src/tools directory.
+The src/mcMd, src/ddMd, and src/mdPp directories each also contain one or more main program source files. The main programs mdSim.cpp and mcSim.cpp for single processor simulations are both in the src/mcMd directory.  The main program ddSim.cpp for parallel MD simulations is in the src/ddMd directory. The main program mdPp.cpp for single-processor analysis is in the src/mdPp directory.
 
 Each namespace level source directory contains a subdirectory named tests/ that contains unit tests for classes in the associated name space. These unit tests are not automatically compiled or run by the build system that compiles the source code.
 
@@ -64,7 +64,7 @@ After the setup script has been run, but before any code has has been compiled, 
       simp/
       mcMd/
       ddMd/
-      tools/
+      mdPp/
 \endcode
 Here, we use the BLD_DIR to represent the path to a specific build directory. The purposes of the files in this directory are:
 
@@ -74,7 +74,7 @@ Here, we use the BLD_DIR to represent the path to a specific build directory. Th
 
    - configure is a bash script that can be used to enable or disable specific features before compilation.
 
-After setup but before compilation, each of the five namespace level subdirectories (util/, simp/, mcMd/, ddMd/, and tools/) of each build directory also contains a few makefile fragments with similar names, of the form:
+After setup but before compilation, each of the five namespace level subdirectories (util/, simp/, mcMd/, ddMd/, and mdPp/) of each build directory also contains a few makefile fragments with similar names, of the form:
 \code
    namespace/
       makefile
@@ -82,7 +82,7 @@ After setup but before compilation, each of the five namespace level subdirector
       \tests
          makefile
 \endcode
-Here, we use "namespace/" to denote a namespace level directory name util/, simp/, mcMd/, ddMd/, or tools/. The purposes of these files are:
+Here, we use "namespace/" to denote a namespace level directory name util/, simp/, mcMd/, ddMd/, or mdPp/. The purposes of these files are:
 
    - namespace/makefile is the main makefile for a single namespace. 
 
@@ -123,7 +123,7 @@ The "config.mk" file in each of the namespace level subdirectories of each build
 
 Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, simp/config.mk defines SIMP_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable SIMP_ANGLE in the file BLD_DIR/simp/config.mk, the variable SIMP_DEFS will contain a string "-DSIMP_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named SIMP_ANGLE. 
 
-Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Simp, McMd, DdMd, and Tools namespaces all depend upon the Util namespace.
+Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Simp, McMd, DdMd, and MdPp namespaces all depend upon the Util namespace.
 
 \section make_config_script The configure script
 
@@ -371,7 +371,7 @@ The target rule for library simp_LIB lists all of the object files in simp_OBJS 
 
 \section make_makefile_executable Namespace Directory makefiles with Executable Targets
 
-The makefile for the simp/ namespace level directory, which we used above as an example, does not build any executable files. Corresponding makefiles for the mcMd/, ddMd/, and tools/ subdirectories of each build directory, however, also contain targets that that build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the main program source files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and then linking the resulting object files to static libraries from the mcMd/, simp/ and util/ build directories. The target rules for the final executables list the required static libraries as dependencies.
+The makefile for the simp/ namespace level directory, which we used above as an example, does not build any executable files. Corresponding makefiles for the mcMd/, ddMd/, and mdPp/ subdirectories of each build directory, however, also contain targets that that build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the main program source files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and then linking the resulting object files to static libraries from the mcMd/, simp/ and util/ build directories. The target rules for the final executables list the required static libraries as dependencies.
 
 The fact that executable targets depend on libraries that are defined in other namespaces requires the following further changes to the structure of makefiles that contain executable targets:
 

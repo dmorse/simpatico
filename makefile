@@ -1,6 +1,6 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: all mcMd mcMd-mpi ddMd tools \
+.PHONY: all mcMd mcMd-mpi ddMd mdPp \
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html
@@ -9,7 +9,7 @@ include src/config.mk
 # Main build targets
 
 all:
-	cd bld/serial; $(MAKE) tools
+	cd bld/serial; $(MAKE) mdPp
 	cd bld/serial; $(MAKE) mcMd
 	cd bld/parallel; $(MAKE) mcMd-mpi
 	cd bld/parallel; $(MAKE) ddMd
@@ -27,8 +27,8 @@ ddMd:
 	cd bld/parallel; $(MAKE) ddMd
 
 # Build single-processor analysis program in bld/serial
-tools:
-	cd bld/serial; $(MAKE) tools
+mdPp:
+	cd bld/serial; $(MAKE) mdPp
 
 # ==============================================================================
 # Test targets
@@ -37,11 +37,11 @@ test-serial:
 	@cd bld/serial/util/tests; $(MAKE) quiet
 	@cd bld/serial/simp/tests; $(MAKE) quiet
 	@cd bld/serial/mcMd/tests; $(MAKE) quiet
-	@cd bld/serial/tools/tests; $(MAKE) quiet
+	@cd bld/serial/mdPp/tests; $(MAKE) quiet
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/simp/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
-	@cat bld/serial/tools/tests/count >> count
+	@cat bld/serial/mdPp/tests/count >> count
 	@echo " "
 	@echo "Summary"
 	@cat count
@@ -83,14 +83,14 @@ clean-bin:
 veryclean:
 	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
 	cd bld/serial; rm -f util/makefile simp/makefile 
-	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/serial; rm -f mcMd/makefile ddMd/makefile mdPp/makefile
 	cd bld/serial; rm -f util/tests/makefile simp/tests/makefile 
-	cd bld/serial; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
+	cd bld/serial; rm -f mcMd/tests/makefile ddMd/tests/makefile mdPp/tests/makefile
 	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
 	cd bld/parallel; rm -f util/makefile simp/makefile 
-	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile mdPp/makefile
 	cd bld/parallel; rm -f util/tests/makefile simp/tests/makefile 
-	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile tools/tests/makefile
+	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile mdPp/tests/makefile
 	$(MAKE) clean-bin
 	-rm -f $(BIN_DIR)/makeDep
 	-rm -f scripts/python/*.pyc

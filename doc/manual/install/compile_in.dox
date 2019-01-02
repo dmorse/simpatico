@@ -47,7 +47,7 @@ C++ files in the tree rooted at that subdirectory, without compiling any
 code outside of that subdirectory.
 
 Invoking "make all" from any namespace level subdirectory of src/ 
-(i.e., from the src/util, src/simp, src/mcMd, src/ddMd or src/tools 
+(i.e., from the src/util, src/simp, src/mcMd, src/ddMd or src/mdPp 
 directory) will cause make to compile all the *.cpp source files in
 the namespace level directory tree, create a library containing all
 of the resulting object code, and compile and install any main

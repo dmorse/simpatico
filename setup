@@ -88,7 +88,7 @@ cp ./src/util/config.mk_r src/util/config.mk
 cp make/config/simp_config src/simp/config.mk
 cp make/config/mcMd_config src/mcMd/config.mk
 cp make/config/ddMd_config src/ddMd/config.mk
-cp make/config/tools_config src/tools/config.mk
+cp make/config/mdPp_config src/mdPp/config.mk
 
 # Install typedef for the class that defines boundary conditions
 cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
@@ -102,7 +102,7 @@ cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
 (cd ./src/simp; ./setup)
 (cd ./src/mcMd; ./setup)
 (cd ./src/ddMd; ./setup)
-(cd ./src/tools; ./setup)
+(cd ./src/mdPp; ./setup)
  
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=src/util/config.mk
@@ -127,7 +127,7 @@ cp src/util/config.mk_r bld/serial/util/config.mk
 cp make/config/simp_config bld/serial/simp/config.mk
 cp make/config/mcMd_config bld/serial/mcMd/config.mk
 cp make/config/ddMd_config bld/serial/ddMd/config.mk
-cp make/config/tools_config bld/serial/tools/config.mk
+cp make/config/mdPp_config bld/serial/mdPp/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/serial/util/config.mk
@@ -142,14 +142,14 @@ cp src/makefile bld/serial/makefile
 cp src/util/makefile bld/serial/util/makefile
 cp src/simp/makefile bld/serial/simp/makefile
 cp src/mcMd/makefile bld/serial/mcMd/makefile
-cp src/tools/makefile bld/serial/tools/makefile
+cp src/mdPp/makefile bld/serial/mdPp/makefile
 cp src/ddMd/makefile bld/serial/ddMd/makefile
 
 # Install makefiles in test directories
 cp src/util/tests/makefile bld/serial/util/tests/makefile
 cp src/simp/tests/makefile bld/serial/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/serial/tools/tests/makefile
+cp src/mdPp/tests/makefile bld/serial/mdPp/tests/makefile
 cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
 
 # Install configure script
@@ -170,7 +170,7 @@ cp src/util/config.mk_r bld/parallel/util/config.mk
 cp make/config/simp_config bld/parallel/simp/config.mk
 cp make/config/mcMd_config bld/parallel/mcMd/config.mk
 cp make/config/ddMd_config bld/parallel/ddMd/config.mk
-cp make/config/tools_config bld/parallel/tools/config.mk
+cp make/config/mdPp_config bld/parallel/mdPp/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/parallel/util/config.mk
@@ -186,13 +186,13 @@ cp src/util/makefile bld/parallel/util/makefile
 cp src/simp/makefile bld/parallel/simp/makefile
 cp src/mcMd/makefile bld/parallel/mcMd/makefile
 cp src/ddMd/makefile bld/parallel/ddMd/makefile
-cp src/tools/makefile bld/parallel/tools/makefile
+cp src/mdPp/makefile bld/parallel/mdPp/makefile
 
 # Install makefiles in test directories
 cp src/util/tests/makefile bld/parallel/util/tests/makefile
 cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
+cp src/mdPp/tests/makefile bld/parallel/mdPp/tests/makefile
 cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 
 # Install configure script

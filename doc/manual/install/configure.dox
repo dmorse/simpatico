@@ -283,7 +283,7 @@ The directories bld/serial, bld/parallel and src/ each contain similar
 directory structures, and similar sets of makefiles and makefile fragments.
 In what follows, we will refer to these three directories collectively as 
 build directories.  Each of these three build directories contains a set 
-of five subdirectories named util/, simp/, mcMd/, ddMd/, and tools/ that 
+of five subdirectories named util/, simp/, mcMd/, ddMd/, and mdPp/ that 
 each contain all of the C++ source files in a single C++ namespace. In 
 what follows, we will refer to these five subdirectories as 
 "namespace-level" subdirectories of a build directory.
@@ -295,7 +295,7 @@ been run), each of these three build directories will contain a set of
 configuration are all files named "config.mk" that are located either in 
 the root of the build directory (i.e., in bld/serial, bld/parallel, or 
 src/) or in one the 5 namespace-level subdirectories of the build directory 
-(i.e., in the util/, simp/, mcMd/ and ddMd/, and tools/ subdirectories). 
+(i.e., in the util/, simp/, mcMd/ and ddMd/, and mdPp/ subdirectories). 
 These config.mk configuration files are makefile fragments that are 
 included by other makefiles during compilation process.
 

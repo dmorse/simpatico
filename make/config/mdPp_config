@@ -1,0 +1,64 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(MDPP_DEFS) that is passed to the processor to define 
+#     any preprocessor flags that effect the code in the mdPp/ directory. 
+#
+#   - A variable $(MDPP_SUFFIX) which is added as a suffix to the name of
+#     the mdPp library and (by default) the main executables. 
+#
+#   - Name $(MDPP_LIB) and $(mdPp_BIN) of the DdMd library and 
+#     executable files.
+#
+# This file is included by every makefile in the mdPp directory. 
+# It should be included after $(SRC_DIR)/config.mk and after the
+# $(SRC_DIR)/util/config.mk and $(SRC_DIR)/simp/config.mk files,
+# but before $(SRC_DIR)/mcmd/patterns.mk.
+# 
+# Note: The structure of this file is the same as that of config.mk
+# files in the src/util, src/simp and src/mcMd directories, but this
+# one does not yet define any preprocessor macros. The MDPP_DEFS and
+# MDPP_SUFFIX strings are thus left empty. 
+#
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros.
+
+#-----------------------------------------------------------------------
+# The following code defines the variables MDPP_DEFS and MDPP_SUFFIX.
+# Most uers should not need to modify anything below this point.
+#
+# The variable MDPP_DEFS is a string containg preprocessor definitions 
+# as command line options for the compiler, using the "-D" compiler 
+# option.
+#
+# The variable MDPP_SUFFIX is appended to the names of the mdPp library
+# and (by default) of the ddSim executable.
+#
+
+MDPP_DEFS=
+MDPP_SUFFIX:=
+
+# Note that MDPP_DEFS is a recursive (normal) makefile variable, and so
+# may be extended using the += operator, but that MDPP_SUFFIX is a 
+# non-recursive makefile variable, which may be extended using the := 
+# operator, as MDPP_SUFFIX:=$(MDPP_SUFFIX)_u. 
+
+#-----------------------------------------------------------------------
+# Path to mdPp library
+# Note: BLD_DIR is defined in src/config.mk.
+
+MDPP_ALL_SUFFIX=$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(MDPP_SUFFIX)
+
+mdPp_LIBNAME=mdPp$(MDPP_ALL_SUFFIX)
+mdPp_LIB=$(BLD_DIR)/mdPp/lib$(mdPp_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Path to executables
+# BIN_DIR is defined in src/config.mk.
+
+# Path to serial MD postprocessor (mdPp) program
+mdPp_EXE=$(BIN_DIR)/mdPp
+
+# Path to chainMaker program
+chainMaker_EXE=$(BIN_DIR)/chainMaker
+#-----------------------------------------------------------------------

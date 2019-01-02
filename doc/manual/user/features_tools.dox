@@ -1,4 +1,4 @@
-/*! \page user_features_tools_page 3.7.3 Options for mdPp postprocessor
+/*! \page user_features_mdPp_page 3.7.3 Options for mdPp postprocessor
 
 \ref user_features_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_restart_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -10,7 +10,7 @@ its documentation are still very much under development, however, so
 there thus far not much to see.
 
 <ul style="list-style: none;">
-  <li> \subpage tools_config_HoomdTypeMap_page </li>
+  <li> \subpage mdPp_config_HoomdTypeMap_page </li>
 </ul>
 
 <BR>

@@ -1,0 +1,18 @@
+The directory tree rooted at src/mdPp contains classes for storage and 
+analysis of MD configurations on a single processor. These are intended 
+to be used for analysis of trajectories produced by ddSim, either during 
+post-processing of MD trajectory files or on-the-fly, for operations that
+are most easily carried out on a single processor.
+
+Subdirectories:
+---------------
+
+chemistry   atoms, covalent groups (bonds, etc.), molecules and species
+storage     containers for atoms and groups. System represent a configuration
+config      configuration file readers and writers
+trajectory  trajectory file readers
+analyzers   data analysis and output (classes derived from Analyzer)
+processor   main postprocessor class
+neighbor    classes to identify non-bonded neighboring atoms
+tests       unit tests
+

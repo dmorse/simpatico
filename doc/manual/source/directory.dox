@@ -11,7 +11,7 @@ The following list explains the contents of the subdirectories of the root simpa
      simp/    - Simp namespace
      mcMd/    - McMd namespace
      ddMd/    - DdMd namespace
-     tools/   - Tools namespace
+     mdPp/   - MdPp namespace
      test/    - unit test framework
   bld/        - directories for object (*.o) files and libraries
      serial/  - build directory for serial programs (mcSim and mdSim)
