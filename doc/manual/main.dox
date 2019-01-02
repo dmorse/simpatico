@@ -23,6 +23,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref install_compile_out_page  </li>
    <li> \ref install_compile_in_page  </li>
    <li> \ref install_configure_page  </li>
+   <li> \ref install_boundary_page  </li>
    <li> \ref install_doc_page  </li>
    </ul>
  </li>

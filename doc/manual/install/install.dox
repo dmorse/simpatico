@@ -18,7 +18,8 @@ simpatico.
   <li> \subpage install_compile_out_page  "2.7  Compiling (out-of-source)"</li>
   <li> \subpage install_compile_in_page   "2.8  Compiling (in-source)"</li>
   <li> \subpage install_configure_page    "2.9  Optional Features" </li>
-  <li> \subpage install_doc_page          "2.10 Generating Documentation"</li>
+  <li> \subpage install_boundary_page     "2.10 Period Unit Cell Type" </li>
+  <li> \subpage install_doc_page          "2.11 Generating Documentation"</li>
   </ul>
 
 <BR>
