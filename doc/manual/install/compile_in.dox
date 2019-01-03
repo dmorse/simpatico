@@ -10,7 +10,7 @@ to developers who prefer to be able to compile some or all of the code from
 the unix command line without leaving the directory tree in which they are 
 editing source code files.
 
-\section install_insource_src_sec Invoking make from the src/ directory
+\section install_insource_src_sec Invoking make from the src/ Directory
 
 To peform a complete in-source build of any of the simpatico programs, one 
 may simply invoke the make utility from the src/ directory rather than from 
@@ -35,7 +35,7 @@ these targets will cause make to place object, dependency and library
 files in the simpatico/src/ directory tree and then install the resulting
 program or programs in the simpatico/bin directory by default. 
 
-\section install_insource_makeall_sec Invoking "make all" from a subdirectory of src/
+\section install_insource_makeall_sec Invoking "make all" from a Subdirectory of src/
 
 It is also possible to invoke make from a subdirectory of src/ in order to 
 compile a smaller set of source files. Invoking the command 

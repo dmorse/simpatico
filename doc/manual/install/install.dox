@@ -14,7 +14,7 @@ simpatico.
   <li> \subpage install_overview_page     "2.3  Installation Overview" </li>
   <li> \subpage install_environment_page  "2.4  Environment Variables" </li>
   <li> \subpage install_setup_page        "2.5  Setup Script" </li>
-  <li> \subpage install_inout_page        "2.6  In-source vs. Out-of-source" </li>
+  <li> \subpage install_inout_page        "2.6  Compiling Out-of-source vs. In-source" </li>
   <li> \subpage install_compile_out_page  "2.7  Compiling (out-of-source)"</li>
   <li> \subpage install_compile_in_page   "2.8  Compiling (in-source)"</li>
   <li> \subpage install_configure_page    "2.9  Optional Features" </li>

@@ -18,9 +18,9 @@ programs using default settings:
      \code 
      > ./setup
      \endcode
-     to setup the default compiler options, or invoke the setup with a
-     filename argument for non-default compiler options 
-     (as discussed \ref install_setup_page "here").
+     to setup the build system with default compiler options. 
+     Alternatively, invoke the setup with a filename argument for non-default 
+     compiler options (as discussed \ref install_setup_page "here").
 
    - Compile mcSim and mdSim: Compile and install the single-processor 
      mcSim and mdSim MC and MD programs, by invoking
@@ -30,7 +30,7 @@ programs using default settings:
      from the simpatico root directory. This will install executables 
      named "mdSim" and "mcSim" in the simpatico/bin directory.
 
-   - Compile postprocessor: Compile and install the "mdPp" MD 
+   - Compile the postprocessor: Compile and install the "mdPp" MD 
      post-processing analysis program, by invoking
      \code
      > make mdPp 
@@ -45,7 +45,7 @@ programs using default settings:
      \code
      > make mcMd-mpi
      \endcode
-     from the simpatico/ directory. If compilation succeeds (i.e., if 
+     from the simpatico root directory. If compilation succeeds (i.e., if 
      MPI is configured correctly), this will install executables named 
      "mcSim_m" and "mdSim_m" in the simpatico/bin directory. 
 
@@ -54,22 +54,23 @@ programs using default settings:
      \code
      > make ddMd
      \endcode
-     from the simpatico/ directory. This will install the "ddSim" executable 
-     in the simpatico/bin directory.
+     from the simpatico root directory. This will install the "ddSim" 
+     executable in the simpatico/bin directory.
 
    - Configure optional features and recompile (optional): Use the configure 
      script in the simpatico/ root directory to enable any desired optional 
      compile-time features that are disabled by default and then recompile 
      (as discussed \ref install_configure_page "here").
 
-Note that all commands should be issued from the simpatico/ root directory. 
+Note that all of the above commands should be issued from the simpatico root 
+directory. 
 
 The most potentially complicated part of compiling simpatico is the need to
 set up the compiler to link correctly to an MPI library. The MPI library is 
 only needed by the ddSim program and the multi-processor versions of mcSim 
 and mdSim. Users who would like to compile the single-processor mcSim and 
-mdSim programs and begin experimenting with those can simply follow the 
-above instructions through the instruction to invoke "make mcMd". 
+mdSim programs and begin experimenting with those can simply follow the above 
+instructions through the instruction to invoke "make mcMd". 
 
 Each of the above steps is discussed in more detail in the following pages.
 
