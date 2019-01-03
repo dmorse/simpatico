@@ -1,4 +1,4 @@
-/*! \page install_source_page 2.2 Obtaining the Source Code
+/*! \page install_source_page 2.2 Source Code
 
 \ref install_require_page (Prev) 
 \ref install_overview_page (Next) 
@@ -45,7 +45,8 @@ a prefix "simpatico/" should be understood to be relative paths, relative
 to this directory. The directory structure is explained 
 \ref source_directory_page "here".
 
-\section compile_submodules_section Comment on Submodules
+\section compile_submodules_section Comment: Use of Git Submodules
+
 Some subdirectories of the simpatico/src directory are maintained in 
 separate github repositories and are imported into simpatico as git
 "submodules". (See chapter 7.11 of the Pro Git online book). Specifically, 

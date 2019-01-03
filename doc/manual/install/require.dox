@@ -52,7 +52,7 @@ the mcSim and mdSim single processor programs. The paralllel versions
 of mcSim and mdSim are trivially parallel programs that simply run 
 different variants or replicas of a system on different CPU cores.
 
-\section require_git_section Checking for git
+\section require_git_section Git Client
 
 The source code for simpatico is hosted on the github server, at
 <a href=http://github.com>github</a>, as project dmorse/simpatico.  
@@ -81,7 +81,7 @@ XCode app and command line tools, which are needed for other purposes.
 Once you have confirmed that a git client is available, you may clone
 a copy of the source code.
 
-\section install_require_python Python interpreter
+\section install_require_python Python 
 
 Similarly, one can check if a python interpreter is accessible by checking
 if the command
@@ -90,7 +90,7 @@ if the command
 \endcode
 returns a non-empty path.
 
-\section install_require_compiler_serial Compiler for serial programs
+\section install_require_compiler_serial Compiler (Serial Programs)
 
 By default, the simpatico build system invokes the compiler used to create 
 serial programs by calling the compiler commnd "g++". On linux systems, 
@@ -123,7 +123,7 @@ modifying a compiler setup file that is read during initial setup
 of the build system. The setup process is described in more detail 
 \ref install_setup_page "here".
 
-\section install_require_compiler_parallel Compiler for parallel programs
+\section install_require_compiler_parallel Compiler (Parallel Programs)
 
 The choice of an MPI library is related to the choice of compiler used 
 to compile simpatico: Generally, simpatico should be compiled using the 
@@ -238,7 +238,7 @@ simpatico programs that use MPI using the gcc compiler and default
 configuration settings (i.e., after invoking the "setup" script with no
 argument, as discussed \ref install_setup_page "here").
 
-\subsection install_mpi_MacPort Mac OS X - MacPort Package Manager
+\subsection install_mpi_MacPort Mac OS X - MacPorts Package Manager
 
 To install OpenMpi on a Mac OS X system on which the MacPorts system is 
 being used to manage linux packages, simply enter
