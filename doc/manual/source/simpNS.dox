@@ -44,16 +44,18 @@ A Species object contains a description of the chemical structure (connectivity)
 
 \section Simp_boundary_sec Boundary
 
-A Util::Boundary object defines periodic boundary conditions for 
-a simulation. A Boundary contains the dimensions of periodic simulation 
-unit cell, and provides methods to calculate separation vectors and 
-distances using the nearest image convention, and to shift a position 
-Vector into the primary unit cell.
+A Simp::Boundary object defines periodic boundary conditions for a 
+simulation. A Boundary contains the dimensions of periodic simulation unit 
+cell, and provides methods to calculate separation vectors and distances 
+using the nearest image convention, and to shift a position Vector into 
+the primary unit cell.
 
-In the current implementation, the name Boundary is a typedef for
-the class OrthorhombicBoundary. The use of a typedef is intended 
-to make it easier to later develop versions of the code with more 
-general boundaries (e.g., non-orthogonal axes). 
+The name Boundary is actually implemented as a C++ typedef that declares
+Boundary to be an alias for the name of a concrete class. The typedef is defined in the file src/simp/Boundary/Boundary.h. By default, Boundary is 
+defined to be an alias for the class OrthorhombicBoundary, which allows
+the use of a unit cell with orthogonal edges of different lengths. The 
+use of a typedef allows the user to introduce an alternate class to
+implement more general boundaries when needed (e.g., non-orthogonal axes). 
 
 \section Simp_ensemble_sec Statistical ensembles
 
