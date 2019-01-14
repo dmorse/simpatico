@@ -35,7 +35,7 @@ these targets will cause make to place object, dependency and library
 files in the simpatico/src/ directory tree and then install the resulting
 program or programs in the simpatico/bin directory by default. 
 
-\section install_insource_makeall_sec Invoking "make all" from a Subdirectory of src/
+\section install_insource_makeall_sec Invoking "make all" from a Subdirectory
 
 It is also possible to invoke make from a subdirectory of src/ in order to 
 compile a smaller set of source files. Invoking the command 
@@ -72,22 +72,21 @@ that have recently been modified.
 
 \section install_insource_mpi_sec Managing MPI Settings
 
-One complication of in-source compilation arises when both serial 
-and parallel programs are built in the same build directory.  The 
-simpatico package contains both serial programs that do not use 
-MPI (the mcSim, mdSim and mdPp programs), and several parallel 
-programs that use MPI (the ddSim program and the parallel versions 
-of mcSim and mdSim). These two sets of programs are constructed from
-of the same C++ classes, but the source files for these classes must 
-be compiled with different compiler options for use in serial and 
-parallel programs. All simpatico C++ source files used by a parallel 
-MPI program must be compiled with MPI enabled by the build system. 
-Conversely, all C++ files used by a serial program must be compiled 
-with MPI disabled.
+Users should be aware of one complication that arises when both serial 
+and parallel simpatico programs are built in the src/ directory. The 
+simpatico package contains both serial programs that do not use MPI 
+(the mcSim, mdSim and mdPp programs), and several parallel programs that 
+do use MPI (the ddSim program and the parallel versions of mcSim and 
+mdSim). These two sets of programs are constructed from many of the same 
+C++ classes, but the source files for these classes must be compiled with 
+different compiler options for use in serial and parallel programs. All 
+simpatico C++ source files used by a parallel MPI program must be compiled 
+with MPI enabled by the build system. Conversely, all C++ files used by 
+serial programs must be compiled with MPI disabled.
 
 When a user compiles part of the source code by invoking "make all" 
 from any subdirectory of the src/ directory, he or she is responsible
-for explicitly making sure that MPI is enabled or disabled, as appropriate, 
+for explicitly making sure that MPI is enabled or disabled, as needed, 
 before attempting to compile. One can determine whether MPI is currently
 enabled or disabled, and enable or disable it as needed, by invoking
 the \ref install_configure_page "configure" bash script from the src/ 

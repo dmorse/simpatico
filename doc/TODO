@@ -3,30 +3,29 @@ TODO:
 1) Re-organize user guide to make it easier for users find what they 
    are looking for. Possible organization (think about this again):
 
-   - Getting the Source Code (good)
-   - Compiling (good)
    - Running a Simulation (good)
    - Parameter Files (good)
    - Command Files (good)
    - Configuration Files (good)
    - Examples (pretty good, check if up to date)
-   - Potential Energies (new)
-   - Simulation Algorithms (list and explain options)
+   * Potential Energies (new)
+   * Simulation Algorithms (list and explain options)
       - ddSim integrators
       - mdSim integrators
       - mcSim McMoves 
-   - Data Analysis 
-      - One the fly
-      - Post-processing
+   * Analyzers
+      Explain use of analyzers, briefly postprocessing
       - Analyzers for ddSim 
       - Analyzers for mdSim or mcSim
       - Analyzers for mdSim 
       - Analyzers for mcSim 
+   * Postprocessing
+      - One the fly
+      - Post-processing
    - Perturbation (new)
    - Restarting (check if up to date)
    - Multi-System Simulations
-   - Compile Time Options (pretty good)
-   - Guide to Documentation (new - Where to find information)
+   * Guide to Documentation (new - Where to find information)
 
 2) Document all of the analyzers, with one *.dox file per interaction 
    in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.

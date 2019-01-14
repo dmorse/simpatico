@@ -5,14 +5,12 @@
 <BR>
 
 Simpatico is designed to be compiled and run in a unix-like environment. 
-The build system that is used to compile and install simpatico is based
-on unix makefiles, and is thus designed to work only in unix-like 
-environments (i.e., gnu/linux or Mac OS X).  The package has been 
-compiled and used on systems running either linux or a recent version 
-of Mac OS X operating systems. In order to compile on a MacIntosh under
-Mac OS X, the computer must first be configured for development by 
-installing both the XCode integrated development environment and the 
-command line tools for XCode.
+The package has been compiled and used on systems running either linux 
+or a recent version of Mac OS X operating systems.  Compilation is 
+controlled by a system of unix makefiles. In order to compile on a
+MacIntosh computer running Mac OS X, the computer must first be configured 
+for development by installing both the XCode integrated development 
+environment and the command line tools for XCode. 
 
 Simpatico is distributed only as source code, and must be compiled 
 by the user.  All source code is written in ANSI standard C++.  By 

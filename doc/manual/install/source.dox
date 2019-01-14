@@ -7,22 +7,21 @@
 
 The source code for simpatico is hosted on the github server, at
 <a href=http://github.com>github</a>, as project dmorse/simpatico.  The 
-source code may be obtained by using the git version control manager 
-program to clone the public 
-<a href=https://github.com/dmorse/simpatico>git repository</a>. The
-following instructions assume that a "git" client is installed on
+source code may be obtained by using a git version control manager to clone 
+the public <a href=https://github.com/dmorse/simpatico>git repository</a>. 
+The following instructions assume that a "git" client is installed on
 your computer.
 
 \section compile_getcode_section Cloning the Repository
 
-To obtain a working copy of the simpatico git repository, you should 
+To obtain a working copy of the simpatico git repository, you should first
 change directory (cd) to the directory you want to contain the simpatico 
-root directory and enter the command
+root directory. From there, then enter the command
 \code
 > git clone --recursive https://github.com/dmorse/simpatico.git
 \endcode
-This should create a complete working copy of the simpatico source code in 
-a new subdirectory named "simpatico/" of the directory from which you 
+This should create a complete working copy of the simpatico source code 
+in a new subdirectory named "simpatico/" of the directory from which you 
 invoked the above command.
 
 The above instructions are for users who simply want to get a copy of 
@@ -33,19 +32,19 @@ simpatico with others should go through a slightly more complicated
 procedure. Such users should instead:
 <ul>
 <li> Create a user account on github.com, if they do not already have one.</li>
-<li> Create a user fork of simpatico on their personal github account</li>
-<li> Clone their personal fork of simpatico to a local machine, using 
-the --recursive option and using a communication protocol that is set up 
-to allow them write access. </li>
+<li> Create a fork (i.e., a personal version) of the simpatico repository in their github user account</li>
+<li> Clone their copy of simpatico to a computer on which they can compile 
+and edit the code, using the --recursive option and using a communication 
+protocol that is set up to allow them write access. </li>
 </ul>
 
 Herefafter, we assume that the root directory of the simpatico working copy 
 is named simpatico/.  References to paths that do not start explicitly with 
 a prefix "simpatico/" should be understood to be relative paths, relative 
-to this directory. The directory structure is explained 
-\ref source_directory_page "here".
+to this directory. The directory structure of the simpatico repository is 
+explained \ref source_directory_page "here".
 
-\section compile_submodules_section Comment: Use of Git Submodules
+\section compile_submodules_section On the Use of Git Submodules
 
 Some subdirectories of the simpatico/src directory are maintained in 
 separate github repositories and are imported into simpatico as git
