@@ -19,7 +19,7 @@ The following classes represent entities that are used to describe the structure
 
    - A Atom represents a point particle
 
-   - A Group <N> represents a small group of N covalently bonded interacting atoms, such as a 2-body (N=2)
+   - A Group < N > represents a small group of N covalently bonded interacting atoms, such as a 2-body (N=2)
      covalent bond, a 3-body angle interaction group, or a 4-body dihedral interaction group.
 
    - A Molecule represents a molecule, which contains atoms and covalent groups.
