@@ -778,7 +778,7 @@ INPUT                  = ../src/programs.mod \
                          ../src/simp \
                          ../src/mcMd \
                          ../src/ddMd \
-                         ../src/tools \
+                         ../src/mdPp \
                          ../src/test \
                          manual
 
@@ -824,9 +824,9 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = ../src/tools/hoomd/xmlParser.h \
-                         ../src/tools/hoomd/xmlParser.cpp \
-                         ../src/tools/hoomd/ExtractTopologyMain.cpp \
+EXCLUDE                = ../src/mdPp/hoomd/xmlParser.h \
+                         ../src/mdPp/hoomd/xmlParser.cpp \
+                         ../src/mdPp/hoomd/ExtractTopologyMain.cpp \
                          ../src/util/boundary \
                          ../src/util/ensembles \
                          ../src/mcMd/attic \

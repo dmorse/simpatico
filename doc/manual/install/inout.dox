@@ -32,7 +32,7 @@ We refer to the three directories src/, bld/serial, and bld/parallel
 in what follows as standard build directories.  The bld/serial and 
 bld/parallel directories each have a directory structure similar to that 
 of the src/ directory.  Each of the three standard build directories has 
-five subdirectories names util/, simp/, mcMd/, ddMd/, and tools/ that each 
+five subdirectories names util/, simp/, mcMd/, ddMd/, and mdPp/ that each 
 contain the source code for all entities defined in a corresponding C++ 
 namespace. We refer to these five top level directories of each build
 directory as namespace level directories.

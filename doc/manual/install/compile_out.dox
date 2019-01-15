@@ -57,8 +57,8 @@ do so, cd to the simpatico/ root directory and enter:
 > make mdPp
 \endcode
 If this is done after compiling mcSim and mdSim, this will compile some 
-additional code in src/tools directory, place *.o and *.d files in the 
-simpatico/bld/serial/tools directory and install an executable named 
+additional code in src/mdPp directory, place *.o and *.d files in the 
+simpatico/bld/serial/mdPp directory and install an executable named 
 mdPp in the simpatico/bin directory. 
 
 \section compile_ddMd_section Compiling ddSim
