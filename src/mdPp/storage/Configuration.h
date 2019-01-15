@@ -31,7 +31,7 @@ namespace MdPp
    * An instantaneous molecular dynamics configuration.
    *
    * A Configuration has:
-   *   - a Util::Boundary
+   *   - a Simp::Boundary
    *   - an AtomStorage container for atoms
    *   - a GroupStorage for each type of covalent group
    *

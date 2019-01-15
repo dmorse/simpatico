@@ -36,8 +36,8 @@ The dimensions of the box are periodically output to file {outputFileName}.dat. 
 
    iStep  L[0]  L[1]  L[2]   V
 
-where the vector L is the value returned by Util::Boundary::lengths() and
-V is the volume, as returned by Util::Boundary::volume().
+where the vector L is the value returned by Simp::Boundary::lengths() and
+V is the volume, as returned by Simp::Boundary::volume().
 
 */
 
