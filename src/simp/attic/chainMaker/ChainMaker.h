@@ -1,5 +1,5 @@
-#ifndef MDPP_CHAIN_MAKER_H
-#define MDPP_CHAIN_MAKER_H
+#ifndef SIMP_CHAIN_MAKER_H
+#define SIMP_CHAIN_MAKER_H
 
 #include   <simp/interaction/bond/HarmonicBond.h>
 #include   <simp/boundary/Boundary.h>
@@ -9,11 +9,10 @@
 
 #include <iostream>
 
-namespace MdPp 
+namespace Simp
 {
 
    using namespace Util;
-   using namespace Simp;
 
    /**
    * Generates a simulation box full of randomly generated linear polymers.

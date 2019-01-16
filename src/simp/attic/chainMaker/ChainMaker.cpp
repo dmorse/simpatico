@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace MdPp 
+namespace Simp
 {
 
    ChainMaker::ChainMaker(){};

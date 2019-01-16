@@ -1,10 +1,10 @@
 BLD_DIR_REL =../..
 include $(BLD_DIR_REL)/config.mk
-include $(SRC_DIR)/mdPp/patterns.mk
+include $(SRC_DIR)/simp/patterns.mk
 
 # -- Targets for programs
 
-ChainMaker=$(BLD_DIR)/mdPp/generators/ChainMaker
+ChainMaker=$(BLD_DIR)/simp/attic/chainMaker/ChainMaker
 ChainMaker_BIN=$(BIN_DIR)/chainMaker
 
 $(ChainMaker_BIN): $(ChainMaker).o $(LIBS)

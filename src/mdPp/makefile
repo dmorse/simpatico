@@ -13,12 +13,13 @@ include $(SRC_DIR)/mdPp/patterns.mk
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(mdPp_LIB) $(mdPp_EXE) $(chainMaker_EXE)
+all: $(mdPp_LIB) $(mdPp_EXE)
+	echo $(mdPp_LIB)
+	echo $(mdPp_OBJS)
 
 clean:
 	rm -f $(mdPp_OBJS) $(mdPp_OBJS:.o=.d) $(mdPp_LIB)
 	rm -f $(mdPp).o $(mdPp).d
-	rm -f $(ChainMaker).o $(ChainMaker).d
 	cd tests; $(MAKE) clean
 	rm -f *.o */*.o 
 	rm -f *.d */*.d 
@@ -47,15 +48,6 @@ $(mdPp_EXE): $(mdPp).o $(LIBS)
 mdPp:
 	$(MAKE) $(mdPp_EXE)
 
-
-#--- ChainMaker -------------------------------------
-# Note: chainMaker_EXE is defined in mdPp/config.mk
-
-ChainMaker=$(BLD_DIR)/mdPp/generators/ChainMaker
-
-$(chainMaker_EXE): $(ChainMaker).o $(LIBS)
-	$(CXX) -o $(chainMaker_EXE) $(ChainMaker).o $(LIBS) $(LDFLAGS)
-
 #-----------------------------------------------------------------------
 # Include *.d dependency files
  
@@ -63,5 +55,4 @@ $(chainMaker_EXE): $(ChainMaker).o $(LIBS)
 -include $(simp_OBJS:.o=.d)
 -include $(mdPp_OBJS:.o=.d)
 -include $(mdPp).d
--include $(ChainMaker).d
 
