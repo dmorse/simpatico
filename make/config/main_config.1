@@ -15,7 +15,7 @@
 # 
 #  - Variables ROOT_DIR, SRC_DIR, BLD_DIR and BIN_DIR that contains 
 #    absolute paths for the simpatico root directory and some of its
-#    subdirectories. 
+#    subdirectories.
 #
 #  - Variables UTIL_MPI, UTIL_DEBUG, and UTIL_CXX11 that, if defined
 #    enabled conditional compilation of optional features of the code.
@@ -73,7 +73,7 @@ BIN_DIR=$(ROOT_DIR)/bin
 # disabling the MPI or and/or debugging features.  Specifically, the 
 # configure script may be be invoked with option -m to enable 
 # (option -m1) or disable (-m0) MPI, and with option -g to enable 
-# (-g1) or disable (-g1) debugging. For example, the command:
+# (-g1) or disable (-g0) debugging. For example, the command:
 #
 # ./configure -m1 -g0 
 #
@@ -92,11 +92,13 @@ BIN_DIR=$(ROOT_DIR)/bin
 # programs (when UTIL_MPI is not defined) or parallel programs (when
 # UTIL_MPI is defined). The choice of values of variables defined here 
 # may thus be different for different combinations of compiler, MPI
-# library and operating system.  See src/make/README for further 
-# discussion of some of these makefile variables.
+# library and operating system.  See the section of this file 
+# entitled "Makefile Patterns and Recipes" for a discussion of how
+# these variables are used.
 #
-# The following block of variable definitons is copied by the setup
-# script from a compiler setup file in the make/compiler directory. 
-# The name of the desired compiler setup file may be specified as an 
-# argument to the setup script command (e.g., "./setup intel").
+# The following block of variable definitions is copied by the setup
+# script from a compiler setup file in the make/compiler directory
+# and incorporated into this config.mk file. The name of the desired 
+# compiler setup file may be specified as an argument to the setup 
+# script command (e.g., "> ./setup intel").
 #
