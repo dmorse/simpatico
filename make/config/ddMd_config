@@ -13,7 +13,7 @@
 # This file is included by every makefile in the ddMd directory. 
 # It should be included after $(SRC_DIR)/config.mk and after the
 # $(SRC_DIR)/util/config.mk and $(SRC_DIR)/simp/config.mk files,
-# but before $(SRC_DIR)/mcmd/patterns.mk.
+# but before $(SRC_DIR)/ddMd/patterns.mk.
 # 
 # Note: The structure of this file is the same as that of config.mk
 # files in the src/util, src/simp and src/mcMd directories, but this
@@ -52,17 +52,24 @@ DDMD_DEFS+= -DDDMD_MODIFIERS
 endif
 
 #-----------------------------------------------------------------------
-# Path to ddMd library
-# Note: $(BLD_DIR) is defined in $(BLD_DIR)/config.mk main config file
+# Path to ddMd static library file
+#
+# Note: 
+#   BLD_DIR is defined in src/config.mk (main config file)
+#   *_SUFFIX variables are defined in namespace config.mk files
 
+# Suffix added to name of library file and executable
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(DDMD_SUFFIX)
 
+# Name of library file
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
+
+# Full path to library file
 ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
 # Path to executables
-# $(BIN_DIR) is defined in $(BLD_DIR)/config.mk main config file
+# Note: $(BIN_DIR) is defined in $(BLD_DIR)/config.mk main config file
 
 # Path to parallel domain-decomposition Md (ddSim) program
 ddSim_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)

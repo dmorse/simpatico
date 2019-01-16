@@ -70,15 +70,24 @@ MCMD_DEFS+= -DMCMD_SHIFT
 endif
 
 #-----------------------------------------------------------------------
-# Path to mcMd library
+# Path to mcMd static library file
+#
+# Note: 
+#   BLD_DIR is defined in src/config.mk (main config file)
+#   *_SUFFIX variables are defined in namespace config.mk files
 
+# Suffix added to name of library and executables
 MCMD_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(MCMD_SUFFIX)
 
+# Name of library file
 mcMd_LIBNAME=mcMd$(MCMD_ALL_SUFFIX)
+
+# Path to library file
 mcMd_LIB=$(BLD_DIR)/mcMd/lib$(mcMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
 # Paths to executable files
+# Note: BIN_DIR is defined in src/config.mk (main config file)
 
 mcSim_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
 mdSim_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)

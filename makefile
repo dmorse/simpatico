@@ -91,7 +91,6 @@ veryclean:
 	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile mdPp/makefile
 	cd bld/parallel; rm -f util/tests/makefile simp/tests/makefile 
 	cd bld/parallel; rm -f mcMd/tests/makefile ddMd/tests/makefile mdPp/tests/makefile
-	$(MAKE) clean-bin
 	-rm -f scripts/python/*.pyc
 	-rm -f $(BIN_DIR)/*
 	cd doc; $(MAKE) clean

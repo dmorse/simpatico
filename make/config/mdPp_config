@@ -32,8 +32,7 @@
 # option.
 #
 # The variable MDPP_SUFFIX is appended to the names of the mdPp library
-# and (by default) of the ddSim executable.
-#
+# and (by default) of the mdPp executable.
 
 MDPP_DEFS=
 MDPP_SUFFIX:=
@@ -41,11 +40,14 @@ MDPP_SUFFIX:=
 # Note that MDPP_DEFS is a recursive (normal) makefile variable, and so
 # may be extended using the += operator, but that MDPP_SUFFIX is a 
 # non-recursive makefile variable, which may be extended using the := 
-# operator, as MDPP_SUFFIX:=$(MDPP_SUFFIX)_u. 
+# operator, as MDPP_SUFFIX:=$(MDPP_SUFFIX)_m. 
 
 #-----------------------------------------------------------------------
-# Path to mdPp library
-# Note: BLD_DIR is defined in src/config.mk.
+# Path to mdPp static library file
+#
+# Note: 
+#   BLD_DIR is defined in src/config.mk (main config file)
+#   *_SUFFIX variables are defined in namespace config.mk files
 
 MDPP_ALL_SUFFIX=$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(MDPP_SUFFIX)
 
@@ -53,12 +55,9 @@ mdPp_LIBNAME=mdPp$(MDPP_ALL_SUFFIX)
 mdPp_LIB=$(BLD_DIR)/mdPp/lib$(mdPp_LIBNAME).a
 
 #-----------------------------------------------------------------------
-# Path to executables
-# BIN_DIR is defined in src/config.mk.
+# Path to mdPp executable
+# Note: BIN_DIR is defined in src/config.mk.
 
 # Path to serial MD postprocessor (mdPp) program
 mdPp_EXE=$(BIN_DIR)/mdPp
-
-# Path to chainMaker program
-chainMaker_EXE=$(BIN_DIR)/chainMaker
 #-----------------------------------------------------------------------

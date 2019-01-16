@@ -5,7 +5,7 @@ util       utility classes for scientific computation (namespace Util)
 simp       general classes for simpatico simulations (namespace Simp)
 mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
 ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
-mdPp       pre- and postprocessing tools (namespace MdPp)
+mdPp       molecular dynamics postprocessor (namespace MdPp)
 test       unit test framework
 draft      unfinished or proposed classes
 
