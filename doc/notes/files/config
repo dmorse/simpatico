@@ -44,26 +44,24 @@ SPECIES:
    nSpecies int
    [hasAtomCharge]
 
-   species 1 {
+   species 0
      nMolecule int
      nAtom int
-       0 atomType [charge]
-       1 atomType [charge]
+     0 atomType [charge]
+     1 atomType [charge]
        ...
      [nBond int]
-       id  atomId0 atomId1 typeId
+     id  atomId0 atomId1 typeId
        .....
      [nAngle int]
-       id  atomId0 atomId1 atomId2 typeId
+     id  atomId0 atomId1 atomId2 typeId
        ...
      [nDihedral int]
-       id  atomId0 atomId1 atomId2 typeId
+     id  atomId0 atomId1 atomId2 typeId
      ...
-   }
 
-   species 2 {
+   species 1 
      ....
-   }
 
    ------------------
 
@@ -158,16 +156,16 @@ BONDS, ANGLES, or DIHEDRALS:
 
    Remarks:
 
-   1) In a molecular system with no intramolecular bonding, the BONDS,
+   1) In a molecular system with no inter-molecular bonding, the BONDS,
    ANGLES and DIHEDRALS blocks should be absent.
 
    2) In a molecular system, these blocks may be used to describe covalent
    interactions that are not already specified by the topology block. 
 
    3) Each of these blocks is optional. In a non-molecular system, the 
-   absence of sucha  block means that there are no groups of the specified 
+   absence of such  block means that there are no groups of the specified 
    type. In a molecular system, the absence of a block means that all such
-   groups are accounted for by the TOPOLOGY block.
+   groups are accounted for by the SPECIES block.
 
    4) The format is essentially the same for each type of covalent bond, 
    except for the block label BONDS, ANGLES, or DIHEDRALS and the number

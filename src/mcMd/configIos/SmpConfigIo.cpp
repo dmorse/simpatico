@@ -121,8 +121,8 @@ namespace McMd
       in >> Label("BOUNDARY");
       in >> boundary();
 
-      // Read ATOM block header
-      in >> Label("ATOM");
+      // Read ATOMs block header
+      in >> Label("ATOMS");
       Label orderedLabel("ordered", false); // optional label
       bool isOrdered = orderedLabel.match(in);
       std::string formatString;
@@ -142,9 +142,11 @@ namespace McMd
       bool hasAtomVelocity = atomFormat.isActive('v');
       bool hasAtomShift = atomFormat.isActive('s');
       UTIL_CHECK(hasAtomPosition);
-      if (!isOrdered) {
-         UTIL_CHECK(hasAtomContext);
-      }
+      UTIL_CHECK(isOrdered);
+      // TODO: Add ability to read unordered atoms with context.
+      // if (!isOrdered) {
+      //   UTIL_CHECK(hasAtomContext);
+      // }
 
       // Read all atoms
       Molecule* molPtr;
@@ -238,7 +240,7 @@ namespace McMd
    {
       using std::endl;
 
-      // Species atom info
+      // Write SPECIES block (structure of molecular species)
       out << "SPECIES";
       int nSpecies = simulation().nSpecies();
       out << endl << "nSpecies  " << nSpecies;
@@ -250,7 +252,7 @@ namespace McMd
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          out << endl << "species " << iSpecies;
          nMolecule = system().nMolecule(iSpecies);
-         out << endl << "  nMolecule  " << nMolecule;
+         out << endl << "  nMolecule  " << nMolecule << endl;
          speciesPtr = &simulation().species(iSpecies);
          speciesPtr->writeStructure(out, "  ");
          nAtom = speciesPtr->nAtom();
@@ -258,12 +260,12 @@ namespace McMd
          out << endl;
       }
 
-      // Write Boundary dimensions
+      // Write BOUNDARY block (boundary dimensions)
       out << endl << "BOUNDARY";
       out << endl << boundary() << endl;
 
-      // Write ATOM information
-      out << endl << "ATOM";
+      // Write ATOMS block
+      out << endl << "ATOMS";
       out << endl << "ordered";
       out << endl << "format imtpv";
       out << endl << "nAtom " << nAtomTot;

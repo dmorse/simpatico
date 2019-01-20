@@ -24,7 +24,7 @@ namespace McMd
    using namespace Simp;
 
    /**
-   * Common configuration file format for simpatico.
+   * Configuration file format for simpatico simulation programs.
    *
    * \ingroup McMd_ConfigIo_Module
    */
