@@ -9,6 +9,7 @@
 */
 
 #include <ddMd/configIos/ConfigIo.h>
+#include <simp/species/SpeciesGroup.h>
 
 namespace DdMd
 {
@@ -16,6 +17,7 @@ namespace DdMd
    class Simulation;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Simpatico configuration file format.
@@ -84,8 +86,24 @@ namespace DdMd
       template <int N>
       int writeGroups(std::ofstream& file, 
                       const char* sectionLabel, const char* nGroupLabel,
-                      GroupStorage<N>& storage, GroupCollector<N>& collector);
+                      GroupStorage<N>& storage, 
+                      GroupCollector<N>& collector);
    
+
+      /**
+      * Replicate and send Group<N> objects for a species.
+      */
+      template <int N>
+      void sendSpeciesGroups(int& groupId, int& firstAtomId,
+                             int  nMolecule, int  nAtom, int  nGroup,
+                             const DArray<SpeciesGroup<N> >& groups,
+                             GroupDistributor<N>& distributor);
+
+      /**
+      * Replicate and send all bond groups.
+      */
+      void replicateBonds();
+
    };
 
 }

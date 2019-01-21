@@ -73,11 +73,11 @@ Communicators in Potential Energies
 Species:
 -------
 
-- Add an array of Species, which is optionally allocated. 
-
 - Add a SmpConfig read/writer that can read Species topology 
   information.  This can simply call the readStructure method of 
   Species, but will need to add code to read the moleculeCapacity.
+  Needed: Ability to generate and broadcast groups based on the
+  species topology descriptions, without reading explicit groups.
 
 - Add a SmpTrajectory writer. Decide whether this should optionally
   include a Species block in the header.

@@ -217,6 +217,11 @@ namespace Simp
       const SpeciesBond& speciesBond(int iBond) const;
 
       /**
+      * Get entire array of SpeciesBond objects.
+      */
+      const DArray<SpeciesBond>& speciesBonds() const;
+
+      /**
       * Get array of ids for Bonds that contain one Atom.
       *
       * \param atomId local index for atom of interest
@@ -238,6 +243,11 @@ namespace Simp
       const SpeciesAngle& speciesAngle(int iAngle) const;
 
       /**
+      * Get entire array of SpeciesAngles objects.
+      */
+      const DArray<SpeciesAngle>& speciesAngles() const;
+
+      /**
       * Get array of ids for angles that contain one Atom.
       *
       * \param atomId local index for atom of interest
@@ -257,6 +267,11 @@ namespace Simp
       * \param iDihedral  local index of a SpeciesDihedral within a molecule.
       */
       const SpeciesDihedral& speciesDihedral(int iDihedral) const;
+
+      /**
+      * Get entire array of SpeciesDihedral objects.
+      */
+      const DArray<SpeciesDihedral>& speciesDihedrals() const;
 
       /**
       * Get array of ids for dihedrals that contain one Atom.
@@ -617,6 +632,13 @@ namespace Simp
    {  return speciesBonds_[iBond]; }
 
    /*
+   * Get the array of all SpeciesBond objects.
+   */
+   inline 
+   const DArray<Species::SpeciesBond>& Species::speciesBonds() const
+   {  return speciesBonds_; }
+
+   /*
    * Get array of ids for bonds that contain one atom.
    */
    inline 
@@ -637,6 +659,13 @@ namespace Simp
    inline 
    const Species::SpeciesAngle& Species::speciesAngle(int iAngle) const
    {  return speciesAngles_[iAngle]; }
+
+   /*
+   * Get the array of all SpeciesAngle objects.
+   */
+   inline 
+   const DArray<Species::SpeciesAngle>& Species::speciesAngles() const
+   {  return speciesAngles_; }
 
    /*
    * Get array of ids for angles that contain one Atom.
@@ -660,6 +689,13 @@ namespace Simp
    const Species::SpeciesDihedral& Species::speciesDihedral(int iDihedral) 
    const
    {  return speciesDihedrals_[iDihedral]; }
+
+   /*
+   * Get the array of all SpeciesDihedral objects.
+   */
+   inline 
+   const DArray<Species::SpeciesDihedral>& Species::speciesDihedrals() const
+   {  return speciesDihedrals_; }
 
    /*
    * Get array of ids for dihedrals that contain one Atom.

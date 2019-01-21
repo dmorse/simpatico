@@ -79,6 +79,63 @@ namespace DdMd
    }
 
    /*
+   * Private method to replicate and send Group<N> objects for a species.
+   */
+   template <int N>
+   void 
+   SmpConfigIo::sendSpeciesGroups(int& groupId, int& firstAtomId,
+                                  int  nMolecule, int  nAtom, int  nGroup,
+                                  const DArray<SpeciesGroup<N> >& groups,
+                                  GroupDistributor<N>& distributor)
+   {
+      if (domain().isMaster()) {
+         Group<N>* groupPtr = 0;
+         const SpeciesGroup<N>* speciesGroupPtr = 0;
+         int im, ig, j, ia;
+         for (im = 0; im < nMolecule; ++im) {
+            for (ig = 0; ig < nGroup; ++ig) {
+               groupPtr = distributor.newPtr();
+               groupPtr->setId(groupId);
+               speciesGroupPtr = &groups[ig];
+               groupPtr->setTypeId(speciesGroupPtr->typeId());
+               for (j = 0; j < N; ++j) {
+                  ia = firstAtomId + speciesGroupPtr->atomId(j);
+                  groupPtr->setAtomId(j, ia);
+               }
+               distributor.add();
+               ++groupId;
+            } // end loop over groups 
+            firstAtomId += nAtom;
+         } // end loop over molecules
+      }
+   }
+
+   void SmpConfigIo::replicateBonds() 
+   {
+      GroupDistributor<2> distributor = bondDistributor();
+      if (domain().isMaster()) {  
+         distributor.setup();
+         int nSpecies = simulation().nSpecies();
+         int groupId = 0;
+         int firstAtomId = 0;
+         for (int is = 0; is < nSpecies; ++is) {
+            Species& species = simulation().species(is);
+            sendSpeciesGroups(groupId, 
+                              firstAtomId,
+                              species.capacity(), 
+                              species.nAtom(), 
+                              species.nBond(), 
+                              species.speciesBonds(), 
+                              distributor);
+         }
+         // Send any groups not sent previously.
+         distributor.send();
+      } else { // If I am not the master processor
+         distributor.receive();
+      }
+   }
+
+   /*
    * Read a configuration file.
    */
    void SmpConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
