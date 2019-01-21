@@ -91,7 +91,7 @@ namespace DdMd
    
 
       /**
-      * Replicate and send Group<N> objects for a species.
+      * Compute and send Group<N> objects for a species.
       */
       template <int N>
       void sendSpeciesGroups(int& groupId, int& firstAtomId,
@@ -99,10 +99,26 @@ namespace DdMd
                              const DArray<SpeciesGroup<N> >& groups,
                              GroupDistributor<N>& distributor);
 
+      #ifdef SIMP_BOND
       /**
-      * Replicate and send all bond groups.
+      * Compute all bonds from species data. 
       */
-      void replicateBonds();
+      void makeBonds();
+      #endif
+
+      #ifdef SIMP_ANGLE
+      /**
+      * Compute all angles from species data. 
+      */
+      void makeAngles();
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      /**
+      * Compute all dihedrals from species data. 
+      */
+      void makeDihedrals();
+      #endif
 
    };
 

@@ -102,6 +102,7 @@ namespace DdMd
                   ia = firstAtomId + speciesGroupPtr->atomId(j);
                   groupPtr->setAtomId(j, ia);
                }
+               //Log::file() << *groupPtr << std::endl;
                distributor.add();
                ++groupId;
             } // end loop over groups 
@@ -110,14 +111,15 @@ namespace DdMd
       }
    }
 
-   void SmpConfigIo::replicateBonds() 
+   #ifdef SIMP_BOND
+   void SmpConfigIo::makeBonds() 
    {
-      GroupDistributor<2> distributor = bondDistributor();
+      GroupDistributor<2>& distributor = bondDistributor();
       if (domain().isMaster()) {  
-         distributor.setup();
          int nSpecies = simulation().nSpecies();
          int groupId = 0;
          int firstAtomId = 0;
+         distributor.setup();
          for (int is = 0; is < nSpecies; ++is) {
             Species& species = simulation().species(is);
             sendSpeciesGroups(groupId, 
@@ -134,6 +136,61 @@ namespace DdMd
          distributor.receive();
       }
    }
+   #endif
+
+   #ifdef SIMP_ANGLE
+   void SmpConfigIo::makeAngles() 
+   {
+      GroupDistributor<3>& distributor = angleDistributor();
+      if (domain().isMaster()) {  
+         int nSpecies = simulation().nSpecies();
+         int groupId = 0;
+         int firstAtomId = 0;
+         distributor.setup();
+         for (int is = 0; is < nSpecies; ++is) {
+            Species& species = simulation().species(is);
+            sendSpeciesGroups(groupId, 
+                              firstAtomId,
+                              species.capacity(), 
+                              species.nAtom(), 
+                              species.nAngle(), 
+                              species.speciesAngles(), 
+                              distributor);
+         }
+         // Send any groups not sent previously.
+         distributor.send();
+      } else { // If I am not the master processor
+         distributor.receive();
+      }
+   }
+   #endif
+
+   #ifdef SIMP_DIHEDRAL
+   void SmpConfigIo::makeDihedrals() 
+   {
+      GroupDistributor<4>& distributor = dihedralDistributor();
+      if (domain().isMaster()) {  
+         int nSpecies = simulation().nSpecies();
+         int groupId = 0;
+         int firstAtomId = 0;
+         distributor.setup();
+         for (int is = 0; is < nSpecies; ++is) {
+            Species& species = simulation().species(is);
+            sendSpeciesGroups(groupId, 
+                              firstAtomId,
+                              species.capacity(), 
+                              species.nAtom(), 
+                              species.nDihedral(), 
+                              species.speciesDihedrals(), 
+                              distributor);
+         }
+         // Send any groups not sent previously.
+         distributor.send();
+      } else { // If I am not the master processor
+         distributor.receive();
+      }
+   }
+   #endif
 
    /*
    * Read a configuration file.
@@ -164,13 +221,20 @@ namespace DdMd
       DArray<int> firstAtomIds;
 
       // Optionally read SPECIES block
-      Label speciesLabel("SPECIES", false); // optional label
-      if (speciesLabel.match(file)) {
-
-         file >> Label("nSpecies") >> nSpecies;
-         UTIL_CHECK(nSpecies > 0);
-
-         // Allocate memory for species in simulation, if necessary
+      if (domain().isMaster()) {  
+         Label speciesLabel("SPECIES", false); // optional label
+         if (speciesLabel.match(file)) {
+            file >> Label("nSpecies") >> nSpecies;
+            UTIL_CHECK(nSpecies > 0);
+         }
+         firstAtomIds.allocate(nSpecies);
+      }
+      #if UTIL_MPI
+      bcast(domain().communicator(), nSpecies, 0);
+      #endif
+      if (nSpecies > 0) {
+  
+         // Set nSpecies in parent Simulation
          if (!simulation().hasSpecies()) {
             simulation().setNSpecies(nSpecies);
          } else {
@@ -178,29 +242,32 @@ namespace DdMd
                UTIL_THROW("Inconsistent values of nSpecies");
             }
          }
-         firstAtomIds.allocate(nSpecies);
 
-         Label speciesLabel("species");
-         Label nMoleculeLabel("nMolecule");
-         int j, nMolecule;
-         firstAtomIds[0] = 0;
-         for (int i = 0; i < nSpecies; ++i) {
-            file >> Label("species") >> j;
-            UTIL_CHECK(j == i);
-            firstAtomIds[i] = nAtomTot;
-            file >> Label("nMolecule") >> nMolecule;
-            UTIL_CHECK(nMolecule > 0);
-            Species& species = simulation().species(i);
-            species.readStructure(file);
-            species.setCapacity(nMolecule);
-            nAtomTot += nMolecule * species.nAtom();
+         // Read molecular structures for all species
+         if (domain().isMaster()) {
+            Label speciesLabel("species");
+            Label nMoleculeLabel("nMolecule");
+            int j, nMolecule;
+            firstAtomIds[0] = 0;
+            for (int i = 0; i < nSpecies; ++i) {
+               file >> Label("species") >> j;
+               UTIL_CHECK(j == i);
+               firstAtomIds[i] = nAtomTot;
+               file >> Label("nMolecule") >> nMolecule;
+               UTIL_CHECK(nMolecule > 0);
+               Species& species = simulation().species(i);
+               species.readStructure(file);
+               species.setCapacity(nMolecule);
+               nAtomTot += nMolecule * species.nAtom();
+            }
+            // Note: Species information is not replicated,
+            // and is stored only on master. All processors,
+            // however, have the same value of nSpecies.
          }
-
       }
 
       // BOUNDARY block
       if (domain().isMaster()) {  
-         UTIL_CHECK(Label::isClear());
          file >> Label("BOUNDARY");
          file >> boundary();
       }
@@ -210,7 +277,7 @@ namespace DdMd
 
       // ATOMS block
       int nAtom = 0;  // Total number of atoms in file
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
 
          UTIL_CHECK(Label::isClear());
 
@@ -230,7 +297,7 @@ namespace DdMd
          bool hasFormat = formatLabel.match(file);
          if (hasFormat) {
             std::string formatString;
-            file >> Label("format") >> formatString;
+            file >> formatString;
             UTIL_CHECK(formatString.size() > 0);
    
             // Parse and validate atom format string
@@ -298,18 +365,18 @@ namespace DdMd
             // Atom context
             if (hasAtomContext) {
                file >> sId >> mId >> aId;
-               if (aId < 0) {
-                  UTIL_THROW("Invalid Atom");
+               if (sId < 0) {
+                  UTIL_THROW("Invalid Species");
                }
                if (mId < 0) {
                   UTIL_THROW("Invalid Molecule");
                }
-               if (sId < 0) {
-                  UTIL_THROW("Invalid Species");
+               if (aId < 0) {
+                  UTIL_THROW("Invalid Atom");
                }
-               atomPtr->context().atomId = aId;
-               atomPtr->context().moleculeId = mId;
                atomPtr->context().speciesId = sId;
+               atomPtr->context().moleculeId = mId;
+               atomPtr->context().atomId = aId;
             }
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
@@ -342,34 +409,70 @@ namespace DdMd
          }
       }
 
-      // Read Covalent Groups
+      // Read or replicate covalent groups:
+      // If nSpecies > 0, then replicate and broadcast groups.
+      // If nSpecies == 0, then read and broadcast all groups.
       bool hasGhosts = false;
-      #ifdef SIMP_BOND
-      if (bondStorage().capacity()) {
-         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
-         bondStorage().isValid(atomStorage(), domain().communicator(), 
-                               hasGhosts);
-         // Set atom "mask" values
-         if (maskPolicy == MaskBonded) {
-            setAtomMasks();
+
+      if (simulation().nSpecies() == 0) {
+
+         // Read Covalent Groups
+         #ifdef SIMP_BOND
+         if (bondStorage().capacity()) {
+            readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+            bondStorage().isValid(atomStorage(), domain().communicator(), 
+                                  hasGhosts);
+            // Set atom "mask" values
+            if (maskPolicy == MaskBonded) {
+               setAtomMasks();
+            }
          }
-      }
-      #endif
-      #ifdef SIMP_ANGLE
-      if (angleStorage().capacity()) {
-         readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
-         angleStorage().isValid(atomStorage(), domain().communicator(), 
-                                hasGhosts);
-      }
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         readGroups<4>(file, "DIHEDRALS", "nDihedral", 
-                       dihedralDistributor());
-         dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+         #endif
+         #ifdef SIMP_ANGLE
+         if (angleStorage().capacity()) {
+            readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
+            angleStorage().isValid(atomStorage(), domain().communicator(), 
                                    hasGhosts);
+         }
+         #endif
+         #ifdef SIMP_DIHEDRAL
+         if (dihedralStorage().capacity()) {
+            readGroups<4>(file, "DIHEDRALS", "nDihedral", 
+                          dihedralDistributor());
+            dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+                                      hasGhosts);
+         }
+         #endif
+
+      } else {
+
+         #ifdef SIMP_BOND
+         if (bondStorage().capacity()) {
+            makeBonds();
+            bondStorage().isValid(atomStorage(), domain().communicator(), 
+                                  hasGhosts);
+            // Set atom "mask" values
+            if (maskPolicy == MaskBonded) {
+               setAtomMasks();
+            }
+         }
+         #endif
+         #ifdef SIMP_ANGLE
+         if (angleStorage().capacity()) {
+            makeAngles();
+            angleStorage().isValid(atomStorage(), domain().communicator(), 
+                                   hasGhosts);
+         }
+         #endif
+         #ifdef SIMP_DIHEDRAL
+         if (dihedralStorage().capacity()) {
+            makeDihedrals();
+            dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+                                   hasGhosts);
+         }
+         #endif
+
       }
-      #endif
 
       // Postcondition: Label buffer should be clear on exit
       if (domain().isMaster()) {  
@@ -431,21 +534,23 @@ namespace DdMd
             int nSpecies = simulation().nSpecies();
             UTIL_CHECK(nSpecies > 0);
             for (int i = 0; i < nSpecies; ++i) {
+               file << "species  " << i << endl;
                Species& species = simulation().species(i);
                file << "mNolecule  " << species.capacity() << endl;
                species.writeStructure(file);
-               file << endl;
+               file << endl << endl;
             }
          }
       }
-      // Write Boundary dimensions
+
+      // Write BOUNDARY block (periodic unit cell dimensions)
       if (domain().isMaster()) {
-         file << "BOUNDARY" << endl << endl;
+         file << "BOUNDARY" << endl;
          file << boundary() << endl;
          file << endl;
       }
 
-      // Atoms
+      // WRITE ATOMS block
       bool hasAtomContext = Atom::hasAtomContext();
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
@@ -456,7 +561,7 @@ namespace DdMd
          std::string format = "format  it";
          if (hasAtomContext) format += "m";
          format += "pv";
-         file << "format " << format << endl;
+         file << format << endl;
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) 
               << endl;
 
@@ -467,12 +572,12 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10);
+            file << Int(atomPtr->typeId(), 6);
             if (hasAtomContext) {
                file << Int(atomPtr->context().speciesId, 6) 
                     << Int(atomPtr->context().moleculeId, 10)
                     << Int(atomPtr->context().atomId, 6);
             }
-            file << Int(atomPtr->typeId(), 6);
             if (isCartesian) {
                r = atomPtr->position();
             } else {
@@ -487,25 +592,27 @@ namespace DdMd
          atomCollector().send();
       }
 
-      // Write the groups
-      #ifdef SIMP_BOND
-      if (bondStorage().capacity()) {
-         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), 
-                        bondCollector());
+      if (!simulation().hasSpecies()) {
+         // Write the covalent groups
+         #ifdef SIMP_BOND
+         if (bondStorage().capacity()) {
+            writeGroups<2>(file, "BONDS", "nBond", bondStorage(), 
+                           bondCollector());
+         }
+         #endif
+         #ifdef SIMP_ANGLE
+         if (angleStorage().capacity()) {
+            writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), 
+                           angleCollector());
+         }
+         #endif
+         #ifdef SIMP_DIHEDRAL
+         if (dihedralStorage().capacity()) {
+            writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), 
+                           dihedralCollector());
+         }
+         #endif
       }
-      #endif
-      #ifdef SIMP_ANGLE
-      if (angleStorage().capacity()) {
-         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), 
-                        angleCollector());
-      }
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), 
-                        dihedralCollector());
-      }
-      #endif
 
    }
  

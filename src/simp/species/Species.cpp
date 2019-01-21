@@ -219,8 +219,6 @@ namespace Simp
 
       // Check validity, throw exception if not valid
       isValid();
-
-      UTIL_CHECK(Label::isClear());
    }
 
    /*

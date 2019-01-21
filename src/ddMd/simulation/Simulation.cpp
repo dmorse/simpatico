@@ -2311,11 +2311,13 @@ namespace DdMd
    void Simulation::setNSpecies(int nSpecies) 
    {
       UTIL_CHECK(nSpecies > 0);
-      UTIL_CHECK(!species_.isAllocated());
       UTIL_CHECK(nSpecies_ == 0);
-      species_.allocate(nSpecies);
       nSpecies_ = nSpecies;
-      UTIL_CHECK(species_.capacity() == nSpecies_);
+      if (domain().isMaster()) {
+         UTIL_CHECK(!species_.isAllocated());
+         species_.allocate(nSpecies);
+         UTIL_CHECK(species_.capacity() == nSpecies_);
+      }
    }
 
    /*
