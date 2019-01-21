@@ -28,6 +28,9 @@
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
 #include <ddMd/chemistry/MaskPolicy.h>
+
+#include <simp/species/Species.h>
+
 #include <util/space/Vector.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/format/Int.h>
@@ -42,17 +45,9 @@ namespace DdMd
    /*
    * Constructor.
    */
-   SmpConfigIo::SmpConfigIo(bool hasMolecules)
-    : ConfigIo(),
-      hasMolecules_(hasMolecules)
-   {  setClassName("SmpConfigIo"); }
-
-   /*
-   * Constructor.
-   */
-   SmpConfigIo::SmpConfigIo(Simulation& simulation, bool hasMolecules)
+   SmpConfigIo::SmpConfigIo(Simulation& simulation)
     : ConfigIo(simulation),
-      hasMolecules_(hasMolecules)
+      simulationPtr_(&simulation)
    {  setClassName("SmpConfigIo"); }
 
    /*
@@ -98,15 +93,57 @@ namespace DdMd
       if (atomStorage().isCartesian()) {
          UTIL_THROW("Error: Atom storage is set for Cartesian coordinates");
       }
-      if (domain().isMaster() && !file.is_open()) {  
-            UTIL_THROW("Error: File is not open on master"); 
-      }
-      if (!Atom::hasAtomContext()) {
-         hasMolecules_ = false;
+      if (domain().isMaster()) {
+         if (!file.is_open()) {  
+            UTIL_THROW("Error: File is not open for reading on master"); 
+         }
+         if (!Label::isClear()) {
+            UTIL_THROW("Error: Label buffer is not clear on master"); 
+         }
       }
 
-      // Read and broadcast boundary
+      int nSpecies = 0;  // Number of species
+      int nAtomTot = 0;  // Number of molecules of all species
+      DArray<int> firstAtomIds;
+
+      // Optionally read SPECIES block
+      Label speciesLabel("SPECIES", false); // optional label
+      if (speciesLabel.match(file)) {
+
+         file >> Label("nSpecies") >> nSpecies;
+         UTIL_CHECK(nSpecies > 0);
+
+         // Allocate memory for species in simulation, if necessary
+         if (!simulation().hasSpecies()) {
+            simulation().setNSpecies(nSpecies);
+         } else {
+            if (simulation().nSpecies() != nSpecies) {
+               UTIL_THROW("Inconsistent values of nSpecies");
+            }
+         }
+         firstAtomIds.allocate(nSpecies);
+
+         Label speciesLabel("species");
+         Label nMoleculeLabel("nMolecule");
+         int j, nMolecule;
+         firstAtomIds[0] = 0;
+         for (int i = 0; i < nSpecies; ++i) {
+            file >> Label("species") >> j;
+            UTIL_CHECK(j == i);
+            firstAtomIds[i] = nAtomTot;
+            file >> Label("nMolecule") >> nMolecule;
+            UTIL_CHECK(nMolecule > 0);
+            Species& species = simulation().species(i);
+            species.readStructure(file);
+            species.setCapacity(nMolecule);
+            nAtomTot += nMolecule * species.nAtom();
+         }
+
+      }
+
+      // BOUNDARY block
       if (domain().isMaster()) {  
+         UTIL_CHECK(Label::isClear());
          file >> Label("BOUNDARY");
          file >> boundary();
       }
@@ -114,7 +151,7 @@ namespace DdMd
       bcast(domain().communicator(), boundary(), 0);
       #endif
 
-      // Atoms 
+      // ATOMS block
       int nAtom = 0;  // Total number of atoms in file
       if (domain().isMaster()) {  
 
@@ -127,43 +164,49 @@ namespace DdMd
          Label orderedLabel("ordered", false); // optional label
          bool isOrdered = orderedLabel.match(file);
 
-         // Read format string and nAtom
-         std::string formatString;
-         file >> Label("format") >> formatString;
-         UTIL_CHECK(formatString.size() > 0);
+         // Default format settings
+         bool hasAtomContext = Atom::hasAtomContext();
+         bool hasAtomVelocity = true;
+
+         // Optionally read atom format string
+         Label formatLabel("format", false); // optional label
+         bool hasFormat = formatLabel.match(file);
+         if (hasFormat) {
+            std::string formatString;
+            file >> Label("format") >> formatString;
+            UTIL_CHECK(formatString.size() > 0);
    
-         // Parse atom format string
-         FlagSet atomFormat("imtpvs");
-         atomFormat.setActualOrdered(formatString);
-         bool hasAtomIndex = atomFormat.isActive('i');
-         bool hasAtomContext = atomFormat.isActive('m');
-         bool hasAtomTypeId = atomFormat.isActive('t');
-         bool hasAtomPosition = atomFormat.isActive('p');
-         bool hasAtomVelocity = atomFormat.isActive('v');
-         //bool hasAtomShift = atomFormat.isActive('s');
-         UTIL_CHECK(hasAtomIndex);
-         UTIL_CHECK(hasAtomTypeId);
-         UTIL_CHECK(hasAtomPosition);
-         UTIL_CHECK(isOrdered);
+            // Parse and validate atom format string
+            FlagSet atomFormat("itmpvs");
+            atomFormat.setActualOrdered(formatString);
+            bool hasAtomIndex = atomFormat.isActive('i');
+            UTIL_CHECK(hasAtomIndex);
+            bool hasAtomTypeId = atomFormat.isActive('t');
+            UTIL_CHECK(hasAtomTypeId);
+            bool hasAtomPosition = atomFormat.isActive('p');
+            UTIL_CHECK(hasAtomPosition);
+            hasAtomContext = atomFormat.isActive('m');
+            UTIL_CHECK(hasAtomContext == Atom::hasAtomContext());
+            hasAtomVelocity = atomFormat.isActive('v');
+            //bool hasAtomShift = atomFormat.isActive('s');
+         }
+
          // TODO: Add ability to read unordered atoms with context.
          // if (!isOrdered) {
          //   UTIL_CHECK(hasAtomContext);
          // }
-         if (hasAtomContext) hasMolecules_ = true;
-
 
          // Read number of atoms
          file >> Label("nAtom") >> nAtom;
-         // UTIL_CHECK(nAtom == nAtomTot);
-
-         int totalAtomCapacity = atomStorage().totalAtomCapacity();
+         // if (nSpecies) {
+         //    UTIL_CHECK(nAtom == nAtomTot);
+         // }
 
          #if UTIL_MPI
          //Initialize the send buffer.
          atomDistributor().setup();
          #endif
 
-         // Read atoms
          Vector r;
          Vector v;
          Atom*  atomPtr;
@@ -172,19 +215,31 @@ namespace DdMd
          int mId;
          int sId;
          int typeId;
+         int totalAtomCapacity = atomStorage().totalAtomCapacity();
 
+         // Loop over atoms
          v.zero();
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
-            
+
+            // Atom index            
             file >> id;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
+            if (isOrdered) {
+               UTIL_CHECK(id == i);
+            }
             atomPtr->setId(id);
-            if (hasMolecules_) {
+
+            // Atom type id
+            file >> typeId;
+            atomPtr->setTypeId(typeId);
+
+            // Atom context
+            if (hasAtomContext) {
                file >> sId >> mId >> aId;
                if (aId < 0) {
                   UTIL_THROW("Invalid Atom");
@@ -199,8 +254,6 @@ namespace DdMd
                atomPtr->context().moleculeId = mId;
                atomPtr->context().speciesId = sId;
             }
-            file >> typeId;
-            atomPtr->setTypeId(typeId);
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             if (hasAtomVelocity) {
@@ -237,7 +290,8 @@ namespace DdMd
       #ifdef SIMP_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
-         bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         bondStorage().isValid(atomStorage(), domain().communicator(), 
+                               hasGhosts);
          // Set atom "mask" values
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
@@ -253,11 +307,17 @@ namespace DdMd
       #endif
       #ifdef SIMP_DIHEDRAL
       if (dihedralStorage().capacity()) {
-         readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
+         readGroups<4>(file, "DIHEDRALS", "nDihedral", 
+                       dihedralDistributor());
          dihedralStorage().isValid(atomStorage(), domain().communicator(), 
                                    hasGhosts);
       }
       #endif
+
+      // Postcondition: Label buffer should be clear on exit
+      if (domain().isMaster()) {  
+         UTIL_CHECK(Label::isClear());
+      }
    }
 
    /*
@@ -270,23 +330,29 @@ namespace DdMd
                   GroupStorage<N>& storage,
                   GroupCollector<N>& collector) 
    {
-      Group<N>* groupPtr;
-      int       nGroup;
+
+      // Compute total total number of groups on all processors
+      // nGroup = total only on master, zero on other processors
       storage.computeNTotal(domain().communicator());
-      nGroup = storage.nTotal();
-      if (domain().isMaster()) {  
-         file << std::endl;
-         file << sectionLabel << std::endl;
-         file << nGroupLabel << Int(nGroup, 10) << std::endl;
+      int nGroup = storage.nTotal();
+
+      // Collect groups and write to file
+      if (domain().isMaster()) {
+         using std::endl;
+         file << endl;
+         file << sectionLabel << endl;
+         file << nGroupLabel << Int(nGroup, 10) << endl;
+         Group<N>* groupPtr;
          collector.setup();
          groupPtr = collector.nextPtr();
          while (groupPtr) {
-            file << *groupPtr << std::endl;
+            file << *groupPtr << endl;
             groupPtr = collector.nextPtr();
          }
-      } else { 
+      } else {
          collector.send();
       }
+
       return nGroup;
    }
 
@@ -299,29 +365,43 @@ namespace DdMd
       if (domain().isMaster() && !file.is_open()) {  
             UTIL_THROW("Error: File is not open on master"); 
       }
-      if (!Atom::hasAtomContext()) {
-         hasMolecules_ = false;
-      }
+      using std::endl;
 
+      // Write SPECIES block (if any)
+      if (domain().isMaster()) {
+         if (simulation().hasSpecies()) {
+            file << "SPECIES" << endl << endl;
+            int nSpecies = simulation().nSpecies();
+            UTIL_CHECK(nSpecies > 0);
+            for (int i = 0; i < nSpecies; ++i) {
+               Species& species = simulation().species(i);
+               file << "mNolecule  " << species.capacity() << endl;
+               species.writeStructure(file);
+               file << endl;
+            }
+         }
+      }
       // Write Boundary dimensions
       if (domain().isMaster()) {
-         file << "BOUNDARY" << std::endl << std::endl;
-         file << boundary() << std::endl;
-         file << std::endl;
+         file << "BOUNDARY" << endl << endl;
+         file << boundary() << endl;
+         file << endl;
       }
 
       // Atoms
+      bool hasAtomContext = Atom::hasAtomContext();
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
 
-         file << "ATOMS" << std::endl;
+         file << "ATOMS" << endl;
 
-         // Write format string "i[m]tpv"
-         std::string format = "format  i";
-         if (hasMolecules_) format += "m";
-         format += "tpv";
-         file << "format" << std::endl;
-         file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
+         // Write format string "it[m]pv"
+         std::string format = "format  it";
+         if (hasAtomContext) format += "m";
+         format += "pv";
+         file << "format " << format << endl;
+         file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) 
+              << endl;
 
          // Collect and write atoms
          Vector r;
@@ -330,7 +410,7 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10);
-            if (hasMolecules_) {
+            if (hasAtomContext) {
                file << Int(atomPtr->context().speciesId, 6) 
                     << Int(atomPtr->context().moleculeId, 10)
                     << Int(atomPtr->context().atomId, 6);
@@ -353,17 +433,20 @@ namespace DdMd
       // Write the groups
       #ifdef SIMP_BOND
       if (bondStorage().capacity()) {
-         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
+         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), 
+                        bondCollector());
       }
       #endif
       #ifdef SIMP_ANGLE
       if (angleStorage().capacity()) {
-         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector());
+         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), 
+                        angleCollector());
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (dihedralStorage().capacity()) {
-         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector());
+         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), 
+                        dihedralCollector());
       }
       #endif
 

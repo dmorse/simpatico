@@ -9,6 +9,7 @@
 
 // Subclasses of ConfigIo 
 #include "DdMdConfigIo.h"
+#include "SmpConfigIo.h"
 #include "DdMdOrderedConfigIo.h"
 #include "LammpsConfigIo.h"
 #include "SerializeConfigIo.h"
@@ -44,6 +45,9 @@ namespace DdMd
             hasMolecules = false;
          }
          ptr = new DdMdConfigIo(*simulationPtr_, hasMolecules);
+      } else 
+      if (className == "SmpConfigIo") {
+         ptr = new SmpConfigIo(*simulationPtr_);
       } else 
       if (className == "DdMdConfigIo_NoMolecule") {
          ptr = new DdMdConfigIo(*simulationPtr_, false);

@@ -150,6 +150,7 @@ namespace DdMd
       externalStyle_(),
       #endif
       nAtomType_(0),
+      nSpecies_(0),
       #ifdef SIMP_BOND
       nBondType_(0),
       #endif
@@ -2305,6 +2306,16 @@ namespace DdMd
       #else
       out << "-s Special     OFF" << std::endl;
       #endif
+   }
+
+   void Simulation::setNSpecies(int nSpecies) 
+   {
+      UTIL_CHECK(nSpecies > 0);
+      UTIL_CHECK(!species_.isAllocated());
+      UTIL_CHECK(nSpecies_ == 0);
+      species_.allocate(nSpecies);
+      nSpecies_ = nSpecies;
+      UTIL_CHECK(species_.capacity() == nSpecies_);
    }
 
    /*

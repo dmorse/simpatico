@@ -127,6 +127,11 @@ namespace Simp
       void setId(int id);
       
       /**
+      * Set maximum number of allowed molecules of this species.
+      */
+      void setCapacity(int capacity);
+      
+      /**
       * Read parameters and initialize structure for this species.
       *
       * This function reads the parameter moleculeCapacity (the maximum 

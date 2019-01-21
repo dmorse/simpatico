@@ -2,6 +2,7 @@ ddMd_configIos_=\
    ddMd/configIos/ConfigIo.cpp \
    ddMd/configIos/DdMdConfigIo.cpp \
    ddMd/configIos/DdMdOrderedConfigIo.cpp \
+   ddMd/configIos/SmpConfigIo.cpp \
    ddMd/configIos/LammpsConfigIo.cpp \
    ddMd/configIos/SerializeConfigIo.cpp \
    ddMd/configIos/ConfigIoFactory.cpp 

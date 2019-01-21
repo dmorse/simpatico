@@ -18,7 +18,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Common format for configuration files for all simpatico programs.
+   * Simpatico configuration file format.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
@@ -28,19 +28,11 @@ namespace DdMd
    public:
 
       /**
-      * Default constructor.
-      *
-      * \param hasMolecules desired value of hasMolecules flag
-      */
-      SmpConfigIo(bool hasMolecules = false);
-
-      /**
       * Constructor.
       *
       * \param simulation parent Simulation object
-      * \param hasMolecules desired value of hasMolecules flag
       */
-      SmpConfigIo(Simulation& simulation, bool hasMolecules = false);
+      SmpConfigIo(Simulation& simulation);
 
       /**
       * Read configuration file.
@@ -73,10 +65,10 @@ namespace DdMd
    
    private:
 
-      /**
-      * Include AtomContext info in file format, if available? 
-      */
-      bool hasMolecules_;
+      Simulation* simulationPtr_;
+
+      Simulation& simulation()
+      {  return *simulationPtr_; }
 
       /**
       * Read Group<N> objects from file. 

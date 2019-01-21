@@ -459,6 +459,18 @@ namespace Simp
    }
 
    /*
+   * Set value of integer id for this species.
+   */
+   void Species::setCapacity(int capacity)
+   { 
+      // Preconditions
+      if (capacity < 0) UTIL_THROW("Negative capacity for Species");
+      if (moleculeCapacity_ > 0) UTIL_THROW("Capacity was set previously");
+
+      moleculeCapacity_ = capacity; 
+   }
+
+   /*
    * Set a pointer to an associated SpeciesMutator object.
    */
    void Species::setMutatorPtr(McMd::SpeciesMutator* mutatorPtr)
