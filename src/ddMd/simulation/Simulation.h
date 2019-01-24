@@ -617,8 +617,12 @@ namespace DdMd
       /**
       * Allocate space for an array of Species objects.
       *
-      * Each Species object contains a description of the structure
-      * of a molecular species. 
+      * An array of Species object is allocated only on the master 
+      * processor. All processors store the value of nSpecies, but do
+      * not allocate such an array. Each Species object on the master
+      * processor can store a description of the structure of one
+      * molecular species, along with a "capacity" giving the number
+      * of molecules of that species.
       *
       * \param nSpecies number of Species objects.
       */
@@ -1288,7 +1292,8 @@ namespace DdMd
    /// Get an AtomType descriptor for a specific type by reference.
    inline Species& Simulation::species(int i)
    {
-      UTIL_CHECK(nSpecies_);  
+      UTIL_CHECK(nSpecies_ > 0); 
+      UTIL_CHECK(domain().isMaster());  
       return species_[i]; 
    }
 

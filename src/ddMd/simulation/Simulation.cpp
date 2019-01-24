@@ -2308,16 +2308,25 @@ namespace DdMd
       #endif
    }
 
+   /*
+   * Set parameter NSpecies on all processors, allocate array on master.
+   */
    void Simulation::setNSpecies(int nSpecies) 
    {
       UTIL_CHECK(nSpecies > 0);
-      UTIL_CHECK(nSpecies_ == 0);
-      nSpecies_ = nSpecies;
       if (domain().isMaster()) {
-         UTIL_CHECK(!species_.isAllocated());
-         species_.allocate(nSpecies);
-         UTIL_CHECK(species_.capacity() == nSpecies_);
+         if (species_.isAllocated()) {
+            UTIL_CHECK(species_.capacity() == nSpecies_);
+            species_.deallocate();
+         } else {
+            UTIL_CHECK(nSpecies_ == 0);
+         }
+         if (!species_.isAllocated()) {
+            species_.allocate(nSpecies);
+         }
       }
+      UTIL_CHECK(species_.capacity() == nSpecies);
+      nSpecies_ = nSpecies;
    }
 
    /*

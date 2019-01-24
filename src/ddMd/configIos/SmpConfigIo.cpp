@@ -234,16 +234,11 @@ namespace DdMd
       #endif
       if (nSpecies > 0) {
   
-         // Set nSpecies in parent Simulation
-         if (!simulation().hasSpecies()) {
-            simulation().setNSpecies(nSpecies);
-         } else {
-            if (simulation().nSpecies() != nSpecies) {
-               UTIL_THROW("Inconsistent values of nSpecies");
-            }
-         }
+         // Set nSpecies in parent Simulation.
+         // If a Species array was allocated previously, reallocate.
+         simulation().setNSpecies(nSpecies);
 
-         // Read molecular structures for all species
+         // Read molecular structures for all species on master
          if (domain().isMaster()) {
             Label speciesLabel("species");
             Label nMoleculeLabel("nMolecule");
