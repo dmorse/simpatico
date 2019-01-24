@@ -219,8 +219,6 @@ namespace Simp
 
       // Check validity, throw exception if not valid
       isValid();
-
-      UTIL_CHECK(Label::isClear());
    }
 
    /*
@@ -456,6 +454,18 @@ namespace Simp
       if (id_ >= 0) UTIL_THROW("Species id was set previously");
 
       id_ = id; 
+   }
+
+   /*
+   * Set value of integer id for this species.
+   */
+   void Species::setCapacity(int capacity)
+   { 
+      // Preconditions
+      if (capacity < 0) UTIL_THROW("Negative capacity for Species");
+      if (moleculeCapacity_ > 0) UTIL_THROW("Capacity was set previously");
+
+      moleculeCapacity_ = capacity; 
    }
 
    /*

@@ -133,11 +133,11 @@ namespace McMd
       UTIL_CHECK(nAtom == nAtomTot);
 
       // Parse atom format string
-      FlagSet atomFormat("imtpvs");
+      FlagSet atomFormat("itmpvs");
       atomFormat.setActualOrdered(formatString);
       bool hasAtomIndex = atomFormat.isActive('i');
-      bool hasAtomContext = atomFormat.isActive('m');
       bool hasAtomTypeId = atomFormat.isActive('t');
+      bool hasAtomContext = atomFormat.isActive('m');
       bool hasAtomPosition = atomFormat.isActive('p');
       bool hasAtomVelocity = atomFormat.isActive('v');
       bool hasAtomShift = atomFormat.isActive('s');
@@ -174,38 +174,30 @@ namespace McMd
                molPtr->begin(atomIter); 
                for ( ; atomIter.notEnd(); ++atomIter) {
 
-                  // Log::file() << endl;
                   if (hasAtomIndex) {
                      in >> atomIndex;
                      UTIL_CHECK(atomIndex == count);
-                     // Log::file() << atomIndex << " ";
-                  }
-                  if (hasAtomContext) {
-                     in >> cSpeciesId;
-                     UTIL_CHECK(cSpeciesId == iSpecies);
-                     // Log::file() << cSpeciesId << " ";
-                     in >> cMoleculeId;
-                     UTIL_CHECK(cMoleculeId == iMol);
-                     // Log::file() << cMoleculeId << " ";
-                     in >> cAtomId;
-                     UTIL_CHECK(cAtomId == iAtom);
-                     // Log::file() << cAtomId << " ";
                   }
                   if (hasAtomTypeId) {
                      in >> atomTypeId;
                      UTIL_CHECK(atomTypeId 
                                 == speciesPtr->atomTypeId(iAtom));
-                     // Log::file() << atomTypeId << " ";
                   } else {
                      atomTypeId = speciesPtr->atomTypeId(iAtom);
                   }
                   atomIter->setTypeId(atomTypeId);
+                  if (hasAtomContext) {
+                     in >> cSpeciesId;
+                     UTIL_CHECK(cSpeciesId == iSpecies);
+                     in >> cMoleculeId;
+                     UTIL_CHECK(cMoleculeId == iMol);
+                     in >> cAtomId;
+                     UTIL_CHECK(cAtomId == iAtom);
+                  }
 
                   in >> atomIter->position();
-                  // Log::file() << endl << atomIter->position(); 
                   if (hasAtomVelocity) {
                      in >> atomIter->velocity();
-                     // Log::file() << endl << atomIter->velocity();
                   }
                   if (hasAtomShift) {
                      in >> shift;
@@ -216,7 +208,6 @@ namespace McMd
 
                   // Shift atom positions to primary cell
                   #ifdef MCMD_SHIFT
-                  in >> atomIter->shift();
                   boundary().shift(atomIter->position(), atomIter.shift());
                   #else
                   boundary().shift(atomIter->position());
@@ -224,10 +215,10 @@ namespace McMd
 
                   iAtom++;
                   count++;
-               }   // atom loop
-            }   // molecule loop
-         }   // species loop
-      }   // if (isOrdered)
+               }  // atom loop
+            }  // molecule loop
+         }  // species loop
+      }  // if (isOrdered)
 
       // Make sure static Label buffer is clean on exit
       UTIL_CHECK(Label::isClear());
@@ -267,7 +258,7 @@ namespace McMd
       // Write ATOMS block
       out << endl << "ATOMS";
       out << endl << "ordered";
-      out << endl << "format imtpv";
+      out << endl << "format itmpv";
       out << endl << "nAtom " << nAtomTot;
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator atomIter;
@@ -282,8 +273,8 @@ namespace McMd
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                out << endl;
                out << atomId << "  ";
-               out << iSpecies << " " << iMolecule << " " << iAtom << "  ";
-               out << atomIter->typeId();
+               out << atomIter->typeId() << "  ";
+               out << iSpecies << " " << iMolecule << " " << iAtom;
                out << endl << atomIter->position();
                out << endl << atomIter->velocity();
                ++iAtom;

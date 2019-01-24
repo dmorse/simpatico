@@ -16,8 +16,9 @@
 #include <ddMd/storage/BondStorage.h>         // member
 #include <ddMd/storage/AngleStorage.h>        // member
 #include <ddMd/storage/DihedralStorage.h>     // member
-#include <ddMd/chemistry/AtomType.h>          // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>        // member
+#include <ddMd/chemistry/AtomType.h>          // member (template param)
+#include <simp/species/Species.h>             // member (template param)
 #include <simp/boundary/Boundary.h>           // member
 #include <util/random/Random.h>               // member
 #include <util/space/Tensor.h>                // member (template param)
@@ -610,6 +611,37 @@ namespace DdMd
       #endif
 
       //@}
+      /// \name Molecular Species 
+      //@{
+
+      /**
+      * Allocate space for an array of Species objects.
+      *
+      * Each Species object contains a description of the structure
+      * of a molecular species. 
+      *
+      * \param nSpecies number of Species objects.
+      */
+      void setNSpecies(int inSpecies);
+
+      /**
+      * Does this simulation have an array of Species objects?
+      */
+      bool hasSpecies() const;
+
+      /**
+      * Return the number of species (returns 0 if there are none).
+      */
+      int nSpecies() const;
+
+      /**
+      * Access a specific Species object by reference.
+      * 
+      * \param i index of desired molecular species.
+      */
+      Species& species(int i);
+
+      //@}
       /// \name Miscellaneous Accessors (return members by reference)
       //@{
 
@@ -858,6 +890,9 @@ namespace DdMd
       /// Array of AtomType objects for all atoms in a simulation.
       DArray<AtomType> atomTypes_;
 
+      /// Array of Species molecule structure descriptors
+      DArray<Species> species_;
+
       /// Processor grid.
       Domain domain_;
 
@@ -982,6 +1017,9 @@ namespace DdMd
 
       /// Number of distinct atom types.
       int nAtomType_;
+
+      /// Number of species (0 if none)
+      int nSpecies_;
 
       #ifdef SIMP_BOND
       /// Number of distinct bond types.
@@ -1211,6 +1249,14 @@ namespace DdMd
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
+   /// Get maximum number of atom types.
+   inline bool Simulation::hasSpecies() const
+   {  return bool(nSpecies_ > 0); }
+
+   /// Get maximum number of atom types.
+   inline int Simulation::nSpecies() const
+   {  return nSpecies_; }
+
    #ifdef SIMP_BOND
    /// Get maximum number of bond types.
    inline int Simulation::nBondType()
@@ -1238,6 +1284,13 @@ namespace DdMd
    /// Get an AtomType descriptor for a specific type by reference.
    inline AtomType& Simulation::atomType(int i)
    {  return atomTypes_[i]; }
+
+   /// Get an AtomType descriptor for a specific type by reference.
+   inline Species& Simulation::species(int i)
+   {
+      UTIL_CHECK(nSpecies_);  
+      return species_[i]; 
+   }
 
    /// Get the masked pair policy.
    inline MaskPolicy Simulation::maskedPairPolicy() const
