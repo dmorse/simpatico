@@ -11,14 +11,12 @@
 #include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#ifdef SIMP_TETHER
-#include <mcMd/tethers/TetherMaster.h>
-#endif
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>
 #endif
 #include <simp/species/Species.h>
 #include <util/param/Label.h>
+#include <util/param/OptionalLabel.h>
 #include <util/misc/FlagSet.h>
 #include <util/format/Int.h>
 
@@ -74,13 +72,13 @@ namespace McMd
          * arrays nMoleculeSpecies and firstAtomIds.
          */
 
-         int nSpeciesIn, iSpeciesIn;
+         int iSpecies, nSpeciesIn, iSpeciesIn;
          in >> Label("nSpecies") >> nSpeciesIn;
          UTIL_CHECK(nSpeciesIn > 0);
          UTIL_CHECK(nSpeciesIn == nSpecies);
          Label speciesLabel("species");
          Label nMoleculeLabel("nMolecule");
-         for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             in >> Label("species") >> iSpeciesIn;
             UTIL_CHECK(iSpeciesIn == iSpecies);
             in >> Label("nMolecule") >> nMoleculeSpecies[iSpecies];
@@ -220,6 +218,60 @@ namespace McMd
          }  // species loop
       }  // if (isOrdered)
 
+      #ifdef MCMD_LINK
+      if (OptionalLabel("LINKS").match(in)) { 
+
+         // Read Links
+         Atom*  atom0Ptr;
+         Atom*  atom1Ptr;
+         int    iLink, nLink, iAtom, linkType;
+
+         in >> Label("nLink") >> nLink;
+         UTIL_CHECK(nLink > 0);
+         for (iLink = 0; iLink < nLink; ++iLink) {
+
+            // Read atom 0
+            in >> iSpecies >> iMol >> iAtom;
+            if (iSpecies < 0 || iSpecies >= simulation().nSpecies()) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iSpecies0 index in link");
+            }
+            if (iMol < 0 || iMol >= system().nMolecule(iSpecies)) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iMol0 index in link");
+            }
+            molPtr  = &system().molecule(iSpecies, iMol);
+            if (iAtom < 0 || iAtom >= molPtr->nAtom()) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iAtom0 index for link");
+            }
+            atom0Ptr = &molPtr->atom(iAtom);
+
+            // Read atom 1
+            in >> iSpecies >> iMol >> iAtom;
+            if (iSpecies < 0 || iSpecies >= simulation().nSpecies()) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iSpecies1 index in link");
+            }
+            if (iMol < 0 || iMol >= system().nMolecule(iSpecies)) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iMol1 index in link");
+            }
+            molPtr  = &system().molecule(iSpecies, iMol);
+            if (iAtom < 0 || iAtom >= molPtr->nAtom()) {
+               Log::file() << "iLink = " << iLink << std::endl;
+               UTIL_THROW("Invalid iAtom1 index for link");
+            }
+            atom1Ptr = &molPtr->atom(iAtom);
+
+            in >> linkType;
+            system().linkMaster().addLink(*atom0Ptr, *atom1Ptr, linkType);
+
+         }
+
+      }
+      #endif
+
       // Make sure static Label buffer is clean on exit
       UTIL_CHECK(Label::isClear());
    }
@@ -235,12 +287,12 @@ namespace McMd
       out << "SPECIES";
       int nSpecies = simulation().nSpecies();
       out << endl << "nSpecies  " << nSpecies;
-      int iMolecule, nMolecule;
+      int iSpecies, iMolecule, nMolecule;
       int nAtom, nAtomTot;
       nAtomTot = 0;
       Species* speciesPtr;
       out << endl;
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          out << endl << "species " << iSpecies;
          nMolecule = system().nMolecule(iSpecies);
          out << endl << "  nMolecule  " << nMolecule << endl;
@@ -283,6 +335,46 @@ namespace McMd
             ++iMolecule;
          }
       }
+
+
+      #ifdef MCMD_LINK
+      { // Scope for local variables
+
+         // Write Links
+         Link*      linkPtr;
+         Atom*      atomPtr;
+         Molecule*  molPtr;
+         int        iLink, nLink, iAtom;
+         out << std::endl;
+         out << "LINKS" << endl << endl;
+         nLink = system().linkMaster().nLink();
+         out << Label("nLink") << nLink << std::endl;
+         for (iLink = 0; iLink < nLink; ++iLink) {
+            linkPtr  = &(system().linkMaster().link(iLink));
+
+            // Output species, molecule, atom ids for atom 0
+            atomPtr   = &(linkPtr->atom0());
+            molPtr    = &atomPtr->molecule();
+            iAtom     = atomPtr->indexInMolecule();
+            iMolecule = system().moleculeId(*molPtr);
+            iSpecies  = molPtr->species().id();
+            out << Int(iSpecies,8) << Int(iMolecule,8) << Int(iAtom,8);
+            out << "   ";
+
+            // Output species, molecule, atom ids for atom 1
+            atomPtr   = &(linkPtr->atom1());
+            molPtr    = &atomPtr->molecule();
+            iAtom     = atomPtr->indexInMolecule();
+            iMolecule = system().moleculeId(*molPtr);
+            iSpecies  = molPtr->species().id();
+            out << Int(iSpecies,8) << Int(iMolecule,8) << Int(iAtom,8);
+            out << "   ";
+
+            out << Int(linkPtr->typeId(),8) << std::endl;
+         }
+
+      }
+      #endif
 
       UTIL_CHECK(Label::isClear());
    }
