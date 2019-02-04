@@ -190,7 +190,7 @@ namespace Util{
    using namespace Simp;
 
    template <>
-   void send<MonoclinicBoundary>(MPI::Comm& comm, 
+   void send<MonoclinicBoundary>(MPI_Comm comm, 
              MonoclinicBoundary& data, int dest, int tag)
    {
       send<Vector>(comm, data.l_, dest, tag);
@@ -198,7 +198,7 @@ namespace Util{
    }
 
    template <>
-   void recv<MonoclinicBoundary>(MPI::Comm& comm, 
+   void recv<MonoclinicBoundary>(MPI_Comm comm, 
              MonoclinicBoundary& data, int source, int tag)
    {
       Vector l;
@@ -209,12 +209,13 @@ namespace Util{
    }
 
    template <>
-   void bcast<MonoclinicBoundary>(MPI::Intracomm& comm, 
+   void bcast<MonoclinicBoundary>(MPI_Comm comm, 
               MonoclinicBoundary& data, int root)
    {
       Vector l; 
       double d;
-      int rank = comm.Get_rank();
+      int rank;
+      MPI_Comm_rank(comm, &rank);
       if (rank == root) {
          l = data.l_;
          d = data.d_;
@@ -229,7 +230,7 @@ namespace Util{
    /*
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<MonoclinicBoundary>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<MonoclinicBoundary>::type = MPI_BYTE;
    bool MpiTraits<MonoclinicBoundary>::hasType = false;
 
 }

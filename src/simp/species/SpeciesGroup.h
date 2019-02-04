@@ -265,7 +265,7 @@ namespace Util
    class MpiTraits< Simp::SpeciesGroup<4> >
    {  
    public:  
-      static MPI::Datatype type;   ///< MPI Datatype
+      static MPI_Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
 
@@ -276,7 +276,7 @@ namespace Util
    class MpiTraits< Simp::SpeciesGroup<3> >
    {  
    public:  
-      static MPI::Datatype type;   ///< MPI Datatype
+      static MPI_Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
 
@@ -287,7 +287,7 @@ namespace Util
    class MpiTraits< Simp::SpeciesGroup<2> >
    {  
    public:  
-      static MPI::Datatype type;   ///< MPI Datatype
+      static MPI_Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
 

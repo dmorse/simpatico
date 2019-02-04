@@ -15,19 +15,19 @@ namespace Util
    /*
    * Initialize MpiTraits< SpeciesGroup<4> >
    */
-   MPI::Datatype MpiTraits< Simp::SpeciesGroup<4> >::type = MPI::BYTE;
+   MPI_Datatype MpiTraits< Simp::SpeciesGroup<4> >::type = MPI_BYTE;
    bool MpiTraits< Simp::SpeciesGroup<4> >::hasType = false;
 
    /*
    * Initialize MpiTraits< SpeciesGroup<3> >
    */
-   MPI::Datatype MpiTraits< Simp::SpeciesGroup<3> >::type = MPI::BYTE;
+   MPI_Datatype MpiTraits< Simp::SpeciesGroup<3> >::type = MPI_BYTE;
    bool MpiTraits< Simp::SpeciesGroup<3> >::hasType = false;
 
    /*
    * Initialize MpiTraits< SpeciesGroup<2> >
    */
-   MPI::Datatype MpiTraits< Simp::SpeciesGroup<2> >::type = MPI::BYTE;
+   MPI_Datatype MpiTraits< Simp::SpeciesGroup<2> >::type = MPI_BYTE;
    bool MpiTraits< Simp::SpeciesGroup<2> >::hasType = false;
 
 }

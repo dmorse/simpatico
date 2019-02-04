@@ -154,7 +154,7 @@ namespace Util
    class MpiTraits<Simp::SpeciesEnsemble>
    {  
    public:  
-      static MPI::Datatype type;    ///< MPI Datatype
+      static MPI_Datatype type;    ///< MPI Datatype
       static bool hasType;          ///< Is the MPI type initialized?
    };
 
@@ -165,7 +165,7 @@ namespace Util
    class MpiTraits<Simp::SpeciesEnsemble::Type>
    {  
    public:  
-      static MPI::Datatype type;    ///< MPI Datatype
+      static MPI_Datatype type;    ///< MPI Datatype
       static bool hasType;          ///< Is the MPI type initialized?
    };
 

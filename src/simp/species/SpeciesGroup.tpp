@@ -62,9 +62,9 @@ namespace Simp
    
          builder.setBase(&object);
          for (int i = 0; i < NAtom; ++i) {
-            builder.addMember(&(object.atomIds_[i]), MPI::INT);
+            builder.addMember(&(object.atomIds_[i]), MPI_INT);
          }
-         builder.addMember(&object.typeId_, MPI::INT);
+         builder.addMember(&object.typeId_, MPI_INT);
          builder.commit(Util::MpiTraits< SpeciesGroup<NAtom> >::type);
          Util::MpiTraits< SpeciesGroup<NAtom> >::hasType = true;
       }

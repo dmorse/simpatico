@@ -23,9 +23,9 @@ class MonoclinicBoundaryTest;
 namespace Util { 
    class Random; 
    #ifdef UTIL_MPI
-   template <class T> void send(MPI::Comm& comm, T& data, int dest, int tag);
-   template <class T> void recv(MPI::Comm& comm, T& data, int source, int tag);
-   template <class T> void bcast(MPI::Intracomm& comm, T& data, int root);
+   template <class T> void send(MPI_Comm comm, T& data, int dest, int tag);
+   template <class T> void recv(MPI_Comm comm, T& data, int source, int tag);
+   template <class T> void bcast(MPI_Comm comm, T& data, int root);
    #endif
 }
 
@@ -341,13 +341,13 @@ namespace Simp
                                         const MonoclinicBoundary& boundary);
 
       #ifdef UTIL_MPI
-      friend void Util::send<>(MPI::Comm& comm, Simp::MonoclinicBoundary& data, 
+      friend void Util::send<>(MPI_Comm comm, Simp::MonoclinicBoundary& data, 
                                int dest, int tag);
 
-      friend void Util::recv<>(MPI::Comm& comm, Simp::MonoclinicBoundary& data, 
+      friend void Util::recv<>(MPI_Comm comm, Simp::MonoclinicBoundary& data, 
                                int source, int tag);
 
-      friend void Util::bcast<>(MPI::Intracomm& comm, Simp::MonoclinicBoundary& data, 
+      friend void Util::bcast<>(MPI_Comm comm, Simp::MonoclinicBoundary& data, 
                                 int root);
       #endif
 
@@ -752,21 +752,21 @@ namespace Util
    * Send an MonoclinicBoundary via MPI.
    */
    template <>
-   void send<MonoclinicBoundary>(MPI::Comm& comm, MonoclinicBoundary& data, 
+   void send<MonoclinicBoundary>(MPI_Comm comm, MonoclinicBoundary& data, 
                                  int dest, int tag);
 
    /**
    * Receive an MonoclinicBoundary via MPI.
    */
    template <>
-   void recv<MonoclinicBoundary>(MPI::Comm& comm, MonoclinicBoundary& data, 
+   void recv<MonoclinicBoundary>(MPI_Comm comm, MonoclinicBoundary& data, 
                                  int source, int tag);
 
    /**
    * Broadcast an MonoclinicBoundary via MPI.
    */
    template <>
-   void bcast<MonoclinicBoundary>(MPI::Intracomm& comm, 
+   void bcast<MonoclinicBoundary>(MPI_Comm comm, 
                                   MonoclinicBoundary& data, int root);
 
    /**
@@ -776,7 +776,7 @@ namespace Util
    class MpiTraits<MonoclinicBoundary>
    {
    public:
-      static MPI::Datatype type;         ///< MPI Datatype
+      static MPI_Datatype type;         ///< MPI Datatype
       static bool hasType;               ///< Is the MPI type initialized?
    };
 

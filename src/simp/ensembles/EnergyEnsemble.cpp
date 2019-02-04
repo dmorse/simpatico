@@ -122,9 +122,9 @@ namespace Simp{
       EnergyEnsemble   object;
 
       builder.setBase(&object);
-      builder.addMember(&object.temperature_, MPI::DOUBLE);
-      builder.addMember(&object.beta_, MPI::DOUBLE);
-      builder.addMember(&object.type_, MPI::INT);
+      builder.addMember(&object.temperature_, MPI_DOUBLE);
+      builder.addMember(&object.beta_, MPI_DOUBLE);
+      builder.addMember(&object.type_, MPI_INT);
       builder.commit(MpiTraits<EnergyEnsemble>::type);
       MpiTraits<EnergyEnsemble>::hasType = true;
    }
@@ -138,13 +138,13 @@ namespace Util
    /*
    * Initialize Simp::EnergyEnsemble MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Simp::EnergyEnsemble>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<Simp::EnergyEnsemble>::type = MPI_BYTE;
    bool MpiTraits<Simp::EnergyEnsemble>::hasType = false;
 
    /*
    * Initialize Simp::EnergyEnsemble::Type MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Simp::EnergyEnsemble::Type>::type = MPI::INT;
+   MPI_Datatype MpiTraits<Simp::EnergyEnsemble::Type>::type = MPI_INT;
    bool MpiTraits<Simp::EnergyEnsemble::Type>::hasType = true;
 
 }

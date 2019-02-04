@@ -95,8 +95,8 @@ namespace Simp
       SpeciesEnsemble  object;
 
       builder.setBase(&object);
-      builder.addMember(&object.mu_, MPI::DOUBLE);
-      builder.addMember(&object.type_, MPI::INT);
+      builder.addMember(&object.mu_, MPI_DOUBLE);
+      builder.addMember(&object.type_, MPI_INT);
       builder.commit(MpiTraits<SpeciesEnsemble>::type);
       MpiTraits<SpeciesEnsemble>::hasType = true;
    }
@@ -111,13 +111,13 @@ namespace Util
    /*
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Simp::SpeciesEnsemble>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<Simp::SpeciesEnsemble>::type = MPI_BYTE;
    bool MpiTraits<Simp::SpeciesEnsemble>::hasType = false;
 
    /*
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Simp::SpeciesEnsemble::Type>::type = MPI::INT;
+   MPI_Datatype MpiTraits<Simp::SpeciesEnsemble::Type>::type = MPI_INT;
    bool MpiTraits<Simp::SpeciesEnsemble::Type>::hasType = true;
 
 } 

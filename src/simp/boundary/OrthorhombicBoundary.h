@@ -670,21 +670,21 @@ namespace Util
    * Send an OrthorhombicBoundary via MPI.
    */
    template <>
-   void send<Simp::OrthorhombicBoundary>(MPI::Comm& comm, 
+   void send<Simp::OrthorhombicBoundary>(MPI_Comm comm, 
              Simp::OrthorhombicBoundary& data, int dest, int tag);
 
    /**
    * Receive an OrthorhombicBoundary via MPI.
    */
    template <>
-   void recv<Simp::OrthorhombicBoundary>(MPI::Comm& comm, 
+   void recv<Simp::OrthorhombicBoundary>(MPI_Comm comm, 
              Simp::OrthorhombicBoundary& data, int source, int tag);
 
    /**
    * Broadcast an OrthorhombicBoundary via MPI.
    */
    template <>
-   void bcast<Simp::OrthorhombicBoundary>(MPI::Intracomm& comm, 
+   void bcast<Simp::OrthorhombicBoundary>(MPI_Comm comm, 
               Simp::OrthorhombicBoundary& data, int root);
 
    /**
@@ -694,7 +694,7 @@ namespace Util
    class MpiTraits<Simp::OrthorhombicBoundary>
    {
    public:
-      static MPI::Datatype type;         ///< MPI Datatype
+      static MPI_Datatype type;         ///< MPI Datatype
       static bool hasType;               ///< Is the MPI type initialized?
    };
 

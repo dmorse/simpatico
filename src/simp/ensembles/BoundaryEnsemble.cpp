@@ -118,8 +118,8 @@ namespace Simp
       BoundaryEnsemble   object;
 
       builder.setBase(&object);
-      builder.addMember(&object.pressure_, MPI::DOUBLE);
-      builder.addMember(&object.type_, MPI::INT);
+      builder.addMember(&object.pressure_, MPI_DOUBLE);
+      builder.addMember(&object.type_, MPI_INT);
       builder.commit(MpiTraits<BoundaryEnsemble>::type);
       MpiTraits<BoundaryEnsemble>::hasType = true;
    }
@@ -132,11 +132,11 @@ namespace Util
 {
 
    // Initialize Simp::BoundaryEnsemble MPI Datatype.
-   MPI::Datatype MpiTraits<Simp::BoundaryEnsemble>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<Simp::BoundaryEnsemble>::type = MPI_BYTE;
    bool MpiTraits<Simp::BoundaryEnsemble>::hasType = false;
 
    // Initialize Simp::BoundaryEnsemble::Type MPI Datatype.
-   MPI::Datatype MpiTraits<Simp::BoundaryEnsemble::Type>::type = MPI::INT;
+   MPI_Datatype MpiTraits<Simp::BoundaryEnsemble::Type>::type = MPI_INT;
    bool MpiTraits<Simp::BoundaryEnsemble::Type>::hasType = true;
 
 }

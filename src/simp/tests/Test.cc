@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
    try {
 
       #ifdef UTIL_MPI
-      MPI::Init();
+      MPI_Init(&argc, &argv);
       Vector::commitMpiType();
       IntVector::commitMpiType();
       #endif 
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
       int failures = runner.run();
    
       #ifdef UTIL_MPI
-      MPI::Finalize();
+      MPI_Finalize();
       #endif 
 
       return (failures != 0);

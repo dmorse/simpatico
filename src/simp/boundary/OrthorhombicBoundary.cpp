@@ -207,7 +207,7 @@ namespace Simp
 namespace Util {
 
    template <>
-   void send<Simp::OrthorhombicBoundary>(MPI::Comm& comm,
+   void send<Simp::OrthorhombicBoundary>(MPI_Comm comm,
              Simp::OrthorhombicBoundary& data, int dest, int tag)
    {
       Vector lengths = data.lengths();
@@ -215,7 +215,7 @@ namespace Util {
    }
 
    template <>
-   void recv<Simp::OrthorhombicBoundary>(MPI::Comm& comm,
+   void recv<Simp::OrthorhombicBoundary>(MPI_Comm comm,
              Simp::OrthorhombicBoundary& data, int source, int tag)
    {
       Vector lengths;
@@ -224,11 +224,12 @@ namespace Util {
    }
 
    template <>
-   void bcast<Simp::OrthorhombicBoundary>(MPI::Intracomm& comm,
+   void bcast<Simp::OrthorhombicBoundary>(MPI_Comm comm,
               Simp::OrthorhombicBoundary& data, int root)
    {
       Vector lengths;
-      int    rank = comm.Get_rank();
+      int rank;
+      MPI_Comm_rank(comm, &rank);
       if (rank == root) {
          lengths = data.lengths();
       }
@@ -241,7 +242,7 @@ namespace Util {
    /*
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Simp::OrthorhombicBoundary>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<Simp::OrthorhombicBoundary>::type = MPI_BYTE;
    bool MpiTraits<Simp::OrthorhombicBoundary>::hasType = false;
 
 }

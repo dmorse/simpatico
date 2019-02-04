@@ -176,7 +176,7 @@ namespace Util
    class MpiTraits<Simp::BoundaryEnsemble>
    {  
    public:  
-      static MPI::Datatype type;      ///< MPI Datatype 
+      static MPI_Datatype type;      ///< MPI Datatype 
       static bool hasType;            ///< Is the MPI type initialized?
    };
 
@@ -187,7 +187,7 @@ namespace Util
    class MpiTraits<Simp::BoundaryEnsemble::Type>
    {  
    public:  
-      static MPI::Datatype type;      ///< MPI Datatype
+      static MPI_Datatype type;      ///< MPI Datatype
       static bool hasType;            ///< Is the MPI type initialized?
    };
 

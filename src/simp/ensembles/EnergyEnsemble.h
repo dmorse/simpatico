@@ -190,7 +190,7 @@ namespace Util
    class MpiTraits<Simp::EnergyEnsemble>
    {  
    public:  
-      static MPI::Datatype type;       ///< MPI Datatype
+      static MPI_Datatype type;       ///< MPI Datatype
       static bool hasType;             ///< Is the MPI type initialized?  
    };
 
@@ -201,7 +201,7 @@ namespace Util
    class MpiTraits<Simp::EnergyEnsemble::Type>
    {  
    public:  
-      static MPI::Datatype type;       ///< MPI Datatype
+      static MPI_Datatype type;       ///< MPI Datatype
       static bool hasType;             ///< Is the MPI type initialized?
    };
 
