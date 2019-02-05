@@ -513,9 +513,11 @@ namespace DdMd
 
       int nAtomLocal = nAtom();
       int nAtomTotal = 0;
-      communicator.Reduce(&nAtomLocal, &nAtomTotal, 1, 
-                          MPI_INT, MPI_SUM, 0);
-      if (communicator.Get_rank() !=0) {
+      MPI_Reduce(&nAtomLocal, &nAtomTotal, 1, MPI_INT, MPI_SUM, 0, 
+                 communicator);
+      int rank;
+      MPI_Comm_rank(communicator, &rank);
+      if (rank !=0) {
          nAtomTotal = 0;
       }
       nAtomTotal_.set(nAtomTotal);
@@ -536,8 +538,8 @@ namespace DdMd
    { 
       #ifdef UTIL_MPI
       int maxNAtomGlobal;
-      communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
-                             MPI_INT, MPI_MAX);
+      MPI_Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, MPI_INT, MPI_MAX, 
+                    communicator);
       maxNAtom_.set(maxNAtomGlobal);
       maxNAtomLocal_ = maxNAtomGlobal;
       #else
@@ -546,8 +548,8 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       int maxNGhostGlobal;
-      communicator.Allreduce(&maxNGhostLocal_, &maxNGhostGlobal, 1, 
-                             MPI_INT, MPI_MAX);
+      MPI_Allreduce(&maxNGhostLocal_, &maxNGhostGlobal, 1, 
+                    MPI_INT, MPI_MAX, communicator);
       maxNGhost_.set(maxNGhostGlobal);
       maxNGhostLocal_ = maxNGhostGlobal;
       #else

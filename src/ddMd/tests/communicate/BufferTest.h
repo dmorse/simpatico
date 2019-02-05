@@ -146,8 +146,10 @@ public:
       int       myrank, commsize;
 
       atoms.allocate(4);
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Fill one local atom object. 
       // Add processor's rank to the position and velocity vectors.
@@ -276,8 +278,10 @@ public:
       int myrank, commsize;
       atoms.allocate(4);
 
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Fill one local atom object. Add processor's rank to the position
       // and velocity vectors.
@@ -350,8 +354,10 @@ public:
       int myrank, commsize;
 
       atoms.allocate(4);
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Fill one local atom object. Add processor's rank to the
       // position and velocity vectors.
@@ -477,8 +483,10 @@ public:
       int myrank, commsize;
       atoms.allocate(4);
 
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Fill one local atom object. Add processor's rank to the position
       // and velocity vectors.
@@ -551,8 +559,10 @@ public:
       int myrank, commsize;
 
       atoms.allocate(8);
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Atom[0]. 
       // Add processor's rank to the position and velocity vectors.
@@ -692,8 +702,10 @@ public:
       int          myrank, commsize;
 
       bonds.allocate(4);
-      myrank   = MPI_COMM_WORLD.Get_rank();
-      commsize = MPI_COMM_WORLD.Get_size();
+      //myrank   = MPI_COMM_WORLD.Get_rank();
+      //commsize = MPI_COMM_WORLD.Get_size();
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+      MPI_Comm_size(MPI_COMM_WORLD, &commsize);
 
       // Fill one local atom object. 
       bonds[0].setId(0);
@@ -794,8 +806,14 @@ public:
       DArray<Bond> bonds;
       bonds.allocate(4);
 
-      int myrank = MPI_COMM_WORLD.Get_rank();
+      // int myrank = MPI_COMM_WORLD.Get_rank();
+      int myrank;
+      MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
+
       // int commsize = MPI_COMM_WORLD.Get_size();
+      // int commsize;
+      // MPI_Comm_size(MPI_COMM_WORLD, &commsize);
+
       int source = 0;
 
       if (myrank == source) {

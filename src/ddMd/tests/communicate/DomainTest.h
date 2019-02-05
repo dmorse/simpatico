@@ -138,6 +138,7 @@ public:
  
       Boundary boundary; 
       MPI_Request request[2]; 
+      MPI_Status status[2]; 
       MpiLogger logger;
 
       domain_.setBoundary(boundary);
@@ -164,17 +165,23 @@ public:
             #endif
 
             if (s != myRank) {
-               request[0] = domain_.communicator().Irecv(&rr, 1, MPI_INT, s, 34);
+               //request[0] = domain_.communicator().Irecv(&rr, 1, MPI_INT, s, 34);
+               MPI_Irecv(&rr, 1, MPI_INT, s, 34, domain_.communicator(), 
+                         &request[0]);
             }
             if (d != myRank) {
-               request[1] = domain_.communicator().Isend(&myRank, 1, MPI_INT, d, 34);
+               //request[1] = domain_.communicator().Isend(&myRank, 1, MPI_INT, d, 34);
+               MPI_Isend(&myRank, 1, MPI_INT, d, 34, domain_.communicator(),
+                         &request[1]);
             }
             if (s != myRank) {
-               request[0].Wait();
+               //request[0].Wait();
+               MPI_Wait(&request[0], &status[0]);
                TEST_ASSERT(rr == s);
             }
             if (d != myRank) {
-               request[1].Wait();
+               //request[1].Wait();
+               MPI_Wait(&request[1], &status[1]);
             }
          }
       }

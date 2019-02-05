@@ -47,13 +47,14 @@ namespace DdMd
    #ifdef UTIL_MPI
    void DdTimer::reduce(MPI_Comm communicator) 
    {
-      int procs = communicator.Get_size();
+      int procs;
+      MPI_Comm_size(communicator, &procs);
       double sum;
       for (int i = 0; i < size_; i++) {
-         communicator.Allreduce(&times_[i], &sum, 1, MPI_DOUBLE, MPI_SUM);
+         MPI_Allreduce(&times_[i], &sum, 1, MPI_DOUBLE, MPI_SUM, communicator);
          times_[i] = sum/double(procs);
       }
-      communicator.Allreduce(&time_, &sum, 1, MPI_DOUBLE, MPI_SUM);
+      MPI_Allreduce(&time_, &sum, 1, MPI_DOUBLE, MPI_SUM, communicator);
       time_ = sum/double(procs);
    }
    #endif

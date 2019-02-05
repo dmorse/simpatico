@@ -325,7 +325,7 @@ namespace DdMd
       }
       nPair_ = localNPair;
       #ifdef UTIL_MPI
-      communicator.Reduce(&localNPair, &nPair_, 1, MPI_INT, MPI_SUM, 0);
+      MPI_Reduce(&localNPair, &nPair_, 1, MPI_INT, MPI_SUM, 0, communicator);
       #else
       nPair_ = localNPair;
       #endif

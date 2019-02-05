@@ -1,10 +1,11 @@
 ddMd_communicate_=\
-    ddMd/communicate/Buffer.cpp \
+    ddMd/communicate/Buffer.cpp  \
     ddMd/communicate/Domain.cpp \
     ddMd/communicate/AtomDistributor.cpp \
-    ddMd/communicate/Exchanger.cpp \
     ddMd/communicate/AtomCollector.cpp \
-    ddMd/communicate/Plan.cpp 
+    ddMd/communicate/Plan.cpp \
+
+# ddMd/communicate/Exchanger.cpp 
 
 ddMd_communicate_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_communicate_))

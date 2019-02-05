@@ -321,9 +321,10 @@ namespace DdMd
       // Reduce data on all processors and set nTotal_ on master.
       int nTot;
       #ifdef UTIL_MPI
-      communicator.Reduce(&nLocal, &nTot, 1, 
-                          MPI_INT, MPI_SUM, 0);
-      if (communicator.Get_rank() !=0) {
+      MPI_Reduce(&nLocal, &nTot, 1, MPI_INT, MPI_SUM, 0, communicator);
+      int rank;
+      MPI_Comm_rank(communicator, &rank);
+      if (rank != 0) {
          nTot = -1;
       }
       nTotal_.set(nTot);
@@ -344,8 +345,8 @@ namespace DdMd
    { 
       #ifdef UTIL_MPI
       int maxNGroupGlobal;
-      communicator.Allreduce(&maxNGroupLocal_, &maxNGroupGlobal, 1, 
-                             MPI_INT, MPI_MAX);
+      MPI_Allreduce(&maxNGroupLocal_, &maxNGroupGlobal, 1, MPI_INT, 
+                    MPI_MAX, communicator);
       maxNGroup_.set(maxNGroupGlobal);
       maxNGroupLocal_ = maxNGroupGlobal;
       #else
@@ -453,9 +454,11 @@ namespace DdMd
       // Count & return number of local atoms in groups on all processors.
       int nAtomGroupTotal;
       const int source = 0;
-      communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
-                          MPI_INT, MPI_SUM, source);
-      if (communicator.Get_rank() == source) {
+      MPI_Reduce(&nAtomGroup, &nAtomGroupTotal, 1, MPI_INT, MPI_SUM, 
+                 source, communicator);
+      int rank;
+      MPI_Comm_rank(communicator, &rank);
+      if (rank == source) {
          if (!nTotal_.isSet()) {
             UTIL_THROW("nTotal not set");
          }

@@ -124,9 +124,11 @@ namespace DdMd
    {
       #ifdef UTIL_MPI
       double totalEnergy = 0.0; 
-      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI_DOUBLE, MPI_SUM, 0);
-      if (communicator.Get_rank() != 0) {
+      MPI_Reduce(&localEnergy, &totalEnergy, 1, MPI_DOUBLE, MPI_SUM, 0, 
+                 communicator);
+      int rank;
+      MPI_Comm_rank(communicator, &rank);
+      if (rank != 0) {
          totalEnergy = 0.0;
       }
       setEnergy(totalEnergy);
@@ -146,9 +148,11 @@ namespace DdMd
    {
       #ifdef UTIL_MPI
       Tensor totalStress;
-      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
-                          Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
-      if (communicator.Get_rank() != 0) {
+      MPI_Reduce(&localStress(0,0), &totalStress(0,0), 
+                 Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0, communicator);
+      int rank;
+      MPI_Comm_rank(communicator, &rank);
+      if (rank != 0) {
          totalStress.zero();
       }
       setStress(totalStress);

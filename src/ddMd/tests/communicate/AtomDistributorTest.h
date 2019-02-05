@@ -152,7 +152,8 @@ public:
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
       int nRecvAll;
-      communicator().Reduce(&recvCount, &nRecvAll, 1, MPI_INT, MPI_SUM, 0);
+      //communicator().Reduce(&recvCount, &nRecvAll, 1, MPI_INT, MPI_SUM, 0);
+      MPI_Reduce(&recvCount, &nRecvAll, 1, MPI_INT, MPI_SUM, 0, communicator());
       if (myRank == 0) {
          //std::cout << "Total atom count = " << nRecvAll << std::endl;
          TEST_ASSERT(nRecvAll == atomCount);

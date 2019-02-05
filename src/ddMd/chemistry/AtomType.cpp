@@ -93,8 +93,9 @@ namespace Util
    void bcast<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int root)
    {
       std::string name;
-      double      mass; 
-      int         rank = comm.Get_rank();
+      double mass; 
+      int rank;
+      MPI_Comm_rank(comm, &rank);
       if (rank == root) {
          name = data.name();
          mass = data.mass();

@@ -1,6 +1,6 @@
 #include "BufferTest.h"
 
-int main()
+int main(int argc, char** argv)
 {
    #ifdef UTIL_MPI 
    MPI_Init(&argc, &argv);
