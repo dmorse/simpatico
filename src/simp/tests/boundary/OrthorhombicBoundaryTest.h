@@ -48,21 +48,23 @@ public:
       // Assertions
       TEST_ASSERT(boundary.isValid());
 
-      #if 0
-      // Verbose output
-      if (verbose() > 1) {
-         printf("Boundary.minima_: %lf %lf %lf\n", 
-                 boundary.minima_[0], boundary.minima_[1], boundary.minima_[2]);
-         printf("Boundary.maxima_: %lf %lf %lf\n", 
-                 boundary.maxima_[0], boundary.maxima_[1], boundary.maxima_[2]);
-         printf("Boundary.L   : %lf %lf %lf\n", 
-                 boundary.lengths_[0], boundary.lengths_[1], boundary.lengths_[2]);
+      if (isIoProcessor()) {
+         #if 0
+         // Verbose output
+         if (verbose() > 1) {
+            printf("Boundary.minima_: %lf %lf %lf\n", 
+                    boundary.minima_[0], boundary.minima_[1], boundary.minima_[2]);
+            printf("Boundary.maxima_: %lf %lf %lf\n", 
+                    boundary.maxima_[0], boundary.maxima_[1], boundary.maxima_[2]);
+            printf("Boundary.L   : %lf %lf %lf\n", 
+                    boundary.lengths_[0], boundary.lengths_[1], boundary.lengths_[2]);
+         }
+         #endif
+   
+         std::cout << std::endl;
+         std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
+         std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
       }
-      #endif
-
-      std::cout << std::endl;
-      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
 
    }
 
@@ -91,7 +93,9 @@ public:
 
       // Verbose output
       if (verbose() > 1) {
-         std::cout << boundary << std::endl;
+         if (isIoProcessor()) {
+            std::cout << boundary << std::endl;
+         }
       }
 
    }
@@ -108,8 +112,10 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      if (isIoProcessor()) {
+         std::cout << std::endl;
+         std::cout << boundary << std::endl;
+      }
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -124,7 +130,7 @@ public:
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
       Vector Lp = boundary.lengths();
-      std::cout << "Lp = " << Lp << std::endl;
+      // std::cout << "Lp = " << Lp << std::endl;
       TEST_ASSERT(eq(Lp[0], 2.0));
       TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));
@@ -148,8 +154,10 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      if (isIoProcessor()) {
+         std::cout << std::endl;
+         std::cout << boundary << std::endl;
+      }
 
       // Assertions
       for (i = 0; i < 3; i++) {
@@ -159,7 +167,7 @@ public:
       }
 
       // Verbose output
-      if (verbose() > 1) {
+      if (verbose() > 1 && isIoProcessor()) {
          std::cout << boundary << std::endl;
       }
 
@@ -167,44 +175,46 @@ public:
 
    void testSerialize() 
    {
-      printMethod(TEST_FUNC);
-
-      MemoryOArchive oar;
-      MemoryIArchive iar;
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/TetragonalBoundary", in);
-     
-      in >> boundary;
-      oar.allocate(2000);
-      oar << boundary;
-      iar = oar;
-
-      OrthorhombicBoundary clone;
-      iar >> clone;
-
-      std::cout << std::endl;
-      std::cout << clone << std::endl;
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-      for (i = 0; i < Dimension; i++) {
-         TEST_ASSERT(eq(clone.minima_[i], 0.0));
-         TEST_ASSERT(eq(clone.maxima_[i], clone.lengths_[i]));
-         TEST_ASSERT(eq(clone.lengths_[i], boundary.lengths_[i]));
-         TEST_ASSERT(eq(clone.volume(), boundary.volume()));
-         TEST_ASSERT(clone.lengths_[i] > 1.0E-8);
+         if (isIoProcessor()) {
+         printMethod(TEST_FUNC);
+   
+         MemoryOArchive oar;
+         MemoryIArchive iar;
+   
+         int i;
+   
+         // Read parameters from file
+         std::ifstream in;
+         openInputFile("in/TetragonalBoundary", in);
+        
+         in >> boundary;
+         oar.allocate(2000);
+         oar << boundary;
+         iar = oar;
+   
+         OrthorhombicBoundary clone;
+         iar >> clone;
+   
+         std::cout << std::endl;
+         std::cout << clone << std::endl;
+   
+         // Assertions
+         TEST_ASSERT(boundary.isValid());
+         for (i = 0; i < Dimension; i++) {
+            TEST_ASSERT(eq(clone.minima_[i], 0.0));
+            TEST_ASSERT(eq(clone.maxima_[i], clone.lengths_[i]));
+            TEST_ASSERT(eq(clone.lengths_[i], boundary.lengths_[i]));
+            TEST_ASSERT(eq(clone.volume(), boundary.volume()));
+            TEST_ASSERT(clone.lengths_[i] > 1.0E-8);
+         }
+   
+         #if 0
+         // Verbose output
+         if (verbose() > 1) {
+            std::cout << boundary << std::endl;
+         }
+         #endif
       }
-
-      #if 0
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
-      }
-      #endif
 
    }
 
@@ -383,8 +393,8 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      //std::cout << std::endl;
+      //std::cout << boundary << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -523,8 +533,8 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      //std::cout << std::endl;
+      //std::cout << boundary << std::endl;
 
       TEST_ASSERT(boundary.isValid());
 
@@ -533,7 +543,7 @@ public:
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
       Vector Lp = boundary.lengths();
-      std::cout << "Lp = " << Lp << std::cout;
+      //std::cout << "Lp = " << Lp << std::cout;
       TEST_ASSERT(eq(Lp[0], 2.0));
       TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));

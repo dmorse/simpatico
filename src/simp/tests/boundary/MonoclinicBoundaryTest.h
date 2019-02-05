@@ -60,13 +60,15 @@ public:
       }
       #endif
 
-      std::cout << std::endl;
-      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(0) << std::endl;
-      std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(1) << std::endl;
-      std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(2) << std::endl;
-      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(0) << std::endl;
-      std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(1) << std::endl;
-      std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(2) << std::endl;
+      if (verbose() > 1 && isIoProcessor()) {
+         std::cout << std::endl;
+         std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(0) << std::endl;
+         std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(1) << std::endl;
+         std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(2) << std::endl;
+         std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(0) << std::endl;
+         std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(1) << std::endl;
+         std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(2) << std::endl;
+      }
 
    }
 
@@ -74,20 +76,18 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      int i;
-
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/MonoclinicBoundary", in);
      
       in >> boundary;
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      // std::cout << std::endl;
+      // std::cout << boundary << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
-      for (i = 0; i < 3; i++) {
+      for (int i = 0; i < 3; i++) {
          TEST_ASSERT(eq(boundary.minima_[i], 0.0));
          TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
       }
@@ -95,7 +95,7 @@ public:
       TEST_ASSERT(eq(boundary.maxima_[1], boundary.lengths_[1]));
 
       // Verbose output
-      if (verbose() > 1) {
+      if (verbose() > 1 && isIoProcessor()) {
          std::cout << boundary << std::endl;
       }
 
@@ -122,8 +122,8 @@ public:
       MonoclinicBoundary clone;
       iar >> clone;
 
-      std::cout << std::endl;
-      std::cout << clone << std::endl;
+      // std::cout << std::endl;
+      // std::cout << clone << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -137,7 +137,7 @@ public:
       }
 
       // Verbose output
-      if (verbose() > 1) {
+      if (verbose() > 1 && isIoProcessor()) {
          std::cout << boundary << std::endl;
       }
 
@@ -314,8 +314,8 @@ public:
       R2[1] =  0.0;
       R2[2] =  2.1;
       dRSq = boundary.distanceSq(R1, R2);
-      std::cout<<dRSq;
-     // TEST_ASSERT(eq(dRSq, 3.61));
+      // std::cout << dRSq;
+      // TEST_ASSERT(eq(dRSq, 3.61));
 
       R1[0] =  2.0;
       R1[1] =  0.0;
