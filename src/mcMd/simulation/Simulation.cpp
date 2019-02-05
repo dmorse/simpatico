@@ -86,7 +86,7 @@ namespace McMd
       // Check if MPI is initialized
       int mpiIsInitialized;
       MPI_Initialized(&mpiIsInitialized);
-      if (mpiIsInitialized) {
+      if (!mpiIsInitialized) {
          UTIL_THROW("Error: MPI not initialized on entry");
       }
       commitMpiTypes();
