@@ -153,7 +153,7 @@ namespace McMd
       System* systemPtr_;
 
       /// Get the communicator in the simulation.
-      MPI::Intracomm* communicatorPtr_;
+      MPI_Comm communicator_;
 
       /// Current processor's rank.
       int   myId_;

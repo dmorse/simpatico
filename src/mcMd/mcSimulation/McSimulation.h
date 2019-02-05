@@ -40,7 +40,7 @@ namespace McMd
       /**
       * Constructor.
       */
-      McSimulation(MPI::Intracomm& communicator);
+      McSimulation(MPI_Comm communicator);
       #endif
 
       /**

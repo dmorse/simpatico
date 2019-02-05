@@ -53,8 +53,12 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      int size = systemPtr_->simulation().communicator().Get_size();
-      int rank = systemPtr_->simulation().communicator().Get_rank();
+      // int size = systemPtr_->simulation().communicator().Get_size();
+      // int rank = systemPtr_->simulation().communicator().Get_rank();
+      int size;
+      MPI_Comm_size(systemPtr_->simulation().communicator(), &size);
+      int rank;
+      MPI_Comm_rank(systemPtr_->simulation().communicator(), &rank);
 
       if (className == "McEnergyPerturbation") {
          ptr = new McEnergyPerturbation(*systemPtr_, size, rank);

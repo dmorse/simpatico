@@ -36,7 +36,7 @@ namespace McMd
    */
    ReplicaMove::ReplicaMove(System& system) :
       systemPtr_(&system),
-      communicatorPtr_(0),
+      communicator_(0),
       myId_(-1),
       nProcs_(0),
       outputFile_(),
@@ -54,9 +54,9 @@ namespace McMd
       }
 
       setClassName("ReplicaMove");
-      communicatorPtr_ = &(system.simulation().communicator());
-      myId_   = communicatorPtr_->Get_rank();
-      nProcs_ = communicatorPtr_->Get_size();
+      communicator_ = system.simulation().communicator();
+      MPI_Comm_rank(communicator_, &myId_);
+      MPI_Comm_size(communicator_, &nProcs_);
 
       // Generate output file name and open the file.
       //std::stringstream sMyId;
@@ -149,8 +149,8 @@ namespace McMd
    */
    bool ReplicaMove::move()
    {
-      MPI::Request request[4];
-      MPI::Status  status;
+      MPI_Request request[4];
+      MPI_Status  status;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       int iA;
@@ -182,7 +182,7 @@ namespace McMd
          sendCurrent << myDerivatives;
          sendCurrent << myParameters;
 
-         sendCurrent.send(*communicatorPtr_, 0);
+         sendCurrent.send(communicator_, 0);
       } else {
          DArray< DArray<double> > allDerivatives;
          DArray< DArray<double> > allParameters;
@@ -197,7 +197,7 @@ namespace McMd
          for (int i = 1; i<nProcs_; i++) {
             MemoryIArchive recvPartner;
             recvPartner.allocate(size);
-            recvPartner.recv(*communicatorPtr_, i);
+            recvPartner.recv(communicator_, i);
             allDerivatives[i].allocate(nParameters_);
             allParameters[i].allocate(nParameters_);
             recvPartner >> allDerivatives[i];
@@ -239,24 +239,27 @@ namespace McMd
     
          // send exchange partner information to all other processors
          for (int i = 0; i < nProcs_; i++) {
-            if (i != 0)
-                communicatorPtr_->Send(&permutation[i], 1, MPI::INT, i, 0);
-            else
+            if (i != 0) {
+                MPI_Send(&permutation[i], 1, MPI_INT, i, 0, communicator_);
+            } else {
                 sendPt = permutation[i];
+            }
 
-            if (permutation[i] != 0)
-               communicatorPtr_->Send(&i, 1, MPI::INT, permutation[i], 1);
-            else
+            if (permutation[i] != 0) {
+               MPI_Send(&i, 1, MPI_INT, permutation[i], 1, communicator_); 
+            } else {
                recvPt = i;
+            }
          }
       }
 
       
       if (myId_ != 0) {
+         MPI_Status status;
          // partner id to receive from
-         communicatorPtr_->Recv(&sendPt, 1, MPI::INT, 0, 0);
+         MPI_Recv(&sendPt, 1, MPI_INT, 0, 0, communicator_, &status);
          // partner id to send to
-         communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 1);
+         MPI_Recv(&recvPt, 1, MPI_INT, 0, 1, communicator_, &status);
       }
 
       if (recvPt == myId_ || sendPt == myId_) {
@@ -273,11 +276,11 @@ namespace McMd
       Vector ptBoundary;
             
       // Accomodate new boundary dimensions.
-      request[0] = communicatorPtr_->Irecv(&ptBoundary, 1,
+      request[0] = communicator_->Irecv(&ptBoundary, 1,
                                            MpiTraits<Vector>::type, recvPt, 1);
 
       // Send old boundary dimensions.
-      request[1] = communicatorPtr_->Isend(&myBoundary, 1,
+      request[1] = communicator_->Isend(&myBoundary, 1,
                                             MpiTraits<Vector>::type, sendPt, 1);
 
       request[0].Wait();
@@ -297,11 +300,11 @@ namespace McMd
       }
       
       // Accomodate new configuration.
-      request[2] = communicatorPtr_->Irecv(ptPositionPtr_, iA,
+      request[2] = communicator_->Irecv(ptPositionPtr_, iA,
                        MpiTraits<Vector>::type, recvPt, 2); 
 
       // Send old configuration.
-      request[3] = communicatorPtr_->Isend(myPositionPtr_, iA,
+      request[3] = communicator_->Isend(myPositionPtr_, iA,
                        MpiTraits<Vector>::type, sendPt, 2);
 
       request[2].Wait();

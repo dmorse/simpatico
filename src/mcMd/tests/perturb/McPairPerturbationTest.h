@@ -46,7 +46,7 @@ public:
 private:
 
    #ifdef UTIL_MPI
-   McSimulation  simulation_(MPI::COMM_WORLD);
+   McSimulation  simulation_(MPI_COMM_WORLD);
    #else
    McSimulation  simulation_;
    #endif

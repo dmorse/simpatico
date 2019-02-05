@@ -59,7 +59,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   McSimulation::McSimulation(MPI::Intracomm& communicator)
+   McSimulation::McSimulation(MPI_Comm communicator)
     : Simulation(communicator),
       system_(),
       mcMoveManager_(*this),

@@ -44,7 +44,7 @@ namespace McMd
    /* 
    * Constructor.
    */
-   MdSimulation::MdSimulation(MPI::Intracomm& communicator)
+   MdSimulation::MdSimulation(MPI_Comm communicator)
     : Simulation(communicator),
       system_(),
       mdAnalyzerManager_(*this),

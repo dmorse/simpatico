@@ -87,8 +87,8 @@ int main(int argc, char **argv)
    }
 
    #ifdef UTIL_MPI
-   MPI::Init();
-   McMd::McSimulation simulation(MPI::COMM_WORLD);
+   MPI_Init(&argc, &argv);
+   McMd::McSimulation simulation(MPI_COMM_WORLD);
    #else
    McMd::McSimulation simulation;
    #endif
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
    simulation.readCommands();
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
    // Normal completion
    return 0;

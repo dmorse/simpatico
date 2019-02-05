@@ -114,7 +114,7 @@ namespace McMd
       static const int TagFermi[2];
       
       /// MPI communicator in the simulation.
-      MPI::Intracomm* communicatorPtr_;
+      MPI_Comm communicator_;
       
       /// Current processor's rank.
       int  myId_;

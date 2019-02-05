@@ -107,7 +107,7 @@ namespace McMd
       /**
       * Constructor.
       */
-      Simulation(MPI::Intracomm& communicator);
+      Simulation(MPI_Comm communicator);
       #endif
 
       /**
@@ -135,7 +135,7 @@ namespace McMd
       *
       * \param communicator MPI communicator used for parameter file.
       */
-      virtual void setIoCommunicator(MPI::Intracomm& communicator);
+      virtual void setIoCommunicator(MPI_Comm communicator);
 
       /**
       * Set MPI job to read one parameter file and one command file.
@@ -249,7 +249,7 @@ namespace McMd
       /**
       * Get the MPI communicator by reference
       */
-      MPI::Intracomm& communicator();
+      MPI_Comm communicator();
       #endif
 
       //@}
@@ -711,7 +711,7 @@ namespace McMd
       /**
       * Pointer to the simulation communicator.
       */
-      MPI::Intracomm* communicatorPtr_;
+      MPI_Comm communicator_;
       #endif
  
       //@}
@@ -842,12 +842,12 @@ namespace McMd
 
    #ifdef UTIL_MPI
    inline bool Simulation::hasCommunicator() const
-   {  return communicatorPtr_ != 0; }
+   {  return communicator_ != 0; }
 
-   inline MPI::Intracomm& Simulation::communicator()
+   inline MPI_Comm Simulation::communicator()
    {
-      assert(communicatorPtr_);  
-      return *communicatorPtr_; 
+      assert(communicator_);  
+      return communicator_; 
    }
    #endif
 

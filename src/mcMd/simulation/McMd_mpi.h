@@ -25,7 +25,7 @@ namespace Util
    class MpiTraits< Pair<int> >
    {  
    public:  
-      static MPI::Datatype type;  ///< MPI Datatype
+      static MPI_Datatype type;  ///< MPI Datatype
       static bool hasType;        ///< Is the MPI type initialized?
    };
 

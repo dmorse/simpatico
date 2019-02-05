@@ -36,7 +36,7 @@ namespace McMd
    * Constructor.
    */
    #ifdef UTIL_MPI
-   Simulation::Simulation(MPI::Intracomm& communicator)
+   Simulation::Simulation(MPI_Comm communicator)
     : iStep_(0),
       nSystem_(1),
       speciesManagerPtr_(0),
@@ -76,20 +76,24 @@ namespace McMd
       , hasSpecial_(-1)
       #endif
       , hasSpecies_(false)
-      , communicatorPtr_(&communicator)
+      , communicator_(communicator)
    {
       setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
       Analyzer::initStatic();
 
-      if (!MPI::Is_initialized()) {
-         UTIL_THROW("MPI not initialized on entry");
+      // Check if MPI is initialized
+      int mpiIsInitialized;
+      MPI_Initialized(&mpiIsInitialized);
+      if (mpiIsInitialized) {
+         UTIL_THROW("Error: MPI not initialized on entry");
       }
       commitMpiTypes();
 
       // Set directory Id in FileMaster to MPI processor rank.
-      int rank = communicatorPtr_->Get_rank();
+      int rank;
+      MPI_Comm_rank(communicator_, &rank);
       fileMaster_.setDirectoryId(rank);
 
       // Set log file for processor n to a new file named "n/log"
@@ -145,7 +149,7 @@ namespace McMd
       #endif
       , hasSpecies_(false)
       #ifdef UTIL_MPI
-      , communicatorPtr_(0)
+      , communicator_(0)
       #endif
    {
       setClassName("Simulation");
@@ -187,12 +191,12 @@ namespace McMd
    /*
    * Set an MPI job to read a single parameter file, from std::cin.
    */
-   void Simulation::setIoCommunicator(MPI::Intracomm& communicator)
+   void Simulation::setIoCommunicator(MPI_Comm communicator)
    {
       if (!hasCommunicator()) {
          UTIL_THROW("No communicator was passed to constructor");
       } else 
-      if (communicatorPtr_ != &communicator) {
+      if (communicator_ != communicator) {
          UTIL_THROW("ParamCommunicator must be the one passed to constructor");
       }
       fileMaster_.setCommonControl();

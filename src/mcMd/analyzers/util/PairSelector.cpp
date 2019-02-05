@@ -148,11 +148,11 @@ namespace Util
 {
 
    // Initialize MpiTraits<McMd::PairSelector>
-   MPI::Datatype MpiTraits< McMd::PairSelector>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits< McMd::PairSelector>::type = MPI_BYTE;
    bool MpiTraits< McMd::PairSelector>::hasType = false;
 
    // Initialize MpiTraits<McMd::PairSelector::PairType>
-   MPI::Datatype MpiTraits< McMd::PairSelector::PairType>::type = MPI::INT;
+   MPI_Datatype MpiTraits< McMd::PairSelector::PairType>::type = MPI_INT;
    bool MpiTraits< McMd::PairSelector::PairType>::hasType = true;
 
 }
@@ -172,8 +172,8 @@ namespace McMd
          PairSelector     object;
          builder.setBase(&object);
          builder.addMember(&object.pairType_, MpiTraits<PairSelector::PairType>::type);
-         builder.addMember(&object.atom1TypeId_, MPI::INT);
-         builder.addMember(&object.atom2TypeId_, MPI::INT);
+         builder.addMember(&object.atom1TypeId_, MPI_INT);
+         builder.addMember(&object.atom2TypeId_, MPI_INT);
          builder.commit(Util::MpiTraits<PairSelector>::type);
          Util::MpiTraits<PairSelector>::hasType = true;
       }

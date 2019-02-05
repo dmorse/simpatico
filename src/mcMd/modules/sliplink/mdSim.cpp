@@ -44,8 +44,8 @@
 int main(int argc, char **argv)
 {
    #ifdef UTIL_MPI
-   MPI::Init();
-   McMd::MdSimulation simulation(MPI::COMM_WORLD);
+   MPI_Init(&argc, &argv);
+   McMd::MdSimulation simulation(MPI_COMM_WORLD);
    #else
    McMd::MdSimulation simulation;
    #endif
@@ -65,8 +65,8 @@ int main(int argc, char **argv)
    simulation.readCommands();
 
    #if UTIL_MPI
-   if (MPI::Is_initialized()) {
-      MPI::Finalize();
+   if (MPI_Is_initialized()) {
+      MPI_Finalize();
    }
    #endif
 

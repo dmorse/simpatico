@@ -105,7 +105,7 @@ namespace Util
 {
 
    template <>
-   void send<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int dest, int tag)
+   void send<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int dest, int tag)
    {
       std::string  name = data.name();
       send<std::string>(comm, name, dest, tag);
@@ -124,7 +124,7 @@ namespace Util
    }
 
    template <>
-   void recv<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int source, int tag)
+   void recv<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int source, int tag)
    {
       std::string name;
       recv<std::string>(comm, name, source, tag);
@@ -147,7 +147,7 @@ namespace Util
    }
 
    template <>
-   void bcast<McMd::AtomType>(MPI::Intracomm& comm, McMd::AtomType& data, int root)
+   void bcast<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int root)
    {
       std::string  name;
       double  mass; 
@@ -155,7 +155,8 @@ namespace Util
       double  charge;
       bool hasCharge; 
       #endif
-      int  rank = comm.Get_rank();
+      int rank;
+      MPI_Comm_rank(comm, &rank);
       if (rank == root) {
          name = data.name();
          mass = data.mass();
@@ -189,7 +190,7 @@ namespace Util
    /**
    * Initialize AtomType MPI Datatype.
    */
-   MPI::Datatype MpiTraits<McMd::AtomType>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<McMd::AtomType>::type = MPI_BYTE;
    bool MpiTraits<McMd::AtomType>::hasType = false;
 
 }

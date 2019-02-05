@@ -262,7 +262,7 @@ namespace Util
    * \param tag  integer identifier for message
    */
    template <>
-   void send<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int dest, int tag);
+   void send<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int dest, int tag);
 
    /**
    * Receive an AtomType (wrapper for MPI Recv).
@@ -273,7 +273,7 @@ namespace Util
    * \param tag  integer identifier for message
    */
    template <>
-   void recv<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int source, int tag);
+   void recv<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int source, int tag);
 
    /**
    * Broadcast an AtomType (wrapper for MPI Bcast).
@@ -283,7 +283,7 @@ namespace Util
    * \param root MPI rank of root processor from which data is broadcast
    */
    template <>
-   void bcast<McMd::AtomType>(MPI::Intracomm& comm, McMd::AtomType& data, int root);
+   void bcast<McMd::AtomType>(MPI_Comm comm, McMd::AtomType& data, int root);
 
    /**
    * Explicit specialization MpiTraits<AtomType>.
@@ -292,7 +292,7 @@ namespace Util
    class MpiTraits<McMd::AtomType>
    {
    public:
-      static MPI::Datatype type;   ///< MPI Datatype
+      static MPI_Datatype type;   ///< MPI Datatype
       static bool hasType;         ///< Is the MPI type initialized?
    };
 

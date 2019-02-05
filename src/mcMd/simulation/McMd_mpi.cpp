@@ -15,7 +15,7 @@ namespace Util
    /*
    * Initialize MpiTraits< Pair<int> >
    */
-   MPI::Datatype MpiTraits< Pair<int> >::type = MPI::BYTE;
+   MPI_Datatype MpiTraits< Pair<int> >::type = MPI_BYTE;
    bool MpiTraits< Pair<int> >::hasType = false;
 
 }
