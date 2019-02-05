@@ -307,7 +307,7 @@ namespace DdMd
    * Compute total pair nPair on all processors.
    */
    #ifdef UTIL_MPI
-   void PairPotential::computeNPair(MPI::Intracomm& communicator)
+   void PairPotential::computeNPair(MPI_Comm communicator)
    #else
    void PairPotential::computeNPair()
    #endif
@@ -325,7 +325,7 @@ namespace DdMd
       }
       nPair_ = localNPair;
       #ifdef UTIL_MPI
-      communicator.Reduce(&localNPair, &nPair_, 1, MPI::INT, MPI::SUM, 0);
+      communicator.Reduce(&localNPair, &nPair_, 1, MPI_INT, MPI_SUM, 0);
       #else
       nPair_ = localNPair;
       #endif

@@ -182,7 +182,7 @@ namespace DdMd
       * Call on all processors (MPI reduce operation).
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator);
+      virtual void computeEnergy(MPI_Comm communicator);
       #else
       virtual void computeEnergy();
       #endif
@@ -193,7 +193,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator);
+      virtual void computeStress(MPI_Comm communicator);
       #else
       virtual void computeStress();
       #endif
@@ -426,7 +426,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void
-   DihedralPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   DihedralPotentialImpl<Interaction>::computeEnergy(MPI_Comm communicator)
    #else
    void DihedralPotentialImpl<Interaction>::computeEnergy()
    #endif
@@ -487,7 +487,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void
-   DihedralPotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   DihedralPotentialImpl<Interaction>::computeStress(MPI_Comm communicator)
    #else
    void DihedralPotentialImpl<Interaction>::computeStress()
    #endif

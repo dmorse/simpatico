@@ -58,7 +58,7 @@ namespace DdMd
    */
    void AtomType::initStatic()
    {
-      MpiTraits<DdMd::AtomType>::type = MPI::BYTE;
+      MpiTraits<DdMd::AtomType>::type = MPI_BYTE;
       MpiTraits<DdMd::AtomType>::hasType = false;
    }
    #endif
@@ -70,7 +70,7 @@ namespace Util
 {
 
    template <>
-   void send<DdMd::AtomType>(MPI::Comm& comm, DdMd::AtomType& data, int dest, int tag)
+   void send<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int dest, int tag)
    {
       std::string name = data.name();
       double      mass = data.mass();
@@ -79,7 +79,7 @@ namespace Util
    }
 
    template <>
-   void recv<DdMd::AtomType>(MPI::Comm& comm, DdMd::AtomType& data, int source, int tag)
+   void recv<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int source, int tag)
    {
       std::string name;
       double      mass; 
@@ -90,7 +90,7 @@ namespace Util
    }
 
    template <>
-   void bcast<DdMd::AtomType>(MPI::Intracomm& comm, DdMd::AtomType& data, int root)
+   void bcast<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int root)
    {
       std::string name;
       double      mass; 
@@ -110,7 +110,7 @@ namespace Util
    /**
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<DdMd::AtomType>::type = MPI::BYTE;
+   MPI_Datatype MpiTraits<DdMd::AtomType>::type = MPI_BYTE;
    bool MpiTraits<DdMd::AtomType>::hasType = false;
 
 }

@@ -6,7 +6,7 @@
 int main()
 {
    #ifdef UTIL_MPI 
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    #endif
 
    StorageTestComposite runner;
@@ -24,7 +24,7 @@ int main()
    #endif
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
 } 

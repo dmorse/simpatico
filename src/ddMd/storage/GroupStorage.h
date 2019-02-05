@@ -270,7 +270,7 @@ namespace DdMd
       * \return on master node, return total number of groups.
       */
       #ifdef UTIL_MPI
-      void computeNTotal(MPI::Intracomm& communicator);
+      void computeNTotal(MPI_Comm communicator);
       #else
       void computeNTotal();
       #endif
@@ -374,7 +374,7 @@ namespace DdMd
       */
       #ifdef UTIL_MPI
       virtual
-      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
+      bool isValid(AtomStorage& atomStorage, MPI_Comm communicator, 
                    bool hasGhosts);
       #else
       virtual
@@ -391,7 +391,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& communicator);
+      virtual void computeStatistics(MPI_Comm communicator);
       #else
       virtual void computeStatistics();
       #endif

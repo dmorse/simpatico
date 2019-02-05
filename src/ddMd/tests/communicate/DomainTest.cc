@@ -2,7 +2,7 @@
 int main()
 {
    #ifdef UTIL_MPI 
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    IntVector::commitMpiType();
    #endif 
 
@@ -10,7 +10,7 @@ int main()
    runner1.run();
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
 } 

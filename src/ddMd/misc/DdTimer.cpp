@@ -45,15 +45,15 @@ namespace DdMd
    {  time_ += MPI_Wtime() - begin_; }
 
    #ifdef UTIL_MPI
-   void DdTimer::reduce(MPI::Intracomm& communicator) 
+   void DdTimer::reduce(MPI_Comm communicator) 
    {
       int procs = communicator.Get_size();
       double sum;
       for (int i = 0; i < size_; i++) {
-         communicator.Allreduce(&times_[i], &sum, 1, MPI::DOUBLE, MPI::SUM);
+         communicator.Allreduce(&times_[i], &sum, 1, MPI_DOUBLE, MPI_SUM);
          times_[i] = sum/double(procs);
       }
-      communicator.Allreduce(&time_, &sum, 1, MPI::DOUBLE, MPI::SUM);
+      communicator.Allreduce(&time_, &sum, 1, MPI_DOUBLE, MPI_SUM);
       time_ = sum/double(procs);
    }
    #endif

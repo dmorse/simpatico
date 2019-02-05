@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
    }
 
    #ifdef TEST_MPI 
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    Util::IntVector::commitMpiType();
    Util::Vector::commitMpiType();
    #endif
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
    runner.run();
 
    #ifdef TEST_MPI 
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
 }

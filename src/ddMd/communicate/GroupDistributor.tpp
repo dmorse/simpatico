@@ -335,7 +335,7 @@ namespace DdMd
       int nAtomRecvTot;
       const int source = 0;
       domainPtr_->communicator()
-             .Reduce(&nAtomRecv_, &nAtomRecvTot, 1, MPI::INT, MPI::SUM, source);
+             .Reduce(&nAtomRecv_, &nAtomRecvTot, 1, MPI_INT, MPI_SUM, source);
       if (domainPtr_->gridRank() == 0) {
          if (nAtomRecvTot != nSentTotal_*N) {
              Log::file() << "nSentTotal_*N = " << nSentTotal_*N << std::endl;

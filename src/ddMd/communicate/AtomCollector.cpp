@@ -159,7 +159,7 @@ namespace DdMd
             
             // Send request to processor source_ .
             int message = source_;
-            domainPtr_->communicator().Send(&message, 1, MPI::INT, 
+            domainPtr_->communicator().Send(&message, 1, MPI_INT, 
                                                source_, message);
       
             // Receive buffer from processor source_
@@ -227,7 +227,7 @@ namespace DdMd
          // Receive notice from master to send atoms (blocking receive)
          int message;
          int tag = domainPtr_->communicator().Get_rank();
-         domainPtr_->communicator().Recv(&message, 1, MPI::INT, 0, tag);
+         domainPtr_->communicator().Recv(&message, 1, MPI_INT, 0, tag);
 
          // Pack buffer with atoms
          int recvArraySize_ = 0;

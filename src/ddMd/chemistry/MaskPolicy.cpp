@@ -14,7 +14,7 @@ namespace Util
    /**
    * Initialize MPI Datatype associated with MaskPolicy.
    */
-   MPI::Datatype MpiTraits<DdMd::MaskPolicy>::type    = MPI::INT;
+   MPI_Datatype MpiTraits<DdMd::MaskPolicy>::type    = MPI_INT;
    bool          MpiTraits<DdMd::MaskPolicy>::hasType = true;
 
 }

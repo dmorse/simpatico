@@ -175,13 +175,13 @@ namespace Util
 {
 
    template <>
-   void send<DdMd::AtomType>(MPI::Comm& comm, DdMd::AtomType& data, int dest, int tag);
+   void send<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int dest, int tag);
 
    template <>
-   void recv<DdMd::AtomType>(MPI::Comm& comm, DdMd::AtomType& data, int source, int tag);
+   void recv<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int source, int tag);
 
    template <>
-   void bcast<DdMd::AtomType>(MPI::Intracomm& comm, DdMd::AtomType& data, int root);
+   void bcast<DdMd::AtomType>(MPI_Comm comm, DdMd::AtomType& data, int root);
 
    /**
    * Explicit specialization MpiTraits<AtomType>.
@@ -190,7 +190,7 @@ namespace Util
    class MpiTraits<DdMd::AtomType>
    {
    public:
-      static MPI::Datatype type;
+      static MPI_Datatype type;
       static bool hasType;
    };
 

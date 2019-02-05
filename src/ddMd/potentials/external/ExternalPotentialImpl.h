@@ -161,7 +161,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator);
+      virtual void computeEnergy(MPI_Comm communicator);
       #else
       virtual void computeEnergy();
       #endif
@@ -350,7 +350,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void 
-   ExternalPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   ExternalPotentialImpl<Interaction>::computeEnergy(MPI_Comm communicator)
    #else
    void ExternalPotentialImpl<Interaction>::computeEnergy()
    #endif

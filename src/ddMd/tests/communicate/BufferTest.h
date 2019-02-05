@@ -146,8 +146,8 @@ public:
       int       myrank, commsize;
 
       atoms.allocate(4);
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Fill one local atom object. 
       // Add processor's rank to the position and velocity vectors.
@@ -191,7 +191,7 @@ public:
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI_COMM_WORLD, source, dest);
 
       // Unpack atoms
       buffer_.beginRecvBlock();
@@ -276,8 +276,8 @@ public:
       int myrank, commsize;
       atoms.allocate(4);
 
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Fill one local atom object. Add processor's rank to the position
       // and velocity vectors.
@@ -312,7 +312,7 @@ public:
       // Send the sendbuffer to processor to the right. Receive from the
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI_COMM_WORLD, source, dest);
 
       // Unpack ghost atoms
       buffer_.beginRecvBlock();
@@ -350,8 +350,8 @@ public:
       int myrank, commsize;
 
       atoms.allocate(4);
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Fill one local atom object. Add processor's rank to the
       // position and velocity vectors.
@@ -390,11 +390,11 @@ public:
 
       // Send the sendbuffer to processor to the right.
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI_COMM_WORLD, dest);
 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
-      buffer_.recv(MPI::COMM_WORLD, source);
+      buffer_.recv(MPI_COMM_WORLD, source);
 
       // Unpack 2 atoms from receive buffer
       bool isComplete = buffer_.beginRecvBlock();
@@ -477,8 +477,8 @@ public:
       int myrank, commsize;
       atoms.allocate(4);
 
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Fill one local atom object. Add processor's rank to the position
       // and velocity vectors.
@@ -510,11 +510,11 @@ public:
 
       // Send the sendbuffer to processor to the right.
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI_COMM_WORLD, dest);
 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
-      buffer_.recv(MPI::COMM_WORLD, source);
+      buffer_.recv(MPI_COMM_WORLD, source);
 
       // Unpack ghost atoms
       bool isComplete = buffer_.beginRecvBlock();
@@ -551,8 +551,8 @@ public:
       int myrank, commsize;
 
       atoms.allocate(8);
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Atom[0]. 
       // Add processor's rank to the position and velocity vectors.
@@ -623,11 +623,11 @@ public:
 
       // Send sendbuffer to next processor in ring.
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI_COMM_WORLD, dest);
 
       // Receive from previous processor in ring.
       int  source = (myrank + commsize - 1) % commsize;
-      buffer_.recv(MPI::COMM_WORLD, source);
+      buffer_.recv(MPI_COMM_WORLD, source);
 
       // Unpack block of 2 local atoms from receive buffer
       bool isComplete;
@@ -692,8 +692,8 @@ public:
       int          myrank, commsize;
 
       bonds.allocate(4);
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
+      myrank   = MPI_COMM_WORLD.Get_rank();
+      commsize = MPI_COMM_WORLD.Get_size();
 
       // Fill one local atom object. 
       bonds[0].setId(0);
@@ -722,7 +722,7 @@ public:
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI_COMM_WORLD, source, dest);
 
       // Unpack bonds
       buffer_.beginRecvBlock();
@@ -794,8 +794,8 @@ public:
       DArray<Bond> bonds;
       bonds.allocate(4);
 
-      int myrank = MPI::COMM_WORLD.Get_rank();
-      // int commsize = MPI::COMM_WORLD.Get_size();
+      int myrank = MPI_COMM_WORLD.Get_rank();
+      // int commsize = MPI_COMM_WORLD.Get_size();
       int source = 0;
 
       if (myrank == source) {
@@ -825,7 +825,7 @@ public:
 
       }
 
-      buffer_.bcast(MPI::COMM_WORLD, source);
+      buffer_.bcast(MPI_COMM_WORLD, source);
 
       if (myrank != source) {
 

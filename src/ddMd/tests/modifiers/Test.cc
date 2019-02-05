@@ -8,7 +8,7 @@ int main()
 
    #ifdef UTIL_MPI 
    #ifdef TEST_MPI
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    DdMd::Modifier::initStatic();
    #endif
    #endif
@@ -18,7 +18,7 @@ int main()
 
    #ifdef UTIL_MPI 
    #ifdef TEST_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
    #endif
 

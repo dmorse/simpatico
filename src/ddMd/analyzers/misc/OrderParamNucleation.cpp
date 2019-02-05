@@ -153,7 +153,7 @@ namespace DdMd
             //Sum values from all processors.
             simulation().domain().communicator().
                          Reduce(&cosFactors_(i, j), &totalCosFactors_(i, j),
-                                1, MPI::DOUBLE, MPI::SUM, 0);
+                                1, MPI_DOUBLE, MPI_SUM, 0);
             }
          }
          #else

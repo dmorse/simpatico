@@ -34,7 +34,7 @@ namespace DdMd
    */
    void ExternalEnergyAnalyzer::compute() 
    {
-      MPI::Intracomm& communicator = simulation().domain().communicator();  
+      MPI_Comm communicator = simulation().domain().communicator();  
       simulation().externalPotential().computeEnergy(communicator); 
    }
 

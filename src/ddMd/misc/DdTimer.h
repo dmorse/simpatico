@@ -63,7 +63,7 @@ namespace DdMd
       /**
       * Upon return, times on every processor replaced by average over procs.
       */
-      void reduce(MPI::Intracomm& communicator);
+      void reduce(MPI_Comm communicator);
       #endif
    
    private:

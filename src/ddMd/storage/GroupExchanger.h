@@ -125,7 +125,7 @@ namespace DdMd
       */
       #ifdef UTIL_MPI
       virtual 
-      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
+      bool isValid(AtomStorage& atomStorage, MPI_Comm communicator, 
                    bool hasGhosts) = 0;
       #else
       virtual 

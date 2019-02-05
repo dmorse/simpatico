@@ -155,7 +155,7 @@ namespace DdMd
       * Call on all processors (MPI reduce operation).
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator);
+      virtual void computeEnergy(MPI_Comm communicator);
       #else
       virtual void computeEnergy();
       #endif
@@ -166,7 +166,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator);
+      virtual void computeStress(MPI_Comm communicator);
       #else
       virtual void computeStress();
       #endif
@@ -370,7 +370,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void 
-   AnglePotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   AnglePotentialImpl<Interaction>::computeEnergy(MPI_Comm communicator)
    #else
    void AnglePotentialImpl<Interaction>::computeEnergy()
    #endif
@@ -421,7 +421,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void AnglePotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   void AnglePotentialImpl<Interaction>::computeStress(MPI_Comm communicator)
    #else
    void AnglePotentialImpl<Interaction>::computeStress()
    #endif

@@ -72,7 +72,7 @@ namespace Util
    template <>
    class MpiTraits<DdMd::MaskPolicy> {  
    public:  
-      static MPI::Datatype type;     ///< MPI Datatype
+      static MPI_Datatype type;     ///< MPI Datatype
       static bool hasType;           ///< Is the MPI type initialized?
    };
 

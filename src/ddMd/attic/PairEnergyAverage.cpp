@@ -110,7 +110,7 @@ namespace DdMd
       if (isAtInterval(iStep))  {
          Simulation& sim = simulation();
          PairPotential& potential = sim.pairPotential();
-         MPI::Intracomm& communicator = sim.domain().communicator();
+         MPI_Comm communicator = sim.domain().communicator();
          potential.computePairEnergies(communicator);
          //sim.computePairEnergies();
          if (sim.domain().isMaster()) {

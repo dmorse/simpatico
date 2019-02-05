@@ -295,7 +295,7 @@ namespace DdMd
    */
    template <int N>
    #ifdef UTIL_MPI
-   void GroupStorage<N>::computeNTotal(MPI::Intracomm& communicator)
+   void GroupStorage<N>::computeNTotal(MPI_Comm communicator)
    #else
    void GroupStorage<N>::computeNTotal()
    #endif
@@ -322,7 +322,7 @@ namespace DdMd
       int nTot;
       #ifdef UTIL_MPI
       communicator.Reduce(&nLocal, &nTot, 1, 
-                          MPI::INT, MPI::SUM, 0);
+                          MPI_INT, MPI_SUM, 0);
       if (communicator.Get_rank() !=0) {
          nTot = -1;
       }
@@ -337,7 +337,7 @@ namespace DdMd
    */
    template <int N>
    #ifdef UTIL_MPI
-   void GroupStorage<N>::computeStatistics(MPI::Intracomm& communicator)
+   void GroupStorage<N>::computeStatistics(MPI_Comm communicator)
    #else
    void GroupStorage<N>::computeStatistics()
    #endif
@@ -345,7 +345,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       int maxNGroupGlobal;
       communicator.Allreduce(&maxNGroupLocal_, &maxNGroupGlobal, 1, 
-                             MPI::INT, MPI::MAX);
+                             MPI_INT, MPI_MAX);
       maxNGroup_.set(maxNGroupGlobal);
       maxNGroupLocal_ = maxNGroupGlobal;
       #else
@@ -384,7 +384,7 @@ namespace DdMd
    template <int N>
    #ifdef UTIL_MPI
    bool GroupStorage<N>::isValid(AtomStorage& atomStorage, 
-                                 MPI::Intracomm& communicator,
+                                 MPI_Comm communicator,
                                  bool hasGhosts)
    #else
    bool GroupStorage<N>::isValid(AtomStorage& atomStorage, bool hasGhosts)
@@ -454,7 +454,7 @@ namespace DdMd
       int nAtomGroupTotal;
       const int source = 0;
       communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
-                          MPI::INT, MPI::SUM, source);
+                          MPI_INT, MPI_SUM, source);
       if (communicator.Get_rank() == source) {
          if (!nTotal_.isSet()) {
             UTIL_THROW("nTotal not set");

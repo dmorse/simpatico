@@ -414,7 +414,7 @@ namespace DdMd
       *
       * \param communicator MPI communicator for this system.
       */
-      void computeNAtomTotal(MPI::Intracomm& communicator);
+      void computeNAtomTotal(MPI_Comm communicator);
       #endif
 
       /**
@@ -478,7 +478,7 @@ namespace DdMd
       *  
       * \param communicator communicator for all domain processors.
       */
-      bool isValid(MPI::Intracomm& communicator) const;
+      bool isValid(MPI_Comm communicator) const;
       #endif
 
       //@}
@@ -491,7 +491,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& communicator);
+      virtual void computeStatistics(MPI_Comm communicator);
       #else
       virtual void computeStatistics();
       #endif

@@ -154,7 +154,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& communicator);
+      virtual void computeStatistics(MPI_Comm communicator);
       #else
       virtual void computeStatistics();
       #endif

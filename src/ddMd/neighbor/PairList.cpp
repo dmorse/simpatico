@@ -242,7 +242,7 @@ namespace DdMd
    * Compute memory usage statistics (call on all processors).
    */
    #ifdef UTIL_MPI
-   void PairList::computeStatistics(MPI::Intracomm& communicator)
+   void PairList::computeStatistics(MPI_Comm communicator)
    #else
    void PairList::computeStatistics()
    #endif
@@ -251,9 +251,9 @@ namespace DdMd
       int maxNAtomGlobal;
       int maxNPairGlobal;
       communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1,
-                             MPI::INT, MPI::MAX);
+                             MPI_INT, MPI_MAX);
       communicator.Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1,
-                             MPI::INT, MPI::MAX);
+                             MPI_INT, MPI_MAX);
       maxNAtom_.set(maxNAtomGlobal);
       maxNPair_.set(maxNPairGlobal);
       maxNAtomLocal_ = maxNAtomGlobal;

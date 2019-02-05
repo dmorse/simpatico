@@ -199,7 +199,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator);
+      virtual void computeEnergy(MPI_Comm communicator);
       #else
       virtual void computeEnergy();
       #endif
@@ -210,7 +210,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator);
+      virtual void computeStress(MPI_Comm communicator);
       #else
       virtual void computeStress();
       #endif
@@ -222,7 +222,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computePairEnergies(MPI::Intracomm& communicator);
+      virtual void computePairEnergies(MPI_Comm communicator);
       #else
       virtual void computePairEnergies();
       #endif
@@ -233,7 +233,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      virtual void computeForcesAndStress(MPI_Comm communicator);
       #else
       virtual void computeForcesAndStress();
       #endif
@@ -480,7 +480,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void 
-   PairPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   PairPotentialImpl<Interaction>::computeEnergy(MPI_Comm communicator)
    #else
    void PairPotentialImpl<Interaction>::computeEnergy()
    #endif
@@ -953,7 +953,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void PairPotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   void PairPotentialImpl<Interaction>::computeStress(MPI_Comm communicator)
    #else
    void PairPotentialImpl<Interaction>::computeStress()
    #endif
@@ -1020,7 +1020,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void PairPotentialImpl<Interaction>::computeForcesAndStress(MPI::Intracomm& communicator)
+   void PairPotentialImpl<Interaction>::computeForcesAndStress(MPI_Comm communicator)
    #else
    void PairPotentialImpl<Interaction>::computeForcesAndStress()
    #endif
@@ -1095,7 +1095,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void PairPotentialImpl<Interaction>::computePairEnergies(MPI::Intracomm& communicator)
+   void PairPotentialImpl<Interaction>::computePairEnergies(MPI_Comm communicator)
    #else
    void PairPotentialImpl<Interaction>::computePairEnergies()
    #endif
@@ -1152,7 +1152,7 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       communicator.Reduce(&localPairEnergies(0,0), &totalPairEnergies(0,0), nAtomType_*nAtomType_,
-                           MPI::DOUBLE, MPI::SUM, 0);
+                           MPI_DOUBLE, MPI_SUM, 0);
       if (communicator.Get_rank() == 0) {
          setPairEnergies(totalPairEnergies);
       } else {

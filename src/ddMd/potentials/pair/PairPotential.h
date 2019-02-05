@@ -229,7 +229,7 @@ namespace DdMd
       * the pairEnergies() function on the master processor.
       */
       #ifdef UTIL_MPI
-      virtual void computePairEnergies(MPI::Intracomm& communicator) = 0;
+      virtual void computePairEnergies(MPI_Comm communicator) = 0;
       #else
       virtual void computePairEnergies() = 0;
       #endif
@@ -257,7 +257,7 @@ namespace DdMd
       * of reverseUpdateFlag().
       */
       #ifdef UTIL_MPI
-      void computeNPair(MPI::Intracomm& communicator);
+      void computeNPair(MPI_Comm communicator);
       #else
       void computeNPair();
       #endif

@@ -36,7 +36,7 @@ namespace DdMd
    */
    void BondTensorAutoCorr::computeData()
    {
-      MPI::Intracomm& communicator = simulation().domain().communicator();
+      MPI_Comm communicator = simulation().domain().communicator();
       BondStorage& storage = simulation().bondStorage();
       Boundary& boundary = simulation().boundary();
 
@@ -83,7 +83,7 @@ namespace DdMd
       // Reduce partial sums from all processors, store on the master.
       bondTensor_.zero();
       communicator.Reduce(&localTensor(0,0), &bondTensor_(0,0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+                          Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
 
       if (communicator.Get_rank() != 0) {
          bondTensor_.zero();

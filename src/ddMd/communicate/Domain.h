@@ -52,7 +52,7 @@ namespace DdMd
       *
       * \param communicator Intramcommunicator to be used.
       */
-      void setGridCommunicator(MPI::Intracomm& communicator);
+      void setGridCommunicator(MPI_Comm communicator);
 
       #else
 
@@ -159,7 +159,7 @@ namespace DdMd
       /**
       * Return Cartesian communicator by reference.
       */
-      MPI::Intracomm& communicator() const;
+      MPI_Comm communicator() const;
       #endif
 
       /**
@@ -230,7 +230,7 @@ namespace DdMd
       #if UTIL_MPI
 
       // Pointer to Intracommunicator.
-      MPI::Intracomm* intracommPtr_;
+      MPI_Comm intracomm_;
 
       #endif
 
@@ -254,10 +254,10 @@ namespace DdMd
    /**
    * Return Cartesian communicator by reference.
    */
-   inline MPI::Intracomm& Domain::communicator() const
+   inline MPI_Comm Domain::communicator() const
    {
-      assert(intracommPtr_);
-      return *intracommPtr_; 
+      //assert(intracomm_);
+      return intracomm_; 
    }
 
    #endif

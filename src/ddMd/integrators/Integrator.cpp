@@ -255,7 +255,7 @@ namespace DdMd
       #if UTIL_MPI
       int neededAll;
       domain().communicator().Allreduce(&needed, &neededAll, 
-                                        1, MPI::INT, MPI::MAX);
+                                        1, MPI_INT, MPI_MAX);
       timer_.stamp(ALLREDUCE);
       return bool(neededAll);
       #else
@@ -284,14 +284,14 @@ namespace DdMd
       #if UTIL_MPI
       double maxSqDispAll;                    // global maximum
       domain().communicator().Reduce(&maxSqDisp, &maxSqDispAll, 1, 
-                          MPI::DOUBLE, MPI::MAX, 0);
+                          MPI_DOUBLE, MPI_MAX, 0);
       if (domain().communicator().Get_rank() == 0) {
          needed = 0;
          if (sqrt(maxSqDispAll) > 0.5*skin) {
             needed = 1; 
          }
       }
-      domain().communicator().Bcast(&needed, 1, MPI::INT, 0);
+      domain().communicator().Bcast(&needed, 1, MPI_INT, 0);
       timer_.stamp(ALLREDUCE);
       #else
       if (sqrt(maxSqDisp) > 0.5*skin) {
@@ -508,7 +508,7 @@ namespace DdMd
       out << std::endl;
 
       // Output info about timer resolution
-      double tick = MPI::Wtick();
+      double tick = MPI_Wtick();
       out << "Timer resolution     " 
           << Dbl(tick, 12, 6) 
           << "   "

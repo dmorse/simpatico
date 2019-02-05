@@ -137,7 +137,7 @@ public:
       printMethod(TEST_FUNC); 
  
       Boundary boundary; 
-      MPI::Request request[2]; 
+      MPI_Request request[2]; 
       MpiLogger logger;
 
       domain_.setBoundary(boundary);
@@ -164,10 +164,10 @@ public:
             #endif
 
             if (s != myRank) {
-               request[0] = domain_.communicator().Irecv(&rr, 1, MPI::INT, s, 34);
+               request[0] = domain_.communicator().Irecv(&rr, 1, MPI_INT, s, 34);
             }
             if (d != myRank) {
-               request[1] = domain_.communicator().Isend(&myRank, 1, MPI::INT, d, 34);
+               request[1] = domain_.communicator().Isend(&myRank, 1, MPI_INT, d, 34);
             }
             if (s != myRank) {
                request[0].Wait();

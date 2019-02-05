@@ -245,7 +245,7 @@ void ExchangerForceTest::initialize()
 
    // Check that all atoms are accounted for after distribution.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
    if (domain.gridRank() == 0) {
       //std::cout << std::endl;
       // std::cout << "Total atom count (post-distribute) = " 
@@ -422,7 +422,7 @@ void ExchangerForceTest::testGhostUpdate()
 
    // Check that all atoms are accounted for after atom and ghost exchanges.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
       //           << nAtomAll << std::endl;
@@ -630,7 +630,7 @@ void ExchangerForceTest::testInitialForces()
    // Check that all atoms are accounted for after atom and ghost exchanges.
    nAtom = atomStorage.nAtom();
    int  nAtomAll  = 0; // Number received on all processors.
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
    int  myRank = domain.gridRank();
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
@@ -753,7 +753,7 @@ void ExchangerForceTest::testInitialForces()
    }
 
    // Check that total force is zero (on master node)
-   communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
+   communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
    if (communicator().Get_rank() == 0) {
       TEST_ASSERT(eq(totForce[0], 0.0));
       TEST_ASSERT(eq(totForce[1], 0.0));
@@ -991,7 +991,7 @@ void ExchangerForceTest::testForceCycle()
 
       // Check that total force is zero, different methods agree.
       Vector totForce;
-      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
+      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
       if (communicator().Get_rank() == 0) {
          TEST_ASSERT(eq(totForce[0], 0.0));
          TEST_ASSERT(eq(totForce[1], 0.0));
@@ -1080,7 +1080,7 @@ bool ExchangerForceTest::isExchangeNeeded(double skin)
 
    #if UTIL_MPI
    int neededAll;
-   domain.communicator().Allreduce(&needed, &neededAll, 1, MPI::INT, MPI::MAX);
+   domain.communicator().Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX);
    return bool(neededAll);
    #else
    return bool(needed);

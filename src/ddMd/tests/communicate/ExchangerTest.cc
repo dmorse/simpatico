@@ -2,14 +2,14 @@
 int main()
 {
    #ifdef UTIL_MPI
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    IntVector::commitMpiType();
    Vector::commitMpiType();
 
    TEST_RUNNER(ExchangerTest) runner;
    runner.run();
 
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
 }

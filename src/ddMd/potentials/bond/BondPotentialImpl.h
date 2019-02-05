@@ -160,7 +160,7 @@ namespace DdMd
       * Call on all processors (MPI reduce operation).
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator);
+      virtual void computeEnergy(MPI_Comm communicator);
       #else
       virtual void computeEnergy();
       #endif
@@ -171,7 +171,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator);
+      virtual void computeStress(MPI_Comm communicator);
       #else
       virtual void computeStress();
       #endif
@@ -182,7 +182,7 @@ namespace DdMd
       * Call on all processors.
       */
       #ifdef UTIL_MPI
-      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      virtual void computeForcesAndStress(MPI_Comm communicator);
       #else
       virtual void computeForcesAndStress();
       #endif
@@ -408,7 +408,7 @@ namespace DdMd
    template <class Interaction>
    #ifdef UTIL_MPI
    void 
-   BondPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   BondPotentialImpl<Interaction>::computeEnergy(MPI_Comm communicator)
    #else
    void BondPotentialImpl<Interaction>::computeEnergy()
    #endif
@@ -457,7 +457,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void BondPotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   void BondPotentialImpl<Interaction>::computeStress(MPI_Comm communicator)
    #else
    void BondPotentialImpl<Interaction>::computeStress()
    #endif
@@ -512,7 +512,7 @@ namespace DdMd
    */
    template <class Interaction>
    #ifdef UTIL_MPI
-   void BondPotentialImpl<Interaction>::computeForcesAndStress(MPI::Intracomm& communicator)
+   void BondPotentialImpl<Interaction>::computeForcesAndStress(MPI_Comm communicator)
    #else
    void BondPotentialImpl<Interaction>::computeForcesAndStress()
    #endif

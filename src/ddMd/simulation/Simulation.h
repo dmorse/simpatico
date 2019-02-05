@@ -98,7 +98,7 @@ namespace DdMd
       *
       * \param communicator MPI communicator for MD processors.
       */
-      Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
+      Simulation(MPI_Comm communicator = MPI_COMM_WORLD);
       #else
       /**
       * Constructor.
@@ -1063,7 +1063,7 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       /// Communicator for this system.
-      MPI::Intracomm communicator_;
+      MPI_Comm communicator_;
       #endif
 
       /// Signal to force clearing of all computed quantities.

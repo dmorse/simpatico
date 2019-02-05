@@ -128,7 +128,7 @@ namespace DdMd
    *
    *    Buffer buffer;
    *    DArray< Group<2> > bonds;
-   *    MPI::Intracomm communicator;
+   *    MPI_Comm communicator;
    *    int source;
    *
    *    // Receive the buffer 
@@ -185,7 +185,7 @@ namespace DdMd
    *
    *    Buffer buffer;
    *    DArray< Group<2> > bonds;
-   *    MPI::Intracomm communicator;
+   *    MPI_Comm communicator;
    *    int source;
    *
    *    int i = 0;
@@ -384,7 +384,7 @@ namespace DdMd
       * \param source MPI rank of processor from which data is sent
       * \param dest   MPI rank of processor to which data is sent
       */
-      void sendRecv(MPI::Intracomm& comm, int source, int dest);
+      void sendRecv(MPI_Comm comm, int source, int dest);
 
       /**
       * Send a complete buffer.
@@ -395,7 +395,7 @@ namespace DdMd
       * \param comm  MPI communicator
       * \param dest  rank of processor to which data is sent
       */
-      void send(MPI::Intracomm& comm, int dest);
+      void send(MPI_Comm comm, int dest);
 
       /**
       * Receive a buffer.
@@ -403,7 +403,7 @@ namespace DdMd
       * \param comm   MPI communicator
       * \param source rank of processor from which data is sent.
       */
-      void recv(MPI::Intracomm& comm, int source);
+      void recv(MPI_Comm comm, int source);
 
       /**
       * Broadcast a buffer.
@@ -411,7 +411,7 @@ namespace DdMd
       * \param comm   MPI communicator.
       * \param source rank of source processor.
       */
-      void bcast(MPI::Intracomm& comm, int source);
+      void bcast(MPI_Comm comm, int source);
 
       //@}
       #endif
@@ -426,7 +426,7 @@ namespace DdMd
       * \param comm MPI communicator
       */
       #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& comm);
+      virtual void computeStatistics(MPI_Comm comm);
       #else
       virtual void computeStatistics();
       #endif

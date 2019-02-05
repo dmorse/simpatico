@@ -506,7 +506,7 @@ namespace DdMd
    /*
    * Compute, store and return total number of atoms on all processors.
    */
-   void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
+   void AtomStorage::computeNAtomTotal(MPI_Comm communicator)
    {
       // If nAtomTotal is already set, do nothing and return.
       // if (nAtomTotal_.isSet()) return;
@@ -514,7 +514,7 @@ namespace DdMd
       int nAtomLocal = nAtom();
       int nAtomTotal = 0;
       communicator.Reduce(&nAtomLocal, &nAtomTotal, 1, 
-                          MPI::INT, MPI::SUM, 0);
+                          MPI_INT, MPI_SUM, 0);
       if (communicator.Get_rank() !=0) {
          nAtomTotal = 0;
       }
@@ -529,7 +529,7 @@ namespace DdMd
    * Compute memory usage statistics (call on all processors).
    */
    #ifdef UTIL_MPI
-   void AtomStorage::computeStatistics(MPI::Intracomm& communicator)
+   void AtomStorage::computeStatistics(MPI_Comm communicator)
    #else
    void AtomStorage::computeStatistics()
    #endif
@@ -537,7 +537,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       int maxNAtomGlobal;
       communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
-                             MPI::INT, MPI::MAX);
+                             MPI_INT, MPI_MAX);
       maxNAtom_.set(maxNAtomGlobal);
       maxNAtomLocal_ = maxNAtomGlobal;
       #else
@@ -547,7 +547,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       int maxNGhostGlobal;
       communicator.Allreduce(&maxNGhostLocal_, &maxNGhostGlobal, 1, 
-                             MPI::INT, MPI::MAX);
+                             MPI_INT, MPI_MAX);
       maxNGhost_.set(maxNGhostGlobal);
       maxNGhostLocal_ = maxNGhostGlobal;
       #else
@@ -657,7 +657,7 @@ namespace DdMd
    *  
    * \param communicator domain communicator for all domain processors.
    */
-   bool AtomStorage::isValid(MPI::Intracomm& communicator) const
+   bool AtomStorage::isValid(MPI_Comm communicator) const
    {
       isValid();
       nAtomTotal_.isValid(communicator);

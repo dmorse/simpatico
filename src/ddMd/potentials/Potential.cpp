@@ -100,7 +100,7 @@ namespace DdMd
    * Default implementation just calls computeForces and computeStress.
    */
    #ifdef UTIL_MPI
-   void Potential::computeForcesAndStress(MPI::Intracomm& communicator)
+   void Potential::computeForcesAndStress(MPI_Comm communicator)
    #else
    void Potential::computeForcesAndStress();
    #endif
@@ -117,7 +117,7 @@ namespace DdMd
    * Reduce energy from all processors.
    */
    #ifdef UTIL_MPI
-   void Potential::reduceEnergy(double localEnergy, MPI::Intracomm& communicator)
+   void Potential::reduceEnergy(double localEnergy, MPI_Comm communicator)
    #else
    void Potential::reduceEnergy(double localEnergy)
    #endif
@@ -125,7 +125,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       double totalEnergy = 0.0; 
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
+                          MPI_DOUBLE, MPI_SUM, 0);
       if (communicator.Get_rank() != 0) {
          totalEnergy = 0.0;
       }
@@ -139,7 +139,7 @@ namespace DdMd
    * Reduce stress from all processors.
    */
    #ifdef UTIL_MPI
-   void Potential::reduceStress(Tensor& localStress, MPI::Intracomm& communicator)
+   void Potential::reduceStress(Tensor& localStress, MPI_Comm communicator)
    #else
    void PairPotential::reduceStress(Tensor& localStress)
    #endif
@@ -147,7 +147,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       Tensor totalStress;
       communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+                          Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
       if (communicator.Get_rank() != 0) {
          totalStress.zero();
       }
@@ -161,7 +161,7 @@ namespace DdMd
    /*
    * Is the potential in a valid internal state?
    */
-   bool Potential::isValid(MPI::Intracomm& communicator) const
+   bool Potential::isValid(MPI_Comm communicator) const
    {
       energy_.isValid(communicator);
       stress_.isValid(communicator);

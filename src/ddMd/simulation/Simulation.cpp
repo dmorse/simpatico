@@ -76,7 +76,7 @@ namespace DdMd
    * Constructor.
    */
    #ifdef UTIL_MPI
-   Simulation::Simulation(MPI::Intracomm& communicator)
+   Simulation::Simulation(MPI_Comm communicator)
    #else
    Simulation::Simulation()
    #endif
@@ -176,7 +176,7 @@ namespace DdMd
       setClassName("Simulation");
 
       #ifdef UTIL_MPI
-      if (!MPI::Is_initialized()) {
+      if (!MPI_Is_initialized()) {
          UTIL_THROW("MPI is not initialized");
       }
       Vector::commitMpiType();
@@ -364,8 +364,10 @@ namespace DdMd
          if (nSystem <= 1) {
             UTIL_THROW("nSystem must be greater than 1");
          }
-         int worldRank = communicator_.Get_rank();
-         int worldSize = communicator_.Get_size();
+         int worldRank;
+         MPI_Comm_rank(communicator_, &worldRank);
+         worldSize;
+         MPI_Comm_size(communicator_, &worldSize);
          if (worldSize % nSystem != 0) {
             UTIL_THROW("World communicator size not a multiple of nSystem");
          }
@@ -388,7 +390,9 @@ namespace DdMd
 
       // If option -q, output compile time options to log 
       if (qFlag) {
-         if (communicator_.Get_rank() == 0) {
+         int worldRank;
+         MPI_Comm_rank(communicator_, &worldRank);
+         if (worldRank == 0) {
             outputOptions(Log::file());
          }
       }
@@ -1517,10 +1521,10 @@ namespace DdMd
 
       // Compute total momentum and mass for system, by MPI all reduce
       domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
-                                       MPI::DOUBLE, MPI::SUM);
+                                       MPI_DOUBLE, MPI_SUM);
       domain_.communicator().Allreduce(&momentumLocal[0],
                                        &momentumTotal[0], Dimension,
-                                       MPI::DOUBLE, MPI::SUM);
+                                       MPI_DOUBLE, MPI_SUM);
 
       // Subtract average drift velocity
       Vector drift = momentumTotal;
@@ -1641,8 +1645,10 @@ namespace DdMd
       // Sum values from all processors.
       double totalEnergy = 0.0;
       domain_.communicator().Reduce(&localEnergy, &totalEnergy, 1,
-                                    MPI::DOUBLE, MPI::SUM, 0);
-      if (domain_.communicator().Get_rank() != 0) {
+                                    MPI_DOUBLE, MPI_SUM, 0);
+      int domainRank;
+      MPI_Comm_rank(domain_.communicator(), &domainRank);
+      if (domainRank != 0) {
          totalEnergy = 0.0;
       }
       kineticEnergy_.set(totalEnergy);
@@ -1706,8 +1712,10 @@ namespace DdMd
       // Sum values from all processors
       Tensor totalStress;
       domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0),
-                                    Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (domain_.communicator().Get_rank() != 0) {
+                                    Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
+      int domainRank;
+      MPI_Comm_rank(domain_.communicator(), &domainRank);
+      if (domainRank != 0) {
          totalStress.zero();
       }
       kineticStress_.set(totalStress);
@@ -2345,7 +2353,7 @@ namespace DdMd
       int nGhostAll = 0;
       #ifdef UTIL_MPI
       domain_.communicator().Reduce(&nGhost, &nGhostAll, 1,
-                                    MPI::INT, MPI::SUM, 0);
+                                    MPI_INT, MPI_SUM, 0);
       bcast(domain_.communicator(), nGhostAll, 0);
       #else
       nGhostAll = nGhost;

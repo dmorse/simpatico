@@ -68,7 +68,7 @@ namespace DdMd
       * calling energy() on this processor.
       */
       #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
+      virtual void computeEnergy(MPI_Comm communicator) = 0;
       #else
       virtual void computeEnergy() = 0;
       #endif
@@ -101,7 +101,7 @@ namespace DdMd
       * by calling stress() on this processor.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator)
+      virtual void computeStress(MPI_Comm communicator)
       #else
       virtual void computeStress()
       #endif
@@ -115,7 +115,7 @@ namespace DdMd
       * combine into a single loop.
       */
       #ifdef UTIL_MPI
-      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      virtual void computeForcesAndStress(MPI_Comm communicator);
       #else
       virtual void computeForcesAndStress();
       #endif
@@ -157,7 +157,7 @@ namespace DdMd
       *
       * \param communicator domain communicator for all domain procs
       */
-      virtual bool isValid(MPI::Intracomm& communicator) const;
+      virtual bool isValid(MPI_Comm communicator) const;
       #endif
 
       //@}
@@ -193,7 +193,7 @@ namespace DdMd
       * \param communicator domain communicator
       */
       #ifdef UTIL_MPI
-      void reduceEnergy(double localEnergy, MPI::Intracomm& communicator);
+      void reduceEnergy(double localEnergy, MPI_Comm communicator);
       #else
       void reduceEnergy();
       #endif
@@ -207,7 +207,7 @@ namespace DdMd
       * \param communicator domain communicator
       */
       #ifdef UTIL_MPI
-      void reduceStress(Tensor& localStress, MPI::Intracomm& communicator);
+      void reduceStress(Tensor& localStress, MPI_Comm communicator);
       #else
       void reduceStress();
       #endif

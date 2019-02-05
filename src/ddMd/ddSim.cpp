@@ -20,11 +20,11 @@ int main(int argc, char **argv)
 {
 
    #ifdef UTIL_MPI
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    #endif
 
    #ifdef UTIL_MPI
-   DdMd::Simulation simulation(MPI::COMM_WORLD);
+   DdMd::Simulation simulation(MPI_COMM_WORLD);
    #else
    DdMd::Simulation simulation();
    #endif
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
    simulation.readCommands();
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
    return 0;

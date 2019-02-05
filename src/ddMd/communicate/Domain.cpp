@@ -25,9 +25,6 @@ namespace DdMd
       gridCoordinates_(),
       gridRank_(-1),
       gridIsPeriodic_(),
-      #if UTIL_MPI
-      intracommPtr_(0),
-      #endif
       boundaryPtr_(0),
       isInitialized_(false)
    {  setClassName("Domain"); }
@@ -42,10 +39,10 @@ namespace DdMd
    /*
    * Set the grid intracommunicator.
    */
-   void Domain::setGridCommunicator(MPI::Intracomm& intraCommunicator)
+   void Domain::setGridCommunicator(MPI_Comm intraCommunicator)
    {
-      intracommPtr_ = &intraCommunicator;
-      gridRank_ = intracommPtr_->Get_rank();
+      intracomm_ = intraCommunicator;
+      MPI_Comm_rank(intracomm_, &gridRank_);
    }
    #else
    void Domain::setRank(int rank)
@@ -65,7 +62,7 @@ namespace DdMd
    {
 
       #ifdef UTIL_MPI
-      if (intracommPtr_ == 0) {
+      if (intracomm_ == 0) {
          UTIL_THROW("Intra-communicator not set before readParam");
       } 
       #endif
@@ -90,7 +87,7 @@ namespace DdMd
    void Domain::loadParameters(Serializable::IArchive& ar)
    {
       #ifdef UTIL_MPI
-      if (intracommPtr_ == 0) {
+      if (intracomm_ == 0) {
          UTIL_THROW("Intra-communicator not set before readParam");
       } 
       #endif
@@ -130,7 +127,7 @@ namespace DdMd
       }
       int commSize = 1;
       #ifdef UTIL_MPI
-      commSize = intracommPtr_->Get_size();
+      MPI_Comm_size(intracomm_, &commSize);
       #endif
       if (nproc != commSize) {
          UTIL_THROW("Grid dimensions inconsistent with communicator size");

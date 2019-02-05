@@ -282,11 +282,11 @@ inline void SimulationTest::testCalculateForces()
 
    #ifdef UTIL_MPI
    domain.communicator().Reduce(&f[0], &t[0], 1, 
-                                 MPI::DOUBLE, MPI::SUM, 0);
+                                 MPI_DOUBLE, MPI_SUM, 0);
    domain.communicator().Reduce(&f[1], &t[1], 1, 
-                                 MPI::DOUBLE, MPI::SUM, 0);
+                                 MPI_DOUBLE, MPI_SUM, 0);
    domain.communicator().Reduce(&f[2], &t[2], 1, 
-                                 MPI::DOUBLE, MPI::SUM, 0);
+                                 MPI_DOUBLE, MPI_SUM, 0);
 
    if (myRank == 0) {
      std::cout << std::endl;

@@ -973,8 +973,8 @@ namespace DdMd
       * Just before calling this function on the master processor, the 
       * invoking function must call the following functions on all processors:
       *
-      *  - Integrator::computeStatistics(MPI::IntraComm&)
-      *  - Exchanger::timer().reduce(MPI::IntraComm&)
+      *  - Integrator::computeStatistics(MPI_IntraComm&)
+      *  - Exchanger::timer().reduce(MPI_IntraComm&)
       */
 
       int nAtomTot = atomStoragePtr_->nAtomTotal();

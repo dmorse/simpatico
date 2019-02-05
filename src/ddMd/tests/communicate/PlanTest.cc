@@ -2,14 +2,14 @@
 int main()
 {
    #ifdef UTIL_MPI 
-   MPI::Init();
+   MPI_Init(&argc, &argv);
    #endif 
 
    TEST_RUNNER(PlanTest) runner1;
    runner1.run();
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   MPI_Finalize();
    #endif
 
 } 

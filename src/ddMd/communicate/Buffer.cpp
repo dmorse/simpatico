@@ -316,10 +316,10 @@ namespace DdMd
    /*
    * Send and receive buffer.
    */
-   void Buffer::sendRecv(MPI::Intracomm& comm, int source, int dest)
+   void Buffer::sendRecv(MPI_Comm comm, int source, int dest)
    {
 
-      MPI::Request request[2];
+      MPI_Request request[2];
       int  sendBytes = 0;
       int  myRank    = comm.Get_rank();
       int  comm_size = comm.Get_size();
@@ -340,11 +340,11 @@ namespace DdMd
 
       // Start nonblocking receive.
       request[0] = comm.Irecv(recvBufferBegin_, bufferCapacity_ ,
-                              MPI::CHAR, source, 5);
+                              MPI_CHAR, source, 5);
 
       // Start nonblocking send.
       sendBytes = sendPtr_ - sendBufferBegin_;
-      request[1] = comm.Isend(sendBufferBegin_, sendBytes , MPI::CHAR, dest, 5);
+      request[1] = comm.Isend(sendBufferBegin_, sendBytes , MPI_CHAR, dest, 5);
 
       // Wait for completion of receive.
       request[0].Wait();
@@ -362,9 +362,9 @@ namespace DdMd
    /*
    * Send a buffer.
    */
-   void Buffer::send(MPI::Intracomm& comm, int dest)
+   void Buffer::send(MPI_Comm comm, int dest)
    {
-      MPI::Request request;
+      MPI_Request request;
       int  sendBytes = 0;
       int  comm_size = comm.Get_size();
       int  myRank = comm.Get_rank();
@@ -378,7 +378,7 @@ namespace DdMd
       }
 
       sendBytes = sendPtr_ - sendBufferBegin_;
-      request = comm.Isend(sendBufferBegin_, sendBytes, MPI::CHAR, dest, 5);
+      request = comm.Isend(sendBufferBegin_, sendBytes, MPI_CHAR, dest, 5);
       request.Wait();
 
       // Update statistics.
@@ -390,9 +390,9 @@ namespace DdMd
    /*
    * Receive a buffer.
    */
-   void Buffer::recv(MPI::Intracomm& comm, int source)
+   void Buffer::recv(MPI_Comm comm, int source)
    {
-      MPI::Request request;
+      MPI_Request request;
       int  myRank     = comm.Get_rank();
       int  comm_size  = comm.Get_size();
 
@@ -405,7 +405,7 @@ namespace DdMd
       }
 
       request = comm.Irecv(recvBufferBegin_, bufferCapacity_,
-                           MPI::CHAR, source, 5);
+                           MPI_CHAR, source, 5);
       request.Wait();
       recvType_ = NONE;
       recvPtr_ = recvBufferBegin_;
@@ -414,7 +414,7 @@ namespace DdMd
    /*
    * Broadcast a buffer.
    */
-   void Buffer::bcast(MPI::Intracomm& comm, int source)
+   void Buffer::bcast(MPI_Comm comm, int source)
    {
       int comm_size = comm.Get_size();
       int myRank = comm.Get_rank();
@@ -425,13 +425,13 @@ namespace DdMd
       int sendBytes;
       if (myRank == source) {
          sendBytes = sendPtr_ - sendBufferBegin_;
-         comm.Bcast(&sendBytes, 1, MPI::INT, source);
-         comm.Bcast(sendBufferBegin_, sendBytes, MPI::CHAR, source);
+         comm.Bcast(&sendBytes, 1, MPI_INT, source);
+         comm.Bcast(sendBufferBegin_, sendBytes, MPI_CHAR, source);
          sendPtr_ = sendBufferBegin_;
          sendType_ = NONE;
       } else {
-         comm.Bcast(&sendBytes, 1, MPI::INT, source);
-         comm.Bcast(recvBufferBegin_, sendBytes, MPI::CHAR, source);
+         comm.Bcast(&sendBytes, 1, MPI_INT, source);
+         comm.Bcast(recvBufferBegin_, sendBytes, MPI_CHAR, source);
          recvPtr_ = recvBufferBegin_;
          recvType_ = NONE;
       }
@@ -446,14 +446,14 @@ namespace DdMd
    * Compute maximum message size among all processors.
    */
    #ifdef UTIL_MPI
-   void Buffer::computeStatistics(MPI::Intracomm& comm)
+   void Buffer::computeStatistics(MPI_Comm comm)
    #else
    void Buffer::computeStatistics()
    #endif
    {
       #ifdef UTIL_MPI
       int globalSendMax;
-      comm.Allreduce(&maxSendLocal_, &globalSendMax, 1, MPI::INT, MPI::MAX);
+      comm.Allreduce(&maxSendLocal_, &globalSendMax, 1, MPI_INT, MPI_MAX);
       maxSend_.set(globalSendMax);
       #else
       maxSend_.set(maxSendLocal_);
