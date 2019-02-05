@@ -2,6 +2,10 @@
 * This program runs all unit tests in the mcMd directory.
 */
 
+#ifdef UTIL_MPI
+#define TEST_MPI
+#endif
+
 #include <test/CompositeTestRunner.h>
 
 #include "chemistry/ChemistryTestComposite.h"
@@ -21,6 +25,10 @@ TEST_COMPOSITE_END
 
 int main(int argc, char* argv[])
 {
+   #ifdef UTIL_MPI
+   MPI_Init(&argc, &argv);
+   #endif
+
    try {
       if (argc > 2) {
          UTIL_THROW("Too many arguments");
@@ -34,12 +42,17 @@ int main(int argc, char* argv[])
       // Run all unit test methods
       int failures = runner.run();
 
+      #ifdef UTIL_MPI
+      MPI_Finalize();
+      #endif
+
       return (failures != 0);
 
    } catch (...) {
 
-      std::cerr << "Uncaught exception in mcMd/tests/Test.cc" << std::endl;
-      return 1;
+      //std::cerr << "Uncaught exception in mcMd/tests/Test.cc" << std::endl;
+      UTIL_THROW("Uncaught exception in mcMd/tests/Test.cc");
+      //return 1;
 
    }
 }

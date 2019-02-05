@@ -24,28 +24,31 @@ public:
    void tearDown()
    {}
 
-   void testReadWrite() {
-      printMethod(TEST_FUNC);
-      MaskPolicy policy;
-      std::ifstream in;
-      openInputFile("in/MaskPolicy", in);
-      in >> policy;
-
-      std::cout << std::endl;
-      std::cout << policy << std::endl ;
-
-      Util::TextFileOArchive oar;
-      openOutputFile("tmp/ar.txt", oar.file());
-      oar & policy;
-      oar.file().close();
-
-      MaskPolicy clone;
-      Util::TextFileIArchive iar;
-      openInputFile("tmp/ar.txt", iar.file());
-      iar & clone;
-
-      TEST_ASSERT(policy == clone);
-      std::cout << clone;
+   void testReadWrite() 
+   {
+      if (isIoProcessor()) {   
+         printMethod(TEST_FUNC);
+         MaskPolicy policy;
+         std::ifstream in;
+         openInputFile("in/MaskPolicy", in);
+         in >> policy;
+   
+         std::cout << std::endl;
+         std::cout << policy << std::endl ;
+   
+         Util::TextFileOArchive oar;
+         openOutputFile("tmp/ar.txt", oar.file());
+         oar & policy;
+         oar.file().close();
+   
+         MaskPolicy clone;
+         Util::TextFileIArchive iar;
+         openInputFile("tmp/ar.txt", iar.file());
+         iar & clone;
+   
+         TEST_ASSERT(policy == clone);
+         std::cout << clone;
+      }
    }
 
 };

@@ -549,10 +549,12 @@ public:
       cellList.getCellNeighbors(ic, neighborPtrs, nInCell);
       nNeighbors = neighborPtrs.size();
 
-      std::cout << std::endl;
-      std::cout << "Cell Index         = " << ic << std::endl;
-      std::cout << "Number in cell      = " << nInCell    << std::endl;
-      std::cout << "Number of neighbors = " << nNeighbors << std::endl;
+      if (verbose() > 1 && isIoProcessor()) {
+         std::cout << std::endl;
+         std::cout << "Cell Index         = " << ic << std::endl;
+         std::cout << "Number in cell      = " << nInCell    << std::endl;
+         std::cout << "Number of neighbors = " << nNeighbors << std::endl;
+      }
 
       //const Atom *atomPtr;
       //for (i=0; i < nNeighbors; i++) {
@@ -564,9 +566,9 @@ public:
       Vector r(0.9, 2.0, 3.0);
       cellList.getNeighbors(r, neighborPtrs);
       nNeighbors = neighborPtrs.size();
-      std::cout << "Cell Index         = " 
-           << cellList.cellIndexFromPosition(r) << std::endl;
-      std::cout << "Number of neighbors = " << nNeighbors << std::endl;
+      //std::cout << "Cell Index         = " 
+      //          << cellList.cellIndexFromPosition(r) << std::endl;
+      //std::cout << "Number of neighbors = " << nNeighbors << std::endl;
 
       //for (i=0; i < nNeighbors; i++) {
       //   atomPtr = neighborPtrs[i];

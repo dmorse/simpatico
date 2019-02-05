@@ -46,15 +46,15 @@ void SystemTest::setUp()
 
    #ifdef SIMP_ANGLE
    #ifdef SIMP_DIHEDRAL
-   openFile("in/SimulationAngleDihedral"); 
+   openInputFile("in/SimulationAngleDihedral", file()); 
    #else
-   openFile("in/SimulationAngle"); 
+   openInputFile("in/SimulationAngle", file()); 
    #endif
    #else
    #ifdef SIMP_DIHEDRAL
-   openFile("in/SimulationDihedral"); 
+   openInputFile("in/SimulationDihedral", file()); 
    #else
-   openFile("in/Simulation"); 
+   openInputFile("in/Simulation", file()); 
    #endif
    #endif
 
@@ -85,7 +85,10 @@ void SystemTest::dump()
    const Atom                *atomPtr;
    int   iSpecies, iMolecule, nMolecule, iAtom, nAtom;
 
-   std::cout << std::endl; 
+   if (isIoProcessor()) {
+      std::cout << std::endl; 
+   }
+
    for (iSpecies=0; iSpecies < simulation_.nSpecies() ; ++iSpecies ) {
       speciesPtr     = &simulation_.species(iSpecies);
       nAtom          = speciesPtr->nAtom(); 
@@ -93,15 +96,17 @@ void SystemTest::dump()
       //nMolecule      = moleculeSetPtr->size(); 
       nMolecule      = system_.nMolecule(iSpecies);
 
-      std::cout << "Species Id     = " << speciesPtr->id() << std::endl; 
-      std::cout << "# in System    = " << nMolecule << std::endl;
-      for (iMolecule = 0; iMolecule < nMolecule; ++iMolecule) {
-         moleculePtr = &system_.molecule(iSpecies,iMolecule);
-         std::cout << "Molecule Id    = " << moleculePtr->id() << std::endl;
-         for (iAtom = 0; iAtom < nAtom; ++iAtom) {
-            atomPtr = &moleculePtr->atom(iAtom);
-            std::cout << "   Atom # " << atomPtr->id()
-                      << "   type "   << atomPtr->typeId() << std::endl;
+      if (isIoProcessor()) {
+         std::cout << "Species Id     = " << speciesPtr->id() << std::endl; 
+         std::cout << "# in System    = " << nMolecule << std::endl;
+         for (iMolecule = 0; iMolecule < nMolecule; ++iMolecule) {
+            moleculePtr = &system_.molecule(iSpecies,iMolecule);
+            std::cout << "Molecule Id    = " << moleculePtr->id() << std::endl;
+            for (iAtom = 0; iAtom < nAtom; ++iAtom) {
+               atomPtr = &moleculePtr->atom(iAtom);
+               std::cout << "   Atom # " << atomPtr->id()
+                         << "   type "   << atomPtr->typeId() << std::endl;
+            }
          }
       }
    }
@@ -127,7 +132,7 @@ void SystemTest::testAddMolecules()
       TEST_ASSERT(system_.nMolecule(iSpecies) == speciesPtr->capacity());
    }
 
-   if (verbose() > 0) dump();
+   if (verbose() > 0 && isIoProcessor()) dump();
 
 }
 

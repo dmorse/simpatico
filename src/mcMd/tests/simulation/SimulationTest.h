@@ -1,6 +1,10 @@
 #ifndef MCMD_SIMULATION_TEST_H
 #define MCMD_SIMULATION_TEST_H
 
+#ifdef UTIL_MPI
+#define TEST_MPI
+#endif
+
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
 
@@ -21,21 +25,19 @@ public:
 
    virtual void setUp()
    {  
-
       #ifdef SIMP_ANGLE
       #ifdef SIMP_DIHEDRAL
-      openFile("in/SimulationAngleDihedral"); 
+      openInputFile("in/SimulationAngleDihedral", file()); 
       #else
-      openFile("in/SimulationAngle"); 
+      openInputFile("in/SimulationAngle", file()); 
       #endif
       #else
       #ifdef SIMP_DIHEDRAL
-      openFile("in/SimulationDihedral"); 
+      openInputFile("in/SimulationDihedral", file()); 
       #else
-      openFile("in/Simulation"); 
+      openInputFile("in/Simulation", file()); 
       #endif
       #endif
-      simulation_.readParameters(file());
    }
 
    void testReadParam();
@@ -52,7 +54,8 @@ void SimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
 
-   if (verbose() > 1) {
+   simulation_.readParameters(file());
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << std::endl;
       simulation_.writeParam(std::cout);
    }

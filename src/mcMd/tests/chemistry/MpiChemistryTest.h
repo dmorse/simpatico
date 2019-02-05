@@ -26,7 +26,7 @@ public:
 
    MpiChemistryTest()
     : UnitTest(),
-      communicator_(0)
+      communicator_(MPI_COMM_WORLD)
    {}
 
    void setUp()

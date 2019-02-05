@@ -3,11 +3,11 @@ include $(BLD_DIR_REL)/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/mcMd/tests/chemistry/sources.mk
 
-ifdef UTIL_MPI
-TEST=$(BLD_DIR)/mcMd/tests/chemistry/MpiTest
-else
+#ifdef UTIL_MPI
+#TEST=$(BLD_DIR)/mcMd/tests/chemistry/MpiTest
+#else
+#endif
 TEST=$(BLD_DIR)/mcMd/tests/chemistry/Test
-endif
 
 .Secondary: $(mcMd_tests_chemistry_EXES) 
 

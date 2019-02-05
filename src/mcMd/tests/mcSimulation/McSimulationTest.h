@@ -1,6 +1,10 @@
 #ifndef MCMD_MC_SIMULATION_TEST_H
 #define MCMD_MC_SIMULATION_TEST_H
 
+#ifdef UTIL_MPI
+#define TEST_MPI
+#endif
+
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mdSimulation/MdSystem.h>
@@ -77,15 +81,15 @@ void McSimulationTest::setUp()
 } 
 
 void McSimulationTest::readParam(const char* filename)
-{  
-   openFile(filename); 
+{ 
+   openInputFile(filename, file()); 
    simulation_.readParam(file());
    file().close();
 }
 
 void McSimulationTest::readConfig(const char* filename)
 {  
-   openFile(filename); 
+   openInputFile(filename, file()); 
    system_.readConfig(file());
    file().close();
 }
@@ -104,7 +108,7 @@ void McSimulationTest::testReadParamBond()
       TEST_ASSERT(0);
    }
 
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << std::endl;
       simulation_.writeParam(std::cout);
    }
@@ -130,7 +134,7 @@ void McSimulationTest::testReadParamAngle()
    printMethod(TEST_FUNC);
 
    readParam("in/McSimulationAngle"); 
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << std::endl;
       simulation_.writeParam(std::cout);
    }
@@ -140,7 +144,7 @@ void McSimulationTest::testReadParamAngle()
 void McSimulationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    readParam("in/McSimulation"); 
    readConfig("in/config");
@@ -162,7 +166,7 @@ void McSimulationTest::testPairEnergy()
          }
       }
    }
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << "Total atomPairEnergy = " << 0.5*energy << std::endl;
       std::cout << "Total PairEnergy     = " << total << std::endl;
    }
@@ -172,7 +176,7 @@ void McSimulationTest::testPairEnergy()
 void McSimulationTest::testBondEnergy()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    readParam("in/McSimulation"); 
    readConfig("in/config");
@@ -194,7 +198,7 @@ void McSimulationTest::testBondEnergy()
          }
       }
    }
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << "Total atomBondEnergy = " << 0.5*energy << std::endl;
       std::cout << "Total bondEnergy     = " << total << std::endl;
    }
@@ -205,7 +209,7 @@ void McSimulationTest::testBondEnergy()
 void McSimulationTest::testAngleEnergy()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    readParam("in/McSimulationAngle"); 
    readConfig("in/config");
@@ -230,7 +234,7 @@ void McSimulationTest::testAngleEnergy()
          }
       }
    }
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << "Total angleEnergy     = " << total << std::endl;
       std::cout << "Total atomAngleEnergy = " << energy/3.0 << std::endl;
    }
@@ -241,7 +245,7 @@ void McSimulationTest::testAngleEnergy()
 void McSimulationTest::testActivate()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    readParam("in/McSimulation"); 
    readConfig("in/config");
@@ -304,7 +308,7 @@ void McSimulationTest::testActivate()
 void McSimulationTest::testMdSystemCopy()
 {
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    readParam("in/McSimulation"); 
    readConfig("in/config");
@@ -318,10 +322,12 @@ void McSimulationTest::testMdSystemCopy()
 
    mdSystem.readParam(mdSystemFile);
 
-   std::cout << "MC Potential Energy      = " 
-             << system_.potentialEnergy() << std::endl;
-   std::cout << "MD Potential Energy      = " 
-             << mdSystem.potentialEnergy() << std::endl;
+   if (isIoProcessor()) {
+      std::cout << "MC Potential Energy      = " 
+                << system_.potentialEnergy() << std::endl;
+      std::cout << "MD Potential Energy      = " 
+                << mdSystem.potentialEnergy() << std::endl;
+   }
 
    mdSystemFile.close(); 
 }
@@ -359,30 +365,34 @@ void McSimulationTest::testSimulateAngle()
 
 void McSimulationTest::testWriteRestartBond()
 {
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   readParam("in/McSimulation"); 
-   readConfig("in/config"); 
-
-   simulation_.save("tmp/writeRestart.0");
-
-   simulation_.simulate(10);
-   simulation_.save("tmp/writeRestart.10");
-
-   bool isContinuation = true;
-   simulation_.simulate(20, isContinuation);
-
-   simulation_.save("tmp/writeRestart.20");
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      readParam("in/McSimulation"); 
+      readConfig("in/config"); 
+   
+      simulation_.save("tmp/writeRestart.0");
+   
+      simulation_.simulate(10);
+      simulation_.save("tmp/writeRestart.10");
+   
+      bool isContinuation = true;
+      simulation_.simulate(20, isContinuation);
+   
+      simulation_.save("tmp/writeRestart.20");
+   }
 }
 
 void McSimulationTest::testReadRestart()
 {
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      if (isIoProcessor()) std::cout << std::endl;
 
-   simulation_.load("tmp/writeRestart.10");
-   simulation_.save("tmp/readRestart");
+      simulation_.load("tmp/writeRestart.10");
+      simulation_.save("tmp/readRestart");
+   }
 }
 
 TEST_BEGIN(McSimulationTest)

@@ -6,7 +6,7 @@ include $(SRC_DIR)/mcMd/tests/generators/sources.mk
 TEST=$(BLD_DIR)/mcMd/tests/generators/Test
 .Secondary: $(mcMd_tests_generators_OBJS)
 
-all: $(mcMd_tests_generators_OBJS)
+all: $(mcMd_tests_generators_EXES)
 
 run: $(TEST)
 	$(TEST)

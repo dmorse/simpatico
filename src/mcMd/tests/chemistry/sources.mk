@@ -1,5 +1,8 @@
+
 ifdef UTIL_MPI
-mcMd_tests_chemistry_=mcMd/tests/chemistry/MpiTest.cc 
+mcMd_tests_chemistry_= \
+   mcMd/tests/chemistry/Test.cc \
+   mcMd/tests/chemistry/MpiTest.cc 
 else
 mcMd_tests_chemistry_=mcMd/tests/chemistry/Test.cc 
 endif

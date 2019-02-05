@@ -60,7 +60,7 @@ void MdSimulationTest::setUp()
 void MdSimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
@@ -68,7 +68,7 @@ void MdSimulationTest::testReadParam()
    simulation_.readParam(paramFile);
    //ParamComponent::setEcho(false);
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    try {
       simulation_.isValid();
@@ -76,7 +76,7 @@ void MdSimulationTest::testReadParam()
       TEST_ASSERT(0);
    }
 
-   if (verbose() > 1) {
+   if (verbose() > 1 && isIoProcessor()) {
       std::cout << std::endl;
       simulation_.writeParam(std::cout);
       simulation_.system().writeConfig(std::cout);
@@ -87,7 +87,7 @@ void MdSimulationTest::testReadParam()
 void MdSimulationTest::testSetZeroVelocities()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    // Read the parameter file
    std::ifstream paramFile;
@@ -95,7 +95,7 @@ void MdSimulationTest::testSetZeroVelocities()
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    double energy;
    energy = system_.kineticEnergy();
@@ -109,14 +109,14 @@ void MdSimulationTest::testSetZeroVelocities()
 void MdSimulationTest::testSetBoltzmannVelocities()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    double energy;
    energy = system_.kineticEnergy();
@@ -132,14 +132,14 @@ void MdSimulationTest::testSetBoltzmannVelocities()
 void MdSimulationTest::testBuildPairList()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    system_.pairPotential().buildPairList();
 
@@ -159,14 +159,14 @@ void MdSimulationTest::testBuildPairList()
 void MdSimulationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    system_.pairPotential().buildPairList();
    double energy = system_.pairPotential().energy();
@@ -176,14 +176,14 @@ void MdSimulationTest::testPairEnergy()
 void MdSimulationTest::testAddPairForces()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    system_.pairPotential().buildPairList();
    system_.setZeroForces();
@@ -194,30 +194,32 @@ void MdSimulationTest::testAddPairForces()
 void MdSimulationTest::testBondEnergy()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    double energy = system_.bondPotential().energy();
-   std::cout << "Bond energy = " << energy << std::endl;
+   if (isIoProcessor()) {
+      std::cout << "Bond energy = " << energy << std::endl;
+   }
 }
 
 void MdSimulationTest::testAddBondForces()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
@@ -230,14 +232,14 @@ void MdSimulationTest::testAddBondForces()
 void MdSimulationTest::testCalculateForces()
 { 
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    system_.pairPotential().buildPairList();
    system_.calculateForces();
@@ -246,7 +248,7 @@ void MdSimulationTest::testCalculateForces()
 void MdSimulationTest::testStep()
 {
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
@@ -254,7 +256,7 @@ void MdSimulationTest::testStep()
    paramFile.close();
    simulation_.readCommands();
 
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    double kinetic, potential;
    system_.pairPotential().buildPairList();
@@ -264,29 +266,33 @@ void MdSimulationTest::testStep()
 
       kinetic   = system_.kineticEnergy(); 
       potential = system_.potentialEnergy(); 
-      std::cout << kinetic << "  " << potential 
-                << "  " << kinetic + potential << std::endl;
+      if (isIoProcessor()) {
+         std::cout << kinetic << "  " << potential 
+                   << "  " << kinetic + potential << std::endl;
+      }
 
       system_.mdIntegrator().step();
    }
 
    kinetic   = system_.kineticEnergy(); 
    potential = system_.potentialEnergy(); 
-   std::cout << kinetic << "  " << potential << "  " 
-             << kinetic + potential << std::endl;
+   if (isIoProcessor()) {
+      std::cout << kinetic << "  " << potential << "  " 
+                << kinetic + potential << std::endl;
+   }
 }
 
 void MdSimulationTest::testSimulate()
 {
    printMethod(TEST_FUNC);
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
    paramFile.close();
    simulation_.readCommands();
-   std::cout << std::endl;
+   if (isIoProcessor()) std::cout << std::endl;
 
    //simulation_.save("simulate.0");
 
@@ -297,63 +303,67 @@ void MdSimulationTest::testSimulate()
 
 void MdSimulationTest::testWriteRestart()
 {
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   std::cout << std::endl;
-
-   // Save initial state to tmp/begin
-   simulation_.save("tmp/begin.rst");
-
-   // Run simulation of 10000 steps
-   simulation_.simulate(10000);
-
-   // Save state at iStep = 10000 to file middle.rst
-   simulation_.save("tmp/middle.rst");
-
-   // Write configuration at iStep = 1000 to middle.cfg
-   std::ofstream configFile("tmp/middle.cfg");
-   simulation_.system().writeConfig(configFile);
-   configFile.close();
-
-   bool isContinuation = true;
-   simulation_.simulate(10100, isContinuation);
-
-   // Write configuration at iStep = 101000 
-   configFile.open("tmp/end.cfg");
-   simulation_.system().writeConfig(configFile);
-   configFile.close();
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      // Save initial state to tmp/begin
+      simulation_.save("tmp/begin.rst");
+   
+      // Run simulation of 10000 steps
+      simulation_.simulate(10000);
+   
+      // Save state at iStep = 10000 to file middle.rst
+      simulation_.save("tmp/middle.rst");
+   
+      // Write configuration at iStep = 1000 to middle.cfg
+      std::ofstream configFile("tmp/middle.cfg");
+      simulation_.system().writeConfig(configFile);
+      configFile.close();
+   
+      bool isContinuation = true;
+      simulation_.simulate(10100, isContinuation);
+   
+      // Write configuration at iStep = 101000 
+      configFile.open("tmp/end.cfg");
+      simulation_.system().writeConfig(configFile);
+      configFile.close();
+   }
 
 }
 
 void MdSimulationTest::testReadRestart()
 {
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   // Restart after iStep = 10000
-   simulation_.load("tmp/middle.rst");
-
-   // Save new restart file at iStep = 10000
-   simulation_.save("tmp/middle2.rst");
-
-   // Save config file at iStep = 10000
-   std::ofstream configFile("tmp/middle2.cfg");
-   simulation_.system().writeConfig(configFile);
-   configFile.close();
-
-   // Run to iStep = 10100
-   bool isContinuation = true;
-   simulation_.simulate(10100, isContinuation);
-
-   configFile.open("tmp/end2.cfg");
-   simulation_.system().writeConfig(configFile);
-   configFile.close();
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      // Restart after iStep = 10000
+      simulation_.load("tmp/middle.rst");
+   
+      // Save new restart file at iStep = 10000
+      simulation_.save("tmp/middle2.rst");
+   
+      // Save config file at iStep = 10000
+      std::ofstream configFile("tmp/middle2.cfg");
+      simulation_.system().writeConfig(configFile);
+      configFile.close();
+   
+      // Run to iStep = 10100
+      bool isContinuation = true;
+      simulation_.simulate(10100, isContinuation);
+   
+      configFile.open("tmp/end2.cfg");
+      simulation_.system().writeConfig(configFile);
+      configFile.close();
+   }
 }
 
 TEST_BEGIN(MdSimulationTest)
