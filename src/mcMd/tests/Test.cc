@@ -21,6 +21,9 @@ addChild(new NeighborTestComposite, "neighbor/");
 addChild(new SimulationTestComposite, "simulation/");
 addChild(new TEST_RUNNER(McSimulationTest), "mcSimulation/");
 addChild(new TEST_RUNNER(MdSimulationTest), "mdSimulation/");
+#ifdef UTIL_MPI
+addChild(new TEST_RUNNER(MpiChemistryTest), "chemistry/");
+#endif
 TEST_COMPOSITE_END
 
 int main(int argc, char* argv[])

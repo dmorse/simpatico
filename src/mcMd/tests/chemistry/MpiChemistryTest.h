@@ -32,24 +32,26 @@ public:
    {}
 
    void tearDown()
-   {}
+   {
+      MPI_Barrier(communicator());
+   }
 
    void testSendRecvAtomType() 
    {
       printMethod(TEST_FUNC);
-      AtomType value;
+      TEST_ASSERT(communicator() == MPI_COMM_WORLD);
       if (mpiRank() == 1) {
-         TEST_ASSERT(communicator() == MPI_COMM_WORLD);
+         AtomType value;
          value.setMass(5.0);
          value.setName("MyType");
          Util::send<AtomType>(communicator(), value, 0, 37);
-      } else
+      } 
       if (mpiRank() == 0) {
-         TEST_ASSERT(communicator() == MPI_COMM_WORLD);
+         AtomType value;
          Util::recv<AtomType>(communicator(), value, 1, 37);
          TEST_ASSERT(eq(value.mass(), 5.0));
-         std::cout << value << std::endl;
          TEST_ASSERT(!value.name().compare("MyType"));
+         std::cout << std::endl << value << std::endl;
       }
    }
 

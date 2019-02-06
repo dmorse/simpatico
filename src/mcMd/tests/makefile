@@ -9,7 +9,11 @@ TEST=$(BLD_DIR)/mcMd/tests/Test
 all: $(mcMd_tests_EXES) 
 
 run: $(TEST)
+ifdef UTIL_MPI
+	mpirun -np 6 $(TEST) $(SRC_DIR)/mcMd/tests/
+else
 	$(TEST) $(SRC_DIR)/mcMd/tests/
+endif
 	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
 quiet: $(TEST)
