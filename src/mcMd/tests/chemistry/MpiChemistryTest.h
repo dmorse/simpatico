@@ -60,13 +60,12 @@ public:
       if (mpiRank() == 1) {
          value.setMass(5.0);
          value.setName("MyType");
-         Util::bcast<AtomType>(communicator(), value, 1);
-      } else
-      if (mpiRank() == 0) {
-         Util::bcast<AtomType>(communicator(), value, 1);
-         TEST_ASSERT(eq(value.mass(), 5.0));
+      }
+      Util::bcast<AtomType>(communicator(), value, 1);
+      TEST_ASSERT(eq(value.mass(), 5.0));
+      TEST_ASSERT(!value.name().compare("MyType"));
+      if (isIoProcessor()) {
          std::cout << value << std::endl;
-         TEST_ASSERT(!value.name().compare("MyType"));
       }
    }
 
@@ -96,14 +95,11 @@ public:
          value.setAtomId(0, 5);
          value.setAtomId(1, 3);
          value.setTypeId(8);
-         Util::bcast<SpeciesGroup<2> >(communicator(), value, 1);
-      } else
-      if (mpiRank() == 0) {
-         Util::bcast<SpeciesGroup<2> >(communicator(), value, 1);
-         TEST_ASSERT(value.atomId(0) == 5);
-         TEST_ASSERT(value.atomId(1) == 3);
-         TEST_ASSERT(value.typeId() == 8);
-      }
+      } 
+      Util::bcast<SpeciesGroup<2> >(communicator(), value, 1);
+      TEST_ASSERT(value.atomId(0) == 5);
+      TEST_ASSERT(value.atomId(1) == 3);
+      TEST_ASSERT(value.typeId() == 8);
    }
 
 };

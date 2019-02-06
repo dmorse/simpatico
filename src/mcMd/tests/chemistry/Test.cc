@@ -9,6 +9,7 @@ int main(int argc, char** argv)
 {
    #ifdef UTIL_MPI
    MPI_Init(&argc, &argv);
+   McMd::commitMpiTypes();
    #endif
 
    Util::initStatic();
