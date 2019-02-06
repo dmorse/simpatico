@@ -245,7 +245,8 @@ void ExchangerForceTest::initialize()
 
    // Check that all atoms are accounted for after distribution.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   //communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    if (domain.gridRank() == 0) {
       //std::cout << std::endl;
       // std::cout << "Total atom count (post-distribute) = " 
@@ -422,7 +423,8 @@ void ExchangerForceTest::testGhostUpdate()
 
    // Check that all atoms are accounted for after atom and ghost exchanges.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   //communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
       //           << nAtomAll << std::endl;
@@ -630,7 +632,8 @@ void ExchangerForceTest::testInitialForces()
    // Check that all atoms are accounted for after atom and ghost exchanges.
    nAtom = atomStorage.nAtom();
    int  nAtomAll  = 0; // Number received on all processors.
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   // communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    int  myRank = domain.gridRank();
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
@@ -656,6 +659,10 @@ void ExchangerForceTest::testInitialForces()
 
    TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
 
+   // Get communicator rank
+   int commRank;
+   MPI_Comm_rank(domain.communicator(), &commRank);
+
    // Compute forces etc. with N^2 loop (MethodId = 2)
    pairPotential.setMethodId(2);
    computeForces();
@@ -665,13 +672,13 @@ void ExchangerForceTest::testInitialForces()
    saveForces();
    int nPairNSq = 0;
    pairPotential.computeNPair(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       nPairNSq = pairPotential.nPair();
    }
    double pairEnergyNSq = 0.0;
    pairPotential.unsetEnergy();
    pairPotential.computeEnergy(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       pairEnergyNSq = pairPotential.energy();
    }
 
@@ -683,24 +690,24 @@ void ExchangerForceTest::testInitialForces()
    }
    int nPairList = 0;
    pairPotential.computeNPair(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       nPairList = pairPotential.nPair();
    }
    double energyList = 0.0;
    pairPotential.unsetEnergy();
    pairPotential.computeEnergy(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       energyList = pairPotential.energy();
    }
    Tensor pairStress;
    pairPotential.unsetStress();
    pairPotential.computeStress(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       pairStress = pairPotential.stress();
    }
    Tensor bondStress;
    bondPotential.computeStress(domain.communicator());
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       bondStress = bondPotential.stress();
    }
    #ifdef SIMP_ANGLE
@@ -708,7 +715,7 @@ void ExchangerForceTest::testInitialForces()
    if (hasDihedrals) {
       anglePotential.unsetStress();
       anglePotential.computeStress(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
+      if (commRank == 0) {
          angleStress = anglePotential.stress();
       }
    }
@@ -718,14 +725,14 @@ void ExchangerForceTest::testInitialForces()
    if (hasDihedrals) {
       dihedralPotential.unsetStress();
       dihedralPotential.computeStress(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
+      if (commRank == 0) {
          dihedralStress = dihedralPotential.stress();
       }
    }
    #endif
 
    // Compare Nsq and PairList values of nPair and Energy
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       TEST_ASSERT(nPairNSq == nPairList);
       TEST_ASSERT(eq(pairEnergyNSq, energyList));
    }
@@ -753,8 +760,9 @@ void ExchangerForceTest::testInitialForces()
    }
 
    // Check that total force is zero (on master node)
-   communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
-   if (communicator().Get_rank() == 0) {
+   // communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
+   MPI_Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0, communicator());
+   if (commRank == 0) {
       TEST_ASSERT(eq(totForce[0], 0.0));
       TEST_ASSERT(eq(totForce[1], 0.0));
       TEST_ASSERT(eq(totForce[2], 0.0));
@@ -783,7 +791,7 @@ void ExchangerForceTest::testInitialForces()
       exchanger.reverseUpdate();
    }
 
-   if (domain.communicator().Get_rank() == 0) {
+   if (commRank == 0) {
       Tensor pairStress2 = pairPotential.stress();
       Tensor bondStress2;
       bondStress2 = bondPotential.stress();
@@ -947,6 +955,9 @@ void ExchangerForceTest::testForceCycle()
       }
       #endif
 
+      int commRank;
+      MPI_Comm_rank(domain.communicator(), &commRank);
+
       // Calculate forces by an N^2 loop.
       computeForces();
       if (reverseUpdateFlag) {
@@ -957,7 +968,7 @@ void ExchangerForceTest::testForceCycle()
       pairEnergyNSq = 0.0;
       pairPotential.computeNPair(domain.communicator());
       pairPotential.computeEnergy(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
+      if (commRank == 0) {
          nPairNSq = pairPotential.nPair();
          pairEnergyNSq = pairPotential.energy();
       }
@@ -972,7 +983,7 @@ void ExchangerForceTest::testForceCycle()
       nPairList = 0;
       pairPotential.computeEnergy(domain.communicator());
       pairPotential.computeNPair(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
+      if (commRank == 0) {
          energyList = pairPotential.energy();
          nPairList = pairPotential.nPair();
       }
@@ -991,8 +1002,10 @@ void ExchangerForceTest::testForceCycle()
 
       // Check that total force is zero, different methods agree.
       Vector totForce;
-      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
-      if (communicator().Get_rank() == 0) {
+      //communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0);
+      MPI_Reduce(&nodeForce[0], &totForce[0], 3, MPI_DOUBLE, MPI_SUM, 0, 
+                 communicator());
+      if (commRank == 0) {
          TEST_ASSERT(eq(totForce[0], 0.0));
          TEST_ASSERT(eq(totForce[1], 0.0));
          TEST_ASSERT(eq(totForce[2], 0.0));
@@ -1019,7 +1032,7 @@ void ExchangerForceTest::testForceCycle()
          energyF = 0.0;
          pairPotential.computeEnergy(domain.communicator());
          pairPotential.computeNPair(domain.communicator());
-         if (domain.communicator().Get_rank() == 0) {
+         if (commRank == 0) {
             energyF = pairPotential.energy();
             nPairF = pairPotential.nPair();
          }
@@ -1034,7 +1047,7 @@ void ExchangerForceTest::testForceCycle()
          }
 
          // Compare energy and nPair
-         if (communicator().Get_rank() == 0) {
+         if (commRank == 0) {
             TEST_ASSERT(nPairF == nPairList);
             TEST_ASSERT(eq(energyF, energyList));
          }
@@ -1080,7 +1093,9 @@ bool ExchangerForceTest::isExchangeNeeded(double skin)
 
    #if UTIL_MPI
    int neededAll;
-   domain.communicator().Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX);
+   //domain.communicator().Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX);
+   MPI_Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX, 
+                 domain.communicator());
    return bool(neededAll);
    #else
    return bool(needed);

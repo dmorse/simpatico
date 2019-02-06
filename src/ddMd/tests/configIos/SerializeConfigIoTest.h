@@ -193,9 +193,9 @@ public:
       configIo.writeConfig(outFile);
       outFile.close();
 
-      communicator().Barrier();
+      MPI_Barrier(communicator());
       clearStorage();
-      communicator().Barrier();
+      MPI_Barrier(communicator());
 
       openInputFile("tmp/out2", inFile);
       configIo.readConfig(inFile, MaskBonded);

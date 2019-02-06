@@ -254,8 +254,10 @@ namespace DdMd
 
       #if UTIL_MPI
       int neededAll;
-      domain().communicator().Allreduce(&needed, &neededAll, 
-                                        1, MPI_INT, MPI_MAX);
+      //domain().communicator().Allreduce(&needed, &neededAll, 
+      //                                  1, MPI_INT, MPI_MAX);
+      MPI_Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX, 
+                    domain().communicator());
       timer_.stamp(ALLREDUCE);
       return bool(neededAll);
       #else
@@ -332,7 +334,8 @@ namespace DdMd
       int nAtomTot = atomStorage().nAtomTotal();
       int nProc = 1;
       #ifdef UTIL_MPI
-      nProc = domain().communicator().Get_size();
+      //nProc = domain().communicator().Get_size();
+      MPI_Comm_size(domain().communicator(), &nProc);
       #endif
 
       // Output total time for the run

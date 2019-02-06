@@ -12,12 +12,10 @@ include $(SRC_DIR)/ddMd/misc/sources.mk
 
 # Concatenate source file lists from subdirectories
 ddMd_=$(ddMd_chemistry_) $(ddMd_storage_) \
-    $(ddMd_communicate_) 
-
-#$(ddMd_neighbor_) 
-#    $(ddMd_simulation_) $(ddMd_configIos_) 
-#    $(ddMd_potentials_) $(ddMd_integrators_) 
-#    $(ddMd_analyzers_) $(ddMd_misc_) 
+    $(ddMd_communicate_) $(ddMd_configIos_) \
+    $(ddMd_potentials_) $(ddMd_neighbor_) $(ddMd_misc_) \
+    $(ddMd_simulation_) $(ddMd_integrators_) \
+    $(ddMd_analyzers_) 
 
 ifdef DDMD_MODIFIERS
 include $(SRC_DIR)/ddMd/modifiers/sources.mk

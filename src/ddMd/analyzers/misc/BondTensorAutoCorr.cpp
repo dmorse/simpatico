@@ -82,10 +82,15 @@ namespace DdMd
 
       // Reduce partial sums from all processors, store on the master.
       bondTensor_.zero();
-      communicator.Reduce(&localTensor(0,0), &bondTensor_(0,0), 
-                          Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
+      //communicator.Reduce(&localTensor(0,0), &bondTensor_(0,0), 
+      //                    Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
+      MPI_Reduce(&localTensor(0,0), &bondTensor_(0,0), 
+                 Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0, 
+                 communicator);
 
-      if (communicator.Get_rank() != 0) {
+      int commRank;
+      MPI_Comm_rank(communicator, &commRank);
+      if (commRank != 0) {
          bondTensor_.zero();
       }
    }

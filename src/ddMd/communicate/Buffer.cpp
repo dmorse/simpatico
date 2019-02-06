@@ -362,7 +362,7 @@ namespace DdMd
 
       // Wait for completion of send.
       // request[1].Wait();
-      MPI_Wait(&request[0], &status[1]);
+      MPI_Wait(&request[1], &status[1]);
 
       // Update statistics.
       if (sendBytes > maxSendLocal_) {

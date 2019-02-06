@@ -151,9 +151,12 @@ namespace DdMd
          for (int i = 0; i < nAtomType_; ++i) {
             for (int j = 0; j < nBin_; ++j) {
             //Sum values from all processors.
-            simulation().domain().communicator().
-                         Reduce(&cosFactors_(i, j), &totalCosFactors_(i, j),
-                                1, MPI_DOUBLE, MPI_SUM, 0);
+            //simulation().domain().communicator().
+            //             Reduce(&cosFactors_(i, j), &totalCosFactors_(i, j),
+            //                    1, MPI_DOUBLE, MPI_SUM, 0);
+            MPI_Reduce(&cosFactors_(i, j), &totalCosFactors_(i, j),
+                       1, MPI_DOUBLE, MPI_SUM, 0,
+                       simulation().domain().communicator());
             }
          }
          #else

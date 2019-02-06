@@ -980,9 +980,9 @@ namespace DdMd
       int nAtomTot = atomStoragePtr_->nAtomTotal();
       int nProc = 1;
       #ifdef UTIL_MPI
-      nProc = domainPtr_->communicator().Get_size();
+      //nProc = domainPtr_->communicator().Get_size();
+      MPI_Comm_size(domainPtr_->communicator(), &nProc);
       #endif
-
 
       double factor1 = 1.0/double(nStep);
       double factor2 = double(nProc)/(double(nStep)*double(nAtomTot));

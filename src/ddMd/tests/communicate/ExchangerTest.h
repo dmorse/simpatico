@@ -173,7 +173,8 @@ void ExchangerTest::setUp()
 
    // Check that all atoms are accounted for after distribution.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   //communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    if (domain.gridRank() == 0) {
       atomCount = nAtomAll;
    }
@@ -259,7 +260,8 @@ void ExchangerTest::testExchange()
 
    // Check that all atoms are accounted for after ghost exchange.
    nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   //communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
       //           << nAtomAll << std::endl;
@@ -332,7 +334,8 @@ void ExchangerTest::testGhostUpdate()
    TEST_ASSERT(nGhost == atomStorage.nGhost());
 
    // Check that all atoms are accounted for after atom and ghost exchanges.
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   //communicator().Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0);
+   MPI_Reduce(&nAtom, &nAtomAll, 1, MPI_INT, MPI_SUM, 0, communicator());
    if (myRank == 0) {
       // std::cout << "Total atom count (post ghost exchange) = " 
       //           << nAtomAll << std::endl;
@@ -616,7 +619,9 @@ bool ExchangerTest::isExchangeNeeded(double skin)
 
    #if UTIL_MPI
    int neededAll;
-   domain.communicator().Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX);
+   //domain.communicator().Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX);
+   MPI_Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX, 
+                 domain.communicator());
    return bool(neededAll);
    #else
    return bool(needed);
