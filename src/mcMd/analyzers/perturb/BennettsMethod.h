@@ -167,9 +167,6 @@ namespace McMd
       /// Output file stream.
       std::ofstream outputFile_;
       
-      /// Sampling interval.
-      long interval_;
- 
       /// Has readParam been called?
       bool  isInitialized_;
       

@@ -58,9 +58,11 @@ namespace McMd
       isInitialized_(false)
    {  
       setClassName("BennettsMethod");
-      communicator_ = &(system.simulation().communicator());
-      myId_   = communicator_->Get_rank();
-      nProcs_ = communicator_->Get_size();   
+      communicator_ = system.simulation().communicator();
+      //myId_   = communicator_->Get_rank();
+      //nProcs_ = communicator_->Get_size();   
+      MPI_Comm_rank(communicator_, &myId_ );
+      MPI_Comm_size(communicator_, &nProcs_ );
       if (myId_ != 0) { 
          lowerId_ = myId_ - 1;
       } else {
@@ -172,7 +174,8 @@ namespace McMd
          UTIL_THROW("Object is not initialized");
       }
 
-      communicator_->Bcast((void*)&shifts_[0], nProcs_, MPI_DOUBLE, 0);
+      //communicator_->Bcast((void*)&shifts_[0], nProcs_, MPI_DOUBLE, 0);
+      MPI_Bcast((void*)&shifts_[0], nProcs_, MPI_DOUBLE, 0, communicator_);
       if ( myId_ != 0 ) {
          lowerShift_ = shifts_[lowerId_];
       } else {}
@@ -187,7 +190,7 @@ namespace McMd
 
       int myPort, upperPort;
       MPI_Request requestFermi[2];
-      MPI_Status  status;
+      MPI_Status  statusFermi[2];
 
       // Exchange perturbation parameters and differences
       if (myId_ != 0 && myId_ != nProcs_ - 1) {
@@ -210,15 +213,21 @@ namespace McMd
          myFermi_ = 1/(1 + exp(myArg_));
          lowerFermi_ = 1/(1 + exp(lowerArg_));
             
-         requestFermi[0] = communicator_->Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_,
-                                             TagFermi[upperPort]);
+         //requestFermi[0] = communicator_->Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_,
+         //                                    TagFermi[upperPort]);
+         MPI_Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_, TagFermi[upperPort],
+                   communicator_, &requestFermi[0]);
             
-         requestFermi[1] = communicator_->Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_,
-                                             TagFermi[myPort]);
+         //requestFermi[1] = communicator_->Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_,
+         //                                    TagFermi[myPort]);
+         MPI_Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_, TagFermi[myPort], 
+                   communicator_, &requestFermi[1]);
             
          // Synchronizing
-         requestFermi[0].Wait();
-         requestFermi[1].Wait();
+         //requestFermi[0].Wait();
+         //requestFermi[1].Wait();
+         MPI_Wait(&requestFermi[0], &statusFermi[0]);
+         MPI_Wait(&requestFermi[1], &statusFermi[1]);
 
          upperAccumulator_.sample(upperFermi_);
          myAccumulator_.sample(myFermi_);
@@ -241,11 +250,14 @@ namespace McMd
             
             myFermi_ = 1/(1 + exp(myArg_));
             
-            requestFermi[0] = communicator_->Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_,
-                                              TagFermi[upperPort]);
+            //requestFermi[0] = communicator_->Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_,
+            //                                  TagFermi[upperPort]);
+            MPI_Irecv(&upperFermi_, 1, MPI_DOUBLE, upperId_, TagFermi[upperPort], 
+                      communicator_, &requestFermi[0]);
              
             // Synchronizing
-            requestFermi[0].Wait();
+            //requestFermi[0].Wait();
+            MPI_Wait(&requestFermi[0], &statusFermi[0]);
             
             upperAccumulator_.sample(upperFermi_);
             myAccumulator_.sample(myFermi_);
@@ -267,11 +279,14 @@ namespace McMd
             
             lowerFermi_ = 1/(1 + exp(lowerArg_));
             
-            requestFermi[1] = communicator_->Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_,
-                                               TagFermi[myPort]);
+            //requestFermi[1] = communicator_->Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_,
+            //                                      TagFermi[myPort]);
+            MPI_Isend(&lowerFermi_, 1, MPI_DOUBLE, lowerId_, TagFermi[myPort], 
+                      communicator_, &requestFermi[1]);
          
             // Synchronizing
-            requestFermi[1].Wait();
+            // requestFermi[1].Wait();
+            MPI_Wait(&requestFermi[1], &statusFermi[1]);
         }
    }
 
@@ -313,7 +328,9 @@ namespace McMd
 
       analyze(); 
 
-      communicator_->Gather((const void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 1, MPI_DOUBLE, 0);
+      //communicator_->Gather((const void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 1, MPI_DOUBLE, 0);
+      MPI_Gather((const void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 
+                 1, MPI_DOUBLE, 0, communicator_);
       int i;
       if (myId_ == 0) {
          fileMaster().openOutputFile(outputFileName("_all.dat"), outputFile_);

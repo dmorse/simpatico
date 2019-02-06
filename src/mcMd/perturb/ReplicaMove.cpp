@@ -150,7 +150,7 @@ namespace McMd
    bool ReplicaMove::move()
    {
       MPI_Request request[4];
-      MPI_Status  status;
+      MPI_Status  status[4];
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       int iA;
@@ -255,11 +255,12 @@ namespace McMd
 
       
       if (myId_ != 0) {
-         MPI_Status status;
          // partner id to receive from
-         MPI_Recv(&sendPt, 1, MPI_INT, 0, 0, communicator_, &status);
+         MPI_Status sendStatus;
+         MPI_Recv(&sendPt, 1, MPI_INT, 0, 0, communicator_, &sendStatus);
          // partner id to send to
-         MPI_Recv(&recvPt, 1, MPI_INT, 0, 1, communicator_, &status);
+         MPI_Status recvStatus;
+         MPI_Recv(&recvPt, 1, MPI_INT, 0, 1, communicator_, &recvStatus);
       }
 
       if (recvPt == myId_ || sendPt == myId_) {
@@ -276,15 +277,19 @@ namespace McMd
       Vector ptBoundary;
             
       // Accomodate new boundary dimensions.
-      request[0] = communicator_->Irecv(&ptBoundary, 1,
-                                           MpiTraits<Vector>::type, recvPt, 1);
+      //request[0] = communicator_->Irecv(&ptBoundary, 1,
+      //                                     MpiTraits<Vector>::type, recvPt, 1);
+      MPI_Irecv(&ptBoundary, 1, MpiTraits<Vector>::type, recvPt, 1, 
+                communicator_, &request[0]);
 
       // Send old boundary dimensions.
-      request[1] = communicator_->Isend(&myBoundary, 1,
-                                            MpiTraits<Vector>::type, sendPt, 1);
+      MPI_Isend(&myBoundary, 1, MpiTraits<Vector>::type, sendPt, 1, 
+                communicator_, &request[1]);
 
-      request[0].Wait();
-      request[1].Wait();
+      //request[0].Wait();
+      //request[1].Wait();
+      MPI_Wait(&request[0], &status[0]);
+      MPI_Wait(&request[1], &status[1]);
              
       system().boundary().setOrthorhombic(ptBoundary);
 
@@ -300,15 +305,21 @@ namespace McMd
       }
       
       // Accomodate new configuration.
-      request[2] = communicator_->Irecv(ptPositionPtr_, iA,
-                       MpiTraits<Vector>::type, recvPt, 2); 
+      //request[2] = communicator_->Irecv(ptPositionPtr_, iA,
+      //                 MpiTraits<Vector>::type, recvPt, 2); 
+      MPI_Irecv(ptPositionPtr_, iA, MpiTraits<Vector>::type, recvPt, 2, 
+                communicator_, &request[2]); 
 
       // Send old configuration.
-      request[3] = communicator_->Isend(myPositionPtr_, iA,
-                       MpiTraits<Vector>::type, sendPt, 2);
+      //request[3] = communicator_->Isend(myPositionPtr_, iA,
+      //                 MpiTraits<Vector>::type, sendPt, 2);
+      MPI_Isend(myPositionPtr_, iA, MpiTraits<Vector>::type, sendPt, 2,
+                communicator_, &request[3]);
 
-      request[2].Wait();
-      request[3].Wait();
+      //request[2].Wait();
+      //request[3].Wait();
+      MPI_Wait(&request[2], &status[2]);
+      MPI_Wait(&request[3], &status[3]);
       
       // Adopt the new atomic positions.
       iA = 0;
