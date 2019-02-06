@@ -329,7 +329,7 @@ namespace McMd
       analyze(); 
 
       //communicator_->Gather((const void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 1, MPI_DOUBLE, 0);
-      MPI_Gather((const void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 
+      MPI_Gather((void *) &shift_, 1, MPI_DOUBLE, (void *) &shifts_[0], 
                  1, MPI_DOUBLE, 0, communicator_);
       int i;
       if (myId_ == 0) {
