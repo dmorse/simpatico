@@ -6,6 +6,7 @@ branches:
   only:
    - master
    - devel
+   - mpic
 
 matrix:
   include:
