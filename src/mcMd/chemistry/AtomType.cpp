@@ -130,7 +130,7 @@ namespace Util
       recv<std::string>(comm, name, source, tag);
       data.setName(name);
 
-      double  mass; 
+      double mass; 
       recv<double>(comm, mass, source, tag);
       data.setMass(mass);
 

@@ -25,9 +25,8 @@ class MpiChemistryTest : public UnitTest
 public:
 
    MpiChemistryTest()
-    : UnitTest(),
-      communicator_(MPI_COMM_WORLD)
-   {}
+    : UnitTest()
+   {  setCommunicator(MPI_COMM_WORLD); }
 
    void setUp()
    {}
@@ -107,20 +106,13 @@ public:
       }
    }
 
-   MPI_Comm communicator()
-   { return communicator_; }
-
-private:
-
-   MPI_Comm communicator_;
-
 };
 
 TEST_BEGIN(MpiChemistryTest)
 TEST_ADD(MpiChemistryTest, testSendRecvAtomType)
-//TEST_ADD(MpiChemistryTest, testBcastAtomType)
-//TEST_ADD(MpiChemistryTest, testSendRecvSpeciesGroup)
-//TEST_ADD(MpiChemistryTest, testBcastSpeciesGroup)
+TEST_ADD(MpiChemistryTest, testBcastAtomType)
+TEST_ADD(MpiChemistryTest, testSendRecvSpeciesGroup)
+TEST_ADD(MpiChemistryTest, testBcastSpeciesGroup)
 TEST_END(MpiChemistryTest)
 
 #endif
