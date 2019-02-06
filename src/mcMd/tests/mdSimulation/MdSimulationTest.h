@@ -59,224 +59,261 @@ void MdSimulationTest::setUp()
 
 void MdSimulationTest::testReadParam()
 {
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   //ParamComponent::setEcho(true);
-   simulation_.readParam(paramFile);
-   //ParamComponent::setEcho(false);
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   try {
-      simulation_.isValid();
-   } catch (Exception e) {
-      TEST_ASSERT(0);
-   }
-
-   if (verbose() > 1 && isIoProcessor()) {
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
       std::cout << std::endl;
-      simulation_.writeParam(std::cout);
-      simulation_.system().writeConfig(std::cout);
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      //ParamComponent::setEcho(true);
+      simulation_.readParam(paramFile);
+      //ParamComponent::setEcho(false);
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         TEST_ASSERT(0);
+      }
+   
+      if (verbose() > 1) {
+         std::cout << std::endl;
+         simulation_.writeParam(std::cout);
+         simulation_.system().writeConfig(std::cout);
+      }
    }
-
 }
 
 void MdSimulationTest::testSetZeroVelocities()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   // Read the parameter file
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   double energy;
-   energy = system_.kineticEnergy();
-   std::cout << "kinetic energy = " << energy << std::endl;
-
-   system_.setZeroVelocities();
-   energy = system_.kineticEnergy();
-   std::cout << "kinetic energy = " << energy << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      // Read the parameter file
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      double energy;
+      energy = system_.kineticEnergy();
+      std::cout << "kinetic energy = " << energy << std::endl;
+   
+      system_.setZeroVelocities();
+      energy = system_.kineticEnergy();
+      std::cout << "kinetic energy = " << energy << std::endl;
+   }
 }
 
 void MdSimulationTest::testSetBoltzmannVelocities()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   double energy;
-   energy = system_.kineticEnergy();
-   std::cout << "kinetic energy = " << energy << std::endl;
-
-   double temperature = 1.0;
-   system_.setBoltzmannVelocities(temperature);
-
-   energy = system_.kineticEnergy();
-   std::cout << "kinetic energy = " << energy << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      double energy;
+      energy = system_.kineticEnergy();
+      std::cout << "kinetic energy = " << energy << std::endl;
+   
+      double temperature = 1.0;
+      system_.setBoltzmannVelocities(temperature);
+   
+      energy = system_.kineticEnergy();
+      std::cout << "kinetic energy = " << energy << std::endl;
+   }
 }
 
 void MdSimulationTest::testBuildPairList()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   system_.pairPotential().buildPairList();
-
-   //bool isContinuation = false;
-   //simulation_.simulate(2, isContinuation);
-
-   try {
-      simulation_.isValid();
-   } catch (Exception e) {
-      std::cout << e.message();
-      TEST_ASSERT(0);
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      if (isIoProcessor()) std::cout << std::endl;
+   
+      system_.pairPotential().buildPairList();
+   
+      //bool isContinuation = false;
+      //simulation_.simulate(2, isContinuation);
+   
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
    }
-
 }
 
 
 void MdSimulationTest::testPairEnergy()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      system_.pairPotential().buildPairList();
+      double energy = system_.pairPotential().energy();
+      std::cout << "Pair energy: " << energy << std::endl;
 
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   system_.pairPotential().buildPairList();
-   double energy = system_.pairPotential().energy();
-   std::cout << "Pair energy: " << energy << std::endl;
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
+   }
 }
 
 void MdSimulationTest::testAddPairForces()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      if (isIoProcessor()) std::cout << std::endl;
+   
+      system_.pairPotential().buildPairList();
+      system_.setZeroForces();
+      system_.pairPotential().addForces();
 
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   system_.pairPotential().buildPairList();
-   system_.setZeroForces();
-   system_.pairPotential().addForces();
-  
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
+   }
 }
 
 void MdSimulationTest::testBondEnergy()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   double energy = system_.bondPotential().energy();
    if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      double energy = system_.bondPotential().energy();
       std::cout << "Bond energy = " << energy << std::endl;
    }
 }
 
 void MdSimulationTest::testAddBondForces()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   //simulation_.simulate(1000);
-
-   system_.setZeroForces();
-   system_.bondPotential().addForces();
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      if (isIoProcessor()) std::cout << std::endl;
+   
+      //double temperature = 1.0;
+      //system_.setBoltzmannVelocities(temperature);
+      //simulation_.simulate(1000);
+   
+      system_.setZeroForces();
+      system_.bondPotential().addForces();
+   }
 }
 
 void MdSimulationTest::testCalculateForces()
 { 
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      system_.pairPotential().buildPairList();
+      system_.calculateForces();
 
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   system_.pairPotential().buildPairList();
-   system_.calculateForces();
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
+   }
 }
 
 void MdSimulationTest::testStep()
 {
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-
-   if (isIoProcessor()) std::cout << std::endl;
-
-   double kinetic, potential;
-   system_.pairPotential().buildPairList();
-   system_.calculateForces();
-   system_.mdIntegrator().setup();
-   for (int i=0; i < 10; ++i) {
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      if (isIoProcessor()) std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+   
+      std::cout << std::endl;
+   
+      double kinetic, potential;
+      system_.pairPotential().buildPairList();
+      system_.calculateForces();
+      system_.mdIntegrator().setup();
+      for (int i=0; i < 10; ++i) {
+   
+         kinetic   = system_.kineticEnergy(); 
+         potential = system_.potentialEnergy(); 
+         std::cout << kinetic << "  " << potential 
+                   << "  " << kinetic + potential << std::endl;
+   
+         system_.mdIntegrator().step();
+      }
+   
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
 
       kinetic   = system_.kineticEnergy(); 
       potential = system_.potentialEnergy(); 
-      if (isIoProcessor()) {
-         std::cout << kinetic << "  " << potential 
-                   << "  " << kinetic + potential << std::endl;
-      }
-
-      system_.mdIntegrator().step();
-   }
-
-   kinetic   = system_.kineticEnergy(); 
-   potential = system_.potentialEnergy(); 
-   if (isIoProcessor()) {
       std::cout << kinetic << "  " << potential << "  " 
                 << kinetic + potential << std::endl;
    }
@@ -284,21 +321,29 @@ void MdSimulationTest::testStep()
 
 void MdSimulationTest::testSimulate()
 {
-   printMethod(TEST_FUNC);
-   if (isIoProcessor()) std::cout << std::endl;
-
-   std::ifstream paramFile;
-   openInputFile("in/MdSimulation", paramFile); 
-   simulation_.readParam(paramFile);
-   paramFile.close();
-   simulation_.readCommands();
-   if (isIoProcessor()) std::cout << std::endl;
-
-   //simulation_.save("simulate.0");
-
-   simulation_.simulate(2000);
-
-   //simulation_.save("simulate.2000");
+   if (isIoProcessor()) {
+      printMethod(TEST_FUNC);
+      std::cout << std::endl;
+   
+      std::ifstream paramFile;
+      openInputFile("in/MdSimulation", paramFile); 
+      simulation_.readParam(paramFile);
+      paramFile.close();
+      simulation_.readCommands();
+      std::cout << std::endl;
+   
+      //simulation_.save("simulate.0");
+   
+      simulation_.simulate(2000);
+   
+      //simulation_.save("simulate.2000");
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
+   }
 }
 
 void MdSimulationTest::testWriteRestart()
@@ -335,6 +380,13 @@ void MdSimulationTest::testWriteRestart()
       configFile.open("tmp/end.cfg");
       simulation_.system().writeConfig(configFile);
       configFile.close();
+
+      try {
+         simulation_.isValid();
+      } catch (Exception e) {
+         std::cout << e.message();
+         TEST_ASSERT(0);
+      }
    }
 
 }
