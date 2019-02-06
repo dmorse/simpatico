@@ -7,6 +7,8 @@
 
 #include "AtomType.h"
 #include <util/param/Parameter.h>
+#include <iostream>
+#include <iomanip>
 
 namespace McMd
 {
@@ -83,12 +85,11 @@ namespace McMd
    */
    std::ostream& operator<<(std::ostream& out, const AtomType &atomType) 
    {
-      out.width(Parameter::Width);
+      out.width(20);
       out << atomType.name_;
-      out.setf(std::ios::scientific);
-      out.width(Parameter::Width);
-      out.precision(Parameter::Precision);
-      out << atomType.mass_;
+      // out.setf(std::ios::scientific);
+      out.width(20);
+      out << std::setprecision(10) << std::fixed << atomType.mass_;
       #ifdef SIMP_COULOMB
       if (atomType.hasCharge_) {
          out.width(Parameter::Width);

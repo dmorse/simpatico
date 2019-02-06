@@ -52,6 +52,7 @@ public:
          TEST_ASSERT(eq(value.mass(), 5.0));
          TEST_ASSERT(!value.name().compare("MyType"));
          std::cout << std::endl << value << std::endl;
+         //std::cout << "Mass = " << value.mass() << std::endl;
       }
    }
 
@@ -67,7 +68,7 @@ public:
       TEST_ASSERT(eq(value.mass(), 5.0));
       TEST_ASSERT(!value.name().compare("MyType"));
       if (isIoProcessor()) {
-         std::cout << value << std::endl;
+         std::cout << std::endl << value << std::endl;
       }
    }
 

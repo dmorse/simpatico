@@ -13,6 +13,7 @@
 #include "simulation/SimulationTestComposite.h"
 #include "mcSimulation/McSimulationTest.h"
 #include "mdSimulation/MdSimulationTest.h"
+#include "util/misc/initStatic.h"
 
 // Define a class McMdNsTestComposite
 TEST_COMPOSITE_BEGIN(McMdNsTestComposite)
@@ -28,10 +29,10 @@ TEST_COMPOSITE_END
 
 int main(int argc, char* argv[])
 {
+   Util::initStatic();
    #ifdef UTIL_MPI
    MPI_Init(&argc, &argv);
    McMd::commitMpiTypes();
-
    #endif
 
    try {
