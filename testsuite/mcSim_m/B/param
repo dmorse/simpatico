@@ -129,7 +129,7 @@ McSimulation{
       interval                          1000
       outputFileName                 perturb
       nSamplePerBlock                      0
-      parameterIndex                      10
+      parameterIndex                       0
     }
    
     RadiusGyration{
