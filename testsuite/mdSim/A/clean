@@ -1,0 +1,5 @@
+#!/bin/bash
+rm -f out/*
+rm -f rst/*
+rm -f log
+

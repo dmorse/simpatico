@@ -1,0 +1,24 @@
+System:
+
+Melt of symmetric, flexible diblock copolymers.
+M=588 molecules, N=32 beads per chain, WCA and Harmonic potentials
+
+To run and restart using the bash script:
+
+   ./run MODE
+
+   where MODE can be nve, nvt or npt. Default is nve.
+   This outputs the original run in out/ and the restart in rst/
+
+Parallel NVE simulation on 6 processors, 8000 steps, log info to screen:
+
+   mpirun -np 6 ddSim -e -p param.nve -c commands
+
+To postprocess the resulting config and trajectory files:
+
+   mdPp -p param.pp -c commands.pp
+
+To restart the simulation and continue to 12000 steps
+
+   mpirun -np 6 ddSim -e -r restart -c commands.rst -o rst/
+

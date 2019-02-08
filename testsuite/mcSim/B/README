@@ -1,0 +1,19 @@
+Description:
+
+    Semigrand MC simulation of a blend A and B homopolymers.
+    Melt of 100 flexible chains of 8 atoms, of species HomopolymerSG.
+    WCA and Harmonic potentials. Combination of MC moves.
+
+Usage:
+
+Use run script to run and restart:
+
+    ./run
+
+MC simulation:
+
+    mcSim -e -p param.nve -c commands
+
+Restarting simulations
+
+    mcSim -e -r restart -c commands.rst -o rst/

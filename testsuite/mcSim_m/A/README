@@ -1,0 +1,23 @@
+System:
+
+    melt of 100 chains of 8 atoms
+
+Usage:
+
+To run and restart with script:
+
+    ./run
+
+    Output from original in n/out/ and from restart in n/rst/
+
+To run independent MC simulations on 3 processors:
+
+    mpirun -np 3 mcSim_m -e -p param -c commands
+
+    (See files n/log, n=0,1, 2 for log output)
+
+Restarting above:
+
+    mpirun -np 3 mcSim_m -e -p param -c commands
+
+

@@ -1,0 +1,5 @@
+Test cases for mcSim_m multiprocessor version of mcSim.
+Each test cases runs three simulations on different processors
+
+A/ - melt of 100 flexible homopolymers, N=8, independent param files
+B/ - A/B homopolymer blend, 100 molecules, N=8, uses perturbation

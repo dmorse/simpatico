@@ -1,0 +1,52 @@
+#!/bin/bash
+set -ev
+
+echo " "
+echo "Running testsuite/mcSim_m/B"
+
+# Clean out out directories
+rm -f 0/out/*
+rm -f 1/out/*
+rm -f 2/out/*
+
+# Run simulation, writing to out
+mpirun -np 3 mcSim_m -e -f -p param -c commands 
+
+echo " "
+echo "Log file for testsuite/mcSim_m/B/0"
+cat 0/log
+
+mv 0/log 0/out
+mv 1/log 1/out
+mv 2/log 2/out
+
+echo " "
+echo "Restarting testsuite/mcSim_m/B"
+
+# Make or clean rst directories
+if [ ! -d "0/rst" ]; then
+   mkdir 0/rst
+else
+   rm -f 0/rst/*
+fi
+if [ ! -d "1/rst" ]; then
+   mkdir 1/rst
+else
+   rm -f 1/rst/*
+fi
+if [ ! -d "2/rst" ]; then
+   mkdir 2/rst
+else
+   rm -f 2/rst/*
+fi
+
+mpirun -np 3 mcSim_m -e -r restart -c commands.rst -o rst/
+
+echo " "
+echo "Log file for testsuite/mcSim_m/B/1 after restart"
+cat 1/log
+
+mv 0/log 0/rst
+mv 1/log 1/rst
+mv 2/log 2/rst
+
