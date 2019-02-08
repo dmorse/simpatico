@@ -58,16 +58,16 @@ Simulation{
      baseInterval     100
 
      LogEnergy{
-        interval  1000
+        interval  100
      }
 
      DdMdTrajectoryWriter{
-        interval        2000
+        interval        1000
         outputFileName  trajectory
      } 
 
      DdMdGroupTrajectoryWriter{
-        interval        2000
+        interval        1000
         outputFileName  trajectory.0
         groupId         0 
      } 
@@ -89,7 +89,7 @@ Simulation{
      }
 
      WriteConfig{
-        interval          2000
+        interval          1000
         outputFileName  config
      }
 

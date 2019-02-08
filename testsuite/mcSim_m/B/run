@@ -43,7 +43,7 @@ fi
 mpirun -np 3 mcSim_m -e -r restart -c commands.rst -o rst/
 
 echo " "
-echo "Log file for homopolymer/N8/mdMulti/1 after restart"
+echo "Log file for testsuite/mcSim_m/B/1 after restart"
 cat 1/log
 
 mv 0/log 0/rst

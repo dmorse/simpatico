@@ -62,7 +62,7 @@ Simulation{
      baseInterval      100
 
      LogEnergy{
-        interval   200
+        interval   100
      }
  
      OutputEnergy{
@@ -85,7 +85,7 @@ Simulation{
 }
 
      WriteConfig{
-        interval          2000
+        interval          1000
         outputFileName  config
      }
 
