@@ -92,55 +92,55 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                        1000
+    baseInterval                         100
 
     LogProgress{
-      interval                         20000
+      interval                          1000
     }
 
     McEnergyAverage{
-      interval                         10000
+      interval                           200
       outputFileName               energyAve
-      nSamplePerBlock                     10
+      nSamplePerBlock                      5
     }
 
     McPairEnergyAverage{
-      interval                         10000
+      interval                           100
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           inter  -1  -1
     }
    
     McPairEnergyAverage{
-      interval                         10000
+      interval                           100
       outputFileName              pairEnergy
-      nSamplePerBlock                      0
+      nSamplePerBlock                     10
       selector                           inter   0  1
     }
    
     McPairEnergyAverage{
-      interval                         10000
+      interval                           100
       outputFileName              pairEnergy
-      nSamplePerBlock                      0
+      nSamplePerBlock                     10
       selector                           inter   0  0
     }
    
     PerturbDerivative{
-      interval                         10000
+      interval                          1000
       outputFileName                 perturb
       nSamplePerBlock                      0
-      parameterIndex                       0
+      parameterIndex                      10
     }
    
     RadiusGyration{
-      interval                         10000
+      interval                          1000
       outputFileName          RadiusGyration
       nSamplePerBlock                      0
       speciesId                            0
     }
 
     RDF{
-      interval                         10000
+      interval                          1000
       outputFileName                     RDF
       max                                5.0
       nBin                               500
@@ -148,7 +148,7 @@ McSimulation{
     }
 
     BondLengthDist{
-      interval                         10000
+      interval                          1000
       outputFileName          BondLengthDist
       speciesId                            0
       min                                0.0
@@ -157,7 +157,7 @@ McSimulation{
     }
 
     AtomMSD{
-      interval                         10000
+      interval                          1000
       outputFileName                 AtomMSD
       speciesId                            0
       atomId                               5
@@ -165,7 +165,7 @@ McSimulation{
     }
 
     IntraPairAutoCorr{
-      interval                        10000
+      interval                         1000
       outputFileName      IntraPairAutoCorr
       speciesId                           0
       atom1Id                             0
@@ -174,7 +174,7 @@ McSimulation{
     }
 
   }
-  saveInterval           20000
+  saveInterval            2000
   saveFileName         restart
 }
 
