@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                       ../in/
+    inputPrefix                         in/
     outputPrefix                        out/
   }
   nAtomType                              1

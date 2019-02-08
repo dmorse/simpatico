@@ -118,18 +118,6 @@ MdSimulation{
   saveInterval              10000
   saveFileName            restart
 }
-SET_CONFIG_IO  McConfigIo
-READ_CONFIG        config
-THERMALIZE            1.0
-SIMULATE            20000
-SET_CONFIG_IO  MdConfigIo
-WRITE_CONFIG       config
-WRITE_PARAM         param
-FINISH
-
-
-
-
 
     DumpConfig{
       interval                           2000

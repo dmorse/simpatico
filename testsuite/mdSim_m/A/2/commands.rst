@@ -1,4 +1,4 @@
-RESTART             26000
+RESTART             16000
 FINISH
 
 SET_CONFIG_IO  McConfigIo

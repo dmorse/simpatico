@@ -1,6 +1,9 @@
 #!/bin/bash
 set -ev
 
+echo " "
+echo "Running testsuite/mdSim_m/A"
+
 # Clean out out directories
 rm -f 0/out/*
 rm -f 1/out/*
@@ -10,7 +13,7 @@ rm -f 2/out/*
 mpirun -np 3 mdSim_m -e -p param -c commands 
 
 echo " "
-echo "Log file for testcases/mdSim_m/A/1"
+echo "Log file for testsuite/mdSim_m/A/1"
 cat 1/log
 
 mv 0/log 0/out
@@ -37,7 +40,7 @@ fi
 mpirun -np 3 mdSim_m -e -r restart -c commands.rst -o rst/
 
 echo " "
-echo "Log file for testcases/mdSim_m/A/1 after restart"
+echo "Log file for testsuite/mdSim_m/A/1 after restart"
 cat 1/log
 
 mv 0/log 0/rst

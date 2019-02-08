@@ -1,4 +1,4 @@
-RESTART         80000
+RESTART         26000
 WRITE_PARAM     param
 FINISH
 
