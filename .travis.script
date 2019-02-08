@@ -6,19 +6,19 @@ if [ "$SMP_PROG" == "mcMd" ]; then
   cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run
   cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run
   cd $TRAVIS_BUILD_DIR/bld/serial/mdPp/tests && make run
-  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && { ./run || exit 1} && ./clean
-  cd $TRAVIS_BUILD_DIR/testsuite/mcSim/A && { ./run || exit 1} && ./clean
-  cd $TRAVIS_BUILD_DIR/testsuite/mcSim/B && { ./run || exit 1} && ./clean
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim/B && ./run
 fi
 
 if [ "$SMP_PROG" == "ddMd" ]; then
   cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
-  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ( ./run || exit 1) && ./clean
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run 
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run
 fi
 
 if [ "$SMP_PROG" == "mcMdMpi" ]; then 
   cd $TRAVIS_BUILD_DIR/bld/parallel/mcMd/tests && make run 
-  cd $TRAVIS_BUILD_DIR/testsuite/mdSim_m/A && { ./run || exit 1} && ./clean
-  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/A && { ./run || exit 1} && ./clean
-  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/B && { ./run || exit 1} && ./clean
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim_m/A && ./run 
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/A && ./run
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/B && ./run
 fi
