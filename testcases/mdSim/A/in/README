@@ -1,0 +1,5 @@
+Input configuration files (100 Homopolymer chains, 8 atoms each):
+
+    config    - equilibrated interacting system.
+    config_np - equilibrated ideal gas (no pair interaction).
+

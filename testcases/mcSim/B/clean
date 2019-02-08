@@ -1,0 +1,6 @@
+#!/bin/bash
+rm -f out/*
+rm -f rst/*
+rm -f restart
+rm -f log
+
