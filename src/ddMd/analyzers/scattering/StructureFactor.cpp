@@ -201,7 +201,7 @@ namespace DdMd
          for (int j = 0; j < nMode_; ++j) {
          //Sum values from all processors.
          MPI_Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j),
-                    1, MPI_CXX_DOUBLE_COMPLEX, MPI_SUM, 0,
+                    1, MPI_DOUBLE_COMPLEX, MPI_SUM, 0,
                     simulation().domain().communicator()
                     );
          }
