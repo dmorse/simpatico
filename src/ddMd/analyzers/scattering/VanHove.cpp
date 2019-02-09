@@ -182,11 +182,8 @@ namespace DdMd
          // Loop over wavevectors
          for (int i = 0; i < nWave_; ++i) {
             //Sum values from all processors.
-            //simulation().domain().communicator().
-            //Reduce(&fourierModes_[i], &totalFourierModes_[i],
-            //        1, MPI_DOUBLE_COMPLEX, MPI_SUM, 0);
             MPI_Reduce(&fourierModes_[i], &totalFourierModes_[i],
-                    1, MPI_DOUBLE_COMPLEX, MPI_SUM, 0,
+                    1, MPI_CXX_DOUBLE_COMPLEX, MPI_SUM, 0,
                     simulation().domain().communicator());
          }
          #else

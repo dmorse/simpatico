@@ -225,9 +225,9 @@ namespace DdMd
       while (!isComplete_) {
 
          // Receive notice from master to send atoms (blocking receive)
-         int message;
          int tag;
          MPI_Comm_rank(domainPtr_->communicator(), &tag);
+         int message;
          MPI_Status status;
          MPI_Recv(&message, 1, MPI_INT, 0, tag, 
                   domainPtr_->communicator(), &status);

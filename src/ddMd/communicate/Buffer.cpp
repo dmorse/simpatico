@@ -322,8 +322,6 @@ namespace DdMd
       MPI_Request request[2];
       MPI_Status status[2];
       int  sendBytes = 0;
-      // int  myRank = comm.Get_rank();
-      //int  comm_size = comm.Get_size();
       int  myRank;
       MPI_Comm_rank(comm, &myRank);
       int  comm_size;
@@ -344,14 +342,11 @@ namespace DdMd
       }
 
       // Start nonblocking receive.
-      //request[0] = comm.Irecv(recvBufferBegin_, bufferCapacity_ , MPI_CHAR, 
-      //                        source, 5);
       MPI_Irecv(recvBufferBegin_, bufferCapacity_ , MPI_CHAR, source, 5, 
                 comm, &request[0]);
 
       // Start nonblocking send.
       sendBytes = sendPtr_ - sendBufferBegin_;
-      //request[1] = comm.Isend(sendBufferBegin_, sendBytes, MPI_CHAR, dest, 5);
       MPI_Isend(sendBufferBegin_, sendBytes , MPI_CHAR, dest, 5, 
                 comm, &request[1]);
 
@@ -375,10 +370,6 @@ namespace DdMd
    */
    void Buffer::send(MPI_Comm comm, int dest)
    {
-      MPI_Request request;
-      int  sendBytes = 0;
-      //int  comm_size = comm.Get_size();
-      //int  myRank = comm.Get_rank();
       int  myRank;
       MPI_Comm_rank(comm, &myRank);
       int  comm_size;
@@ -392,11 +383,11 @@ namespace DdMd
          UTIL_THROW("Source and destination identical");
       }
 
+      int  sendBytes = 0;
       sendBytes = sendPtr_ - sendBufferBegin_;
-      //request = comm.Isend(sendBufferBegin_, sendBytes, MPI_CHAR, dest, 5);
+      MPI_Request request;
       MPI_Isend(sendBufferBegin_, sendBytes, MPI_CHAR, dest, 5, 
                 comm, &request);
-      //request.Wait();
       MPI_Status status;
       MPI_Wait(&request, &status);
 
@@ -411,9 +402,6 @@ namespace DdMd
    */
    void Buffer::recv(MPI_Comm comm, int source)
    {
-      MPI_Request request;
-      //int  myRank     = comm.Get_rank();
-      //int  comm_size  = comm.Get_size();
       int myRank;
       MPI_Comm_rank(comm, &myRank);
       int comm_size;
@@ -427,11 +415,9 @@ namespace DdMd
          UTIL_THROW("Source and destination identical");
       }
 
-      // request = comm.Irecv(recvBufferBegin_, bufferCapacity_,
-      //                     MPI_CHAR, source, 5);
+      MPI_Request request;
       MPI_Irecv(recvBufferBegin_, bufferCapacity_, MPI_CHAR, source, 5, 
                 comm, &request);
-      //request.Wait();
       MPI_Status status;
       MPI_Wait(&request, &status);
       recvType_ = NONE;
@@ -443,8 +429,6 @@ namespace DdMd
    */
    void Buffer::bcast(MPI_Comm comm, int source)
    {
-      //int comm_size = comm.Get_size();
-      //int myRank = comm.Get_rank();
       int myRank;
       MPI_Comm_rank(comm, &myRank);
       int comm_size;
@@ -456,16 +440,12 @@ namespace DdMd
       int sendBytes;
       if (myRank == source) {
          sendBytes = sendPtr_ - sendBufferBegin_;
-         //comm.Bcast(&sendBytes, 1, MPI_INT, source);
          MPI_Bcast(&sendBytes, 1, MPI_INT, source, comm);
-         //comm.Bcast(sendBufferBegin_, sendBytes, MPI_CHAR, source);
          MPI_Bcast(sendBufferBegin_, sendBytes, MPI_CHAR, source, comm);
          sendPtr_ = sendBufferBegin_;
          sendType_ = NONE;
       } else {
-         //comm.Bcast(&sendBytes, 1, MPI_INT, source);
          MPI_Bcast(&sendBytes, 1, MPI_INT, source, comm);
-         //comm.Bcast(recvBufferBegin_, sendBytes, MPI_CHAR, source);
          MPI_Bcast(recvBufferBegin_, sendBytes, MPI_CHAR, source, comm);
          recvPtr_ = recvBufferBegin_;
          recvType_ = NONE;
@@ -488,7 +468,6 @@ namespace DdMd
    {
       #ifdef UTIL_MPI
       int globalSendMax;
-      //comm.Allreduce(&maxSendLocal_, &globalSendMax, 1, MPI_INT, MPI_MAX);
       MPI_Allreduce(&maxSendLocal_, &globalSendMax, 1, MPI_INT, MPI_MAX, comm);
       maxSend_.set(globalSendMax);
       #else

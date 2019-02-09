@@ -214,7 +214,8 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      // If reservoir is empty, send buffer to processor with maximum sendSize_
+      // If the reservoir is empty, send buffer to the processor with 
+      // the maximum value for sendSize_
       if (reservoir_.size() == 0) {
 
          Atom* ptr;

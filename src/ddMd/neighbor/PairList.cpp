@@ -250,12 +250,8 @@ namespace DdMd
       #ifdef UTIL_MPI
       int maxNAtomGlobal;
       int maxNPairGlobal;
-      //communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1,
-      //                       MPI_INT, MPI_MAX);
       MPI_Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
                     MPI_INT, MPI_MAX, communicator);
-      //communicator.Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1,
-      //                       MPI_INT, MPI_MAX);
       MPI_Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1,
                     MPI_INT, MPI_MAX, communicator);
       maxNAtom_.set(maxNAtomGlobal);

@@ -254,8 +254,6 @@ namespace DdMd
 
       #if UTIL_MPI
       int neededAll;
-      //domain().communicator().Allreduce(&needed, &neededAll, 
-      //                                  1, MPI_INT, MPI_MAX);
       MPI_Allreduce(&needed, &neededAll, 1, MPI_INT, MPI_MAX, 
                     domain().communicator());
       timer_.stamp(ALLREDUCE);
@@ -285,15 +283,17 @@ namespace DdMd
 
       #if UTIL_MPI
       double maxSqDispAll;                    // global maximum
-      domain().communicator().Reduce(&maxSqDisp, &maxSqDispAll, 1, 
-                          MPI_DOUBLE, MPI_MAX, 0);
-      if (domain().communicator().Get_rank() == 0) {
+      MPI_Comm_Reduce(&maxSqDisp, &maxSqDispAll, 1, MPI_DOUBLE, 
+                      MPI_MAX, 0, domain().communicator());
+      int rank;
+      MPI_Comm_rank(comm, &rank);
+      if (rank == 0) {
          needed = 0;
          if (sqrt(maxSqDispAll) > 0.5*skin) {
             needed = 1; 
          }
       }
-      domain().communicator().Bcast(&needed, 1, MPI_INT, 0);
+      MPI_Comm_Bcast(&needed, 1, MPI_INT, 0, domain().communicator());
       timer_.stamp(ALLREDUCE);
       #else
       if (sqrt(maxSqDisp) > 0.5*skin) {
@@ -334,7 +334,6 @@ namespace DdMd
       int nAtomTot = atomStorage().nAtomTotal();
       int nProc = 1;
       #ifdef UTIL_MPI
-      //nProc = domain().communicator().Get_size();
       MPI_Comm_size(domain().communicator(), &nProc);
       #endif
 

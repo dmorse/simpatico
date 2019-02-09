@@ -1524,8 +1524,6 @@ namespace DdMd
       }
 
       // Compute total momentum and mass for system, by MPI all reduce
-      //domain_.communicator().Allreduce(&massLocal, &massTotal, 1,
-      //                                 MPI_DOUBLE, MPI_SUM);
       MPI_Allreduce(&massLocal, &massTotal, 1,
                     MPI_DOUBLE, MPI_SUM, domain_.communicator());
       MPI_Allreduce(&momentumLocal[0], &momentumTotal[0], Dimension,
@@ -1649,8 +1647,6 @@ namespace DdMd
       #ifdef UTIL_MPI
       // Sum values from all processors.
       double totalEnergy = 0.0;
-      //domain_.communicator().Reduce(&localEnergy, &totalEnergy, 1,
-      //                              MPI_DOUBLE, MPI_SUM, 0);
       MPI_Reduce(&localEnergy, &totalEnergy, 1,
                  MPI_DOUBLE, MPI_SUM, 0, domain_.communicator());
       int domainRank;
@@ -1718,8 +1714,6 @@ namespace DdMd
       #ifdef UTIL_MPI
       // Sum values from all processors
       Tensor totalStress;
-      //domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0),
-      //                              Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0);
       MPI_Reduce(&localStress(0, 0), &totalStress(0, 0),
                  Dimension*Dimension, MPI_DOUBLE, MPI_SUM, 0, 
                  domain_.communicator());
@@ -2362,8 +2356,6 @@ namespace DdMd
       int nGhost = atomStorage_.nGhost();
       int nGhostAll = 0;
       #ifdef UTIL_MPI
-      //domain_.communicator().Reduce(&nGhost, &nGhostAll, 1,
-      //                              MPI_INT, MPI_SUM, 0);
       MPI_Reduce(&nGhost, &nGhostAll, 1, MPI_INT, MPI_SUM, 0, 
                  domain_.communicator());
       bcast(domain_.communicator(), nGhostAll, 0);

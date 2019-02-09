@@ -322,8 +322,8 @@ namespace DdMd
       double xi_prime;
       #ifdef UTIL_MPI
       //reduce vs_sum
-      //domain().communicator().Reduce(&v2_sum, &T_prime, 1, MPI_DOUBLE, MPI_SUM,0);
-      MPI_Reduce(&v2_sum, &T_prime, 1, MPI_DOUBLE, MPI_SUM,0, domain().communicator());
+      MPI_Reduce(&v2_sum, &T_prime, 1, MPI_DOUBLE, MPI_SUM, 0, 
+                 domain().communicator());
       #endif
 
       if (domain().isMaster()) {
