@@ -166,7 +166,7 @@ cat bld/parallel/temp "$VARFILE" make/config/main_config.2 > bld/parallel/config
 rm bld/parallel/temp
 
 # Install namespace level config.mk files
-cp src/util/config.mk_r bld/parallel/util/config.mk
+cp make/config/util_config bld/parallel/util/config.mk
 cp make/config/simp_config bld/parallel/simp/config.mk
 cp make/config/mcMd_config bld/parallel/mcMd/config.mk
 cp make/config/ddMd_config bld/parallel/ddMd/config.mk
