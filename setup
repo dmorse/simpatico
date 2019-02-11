@@ -84,7 +84,7 @@ rm src/temp
 #   - Set $(BLD_DIR) to absolute path to src/ directory (in-source-build)
 
 # Install namespace level configuration files
-cp ./src/util/config.mk_r src/util/config.mk
+cp make/config/util_config src/util/config.mk
 cp make/config/simp_config src/simp/config.mk
 cp make/config/mcMd_config src/mcMd/config.mk
 cp make/config/ddMd_config src/ddMd/config.mk
