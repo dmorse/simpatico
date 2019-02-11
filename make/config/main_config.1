@@ -48,13 +48,18 @@ BIN_DIR=$(ROOT_DIR)/bin
 #======================================================================
 # Variables that (if defined) enable compilation of optional features
 
+# Defining UTIL_DEBUG enables a variety of extra sanity checks, at some
+# cost in speed. Debugging is disabled (commented out) by default.
+#UTIL_DEBUG=1
+
 # Defining UTIL_MPI enables linking to an MPI library. MPI must be
 # enabled by uncommenting this line to build a parallel program.
 #UTIL_MPI=1
 
-# Defining UTIL_DEBUG enables a variety of extra sanity checks, at some
-# cost in speed. Debugging is disabled (commented out) by default.
-#UTIL_DEBUG=1
+# Define version of MPI standard used when MPI is enabled. Set value to
+# 2 for MPI 2.0 or 2.2 and set to 3 for version >= 3.0. This definition 
+# is only relevant when UTIL_MPI is defined, and so is left uncommented.
+UTIL_MPI_VERSION=2
 
 # Defining UTIL_CXX11 enables the use of features of the C++11 standard.
 # Use of C++11 is disabled (commented out) by default. If C++11 is 

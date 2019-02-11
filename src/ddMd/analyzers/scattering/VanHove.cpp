@@ -183,7 +183,7 @@ namespace DdMd
          for (int i = 0; i < nWave_; ++i) {
             //Sum values from all processors.
             MPI_Reduce(&fourierModes_[i], &totalFourierModes_[i],
-                    1, MPI_DOUBLE_COMPLEX, MPI_SUM, 0,
+                    1, UTIL_DOUBLE_COMPLEX, MPI_SUM, 0,
                     simulation().domain().communicator());
          }
          #else

@@ -142,7 +142,7 @@ namespace DdMd
             for (int j = 0; j < nMode_; ++j) {
             //Sum values from all processors.
             simulation().domain().communicator().Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j), 1,
-                                                         MPI_DOUBLE_COMPLEX, MPI_SUM, 0);
+                                                         UTIL_DOUBLE_COMPLEX, MPI_SUM, 0);
             }
          }
          #else

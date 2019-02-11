@@ -64,8 +64,12 @@ UTIL_MPI_SUFFIX:=
 
 # Enable message passing interface
 ifdef UTIL_MPI
-UTIL_DEFS+= -DUTIL_MPI
 UTIL_MPI_SUFFIX:=_m
+ifeq ($(UTIL_MPI_VERSION),3)
+UTIL_DEFS+= -DUTIL_MPI=3
+else
+UTIL_DEFS+= -DUTIL_MPI=2
+endif
 endif
 
 # Enable debugging assertions
