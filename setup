@@ -123,7 +123,7 @@ cat bld/serial/temp "$VARFILE" make/config/main_config.2 > bld/serial/config.mk
 rm bld/serial/temp
 
 # Install namespace level config.mk files 
-cp src/util/config.mk_r bld/serial/util/config.mk
+cp make/config/util_config bld/serial/util/config.mk
 cp make/config/simp_config bld/serial/simp/config.mk
 cp make/config/mcMd_config bld/serial/mcMd/config.mk
 cp make/config/ddMd_config bld/serial/ddMd/config.mk
