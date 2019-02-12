@@ -10,8 +10,8 @@ scripts/        utilities in languages other than C++
   bash/         bash scripts
   python/       python modules and executable scripts
   mathematica/  mathematica notebooks
-make/           files used by the build system setup script
-examples/       example simulations
+make/           files used by the build system during setup
+testsuite/      example simulations used to test validity
 doc/            documentation
   manual/       text source files for manual
   html/         installation directory for *.html manual pages
