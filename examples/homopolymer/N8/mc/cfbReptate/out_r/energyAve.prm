@@ -1,5 +1,0 @@
-    McEnergyAverage{
-      interval                            1000
-      outputFileName                 energyAve
-      nSamplePerBlock                       10
-    }

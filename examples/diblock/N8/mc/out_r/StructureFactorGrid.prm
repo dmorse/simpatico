@@ -1,9 +1,0 @@
-    StructureFactorGrid{
-      interval                            1000
-      outputFileName       StructureFactorGrid
-      nMode                                  2
-      modes                 1.000000000000e+00 -1.000000000000e+00
-                            1.000000000000e+00  1.000000000000e+00
-      hMax                                   5
-      lattice                            cubic
-    }

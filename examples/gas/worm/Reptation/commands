@@ -1,6 +1,0 @@
-SET_CONFIG_IO    McConfigIo
-READ_CONFIG      config
-SIMULATE         1000000
-SET_CONFIG_IO    McConfigIo
-WRITE_CONFIG     config
-FINISH

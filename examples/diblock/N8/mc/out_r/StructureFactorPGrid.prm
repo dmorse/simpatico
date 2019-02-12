@@ -1,9 +1,0 @@
-    StructureFactorPGrid{
-      interval                            1000
-      outputFileName      StructureFactorPGrid
-      nAtomTypeIdPair                        2
-      atomTypeIdPairs                         0    0
-                                              0    1
-      hMax                                   4
-      lattice                            cubic
-    }

@@ -1,7 +1,0 @@
-WRITE_PARAM      param
-SET_CONFIG_IO    McConfigIo
-READ_CONFIG      config
-SIMULATE         50000000
-SET_CONFIG_IO    McConfigIo
-WRITE_CONFIG     config
-FINISH
