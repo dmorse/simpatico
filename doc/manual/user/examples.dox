@@ -4,11 +4,19 @@
 \ref user_analysis_page (Next)
 <BR>
 
-Input files for a set of example simulations are provided with Simpatico in the simpatico/examples/ directory. Examining and running these examples is the easiest way to become familiar with the program.
+A set of examples of input files for simpatico simulations are provided in a separate repository on github. Examining and running these examples is the easiest way to become familiar with the program. The examples are entirely separate from the simpatico source code and can be installed anywhere within the users file system. To obtain the examples, changed directory (cd) to the directory that you wish to contain the simpatico exampled directory and use a git client to clone the repository uby entering
+\code
+   git clone https://github.com/dmorse/simpatico-examples.git
+\endcode
+to the https protocol, or 
+\code
+   git clone git@github.com/dmorse/simpatico-examples.git
+\endcode
+to use the ssh protocol. This will create a new directory containing the examples, which will refer to in what follows as the examples root directory. This directory is entirely self-contained, and may be moved or renamed after it is created with no ill effects. 
 
 \section examples_subdirectories_sec Examples Directory Tree
 
-Subdirectories of the examples/ directory contain different types of examples that use different features of Simpatico.  Some directories contain examples that are designed to work with versions of the code enabled or disabled by preprocessor macros.  The file examples/README describes the examples in different subdirectories, and explains which features must be enabled or disabled at compile time run the examples in each subdirectory.  The examples in the atomic/, dimer/, homopolymer/, blend/ and diblock/ subdirectories are designed to work with the default versions of the code, which contains no angle, dihedral or external potentials.  Many subdirectories also contain README files that explain their contents in greater detail.  Subdirectories that contain similar examples designed for use with mcSim, mdSim and ddSim are often labelled mc/, md/ and dd/, respectively.
+Subdirectories of the examples root directory contain different types of examples that use different features of simpatico.  Some directories contain examples that are designed to work with versions of the code enabled or disabled by preprocessor macros.  The CONTENTS file in the examples root directory describes the examples in different subdirectories, and explains which features must be enabled or disabled at compile time run the examples in each subdirectory.  The examples in the atomic/, dimer/, homopolymer/, blend/ and diblock/ subdirectories are designed to work with the default versions of the code, which contains no angle, dihedral or external potentials.  Many subdirectories also contain README files that explain their contents in greater detail.  Subdirectories that contain similar examples designed for use with mcSim, mdSim and ddSim are often labelled mc/, md/ and dd/, respectively.
 
 \section examples_layout_sec Typical File Layout
 

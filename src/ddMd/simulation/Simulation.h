@@ -626,7 +626,7 @@ namespace DdMd
       *
       * \param nSpecies number of Species objects.
       */
-      void setNSpecies(int inSpecies);
+      void setNSpecies(int nSpecies);
 
       /**
       * Does this simulation have an array of Species objects?
