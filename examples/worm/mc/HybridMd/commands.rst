@@ -1,3 +1,0 @@
-RESTART          300
-WRITE_CONFIG     config
-FINISH

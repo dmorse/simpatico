@@ -1,4 +1,0 @@
-#!/bin/bash
-./md/clean
-./dd/clean
-cd mc; ./clean; cd ..

@@ -1,2 +1,0 @@
-RESTART           1600000
-FINISH

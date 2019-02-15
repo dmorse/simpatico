@@ -1,7 +1,0 @@
-#!/bin/bash -l
-#PBS -l walltime=2:00:00,mem=5000mb,nodes=1:ppn=3
-#PBS -o zout
-cd $PBS_O_WORKDIR
-module load intel 
-module load ompi/intel
-mpirun -np 3 $HOME/simpatico/bin/mcSim_m -e 

@@ -1,7 +1,0 @@
-The examples in this directory are semi-grand ensemble MC simulations of
-polymer blends. Each simulation contains a liquid of HomopolymerSG chains,
-which can change be changed between two types of homopolymer by a MC move.
-
-System:
-
-    100 chains of 8 atoms each.

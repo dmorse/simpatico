@@ -1,6 +1,0 @@
-    McPairEnergyAverage{
-      interval                             200
-      outputFileName                pairEnergy
-      nSamplePerBlock                        1
-      selector                             All         0         1
-    }

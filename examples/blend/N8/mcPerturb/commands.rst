@@ -1,4 +1,0 @@
-RESTART         150000
-WRITE_PARAM     param
-FINISH
-

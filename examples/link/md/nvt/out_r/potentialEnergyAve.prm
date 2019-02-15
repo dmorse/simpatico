@@ -1,5 +1,0 @@
-    MdPotentialEnergyAverage{
-      interval                             100
-      outputFileName        potentialEnergyAve
-      nSamplePerBlock                       10
-    }
