@@ -10,52 +10,115 @@ SIMPATICO TRAJECTORY FILE FORMAT
    2) Each frame should contain mutable per-atom data (no topology info)
 
    3) Question: Should a file consists of a sequence of independent 
-   frames, with no header, or should it have a header?
+   frames, with no header, or should it have a header? Proposal: 
+   The header is optional, and some information in header can be
+   overridden by info in a frame. Require that all required information
+   be provided somewhere.
 
-   3) If no header, a postprocessor is required to read a param 
-   and/or config file to obtain information about mass and charge 
-   associated with types, as well as topology information. (Though
-   some analysis operations may not require this information). The
-   postprocessor needs bool variables to indicate whether it has
-   atomType (mass and charge) and and topology information.
+   4) The header, if any needs to provide information about atom
+   types (if any) and immutable bonding. Atom type information 
+   is necessary if the simulation requires atom masses (for MD)
+   or charge (for charged systems). The header should provide
+   default values for these even if additional information is
+   provided on a per atom basis.
 
-   4) Possibility: Make the entire header optional? The postprocessor
-   can then get mass and charge information either from the header or 
-   from a param or topology file, if available.
+   5) Information in the header about bonding/topology is optional
+   may be provided either in the form of information about species, 
+   for molecular systems, or lists of covalent groups.
 
-   5) Related Question: Could we also provide optional topology 
-   information, in another header?
+   6) If a trajectory file has no header, a postprocessor may be 
+   required to read a param and/or config file to obtain information 
+   about mass and charge associated with types. The mcSim and mdSim 
+   programs can also obtain topology information from a param file, 
+   cannot. The postprocessor needs bool variables to indicate whether 
+   it has atomType (mass and charge) and and topology information.
 
 FORMAT:
 
    Header (if any):
 
-      nAtom int
       headerFormat - bitfield indicating which optional info follows
-      [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
-      [ATOM] 
-         format - bitfield with flags hasMass and hasCharge
+          Boolean fields:
+            hasAtomTypes - Is an AtomType block present ?
+            hasSpecies - Is a SPECIES block present (is data molecular?)
+            hasMass - Is atomic mass specified ?
+            hasCharge - Is atomic charge specified ?
+            hasAtoms - Is per atom info specified
+      [ATOMTYPE] 
+         Default values for mass and/or charge must be specified for
+         types, but can be overridden by information about atoms.
          For each atom{
             typeId, [mass], [charge]
          }
+      [SPECIES] - topology and nMolecule per species, iff isMolecular 
+      [nAtom int] - Include iff SPECIES block is absent.
+      [ATOM]
+         nAtom (# of atoms listed here)
+         format - bitfield with flags hasMass and hasCharge
+         For each listed atom {
+            atomId, typeId, [mass], [charge]
+         }
+      [BOND] - optional, allowed only if SPECIES is absent
+      [ANGLE] - optional, allowed only if SPECIES is absent
+      [DIHEDRAL] - optional, allowed only if SPECIES is absent
+
+      Notes:
+
+         1) If ATOMTYPE block and ATOM block are both present, set
+         any masses or charge to those specified in the ATOMTYPES,
+         and then alter using any specified in the [ATOM] block. 
+         More specific data is processed later, and has priority.
+
+         2) The [ATOM] block need not include all atoms - some can
+         use defaults.
+
+         3) Topology should either be specified by a [SPECIES] block
+         or by a subset of [BOND], [ANGLE] and [DIHEDRAL] blocks.
+         Use of both is an error.
 
    Frame:
 
+      Principles: 
+
+         - A frame should be self-describing
+         - A frame can contain as little as atomic positions
+         - Info about atomtype, charge or mass that is given in a
+           frame has priority over that given in the header to allow
+           mutability of these properties in some simulation types.
+
       iStep
+
       boundary -> Need to develop binary format. Serialize format?
       nAtom int
-      [MOLECULE] - nMolecule & nAtom per molecule, iff isMolecular 
       frameFormat - bitfield with flags that include:
-                    isOrdered, hasShift, hasVelocity, hasCharge, 
-                    hasMolecule, hasSpecial
-      ATOMS (id, position, optionally shift, velocity)
+                    isOrdered, hasType, hasVelocity, hasShift
+      ATOMS
          For each atom {
-           id position (scaled) [shift] [velocity]
+           [id] [type] position [velocity] [shift]
          }
 
       Remarks:
 
-      1) The [MOLECULE] block is allowed only if there is no header.
-      2) Position is stored in scaled coordinates, as 3 x uint
-      3) Shift, if present, is 3 x small int
-      4) Velocity, if present, is 3 x single precision float
+      1) No id if atoms are declared isOrdered
+      2) By default, position is stored in scaled coordinates, as 3 x uint
+      3) By default, velocity is 3 x single precision float
+      4) Shift, if present, is 3 x small int
+
+      Question: Should the frame format specify the resolution used to 
+      store position and velocity values ?
+
+      Comment: The format allows type mutability to allow semi-grand
+      algorithms. Changes in type can be used to create changes in
+      charge, mass, interaction parameters, etc. Atom type id should
+      be not be include in a frame otherwise.
+
+      Comment: The class that implements the format can have functions
+      that allow a user to set format choices before writing, or should
+      allow users to create a bitfield that is passed to the writer.
+
+      Comment: Create classes for SmtHeaderFormat and SmtFrameFormat?
+      Or are these simply instances of BitField?
+
+      Comment: Create a SmpTrajectoryBase base class in Simp with virtual 
+      functions to extract and store information ?
+ 

@@ -1,17 +1,28 @@
 For configuration files:
 
-   Done (SmpConfigIo classes now exist in both McMd and DdMd)
+   1) For reading of configuration files, allow Species block to be
+   optional in McMd programs, allow allocation to be deferred until 
+   reading of the configuration file or the preamble of the trajectory 
+   file that contains species information.
 
 For trajectory files:
 
    1) Write SmpTrajectoryWriter class for DdMd.
 
-   2) Write trajectory file reader and writer classes for McMd.
+   2) Write Smp trajectory file reader and writer classes for McMd.
 
+   In trajectory reading in McMd, initially use allocation of all species
+   during reading of the parameter file, and check consistency with 
+   information in the SPECIES block of the trajectory file, if any.
+   When deferred allocation is enabled, allow deferred allocation.
+   `
 For topology / species structure file, if any:
 
    Proposal: Topology file format is identical to that used in SPECIES 
-   block of a configuration file.
+   block of a configuration file. Alternative: It could be the entire
+   header of a trajectory file. Questions: Where is atom type 
+   information, and can it handle non-molecular systems using [BOND], 
+   [ANGLE] etc. 
 
 Force field file:
 
