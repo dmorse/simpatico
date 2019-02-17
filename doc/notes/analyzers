@@ -43,22 +43,22 @@ AverageAnalyzer:               Average of a single global scalar
                                - RadiusGyration
 TensorAverageAnalyzer:         Stress
 SymmTensorAverageAnalyzer:     Stress
-ListAverageAnalyzer            Container of averages, with string ids
+AverageListAnalyzer            Container of averages, with string ids
                                - Energy components (string ids)
                                - Pressure components (string ids)
                                - StructureFactor (IntVector index ids)
-SymmTensorAverageList:         Stress components
-MatrixAverageAnalyzer:         container of averages, accessible by id pair
-SymmMatrixAverageAnalyzer:     PairEnergyEverages
-
+SymmTensorAverageListAnalyzer: Stress components (virial, kinetic, total)
+                               PairEnergyAverages
 AutoCorrAnalyzer<T,P>:         StressAutoCorr (single sequence)
-MsdEnsmebleAnalyzer<T,P>:      AtomMsd, MoleculeComMsd
+AutoCorrListAnalyzer<T,P>:     Van Hove (list of sequences)
 AutoCorrEnsembleAnalyzer<T,P>: IntraPairAutoCorr (T = Vector)
                                IntraBondTensorAutoCorr (T = Tensor)
-AutoCorrList<T,P>:             Van Hove
+CorrelationAnalyzer<T, P>:     Correlation (two arguments)
+CorrelationListAnalyzer<T, P>: List of Correlations (two arguments)
+MsdEnsmebleAnalyzer<T,P>:      AtomMsd, MoleculeComMsd
 
 DistributionAnalyzer:          single distribution (energy?)
-ListDistributionList:          list of distinct distributions
+DistributionListAnalyzer:      list of distinct distributions
                                Box size distribution
                                Bond length (multiple bond types)
 
