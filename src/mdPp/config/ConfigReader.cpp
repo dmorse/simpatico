@@ -44,14 +44,14 @@ namespace MdPp
    {
       int nSpecies = configuration().nSpecies();
       if (nSpecies > 0) {
-         Species* speciesPtr = 0;
+         SpeciesStorage* speciesPtr = 0;
 
          // Check total number of atoms
          int nFill = 0;
          for (int i = 0; i < nSpecies; ++i) {
             speciesPtr = &configuration().species(i);
             nFill += speciesPtr->nAtom()*speciesPtr->capacity();
-            speciesPtr->clear();
+            // speciesPtr->clear();
          }
          AtomStorage* storagePtr = &configuration().atoms();
          if (storagePtr->size() != nFill) {

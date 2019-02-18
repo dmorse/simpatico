@@ -1,7 +1,6 @@
 
 mdPp_chemistry_= \
-    mdPp/chemistry/Molecule.cpp \
-    mdPp/chemistry/Species.cpp 
+    mdPp/chemistry/Molecule.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 mdPp_chemistry_SRCS=\

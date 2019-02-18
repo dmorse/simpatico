@@ -9,9 +9,9 @@
 
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
-#include <mdPp/chemistry/Species.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
 #include <mdPp/storage/GroupStorage.h>
+#include <mdPp/storage/SpeciesStorage.h>
 #include <mdPp/storage/Configuration.h>
 
 #include <util/space/Vector.h>
