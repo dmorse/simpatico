@@ -100,13 +100,13 @@ inline void ProcessorTest::testReadConfig2()
    printMethod(TEST_FUNC);
    //ParamComponent::setEcho(true);
    readParam("in/Processor.2");
-   TEST_ASSERT(processor_.nSpecies() == 1);
+   //TEST_ASSERT(processor_.nSpecies() == 1);
    processor_.setConfigReader("DdMdConfigReader_Molecule");
    std::ifstream file;
    openInputFile("in/config.3", file);
    processor_.readConfig(file);
    file.close();
-   TEST_ASSERT(processor_.species(0).size() == 8);
+   //TEST_ASSERT(processor_.species(0).size() == 8);
    TEST_ASSERT(processor_.atoms().size() == 256);
 
    #if 0

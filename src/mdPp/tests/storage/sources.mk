@@ -4,4 +4,6 @@ mdPp_tests_storage_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mdPp_tests_storage_))
 mdPp_tests_storage_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mdPp_tests_storage_:.cc=.o))
+mdPp_tests_storage_EXES=\
+     $(addprefix $(BLD_DIR)/, $(mdPp_tests_storage_:.cc=))
 

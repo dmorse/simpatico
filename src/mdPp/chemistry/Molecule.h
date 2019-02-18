@@ -8,7 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/space/Vector.h>     // members
 #include <util/global.h>           // error handling
 
 namespace MdPp
