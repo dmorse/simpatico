@@ -137,9 +137,15 @@ namespace McMd
       /// \name Miscellaneous Accessors
       //@{
 
+      /**
+      * Get EwaldRSpaceAccumulator object by reference.
+      */
       EwaldRSpaceAccumulator& rSpaceAccumulator()
       {  return rSpaceAccumulator_; }
 
+      /**
+      * Get EwaldInteraction object by reference.
+      */
       EwaldInteraction& ewaldInteraction()
       { return ewaldInteraction_; }
 

@@ -88,13 +88,18 @@ namespace Simp
       */
       virtual void save(Serializable::OArchive &ar);
 
-      /*
+      /**
       * Set a potential energy parameter, identified by a string.
+      *
+      * \param name name of parameter to be modified
+      * \param value new value for parameter
       */
       void set(std::string name, double value);
 
-      /*
+      /**
       * Get a parameter value, identified by a string.
+      *
+      * \param name name of parameter to be returned
       */
       double get(std::string name) const;
 
