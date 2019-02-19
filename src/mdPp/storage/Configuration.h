@@ -12,14 +12,13 @@
 
 #include <mdPp/chemistry/Atom.h>             // member (template argument)
 #include <mdPp/chemistry/Group.h>            // member (template argument)
-#include <mdPp/chemistry/Species.h>          // member (template argument)
 #include <mdPp/storage/AtomStorage.h>        // member 
 #include <mdPp/storage/GroupStorage.h>       // member (template)
-#include <simp/boundary/Boundary.h>           // member 
-#include <util/containers/DArray.h>           // member (template)
-#include <util/containers/DSArray.h>          // member (template)
-#include <util/containers/ArrayIterator.h>    // inline function
-
+#include <mdPp/storage/SpeciesStorage.h>     // member (template argument)
+#include <simp/boundary/Boundary.h>          // member 
+#include <util/containers/DArray.h>          // member (template)
+#include <util/containers/DSArray.h>         // member (template)
+#include <util/containers/ArrayIterator.h>   // inline function
 
 namespace MdPp 
 {
@@ -111,11 +110,11 @@ namespace MdPp
       int nSpecies() const;
 
       /**
-      * Get a particular species identified by index.
+      * Get a particular SpeciesStorage identified by index.
       *
       * \param i species index
       */
-      Species& species(int i);
+      SpeciesStorage& species(int i);
 
    private:
      
@@ -144,7 +143,7 @@ namespace MdPp
       #endif
 
       /// Array of Species objects.
-      DArray<Species> species_;
+      DArray<SpeciesStorage> species_;
 
       /// Maximum number of atoms = max id + 1 (used to allocate arrays).
       int atomCapacity_;
@@ -204,7 +203,7 @@ namespace MdPp
    inline int Configuration::nSpecies() const
    {  return nSpecies_; }
 
-   inline Species& Configuration::species(int i)
+   inline SpeciesStorage& Configuration::species(int i)
    {  return species_[i]; }
 
 }

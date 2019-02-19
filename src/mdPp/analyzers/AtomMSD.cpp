@@ -8,7 +8,7 @@
 #include "AtomMSD.h"
 #include <mdPp/chemistry/Molecule.h>
 #include <mdPp/chemistry/Atom.h>
-#include <mdPp/chemistry/Species.h>
+#include <mdPp/storage/SpeciesStorage.h>
 #include <mdPp/storage/Configuration.h>
 #include <simp/boundary/Boundary.h>
 #include <util/space/Dimension.h>
@@ -109,7 +109,7 @@ namespace MdPp
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");
       }
-      Species& species = configuration().species(speciesId_);
+      SpeciesStorage& species = configuration().species(speciesId_);
       Boundary& boundary = configuration().boundary();
 
       // Set number of molecules of this species in the Configuration. 
@@ -120,7 +120,7 @@ namespace MdPp
       // Store initial positions, and set initial shift vectors.
       Vector r;
       IntVector zero(0);
-      Species::Iterator iter;
+      SpeciesStorage::Iterator iter;
       int i = 0;
 
       species.begin(iter);
@@ -139,7 +139,7 @@ namespace MdPp
    void AtomMSD::sample(long iStep) 
    { 
       if (isAtInterval(iStep)) {
-         Species&  species  = configuration().species(speciesId_);
+         SpeciesStorage&  species  = configuration().species(speciesId_);
          Boundary& boundary = configuration().boundary();
    
          // Confirm that nMolecule is positive, and unchanged.
@@ -154,7 +154,7 @@ namespace MdPp
          IntVector shift;
          Vector lengths = boundary.lengths();
          int i, j;
-         Species::Iterator iter;
+         SpeciesStorage::Iterator iter;
    
          i = 0;
          for (species.begin(iter); iter.notEnd(); ++iter) {

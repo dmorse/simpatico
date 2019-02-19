@@ -5,7 +5,7 @@ include $(SRC_DIR)/mdPp/tests/storage/sources.mk
 
 TEST=$(SRC_DIR)/mdPp/tests/storage/Test
 
-all: $(mdPp_tests_storage_OBJS)
+all: $(mdPp_tests_storage_EXES)
 
 run: $(TEST)
 	$(TEST)

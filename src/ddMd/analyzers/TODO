@@ -18,3 +18,59 @@ TODO:
    of mass of a molecule is harder, and still requires some
    post processing).
 
+6) Standardize analyzer outputs, write as subclasses of base class when 
+possible. Below is a list of analyzers grouped into types that correspond 
+to possible base classes.
+
+Output:
+class OutputTemperature : public Analyzer
+class OutputEnergy : public Analyzer
+class OutputPressure : public Analyzer
+
+OutputList:
+class OutputPairEnergies : public Analyzer
+class OutputBoxdim : public Analyzer
+
+OutputSymmTensor:
+class OutputStressTensor : public Analyzer
+
+AverageAnalyzer:
+class KineticEnergyAnalyzer : public AverageAnalyzer
+class ExternalEnergyAnalyzer : public AverageAnalyzer
+class PairEnergyAnalyzer : public AverageAnalyzer
+class PressureAnalyzer : public AverageAnalyzer
+
+class ExternalEnergyAverage : public Analyzer      <- attic
+
+AverageListAnalyzer:
+class EnergyAnalyzer : public Analyzer         
+class StructureFactor : public Analyzer
+class StructureFactorGrid : public StructureFactor
+
+SymmTensorAverageAnalyzer:
+class StressAnalyzer : public SymmTensorAverageAnalyzer
+class VirialStressAnalyzer : public SymmTensorAverageAnalyzer
+
+class VirialStressTensor : public Analyzer         <- attic
+class VirialStressTensorAverage : public Analyzer  <- attic
+
+SymmTensorAverageListAnalyzer:
+   Add variants that keep of kinetic, virial stress separately
+ 
+AutoCorrAnalyzer:
+class BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
+class StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
+
+class StressAutoCorr : public Analyzer             <- attic
+
+AutoCorrListAnalyzer:
+class VanHove : public Analyzer
+
+TrajectoryWriter:
+class DdMdTrajectoryWriter : public TrajectoryWriter
+class LammpsDumpWriter : public TrajectoryWriter
+class DdMdGroupTrajectoryWriter : public TrajectoryWriter
+
+class ConfigWriter : public Analyzer
+
+class LogEnergy : public Analyzer

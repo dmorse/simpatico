@@ -1,7 +1,7 @@
-#ifndef MDPP_SPECIES_TEST_H
-#define MDPP_SPECIES_TEST_H
+#ifndef MDPP_SPECIES_STORAGE_TEST_H
+#define MDPP_SPECIES_STORAGE_TEST_H
 
-#include <mdPp/chemistry/Species.h>
+#include <mdPp/storage/SpeciesStorage.h>
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Molecule.h>
 
@@ -11,7 +11,7 @@
 using namespace Util;
 using namespace MdPp;
 
-class SpeciesTest : public ParamFileTest
+class SpeciesStorageTest : public ParamFileTest
 {
 
 private:
@@ -20,7 +20,7 @@ private:
 
 public:
 
-   SpeciesTest() 
+   SpeciesStorageTest() 
     : species_()
    {}
 
@@ -31,7 +31,7 @@ public:
 
 };
 
-inline void SpeciesTest::testAddAtoms()
+inline void SpeciesStorageTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
@@ -80,7 +80,7 @@ inline void SpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.size() == 0);
 }
 
-inline void SpeciesTest::testRead()
+inline void SpeciesStorageTest::testRead()
 {
    printMethod(TEST_FUNC);
 
@@ -136,9 +136,9 @@ inline void SpeciesTest::testRead()
 }
 
 
-TEST_BEGIN(SpeciesTest)
-TEST_ADD(SpeciesTest, testAddAtoms)
-TEST_ADD(SpeciesTest, testRead)
-TEST_END(SpeciesTest)
+TEST_BEGIN(SpeciesStorageTest)
+TEST_ADD(SpeciesStorageTest, testAddAtoms)
+TEST_ADD(SpeciesStorageTest, testRead)
+TEST_END(SpeciesStorageTest)
 
 #endif

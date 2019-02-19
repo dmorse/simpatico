@@ -8,7 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/space/Vector.h>     // members
 #include <util/global.h>           // error handling
 
 namespace MdPp
@@ -17,14 +16,14 @@ namespace MdPp
    using namespace Util;
 
    struct Atom;
-   class Species;
+   class SpeciesStorage;
 
    /**
-   * An Molecule has a sequence of atoms, and belongs to an Species.
+   * An Molecule has a sequence of atoms, and belongs to a SpeciesStorage.
    *
    * The Molecule class provides read-only access atoms within a 
    * molecule, but does not provide methods to modify its own state. 
-   * Molecule relies on Species, a friend class, to control its
+   * Molecule relies on SpeciesStorage, a friend class, to control its
    * state. 
    * 
    * \ingroup MdPp_Chemistry_Module
@@ -39,9 +38,9 @@ namespace MdPp
       Molecule();
 
       /**
-      * Return parent Species by reference.
+      * Return parent SpeciesStorage by reference.
       */
-      Species& species() const;
+      SpeciesStorage& species() const;
 
       /**
       * Return id of this Molecule within its species.
@@ -66,17 +65,17 @@ namespace MdPp
       * Pointer to an array of pointers to atoms.
       *
       * This member points to a subblock of a larger Atom* array
-      * owned by the parent Species.
+      * owned by the parent SpeciesStorage.
       */
       Atom** atoms_;
 
       /**
-      * Pointer to parent Species.
+      * Pointer to parent SpeciesStorage.
       */
-      Species* speciesPtr_;
+      SpeciesStorage* speciesPtr_;
 
       /**
-      * Index of molecule within its Species.
+      * Index of molecule within its SpeciesStorage.
       */
       int id_;
 
@@ -87,13 +86,13 @@ namespace MdPp
 
    //friends:
 
-      friend class Species;
+      friend class SpeciesStorage;
 
    };
 
    // Inline functions
 
-   inline Species& Molecule::species() const
+   inline SpeciesStorage& Molecule::species() const
    {
       assert(speciesPtr_);
       return *speciesPtr_;

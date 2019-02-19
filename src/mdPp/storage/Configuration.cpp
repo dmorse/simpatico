@@ -85,6 +85,7 @@ namespace MdPp
       }
       #endif
 
+      #if 0
       // Optionally read species info
       nSpecies_ = 0; // default value
       readOptional<int>(in, "nSpecies", nSpecies_);
@@ -95,6 +96,7 @@ namespace MdPp
          }
          readDArray<Species>(in, "species", species_, nSpecies_);
       }
+      #endif
 
    }
 
