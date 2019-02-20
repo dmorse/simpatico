@@ -38,9 +38,10 @@ namespace MdPp
       * Constructor.
       *
       * \param configuration parent Configuration object
-      * \param needsAuxiliaryFile Does this class need to read an auxiliary file?
+      * \param needsAuxiliaryFile Does this class need an auxiliary input file?
       */
-      ConfigReader(Configuration& configuration, bool needsAuxiliaryFile = false);
+      ConfigReader(Configuration& configuration, 
+                   bool needsAuxiliaryFile = false);
 
       /**
       * Destructor.

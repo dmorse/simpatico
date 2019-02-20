@@ -74,7 +74,7 @@ namespace MdPp
       for (int i = 0; i < atomPtrs_.capacity(); ++i) {
          atomPtrs_[i] = 0;
       }
-      for (int i = 0; i < molecules_.size(); ++i) {
+      for (int i = 0; i < molecules_.capacity(); ++i) {
          molecules_[i].nAtom_ = 0;
       }
       molecules_.resize(0);

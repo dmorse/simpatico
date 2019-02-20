@@ -14,7 +14,9 @@ namespace MdPp
    * Constructor.
    */
    Configuration::Configuration()
-    : atomCapacity_(0)
+    : 
+      nSpecies_(0),
+      atomCapacity_(0)
       #ifdef SIMP_BOND
       , bondCapacity_(0)
       #endif
@@ -23,9 +25,10 @@ namespace MdPp
       #endif
       #ifdef SIMP_DIHEDRAL
       , dihedralCapacity_(0)
+      #endif
+      #ifdef SIMP_IMPROPERT
       , improperCapacity_(0)
       #endif
-      , nSpecies_(0)
    {  setClassName("Configuration"); }
 
    /*
@@ -50,9 +53,24 @@ namespace MdPp
    */
    void Configuration::readParameters(std::istream& in)
    {
-      read<int>(in, "atomCapacity", atomCapacity_); 
+      #if 0
+      // Optionally read species info
+      nSpecies_ = 0; // default value
+      readOptional<int>(in, "nSpecies", nSpecies_);
+      if (nSpecies_ > 0) {
+         species_.allocate(nSpecies_);
+         for (int i = 0; i < nSpecies_; ++i) {
+            species_[i].setId(i);
+         }
+      }
+      #endif
 
-      atoms_.allocate(atomCapacity_);
+      // Optionally read atom capacity
+      atomCapacity_ = 0; // default value
+      readOptional<int>(in, "atomCapacity", atomCapacity_); 
+      if (atomCapacity_ > 0) {
+         atoms_.allocate(atomCapacity_);
+      }
 
       #ifdef SIMP_BOND
       bondCapacity_ = 0; // default value
@@ -77,7 +95,9 @@ namespace MdPp
       if (dihedralCapacity_ > 0) {
          dihedrals_.allocate(dihedralCapacity_);
       }
+      #endif
 
+      #ifdef SIMP_IMPROPER
       improperCapacity_ = 0; // default value
       readOptional<int>(in, "improperCapacity", improperCapacity_); 
       if (improperCapacity_ > 0) {
@@ -85,19 +105,16 @@ namespace MdPp
       }
       #endif
 
-      #if 0
-      // Optionally read species info
-      nSpecies_ = 0; // default value
-      readOptional<int>(in, "nSpecies", nSpecies_);
-      if (nSpecies_ > 0) {
-         species_.allocate(nSpecies_);
-         for (int i = 0; i < nSpecies_; ++i) {
-            species_[i].setId(i);
-         }
-         readDArray<Species>(in, "species", species_, nSpecies_);
-      }
-      #endif
+   }
 
+   void Configuration::setNSpecies(int nSpecies)
+   {
+      UTIL_CHECK(nSpecies > 0);
+      nSpecies_ = nSpecies;
+      species_.allocate(nSpecies_);
+      for (int i = 0; i < nSpecies_; ++i) {
+         species_[i].setId(i);
+      }
    }
 
    /*
@@ -105,22 +122,32 @@ namespace MdPp
    */
    void Configuration::clear()
    {
-      atoms_.clear();
+      UTIL_CHECK(nSpecies_ = species_.capacity());
+      if (nSpecies_ > 0) {
+         for (int i = 0; i < nSpecies_; ++i) {
+            species(i).clear();
+         }
+      }
+      if (atoms_.capacity() > 0) {
+         atoms_.clear();
+      }
       #ifdef SIMP_BOND
-      if (bondCapacity_ > 0) {
+      if (bonds_.capacity() > 0) {
          bonds_.clear();
       }
       #endif
       #ifdef SIMP_ANGLE
-      if (angleCapacity_ > 0) {
+      if (angles_.capacity() > 0) {
          angles_.clear();
       }
       #endif
       #ifdef SIMP_DIHEDRAL
-      if (dihedralCapacity_ > 0) {
+      if (dihedrals_.capacity() > 0) {
          dihedrals_.clear();
       }
-      if (improperCapacity_ > 0) {
+      #endif
+      #ifdef SIMP_IMPROPER
+      if (impropers_.capacity() > 0) {
          impropers_.clear();
       }
       #endif

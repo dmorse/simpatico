@@ -2,6 +2,7 @@ mdPp_config_=\
    mdPp/config/ConfigReader.cpp \
    mdPp/config/ConfigReaderFactory.cpp \
    mdPp/config/DdMdConfigReader.cpp \
+   mdPp/config/SmpConfigReader.cpp \
    mdPp/config/HoomdConfigReader.cpp \
    mdPp/config/TypeMap.cpp \
    mdPp/config/ConfigWriter.cpp \
