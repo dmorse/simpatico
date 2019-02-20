@@ -99,7 +99,7 @@ namespace MdPp
    {
       Configuration::readParameters(in);
       readParamCompositeOptional(in, fileMaster_);
-      readParamComposite(in, analyzerManager_);
+      readParamCompositeOptional(in, analyzerManager_);
    }
 
    /*

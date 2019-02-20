@@ -62,6 +62,7 @@ namespace MdPp
          for (int i = 0; i < nSpecies_; ++i) {
             species_[i].setId(i);
          }
+         UTIL_CHECK(nSpecies_ == species_.capacity());
       }
       #endif
 
@@ -122,11 +123,14 @@ namespace MdPp
    */
    void Configuration::clear()
    {
-      UTIL_CHECK(nSpecies_ = species_.capacity());
       if (nSpecies_ > 0) {
+         UTIL_CHECK(species_.isAllocated());
+         UTIL_CHECK(nSpecies_ = species_.capacity());
          for (int i = 0; i < nSpecies_; ++i) {
             species(i).clear();
          }
+      } else {
+         UTIL_CHECK(!species_.isAllocated());
       }
       if (atoms_.capacity() > 0) {
          atoms_.clear();

@@ -228,7 +228,10 @@ namespace MdPp
    {  return nSpecies_; }
 
    inline SpeciesStorage& Configuration::species(int i)
-   {  return species_[i]; }
+   {
+      UTIL_CHECK(species_.isAllocated());
+      return species_[i]; 
+   }
 
 }
 #endif

@@ -9,13 +9,9 @@
 
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
-//#include <mdPp/chemistry/MaskPolicy.h>
-//#include <mdPp/storage/SpeciesStorage.h>
 #include <mdPp/storage/Configuration.h>
 
-#include <util/space/Vector.h>
-//#include <util/format/Int.h>
-//#include <util/format/Dbl.h>
+#include <util/param/OptionalLabel.h>
 
 namespace MdPp
 {
@@ -25,30 +21,11 @@ namespace MdPp
    /*
    * Constructor.
    */
-   DdMdConfigReader::DdMdConfigReader(Configuration& configuration, bool hasMolecules)
+   DdMdConfigReader::DdMdConfigReader(Configuration& configuration, 
+                                      bool hasMolecules)
     : ConfigReader(configuration),
       hasMolecules_(hasMolecules)
    {  setClassName("DdMdConfigReader"); }
-
-   /*
-   * Private method to read Group<N> objects.
-   */
-   template <int N>
-   int DdMdConfigReader::readGroups(std::ifstream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
-                  GroupStorage<N>& groups)
-   {
-      int nGroup;  // Total number of groups in file
-      file >> Label(sectionLabel);
-      file >> Label(nGroupLabel) >> nGroup;
-      Group<N>* groupPtr;
-      for (int i = 0; i < nGroup; ++i) {
-         groupPtr = groups.newPtr();
-         file >> *groupPtr;
-      }
-      return nGroup;
-   }
 
    /*
    * Read a configuration file.
@@ -60,18 +37,25 @@ namespace MdPp
             UTIL_THROW("Error: File is not open"); 
       }
 
+      using std::endl;
+
       // Read and broadcast boundary
       file >> Label("BOUNDARY");
       file >> configuration().boundary();
 
-      // Read and distribute atoms
-
-      // Read atoms
-      Atom* atomPtr;
-      int atomCapacity = configuration().atoms().capacity(); // Maximum allowed id + 1
-      int nAtom;          
+      // Read ATOMS header, allocate if necessary
       file >> Label("ATOMS");
+      int nAtom;          
       file >> Label("nAtom") >> nAtom;
+      UTIL_CHECK(nAtom > 0);
+      if (configuration().atoms().capacity() == 0) {
+         configuration().atoms().allocate(nAtom); 
+      }
+      int atomCapacity = configuration().atoms().capacity(); 
+      UTIL_CHECK(nAtom <= atomCapacity);
+
+      // Read and distribute atoms
+      Atom* atomPtr;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
@@ -79,29 +63,29 @@ namespace MdPp
  
          file >> atomPtr->id;
          if (atomPtr->id < 0) {
-            std::cout << "atom id =" << atomPtr->id << std::endl;
+            std::cout << "atom id =" << atomPtr->id << endl;
             UTIL_THROW("Negative atom id");
          }
          if (atomPtr->id >= atomCapacity) {
-            std::cout << "atom id      =" << atomPtr->id << std::endl;
-            std::cout << "atomCapacity =" << atomCapacity << std::endl;
+            std::cout << "atom id      =" << atomPtr->id << endl;
+            std::cout << "atomCapacity =" << atomCapacity << endl;
             UTIL_THROW("Invalid atom id");
          }
          file >> atomPtr->typeId;
          if (hasMolecules_) {
             file >> atomPtr->speciesId;
             if (atomPtr->speciesId < 0) {
-               std::cout << "species Id  =" << atomPtr->speciesId << std::endl;
+               std::cout << "species Id  =" << atomPtr->speciesId << endl;
                UTIL_THROW("Negative species id");
             }
             file >> atomPtr->moleculeId; 
             if (atomPtr->moleculeId < 0) {
-               std::cout << "molecule Id =" << atomPtr->moleculeId << std::endl;
+               std::cout << "molecule Id =" << atomPtr->moleculeId << endl;
                UTIL_THROW("Negative molecule id");
             }
             file >> atomPtr->atomId;
             if (atomPtr->atomId < 0) {
-               std::cout << "atom id     =" << atomPtr->atomId << std::endl;
+               std::cout << "atom id     =" << atomPtr->atomId << endl;
                UTIL_THROW("Negative atom id in molecule");
             }
          }
@@ -114,24 +98,19 @@ namespace MdPp
 
       // Read Covalent Groups
       #ifdef SIMP_BOND
-      if (configuration().bonds().capacity()) {
-         readGroups(file, "BONDS", "nBond", configuration().bonds());
-         //if (maskPolicy == MaskBonded) {
-         //   setAtomMasks();
-         //}
-      }
+      readGroups(file, "BONDS", "nBond", configuration().bonds());
+      //if (maskPolicy == MaskBonded) {
+      //   setAtomMasks();
+      //}
       #endif
 
       #ifdef SIMP_ANGLE
-      if (configuration().angles().capacity()) {
-         readGroups(file, "ANGLES", "nAngle", configuration().angles());
-      }
+      readGroups(file, "ANGLES", "nAngle", configuration().angles());
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      if (configuration().dihedrals().capacity()) {
-         readGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
-      }
+      readGroups(file, "DIHEDRALS", "nDihedral", 
+                 configuration().dihedrals());
       #endif
 
       // Optionally add atoms to species
@@ -149,4 +128,40 @@ namespace MdPp
 
    }
  
+   /*
+   * Private function template to read Group<N> objects.
+   */
+   template <int N>
+   int DdMdConfigReader::readGroups(std::ifstream& file, 
+                  const char* sectionLabel,
+                  const char* nGroupLabel,
+                  GroupStorage<N>& groups)
+   {
+      int nGroup = 0;  
+
+      // Check for sectionLabel heading
+      OptionalLabel speciesLabel(sectionLabel); 
+      bool hasGroups = speciesLabel.match(file);
+
+      if (hasGroups) {
+
+         // Read nGroup, allocate if necessary
+         file >> Label(nGroupLabel) >> nGroup;
+         UTIL_CHECK(nGroup > 0);
+         if (groups.capacity() == 0) {
+            groups.allocate(nGroup);
+         }
+         UTIL_CHECK(groups.capacity() >= nGroup);
+
+         // Read groups
+         Group<N>* groupPtr;
+         for (int i = 0; i < nGroup; ++i) {
+            groupPtr = groups.newPtr();
+            file >> *groupPtr;
+         }
+
+      }
+      return nGroup;
+   }
+
 }

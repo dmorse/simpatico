@@ -105,9 +105,9 @@ namespace MdPp
       if (hasSpecies) {
          UTIL_CHECK(isOrdered || hasAtomContext);
       }
-      if (hasAtomContext) {
-         UTIL_CHECK(hasSpecies);
-      }
+      //if (hasAtomContext) {
+      //   UTIL_CHECK(hasSpecies);
+      //}
  
       // Read nAtom and allocate if necessary
       int nAtom;
@@ -118,8 +118,8 @@ namespace MdPp
       }
       if (configuration().atoms().capacity() == 0) {
          configuration().atoms().allocate(nAtom);
-      }
-      UTIL_CHECK(configuration().atoms().capacity() == nAtom);
+      } 
+      UTIL_CHECK(configuration().atoms().capacity() >= nAtom);
 
       // Read atoms 
       Atom* atomPtr = 0;
@@ -229,7 +229,7 @@ namespace MdPp
          if (groups.capacity() == 0) {
             groups.allocate(nGroup);
          }
-         UTIL_CHECK(groups.capacity() == nGroup);
+         UTIL_CHECK(groups.capacity() >= nGroup);
 
          // Read groups
          Group<N>* groupPtr;
