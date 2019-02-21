@@ -11,11 +11,10 @@
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/storage/SpeciesStorage.h>
 #include <mdPp/storage/Configuration.h>
+#include <util/space/IntVector.h>
 #include <util/param/Label.h>
-//#include <util/space/Vector.h>
 #include <util/param/OptionalLabel.h>
 #include <util/misc/FlagSet.h>
-#include <util/format/Int.h>
 
 namespace MdPp
 {
