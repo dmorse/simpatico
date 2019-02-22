@@ -181,17 +181,10 @@ namespace MdPp
             }
          }
          makeGroups();
-         #if 0
-         #ifdef SIMP_BOND
-         makeBonds();
-         #endif
-         #ifdef SIMP_ANGLE
-         makeAngles();
-         #endif
-         #ifdef SIMP_DIHEDRAL
-         makeDihedrals();
-         #endif
-         #endif
+         int nSpecies = configuration().nSpecies();
+         for (int i = 0; i < nSpecies; ++i) {
+            configuration().species(i).isValid();
+         }
       } else {
          // Read Covalent Groups
          #ifdef SIMP_BOND

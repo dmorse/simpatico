@@ -110,9 +110,6 @@ namespace MdPp
             }
             configuration().species(speciesId).addAtom(*iter);
          }
-         for (int i = 0; i < nSpecies; ++i) {
-            configuration().species(i).isValid();
-         }
       }
    }
 
