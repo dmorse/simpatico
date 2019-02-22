@@ -88,7 +88,8 @@ inline void ProcessorTest::testAddAtoms()
 inline void ProcessorTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
-   readParam("in/Processor");
+   //ParamComponent::setEcho(true);
+   //readParam("in/Processor.2");
    std::ifstream file;
    openInputFile("in/config", file);
    processor_.readConfig(file);
@@ -98,39 +99,13 @@ inline void ProcessorTest::testReadConfig1()
 inline void ProcessorTest::testReadConfig2()
 {
    printMethod(TEST_FUNC);
-   //ParamComponent::setEcho(true);
-   readParam("in/Processor.2");
-   //TEST_ASSERT(processor_.nSpecies() == 1);
    processor_.setConfigReader("DdMdConfigReader_Molecule");
    std::ifstream file;
    openInputFile("in/config.3", file);
    processor_.readConfig(file);
    file.close();
-   //TEST_ASSERT(processor_.species(0).size() == 8);
    TEST_ASSERT(processor_.atoms().size() == 256);
 
-   #if 0
-   Species* speciesPtr;
-   Species::Iterator mIter; 
-   Atom* atomPtr;
-   int nSpecies = processor_.nSpecies();
-   int i;
-   for (int is = 0; is < nSpecies; ++is) {
-      speciesPtr = &processor_.species(is);
-      for (speciesPtr->begin(mIter); mIter.notEnd(); ++mIter) {
-         for (i = 0; i < speciesPtr->nAtom(); ++i) {
-            atomPtr = &mIter->atom(i);
-            std::cout << atomPtr->id << " "
-                      << atomPtr->typeId << " "
-                      << atomPtr->speciesId << " "
-                      << atomPtr->moleculeId << " "
-                      << atomPtr->atomId << " "
-                      << atomPtr->position << " "
-                      << std::endl;
-         }
-      }
-   }
-   #endif
 }
 
 TEST_BEGIN(ProcessorTest)

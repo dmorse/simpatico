@@ -5,7 +5,7 @@ include $(SRC_DIR)/mdPp/tests/config/sources.mk
 
 TEST= $(SRC_DIR)/mdPp/tests/config/Test
 
-all: $(mdPp_tests_config_OBJS)
+all: $(mdPp_tests_config_EXES)
 
 run: $(TEST)
 	$(TEST)

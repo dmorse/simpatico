@@ -10,11 +10,17 @@
 
 #include <util/param/ParamComposite.h>  // base class
 
+namespace Simp {
+   template <int N> class SpeciesGroup;
+}
+
 namespace MdPp
 {
 
    class Configuration;
+   template <int N> class GroupStorage;
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Abstract reader/writer for configuration files.
@@ -38,9 +44,10 @@ namespace MdPp
       * Constructor.
       *
       * \param configuration parent Configuration object
-      * \param needsAuxiliaryFile Does this class need to read an auxiliary file?
+      * \param needsAuxiliaryFile Does this class need an auxiliary input file?
       */
-      ConfigReader(Configuration& configuration, bool needsAuxiliaryFile = false);
+      ConfigReader(Configuration& configuration, 
+                   bool needsAuxiliaryFile = false);
 
       /**
       * Destructor.
@@ -72,6 +79,12 @@ namespace MdPp
    protected:
 
       /**
+      * Get parent Configuration by reference.
+      */
+      Configuration& configuration()
+      { return *configurationPtr_; }
+
+      /**
       * Set atom context data for all atoms, assuming consecutive ids.
       * 
       * \return true for normal completion, false if error is detected.
@@ -83,11 +96,10 @@ namespace MdPp
       */
       void addAtomsToSpecies();
 
-      /**
-      * Get parent Configuration by reference.
+      /*
+      * Create all covalent groups from species templates.
       */
-      Configuration& configuration()
-      { return *configurationPtr_; }
+      void makeGroups();
 
    private:
 
@@ -96,6 +108,37 @@ namespace MdPp
 
       /// Does this reader require an auxiliary file?
       bool needsAuxiliaryFile_;
+
+      #ifdef SIMP_BOND
+      /*
+      * Create all bonds from species templates.
+      */
+      void makeBonds();
+      #endif
+
+      #ifdef SIMP_ANGLE
+      /*
+      * Create all angles from species templates.
+      */
+      void makeAngles();
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      /*
+      * Create all dihedrals from species templates.
+      */
+      void makeDihedrals();
+      #endif
+
+      /*
+      * Create all Group<N> objects for one species.
+      */
+      template <int N>
+      void makeSpeciesGroups(
+          GroupStorage<N>& storage,
+          const DArray< SpeciesGroup<N> >& speciesGroups,
+          int nMol, int nAtom, int nGroup, 
+          int& firstAtomId, int& groupId);
 
    };
 

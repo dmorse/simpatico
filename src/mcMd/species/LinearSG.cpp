@@ -21,14 +21,17 @@ namespace McMd
    LinearSG::LinearSG()
     : Linear(),
       SpeciesMutator(),
-      beadTypeIds0_(),
-      beadTypeIds1_()
+      bondType_(NullIndex)
       #ifdef SIMP_ANGLE
       , angleType_(NullIndex)
       #endif
       #ifdef SIMP_DIHEDRAL
       , dihedralType_(NullIndex)
       #endif
+      , typeIds_()
+      , weightRatio_(1.0)
+      , beadTypeIds0_()
+      , beadTypeIds1_()
    {
       setMutatorPtr(this);
       setClassName("LinearSG");

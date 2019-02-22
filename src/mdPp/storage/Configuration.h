@@ -33,6 +33,7 @@ namespace MdPp
    *   - a Simp::Boundary
    *   - an AtomStorage container for atoms
    *   - a GroupStorage for each type of covalent group
+   *   - a SpeciesStorage for each species (if any)
    *
    * \ingroup MdPp_Storage_Module
    */
@@ -70,6 +71,13 @@ namespace MdPp
       void readParameters(std::istream& in);
 
       /**
+      * Allocate space for species information.
+      *
+      * \param nSpecies number of species in system
+      */
+      void setNSpecies(int nSpecies);
+
+      /**
       * Clear all atoms and groups.
       */
       void clear();
@@ -77,28 +85,38 @@ namespace MdPp
       // Accessors for members (non-const reference)
 
       /**
-      * Get the Boundary by non-const reference
+      * Get the Boundary by reference
       */
       Boundary& boundary();
 
-      /// Get the AtomStorage.
+      /**
+      * Get the AtomStorage by reference.
+      */
       AtomStorage& atoms();
 
       #ifdef SIMP_BOND
-      /// Get the Bond storage.
+      /**
+      * Get the Bond storage by reference.
+      */
       GroupStorage<2>& bonds();
       #endif
 
       #ifdef SIMP_ANGLE
-      /// Get the Angle storage.
+      /**
+      * Get the Angle storage by reference.
+      */
       GroupStorage<3>& angles();
       #endif
 
       #ifdef SIMP_DIHEDRAL
-      /// Get the Dihedral storage.
+      /**
+      * Get the Dihedral storage by reference.
+      */
       GroupStorage<4>& dihedrals();
 
-      /// Get the Improper dihedral storage.
+      /**
+      * Get the Improper dihedral storage by reference.
+      */
       GroupStorage<4>& impropers();
       #endif
 
@@ -121,6 +139,9 @@ namespace MdPp
       /// Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
+      /// Array of Species objects.
+      DArray<SpeciesStorage> species_;
+
       /// AtomStorage object.
       AtomStorage atoms_;
 
@@ -142,8 +163,12 @@ namespace MdPp
       GroupStorage<4> impropers_;
       #endif
 
-      /// Array of Species objects.
-      DArray<SpeciesStorage> species_;
+      /// Number of species (set to zero to disable)
+      int nSpecies_;
+
+      // Variables atomCapacity, bondCapacity etc. are only used to store
+      // values read from a parameter file. Should not be accessed in any
+      // other way.
 
       /// Maximum number of atoms = max id + 1 (used to allocate arrays).
       int atomCapacity_;
@@ -161,13 +186,12 @@ namespace MdPp
       #ifdef SIMP_DIHEDRAL
       /// Maximum number of dihedrals (used to allocate array).
       int dihedralCapacity_;
+      #endif
 
+      #ifdef SIMP_IMPROPER
       /// Maximum number of impropers (used to allocate array).
       int improperCapacity_;
       #endif
-
-      /// Number of species (set to zero to disable)
-      int nSpecies_;
 
    };
 
@@ -204,7 +228,10 @@ namespace MdPp
    {  return nSpecies_; }
 
    inline SpeciesStorage& Configuration::species(int i)
-   {  return species_[i]; }
+   {
+      UTIL_CHECK(species_.isAllocated());
+      return species_[i]; 
+   }
 
 }
 #endif

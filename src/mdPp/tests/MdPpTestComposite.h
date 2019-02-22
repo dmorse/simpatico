@@ -6,7 +6,7 @@
 #include "storage/ConfigurationTest.h"
 #include "processor/ProcessorTest.h"
 #include "neighbor/CellTest.h"
-#include "config/DdMdConfigReaderTest.h"
+#include "config/ConfigTestComposite.h"
 
 #include <test/CompositeTestRunner.h>
 
@@ -16,7 +16,7 @@ addChild(new TEST_RUNNER(AtomStorageTest), "storage/");
 addChild(new TEST_RUNNER(ConfigurationTest), "storage/");
 addChild(new TEST_RUNNER(ProcessorTest), "processor/");
 addChild(new TEST_RUNNER(CellTest), "neighbor/");
-addChild(new TEST_RUNNER(DdMdConfigReaderTest), "config/");
+addChild(new ConfigTestComposite, "config/");
 TEST_COMPOSITE_END
 
 #endif

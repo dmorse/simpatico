@@ -53,11 +53,12 @@ inline void DdMdConfigReaderTest::testReadConfig1()
    printMethod(TEST_FUNC);
 
    std::ifstream file;
-   openInputFile("in/Processor", file);
-   processor_.readParam(file); 
-   file.close(); 
+   //openInputFile("in/Processor", file);
+   //processor_.readParam(file); 
+   //file.close(); 
 
-   openInputFile("in/config", file);
+   // Read DdMd configuration file without context info
+   openInputFile("in/config.ddc", file);
    processor_.readConfig(file);
    file.close(); 
 
@@ -74,12 +75,12 @@ inline void DdMdConfigReaderTest::testReadConfig2()
    printMethod(TEST_FUNC);
    std::ifstream file;
 
-   openInputFile("in/Processor.2", file);
-   processor_.readParam(file); 
-   file.close();
+   //openInputFile("in/Processor.2", file);
+   //processor_.readParam(file); 
+   //file.close();
 
    processor_.setConfigReader("DdMdConfigReader_Molecule");
-   openInputFile("in/config.2", file);
+   openInputFile("in/config.ddm", file);
    processor_.readConfig(file);
    file.close();
 
