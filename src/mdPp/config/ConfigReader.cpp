@@ -116,6 +116,20 @@ namespace MdPp
       }
    }
 
+
+   void ConfigReader::makeGroups()
+   {
+      #ifdef SIMP_BOND
+      makeBonds();
+      #endif
+      #ifdef SIMP_ANGLE
+      makeAngles();
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      makeDihedrals();
+      #endif
+   }
+
    #ifdef SIMP_BOND
    /*
    * Create all bonds from species templates.
@@ -124,15 +138,34 @@ namespace MdPp
    {
       int nSpecies = configuration().nSpecies();
       UTIL_CHECK(nSpecies);
-      GroupStorage<2>& storage = configuration().bonds();
+
+      // Count the required number of bonds
       SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup, nAtom;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
+         speciesPtr = &configuration().species(speciesId);
+         int nMol = speciesPtr->capacity();
+         int nGroup = speciesPtr->nBond();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<2>& storage = configuration().bonds();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
       int firstAtomId = 0;
       int groupId = 0;
       for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
          speciesPtr = &configuration().species(speciesId);
-         int nMol = speciesPtr->capacity();
-         int nAtom = speciesPtr->nAtom();
-         int nGroup = speciesPtr->nBond();
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nBond();
+         nAtom = speciesPtr->nAtom();
          makeSpeciesGroups<2>(storage, speciesPtr->speciesBonds(),
                               nMol, nAtom, nGroup, firstAtomId, groupId);
       }
@@ -147,15 +180,34 @@ namespace MdPp
    {
       int nSpecies = configuration().nSpecies();
       UTIL_CHECK(nSpecies);
-      GroupStorage<3>& storage = configuration().angles();
+
+      // Count the required number of angles
       SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup, nAtom;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
+         speciesPtr = &configuration().species(speciesId);
+         int nMol = speciesPtr->capacity();
+         int nGroup = speciesPtr->nAngle();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<3>& storage = configuration().angles();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
       int firstAtomId = 0;
       int groupId = 0;
       for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
          speciesPtr = &configuration().species(speciesId);
-         int nMol = speciesPtr->capacity();
-         int nAtom = speciesPtr->nAtom();
-         int nGroup = speciesPtr->nAngle();
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nAngle();
+         nAtom = speciesPtr->nAtom();
          makeSpeciesGroups<3>(storage, speciesPtr->speciesAngles(),
                               nMol, nAtom, nGroup, firstAtomId, groupId);
       }
@@ -170,15 +222,34 @@ namespace MdPp
    {
       int nSpecies = configuration().nSpecies();
       UTIL_CHECK(nSpecies);
-      GroupStorage<4>& storage = configuration().dihedrals();
+
+      // Count the required number of dihedrals
       SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup, nAtom;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
+         speciesPtr = &configuration().species(speciesId);
+         int nMol = speciesPtr->capacity();
+         int nGroup = speciesPtr->nDihedral();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<4>& storage = configuration().dihedrals();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
       int firstAtomId = 0;
       int groupId = 0;
       for (int speciesId = 0; speciesId < nSpecies; ++speciesId) {
          speciesPtr = &configuration().species(speciesId);
-         int nMol = speciesPtr->capacity();
-         int nAtom = speciesPtr->nAtom();
-         int nGroup = speciesPtr->nDihedral();
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nDihedral();
+         nAtom = speciesPtr->nAtom();
          makeSpeciesGroups<4>(storage, speciesPtr->speciesDihedrals(),
                               nMol, nAtom, nGroup, firstAtomId, groupId);
       }

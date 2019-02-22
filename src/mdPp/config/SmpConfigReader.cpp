@@ -42,9 +42,9 @@ namespace MdPp
       UTIL_CHECK(Label::isClear());
 
       // Read optional SPECIES block
-      int nAtomTot = 0;
       OptionalLabel speciesLabel("SPECIES"); 
       bool hasSpecies = speciesLabel.match(file);
+      int nAtomTot = 0;
       if (hasSpecies) {
 
          // Read nSpecies, allocate array of species
@@ -104,9 +104,6 @@ namespace MdPp
       if (hasSpecies) {
          UTIL_CHECK(isOrdered || hasAtomContext);
       }
-      //if (hasAtomContext) {
-      //   UTIL_CHECK(hasSpecies);
-      //}
  
       // Read nAtom and allocate if necessary
       int nAtom;
@@ -172,7 +169,7 @@ namespace MdPp
          configuration().atoms().add();
       }
 
-      // If hasSpecies, add atoms to species
+      // If hasSpecies, add atoms to species and create groups
       if (hasSpecies) {
          if (hasAtomContext) {
             addAtomsToSpecies();
@@ -183,7 +180,18 @@ namespace MdPp
                addAtomsToSpecies();
             }
          }
-         // TODO: Make groups based on species description
+         makeGroups();
+         #if 0
+         #ifdef SIMP_BOND
+         makeBonds();
+         #endif
+         #ifdef SIMP_ANGLE
+         makeAngles();
+         #endif
+         #ifdef SIMP_DIHEDRAL
+         makeDihedrals();
+         #endif
+         #endif
       } else {
          // Read Covalent Groups
          #ifdef SIMP_BOND

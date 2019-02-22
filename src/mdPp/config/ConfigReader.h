@@ -96,6 +96,19 @@ namespace MdPp
       */
       void addAtomsToSpecies();
 
+      /*
+      * Create all covalent groups from species templates.
+      */
+      void makeGroups();
+
+   private:
+
+      /// Pointer to parent Configuration.
+      Configuration* configurationPtr_;
+
+      /// Does this reader require an auxiliary file?
+      bool needsAuxiliaryFile_;
+
       #ifdef SIMP_BOND
       /*
       * Create all bonds from species templates.
@@ -116,14 +129,6 @@ namespace MdPp
       */
       void makeDihedrals();
       #endif
-
-   private:
-
-      /// Pointer to parent Configuration.
-      Configuration* configurationPtr_;
-
-      /// Does this reader require an auxiliary file?
-      bool needsAuxiliaryFile_;
 
       /*
       * Create all Group<N> objects for one species.

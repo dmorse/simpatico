@@ -113,19 +113,6 @@ namespace MdPp
                  configuration().dihedrals());
       #endif
 
-      // Optionally add atoms to species
-      if (configuration().nSpecies() > 0) {
-         if (hasMolecules_) {
-            addAtomsToSpecies();
-         } else {
-            bool success;
-            success = setAtomContexts();
-            if (success) {
-               addAtomsToSpecies();
-            }
-         }
-      }
-
    }
  
    /*

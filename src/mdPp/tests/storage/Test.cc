@@ -1,5 +1,6 @@
 #include "AtomStorageTest.h"
 #include "ConfigurationTest.h"
+//#include "SpeciesStorageTest.h"
 
 int main()
 {
@@ -11,4 +12,7 @@ int main()
 
    TEST_RUNNER(ConfigurationTest) runner2;
    runner2.run();
+
+   //TEST_RUNNER(SpeciesStorageTest) runner3;
+   //runner3.run();
 } 

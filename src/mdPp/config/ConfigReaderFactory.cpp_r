@@ -43,8 +43,7 @@ namespace MdPp
          ptr = new DdMdConfigReader(*configurationPtr_, hasMolecules);
       } else 
       if (className == "SmpConfigReader") {
-         bool hasMolecules = true;
-         ptr = new DdMdConfigReader(*configurationPtr_);
+         ptr = new SmpConfigReader(*configurationPtr_);
       } else 
       if (className == "HoomdConfigReader") {
          ptr = new HoomdConfigReader(*configurationPtr_);
