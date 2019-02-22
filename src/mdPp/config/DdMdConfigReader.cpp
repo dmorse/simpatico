@@ -10,7 +10,6 @@
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/storage/Configuration.h>
-
 #include <util/param/OptionalLabel.h>
 
 namespace MdPp
@@ -99,9 +98,6 @@ namespace MdPp
       // Read Covalent Groups
       #ifdef SIMP_BOND
       readGroups(file, "BONDS", "nBond", configuration().bonds());
-      //if (maskPolicy == MaskBonded) {
-      //   setAtomMasks();
-      //}
       #endif
 
       #ifdef SIMP_ANGLE

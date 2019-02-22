@@ -71,14 +71,13 @@ namespace MdPp
    }
 
    /*
-   * Read default param file.
+   * Read default param file, if any.
    */
    void Processor::readParam()
    {
-      if (fileMaster_.paramFileName().empty()) {
-         UTIL_THROW("Empty param file name");
+      if (!fileMaster_.paramFileName().empty()) {
+         readParam(fileMaster_.paramFile());
       }
-      readParam(fileMaster_.paramFile());
    }
 
    /*

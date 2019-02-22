@@ -56,7 +56,9 @@ namespace MdPp
       using ParamComposite::readParam;
 
       /**
-      * Read parameter file specified in command line.
+      * Read parameter file specified in command line, if any.
+      *
+      * Does nothing if no parameter file has been specified.
       */
       void readParam();
 
@@ -76,6 +78,8 @@ namespace MdPp
 
       /**
       * Read command file specified in command line.
+      * 
+      * If no command file has been specified, reads from the command line.
       */
       void readCommands();
 
