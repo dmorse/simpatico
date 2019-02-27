@@ -29,6 +29,7 @@ namespace MdPp
       #ifdef SIMP_IMPROPERT
       , improperCapacity_(0)
       #endif
+      , hasAtomContexts_(false)
    {  setClassName("Configuration"); }
 
    /*
@@ -107,10 +108,17 @@ namespace MdPp
    }
 
    /*
+   * Set value of hasAtomContexts flag.
+   */
+   void Configuration::setHasAtomContexts(bool hasAtomContexts)
+   {  hasAtomContexts_ = hasAtomContexts; }
+
+   /*
    * Remove all atoms and groups - set to empty state.
    */
    void Configuration::clear()
    {
+      // Clear species data
       if (nSpecies_ > 0) {
          UTIL_CHECK(species_.isAllocated());
          UTIL_CHECK(nSpecies_ = species_.capacity());
@@ -120,9 +128,14 @@ namespace MdPp
       } else {
          UTIL_CHECK(!species_.isAllocated());
       }
+
+      // Clear atom data
       if (atoms_.capacity() > 0) {
          atoms_.clear();
       }
+      hasAtomContexts_ = false;
+
+      // Clear group data
       #ifdef SIMP_BOND
       if (bonds_.capacity() > 0) {
          bonds_.clear();
@@ -184,6 +197,7 @@ namespace MdPp
          }
       }
 
+      hasAtomContexts_ = true;
    }
 
    /*

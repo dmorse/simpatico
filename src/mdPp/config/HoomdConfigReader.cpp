@@ -202,6 +202,7 @@ namespace MdPp
             } 
             #endif
             else {
+               std::cout << "Node name = " << name << std::endl;
                UTIL_THROW("Unknown node name");
             }
 

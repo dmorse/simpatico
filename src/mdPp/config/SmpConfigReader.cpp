@@ -104,6 +104,7 @@ namespace MdPp
       if (hasSpecies) {
          UTIL_CHECK(isOrdered || hasAtomContext);
       }
+
  
       // Read nAtom and allocate if necessary
       int nAtom;
@@ -116,6 +117,7 @@ namespace MdPp
          configuration().atoms().allocate(nAtom);
       } 
       UTIL_CHECK(configuration().atoms().capacity() >= nAtom);
+      configuration().setHasAtomContexts(hasAtomContext);
 
       // Read atoms 
       Atom* atomPtr = 0;

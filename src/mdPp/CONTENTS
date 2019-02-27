@@ -8,7 +8,7 @@ Subdirectories:
 ---------------
 
 chemistry   atoms, covalent groups (bonds, etc.), molecules and species
-storage     containers for atoms and groups. System represent a configuration
+storage     containers for atoms, groups, species. Configuration class.
 config      configuration file readers and writers
 trajectory  trajectory file readers
 analyzers   data analysis and output (classes derived from Analyzer)

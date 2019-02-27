@@ -94,6 +94,11 @@ namespace MdPp
       SpeciesStorage& species(int i);
 
       /**
+      * Return value of hasAtomContexts flag.
+      */
+      bool hasAtomContexts();
+    
+      /**
       * Get the AtomStorage by reference.
       */
       AtomStorage& atoms();
@@ -135,6 +140,13 @@ namespace MdPp
       * \param nSpecies number of species in system
       */
       void setNSpecies(int nSpecies);
+
+      /**
+      * Set value of hasAtomContexts flag.
+      *
+      * \param hasAtomContexts desired bool flag value.
+      */
+      void setHasAtomContexts(bool hasAtomContexts);
 
       /**
       * Clear all atoms and groups.
@@ -217,6 +229,11 @@ namespace MdPp
       int improperCapacity_;
       #endif
 
+      /*
+      * True if atoms store species, molecule and local atom ids.
+      */
+      bool hasAtomContexts_;
+
       #ifdef SIMP_BOND
       /*
       * Create all bonds from species templates.
@@ -260,6 +277,9 @@ namespace MdPp
 
    inline AtomStorage& Configuration::atoms()
    {  return atoms_; }
+
+   inline bool Configuration::hasAtomContexts()
+   {  return hasAtomContexts_; }
 
    #ifdef SIMP_BOND
    inline GroupStorage<2>& Configuration::bonds()

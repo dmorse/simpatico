@@ -69,7 +69,12 @@ namespace MdPp
 
       // Write ATOMS header
       file << endl << "ATOMS";
-      file << endl << "format itmpv";
+      bool writeAtomContexts = configuration().hasAtomContexts();
+      if (writeAtomContexts) {
+          file << endl << "format itmpv"; 
+      } else {
+          file << endl << "format itpv"; 
+      }
       int nAtom = configuration().atoms().size();
       file << "nAtom" << Int(nAtom, 10) << std::endl;
 
@@ -81,11 +86,11 @@ namespace MdPp
          file << endl;
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);
-         //if (hasMolecules_) {
-         //   file << Int(iter->speciesId, 8) 
-         //        << Int(iter->moleculeId, 8)
-         //        << Int(iter->atomId, 8);
-         //}
+         if (writeAtomContexts) {
+            file << Int(iter->speciesId, 8) 
+                 << Int(iter->moleculeId, 8)
+                 << Int(iter->atomId, 8);
+         }
          r = iter->position;
          file << "\n" << r 
               << "\n" << iter->velocity << "\n";

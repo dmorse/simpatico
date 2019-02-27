@@ -9,6 +9,7 @@
 
 // Subclasses of ConfigWriter 
 #include "DdMdConfigWriter.h"
+#include "SmpConfigWriter.h"
 #include "HoomdConfigWriter.h"
 
 namespace MdPp
@@ -36,6 +37,9 @@ namespace MdPp
 
       if (className == "DdMdConfigWriter") {
          ptr = new DdMdConfigWriter(*configurationPtr_);
+      } else 
+      if (className == "SmpConfigWriter") {
+         ptr = new SmpConfigWriter(*configurationPtr_);
       } else 
       if (className == "DdMdConfigWriter_Molecule") {
          bool hasMolecules = true;

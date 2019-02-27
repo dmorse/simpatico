@@ -33,16 +33,18 @@ namespace MdPp
 
       /**
       * Default constructor.
+      *
+      * \param writeAtomContexts Should atom contexts be written, if available.
       */
-      DdMdConfigWriter(bool hasMolecules = false);
+      DdMdConfigWriter(bool writeAtomContexts = true);
 
       /**
       * Constructor.
       *
       * \param configuration parent Configuration object.
-      * \param hasMolecules true if file format has DdMd::AtomContext info
+      * \param writeAtomContexts true if file format has DdMd::AtomContext info
       */
-      DdMdConfigWriter(Configuration& configuration, bool hasMolecules = false);
+      DdMdConfigWriter(Configuration& configuration, bool writeAtomContexts = false);
 
       /**
       * Write configuration file in DdMd default format.
@@ -53,8 +55,14 @@ namespace MdPp
    
    private:
 
-      bool hasMolecules_;
+      /*
+      * Should atom context data be written, if available?
+      */ 
+      bool writeAtomContexts_;
 
+      /**
+      * Write BONDS, ANGLES, or DIHEDRALS data block.
+      */
       template <int N>
       int writeGroups(std::ofstream& file, const char* sectionLabel, 
                       const char* nGroupLabel, GroupStorage<N>& groups);
