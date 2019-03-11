@@ -25,7 +25,6 @@
 #include "energy/OutputPairEnergies.h"
 #ifdef SIMP_EXTERNAL
 #include "energy/ExternalEnergyAnalyzer.h"
-#include "energy/ExternalEnergyAverage.h"
 #endif
 
 // Stress and box dimension analyzers
@@ -35,8 +34,6 @@
 #include "stress/StressAnalyzer.h"
 #include "stress/VirialStressAnalyzer.h"
 #include "stress/OutputStressTensor.h"
-#include "stress/VirialStressTensorAverage.h"
-#include "stress/StressAutoCorr.h"
 #include "stress/StressAutoCorrelation.h"
 
 // Scattering analyzers
@@ -45,7 +42,6 @@
 #include "scattering/VanHove.h"
 
 // Miscellaneous analyzers
-#include "misc/OrderParamNucleation.h"
 #ifdef SIMP_BOND
 #include "misc/BondTensorAutoCorr.h"
 #endif
@@ -99,9 +95,6 @@ namespace DdMd
       if (className == "ExternalEnergyAnalyzer") {
          ptr = new ExternalEnergyAnalyzer(simulation());
       } else
-      if (className == "ExternalEnergyAverage") {
-         ptr = new ExternalEnergyAverage(simulation());
-      } else
       #endif
       // Pressure, Stress and Box Dimensions
       if (className == "OutputBoxdim") {
@@ -121,12 +114,6 @@ namespace DdMd
       } else
       if (className == "OutputStressTensor") {
          ptr = new OutputStressTensor(simulation());
-      } else
-      if (className == "VirialStressTensorAverage") {
-         ptr = new VirialStressTensorAverage(simulation());
-      } else
-      if (className == "StressAutoCorr") {
-         ptr = new StressAutoCorr(simulation());
       } else
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
@@ -153,16 +140,13 @@ namespace DdMd
       } else
       if (className == "LammpsDumpWriter") {
          ptr = new LammpsDumpWriter(simulation());
-      } else
+      } 
       // Miscellaneous
       #ifdef SIMP_BOND
-      if (className == "BondTensorAutoCorr") {
+      else if (className == "BondTensorAutoCorr") {
          ptr = new BondTensorAutoCorr(simulation());
-      } else
-      #endif
-      if (className == "OrderParamNucleation") {
-         ptr = new OrderParamNucleation(simulation());
       }
+      #endif 
       return ptr;
    }
 

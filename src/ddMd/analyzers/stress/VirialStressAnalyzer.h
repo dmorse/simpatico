@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/SymmTensorAverageAnalyzer.h>
+#include <ddMd/analyzers/base/SymmTensorAverageAnalyzer.h>
 
 namespace DdMd
 {

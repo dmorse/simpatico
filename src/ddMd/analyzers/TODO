@@ -55,7 +55,7 @@ class VirialStressTensor : public Analyzer         <- attic
 class VirialStressTensorAverage : public Analyzer  <- attic
 
 SymmTensorAverageListAnalyzer:
-   Add variants that keep of kinetic, virial stress separately
+   Add variants that keep track of kinetic, virial stress separately
  
 AutoCorrAnalyzer:
 class BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
