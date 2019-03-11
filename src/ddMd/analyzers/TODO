@@ -18,59 +18,71 @@ TODO:
    of mass of a molecule is harder, and still requires some
    post processing).
 
-6) Standardize analyzer outputs, write as subclasses of base class when 
-possible. Below is a list of analyzers grouped into types that correspond 
-to possible base classes.
+6) Standardize analyzer outputs, write as subclasses of base class 
+when possible. Below is a list of analyzers grouped into types that 
+correspond to possible base classes.
 
-Output:
-class OutputTemperature : public Analyzer
-class OutputEnergy : public Analyzer
-class OutputPressure : public Analyzer
+7) Move output functions of base classes to classes in Simp
+namespace, to allow outputs to be standardized in both DdMd
+and McMd namespaces. Proposal: Do McMd after standardizing
+classes in DdMd and then moving some of functionality up the
+class hierarchy.
 
-OutputList:
-class OutputPairEnergies : public Analyzer
-class OutputBoxdim : public Analyzer
+------------------------------------------------------------
+OutputAnalyzer:
+OutputTemperature : public Analyzer   <- deprecate (to KineticEnergyAnalyzer)
+OutputEnergy : public Analyzer        <- deprecate (to EnergyAnalyzer)
+OutputPressure : public Analyzer      <- deprecate (to PressureAnalyzer)
+
+OutputsAnalyzer:
+OutputPairEnergies : public Analyzer
+OutputBoxdim : public Analyzer        <- write a BoxDimAnalyzer class
 
 OutputSymmTensor:
-class OutputStressTensor : public Analyzer
+OutputStressTensor : public Analyzer  <- deprecate (to StressAnalyzer)
 
 AverageAnalyzer:
-class KineticEnergyAnalyzer : public AverageAnalyzer
-class ExternalEnergyAnalyzer : public AverageAnalyzer
-class PairEnergyAnalyzer : public AverageAnalyzer
-class PressureAnalyzer : public AverageAnalyzer
+KineticEnergyAnalyzer : public AverageAnalyzer
+ExternalEnergyAnalyzer : public AverageAnalyzer
+PairEnergyAnalyzer : public AverageAnalyzer
+PressureAnalyzer : public AverageAnalyzer
 
-class ExternalEnergyAverage : public Analyzer      <- attic
-
-AverageListAnalyzer:
-class EnergyAnalyzer : public Analyzer         
-class StructureFactor : public Analyzer
-class StructureFactorGrid : public StructureFactor
+AveragesAnalyzer:
+EnergyAnalyzer : public Analyzer         
+StructureFactor : public Analyzer
+StructureFactorGrid : public StructureFactor
 
 SymmTensorAverageAnalyzer:
-class StressAnalyzer : public SymmTensorAverageAnalyzer
-class VirialStressAnalyzer : public SymmTensorAverageAnalyzer
+StressAnalyzer : public SymmTensorAverageAnalyzer
+VirialStressAnalyzer : public SymmTensorAverageAnalyzer
 
-class VirialStressTensor : public Analyzer         <- attic
-class VirialStressTensorAverage : public Analyzer  <- attic
-
-SymmTensorAverageListAnalyzer:
+SymmTensorAveragesAnalyzer:
    Add variants that keep track of kinetic, virial stress separately
  
 AutoCorrAnalyzer:
-class BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
-class StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
+BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
+StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
 
-class StressAutoCorr : public Analyzer             <- attic
-
-AutoCorrListAnalyzer:
-class VanHove : public Analyzer
+AutoCorrsAnalyzer:
+VanHove : public Analyzer
 
 TrajectoryWriter:
-class DdMdTrajectoryWriter : public TrajectoryWriter
-class LammpsDumpWriter : public TrajectoryWriter
-class DdMdGroupTrajectoryWriter : public TrajectoryWriter
+DdMdTrajectoryWriter : public TrajectoryWriter
+LammpsDumpWriter : public TrajectoryWriter
+DdMdGroupTrajectoryWriter : public TrajectoryWriter
 
-class ConfigWriter : public Analyzer
+ConfigWriter : public Analyzer
 
-class LogEnergy : public Analyzer
+LogEnergy : public Analyzer
+
+------------------------------------------------------------
+Deprecated Analyzers (moved to attic)
+
+class ExternalEnergyAverage : public Analyzer      <- attic
+class VirialStressTensor : public Analyzer         <- attic
+class VirialStressTensorAverage : public Analyzer  <- attic
+class StressAutoCorr : public Analyzer             <- attic
+class AsymmSF                                      <- attic 
+class AsymmSFGrid                                  <- attic
+OrderParamNucleation                               <- attic
+
