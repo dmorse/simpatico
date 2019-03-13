@@ -11,6 +11,7 @@
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLoader.h>
+#include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
 
 #include <sstream>
@@ -27,6 +28,7 @@ namespace DdMd
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
+      fileMasterPtr_(&simulation.fileMaster()),
       nSamplePerBlock_(0),
       isInitialized_(false)
    {  setClassName("AverageAnalyzer"); }
@@ -116,7 +118,7 @@ namespace DdMd
       if (simulation().domain().isMaster()) {
          if (nSamplePerBlock_) {
             std::string filename  = outputFileName(".dat");
-            simulation().fileMaster().openOutputFile(filename, outputFile_);
+            openOutputFile(filename, outputFile_);
          }
       }
    }
@@ -142,30 +144,40 @@ namespace DdMd
    }
 
    /*
-   * Output results to file after simulation is completed.
+   * Output results to several files after simulation is completed.
    */
    void AverageAnalyzer::output()
    {
       if (simulation().domain().isMaster()) {
+
          // Close data (*.dat) file, if any
          if (outputFile_.is_open()) {
             outputFile_.close();
          }
+
          // Write parameter (*.prm) file
-         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
+
          // Write average (*.ave) file
-         simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+         openOutputFile(outputFileName(".ave"), outputFile_);
          double ave = accumulatorPtr_->average();
          double err = accumulatorPtr_->blockingError();
-         outputFile_ << "Average   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         outputFile_ << "Average   " << Dbl(ave) << " +- " 
+                     << Dbl(err, 9, 2) << "\n";
          outputFile_.close();
+
          // Write error analysis (*.aer) file
-         simulation().fileMaster().openOutputFile(outputFileName(".aer"), outputFile_);
+         openOutputFile(outputFileName(".aer"), outputFile_);
          accumulatorPtr_->output(outputFile_);
          outputFile_.close();
       }
    }
+
+   void 
+   AverageAnalyzer::openOutputFile(std::string name, 
+                                   std::ofstream& file) 
+   {  fileMasterPtr_->openOutputFile(name, outputFile_); }
 
 }

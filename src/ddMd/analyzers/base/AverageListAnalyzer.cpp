@@ -10,7 +10,7 @@
 #include <util/accumulators/Average.h>   
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
-#include <util/mpi/MpiLoader.h>
+#include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
 
 #include <sstream>
@@ -25,10 +25,11 @@ namespace DdMd
    */
    AverageListAnalyzer::AverageListAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
-      outputFile_(),
-      accumulatorPtr_(0),
       nSamplePerBlock_(0),
+      outputFile_(),
+      fileMasterPtr_(&simulation.fileMaster()),
       nValue_(0),
+      hasAccumulators_(false),
       isInitialized_(false)
    {  setClassName("AverageListAnalyzer"); }
 
@@ -36,11 +37,7 @@ namespace DdMd
    * Destructor.
    */
    AverageListAnalyzer::~AverageListAnalyzer() 
-   {  
-      if (accumulatorPtr_) {
-         delete accumulatorPtr_;
-      }
-   }
+   {}
 
    /*
    * Read interval and outputFileName. 
@@ -51,12 +48,6 @@ namespace DdMd
       readOutputFileName(in);
       nSamplePerBlock_ = 0;
       readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
-
-      if (simulation().domain().isMaster()) {
-         accumulatorPtr_ = new Average;
-         accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
-      }
-
       isInitialized_ = true;
    }
 
@@ -71,15 +62,15 @@ namespace DdMd
       bool isRequired = false;
       loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
                          isRequired);
-
-      if (simulation().domain().isMaster()) {
-         accumulatorPtr_ = new Average;
-         ar >> *accumulatorPtr_;
-         if (nSamplePerBlock_ != accumulatorPtr_->nSamplePerBlock()) {
-            UTIL_THROW("Inconsistent values of nSamplePerBlock");
+      if (hasAccumulators_) {
+         ar >> nValue_;
+         if (nValue_ > 0) {
+            ar >> accumulators_;
+            ar >> names_;
          }
-      } else {
-         accumulatorPtr_ = 0;
+         for (int i = 0; i < nValue_; ++i) {
+            UTIL_CHECK(accumulators_[i].nSamplePerBlock() == nSamplePerBlock_);
+         }
       }
       isInitialized_ = true;
    }
@@ -89,27 +80,35 @@ namespace DdMd
    */
    void AverageListAnalyzer::save(Serializable::OArchive &ar)
    {
-      assert(simulation().domain().isMaster());
-      assert(accumulatorPtr_);
+      UTIL_CHECK(hasAccumulators_);
 
       saveInterval(ar);
       saveOutputFileName(ar);
       bool isActive = (bool)nSamplePerBlock_;
       Parameter::saveOptional<int>(ar, nSamplePerBlock_, isActive);
-      ar << *accumulatorPtr_;
+      if (hasAccumulators_ > 0) {
+         UTIL_CHECK(nValue_ > 0);
+         ar << nValue_;
+         ar << accumulators_;
+         ar << names_;
+      }
    }
 
    /*
    * Clear accumulator (do nothing on slave processors).
    */
-   void AverageListAnalyzer::clearAccumulators() 
-   {  
-      if (nValue_ > 0);
-      for (int i = 0; i < nValue_; ++i) {
-         accumulators_[i].clear();
+   void AverageListAnalyzer::clear() 
+   {
+      if (hasAccumulators_ > 0) {
+         for (int i = 0; i < nValue_; ++i) {
+            accumulators_[i].clear();
+         }
       }
    }
- 
+
+   /**
+   * Set nValue and allocate arrays with dimensions nValue.
+   */ 
    void AverageListAnalyzer::setNValue(int nValue) 
    {
       UTIL_CHECK(nValue > 0);
@@ -117,13 +116,13 @@ namespace DdMd
       names_.allocate(nValue);
       accumulators_.allocate(nValue);
       nValue_ = nValue;
+      hasAccumulators_ = true;
    }
 
    void AverageListAnalyzer::setName(int i, std::string name) 
    {
-      UTIL_CHECK(nValue_ > 0);
-      UTIL_CHECK(i > 0);
-      UTIL_CHECK(i < nValue_);
+      UTIL_CHECK(hasAccumulators_ > 0);
+      UTIL_CHECK(i > 0 && i < nValue_);
       names_[i] = name;
    }
 
@@ -132,10 +131,10 @@ namespace DdMd
    */ 
    void AverageListAnalyzer::setup()
    {
-      if (simulation().domain().isMaster()) {
+      UTIL_CHECK(nSamplePerBlock_ >= 0);
+      if (hasAccumulators_) {
          if (nSamplePerBlock_) {
-            std::string filename  = outputFileName(".dat");
-            simulation().fileMaster().openOutputFile(filename, outputFile_);
+            openOutputFile(outputFileName(".dat"), outputFile_);
          }
       }
    }
@@ -149,14 +148,21 @@ namespace DdMd
          UTIL_THROW("Time step index is not a multiple of interval");
       }
       compute();
-      if (simulation().domain().isMaster()) {
-         double data = value();
-         accumulatorPtr_->sample(data);
-         if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
-            double block = accumulatorPtr_->blockAverage();
+      if (hasAccumulators_) {
+         if (nSamplePerBlock_ > 0 
+                                && accumulators_[0].isBlockComplete() > 0) {
             int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-            outputFile_ << Int(beginStep) << Dbl(block) << "\n";
+            outputFile_ << Int(beginStep);
          }
+         for (int i = 0; i < nValue(); ++i) {
+            double data = value(i);
+            accumulators_[i].sample(data);
+            if (nSamplePerBlock_ > 0 && accumulators_[i].isBlockComplete()){
+               double block = accumulators_[i].blockAverage();
+               outputFile_ << Dbl(block);
+            }
+         }
+         outputFile_ << "\n";
       }
    }
 
@@ -165,26 +171,40 @@ namespace DdMd
    */
    void AverageListAnalyzer::output()
    {
-      if (simulation().domain().isMaster()) {
+      if (hasAccumulators_) {
          // Close data (*.dat) file, if any
          if (outputFile_.is_open()) {
             outputFile_.close();
          }
+
          // Write parameter (*.prm) file
-         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
+
          // Write average (*.ave) file
-         simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-         double ave = accumulatorPtr_->average();
-         double err = accumulatorPtr_->blockingError();
-         outputFile_ << "Average   " << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         openOutputFile(outputFileName(".ave"), outputFile_);
+         double ave, err;
+         for (int i = 0; i < nValue_; ++i) {
+            ave = accumulators_[i].average();
+            err = accumulators_[i].blockingError();
+            outputFile_ << names_[i] << "   ";
+            outputFile_ << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
+         }
          outputFile_.close();
+
          // Write error analysis (*.aer) file
-         simulation().fileMaster().openOutputFile(outputFileName(".aer"), outputFile_);
-         accumulatorPtr_->output(outputFile_);
+         openOutputFile(outputFileName(".aer"), outputFile_);
+         for (int i = 0; i < nValue_; ++i) {
+            accumulators_[i].output(outputFile_);
+         }
          outputFile_.close();
       }
    }
+
+   void 
+   AverageListAnalyzer::openOutputFile(std::string name, 
+                                       std::ofstream& file) 
+   {  fileMasterPtr_->openOutputFile(name, outputFile_); }
 
 }

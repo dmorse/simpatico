@@ -12,6 +12,7 @@
 
 namespace Util { 
    class Average;
+   class FileMaster;
 }
 
 namespace DdMd
@@ -25,9 +26,9 @@ namespace DdMd
    * Analyze average and block averages of a single floating point variable.
    *
    * This class evaluates the average of a sampled float point variable, and
-   * optionally writes block averages to a data file during a simulation. It
-   * is intended for use as a base class for Analyzers that evaluate averages
-   * and (optionally) block averages for specific physical variables.
+   * optionally writes block averages to a data file during a simulation. 
+   * It should be used as a base class of Analyzers that evaluate averages
+   * and (optionally) output block averages for specific physical variables.
    *
    * \ingroup DdMd_Analyzer_Base_Module
    */
@@ -52,8 +53,8 @@ namespace DdMd
       * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
       * The optional variable nSamplePerBlock defaults to 0, which disables
-      * computation and output of block averages. Setting nSamplePerBlock = 1
-      * outputs every sampled value. 
+      * computation and output of block averages. Set nSamplePerBlock = 1
+      * to output every sampled value. 
       *
       * \param in  input parameter file
       */
@@ -95,6 +96,20 @@ namespace DdMd
       */
       virtual void output();
 
+      /**
+      * Does this processor have an Average accumulator?
+      */
+      bool hasAccumulator() const;
+
+      /**
+      * Get Average accumulator.
+      *
+      * Call only on master.
+      *
+      * \param i integer index of value.
+      */
+      const Average& accumulator() const;
+
    protected:
 
       /**
@@ -111,6 +126,16 @@ namespace DdMd
       */
       virtual double value() = 0;
 
+      /**
+      * Access output file by reference.
+      */
+      std::ofstream& outputFile();
+
+      /**
+      * Open an output file. 
+      */
+      void openOutputFile(std::string filename, std::ofstream& file);
+
    private:
 
       /// Output file stream.
@@ -119,6 +144,9 @@ namespace DdMd
       /// Pointer to Average object (only instantiated on master processor)
       Average *accumulatorPtr_;
 
+      /// Pointer to a FileMaster
+      FileMaster* fileMasterPtr_;
+
       /// Number of samples per block average output.
       int nSamplePerBlock_;
    
@@ -126,6 +154,33 @@ namespace DdMd
       bool isInitialized_;
    
    };
+
+
+   // Inline functions
+
+   /*
+   * Does this processor have an accumulator?
+   */
+   inline
+   bool AverageAnalyzer::hasAccumulator() const
+   {  return (bool)(accumulatorPtr_); }
+
+   /*
+   * Get accumulator associated with a variable.
+   */
+   inline
+   const Average& AverageAnalyzer::accumulator() const
+   {
+      UTIL_CHECK(accumulatorPtr_);
+      return *accumulatorPtr_;
+   }
+
+   /*
+   * Access output file by reference.
+   */
+   inline
+   std::ofstream& AverageAnalyzer::outputFile()
+   {  return outputFile_; }
 
 }
 #endif 
