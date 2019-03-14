@@ -138,7 +138,7 @@ namespace DdMd
          if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
             double block = accumulatorPtr_->blockAverage();
             int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-            outputFile_ << Int(beginStep) << Dbl(block) << "\n";
+            outputFile_ << Int(beginStep,10) << Dbl(block, 20, 10) << "\n";
          }
       }
    }

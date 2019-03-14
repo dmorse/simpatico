@@ -132,7 +132,7 @@ namespace DdMd
          accumulatorPtr_->sample(data);
          if (nSamplePerBlock_ > 0 && accumulatorPtr_->isBlockComplete()) {
             int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-            outputFile_ << Int(beginStep) << "  ";
+            outputFile_ << Int(beginStep, 10) << "  ";
             double ave;
             int i, j;
             for (i = 0; i < Dimension; ++i) {

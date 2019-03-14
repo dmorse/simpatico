@@ -9,8 +9,6 @@
 #include <ddMd/simulation/Simulation.h>
 #include <util/accumulators/AutoCorrelation.tpp>
 #include <util/misc/ioUtil.h>
-#include <util/format/Int.h>
-#include <util/format/Dbl.h>
 
 #include <sstream>
 

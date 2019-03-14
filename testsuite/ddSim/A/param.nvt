@@ -70,9 +70,10 @@ Simulation{
         outputFileName   energy
      }
 
-     OutputPressure{
+     PressureAnalyzer{
         interval         100
         outputFileName   pressure
+        nSamplePerBlock  1
      }
 
      PairEnergyAnalyzer{
