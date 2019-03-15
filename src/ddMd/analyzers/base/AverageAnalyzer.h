@@ -49,6 +49,8 @@ namespace DdMd
       */
       virtual ~AverageAnalyzer(); 
    
+      // Analyzer interface.
+
       /**
       * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
@@ -96,6 +98,17 @@ namespace DdMd
       */
       virtual void output();
 
+      // Extension of public interface.
+
+      /**
+      * Get value of nSamplePerBlock.
+      * 
+      * If nSamplePerBlock == 0, output of block averages is disabled.
+      * For nSamplePerBlock > 0, the value is the number of sampled values
+      * averaged in each block. 
+      */
+      bool nSamplePerBlock() const;
+
       /**
       * Does this processor have an Average accumulator?
       */
@@ -104,13 +117,63 @@ namespace DdMd
       /**
       * Get Average accumulator.
       *
-      * Call only on master.
+      * \pre hasAccumulator() == true
       *
       * \param i integer index of value.
       */
       const Average& accumulator() const;
 
    protected:
+
+      /**
+      * Read nSamplePerBlock parameter from file.
+      *
+      * \param in parameter file.
+      */ 
+      void readNSamplePerBlock(std::istream& in);
+
+      /**
+      * Instantiate a new Average accumulator and set nSamplePerBlock.
+      *
+      * \pre hasAccumulator()
+      * \pre nSamplePerBlock is set and positive
+      */ 
+      void initializeAccumulator();
+
+      /**
+      * Clear internal state of the accumulator.
+      *
+      * \pre hasAccumulator()
+      */ 
+      void clearAccumulator();
+
+      /**
+      * Load nSamplePerBlock parameter from an archive.
+      *
+      * \param ar input archive
+      */ 
+      void loadNSamplePerBlock(Serializable::IArchive &ar);
+
+      /**
+      * Instantiate an accumulator and load data from an archive.
+      *
+      * \param ar input archive
+      */ 
+      void loadAccumulator(Serializable::IArchive &ar);
+
+      /**
+      * Save nSamplePerBlock parameter to an archive.
+      *
+      * \param ar output archive
+      */ 
+      void saveNSamplePerBlock(Serializable::OArchive &ar);
+
+      /**
+      * Save accumulator to an archive.
+      *
+      * \param ar output archive
+      */ 
+      void saveAccumulator(Serializable::OArchive &ar);
 
       /**
       * Compute value of sampled quantity.
@@ -122,9 +185,24 @@ namespace DdMd
       /**
       * Get current value, set by compute function.
       *
-      * Call only on master.
+      * \pre hasAccumulator() == true
       */
       virtual double value() = 0;
+
+      /**
+      * Add current value to accumulator, output block average if needed.
+      *
+      * \pre hasAccumulator() == true
+      * \param iStep simulation step counter
+      */
+      void updateAccumulator(long iStep);
+
+      /**
+      * Write results of statistical analysis to files.
+      *
+      * \pre hasAccumulator() == true
+      */
+      void outputAccumulator();
 
       /**
       * Access output file by reference.
@@ -132,9 +210,11 @@ namespace DdMd
       std::ofstream& outputFile();
 
       /**
-      * Open an output file. 
+      * Open the output file. 
+      *
+      * \param filename base file name, without output prefix
       */
-      void openOutputFile(std::string filename, std::ofstream& file);
+      void openOutputFile(std::string filename);
 
    private:
 

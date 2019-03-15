@@ -50,6 +50,8 @@ namespace DdMd
       * Destructor.
       */
       virtual ~AverageListAnalyzer(); 
+
+      // Member functions declared in Analyzer
    
       /**
       * Read interval, outputFileName and (optionally) nSamplePerBlock.
@@ -101,34 +103,35 @@ namespace DdMd
       // Specialized public interface (not required by Analyzer base)
 
       /**
-      * Get number of values.
+      * Get value of nSamplePer Block.
+      */
+      int nSamplePerBlock() const;
+
+      /**
+      * Get number of variables.
       *
-      * Call only on master.
+      * Call only on processors that have accumulators.
       */
       int nValue() const;
 
       /**
-      * Get current value of a variable.
-      *
-      * Call only on master.
-      *
-      * \param i integer index of variable.
-      */
-      double value(int i) const;
-
-      /**
       * Get name associated with value.
       *
-      * Call only on master.
+      * Call only on processors that have accumulators.
       *
       * \param i integer index of name/value pair.
       */
       const std::string& name(int i) const;
 
       /**
+      * Does this processor have accumulators?
+      */
+      bool hasAccumulators() const;
+
+      /**
       * Get Average accumulator for a specific value.
       *
-      * Call only on master.
+      * Call only on processors that have accumulators.
       *
       * \param i integer index of value.
       */
@@ -137,14 +140,14 @@ namespace DdMd
    protected:
 
       /**
-      * Does this processor have accumulators?
+      * Allocate accumulators and names arrays and set nValue.
       */
-      bool hasAccumulators() const;
+      void initializeAccumulators(int nValue);
 
       /**
-      * Set number of values.
+      * Clear all accumulators.
       */
-      void setNValue(int nValue);
+      void clearAccumulators();
 
       /**
       * Set name of variable. 
@@ -157,14 +160,75 @@ namespace DdMd
       void setName(int i, std::string name);
 
       /**
-      * Set current value, used by compute function.
+      * Read nSamplePerBlock parameter from file.
       *
-      * Call only on master.
+      * \param in parameter file.
+      */ 
+      void readNSamplePerBlock(std::istream& in);
+
+      /**
+      * Load nSamplePerBlock parameter from an archive.
+      *
+      * \param ar input archive
+      */ 
+      void loadNSamplePerBlock(Serializable::IArchive &ar);
+
+      /**
+      * Instantiate an accumulator and load data from an archive.
+      *
+      * \param ar input archive
+      */ 
+      void loadAccumulators(Serializable::IArchive &ar);
+
+      /**
+      * Save nSamplePerBlock parameter to an archive.
+      *
+      * \param ar output archive
+      */ 
+      void saveNSamplePerBlock(Serializable::OArchive &ar);
+
+      /**
+      * Save accumulator to an archive.
+      *
+      * \param ar output archive
+      */ 
+      void saveAccumulators(Serializable::OArchive &ar);
+
+      /**
+      * Set current value, used by compute function.
       *
       * \param i integer index of variable
       * \param value current value of variable
       */
       void setValue(int i, double value);
+
+      /**
+      * Compute current values of all variables.
+      *
+      * Call on all processors.
+      */
+      virtual void compute() = 0;
+
+      /**
+      * Get current value of a specific variable.
+      *
+      * Call only on master.
+      *
+      * \param i integer index of variable.
+      */
+      double value(int i) const;
+
+      /**
+      * Add current values to accumulators, output any block averages.
+      *
+      * \param iStep simulation step counter
+      */
+      void updateAccumulators(long iStep);
+
+      /**
+      * Write final accumulator data to files .
+      */
+      void outputAccumulators();
 
       /**
       * Access output file by references.
@@ -174,21 +238,7 @@ namespace DdMd
       /**
       * Open an output file. 
       */
-      void openOutputFile(std::string filename, std::ofstream& file);
-
-      /**
-      * Compute values of sampled quantities.
-      *
-      * Call on all processors.
-      */
-      virtual void compute() = 0;
-
-      /**
-      * Number of samples per block average output.
-      *
-      * Protected so it can be read and loaded.
-      */
-      int nSamplePerBlock_;
+      void openOutputFile(std::string filename);
 
    private:
 
@@ -207,6 +257,9 @@ namespace DdMd
       /// Pointer to a FileMaster
       FileMaster* fileMasterPtr_;
 
+      /// Number of samples per block average output.
+      int nSamplePerBlock_;
+
       /// Number of values.
       int nValue_;
  
@@ -221,6 +274,15 @@ namespace DdMd
    // Inline functions
 
    /*
+   * Get nSamplePerBlock.
+   */
+   inline
+   int AverageListAnalyzer::nSamplePerBlock() const
+   {  
+      return nSamplePerBlock_; 
+   }
+
+   /*
    * Does this processor have accumulators?
    */
    inline
@@ -228,12 +290,12 @@ namespace DdMd
    {  return hasAccumulators_; }
 
    /*
-   * Get nValue (number of values).
+   * Get nValue (number of variables).
    */
    inline
    int AverageListAnalyzer::nValue() const
    {  
-      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(hasAccumulators());
       return nValue_; 
    }
 
@@ -243,7 +305,7 @@ namespace DdMd
    inline
    double AverageListAnalyzer::value(int i) const
    {
-      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(hasAccumulators());
       UTIL_CHECK(i >= 0 && i < nValue_);
       return values_[i];
    }
@@ -254,7 +316,7 @@ namespace DdMd
    inline
    const std::string& AverageListAnalyzer::name(int i) const
    {
-      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(hasAccumulators());
       UTIL_CHECK(i >= 0 && i < nValue_);
       return names_[i];
    }
@@ -265,7 +327,7 @@ namespace DdMd
    inline
    const Average& AverageListAnalyzer::accumulator(int i) const
    {
-      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(hasAccumulators());
       UTIL_CHECK(i >= 0 && i < nValue_);
       return accumulators_[i];
    }
@@ -276,7 +338,7 @@ namespace DdMd
    inline
    void AverageListAnalyzer::setValue(int i, double value)
    {
-      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(hasAccumulators());
       UTIL_CHECK(i >= 0 && i < nValue_);
       values_[i] = value;
    }

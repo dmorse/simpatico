@@ -63,7 +63,7 @@ AutoCorrAnalyzer:
 BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
 StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
 
-AutoCorrsAnalyzer:
+AutoCorrListAnalyzer:
 VanHove : public Analyzer
 
 TrajectoryWriter:
