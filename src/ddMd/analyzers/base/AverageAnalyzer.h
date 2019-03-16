@@ -107,7 +107,7 @@ namespace DdMd
       * For nSamplePerBlock > 0, the value is the number of sampled values
       * averaged in each block. 
       */
-      bool nSamplePerBlock() const;
+      int nSamplePerBlock() const;
 
       /**
       * Does this processor have an Average accumulator?
@@ -237,6 +237,13 @@ namespace DdMd
 
 
    // Inline functions
+
+   /*
+   * Does this processor have an accumulator?
+   */
+   inline
+   int AverageAnalyzer::nSamplePerBlock() const
+   {  return nSamplePerBlock_; }
 
    /*
    * Does this processor have an accumulator?
