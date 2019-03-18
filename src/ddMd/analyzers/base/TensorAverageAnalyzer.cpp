@@ -28,8 +28,7 @@ namespace DdMd
     : Analyzer(simulation),
       outputFile_(),
       accumulatorPtr_(0),
-      nSamplePerBlock_(0),
-      isInitialized_(false)
+      nSamplePerBlock_(0)
    {  setClassName("TensorAverageAnalyzer"); }
 
    /*
@@ -55,8 +54,6 @@ namespace DdMd
          accumulatorPtr_ = new TensorAverage;
          accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
       }
-
-      isInitialized_ = true;
    }
 
    /*
@@ -79,7 +76,6 @@ namespace DdMd
       } else {
          accumulatorPtr_ = 0;
       }
-      isInitialized_ = true;
    }
 
    /*
@@ -163,19 +159,6 @@ namespace DdMd
          fileMaster.openOutputFile(outputFileName(".prm"), outputFile_);
          ParamComposite::writeParam(outputFile_);
          outputFile_.close();
-
-         #if 0
-         // Write average (*.ave) file
-         fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);
-         int i, j;
-         for (i = 0; i < Dimension; ++i) {
-            for (j = 0; j < Dimension; ++j) {
-               (*accumulatorPtr_)(i, j).output(outputFile_);
-               outputFile_ << "\n";
-            }
-         }
-         outputFile_.close();
-         #endif
 
          // Write average (*.ave) file with averages for all elements
          fileMaster.openOutputFile(outputFileName(".ave"), outputFile_);

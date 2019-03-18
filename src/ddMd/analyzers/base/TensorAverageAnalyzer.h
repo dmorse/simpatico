@@ -126,9 +126,6 @@ namespace DdMd
       /// Number of samples per block average output.
       int nSamplePerBlock_;
    
-      /// Has readParam been called?
-      bool isInitialized_;
-   
    };
 
 }

@@ -46,7 +46,7 @@ namespace Simp
       /**
       * Constructor.
       *
-      * \param simulation  parent Simulation object. 
+      * \param fileMaster associated FileMaster object
       */
       AverageMixIn(FileMaster& fileMaster);
    
@@ -162,18 +162,6 @@ namespace Simp
       * \param outputFileName base output file name for analyzer
       */
       void outputAccumulator(std::string outputFileName);
-
-      /**
-      * Access output file by reference.
-      */
-      std::ofstream& outputFile();
-
-      /**
-      * Open the output file. 
-      *
-      * \param filename base file name, without output prefix
-      */
-      void openOutputFile(std::string filename);
 
    private:
 

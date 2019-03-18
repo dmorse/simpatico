@@ -1,5 +1,5 @@
-#ifndef MCMD_SPECIES_TEST_COMPOSITE_H
-#define MCMD_SPECIES_TEST_COMPOSITE_H
+#ifndef SIMP_SPECIES_TEST_COMPOSITE_H
+#define SIMP_SPECIES_TEST_COMPOSITE_H
 
 #include <test/CompositeTestRunner.h>
 

@@ -41,7 +41,7 @@ namespace Simp
       /**
       * Constructor.
       *
-      * \param simulation  parent Simulation object. 
+      * \param fileMaster associated fileMaster object
       */
       AverageListMixIn(FileMaster& fileMaster);
    
