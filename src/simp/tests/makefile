@@ -33,6 +33,7 @@ endif
 
 clean-outputs:
 	@cd species; $(MAKE) clean-outputs
+	@cd analysis; $(MAKE) clean-outputs
 
    
 

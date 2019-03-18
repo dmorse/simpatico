@@ -31,7 +31,8 @@ public:
 
    void setUp() 
    { 
-      setVerbose(2);
+      //setVerbose(2);
+      fileMaster.setOutputPrefix(filePrefix());
 
       std::ifstream in;
       openInputFile("in/MockAverage", in);
