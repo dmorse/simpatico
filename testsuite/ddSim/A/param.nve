@@ -61,6 +61,18 @@ Simulation{
         interval  100
      }
 
+     EnergyAnalyzer{
+        interval         100
+        outputFileName   energy
+        nSamplePerBlock  5
+     }
+
+     PressureAnalyzer{
+        interval         100
+        outputFileName   pressure
+        nSamplePerBlock  1
+     }
+
      DdMdTrajectoryWriter{
         interval        1000
         outputFileName  trajectory

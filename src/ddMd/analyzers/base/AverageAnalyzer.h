@@ -9,6 +9,7 @@
 */
 
 #include <ddMd/analyzers/Analyzer.h>
+#include <simp/analysis/AverageMixIn.h>
 
 namespace Util { 
    class Average;
@@ -22,6 +23,7 @@ namespace DdMd
    class Simulation;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
    * Analyze average and block averages of a single floating point variable.
@@ -33,7 +35,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Base_Module
    */
-   class AverageAnalyzer : public Analyzer
+   class AverageAnalyzer : public Analyzer, public AverageMixIn
    {
    
    public:
@@ -99,6 +101,7 @@ namespace DdMd
       */
       virtual void output();
 
+   #if 0
       // Extension of public interface.
 
       /**
@@ -238,10 +241,12 @@ namespace DdMd
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
+   #endif
    
    };
 
 
+   #if 0
    // Inline functions
 
    /*
@@ -274,6 +279,7 @@ namespace DdMd
    inline
    std::ofstream& AverageAnalyzer::outputFile()
    {  return outputFile_; }
+   #endif
 
 }
 #endif 

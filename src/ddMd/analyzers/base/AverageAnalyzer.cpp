@@ -25,10 +25,11 @@ namespace DdMd
    */
    AverageAnalyzer::AverageAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
-      outputFile_(),
-      fileMasterPtr_(&simulation.fileMaster()),
-      accumulatorPtr_(0),
-      nSamplePerBlock_(0)
+      AverageMixIn(simulation.fileMaster())
+      //outputFile_(),
+      //fileMasterPtr_(&simulation.fileMaster()),
+      //accumulatorPtr_(0),
+      //nSamplePerBlock_(0)
    {  setClassName("AverageAnalyzer"); }
 
    /*
@@ -36,9 +37,9 @@ namespace DdMd
    */
    AverageAnalyzer::~AverageAnalyzer() 
    {  
-      if (accumulatorPtr_) {
-         delete accumulatorPtr_;
-      }
+      //if (accumulatorPtr_) {
+      //   delete accumulatorPtr_;
+      //}
    }
 
    /*
@@ -114,7 +115,8 @@ namespace DdMd
       }
       compute();
       if (simulation().domain().isMaster()) {
-         updateAccumulator(iStep);
+         //updateAccumulator(iStep);
+         updateAccumulator(iStep, interval());
       }
    }
 
@@ -136,11 +138,12 @@ namespace DdMd
          outputFile().close();
 
          // Write average (*.ave) and error analysis (*.aer) files
-         outputAccumulator();
+         outputAccumulator(outputFileName());
 
       }
    }
 
+   #if 0
    // Utility functions (Migrate to base class)
 
    /*
@@ -255,5 +258,6 @@ namespace DdMd
    */
    void AverageAnalyzer::openOutputFile(std::string name)
    {  fileMasterPtr_->openOutputFile(name, outputFile_); }
+   #endif
 
 }

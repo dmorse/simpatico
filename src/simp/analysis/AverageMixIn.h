@@ -62,7 +62,7 @@ namespace Simp
       * For nSamplePerBlock > 0, the value is the number of sampled values
       * averaged in each block. 
       */
-      bool nSamplePerBlock() const;
+      int nSamplePerBlock() const;
 
       /**
       * Does this processor have an Average accumulator?
@@ -174,6 +174,13 @@ namespace Simp
    };
 
    // Inline functions
+
+   /*
+   * Get nSamplePerBlock.
+   */
+   inline
+   int AverageMixIn::nSamplePerBlock() const
+   {  return nSamplePerBlock_; }
 
    /*
    * Does this processor have an accumulator?
