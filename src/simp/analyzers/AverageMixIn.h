@@ -73,8 +73,6 @@ namespace Simp
       * Get Average accumulator.
       *
       * \pre hasAccumulator() == true
-      *
-      * \param i integer index of value.
       */
       const Average& accumulator() const;
 

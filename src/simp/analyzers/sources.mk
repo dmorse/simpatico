@@ -1,7 +1,8 @@
 
 simp_analyzers_= \
     simp/analyzers/AnalyzerMixIn.cpp \
-    simp/analyzers/AverageMixIn.cpp 
+    simp/analyzers/AverageMixIn.cpp \
+    simp/analyzers/AverageListMixIn.cpp 
 
 simp_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(simp_analyzers_))

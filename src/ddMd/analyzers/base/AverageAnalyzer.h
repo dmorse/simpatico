@@ -13,6 +13,7 @@
 namespace Util { 
    class Average;
    class FileMaster;
+   class ParamComposite;
 }
 
 namespace DdMd
@@ -118,19 +119,10 @@ namespace DdMd
       * Get Average accumulator.
       *
       * \pre hasAccumulator() == true
-      *
-      * \param i integer index of value.
       */
       const Average& accumulator() const;
 
    protected:
-
-      /**
-      * Read nSamplePerBlock parameter from file.
-      *
-      * \param in parameter file.
-      */ 
-      void readNSamplePerBlock(std::istream& in);
 
       /**
       * Instantiate a new Average accumulator and set nSamplePerBlock.
@@ -148,21 +140,32 @@ namespace DdMd
       void clearAccumulator();
 
       /**
+      * Read nSamplePerBlock parameter from file.
+      *
+      * \param in parameter file.
+      * \param composite associated ParamComposite object
+      */ 
+      void readNSamplePerBlock(std::istream& in, 
+                               ParamComposite& composite);
+
+      /**
       * Load nSamplePerBlock parameter from an archive.
       *
       * \param ar input archive
+      * \param composite associated ParamComposite object
       */ 
-      void loadNSamplePerBlock(Serializable::IArchive &ar);
+      void loadNSamplePerBlock(Serializable::IArchive &ar, 
+                               ParamComposite& composite);
 
       /**
-      * Instantiate an accumulator and load data from an archive.
+      * Instantiate a new accumulator and load internal data from archive.
       *
       * \param ar input archive
       */ 
       void loadAccumulator(Serializable::IArchive &ar);
 
       /**
-      * Save nSamplePerBlock parameter to an archive.
+      * Save the nSamplePerBlock parameter to an archive.
       *
       * \param ar output archive
       */ 
@@ -176,14 +179,16 @@ namespace DdMd
       void saveAccumulator(Serializable::OArchive &ar);
 
       /**
-      * Compute value of sampled quantity.
+      * Compute value of sampled variable.
       *
       * Call on all processors.
       */
       virtual void compute() = 0;
 
       /**
-      * Get current value, set by compute function.
+      * Get current value of sample variable, set by compute function.
+      *
+      * Call only on processor with an accumulator.
       *
       * \pre hasAccumulator() == true
       */
@@ -192,6 +197,8 @@ namespace DdMd
       /**
       * Add current value to accumulator, output block average if needed.
       *
+      * Call only on processor with an accumulator.
+      *
       * \pre hasAccumulator() == true
       * \param iStep simulation step counter
       */
@@ -199,6 +206,8 @@ namespace DdMd
 
       /**
       * Write results of statistical analysis to files.
+      *
+      * Call only on processor with an accumulator.
       *
       * \pre hasAccumulator() == true
       */
@@ -221,17 +230,14 @@ namespace DdMd
       /// Output file stream.
       std::ofstream  outputFile_;
 
-      /// Pointer to Average object (only instantiated on master processor)
-      Average *accumulatorPtr_;
-
       /// Pointer to a FileMaster
       FileMaster* fileMasterPtr_;
 
+      /// Pointer to Average object (only instantiated on master processor)
+      Average *accumulatorPtr_;
+
       /// Number of samples per block average output.
       int nSamplePerBlock_;
-   
-      /// Has readParam been called?
-      bool isInitialized_;
    
    };
 

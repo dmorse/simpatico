@@ -48,7 +48,7 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      readNSamplePerBlock(in);
+      readNSamplePerBlock(in, *this);
       isInitialized_ = true;
    }
 
@@ -59,7 +59,7 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-      loadNSamplePerBlock(ar);
+      loadNSamplePerBlock(ar, *this);
       if (simulation().domain().isMaster()) {
          loadAccumulators(ar);
       }
@@ -175,21 +175,23 @@ namespace DdMd
    /*
    * Read nSamplePerBlock parameter from file.
    */ 
-   void AverageListAnalyzer::readNSamplePerBlock(std::istream& in)
+   void AverageListAnalyzer::readNSamplePerBlock(std::istream& in,
+                                                 ParamComposite& composite)
    {
       nSamplePerBlock_ = 0;
-      readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
+      composite.readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
    }
 
    /*
    * Load nSamplePerBlock parameter from an archive.
    */ 
-   void AverageListAnalyzer::loadNSamplePerBlock(Serializable::IArchive &ar)
+   void AverageListAnalyzer::loadNSamplePerBlock(Serializable::IArchive &ar,
+                                                 ParamComposite& composite)
    {
       nSamplePerBlock_ = 0;
       bool isRequired = false;
-      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
-                         isRequired);
+      composite.loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
+                                   isRequired);
    }
 
    /*

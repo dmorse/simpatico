@@ -26,10 +26,9 @@ namespace DdMd
    AverageAnalyzer::AverageAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
       outputFile_(),
-      accumulatorPtr_(0),
       fileMasterPtr_(&simulation.fileMaster()),
-      nSamplePerBlock_(0),
-      isInitialized_(false)
+      accumulatorPtr_(0),
+      nSamplePerBlock_(0)
    {  setClassName("AverageAnalyzer"); }
 
    /*
@@ -49,11 +48,10 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-      readNSamplePerBlock(in);
+      readNSamplePerBlock(in, *this);
       if (simulation().domain().isMaster()) {
          initializeAccumulator();
       }
-      isInitialized_ = true;
    }
 
    /*
@@ -63,11 +61,10 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-      loadNSamplePerBlock(ar);
+      loadNSamplePerBlock(ar, *this);
       if (simulation().domain().isMaster()) {
          loadAccumulator(ar);
       }
-      isInitialized_ = true;
    }
 
    /*
@@ -144,16 +141,7 @@ namespace DdMd
       }
    }
 
-   // Utility functions (to be migrated to base class)
-
-   /*
-   * Read nSamplePerBlock parameter from file.
-   */ 
-   void AverageAnalyzer::readNSamplePerBlock(std::istream& in)
-   {
-      nSamplePerBlock_ = 0;
-      readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
-   }
+   // Utility functions (Migrate to base class)
 
    /*
    * Instantiate a new Average accumulator and set nSamplerPerBlock.
@@ -175,14 +163,25 @@ namespace DdMd
    }
  
    /*
+   * Read nSamplePerBlock parameter from file.
+   */ 
+   void AverageAnalyzer::readNSamplePerBlock(std::istream& in, 
+                                             ParamComposite& composite)
+   {
+      nSamplePerBlock_ = 0;
+      composite.readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
+   }
+
+   /*
    * Load nSamplePerBlock parameter from an archive.
    */ 
-   void AverageAnalyzer::loadNSamplePerBlock(Serializable::IArchive &ar)
+   void AverageAnalyzer::loadNSamplePerBlock(Serializable::IArchive &ar, 
+                                             ParamComposite& composite)
    {
       nSamplePerBlock_ = 0;
       bool isRequired = false;
-      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
-                         isRequired);
+      composite.loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
+                                   isRequired);
    }
 
    /*

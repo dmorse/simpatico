@@ -38,7 +38,10 @@ namespace Simp
       /**
       * Constructor.
       *
-      * \param simulation  parent Simulation object. 
+      * Stores a private pointer to the fileMaster, used by the 
+      * openOutputFile function.
+      *
+      * \param fileMaster associated FileMaster object
       */
       AnalyzerMixIn(FileMaster& fileMaster);
    
