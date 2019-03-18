@@ -36,7 +36,7 @@ namespace Simp
    * The use of a shared MixIn avoids duplication of code in different 
    * namespaces and guarantes standardization of output formats.
    *
-   * \ingroup Simp_Analyzer_Module
+   * \ingroup Simp_Analysis_Module
    */
    class AverageMixIn : public AnalyzerMixIn
    {

@@ -28,7 +28,7 @@ namespace Simp
    * An AnalyzerMixIn has an output file and a FileMaster that
    * can be used to open it with the correct prefix.
    *
-   * \ingroup Simp_Analyzer_Module
+   * \ingroup Simp_Analysis_Module
    */
    class AnalyzerMixIn 
    {

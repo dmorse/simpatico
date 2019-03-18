@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <simp/analyzers/AnalyzerMixIn.h>
+#include <simp/analysis/AnalyzerMixIn.h>
 #include <util/accumulators/Average.h>
 #include <util/containers/DArray.h>
 #include <string>
@@ -31,7 +31,7 @@ namespace Simp
    * It is intended for use as a base class for Analyzers that evaluate 
    * averages and (optionally) block averages for specific physical variables.
    *
-   * \ingroup Simp_Analyzer_Module
+   * \ingroup Simp_Analysis_Module
    */
    class AverageListMixIn : public AnalyzerMixIn
    {
