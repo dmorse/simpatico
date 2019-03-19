@@ -9,6 +9,7 @@
 */
 
 #include "AverageAnalyzer.h"
+#include <util/accumulators/Average.h>
 
 namespace McMd
 {
@@ -42,6 +43,11 @@ namespace McMd
       readOutputFileName(in);
       readNSamplePerBlock(in, *this);
       initializeAccumulator();
+      UTIL_CHECK(nSamplePerBlock() >= 0);
+      UTIL_CHECK(accumulator().nSamplePerBlock() == nSamplePerBlock());
+      if (nSamplePerBlock() > 0) {
+         openOutputFile(outputFileName(".dat"));
+      }
    }
 
    /*
@@ -54,6 +60,11 @@ namespace McMd
       loadOutputFileName(ar);
       loadNSamplePerBlock(ar, *this);
       loadAccumulator(ar);
+      UTIL_CHECK(nSamplePerBlock() >= 0);
+      UTIL_CHECK(accumulator().nSamplePerBlock() == nSamplePerBlock());
+      if (nSamplePerBlock() > 0) {
+         openOutputFile(outputFileName(".dat"));
+      }
    }
 
    /*
@@ -85,9 +96,7 @@ namespace McMd
    void AverageAnalyzer<SystemType>::setup()
    {
       UTIL_CHECK(hasAccumulator());
-      if (nSamplePerBlock() > 0) {
-         openOutputFile(outputFileName(".dat"));
-      }
+      clearAccumulator();
    }
 
    /*
