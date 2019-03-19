@@ -89,6 +89,8 @@ namespace Simp
    {
       UTIL_CHECK(!hasAccumulator());
       UTIL_CHECK(nSamplePerBlock_ >= 0); 
+      UTIL_CHECK(accumulatorPtr_ == 0);
+
       accumulatorPtr_ = new Average;
       ar >> *accumulatorPtr_;
       UTIL_CHECK(accumulator().nSamplePerBlock() == nSamplePerBlock_); 

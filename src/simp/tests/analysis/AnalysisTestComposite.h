@@ -4,9 +4,11 @@
 #include <test/CompositeTestRunner.h>
 
 #include "AverageMixInTest.h"
+#include "AverageListMixInTest.h"
 
 TEST_COMPOSITE_BEGIN(AnalysisTestComposite)
 TEST_COMPOSITE_ADD_UNIT(AverageMixInTest);
+TEST_COMPOSITE_ADD_UNIT(AverageListMixInTest);
 TEST_COMPOSITE_END
 
 #endif
