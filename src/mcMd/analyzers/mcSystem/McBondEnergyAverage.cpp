@@ -6,7 +6,6 @@
 */
 
 #include "McBondEnergyAverage.h"                  
-#include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 
 namespace McMd
@@ -18,7 +17,7 @@ namespace McMd
    * Constructor.
    */
    McBondEnergyAverage::McBondEnergyAverage(McSystem& system)
-    : McAverageAnalyzer(system)
+    : AverageAnalyzer<McSystem>(system)
    {  setClassName("McBondEnergyAverage"); }
 
    /*
