@@ -7,18 +7,12 @@
 
 #include "AverageAnalyzer.h"
 #include <ddMd/simulation/Simulation.h>
-#include <util/accumulators/Average.h>   
-#include <util/format/Int.h>
-#include <util/format/Dbl.h>
-#include <util/misc/FileMaster.h>
-#include <util/misc/ioUtil.h>
-
-#include <sstream>
 
 namespace DdMd
 {
 
    using namespace Util;
+   using namespace Simp;
 
    /*
    * Constructor.

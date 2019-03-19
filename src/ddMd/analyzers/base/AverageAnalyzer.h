@@ -8,14 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/Analyzer.h>
-#include <simp/analysis/AverageMixIn.h>
-
-namespace Util { 
-   class Average;
-   class FileMaster;
-   class ParamComposite;
-}
+#include <ddMd/analyzers/Analyzer.h>                       // base class
+#include <simp/analysis/AverageMixIn.h>                    // base class
 
 namespace DdMd
 {
