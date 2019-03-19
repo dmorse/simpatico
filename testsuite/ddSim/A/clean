@@ -1,4 +1,4 @@
 #!/bin/bash
 rm -f out/*
-rm -Rf rst
+rm -f rst/*
 rm -f log

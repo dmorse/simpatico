@@ -56,7 +56,7 @@ inline void SmpConfigReaderTest::testReadConfig1()
    // std::cout << processor_.boundary() << "\n";
 
    // Write in DdMd format
-   processor_.setConfigWriter("DdMdConfigWriter");
+   processor_.setConfigWriter("DdMdConfigWriter_Molecule");
    std::ofstream out;
    openOutputFile("out/config.ddc", out);
    processor_.writeConfig(out);

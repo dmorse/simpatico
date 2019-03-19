@@ -33,7 +33,7 @@ namespace MdPp
    *   - a Simp::Boundary
    *   - an AtomStorage container for atoms
    *   - a GroupStorage for each type of covalent group
-   *   - a SpeciesStorage for each species (if any)
+   *   - a SpeciesStorage for each species (optionally)
    *
    * \ingroup MdPp_Storage_Module
    */
@@ -70,18 +70,6 @@ namespace MdPp
       */
       void readParameters(std::istream& in);
 
-      /**
-      * Allocate space for species information.
-      *
-      * \param nSpecies number of species in system
-      */
-      void setNSpecies(int nSpecies);
-
-      /**
-      * Clear all atoms and groups.
-      */
-      void clear();
-  
       // Accessors for members (non-const reference)
 
       /**
@@ -89,6 +77,27 @@ namespace MdPp
       */
       Boundary& boundary();
 
+      /**
+      * Number of species.
+      *
+      * If nSpecies == 0, all species and molecule info is disabled.
+      */
+      int nSpecies() const;
+
+      /**
+      * Get a particular SpeciesStorage identified by index.
+      *
+      * \throw Exception if nSpecies == 0 or i is out of bounds.
+      *
+      * \param i species index
+      */
+      SpeciesStorage& species(int i);
+
+      /**
+      * Return value of hasAtomContexts flag.
+      */
+      bool hasAtomContexts();
+    
       /**
       * Get the AtomStorage by reference.
       */
@@ -120,19 +129,46 @@ namespace MdPp
       GroupStorage<4>& impropers();
       #endif
 
-      /**
-      * Number of species.
-      *
-      * If nSpecies == 0, all species and molecule info is disabled.
-      */
-      int nSpecies() const;
+      // Initialization
 
       /**
-      * Get a particular SpeciesStorage identified by index.
+      * Allocate space for species information.
       *
-      * \param i species index
+      * Call in configuration file reader before reading species
+      * structure information.
+      *
+      * \param nSpecies number of species in system
       */
-      SpeciesStorage& species(int i);
+      void setNSpecies(int nSpecies);
+
+      /**
+      * Set value of hasAtomContexts flag.
+      *
+      * \param hasAtomContexts desired bool flag value.
+      */
+      void setHasAtomContexts(bool hasAtomContexts);
+
+      /**
+      * Clear all atoms and groups.
+      */
+      void clear();
+  
+      /**
+      * Set atom context data for all atoms, assuming consecutive ids.
+      * 
+      * \return true for normal completion, false if error is detected.
+      */
+      void setAtomContexts();
+
+      /**
+      * Add all atoms in AtomStorage to the SpeciesStorage.
+      */
+      void addAtomsToSpecies();
+
+      /*
+      * Create all covalent groups from species templates.
+      */
+      void makeGroups();
 
    private:
      
@@ -193,6 +229,42 @@ namespace MdPp
       int improperCapacity_;
       #endif
 
+      /*
+      * True if atoms store species, molecule and local atom ids.
+      */
+      bool hasAtomContexts_;
+
+      #ifdef SIMP_BOND
+      /*
+      * Create all bonds from species templates.
+      */
+      void makeBonds();
+      #endif
+
+      #ifdef SIMP_ANGLE
+      /*
+      * Create all angles from species templates.
+      */
+      void makeAngles();
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      /*
+      * Create all dihedrals from species templates.
+      */
+      void makeDihedrals();
+      #endif
+
+      /*
+      * Create all Group<N> objects for one species.
+      */
+      template <int N>
+      void makeSpeciesGroups(
+          GroupStorage<N>& storage,
+          const DArray< SpeciesGroup<N> >& speciesGroups,
+          int nMol, int nAtom, int nGroup, 
+          int& firstAtomId, int& groupId);
+
    };
 
    // Inline functions
@@ -205,6 +277,9 @@ namespace MdPp
 
    inline AtomStorage& Configuration::atoms()
    {  return atoms_; }
+
+   inline bool Configuration::hasAtomContexts()
+   {  return hasAtomContexts_; }
 
    #ifdef SIMP_BOND
    inline GroupStorage<2>& Configuration::bonds()

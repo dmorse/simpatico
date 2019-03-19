@@ -1,5 +1,5 @@
-#ifndef DDMD_AVERAGE_ANALYZER_H
-#define DDMD_AVERAGE_ANALYZER_H
+#ifndef DDMD_AVERAGE_LIST_ANALYZER_H
+#define DDMD_AVERAGE_LIST_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,10 +9,7 @@
 */
 
 #include <ddMd/analyzers/Analyzer.h>
-
-namespace Util { 
-   class Average;
-}
+#include <simp/analysis/AverageListMixIn.h>
 
 namespace DdMd
 {
@@ -20,18 +17,19 @@ namespace DdMd
    class Simulation;
 
    using namespace Util;
+   using namespace Simp;
 
    /**
-   * Analyze average and block averages of a single floating point variable.
+   * Analyze averages and block averages of several real variables.
    *
-   * This class evaluates the average of a sampled float point variable, and
-   * optionally writes block averages to a data file during a simulation. It
-   * is intended for use as a base class for Analyzers that evaluate averages
-   * and (optionally) block averages for specific physical variables.
+   * This class evaluates the average of several sampled real variables, and
+   * optionally writes block averages to a data file during a simulation. 
+   * It is intended for use as a base class for Analyzers that evaluate 
+   * averages and (optionally) block averages for specific physical variables.
    *
    * \ingroup DdMd_Analyzer_Base_Module
    */
-   class AverageAnalyzer : public Analyzer
+   class AverageListAnalyzer : public Analyzer, public AverageListMixIn
    {
    
    public:
@@ -41,13 +39,13 @@ namespace DdMd
       *
       * \param simulation  parent Simulation object. 
       */
-      AverageAnalyzer(Simulation& simulation);
+      AverageListAnalyzer(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~AverageAnalyzer(); 
-   
+      virtual ~AverageListAnalyzer(); 
+
       /**
       * Read interval, outputFileName and (optionally) nSamplePerBlock.
       *
@@ -94,36 +92,6 @@ namespace DdMd
       * Write final results to file after a simulation.
       */
       virtual void output();
-
-   protected:
-
-      /**
-      * Compute value of sampled quantity.
-      *
-      * Call on all processors.
-      */
-      virtual void compute() = 0;
-
-      /**
-      * Get current value, set by compute function.
-      *
-      * Call only on master.
-      */
-      virtual double value() = 0;
-
-   private:
-
-      /// Output file stream.
-      std::ofstream  outputFile_;
-
-      /// Pointer to Average object (only instantiated on master processor)
-      Average *accumulatorPtr_;
-
-      /// Number of samples per block average output.
-      int nSamplePerBlock_;
-   
-      /// Has readParam been called?
-      bool isInitialized_;
    
    };
 

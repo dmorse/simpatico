@@ -1,5 +1,9 @@
 # ==============================================================================
-.PHONY: simp mcMd mcMd-mpi ddMd mdPp clean veryclean
+.PHONY: util simp mcMd mcMd-mpi ddMd mdPp clean veryclean
+
+# Compile util directory only (MPI not set automatically)
+util: 
+	cd util; $(MAKE) all
 
 # Compile util and simp directories only (MPI not set automatically)
 simp: 

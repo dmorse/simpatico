@@ -25,9 +25,9 @@ namespace MdPp
    /*
    * Constructor.
    */
-   DdMdConfigWriter::DdMdConfigWriter(Configuration& configuration, bool hasMolecules)
+   DdMdConfigWriter::DdMdConfigWriter(Configuration& configuration, bool writeAtomContexts)
     : ConfigWriter(configuration),
-      hasMolecules_(hasMolecules)
+      writeAtomContexts_(writeAtomContexts)
    {  setClassName("DdMdConfigWriter"); }
 
    /*
@@ -64,7 +64,13 @@ namespace MdPp
       file << configuration().boundary() << std::endl;
       file << std::endl;
 
-      // Write atoms
+      // Decide whether to write atom context data
+      bool writeAtomContexts = false;
+      if (configuration().hasAtomContexts()) {
+         writeAtomContexts = writeAtomContexts_;
+      }
+
+      // Write atom data
       file << "ATOMS" << std::endl;
       int nAtom = configuration().atoms().size();
       file << "nAtom" << Int(nAtom, 10) << std::endl;
@@ -75,7 +81,7 @@ namespace MdPp
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);
          r = iter->position;
-         if (hasMolecules_) {
+         if (writeAtomContexts) {
             file << Int(iter->speciesId, 6) 
                  << Int(iter->moleculeId, 10)
                  << Int(iter->atomId, 6);

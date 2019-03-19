@@ -6,18 +6,12 @@ User documentation for classes that implement data analysis and/or data output o
   <li> \subpage ddMd_analyzer_EnergyAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_KineticEnergyAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_ExternalEnergyAnalyzer_page </li>
-  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_PairEnergyAnalyzer_page </li>
-  <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
-  <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
-  <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
   <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
   <li> \subpage ddMd_analyzer_PressureAnalyzer_page </li>
-  <li> \subpage ddMd_analyzer_OutputPressure_page </li>
   <li> \subpage ddMd_analyzer_StressAnalyzer_page </li>
   <li> \subpage ddMd_analyzer_VirialStressAnalyzer_page </li>
-  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
   <li> \subpage ddMd_analyzer_StressAutoCorrelation_page </li>
   <li> \subpage ddMd_analyzer_StructureFactor_page </li>
   <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>

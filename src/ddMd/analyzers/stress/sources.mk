@@ -5,9 +5,6 @@ ddMd_analyzers_stress_=\
      ddMd/analyzers/stress/StressAnalyzer.cpp\
      ddMd/analyzers/stress/VirialStressAnalyzer.cpp\
      ddMd/analyzers/stress/OutputStressTensor.cpp\
-     ddMd/analyzers/stress/VirialStressTensorAverage.cpp\
-     ddMd/analyzers/stress/VirialStressTensor.cpp\
-     ddMd/analyzers/stress/StressAutoCorr.cpp\
      ddMd/analyzers/stress/StressAutoCorrelation.cpp
 
 ddMd_analyzers_stress_SRCS=\

@@ -30,6 +30,9 @@ namespace MdPp
    void SpeciesStorage::initialize()
    {
       // Preconditions
+      if (capacity() <= 0) {
+         UTIL_THROW("SpeciesStorage capacity() not yet set");
+      }
       if (molecules_.capacity() != 0) {
          UTIL_THROW("SpeciesStorage::molecules_ already allocated");
       }
@@ -51,8 +54,6 @@ namespace MdPp
 
       // Allocate and initialize molecules_ array
       molecules_.allocate(capacity());
-
-      // Initialize molecules_ array
       molecules_.resize(capacity()); // temporarily resize
       Atom** atomPtr = &atomPtrs_[0];
       for (int i = 0; i < capacity(); ++i) {
@@ -86,7 +87,8 @@ namespace MdPp
    */
    void SpeciesStorage::addAtom(Atom& atom)
    {
-      if (atom.speciesId != id_) {
+      int sId = atom.speciesId;
+      if (sId != id_) {
          UTIL_THROW("Inconsistent speciesId");
       }
       int mId = atom.moleculeId;
@@ -126,6 +128,7 @@ namespace MdPp
    bool SpeciesStorage::isValid() const
    {
       // Check allocation and initialization
+      UTIL_CHECK(capacity() > 0);
       if (molecules_.capacity() != capacity()) {
          UTIL_THROW("molecules_ is not allocated");
       }
@@ -149,7 +152,6 @@ namespace MdPp
             if (mPtr->speciesPtr_ != this) {
                UTIL_THROW("Incorrect species pointer in molecule");
             }
-            #if 1
             if (mPtr->nAtom_ == nAtom_) {
                for (ia = 0; ia < nAtom_; ++ia) {
                   aPtr = mPtr->atoms_[ia];
@@ -176,35 +178,9 @@ namespace MdPp
             } else {
                UTIL_THROW("0 != molecule nAtom != species nAtom");
             }
-            #endif
          }
       }
       return true;
    }
-
-   #if 0
-   /*
-   * istream extractor (>>) for a SpeciesStorage.
-   */
-   std::istream& operator >> (std::istream& in, SpeciesStorage &species)
-   {
-      in >> species.nAtom_;
-      in >> species.capacity_;
-      species.initialize();
-      return in;
-   }
-
-   /*
-   * ostream inserter (<<) for a SpeciesStorage.
-   */
-   std::ostream& operator << (std::ostream& out, const SpeciesStorage &species) 
-   {
-      out.width(10);
-      out << species.nAtom_;
-      out.width(10);
-      out << species.capacity_;
-      return out;
-   }
-   #endif
 
 }

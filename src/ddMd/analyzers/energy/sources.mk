@@ -9,7 +9,6 @@ ddMd_analyzers_energy_=\
 
 ifdef SIMP_EXTERNAL
 ddMd_analyzers_energy_+=\
-     ddMd/analyzers/energy/ExternalEnergyAverage.cpp\
      ddMd/analyzers/energy/ExternalEnergyAnalyzer.cpp
 endif
 

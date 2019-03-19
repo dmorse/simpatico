@@ -34,15 +34,15 @@ namespace MdPp
       /**
       * Default constructor.
       */
-      DdMdConfigReader(bool hasMolecules = false);
+      DdMdConfigReader(bool hasAtomContexts = false);
 
       /**
       * Constructor.
       *
       * \param configuration parent Configuration object.
-      * \param hasMolecules true if file format has DdMd::AtomContext info
+      * \param hasAtomContexts true if file format has DdMd::AtomContext info
       */
-      DdMdConfigReader(Configuration& configuration, bool hasMolecules = false);
+      DdMdConfigReader(Configuration& configuration, bool hasAtomContexts = false);
 
       /**
       * Read configuration file in DdMd default format.
@@ -53,8 +53,14 @@ namespace MdPp
 
    private:
 
-      bool hasMolecules_;
+      /*
+      * Does the file have species, molecule, and local atom ids ?
+      */
+      bool hasAtomContexts_;
 
+      /*
+      * Function template to read BOND, ANGLE, or DIHEDRAL block.
+      */
       template <int N>
       int readGroups(std::ifstream& file, const char* sectionLabel, 
                      const char* nGroupLabel, GroupStorage<N>& groups);

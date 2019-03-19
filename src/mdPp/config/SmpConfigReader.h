@@ -40,7 +40,6 @@ namespace MdPp
       * Constructor.
       *
       * \param configuration parent Configuration object.
-      * \param hasMolecules true if file format has DdMd::AtomContext info
       */
       SmpConfigReader(Configuration& configuration);
 

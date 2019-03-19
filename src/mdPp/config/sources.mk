@@ -8,6 +8,7 @@ mdPp_config_=\
    mdPp/config/ConfigWriter.cpp \
    mdPp/config/ConfigWriterFactory.cpp \
    mdPp/config/DdMdConfigWriter.cpp \
+   mdPp/config/SmpConfigWriter.cpp \
    mdPp/config/HoomdConfigWriter.cpp \
 
 mdPp_config_SRCS=\

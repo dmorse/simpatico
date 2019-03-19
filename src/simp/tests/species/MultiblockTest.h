@@ -1,5 +1,5 @@
-#ifndef MCMD_MULTIBLOCK_TEST_H
-#define MCMD_MULTIBLOCK_TEST_H
+#ifndef SIMP_MULTIBLOCK_TEST_H
+#define SIMP_MULTIBLOCK_TEST_H
 
 #include <test/UnitTest.h>
 

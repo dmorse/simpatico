@@ -10,7 +10,6 @@
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/storage/Configuration.h>
-
 #include <util/param/OptionalLabel.h>
 
 namespace MdPp
@@ -24,7 +23,7 @@ namespace MdPp
    DdMdConfigReader::DdMdConfigReader(Configuration& configuration, 
                                       bool hasMolecules)
     : ConfigReader(configuration),
-      hasMolecules_(hasMolecules)
+      hasAtomContexts_(hasMolecules)
    {  setClassName("DdMdConfigReader"); }
 
    /*
@@ -53,6 +52,7 @@ namespace MdPp
       }
       int atomCapacity = configuration().atoms().capacity(); 
       UTIL_CHECK(nAtom <= atomCapacity);
+      configuration().setHasAtomContexts(hasAtomContexts_);
 
       // Read and distribute atoms
       Atom* atomPtr;
@@ -72,7 +72,7 @@ namespace MdPp
             UTIL_THROW("Invalid atom id");
          }
          file >> atomPtr->typeId;
-         if (hasMolecules_) {
+         if (hasAtomContexts_) {
             file >> atomPtr->speciesId;
             if (atomPtr->speciesId < 0) {
                std::cout << "species Id  =" << atomPtr->speciesId << endl;
@@ -99,9 +99,6 @@ namespace MdPp
       // Read Covalent Groups
       #ifdef SIMP_BOND
       readGroups(file, "BONDS", "nBond", configuration().bonds());
-      //if (maskPolicy == MaskBonded) {
-      //   setAtomMasks();
-      //}
       #endif
 
       #ifdef SIMP_ANGLE

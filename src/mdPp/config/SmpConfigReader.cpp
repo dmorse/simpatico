@@ -104,6 +104,7 @@ namespace MdPp
       if (hasSpecies) {
          UTIL_CHECK(isOrdered || hasAtomContext);
       }
+
  
       // Read nAtom and allocate if necessary
       int nAtom;
@@ -116,6 +117,7 @@ namespace MdPp
          configuration().atoms().allocate(nAtom);
       } 
       UTIL_CHECK(configuration().atoms().capacity() >= nAtom);
+      configuration().setHasAtomContexts(hasAtomContext);
 
       // Read atoms 
       Atom* atomPtr = 0;
@@ -171,29 +173,28 @@ namespace MdPp
 
       // If hasSpecies, add atoms to species and create groups
       if (hasSpecies) {
+
+         // Add atoms in AtomStorage to SpeciesStorage
          if (hasAtomContext) {
-            addAtomsToSpecies();
+            configuration().addAtomsToSpecies();
          } else {
-            bool success;
-            success = setAtomContexts();
-            if (success) {
-               addAtomsToSpecies();
-            }
+            configuration().setAtomContexts();
+            configuration().addAtomsToSpecies();
          }
-         makeGroups();
-         #if 0
-         #ifdef SIMP_BOND
-         makeBonds();
-         #endif
-         #ifdef SIMP_ANGLE
-         makeAngles();
-         #endif
-         #ifdef SIMP_DIHEDRAL
-         makeDihedrals();
-         #endif
-         #endif
+
+         // Make all covalent groups
+         configuration().makeGroups();
+
+         // Validate all species
+         int nSpecies = configuration().nSpecies();
+         for (int i = 0; i < nSpecies; ++i) {
+            configuration().species(i).isValid();
+         }
+
       } else {
-         // Read Covalent Groups
+
+         // If no species, read explicit covalent groups
+
          #ifdef SIMP_BOND
          readGroups(file, "BONDS", "nBond", configuration().bonds());
          #endif
@@ -208,6 +209,7 @@ namespace MdPp
          readGroups(file, "IMPROPERS", "nDihedral", 
                     configuration().dihedrals());
          #endif
+
       }
 
       // Make sure static Label buffer is clean on exit

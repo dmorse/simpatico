@@ -202,6 +202,7 @@ namespace MdPp
             } 
             #endif
             else {
+               std::cout << "Node name = " << name << std::endl;
                UTIL_THROW("Unknown node name");
             }
 
@@ -222,11 +223,9 @@ namespace MdPp
       // assuming that atom ids are ordered by molecule and species.
 
       if (configuration().nSpecies() > 0) {
-         bool success;
-         success = setAtomContexts();
-         if (success) {
-            addAtomsToSpecies();
-         }
+         configuration().setAtomContexts();
+         configuration().addAtomsToSpecies();
+         
       }
 
    }

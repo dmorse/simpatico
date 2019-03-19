@@ -29,6 +29,7 @@ namespace MdPp
       #ifdef SIMP_IMPROPERT
       , improperCapacity_(0)
       #endif
+      , hasAtomContexts_(false)
    {  setClassName("Configuration"); }
 
    /*
@@ -53,18 +54,6 @@ namespace MdPp
    */
    void Configuration::readParameters(std::istream& in)
    {
-      #if 0
-      // Optionally read species info
-      nSpecies_ = 0; // default value
-      readOptional<int>(in, "nSpecies", nSpecies_);
-      if (nSpecies_ > 0) {
-         species_.allocate(nSpecies_);
-         for (int i = 0; i < nSpecies_; ++i) {
-            species_[i].setId(i);
-         }
-         UTIL_CHECK(nSpecies_ == species_.capacity());
-      }
-      #endif
 
       // Optionally read atom capacity
       atomCapacity_ = 0; // default value
@@ -119,10 +108,17 @@ namespace MdPp
    }
 
    /*
+   * Set value of hasAtomContexts flag.
+   */
+   void Configuration::setHasAtomContexts(bool hasAtomContexts)
+   {  hasAtomContexts_ = hasAtomContexts; }
+
+   /*
    * Remove all atoms and groups - set to empty state.
    */
    void Configuration::clear()
    {
+      // Clear species data
       if (nSpecies_ > 0) {
          UTIL_CHECK(species_.isAllocated());
          UTIL_CHECK(nSpecies_ = species_.capacity());
@@ -132,9 +128,14 @@ namespace MdPp
       } else {
          UTIL_CHECK(!species_.isAllocated());
       }
+
+      // Clear atom data
       if (atoms_.capacity() > 0) {
          atoms_.clear();
       }
+      hasAtomContexts_ = false;
+
+      // Clear group data
       #ifdef SIMP_BOND
       if (bonds_.capacity() > 0) {
          bonds_.clear();
@@ -155,6 +156,242 @@ namespace MdPp
          impropers_.clear();
       }
       #endif
+   }
+
+   /*
+   * Set atom context info, assuming ordered atom ids.
+   */
+   void Configuration::setAtomContexts()
+   {
+      UTIL_CHECK(nSpecies() > 0);
+
+      // Check total number of atoms
+      int nFill = 0;
+      for (int i = 0; i < nSpecies(); ++i) {
+         nFill += species(i).nAtom()*species(i).capacity();
+      }
+      if (atoms().size() != nFill) {
+         UTIL_THROW("Atom storage capacity != expected total");
+      }
+
+      // Set speciesId, moleculeId and atomId for each Atom
+      Atom* atomPtr = 0;
+      SpeciesStorage* speciesPtr = 0;
+      int speciesId, moleculeId, atomId, nMol, nAtom;
+      int id = 0;
+      for (speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         nMol  = speciesPtr->capacity();
+         nAtom = speciesPtr->nAtom();
+         for (moleculeId = 0; moleculeId < nMol; ++moleculeId) {
+            for (atomId = 0; atomId < nAtom; ++atomId) {
+               atomPtr = atoms().ptr(id);
+               if (!atomPtr) {
+                  UTIL_THROW("Error: missing atom");
+               }
+               atomPtr->speciesId = speciesId;
+               atomPtr->moleculeId = moleculeId;
+               atomPtr->atomId = atomId;
+               ++id;
+            }
+         }
+      }
+
+      hasAtomContexts_ = true;
+   }
+
+   /*
+   * Add all atoms currently in the AtomStorage to the Species 
+   * containers and associated molecules.
+   */
+   void Configuration::addAtomsToSpecies()
+   {
+      UTIL_CHECK(nSpecies() > 0);
+      for (int i = 0; i < nSpecies(); ++i) {
+         species(i).clear();
+      }
+      int speciesId;
+      AtomStorage::Iterator iter;
+      atoms().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         speciesId = iter->speciesId;
+         if (speciesId < 0) {
+            UTIL_THROW("Negative speciesId");
+         }
+         if (speciesId >= nSpecies()) {
+            UTIL_THROW("speciesId >= nSpecies");
+         }
+         species(speciesId).addAtom(*iter);
+      }
+   }
+
+
+   void Configuration::makeGroups()
+   {
+      #ifdef SIMP_BOND
+      makeBonds();
+      #endif
+      #ifdef SIMP_ANGLE
+      makeAngles();
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      makeDihedrals();
+      #endif
+   }
+
+   #ifdef SIMP_BOND
+   /*
+   * Create all bonds from species templates.
+   */
+   void Configuration::makeBonds()
+   {
+      UTIL_CHECK(nSpecies());
+
+      // Count the required number of bonds
+      SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nBond();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<2>& storage = bonds();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
+      int firstAtomId = 0;
+      int groupId = 0;
+      int nAtom;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nBond();
+         nAtom = speciesPtr->nAtom();
+         makeSpeciesGroups<2>(storage, speciesPtr->speciesBonds(),
+                              nMol, nAtom, nGroup, firstAtomId, groupId);
+      }
+   }
+   #endif
+
+   #ifdef SIMP_ANGLE
+   /*
+   * Create all angles from species templates.
+   */
+   void Configuration::makeAngles()
+   {
+      UTIL_CHECK(nSpecies() > 0);
+
+      // Count the required number of angles
+      SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup, nAtom;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         int nMol = speciesPtr->capacity();
+         int nGroup = speciesPtr->nAngle();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<3>& storage = angles();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
+      int firstAtomId = 0;
+      int groupId = 0;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nAngle();
+         nAtom = speciesPtr->nAtom();
+         makeSpeciesGroups<3>(storage, speciesPtr->speciesAngles(),
+                              nMol, nAtom, nGroup, firstAtomId, groupId);
+      }
+   }
+   #endif
+
+   #ifdef SIMP_DIHEDRAL
+   /*
+   * Create all dihedrals from species templates.
+   */
+   void Configuration::makeDihedrals()
+   {
+      UTIL_CHECK(nSpecies());
+
+      // Count the required number of dihedrals
+      SpeciesStorage* speciesPtr = 0;
+      int nMol, nGroup, nAtom;
+      int nGroupTot = 0;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         int nMol = speciesPtr->capacity();
+         int nGroup = speciesPtr->nDihedral();
+         nGroupTot += nMol*nGroup;
+      }
+      if (nGroupTot == 0) return;
+
+      // Allocate if necessary
+      GroupStorage<4>& storage = dihedrals();
+      if (storage.capacity() == 0) {
+         storage.allocate(nGroupTot);
+      }
+      UTIL_CHECK(storage.capacity() >= nGroupTot);
+
+      // Make groups
+      int firstAtomId = 0;
+      int groupId = 0;
+      for (int speciesId = 0; speciesId < nSpecies(); ++speciesId) {
+         speciesPtr = &species(speciesId);
+         nMol = speciesPtr->capacity();
+         nGroup = speciesPtr->nDihedral();
+         nAtom = speciesPtr->nAtom();
+         makeSpeciesGroups<4>(storage, speciesPtr->speciesDihedrals(),
+                              nMol, nAtom, nGroup, firstAtomId, groupId);
+      }
+   }
+   #endif
+
+   /**
+   * Make all Group<N> objects of one type for one species.
+   */
+   template <int N>
+   void Configuration::makeSpeciesGroups(
+       GroupStorage<N>& storage,
+       const DArray< SpeciesGroup<N> >& speciesGroups,
+       int nMol, int nAtom, int nGroup, 
+       int& firstAtomId, int& groupId)
+   {
+      Group<N>* groupPtr = 0;
+      const SpeciesGroup<N>* speciesGroupPtr = 0;
+      int molId, atomId, typeId, i, j;
+
+      for (molId = 0; molId < nMol; ++molId) {
+         for (i = 0; i < nGroup; ++i) {
+            groupPtr = storage.newPtr();
+            groupPtr->id = groupId;
+            speciesGroupPtr = &speciesGroups[i]; //
+            typeId = speciesGroupPtr->typeId();
+            groupPtr->typeId = typeId;
+            for (j = 0; j < N; ++j) {
+               atomId = firstAtomId + speciesGroupPtr->atomId(j);
+               groupPtr->atomIds[j] = atomId;
+            }
+            ++groupId;
+         }
+         firstAtomId += nAtom;
+      }
    }
 
 }
