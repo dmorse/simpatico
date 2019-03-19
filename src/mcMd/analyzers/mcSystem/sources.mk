@@ -14,7 +14,7 @@ endif
 
 ifdef SIMP_BOND
 mcMd_analyzers_mcSystem_+=\
-    mcMd/analyzers/mcSystem/McBondEnergyAverage.cpp \
+mcMd/analyzers/mcSystem/McBondEnergyAverage.cpp \
     mcMd/analyzers/mcSystem/McIntraBondStressAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McIntraBondTensorAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McNVTChemicalPotential.cpp 
@@ -29,4 +29,5 @@ mcMd_analyzers_mcSystem_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_mcSystem_))
 mcMd_analyzers_mcSystem_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_mcSystem_:.cpp=.o))
+
 

@@ -5,34 +5,23 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McEnergyAverage.h"                        // class header
-//#include <util/misc/FileMaster.h>  
-//#include <util/archives/Serializable_includes.h>
-
-
-#include <cstdio> 
+#include "McEnergyAverage.h"                
+#include <mcMd/mcSimulation/McSystem.h>    
 
 namespace McMd
 {
 
    using namespace Util;
 
-   /* 
+   /*
    * Constructor.
    */
    McEnergyAverage::McEnergyAverage(McSystem& system)
-    : AverageAnalyzer<McSystem>(system)
+    : McAverageAnalyzer(system)
    {  setClassName("McEnergyAverage"); }
 
-
-   /* 
-   * Evaluate energy, and add to accumulator.
-   */
-   void McEnergyAverage::sample(long iStep) 
-   {
-      if (isAtInterval(iStep))  {
-         accumulator_.sample(system().potentialEnergy(), outputFile_);
-      }
+   void McEnergyAverage::compute() {
+      value_ = system().potentialEnergy();
    }
-   
+
 }
