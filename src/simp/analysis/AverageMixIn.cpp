@@ -26,7 +26,7 @@ namespace Simp
    AverageMixIn::AverageMixIn(FileMaster& fileMaster) 
     : AnalyzerMixIn(fileMaster),
       accumulatorPtr_(0),
-      nSamplePerBlock_(0)
+      nSamplePerBlock_(-1)
    {}
 
    /*
@@ -44,7 +44,7 @@ namespace Simp
    */
    void AverageMixIn::initializeAccumulator() {
       UTIL_CHECK(!hasAccumulator());
-      UTIL_CHECK(nSamplePerBlock_ > 0);
+      UTIL_CHECK(nSamplePerBlock_ >= 0);
       accumulatorPtr_ = new Average;
       accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
    }
@@ -64,6 +64,7 @@ namespace Simp
    void AverageMixIn::readNSamplePerBlock(std::istream& in,
                                           ParamComposite& composite)
    {
+      // Set to zero by default
       nSamplePerBlock_ = 0;
       composite.readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
    }
@@ -74,6 +75,7 @@ namespace Simp
    void AverageMixIn::loadNSamplePerBlock(Serializable::IArchive &ar,
                                           ParamComposite& composite)
    {
+      // Set to zero by default
       nSamplePerBlock_ = 0;
       bool isRequired = false;
       composite.loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
@@ -86,10 +88,12 @@ namespace Simp
    void AverageMixIn::loadAccumulator(Serializable::IArchive &ar)
    {
       UTIL_CHECK(!hasAccumulator());
-      UTIL_CHECK(nSamplePerBlock_ > 0); 
+      UTIL_CHECK(nSamplePerBlock_ >= 0); 
+      UTIL_CHECK(accumulatorPtr_ == 0);
+
       accumulatorPtr_ = new Average;
       ar >> *accumulatorPtr_;
-      UTIL_CHECK(nSamplePerBlock_ != accumulator().nSamplePerBlock()); 
+      UTIL_CHECK(accumulator().nSamplePerBlock() == nSamplePerBlock_); 
    }
 
    /*
@@ -97,6 +101,7 @@ namespace Simp
    */ 
    void AverageMixIn::saveNSamplePerBlock(Serializable::OArchive &ar)
    {
+      UTIL_CHECK(nSamplePerBlock_ >= 0);
       bool isActive = (bool)nSamplePerBlock_;
       Parameter::saveOptional<int>(ar, nSamplePerBlock_, isActive);
    }

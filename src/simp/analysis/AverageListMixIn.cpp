@@ -41,16 +41,22 @@ namespace Simp
    {
       UTIL_CHECK(nValue > 0);
       UTIL_CHECK(nValue_ == 0);
+      UTIL_CHECK(nSamplePerBlock_ >= 0);
       accumulators_.allocate(nValue);
       names_.allocate(nValue);
+      values_.allocate(nValue);
       nValue_ = nValue;
       hasAccumulators_ = true;
+      for (int i = 0; i < nValue_; ++i) {
+         accumulators_[i].setNSamplePerBlock(nSamplePerBlock_);
+      }
+      clearAccumulators();
    }
 
    void AverageListMixIn::setName(int i, std::string name) 
    {
-      UTIL_CHECK(hasAccumulators_ > 0);
-      UTIL_CHECK(i > 0 && i < nValue_);
+      UTIL_CHECK(hasAccumulators_);
+      UTIL_CHECK(i >= 0 && i < nValue_);
       names_[i] = name;
    }
 
@@ -93,7 +99,7 @@ namespace Simp
    */ 
    void AverageListMixIn::loadAccumulators(Serializable::IArchive &ar)
    {
-      UTIL_CHECK(nSamplePerBlock_ > 0);
+      UTIL_CHECK(nSamplePerBlock_ >= 0);
       UTIL_CHECK(!hasAccumulators());
       int nValue;
       ar >> nValue;
@@ -102,6 +108,7 @@ namespace Simp
       UTIL_CHECK(nValue_ == nValue);
       UTIL_CHECK(accumulators_.capacity() == nValue_);
       UTIL_CHECK(names_.capacity() == nValue_);
+      UTIL_CHECK(values_.capacity() == nValue_);
       ar >> accumulators_;
       ar >> names_;
       for (int i = 0; i < nValue_; ++i) {
@@ -136,36 +143,29 @@ namespace Simp
    void AverageListMixIn::updateAccumulators(long iStep, int interval) 
    {
       UTIL_CHECK(hasAccumulators());
+      UTIL_CHECK(accumulators_.capacity() == nValue_);
 
-      // Decide whether to output block averages
-      bool outputBlocks = false;
-      if (nSamplePerBlock_ > 0) { 
-         if (accumulators_[0].isBlockComplete() > 0) {
-            outputBlocks = true;
-         }
-      }
-
-      // If outputBlocks, write step counter
-      if (outputBlocks) {
-         UTIL_CHECK(outputFile().is_open());
-         int beginStep = iStep - (nSamplePerBlock_ - 1)*interval;
-         outputFile() << Int(beginStep);
-      }
-
-      // Loop over values
+      // Update accumulators.
       for (int i = 0; i < nValue(); ++i) {
          double data = value(i);
          accumulators_[i].sample(data);
-         if (outputBlocks) {
-            UTIL_CHECK(accumulators_[i].isBlockComplete());
-            double block = accumulators_[i].blockAverage();
-            outputFile() << Dbl(block);
+      }
+
+      // Output block averages
+      if (nSamplePerBlock_ > 0) { 
+         if (accumulators_[0].isBlockComplete()) {
+            UTIL_CHECK(outputFile().is_open());
+            int beginStep = iStep - (nSamplePerBlock_ - 1)*interval;
+            outputFile() << Int(beginStep);
+            for (int i = 0; i < nValue(); ++i) {
+               UTIL_CHECK(accumulators_[i].isBlockComplete());
+               double block = accumulators_[i].blockAverage();
+               outputFile() << Dbl(block);
+            }
+            outputFile() << "\n";
          }
       }
 
-      if (outputBlocks) {
-         outputFile() << "\n";
-      }
    }
 
    /*
@@ -184,6 +184,7 @@ namespace Simp
       std::string fileName;
       fileName = outputFileName;
       fileName += ".ave";
+      openOutputFile(fileName);
       double ave, err;
       for (int i = 0; i < nValue_; ++i) {
          ave = accumulators_[i].average();
@@ -196,6 +197,7 @@ namespace Simp
       // Write error analysis (*.aer) file
       fileName = outputFileName;
       fileName += ".aer";
+      openOutputFile(fileName);
       for (int i = 0; i < nValue_; ++i) {
          accumulators_[i].output(outputFile());
       }

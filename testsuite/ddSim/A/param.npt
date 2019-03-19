@@ -66,14 +66,16 @@ Simulation{
         interval         100
      }
 
-     OutputEnergy{
-        interval        200
-        outputFileName  energy
+     EnergyAnalyzer{
+        interval         100
+        outputFileName   energy
+        nSamplePerBlock  2
      }
 
-     OutputPressure{
-        interval        200
-        outputFileName  pressure
+     PressureAnalyzer{
+        interval         100
+        outputFileName   pressure
+        nSamplePerBlock  2
      }
 
   }

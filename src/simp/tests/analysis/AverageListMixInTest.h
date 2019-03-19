@@ -1,15 +1,14 @@
-#ifndef SIMP_AVERAGE_MIXIN_TEST_H
-#define SIMP_AVERAGE_MIXIN_TEST_H
+#ifndef SIMP_AVERAGE_LIST_MIXIN_TEST_H
+#define SIMP_AVERAGE_LIST_MIXIN_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include "MockAverage.h"
-#include <simp/analysis/AverageMixIn.h>
-#include <util/misc/FileMaster.h>
+#include "MockAverageList.h"
+#include <simp/analysis/AverageListMixIn.h>
 #include <util/accumulators/Average.h>
 #include <util/archives/BinaryFileOArchive.h>
-#include <util/archives/BinaryFileIArchive.h>
+#include <util/misc/FileMaster.h>
 
 #include <iostream>
 #include <fstream>
@@ -17,17 +16,17 @@
 using namespace Util;
 using namespace Simp;
 
-class AverageMixInTest : public UnitTest 
+class AverageListMixInTest : public UnitTest 
 {
 
 private:
 
    FileMaster fileMaster;
-   MockAverage analyzer;
+   MockAverageList analyzer;
 
 public:
 
-   AverageMixInTest() :
+   AverageListMixInTest() :
      fileMaster(),
      analyzer(fileMaster)
    {}
@@ -36,6 +35,7 @@ public:
    { 
       //setVerbose(2);
       fileMaster.setOutputPrefix(filePrefix());
+
    } 
 
    void tearDown() 
@@ -46,15 +46,14 @@ public:
    void testSample();
 
    void testSaveLoad();
-
 };
 
-void AverageMixInTest::testReadParam()
+void AverageListMixInTest::testReadParam()
 {
    printMethod(TEST_FUNC);
 
    std::ifstream in;
-   openInputFile("in/MockAverage", in);
+   openInputFile("in/MockAverageList", in);
    analyzer.readParam(in);
    in.close();
 
@@ -66,12 +65,12 @@ void AverageMixInTest::testReadParam()
 
 }
 
-void AverageMixInTest::testSample()
+void AverageListMixInTest::testSample()
 {
    printMethod(TEST_FUNC);
 
    std::ifstream in;
-   openInputFile("in/MockAverage", in);
+   openInputFile("in/MockAverageList", in);
    analyzer.readParam(in);
    in.close();
 
@@ -85,12 +84,12 @@ void AverageMixInTest::testSample()
    analyzer.output();
 }
 
-void AverageMixInTest::testSaveLoad()
+void AverageListMixInTest::testSaveLoad()
 {
    printMethod(TEST_FUNC);
 
    std::ifstream in;
-   openInputFile("in/MockAverage", in);
+   openInputFile("in/MockAverageList", in);
    analyzer.readParam(in);
    in.close();
 
@@ -103,37 +102,38 @@ void AverageMixInTest::testSaveLoad()
    }
 
    std::ofstream ofile;
-   openOutputFile("tmp/arAve", ofile);
+   openOutputFile("tmp/arAveList", ofile);
    BinaryFileOArchive oar(ofile);
    analyzer.save(oar);
    ofile.close();
 
    std::ifstream ifile;
-   openInputFile("tmp/arAve", ifile);
+   openInputFile("tmp/arAveList", ifile);
    BinaryFileIArchive iar(ifile);
-
-   MockAverage analyzer2(fileMaster);
+   MockAverageList analyzer2(fileMaster);
    analyzer2.load(iar);
    ifile.close();
     
    TEST_ASSERT(analyzer.nSamplePerBlock() == analyzer2.nSamplePerBlock());
-   double ave = analyzer2.accumulator().average();
-   TEST_ASSERT(fabs(ave - 1.0) < 0.1);
+   double ave0 = analyzer2.accumulator(0).average();
+   double ave1 = analyzer2.accumulator(1).average();
+   TEST_ASSERT(fabs(ave0) < 0.1);
+   TEST_ASSERT(fabs(ave1 - 1.0) < 0.1);
 
    if (verbose() > 1) {
       std::cout << "\n";
-      std::cout << ave << "\n";
+      std::cout << "average(0) = " << ave0 << "\n";
+      std::cout << "average(1) = " << ave1 << "\n";
    }
 
 }
 
-
-TEST_BEGIN(AverageMixInTest)
-TEST_ADD(AverageMixInTest, testReadParam)
-TEST_ADD(AverageMixInTest, testSample)
+TEST_BEGIN(AverageListMixInTest)
+TEST_ADD(AverageListMixInTest, testReadParam)
+TEST_ADD(AverageListMixInTest, testSample)
 #ifndef UTIL_MPI
-TEST_ADD(AverageMixInTest, testSaveLoad)
+TEST_ADD(AverageListMixInTest, testSaveLoad)
 #endif
-TEST_END(AverageMixInTest)
+TEST_END(AverageListMixInTest)
 
 #endif
