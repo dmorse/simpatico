@@ -26,21 +26,13 @@ namespace DdMd
    AverageAnalyzer::AverageAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
       AverageMixIn(simulation.fileMaster())
-      //outputFile_(),
-      //fileMasterPtr_(&simulation.fileMaster()),
-      //accumulatorPtr_(0),
-      //nSamplePerBlock_(0)
    {  setClassName("AverageAnalyzer"); }
 
    /*
    * Destructor.
    */
    AverageAnalyzer::~AverageAnalyzer() 
-   {  
-      //if (accumulatorPtr_) {
-      //   delete accumulatorPtr_;
-      //}
-   }
+   {}
 
    /*
    * Read interval and outputFileName. 
@@ -115,7 +107,6 @@ namespace DdMd
       }
       compute();
       if (simulation().domain().isMaster()) {
-         //updateAccumulator(iStep);
          updateAccumulator(iStep, interval());
       }
    }
@@ -142,122 +133,5 @@ namespace DdMd
 
       }
    }
-
-   #if 0
-   // Utility functions (Migrate to base class)
-
-   /*
-   * Instantiate a new Average accumulator and set nSamplerPerBlock.
-   */
-   void AverageAnalyzer::initializeAccumulator() {
-      UTIL_CHECK(!hasAccumulator());
-      UTIL_CHECK(nSamplePerBlock_ > 0);
-      accumulatorPtr_ = new Average;
-      accumulatorPtr_->setNSamplePerBlock(nSamplePerBlock_);
-   }
-
-   /*
-   * Clear accumulator.
-   */
-   void AverageAnalyzer::clearAccumulator() 
-   {
-      UTIL_CHECK(hasAccumulator());
-      accumulatorPtr_->clear();
-   }
- 
-   /*
-   * Read nSamplePerBlock parameter from file.
-   */ 
-   void AverageAnalyzer::readNSamplePerBlock(std::istream& in, 
-                                             ParamComposite& composite)
-   {
-      nSamplePerBlock_ = 0;
-      composite.readOptional<int>(in, "nSamplePerBlock", nSamplePerBlock_);
-   }
-
-   /*
-   * Load nSamplePerBlock parameter from an archive.
-   */ 
-   void AverageAnalyzer::loadNSamplePerBlock(Serializable::IArchive &ar, 
-                                             ParamComposite& composite)
-   {
-      nSamplePerBlock_ = 0;
-      bool isRequired = false;
-      composite.loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_, 
-                                   isRequired);
-   }
-
-   /*
-   * Instantiate an Average accumulator and load data from an archive.
-   */ 
-   void AverageAnalyzer::loadAccumulator(Serializable::IArchive &ar)
-   {
-      UTIL_CHECK(!hasAccumulator());
-      UTIL_CHECK(nSamplePerBlock_ > 0); 
-      accumulatorPtr_ = new Average;
-      ar >> *accumulatorPtr_;
-      UTIL_CHECK(nSamplePerBlock_ != accumulator().nSamplePerBlock()); 
-   }
-
-   /*
-   * Save nSamplePerBlock parameter to an output archive.
-   */ 
-   void AverageAnalyzer::saveNSamplePerBlock(Serializable::OArchive &ar)
-   {
-      bool isActive = (bool)nSamplePerBlock_;
-      Parameter::saveOptional<int>(ar, nSamplePerBlock_, isActive);
-   }
-
-   /*
-   * Save Average accumulator to an output archive.
-   */ 
-   void AverageAnalyzer::saveAccumulator(Serializable::OArchive &ar)
-   {  ar << *accumulatorPtr_; }
-
-   void AverageAnalyzer::updateAccumulator(long iStep) 
-   {
-      UTIL_CHECK(hasAccumulator());
-      double data = value();
-      accumulatorPtr_->sample(data);
-      if (nSamplePerBlock_ > 0 && accumulator().isBlockComplete()) {
-         UTIL_CHECK(outputFile().is_open());
-         double block = accumulator().blockAverage();
-         int beginStep = iStep - (nSamplePerBlock_ - 1)*interval();
-         outputFile() << Int(beginStep,10) << Dbl(block, 20, 10) << "\n";
-      }
-   }
-
-   /*
-   * Output accumulator results to files.
-   */
-   void AverageAnalyzer::outputAccumulator()
-   {
-      UTIL_CHECK(hasAccumulator());
-
-      // Close output file.
-      if (outputFile().is_open()) {
-         outputFile().close();
-      }
-
-      // Write average (*.ave) file
-      openOutputFile(outputFileName(".ave"));
-      double ave = accumulatorPtr_->average();
-      double err = accumulatorPtr_->blockingError();
-      outputFile() << "Average   " << Dbl(ave) << " +- " 
-                  << Dbl(err, 9, 2) << "\n";
-      outputFile().close();
-
-      // Write error analysis (*.aer) file
-      openOutputFile(outputFileName(".aer"));
-      accumulatorPtr_->output(outputFile());
-      outputFile().close();
-   }
-
-   /*
-   * Open the output file.
-   */
-   void AverageAnalyzer::openOutputFile(std::string name)
-   {  fileMasterPtr_->openOutputFile(name, outputFile_); }
-   #endif
 
 }
