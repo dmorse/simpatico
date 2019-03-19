@@ -46,6 +46,7 @@ LIBS= $(ddMd_LIB) $(simp_LIB) $(util_LIB)
 
 # Pattern rule to compile all *.cpp class source files in src/ddMd
 $(BLD_DIR)/ddMd/%.o: $(SRC_DIR)/ddMd/%.cpp
+	@SDIR=$$(dirname "$@"); if [ ! -d "$$SDIR" ]; then mkdir -p "$$SDIR"; fi
 	$(CXX) $(INCLUDES) $(DDMD_ADEF) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DDMD_ADEF) $(CXXFLAGS) $(DDMD_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
@@ -53,6 +54,7 @@ endif
 
 # Rule to compile all *.cpp class source files in src/simp
 $(BLD_DIR)/simp/%.o: $(SRC_DIR)/simp/%.cpp
+	@SDIR=$$(dirname "$@"); if [ ! -d "$$SDIR" ]; then mkdir -p "$$SDIR"; fi
 	$(CXX) $(INCLUDES) $(SIMP_ADEF) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(SIMP_ADEF) $(CXXFLAGS) $(SIMP_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
@@ -60,6 +62,7 @@ endif
 
 # Rule to compile all *.cpp class source files in src/util
 $(BLD_DIR)/util/%.o: $(SRC_DIR)/util/%.cpp
+	@SDIR=$$(dirname "$@"); if [ ! -d "$$SDIR" ]; then mkdir -p "$$SDIR"; fi
 	$(CXX) $(INCLUDES) $(UTIL_ADEF) $(CXXFLAGS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(UTIL_ADEF) $(CXXFLAGS) $(UTIL_CFGS) -S$(SRC_DIR) -B$(BLD_DIR) $<
