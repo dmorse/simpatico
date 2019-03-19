@@ -6,9 +6,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McExternalEnergyAverage.h"        // class header
-
-#include <util/misc/FileMaster.h>  
+#include "McExternalEnergyAverage.h"     
+#include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
@@ -25,27 +24,26 @@ namespace McMd
    * Constructor.
    */
    McExternalEnergyAverage::McExternalEnergyAverage(McSystem& system)
-    : AverageAnalyzer<McSystem>(system)
+    : McAverageAnalyzer(system)
    {  setClassName("McExternalEnergyAverage"); }
- 
-   /*
-   * Evaluate external energy, and add to ensemble. 
-   */
-   void McExternalEnergyAverage::sample(long iStep) 
-   {
-      if (!isAtInterval(iStep)) return;
 
-      double energy = 0.0;
+   /*
+   * Evaluate external energy
+   */
+   void McExternalEnergyAverage::compute() 
+   {
+      double value_ = 0.0;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
+      //ExternalPotential& potential = system().externalPotential();
       for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
          for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
              for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-                 energy += system().externalPotential().energy(atomIter->position(), atomIter->typeId());
+                 value_ += system().externalPotential().energy(atomIter->position(), atomIter->typeId());
+                 //value_ += potential().energy(atomIter->position(), atomIter->typeId());
              }
          }
       }
-      accumulator_.sample(energy, outputFile_);
    }
 
 }

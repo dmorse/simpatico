@@ -5,7 +5,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McBondEnergyAverage.h"                    // class header
+#include "McBondEnergyAverage.h"                  
+#include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 
 namespace McMd
@@ -17,13 +18,13 @@ namespace McMd
    * Constructor.
    */
    McBondEnergyAverage::McBondEnergyAverage(McSystem& system)
-    : AverageAnalyzer<McSystem>(system)
+    : McAverageAnalyzer(system)
    {  setClassName("McBondEnergyAverage"); }
 
    /*
    * Evaluate total bond energy.
    */
-   void McBondEnergyAverage::sample(long iStep) 
-   {  accumulator_.sample(system().bondPotential().energy(), outputFile_); }
+   void McBondEnergyAverage::compute() 
+   {  value_ = system().bondPotential().energy(); }
 
 }

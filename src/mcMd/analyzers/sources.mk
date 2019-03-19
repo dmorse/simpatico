@@ -1,3 +1,4 @@
+include $(SRC_DIR)/mcMd/analyzers/base/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/util/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/system/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/mcSystem/sources.mk
@@ -7,6 +8,7 @@ include $(SRC_DIR)/mcMd/analyzers/trajectory/sources.mk
 include $(SRC_DIR)/mcMd/analyzers/mutable/sources.mk
 
 mcMd_analyzers_=\
+    $(mcMd_analyzers_base_) \
     $(mcMd_analyzers_util_) \
     $(mcMd_analyzers_system_) \
     $(mcMd_analyzers_mcSystem_) \
@@ -23,7 +25,7 @@ mcMd_analyzers_+=$(mcMd_analyzers_perturb_)
 endif
 
 mcMd_analyzers_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_))
+    $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_))
 mcMd_analyzers_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_:.cpp=.o))
 
