@@ -46,7 +46,7 @@ Simulation{
   }
   BoundaryEnsemble{
     type              isobaric
-    pressure          2.4
+    pressure          2.483
   }
   NptIntegrator{
     dt                0.005
@@ -60,21 +60,105 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     100
+    baseInterval     10
 
-     LogEnergy{
-        interval         100
-     }
+    LogEnergy{
+       interval         100
+    }
 
-     OutputEnergy{
-        interval        200
-        outputFileName  energy
-     }
+    OutputBoxdim{
+       interval         100
+       outputFileName   boxdim
+    }
 
-     OutputPressure{
-        interval        200
-        outputFileName  pressure
-     }
+    OutputEnergy{
+      interval           100
+      outputFileName     energyOut
+    }
+
+    EnergyAnalyzer{
+      interval           100
+      outputFileName     energy
+      nSamplePerBlock    1
+    }
+
+    KineticEnergyAnalyzer{
+      interval           100
+      outputFileName     kinEnergy
+      nSamplePerBlock    1
+    }
+
+    PairEnergyAnalyzer{
+      interval           100
+      outputFileName     pairEnergy_01
+      nSamplePerBlock    1
+      typeIdPair         0  1
+    }
+
+    OutputPressure{
+      interval           100
+      outputFileName     pressureOut
+    }
+
+    PressureAnalyzer{
+      interval           100
+      outputFileName     pressure
+      nSamplePerBlock    1
+    }
+
+    StressAnalyzer{
+      interval           100
+      outputFileName     stress
+      nSamplePerBlock    1
+    }
+
+    VirialStressAnalyzer{
+      interval           100
+      outputFileName     virialStress
+      nSamplePerBlock    1
+    }
+
+    StressAutoCorrelation{
+      interval           10
+      outputFileName     stressAutoCorr
+      bufferCapacity     1000
+    }
+
+    StructureFactor{
+      interval           100
+      outputFileName     structureFactor
+      nMode              1
+      modes              1   -1
+      nWave              10
+      waveIntVectors     1   0   0
+                         2   0   0
+                         3   0   0
+                         4   0   0
+                         5   0   0
+                         6   0   0
+                         7   0   0
+                         8   0   0
+                         9   0   0
+                        10   0   0
+    }
+
+    VanHove{
+      interval          100
+      outputFileName    vanHove
+      atomTypeCoeffs    1   -1
+      nBuffer           100
+      nWave             10
+      waveIntVectors     1   0   0
+                         2   0   0
+                         3   0   0
+                         4   0   0
+                         5   0   0
+                         6   0   0
+                         7   0   0
+                         8   0   0
+                         9   0   0
+                        10   0   0
+    }
 
   }
 }
@@ -82,23 +166,6 @@ Simulation{
   AnalyzerManager{
      baseInterval     1000
 
-     OutputEnergy{
-        interval         2000
-        outputFileName   energy
-     }
-
-     OutputPressure{
-        interval         2000
-        outputFileName   pressure
-     }
-     OutputBoxdim{
-        interval         2000
-        outputFileName   boxdim
-     }
-     OutputTemperature{
-        interval         2000
-        outputFileName   temperature
-      }
   }
 }
 
