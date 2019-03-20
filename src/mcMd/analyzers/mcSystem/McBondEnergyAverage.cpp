@@ -6,6 +6,7 @@
 */
 
 #include "McBondEnergyAverage.h"                  
+#include <mcMd/analyzers/base/AverageAnalyzer.tpp>
 #include <mcMd/potentials/bond/BondPotential.h>
 
 namespace McMd

@@ -6,6 +6,7 @@
 */
 
 #include "McEnergyAverage.h"                
+#include <mcMd/analyzers/base/AverageAnalyzer.tpp>
 
 namespace McMd
 {
