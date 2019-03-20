@@ -9,7 +9,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/base/McAverageAnalyzer.h> // base class
+#include <mcMd/analyzers/base/AverageAnalyzer.h> // base class template
+#include <mcMd/mcSimulation/McSystem.h>          // base class parameter
 
 #include <cstdio>
 
@@ -26,7 +27,7 @@ namespace McMd
    *
    * \ingroup McMd_Analyzer_Mc_Module
    */
-   class McExternalEnergyAverage : public McAverageAnalyzer
+   class McExternalEnergyAverage : public AverageAnalyzer<McSystem>
    {
 
    public:
