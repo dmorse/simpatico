@@ -203,6 +203,18 @@ namespace Simp
       }
       outputFile().close();
 
+      // Write data format file (*.dfm) file
+      fileName = outputFileName;
+      fileName += ".dfm";
+      openOutputFile(fileName);
+      outputFile() << "Value = " << nValue() << std::endl;
+      outputFile() << "iStep  ";
+      for (int i = 0; i < nValue_; ++i) {
+         outputFile() << names_[i] << "  ";
+      }
+      outputFile() << std::endl;
+      outputFile().close();
+
    }
 
 }

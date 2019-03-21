@@ -41,6 +41,9 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       readNSamplePerBlock(in, *this);
+      if (nSamplePerBlock()) {
+         openOutputFile(outputFileName(".dat"));
+      }
 
       // Note: ReadParameters method of derived classes should call this,
       // determine nValue and then call initializeAccumulators(nValue).
@@ -57,6 +60,9 @@ namespace McMd
       loadOutputFileName(ar);
       loadNSamplePerBlock(ar, *this);
       loadAccumulators(ar);
+      if (nSamplePerBlock()) {
+         openOutputFile(outputFileName(".dat"));
+      }
    }
 
    /*
@@ -88,9 +94,7 @@ namespace McMd
    void AverageListAnalyzer<SystemType>::setup()
    {
       UTIL_CHECK(hasAccumulators());
-      if (nSamplePerBlock()) {
-         openOutputFile(outputFileName(".dat"));
-      }
+      clear();
    }
 
    /*
@@ -100,9 +104,7 @@ namespace McMd
    void AverageListAnalyzer<SystemType>::sample(long iStep) 
    {
       UTIL_CHECK(hasAccumulators());
-      if (!isAtInterval(iStep)) {
-         UTIL_THROW("Time step index is not a multiple of interval");
-      }
+      if (!isAtInterval(iStep)) return;
       compute();
       updateAccumulators(iStep, interval());
    }
