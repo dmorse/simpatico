@@ -7,6 +7,7 @@
 */
 
 #include "McExternalEnergyAverage.h"     
+#include <mcMd/analyzers/base/AverageAnalyzer.tpp>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
@@ -24,7 +25,7 @@ namespace McMd
    * Constructor.
    */
    McExternalEnergyAverage::McExternalEnergyAverage(McSystem& system)
-    : McAverageAnalyzer(system)
+    : AverageAnalyzer<McSystem>(system)
    {  setClassName("McExternalEnergyAverage"); }
 
    /*

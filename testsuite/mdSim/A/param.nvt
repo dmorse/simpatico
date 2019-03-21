@@ -58,7 +58,13 @@ MdSimulation{
 
     MdEnergyOutput{
       interval                          1000
+      outputFileName               energyOut
+    }
+
+    MdEnergyAnalyzer{
+      interval                           100
       outputFileName                  energy
+      nSamplePerBlock                      1
     }
 
     MdPotentialEnergyAverage{

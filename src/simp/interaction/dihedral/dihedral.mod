@@ -36,8 +36,8 @@ namespace Simp
    * \f[
    *    \cos(\phi) \equiv {\bf u}_1 \cdot {\bf u}_2
    * \f]
-   * With this convention, a planar cis (arc) conformation yields 
-   * phi = 0, and a planar trans (zig-zag) conformation yields 
+   * With this convention, a planar sys (arc) conformation yields 
+   * phi = 0, and a planar anti/trans (zig-zag) conformation yields 
    * phi = 180 degrees.
    */
 

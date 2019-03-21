@@ -1,0 +1,20 @@
+NVT simulation of 40,000 steps:
+
+Energy:
+Kinetic     2.8235179e+04 +-  1.05e+01
+Pair        4.9293365e+03 +-  5.78e+00
+Bond        9.1713074e+03 +-  2.12e+01
+Total       4.2335823e+04 +-  8.50e+00
+
+Pressure:
+Average     2.4828141e+00 +-  1.72e-03
+
+Total Stress:
+Average(0, 0) =   2.4788623e+00 +-  2.14e-03
+Average(1, 1) =   2.4859387e+00 +-  3.22e-03
+Average(2, 2) =   2.4836414e+00 +-  3.07e-03
+
+Virial Stress:
+Average(0, 0) =   1.7793970e+00 +-  2.03e-03
+Average(1, 1) =   1.7846055e+00 +-  2.90e-03
+Average(2, 2) =   1.7836083e+00 +-  2.92e-03

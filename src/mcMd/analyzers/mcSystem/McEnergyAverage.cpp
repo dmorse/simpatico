@@ -6,7 +6,7 @@
 */
 
 #include "McEnergyAverage.h"                
-#include <mcMd/mcSimulation/McSystem.h>    
+#include <mcMd/analyzers/base/AverageAnalyzer.tpp>
 
 namespace McMd
 {
@@ -17,7 +17,7 @@ namespace McMd
    * Constructor.
    */
    McEnergyAverage::McEnergyAverage(McSystem& system)
-    : McAverageAnalyzer(system)
+    : AverageAnalyzer<McSystem>(system)
    {  setClassName("McEnergyAverage"); }
 
    void McEnergyAverage::compute() {

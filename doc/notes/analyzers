@@ -186,3 +186,37 @@ Format Files:
   order, so that they can be read and manipulated as single objects. The 
   listing of components is simply a human readable reminder to readers 
   of the order of components for the specified type.
+
+-----------------------------------------------------------
+Reader Classes (C++ and/or python)
+
+   DataFileFormat (reads a format file)
+       void read(file);
+
+   AverageFileReader 
+
+       Purpose: Reads a single average, can be called multiple times.
+
+       void read(filename)
+       void read(file)
+       double average();
+       double error();
+       double blocks();
+
+       Can be called multiple times.
+
+   AverageListFileReader 
+       void setFormat(DataFileFormat);
+       void read(filename)
+       void read(file)
+       double average(int i);
+       double error(int i);
+       double blocks(int i);
+
+   DataFileReader (reads a data file and associated format file)
+       void setFormat(DataFileFormat);
+       Record& readRecord(file);
+       countRecords(file);
+       readFile(file);
+       Record& record(int i);
+

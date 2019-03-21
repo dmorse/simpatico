@@ -2,7 +2,7 @@
 #define SIMP_ORTHORHOMBIC_BOUNDARY_H
 
 /*
-* Util Package - C++ Utilities for Scientific Computation
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
@@ -131,8 +131,8 @@ namespace Simp
       /**
       * Shift generalized Vector r to its primary image.
       *
-      * One output, each coordinate r[i] is shifted by an integer, so as to
-      * lie within the range 0 < r[i] < 1.0
+      * On output, each coordinate r[i] is shifted by an integer, so as to
+      * lie within the range 0 <= r[i] < 1.0
       *
       * Precondition: The algorithm assumes that on input, for each i=0,..,2,
       * -1.0 < r[i] < 2.0
@@ -142,14 +142,12 @@ namespace Simp
       void shiftGen(Vector &r) const;
 
       /**
-      * Shift generalized Vector r to its image within the primary unit cell.
+      * Shift generalized Vector r to its primary image, increment counter.
       *
       * This function maps a vector of generalized coordinates to lie in the 
-      * primary cell, and also increments the atomic shift IntVector:
+      * primary cell, and also increments the shift IntVector parameter:
       *
       * If r[i] -> r[i] - t, then shift[i] -> shift[i] + t.
-      *
-      * \sa Atom:shift()
       *
       * \param r     Vector of generalized coordinates  (in/out)
       * \param shift integer shifts, modified on output (in/out)
@@ -161,7 +159,7 @@ namespace Simp
       //@{
 
       /**
-      * Return square distance between positions r1 and r2.
+      * Return square distance between Cartesian vectors r1 and r2.
       *
       * This function returns the square distance between two Cartesian 
       * vectors, using the nearest image convention for the separation Vector.
@@ -173,7 +171,7 @@ namespace Simp
       double distanceSq(const Vector &r1, const Vector &r2) const;
 
       /**
-      * Return square distance between positions r1 and r2.
+      * Return square distance between r1 and r2, record required shift.
       *
       * This function returns the square distance between two Cartesian 
       * vectors, using the nearest image convention for the separation Vector.
@@ -190,7 +188,7 @@ namespace Simp
       const;
 
       /**
-      * Compute distance and separation between r1 and r2.
+      * Compute square distance and vector separation between r1 and r2.
       *
       * This function returns the square distance between two Cartesian 
       * vectors, using the nearest image convention for the separation Vector.
@@ -506,7 +504,7 @@ namespace Simp
    }
 
    /* 
-   * Calculate squared distance by minimum image convention.
+   * Compute squared distance by minimum image convention.
    */
    inline 
    double OrthorhombicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
@@ -557,7 +555,7 @@ namespace Simp
    }
 
    /* 
-   * Calculate squared distance between two positions, and separation vector,
+   * Compute squared distance between two positions, and separation vector,
    * using the minimum image convention.
    */
    inline 
@@ -701,4 +699,4 @@ namespace Util
 }
 #endif // ifdef  UTIL_MPI
 
-#endif // ifndef UTIL_ORTHORHOMBIC_BOUNDARY_H
+#endif // ifndef SIMP_ORTHORHOMBIC_BOUNDARY_H

@@ -2,7 +2,7 @@
 #define SIMP_MONOCLINIC_BOUNDARY_H
 
 /*
-* Util Package - C++ Utilities for Scientific Computation
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2017, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
@@ -782,4 +782,4 @@ namespace Util
 
 }
 #endif // ifdef  UTIL_MPI
-#endif // ifndef UTIL_MONOCLINIC_BOUNDARY_H
+#endif // ifndef SIMP_MONOCLINIC_BOUNDARY_H

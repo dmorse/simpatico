@@ -2,3 +2,4 @@
 rm -f out/*
 rm -f rst/*
 rm -f log
+rm -f restart

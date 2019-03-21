@@ -180,6 +180,17 @@ namespace Simp
          outputFile().close();
       }
 
+      // Compute maximum length of name field
+      int nameWidth = 0;
+      int length;
+      for (int i = 0; i < nValue_; ++i) {
+         length = names_[i].length();
+         if (length > nameWidth) {
+            nameWidth = length;
+         }
+      }
+      nameWidth += 2;
+
       // Write average (*.ave) file
       std::string fileName;
       fileName = outputFileName;
@@ -189,7 +200,8 @@ namespace Simp
       for (int i = 0; i < nValue_; ++i) {
          ave = accumulators_[i].average();
          err = accumulators_[i].blockingError();
-         outputFile() << names_[i] << "   ";
+         outputFile() << " " << std::left << std::setw(nameWidth) 
+                      << names_[i] << "   ";
          outputFile() << Dbl(ave) << " +- " << Dbl(err, 9, 2) << "\n";
       }
       outputFile().close();
@@ -198,9 +210,27 @@ namespace Simp
       fileName = outputFileName;
       fileName += ".aer";
       openOutputFile(fileName);
+      std::string line; 
+      line = 
+      "---------------------------------------------------------------------";
       for (int i = 0; i < nValue_; ++i) {
+         outputFile() << line << std::endl;
+         outputFile() << names_[i] << " :" << std::endl;
          accumulators_[i].output(outputFile());
+         outputFile() << std::endl;
       }
+      outputFile().close();
+
+      // Write data format file (*.dfm) file
+      fileName = outputFileName;
+      fileName += ".dfm";
+      openOutputFile(fileName);
+      outputFile() << "Value = " << nValue() << std::endl;
+      outputFile() << "iStep  ";
+      for (int i = 0; i < nValue_; ++i) {
+         outputFile() << names_[i] << "  ";
+      }
+      outputFile() << std::endl;
       outputFile().close();
 
    }

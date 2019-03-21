@@ -110,13 +110,19 @@ McSimulation{
 
     McEnergyOutput{
       interval                          1000
-      outputFileName                  energy
+      outputFileName               energyOut
     }
 
     McEnergyAverage{
       interval                          1000
-      outputFileName               energyAve
-      nSamplePerBlock                     10
+      outputFileName                  energy
+      nSamplePerBlock                      2
+    }
+
+    McBondEnergyAverage{
+      interval                          1000
+      outputFileName              bondEnergy
+      nSamplePerBlock                      2
     }
 
     McPairEnergyAverage{
@@ -128,15 +134,32 @@ McSimulation{
 
     McPressureAverage{
       interval                          1000
-      outputFileName             pressureAve
+      outputFileName                pressure
       nSamplePerBlock                     10
     }
 
     RadiusGyration{
       interval                          1000
-      outputFileName          RadiusGyration
+      outputFileName          radiusGyration
       nSamplePerBlock                     10
       speciesId                            0
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      min                                0.0
+      max                                2.0
+      nBin                               400
+    }
+
+    RDF{
+      interval                         10000
+      outputFileName                     RDF
+      max                                5.0
+      nBin                               500
+      selector                         inter   -1    -1
     }
 
     AtomMSD{
@@ -166,23 +189,6 @@ McSimulation{
     DumpConfig{
       interval                         10000
       outputFileName            dump/config.
-    }
-
-    RDF{
-      interval                         10000
-      outputFileName                     RDF
-      max                                5.0
-      nBin                               500
-      selector                         inter   -1    -1
-    }
-
-    BondLengthDist{
-      interval                          1000
-      outputFileName          BondLengthDist
-      speciesId                            0
-      min                                0.0
-      max                                2.0
-      nBin                               400
     }
 
 
