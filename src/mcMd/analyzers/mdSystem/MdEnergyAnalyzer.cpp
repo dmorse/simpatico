@@ -207,7 +207,7 @@ namespace McMd
       if (sys.hasExternalPotential()) {
          double external = sys.externalPotential().energy();
          potential += external;
-         setValue(id, dihedral);
+         setValue(id, external);
          ++id;
          // outputFile_ << Dbl(external, 15);
       }
