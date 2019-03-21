@@ -38,7 +38,7 @@ public:
       //std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, 0.0));
 
-      // Cis backfolded configuration (cosPhi = 1)
+      // Sys arc/backfolded configuration (cosPhi = 1)
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(-1.0, 0.0, 0.0);
@@ -48,7 +48,7 @@ public:
       // std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, 1.0));
 
-      // Cis 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      // Sys 45 deg twist configuration (cosPhi = 1/sqrt(2) )
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(-1.0, 0.0, 1.0);
@@ -58,7 +58,7 @@ public:
       // std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, 1.0/sqrt(2.0)));
 
-      // Trans zig-zag configuration (cosPhi = -1)
+      // Anti/trans zig-zag configuration (cosPhi = -1)
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(1.0, 0.0, 0.0);
@@ -68,7 +68,7 @@ public:
       //std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, -1.0));
 
-      // Trans 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      // Anti/trans 45 deg twist configuration (cosPhi = 1/sqrt(2) )
       b1_ = Vector(1.0, 0.0, 0.0);
       b2_ = Vector(0.0, 1.0, 0.0);
       b3_ = Vector(1.0, 0.0, 1.0);
@@ -78,7 +78,7 @@ public:
       // std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, -1.0/sqrt(2.0)));
 
-      // Rescaled Trans 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      // Rescaled anti 45 deg twist configuration (cosPhi = 1/sqrt(2) )
       b1_ = Vector(2.0, 0.0, 0.0);
       b2_ = Vector(0.0, 1.5, 0.0);
       b3_ = Vector(1.3, 0.0, -1.3);
@@ -91,7 +91,7 @@ public:
       // Irregular angle
       b1_ = Vector( 1.1,  0.2, -0.3);
       b2_ = Vector( 0.1,  0.9,  0.2);
-      b3_ = Vector(-0.1,  0.4,  1.0);
+      b3_ = Vector(-0.2,  0.4,  0.8);
       torsion_.computeAngle(b1_, b2_, b3_);
       angleTest();
       //std::cout << torsion_.cosPhi << std::endl;
