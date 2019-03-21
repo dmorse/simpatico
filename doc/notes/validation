@@ -69,4 +69,40 @@ Validate Directory Structure:
              command  <- command file
              inspect  <- Code to inspect output files (python?)
              out/     <- output files
-     
+    
+
+-------------------------------------------------------------------
+Adding tests to analyzers:
+--------------------------
+
+Idea: Add feature to Analyzer and AnalyzerManager, that allows
+Analyzers to run a validity test at the end of a simulation.
+
+Advantage: Allows a simulation implemented in the main program to 
+test itself.
+
+Changes to AnalyzerManager:
+
+Add testsEnabled_ member and bool testsEnabled() accessor function.
+
+Add optional bool testsEnabled parameter to AnalyzerManager paramfile.
+
+Add bool tests() method that runs test() on all analyzers with tests.
+
+The AnalyzerManager should throw an exception if any test fails.
+
+Changes to Analyzer:
+
+Add bool hasTest_ and bool testsEnabled_ private members.
+
+Add setTestsEnabled(bool ) function to Analyzer to let parent
+AnalyzerManager tell the that tests are enabled.
+
+Add bool hasTest() and void test() to Analyzer interface. 
+
+Read parameters method for specific analyzers can be modified 
+to read in any data required by a test. This could be explicit
+values or file addresses of regression test.
+
+Perhaps use a separate command in command file to run tests?
+
