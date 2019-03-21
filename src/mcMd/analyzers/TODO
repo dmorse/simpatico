@@ -5,4 +5,8 @@ TODO:
 Note: Checked 1/4/2013 with grep that all other analyzers have 
     save / loadParameters functions. Many have not been well tested.
 
+New analyzers:
+
+  - Write DihedralDistribution analyzer for dihedral angle
+  - Write AngleDistribution analyzer for bending angle
 
