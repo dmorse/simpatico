@@ -5,6 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <simp/interaction/dihedral/TorsionForce.h>
+#include <cmath>
 
 using namespace Util;
 using namespace Simp;
@@ -26,6 +27,8 @@ public:
    void testComputeAngle()
    {
       printMethod(TEST_FUNC);
+
+      // Perpendicular crank (cosPhi = 0)
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(0.0, 0.0,  1.0);
@@ -35,10 +38,61 @@ public:
       //std::cout << torsion_.cosPhi << std::endl;
       TEST_ASSERT(eq(torsion_.cosPhi, 0.0));
 
+      // Cis backfolded configuration (cosPhi = 1)
+      b1_ = Vector(1.0, 0.0,  0.0);
+      b2_ = Vector(0.0, 1.0,  0.0);
+      b3_ = Vector(-1.0, 0.0, 0.0);
+      torsion_.computeAngle(b1_, b2_, b3_);
+      angleTest();
+      // std::cout << std::endl;
+      // std::cout << torsion_.cosPhi << std::endl;
+      TEST_ASSERT(eq(torsion_.cosPhi, 1.0));
+
+      // Cis 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      b1_ = Vector(1.0, 0.0,  0.0);
+      b2_ = Vector(0.0, 1.0,  0.0);
+      b3_ = Vector(-1.0, 0.0, 1.0);
+      torsion_.computeAngle(b1_, b2_, b3_);
+      angleTest();
+      // std::cout << std::endl;
+      // std::cout << torsion_.cosPhi << std::endl;
+      TEST_ASSERT(eq(torsion_.cosPhi, 1.0/sqrt(2.0)));
+
+      // Trans zig-zag configuration (cosPhi = -1)
+      b1_ = Vector(1.0, 0.0,  0.0);
+      b2_ = Vector(0.0, 1.0,  0.0);
+      b3_ = Vector(1.0, 0.0, 0.0);
+      torsion_.computeAngle(b1_, b2_, b3_);
+      angleTest();
+      //std::cout << std::endl;
+      //std::cout << torsion_.cosPhi << std::endl;
+      TEST_ASSERT(eq(torsion_.cosPhi, -1.0));
+
+      // Trans 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      b1_ = Vector(1.0, 0.0, 0.0);
+      b2_ = Vector(0.0, 1.0, 0.0);
+      b3_ = Vector(1.0, 0.0, 1.0);
+      torsion_.computeAngle(b1_, b2_, b3_);
+      angleTest();
+      // std::cout << std::endl;
+      // std::cout << torsion_.cosPhi << std::endl;
+      TEST_ASSERT(eq(torsion_.cosPhi, -1.0/sqrt(2.0)));
+
+      // Rescaled Trans 45 deg twist configuration (cosPhi = 1/sqrt(2) )
+      b1_ = Vector(2.0, 0.0, 0.0);
+      b2_ = Vector(0.0, 1.5, 0.0);
+      b3_ = Vector(1.3, 0.0, -1.3);
+      torsion_.computeAngle(b1_, b2_, b3_);
+      angleTest();
+      // std::cout << std::endl;
+      // std::cout << torsion_.cosPhi << std::endl;
+      TEST_ASSERT(eq(torsion_.cosPhi, -1.0/sqrt(2.0)));
+
+      // Irregular angle
       b1_ = Vector( 1.1,  0.2, -0.3);
       b2_ = Vector( 0.1,  0.9,  0.2);
       b3_ = Vector(-0.1,  0.4,  1.0);
-      torsion_.computeDerivatives(b1_, b2_, b3_);
+      torsion_.computeAngle(b1_, b2_, b3_);
       angleTest();
       //std::cout << torsion_.cosPhi << std::endl;
    } 
@@ -79,6 +133,14 @@ public:
       Vector d30 = torsion_.d3;
       double cos0 = torsion_.cosPhi;
       double d, cos1, cos2;
+
+      // Check that derivatives are perpendicular to force vectors
+      double dot1 = d10.dot(b1_);
+      double dot2 = d20.dot(b2_);
+      double dot3 = d30.dot(b3_);
+      TEST_ASSERT(eq(dot1, 0.0));
+      TEST_ASSERT(eq(dot2, 0.0));
+      TEST_ASSERT(eq(dot3, 0.0));
 
       // Derivative with respect to b1
       //std::cout << std::endl;
