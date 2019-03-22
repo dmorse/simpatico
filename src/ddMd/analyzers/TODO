@@ -1,8 +1,7 @@
 TODO:
 -----
 
-1) Write BoundaryAnalyzer, along with modifications of Boundary 
-   required to make the analyzer generic.
+1) Write OrthoBoundaryAnalyzer.
 
 2) Modify PairEnergyAnalyzer to allow averages for more than one
    pair component.
@@ -36,7 +35,7 @@ OutputPressure : public Analyzer      <- deprecate (to PressureAnalyzer)
 
 OutputsAnalyzer:
 OutputPairEnergies : public Analyzer
-OutputBoxdim : public Analyzer        <- write a BoxDimAnalyzer class
+OutputBoxdim : public Analyzer        <- write a OrthoBoundaryAnalyzer class
 
 OutputSymmTensor:
 OutputStressTensor : public Analyzer  <- deprecate (to StressAnalyzer)

@@ -161,6 +161,9 @@ namespace Simp
 
    };
 
+   /**
+   * List of coefficients for one type of dihedral.
+   */
    class FourierDihedral::CoeffList 
    {
 

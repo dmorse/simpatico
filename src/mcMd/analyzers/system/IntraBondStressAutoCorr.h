@@ -29,6 +29,10 @@ namespace McMd
    /**
    * Autocorrelation for bond stress of a molecule.
    *
+   * Computes the autocorrelation function of the traceless part of
+   * the contribution of covalent bond forces to the intramolecular
+   * stress tensor for molecules of a specified species. 
+   *
    * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
@@ -57,14 +61,14 @@ namespace McMd
       virtual void readParameters(std::istream& in);
   
       /**
-      * Load internal state from archive.
+      * Load internal state from an archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
    
       /**
-      * Save internal state to archive.
+      * Save internal state to an archive.
       *
       * \param ar output/saving archive
       */
@@ -73,7 +77,7 @@ namespace McMd
       /**
       * Serialize to/from an archive. 
       *
-      * \param ar      saving or loading archive
+      * \param ar saving or loading archive
       * \param version archive version id
       */
       template <class Archive>
@@ -85,7 +89,7 @@ namespace McMd
       virtual void setup();
   
       /** 
-      * Evaluate end-to-end vectors of all chains, add to ensemble.
+      * Compute values and update accumulator.
       *
       * \param iStep counter for number of steps
       */

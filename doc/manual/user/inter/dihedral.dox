@@ -20,7 +20,7 @@ The dihedral potentials are all function of the dihedral angle \f$\phi\f$.  This
 
 <ul style="list-style: none;">
   <li> \subpage simp_interaction_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
-  <li> \subpage simp_interaction_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
+  <li> \subpage simp_interaction_dihedral_FourierDihedral_page - Fourier expansion in dihedral angle </li>
 </ul>
  
 */

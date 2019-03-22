@@ -9,4 +9,32 @@ New analyzers:
 
   - Write DihedralDistribution analyzer for dihedral angle
   - Write AngleDistribution analyzer for bending angle
+  - Write PairEnergiesAnalyzer template
+  - Write McPairEnergiesAnalyzer for multiple types of pair
+  - Write MdPairEnergiesAnalyzer for multiple types of pair
 
+Documentation (need *.dox files):
+
+  system/LinearRouseAutoCorr 
+  system/RingRouseAutoCorr 
+  mcSystem/McPressureAnalyzer
+
+Deprecate (move to attic):
+
+  mcSystem/McEnergyOutput
+  mdSystem/MdEnergyOutput
+
+Reimplement as subclasses of more generic base classes:
+
+  system/BoundaryAverage (rename OrthoBoundaryAverage)
+  system/RadiusGyration
+  mcSystem/McEnergyAnalyzer
+  mcSystem/McPairEnergyAverage (or deprecate after writing more general version)
+  mdSystem/MdPairEnergyCoefficients (also rename)
+  mdSystem/MdPotentialEnergyAverage (also rename)
+
+Rename / Rewrite:
+
+  mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
+  mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
+ 

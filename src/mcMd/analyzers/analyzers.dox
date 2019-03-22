@@ -26,6 +26,7 @@ The following standard analyzers can be used in either Monte Carlo
   <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
+  <li> \subpage mcMd_analyzer_IntraStructureFactorGrid_page </li>
   <li> \subpage mcMd_analyzer_RadiusGyration_page </li>
   <li> \subpage mcMd_analyzer_RDF_page </li>
   <li> \subpage mcMd_analyzer_StructureFactor_page </li>
