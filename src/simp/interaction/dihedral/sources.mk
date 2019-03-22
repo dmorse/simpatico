@@ -1,6 +1,5 @@
 simp_interaction_dihedral_=\
     simp/interaction/dihedral/CosineDihedral.cpp \
-    simp/interaction/dihedral/MultiHarmonicDihedral.cpp \
     simp/interaction/dihedral/FourierDihedral.cpp 
 
 simp_interaction_dihedral_SRCS=\
