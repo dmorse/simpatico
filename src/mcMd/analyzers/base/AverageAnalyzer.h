@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>             // base class
+#include <mcMd/analyzers/base/SystemAnalyzer.h>             // base class
 #include <simp/analysis/AverageMixIn.h>                // base class
 
 namespace McMd

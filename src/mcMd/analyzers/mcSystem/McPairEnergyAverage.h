@@ -9,7 +9,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>     // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>     // base class template
 #include <mcMd/mcSimulation/McSystem.h>        // base class parameter
 #include <util/accumulators/Average.h>         // member
 #include <mcMd/neighbor/CellList.h>            // member

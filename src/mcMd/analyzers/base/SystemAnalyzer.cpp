@@ -5,18 +5,16 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McAverageAnalyzer.h"
-#include <mcMd/analyzers/base/AverageAnalyzer.tpp>
+#include "SystemAnalyzer.h"
+#include <mcMd/simulation/System.h>
 #include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 namespace McMd
 {
 
-   /*
-   * Constructor.
-   */
-   McAverageAnalyzer::McAverageAnalyzer(McSystem& system) 
-    : AverageAnalyzer<McSystem>(system)
-   {  setClassName("McAverageAnalyzer"); }
+   template class SystemAnalyzer<System>;
+   template class SystemAnalyzer<McSystem>;
+   template class SystemAnalyzer<MdSystem>;
 
 }

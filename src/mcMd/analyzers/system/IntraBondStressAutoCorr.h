@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>   // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>   // base class template
 #include <util/accumulators/AutoCorrArray.h>     // member template 
 #include <util/space/Tensor.h>                   // member template parameter
 #include <util/containers/DArray.h>              // member template

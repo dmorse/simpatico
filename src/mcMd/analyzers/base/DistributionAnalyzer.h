@@ -1,5 +1,5 @@
-#ifndef MCMD_BOND_LENGTH_DIST_H
-#define MCMD_BOND_LENGTH_DIST_H
+#ifndef MCMD_DISTRIBUTION_ANALYZER_H
+#define MCMD_DISTRIBUTION_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,10 +9,7 @@
 */
 
 #include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
-#include <mcMd/simulation/System.h>               // base class template parameter
 #include <util/accumulators/Distribution.h>
-#include <util/containers/DArray.h>
-
 #include <util/global.h>
 
 namespace McMd
@@ -21,23 +18,24 @@ namespace McMd
    using namespace Util;
 
    /**
-   * BondLengthDist evaluates the distribution function of the lengths of the bonds.
+   * DistributionAnalyzer evaluates the distribution of a real variable. 
    *
-   * \sa \ref mcMd_analyzer_BondLengthDist_page "parameter file format"
+   * \sa \ref mcMd_analyzer_DistributionAnalyzer_page "parameter file format"
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
-   class BondLengthDist : public SystemAnalyzer<System>
+   template <class SystemType>
+   class DistributionAnalyzer : public SystemAnalyzer<SystemType>
    {
-   
+
    public:
 
       /**	
       * Constructor.
       *
-      * \param system reference to parent System object
+      * \param system reference to parent SystemType object
       */
-      BondLengthDist(System &system);
+      DistributionAnalyzer(SystemType &system);
 
       /**
       * Read parameters from file.  
@@ -75,24 +73,11 @@ namespace McMd
       virtual void setup();
    
       /** 
-      * Add particle pairs to BondLengthDist histogram.
-      *
-      * \param iStep step counter
-      */
-      void sample(long iStep);
-
-      /** 
       * Output results to output file.
       */
       virtual void output();
 
-   private:
-
-      // Output file stream
-      std::ofstream outputFile_;
-
-      // Distribution statistical accumulator
-      Distribution  accumulator_;
+   protected:
 
       /// Minimum of range
       double min_;
@@ -103,27 +88,59 @@ namespace McMd
       /// Number of bins in range
       double nBin_;
 
-      /// Index of relevant Species.
-      int     speciesId_;
-  
-      /// Has readParam been called?
-      bool    isInitialized_;
+      /** 
+      * Add a value to the accumulator.
+      */
+      void increment(double value);
+
+      /**
+      * Get Distribution accumulator by const reference.
+      */
+      const Distribution& accumulator() const;
+
+      using Analyzer::setClassName;
+      using Analyzer::read;
+      using Analyzer::loadParameter;
+      using Analyzer::writeParam;
+      using Analyzer::readInterval;
+      using Analyzer::readOutputFileName;
+      using Analyzer::loadInterval;
+      using Analyzer::loadOutputFileName;
+      using Analyzer::outputFileName;
+      using Analyzer::fileMaster;
+
+   private:
+
+      // Output file stream
+      std::ofstream outputFile_;
+
+      // Distribution statistical accumulator
+      Distribution  accumulator_;
 
    };
 
    /*
    * Serialize to/from an archive. 
    */
+   template <class SystemType>
    template <class Archive>
-   void BondLengthDist::serialize(Archive& ar, const unsigned int version)
+   void DistributionAnalyzer<SystemType>::serialize(Archive& ar, 
+                                                    const unsigned int version)
    {   
       Analyzer::serialize(ar, version);
-      ar & speciesId_;
       ar & min_;
       ar & max_;
       ar & nBin_;
       ar & accumulator_;
    }
+
+   /*
+   * Get Distribution accumulator by const reference.
+   */
+   template <class SystemType>
+   inline
+   const Distribution& DistributionAnalyzer<SystemType>::accumulator() const
+   {  return accumulator_; }
 
 }
 #endif

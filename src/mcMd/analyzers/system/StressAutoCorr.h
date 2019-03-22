@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>
+#include <mcMd/analyzers/base/SystemAnalyzer.h>
 #include <util/space/Tensor.h>
 #include <util/accumulators/AutoCorrelation.tpp>     // member template
 
