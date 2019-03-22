@@ -97,28 +97,13 @@ namespace Simp
    */
    void MultiHarmonicDihedral::readParameters(std::istream &in) 
    {
-      if (nDihedralType_ <= 0) {
-         UTIL_THROW("nDihedralType must be set before readParam");
-      }
+      UTIL_CHECK(nDihedralType_ > 0);
+      UTIL_CHECK(coeffs_.capacity() == nDihedralType_);
       readDArray<MultiHarmonicDihedral::CoeffList>(in, "coeffs", 
                                         coeffs_, nDihedralType_);
       for (int i = 0; i < nDihedralType_; ++i) {
          coeffs_[i].init();
       }
-
-      #if 0
-      CoeffList* ptr;
-      int j;
-      for (int i = 0; i < nDihedralType_; ++i) {
-         
-         in >> j;
-         if (i != j) UTIL_THROW("Inconsistent dihedral type index");
-         ptr = &(coeffs_[i]);
-         in >> ptr->k0 >> ptr->k1 >> ptr->k2 
-            >> ptr->k3 >> ptr->k4;
-         ptr->init();
-      }
-      #endif
    }
 
    /*
@@ -245,7 +230,7 @@ namespace Simp
    /*
    * Read a CoeffList from input stream.
    */
-   std::istream& operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList p)
+   std::istream& operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList& p)
    {  
       in >> p.k0 >> p.k1 >> p.k2 >> p.k3 >> p.k4; 
       return in;
@@ -254,13 +239,13 @@ namespace Simp
    /*
    * Write a CoeffList to output stream.
    */
-   std::ostream& operator << (std::ostream& out, MultiHarmonicDihedral::CoeffList p)
+   std::ostream& operator << (std::ostream& out, const MultiHarmonicDihedral::CoeffList& p)
    {
-      out << std::setw(11) << p.k0  << "  "
-          << std::setw(11) << p.k1  << "  "
-          << std::setw(11) << p.k2  << "  "
-          << std::setw(11) << p.k3  << "  "
-          << std::setw(11) << p.k4;
+      out << std::setw(10) << p.k0  << "  "
+          << std::setw(10) << p.k1  << "  "
+          << std::setw(10) << p.k2  << "  "
+          << std::setw(10) << p.k3  << "  "
+          << std::setw(10) << p.k4;
       return out;
    }
 

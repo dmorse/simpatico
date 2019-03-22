@@ -143,7 +143,7 @@ namespace Simp
    private:
   
       /// List of coefficients for one type of dihedral 
-      struct CoeffList;
+      class CoeffList;
 
       /// Array of coefficients, one struct per dihedral type
       DArray<MultiHarmonicDihedral::CoeffList> coeffs_;
@@ -154,14 +154,14 @@ namespace Simp
    // friends:
 
       friend std::istream& 
-      operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList param);
+      operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList& param);
 
       friend std::ostream& 
-      operator << (std::ostream& in, MultiHarmonicDihedral::CoeffList param);
+      operator << (std::ostream& in, const MultiHarmonicDihedral::CoeffList& param);
 
    };
 
-   struct MultiHarmonicDihedral::CoeffList 
+   class MultiHarmonicDihedral::CoeffList 
    {
 
    public:
@@ -184,6 +184,23 @@ namespace Simp
       double g2; 
       double g3; 
       double g4; 
+
+      // Default constructor.
+      CoeffList() 
+       : k0(0.0),
+         k1(0.0),
+         k2(0.0),
+         k3(0.0),
+         k4(0.0),
+         a0(0.0),
+         a1(0.0),
+         a2(0.0),
+         a3(0.0),
+         a4(0.0),
+         g2(0.0),
+         g3(0.0),
+         g4(0.0)
+      {}
 
       void init()
       {
@@ -221,10 +238,10 @@ namespace Simp
    // Friend function declarations
  
    std::istream& 
-   operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList param);
+   operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList& param);
 
    std::ostream& 
-   operator << (std::ostream& in, MultiHarmonicDihedral::CoeffList param);
+   operator << (std::ostream& in, const MultiHarmonicDihedral::CoeffList& param);
 
 
    // Inline member function definitions
@@ -245,6 +262,7 @@ namespace Simp
          return (p->a0 + c*(p->a1 + c*(p->a2 + c*(p->a3 + c*p->a4))));
       } else {
          return 0.0;
+         std::cout << "!";
       }
    }
 
