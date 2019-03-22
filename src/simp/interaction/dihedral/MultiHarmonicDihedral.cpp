@@ -30,13 +30,13 @@ namespace Simp
    MultiHarmonicDihedral::MultiHarmonicDihedral(const MultiHarmonicDihedral& other)
     : nDihedralType_(other.nDihedralType_)
    {  
-      Parameter* ptr;
-      const Parameter* otherPtr;
+      CoeffList* ptr;
+      const CoeffList* otherPtr;
       if (nDihedralType_ > 0) {
-         parameters_.allocate(nDihedralType_);
+         coeffs_.allocate(nDihedralType_);
          for (int i = 0; i < nDihedralType_; ++i) {
-            ptr = &(parameters_[i]);
-            otherPtr = &(other.parameters_[i]);
+            ptr = &(coeffs_[i]);
+            otherPtr = &(other.coeffs_[i]);
             ptr->k0 = otherPtr->k0;
             ptr->k1 = otherPtr->k1;
             ptr->k2 = otherPtr->k2;
@@ -53,10 +53,10 @@ namespace Simp
    MultiHarmonicDihedral& 
    MultiHarmonicDihedral::operator = (const MultiHarmonicDihedral& other)
    {
-      if (!parameters_.isAllocated()) {
+      if (!coeffs_.isAllocated()) {
          nDihedralType_ = other.nDihedralType_;
          if (nDihedralType_ > 0) {
-            parameters_.allocate(nDihedralType_);
+            coeffs_.allocate(nDihedralType_);
          }
       } else {
          if (nDihedralType_ != other.nDihedralType_) {
@@ -64,11 +64,11 @@ namespace Simp
          }
       }
       if (nDihedralType_ > 0) {
-         Parameter* ptr;
-         const Parameter* otherPtr;
+         CoeffList* ptr;
+         const CoeffList* otherPtr;
          for (int i = 0; i < nDihedralType_; ++i) {
-            ptr = &(parameters_[i]);
-            otherPtr = &(other.parameters_[i]);
+            ptr = &(coeffs_[i]);
+            otherPtr = &(other.coeffs_[i]);
             ptr->k0 = otherPtr->k0;
             ptr->k1 = otherPtr->k1;
             ptr->k2 = otherPtr->k2;
@@ -89,7 +89,7 @@ namespace Simp
          UTIL_THROW("nDihedralType must be positive");
       }
       nDihedralType_ = nDihedralType;
-      parameters_.allocate(nDihedralType_);
+      coeffs_.allocate(nDihedralType_);
    }
 
    /* 
@@ -100,35 +100,25 @@ namespace Simp
       if (nDihedralType_ <= 0) {
          UTIL_THROW("nDihedralType must be set before readParam");
       }
-      Parameter* ptr;
+      readDArray<MultiHarmonicDihedral::CoeffList>(in, "coeffs", 
+                                        coeffs_, nDihedralType_);
+      for (int i = 0; i < nDihedralType_; ++i) {
+         coeffs_[i].init();
+      }
+
+      #if 0
+      CoeffList* ptr;
       int j;
       for (int i = 0; i < nDihedralType_; ++i) {
+         
          in >> j;
          if (i != j) UTIL_THROW("Inconsistent dihedral type index");
-         ptr = &(parameters_[i]);
+         ptr = &(coeffs_[i]);
          in >> ptr->k0 >> ptr->k1 >> ptr->k2 
             >> ptr->k3 >> ptr->k4;
          ptr->init();
       }
-   }
-
-   /* 
-   * Write Fourier coefficients to file.
-   */
-   void MultiHarmonicDihedral::writeParam(std::ostream &out) 
-   {
-      Parameter* ptr;
-      out.setf(std::ios_base::fixed);
-      for (int i = 0; i < nDihedralType_; ++i) {
-         ptr = &parameters_[i];
-         out << Int(i, 5) << "  " << std::setprecision(6)
-             << std::setw(10) << ptr->k0   << "  "
-             << std::setw(10) << ptr->k1   << "  "
-             << std::setw(10) << ptr->k2   << "  "
-             << std::setw(10) << ptr->k3   << "  "
-             << std::setw(10) << ptr->k4   << "  "
-             << std::endl;
-      }
+      #endif
    }
 
    /*
@@ -140,10 +130,14 @@ namespace Simp
       if (nDihedralType_ <= 0) {
          UTIL_THROW( "nDihedralType must be positive");
       }
-      parameters_.allocate(nDihedralType_);
-      Parameter* ptr;
+      //coeffs_.allocate(nDihedralType_);
+      loadDArray<MultiHarmonicDihedral::CoeffList>(ar, "coeffs", 
+                                                   coeffs_, nDihedralType_);
+
+      #if 0
+      CoeffList* ptr;
       for (int i = 0; i < nDihedralType_; ++i) {
-         ptr = &(parameters_[i]);
+         ptr = &(coeffs_[i]);
          ar >> ptr->k0;
          ar >> ptr->k1;
          ar >> ptr->k2;
@@ -158,6 +152,7 @@ namespace Simp
          ar >> ptr->g3;
          ar >> ptr->g4;
       }
+      #endif
    }
 
    /*
@@ -166,9 +161,11 @@ namespace Simp
    void MultiHarmonicDihedral::save(Serializable::OArchive &ar)
    {
       ar << nDihedralType_;
-      Parameter* ptr;
+      ar << coeffs_;
+      #if 0
+      CoeffList* ptr;
       for (int i = 0; i < nDihedralType_; ++i) {
-         ptr = &(parameters_[i]);
+         ptr = &(coeffs_[i]);
          ar << ptr->k0;
          ar << ptr->k1;
          ar << ptr->k2;
@@ -183,6 +180,7 @@ namespace Simp
          ar << ptr->g3;
          ar << ptr->g4;
       }
+      #endif
    }
 
    /*
@@ -190,7 +188,7 @@ namespace Simp
    */
    void MultiHarmonicDihedral::set(std::string name, int type, double value)
    {
-      Parameter* ptr = &(parameters_[type]);
+      CoeffList* ptr = &(coeffs_[type]);
       if (name == "k0") {
         ptr->k0 = value;
       } else 
@@ -217,7 +215,7 @@ namespace Simp
    double MultiHarmonicDihedral::get(std::string name, int type) const
    {
       double value = 0.0;
-      const Parameter* ptr = &(parameters_[type]);
+      const CoeffList* ptr = &(coeffs_[type]);
       if (name == "k0") {
          value = ptr->k0;
       } else 
@@ -243,5 +241,27 @@ namespace Simp
    */
    std::string MultiHarmonicDihedral::className() const
    {  return std::string("MultiHarmonicDihedral"); }
+
+   /*
+   * Read a CoeffList from input stream.
+   */
+   std::istream& operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList p)
+   {  
+      in >> p.k0 >> p.k1 >> p.k2 >> p.k3 >> p.k4; 
+      return in;
+   }
+
+   /*
+   * Write a CoeffList to output stream.
+   */
+   std::ostream& operator << (std::ostream& out, MultiHarmonicDihedral::CoeffList p)
+   {
+      out << std::setw(11) << p.k0  << "  "
+          << std::setw(11) << p.k1  << "  "
+          << std::setw(11) << p.k2  << "  "
+          << std::setw(11) << p.k3  << "  "
+          << std::setw(11) << p.k4;
+      return out;
+   }
 
 } 

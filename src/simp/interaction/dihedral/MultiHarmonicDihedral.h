@@ -72,15 +72,6 @@ namespace Simp
       void readParameters(std::istream &in);
 
       /**
-      * Write Fourier coefficients to output stream.
-      *
-      * \pre nDihedralType must be set, by calling setNDihedralType().
-      *
-      * \param out output stream
-      */
-      void writeParam(std::ostream& out);
-
-      /**
       * Load internal state from an archive.
       *
       * \param ar input/loading archive
@@ -150,54 +141,93 @@ namespace Simp
       std::string className() const;
  
    private:
-   
-      struct Parameter 
-      {
+  
+      /// List of coefficients for one type of dihedral 
+      struct CoeffList;
 
-      public:
-
-         // Coefficients in expansion V(phi) = \sum_m k_m cos(m phi)
-         double k0; 
-         double k1; 
-         double k2;
-         double k3; 
-         double k4;
-
-         // Coefficients in expansion V(phi) = \sum_m a_m cos^m(phi)
-         double a0;
-         double a1; 
-         double a2; 
-         double a3; 
-         double a4; 
-
-         double g2; 
-         double g3; 
-         double g4; 
-
-         void init()
-         {
-            a0 = k0 - k2 + k4;
-            a1 = k1 - 3.0*k3;
-            a2 = 2.0*k2 - 8.0*k4;
-            a3 = 4.0*k3;
-            a4 = 8.0*k4;
-
-            g2 = 2.0*a2;
-            g3 = 3.0*a3;
-            g4 = 4.0*a4;
-         }
-
-      };
-
-      /// Array of parameters, one struct per dihedral type
-      DArray<MultiHarmonicDihedral::Parameter> parameters_;
+      /// Array of coefficients, one struct per dihedral type
+      DArray<MultiHarmonicDihedral::CoeffList> coeffs_;
 
       /// Number of dihedral types
       int nDihedralType_;        
 
+   // friends:
+
+      friend std::istream& 
+      operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList param);
+
+      friend std::ostream& 
+      operator << (std::ostream& in, MultiHarmonicDihedral::CoeffList param);
+
    };
+
+   struct MultiHarmonicDihedral::CoeffList 
+   {
+
+   public:
+
+      // Coefficients in expansion V(phi) = \sum_m k_m cos(m phi)
+      double k0; 
+      double k1; 
+      double k2;
+      double k3; 
+      double k4;
+
+      // Coefficients in expansion V(phi) = \sum_m a_m cos^m(phi)
+      double a0;
+      double a1; 
+      double a2; 
+      double a3; 
+      double a4; 
+
+      // Coefficients in expansion of derivative dV/d(cos(phi))
+      double g2; 
+      double g3; 
+      double g4; 
+
+      void init()
+      {
+         a0 = k0 - k2 + k4;
+         a1 = k1 - 3.0*k3;
+         a2 = 2.0*k2 - 8.0*k4;
+         a3 = 4.0*k3;
+         a4 = 8.0*k4;
+
+         g2 = 2.0*a2;
+         g3 = 3.0*a3;
+         g4 = 4.0*a4;
+      }
+
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version)
+      {
+         ar & k0; 
+         ar & k1; 
+         ar & k2;
+         ar & k3; 
+         ar & k4;
+         ar & a0;
+         ar & a1; 
+         ar & a2; 
+         ar & a3; 
+         ar & a4; 
+         ar & g2; 
+         ar & g3; 
+         ar & g4; 
+      }
+
+   };
+
+   // Friend function declarations
  
-   // Inline method definitions
+   std::istream& 
+   operator >> (std::istream& in, MultiHarmonicDihedral::CoeffList param);
+
+   std::ostream& 
+   operator << (std::ostream& in, MultiHarmonicDihedral::CoeffList param);
+
+
+   // Inline member function definitions
    
    /* 
    * Return dihedral energy.
@@ -211,7 +241,7 @@ namespace Simp
       status = torsion.computeAngle(b1, b2, b3); // computes cosPhi
       if (!status) { 
          double c = torsion.cosPhi;
-         const Parameter* p = &parameters_[type];
+         const CoeffList* p = &coeffs_[type];
          return (p->a0 + c*(p->a1 + c*(p->a2 + c*(p->a3 + c*p->a4))));
       } else {
          return 0.0;
@@ -236,7 +266,7 @@ namespace Simp
       status = torsion.computeDerivatives(b1, b2, b3);
       if (!status) {
          double c = torsion.cosPhi;
-         const Parameter* p = &parameters_[type];
+         const CoeffList* p = &coeffs_[type];
          double dEdC = p->a1 + c*(p->g2 + c*(p->g3 + c*p->g4));
          f1.multiply(torsion.d1, dEdC);
          f2.multiply(torsion.d2, dEdC);
