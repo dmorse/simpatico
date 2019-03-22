@@ -77,6 +77,12 @@ namespace McMd
       */
       virtual void output();
 
+      using ParamComposite::read;
+      using ParamComposite::loadParameter;
+      using Analyzer::writeParam;
+      using Analyzer::outputFileName;
+      using Analyzer::fileMaster;
+
    protected:
 
       /// Minimum of range
@@ -98,16 +104,11 @@ namespace McMd
       */
       const Distribution& accumulator() const;
 
-      using Analyzer::setClassName;
-      using Analyzer::read;
-      using Analyzer::loadParameter;
-      using Analyzer::writeParam;
+      using ParamComposite::setClassName;
       using Analyzer::readInterval;
       using Analyzer::readOutputFileName;
       using Analyzer::loadInterval;
       using Analyzer::loadOutputFileName;
-      using Analyzer::outputFileName;
-      using Analyzer::fileMaster;
 
    private:
 
