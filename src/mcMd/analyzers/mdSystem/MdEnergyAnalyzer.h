@@ -57,8 +57,39 @@ namespace McMd
       * Compute values of energy components, store in values_ array.
       */  
       void compute();
-  
  
+   private: 
+ 
+      #ifndef SIMP_NOPAIR
+      int pairId_;
+      #endif
+
+      #ifdef SIMP_BOND
+      int bondId_;
+      #endif
+
+      #ifdef SIMP_ANGLE
+      int angleId_;
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      int dihedralId_;
+      #endif
+
+      #ifdef SIMP_COULOMB
+      int coulombId_;
+      #endif
+
+      #ifdef SIMP_EXTERNAL
+      int externalId_;
+      #endif
+
+      int potentialId_;
+
+      int kineticId_;
+
+      int totalId_;
+
    };
 
 }
