@@ -33,6 +33,10 @@
 #include "LinearRouseAutoCorr.h"
 #endif
 
+#ifdef SIMP_DIHEDRAL
+#include "DihedralDist.h"
+#endif
+
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 #include <mcMd/analyzers/perturb/BennettsMethod.h>
@@ -126,6 +130,13 @@ namespace McMd
       } else
       if (className == "RingRouseAutoCorr") {
          ptr = new RingRouseAutoCorr(system());
+      } 
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      else
+      if (className == "DihedralDist") {
+         ptr = new DihedralDist(system());
       } 
       #endif
 

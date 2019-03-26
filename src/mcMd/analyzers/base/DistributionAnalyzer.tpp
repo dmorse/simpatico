@@ -37,9 +37,9 @@ namespace McMd
    {
       readInterval(in);
       readOutputFileName(in);
-      read<double>(in, "min", min_);
-      read<double>(in, "max", max_);
-      read<double>(in, "nBin", nBin_);
+      ParamComposite::template read<double>(in, "min", min_);
+      ParamComposite::template read<double>(in, "max", max_);
+      ParamComposite::template read<int>(in, "nBin", nBin_);
       accumulator_.setParam(min_, max_, nBin_);
       accumulator_.clear();
    }
@@ -53,9 +53,9 @@ namespace McMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-      loadParameter<double>(ar, "min", min_);
-      loadParameter<double>(ar, "max", max_);
-      loadParameter<double>(ar, "nBin", nBin_);
+      ParamComposite::template loadParameter<double>(ar, "min", min_);
+      ParamComposite::template loadParameter<double>(ar, "max", max_);
+      ParamComposite::template loadParameter<int>(ar, "nBin", nBin_);
       ar & accumulator_;
 
       // Validate

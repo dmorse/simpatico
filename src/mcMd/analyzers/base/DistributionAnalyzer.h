@@ -77,6 +77,12 @@ namespace McMd
       */
       virtual void output();
 
+      using ParamComposite::read;
+      using ParamComposite::loadParameter;
+      using Analyzer::writeParam;
+      using Analyzer::outputFileName;
+      using Analyzer::fileMaster;
+
    protected:
 
       /// Minimum of range
@@ -86,7 +92,7 @@ namespace McMd
       double max_;
 
       /// Number of bins in range
-      double nBin_;
+      int nBin_;
 
       /** 
       * Add a value to the accumulator.
@@ -94,20 +100,15 @@ namespace McMd
       void increment(double value);
 
       /**
-      * Get Distribution accumulator by const reference.
+      * Get Distribution accumulator by reference.
       */
-      const Distribution& accumulator() const;
+      Distribution& accumulator();
 
-      using Analyzer::setClassName;
-      using Analyzer::read;
-      using Analyzer::loadParameter;
-      using Analyzer::writeParam;
+      using ParamComposite::setClassName;
       using Analyzer::readInterval;
       using Analyzer::readOutputFileName;
       using Analyzer::loadInterval;
       using Analyzer::loadOutputFileName;
-      using Analyzer::outputFileName;
-      using Analyzer::fileMaster;
 
    private:
 
@@ -139,7 +140,7 @@ namespace McMd
    */
    template <class SystemType>
    inline
-   const Distribution& DistributionAnalyzer<SystemType>::accumulator() const
+   Distribution& DistributionAnalyzer<SystemType>::accumulator()
    {  return accumulator_; }
 
 }
