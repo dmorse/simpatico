@@ -107,28 +107,28 @@ namespace McMd
       MeanSqDispArray<Vector> accumulator_;
 
       /// Array of position vectors, one per molecule of species.
-      DArray<Vector>    truePositions_;
+      DArray<Vector> truePositions_;
    
       /// Array of reference position vectors, one per molecule of species.
-      DArray<Vector>    oldPositions_;
+      DArray<Vector> oldPositions_;
    
       /// Array of shift vectors, one per molecule of species.
       DArray<IntVector> shifts_;
    
       /// Index of relevant Species.
-      int     speciesId_;
+      int speciesId_;
    
       /// Number of molecules in the species (must not change).
-      int     nMolecule_;
+      int nMolecule_;
 
       /// Number of atoms in per molecule (must not change).
-      int     nAtom_;
+      int nAtom_;
   
       /// Maximum length of each sequence in AutoCorrArray.
-      int     capacity_;
+      int capacity_;
 
       /// Has readParam been called?
-      bool    isInitialized_;
+      bool isInitialized_;
 
    };
 

@@ -52,7 +52,7 @@ namespace McMd
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Save state to archive.
+      * Save state to an archive.
       *
       * \param ar saving (output) archive.
       */
@@ -74,11 +74,6 @@ namespace McMd
       */
       void sample(long iStep);
 
-      /** 
-      * Output results to output file.
-      */
-      virtual void output();
-
    private:
 
       /// Index of relevant Species (-1 for all)
@@ -86,15 +81,24 @@ namespace McMd
   
       /// Index of dihedral type (-1 for all)
       int typeId_;
-  
+ 
+      /**
+      * Sample dihedrals for a single molecular species.
+      *
+      * \param is species index
+      */ 
+      void sampleSpecies(int is);
+
    };
+
+   // Member function template.
 
    /*
    * Serialize to/from an archive. 
    */
    template <class Archive>
    void DihedralDist::serialize(Archive& ar, const unsigned int version)
-   {   
+   { 
       DistributionAnalyzer<System>::serialize(ar, version);
       ar & speciesId_;
       ar & typeId_;

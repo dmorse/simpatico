@@ -92,7 +92,7 @@ namespace McMd
       double max_;
 
       /// Number of bins in range
-      double nBin_;
+      int nBin_;
 
       /** 
       * Add a value to the accumulator.
@@ -100,9 +100,9 @@ namespace McMd
       void increment(double value);
 
       /**
-      * Get Distribution accumulator by const reference.
+      * Get Distribution accumulator by reference.
       */
-      const Distribution& accumulator() const;
+      Distribution& accumulator();
 
       using ParamComposite::setClassName;
       using Analyzer::readInterval;
@@ -140,7 +140,7 @@ namespace McMd
    */
    template <class SystemType>
    inline
-   const Distribution& DistributionAnalyzer<SystemType>::accumulator() const
+   Distribution& DistributionAnalyzer<SystemType>::accumulator()
    {  return accumulator_; }
 
 }
