@@ -56,20 +56,21 @@ MdSimulation{
       interval                           2000
     }
 
-    MdEnergyOutput{
-      interval                          1000
-      outputFileName                  energy
+    MdEnergyAnalyzer{
+      interval                           100
+      outputFileName                  energy 
+      nSamplePerBlock                     10
     }
 
     MdPotentialEnergyAverage{
       interval                           100
-      outputFileName      potentialEnergyAve
+      outputFileName               potential
       nSamplePerBlock                     10
     }
 
     MdKineticEnergyAverage{
       interval                           100
-      outputFileName        kineticEnergyAve
+      outputFileName                 kinetic
       nSamplePerBlock                     10
     }
 
