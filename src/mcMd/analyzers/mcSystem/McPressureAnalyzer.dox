@@ -1,18 +1,19 @@
 namespace McMd
 {
 
-/*! \page mcMd_analyzer_McBondEnergyAverage_page  McBondEnergyAverage
+/*! \page mcMd_analyzer_McPressureAnalyzer_page  McPressureAnalyzer
 
-\section mcMd_analyzer_McBondEnergyAverage_synopsis_sec Synopsis
+\section mcMd_analyzer_McPressureAnalyzer_synopsis_sec Synopsis
 
-This analyzer computes the average of the total covalent bond energy, and optionally outputs block average values, if nSamplePerBlock > 0.
+This analyzer computes the virial contribution to the pressure, and optionally 
+outputs block average values, if nSamplePerBlock > 0.
 
-\sa McMd::McBondEnergyAverage
+\sa McMd::McPressureAnalyzer
 
-\section mcMd_analyzer_McBondEnergyAverage_param_sec Parameters
+\section mcMd_analyzer_McPressureAnalyzer_param_sec Parameters
 The parameter file format is:
 \code
-  McBondEnergyAverage{
+  McPressureAnalyzer{
     interval           int
     outputFileName     string
     nSamplePerBlock    int
@@ -34,7 +35,7 @@ in which
   </tr>
 </table>
 
-\section mcMd_analyzer_McBondEnergyAverage_output_sec Output
+\section mcMd_analyzer_McPressureAnalyzer_output_sec Output
 
 If nSamplePerBlock > 0, block averages are output during the simulation 
 to the file {outputFileName}.dat, and a description of the format of this

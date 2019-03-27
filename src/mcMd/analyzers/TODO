@@ -15,7 +15,6 @@ Documentation (need *.dox files):
 
   system/LinearRouseAutoCorr 
   system/RingRouseAutoCorr 
-  mcSystem/McPressureAnalyzer
 
 Reimplement as subclasses of more generic base classes:
 
@@ -23,7 +22,6 @@ Reimplement as subclasses of more generic base classes:
   system/BoundaryAverage (rename OrthoBoundaryAverage)
   mcSystem/McPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
   mcSystem/MdPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
-  mdSystem/MdPairEnergyCoefficients (also rename and stash old version)
   mdSystem/MdPotentialEnergyAverage (also rename and stash old version)
 
 Rename / Rewrite:

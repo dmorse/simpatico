@@ -1,0 +1,75 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_DihedralDist_page DihedralDist
+
+\section mcMd_analyzer_DihedralDist_overview_sec Synopsis
+
+This analyzer calculates a probability distribution (i.e., a histogram) for 
+a set of dihedral angles.  The dihedral angle defined here is reported in
+radians and ranges only over the range [0,pi]. 
+
+The values of the parameters speciesid and typeId determine what dihedrals 
+to include in the histogram, by allowing readers to restrict the set to 
+dihedrals in a particular molecular species (speciesId) or to dihedrals of 
+a certain dihedral type (typeId). Values of speciesId = -1 or typeId = -1 
+indicate that dihedrals from all molecular species or of all dihedral types 
+should be included respectively. Setting speciesId=-1 and typeId=-1 creates
+a histogram that includes results from all dihedral angles in the system.
+
+\sa McMd::DihedralDist
+
+\sa McMd::PairSelector
+
+\section mcMd_analyzer_DihedralDist_param_sec Parameters
+The parameter file format is:
+\code
+   DihedralDist{ 
+      interval           int
+      outputFileName     string
+      nBin               int
+      speciesId          int
+      typeId             int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nBin </td>
+     <td> number of bins in histogram of dihedral angle values  </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> index of single species from which to select dihedrals,
+          or speciesId = -1 to indicate inclusion of all molecular 
+          species.  </td>
+  </tr>
+  <tr> 
+     <td> typeId </td>
+     <td> typeId of dihedrals to include, or -1 to indicate 
+          that dihedrals of all dihedral types may be included.  
+     </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_DihedralDist_out_sec Output Files
+
+At the end of a simulation:
+
+  -  Parameters are echoed to {outputFileName}.prm
+
+  -  The accumulated radial distribution function is output to {outputFileName}.dat.
+  
+The calculation uses Util::RadialDistribution function.
+
+*/
+
+}

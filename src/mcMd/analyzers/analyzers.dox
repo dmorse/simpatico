@@ -24,6 +24,7 @@ The following standard analyzers can be used in either Monte Carlo
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
   <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
   <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
+  <li> \subpage mcMd_analyzer_DihedralDist_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactorGrid_page </li>
@@ -44,13 +45,11 @@ simulations:
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAnalyzer_page </li>
-  <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
-  <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_McPairEnergyAnalyzer_page </li>
+  <li> \subpage mcMd_analyzer_McPressureAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
   <li> \subpage mcMd_analyzer_McNVTChemicalPotential_page </li>
@@ -63,7 +62,6 @@ The following analyzers can only be used in MD simulations:
 
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_MdEnergyAnalyzer_page </li>
-  <li> \subpage mcMd_analyzer_MdEnergyOutput_page </li>
   <li> \subpage mcMd_analyzer_MdIntraBondStressAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
