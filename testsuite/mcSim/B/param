@@ -83,14 +83,15 @@ McSimulation{
       speciesId                            0
     }
 
-    McEnergyOutput{
-      interval                         10000
+    McEnergyAnalyzer{
+      interval                          1000
       outputFileName                  energy
+      nSamplePerBlock                     10
     }
 
-    McEnergyAverage{
+    McPressureAverage{
       interval                          1000
-      outputFileName               energyAve
+      outputFileName                pressure
       nSamplePerBlock                     10
     }
 
