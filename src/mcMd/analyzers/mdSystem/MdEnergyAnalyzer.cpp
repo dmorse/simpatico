@@ -195,6 +195,7 @@ namespace McMd
          double coulomb = sys.coulombPotential().energy();
          // outputFile_ << Dbl(coulomb, 15);
          setValue(coulombId_, coulomb);
+         potential += coulomb;
       }
       #endif
       #endif

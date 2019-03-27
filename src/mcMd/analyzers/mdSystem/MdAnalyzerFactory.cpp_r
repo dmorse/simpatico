@@ -9,7 +9,6 @@
 
 // Analyzers for MdSystem only
 #include "MdEnergyAnalyzer.h"
-#include "MdEnergyOutput.h"
 #include "MdPotentialEnergyAverage.h"
 #include "MdKineticEnergyAverage.h"
 #include "MdPressureAverage.h"
@@ -51,9 +50,6 @@ namespace McMd
       // MdSystem Analyzers
       if (className == "MdEnergyAnalyzer") {
          ptr = new MdEnergyAnalyzer(system());
-      } else
-      if (className == "MdEnergyOutput") {
-         ptr = new MdEnergyOutput(system());
       } else
       if (className == "MdPotentialEnergyAverage") {
          ptr = new MdPotentialEnergyAverage(system());

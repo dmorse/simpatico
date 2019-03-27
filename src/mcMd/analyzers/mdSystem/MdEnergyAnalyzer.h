@@ -61,33 +61,42 @@ namespace McMd
    private: 
  
       #ifndef SIMP_NOPAIR
+      /// Array index for pair energy accumulator.
       int pairId_;
       #endif
 
       #ifdef SIMP_BOND
+      /// Array index for bond energy accumulator.
       int bondId_;
       #endif
 
       #ifdef SIMP_ANGLE
+      /// Array index for angle energy accumulator.
       int angleId_;
       #endif
 
       #ifdef SIMP_DIHEDRAL
+      /// Array index for dihedral energy accumulator.
       int dihedralId_;
       #endif
 
       #ifdef SIMP_COULOMB
+      /// Array index for coulomb energy accumulator.
       int coulombId_;
       #endif
 
       #ifdef SIMP_EXTERNAL
+      /// Array index for external energy accumulator.
       int externalId_;
       #endif
 
+      /// Array index for total potential energy accumulator.
       int potentialId_;
 
+      /// Array index for kinetic energy accumulator.
       int kineticId_;
 
+      /// Array index for total energy accumulator.
       int totalId_;
 
    };

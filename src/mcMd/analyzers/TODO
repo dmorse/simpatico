@@ -1,17 +1,15 @@
 TODO:
 
- - Test serialization analyzers in perturb/ in multi-processor run.
+  - Test serialization analyzers in perturb/ in multi-processor run.
 
-Note: Checked 1/4/2013 with grep that all other analyzers have 
-    save / loadParameters functions. Many have not been well tested.
+  Note: Checked 1/4/2013 with grep that all other analyzers have 
+  save / loadParameters functions. Many have not been well tested.
 
 New analyzers:
 
-  - Write DihedralDistribution analyzer for dihedral angle
   - Write AngleDistribution analyzer for bending angle
-  - Write PairEnergiesAnalyzer template
-  - Write McPairEnergiesAnalyzer for multiple types of pair
-  - Write MdPairEnergiesAnalyzer for multiple types of pair
+  - Write McPairEnergyMatrixAnalyzer template
+  - Write MdPairEnergyMatrixAnalyzer template
 
 Documentation (need *.dox files):
 
@@ -19,19 +17,14 @@ Documentation (need *.dox files):
   system/RingRouseAutoCorr 
   mcSystem/McPressureAnalyzer
 
-Deprecate (move to attic):
-
-  mcSystem/McEnergyOutput
-  mdSystem/MdEnergyOutput
-
 Reimplement as subclasses of more generic base classes:
 
-  system/BoundaryAverage (rename OrthoBoundaryAverage)
   system/RadiusGyration
-  mcSystem/McEnergyAnalyzer
-  mcSystem/McPairEnergyAverage (or deprecate after writing more general version)
-  mdSystem/MdPairEnergyCoefficients (also rename)
-  mdSystem/MdPotentialEnergyAverage (also rename)
+  system/BoundaryAverage (rename OrthoBoundaryAverage)
+  mcSystem/McPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
+  mcSystem/MdPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
+  mdSystem/MdPairEnergyCoefficients (also rename and stash old version)
+  mdSystem/MdPotentialEnergyAverage (also rename and stash old version)
 
 Rename / Rewrite:
 

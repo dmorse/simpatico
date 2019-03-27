@@ -7,7 +7,6 @@
 
 #include "McAnalyzerFactory.h" // Class header
 
-#include "McEnergyOutput.h"
 #include "McEnergyAnalyzer.h"
 #include "McEnergyAverage.h"
 #include "McPressureAverage.h"
@@ -15,6 +14,7 @@
 
 #ifndef SIMP_NOPAIR
 #include "McPairEnergyAverage.h"
+#include "McPairEnergyAnalyzer.h"
 #include "McMuExchange.h"
 #endif
 
@@ -63,9 +63,6 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      if (className == "McEnergyOutput") {
-         ptr = new McEnergyOutput(system());
-      } else
       if (className == "McEnergyAnalyzer") {
          ptr = new McEnergyAnalyzer(system());
       } else
@@ -83,6 +80,9 @@ namespace McMd
       else
       if (className == "McPairEnergyAverage") {
          ptr = new McPairEnergyAverage(system());
+      } else
+      if (className == "McPairEnergyAnalyzer") {
+         ptr = new McPairEnergyAnalyzer(system());
       } else
       if (className == "McMuExchange") {
          ptr = new McMuExchange(system());
