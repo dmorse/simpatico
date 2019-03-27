@@ -20,8 +20,6 @@ namespace McMd
    /**
    * DistributionAnalyzer evaluates the distribution of a real variable. 
    *
-   * \sa \ref mcMd_analyzer_DistributionAnalyzer_page "parameter file format"
-   *
    * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
