@@ -2,7 +2,6 @@ mcMd_analyzers_system_=\
     mcMd/analyzers/system/AtomMSD.cpp \
     mcMd/analyzers/system/ComMSD.cpp \
     mcMd/analyzers/system/CompositionProfile.cpp \
-    mcMd/analyzers/system/DihedralDist.cpp \
     mcMd/analyzers/system/RDF.cpp \
     mcMd/analyzers/system/StructureFactor.cpp \
     mcMd/analyzers/system/StructureFactorGrid.cpp \
@@ -26,6 +25,11 @@ mcMd_analyzers_system_+=\
     mcMd/analyzers/system/ClusterIdentifier.cpp \
     mcMd/analyzers/system/ClusterHistogram.cpp \
     mcMd/analyzers/system/Cluster.cpp 
+endif
+
+ifdef SIMP_DIHEDRAL
+mcMd_analyzers_system_+=\
+    mcMd/analyzers/system/DihedralDist.cpp 
 endif
 
 mcMd_analyzers_system_SRCS=\
