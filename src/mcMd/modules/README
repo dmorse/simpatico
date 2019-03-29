@@ -8,7 +8,9 @@ A module named "stuff" in subdirectory src/mcMd/modules/stuff must
 contain a makefile fragment named src/mcMd/modules/stuff/sources.mk
 that defines a makefile variable mcMd_modules_stuff_ that expands to 
 a list of all of the *.cpp source files in that module, with paths
-defined relative to the simpatico/src/ directory. 
+defined relative to the simpatico/src/ directory. This is the same
+convention used to define a list of source files in a file named 
+sources.mk in every subdirectory of the simpatico/src directory.
 
 To enable the simpatico makefile system to compile the source
 files in a module, the user must make some small modifications
@@ -16,55 +18,43 @@ of the user file src/mcMd/modules/sources.mk. Instructions for
 doing so are given in the repository version of the file, named 
 src/mcMd/modules/sources.mk_r.
 
-The modules/sliplink directory contains an example of a complete 
-module. The file src/mcMd/modules/sources.mk_r contains commented
-out lines that would be required to enable compilation of this
-module.  This particular module contains code that was added to
-simpatico to allow it to be used for Monte Carlo simulations of
-a coarse-grained model of entangled chains in which entanglements
-were modelled by mobile links between chains, and can only be 
-compiled when the MCMC_LINK makefile variable is defined.
-
 Module C++ Source Files
 -----------------------
 
 Every module must contain header and source code files to define
 the following types of classes:
 
-  - A set of "feature" classes, each of which is a subclass of
-    one of the McMd base classes such Analyzer or McMove, each
-    of which adds a feature to mcSim and/or mdSim.
+  - A set of "feature" classes, each of which adds a feature or
+    algorithm to mcSim and/or mdSim.
 
   - A corresponding set of one or more "factory" classes that 
     can create instances of the feature classes.
 
-Each factory class in a module is a subclass of the Factory 
-class associated with a given base class. For example, a module
-that contains one or more subclasses of McMd::Analyzer must 
-also have factory class that is a subclass of Factory<Analyzer>.
-The implementation of the factory() member function of each such 
-factory class must be able to create an instance of any of the 
-"feature" classes of the appropriate type. By convention, the 
-name of each factory class should start with the name of the 
-module. Thus for example, the factory in the sliplink module 
-that creates McMove objects is called SliplinkMcMoveFactory.
+Each feature class must be a subclass of one of the simpatico base 
+classes such McMd::Analyzer, McMd::McMove. Each factory class in a 
+module is a subclass of the Factory class associated with a given 
+base class. For example, a module that contains one or more subclasses 
+of McMd::Analyzer must also have factory class that is a subclass of 
+Factory<Analyzer>.  The implementation of the factory() member function 
+of each such factory class must be able to create an instance of any of 
+the "feature" classes of the appropriate type. By convention, the name 
+of each factory class should start with the name of the module. Thus 
+for example, the factory a moduled named "sliplink" that creates 
+McMove objects is called SliplinkMcMoveFactory.
 
-Complicated modules may also contain one or two "module" 
-classes. A module class is a simple class that encapsulates 
-the code that must be added to the main simulation program
-in order to allow the associated classes to be used in a 
-simulation. By convention, a Module class should have an
-instance of each associated factory class as a member 
-variable. The constructor of a module should take an
-MdSimulation or McSimulation object as an argument, and 
-should invoke the "addSubfactory" functions required to 
-add the specialized subfactories defined in the module as 
-subfactories of the corresponding factory objects used by
-the main simulation object. To enable use of a module, the
-user must simply include the header file for such a module 
-class in the main mcSim and/or mdSim program and add a line 
-to the main program that creates an instannce of the 
-module class. 
+A simpatico source code module may also contain one or two "module" 
+classes. A module class is a simple class that encapsulates the code 
+that must be added to the main simulation program in order to allow 
+the factory classes to be used in a simulation. By convention, a 
+Module class should have an instance of each associated factory class 
+as a member variable. The constructor of a module should take an
+MdSimulation or McSimulation object as an argument, and should invoke 
+the "addSubfactory" functions required to add the specialized 
+subfactories defined in the module as subfactories of the corresponding 
+factory objects used by the main simulation object. To enable use of a 
+module, the user must simply include the header file for such a module 
+class in the main mcSim and/or mdSim program and add a line to the main 
+program that creates an instannce of the module class. 
 
 Module Makefiles
 ----------------
@@ -96,8 +86,8 @@ Summary:
 
 To enable use of a module, a user must:
 
-  - Add a subdirectory to the src/mcMd/modules directory 
-    containing the source code for the module. 
+  - Add a subdirectory to the src/mcMd/modules directory containing 
+    the source code for the new module. 
 
   - Modify the src/mcMd/modules/sources.mk file, as described above,
     to allow the module to be compiled along with the rest of the
@@ -107,7 +97,7 @@ To enable use of a module, a user must:
     MD program src/mcMd/mdSim.cpp to allow the module to be used
     in the main program. 
 
-If a module defines a module class, the main program must be 
+If a module contains a module class, the main program must be 
 modified by adding a line to include the header file for the 
 appropriate module and adding a line to the main program that
 constructs an instance of that module. The code in the module
