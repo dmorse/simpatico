@@ -4,6 +4,9 @@ include $(SRC_DIR)/mcMd/patterns.mk
 
 all: $(mcMd_modules_OBJS)
 
+show:
+	echo $(mcMd_modules_)
+
 clean:
 	rm -f $(mcMd_modules_OBJS) $(mcMd_modules_OBJS:.o=.d)
 
