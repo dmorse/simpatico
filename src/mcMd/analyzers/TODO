@@ -1,10 +1,5 @@
 TODO:
 
-  - Test serialization analyzers in perturb/ in multi-processor run.
-
-  Note: Checked 1/4/2013 with grep that all other analyzers have 
-  save / loadParameters functions. Many have not been well tested.
-
 New analyzers:
 
   - Write AngleDistribution analyzer for bending angle
@@ -24,8 +19,29 @@ Reimplement as subclasses of more generic base classes:
   mcSystem/MdPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
   mdSystem/MdPotentialEnergyAverage (also rename and stash old version)
 
+Deprecate (redundant):
+
+  mcSystem/McEnergyAverage
+  mcSystem/McPressureAverage
+
 Rename / Rewrite:
 
+  mdSystem/MdPressureAverage -> MdPressureAnalyzer
   mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
   mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
+
+More Generic Base Classes:
+
+  AutoCorrelation(Analyzer|Mixin)<class T>
+  MeanSqDisplacement(Analyzer|Mixin)<class T>
+
+Serialization:
  
+  - Test serialization analyzers in perturb/ in multi-processor run.
+
+  - Make sure that all analyzers restart, preferably tested within 
+    the testsuite/ runs.
+
+  Note: Checked 1/4/2013 with grep that all other analyzers have 
+  save / loadParameters functions.
+

@@ -20,12 +20,11 @@
 # of the sliplink module.
 #----------------------------------------------------------
 
-#include $(SRC_DIR)/mcMd/modules/sliplink/sources.mk
+#include $(SRC_DIR)/mcMd/modules/myModule/sources.mk
 
 mcMd_modules_=
 #mcMd_modules_=\
-#    $(mcMd_modules_myModule1_)
-#    $(mcMd_modules_myModule2_)
+#    $(mcMd_modules_myModule)
 
 mcMd_modules_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_modules_))
