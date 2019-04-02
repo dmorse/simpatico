@@ -106,11 +106,6 @@ namespace McMd
       */
       virtual void compute();
    
-      /**
-      * Output results at end of simulation.
-      */
-      virtual void output();
-
    private:
 
       /// Pointer to array of positions for all beads in a molecule
@@ -125,9 +120,6 @@ namespace McMd
       /// Number of atoms per molecule of this species.
       int nAtom_;
    
-      /// Has readParam been called?
-      bool isInitialized_;
-
    };
 
    /**
