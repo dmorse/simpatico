@@ -13,7 +13,9 @@ fi
 
 if [ "$SMP_PROG" == "ddMd" ]; then
   cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
-  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run 
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run nvt
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run npt
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run nve
 fi
 
 if [ "$SMP_PROG" == "mcMdMpi" ]; then 
