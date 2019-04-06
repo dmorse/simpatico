@@ -108,15 +108,6 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-      /**
       * Set up before a simulation.
       */
       virtual void setup();
@@ -159,22 +150,6 @@ namespace McMd
       /// Has readParam been called?
       bool isInitialized_;
    };
-
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void IntraStructureFactorGrid::serialize(Archive& ar, const unsigned int version)
-   {
-      IntraStructureFactor::serialize(ar, version);
-      ar & hMax_;
-      //serializeEnum(ar, lattice_);
-      ar & lattice_;
-      ar & nStar_;
-      ar & starIds_;
-      ar & starSizes_;
-   }
 
 }
 #endif

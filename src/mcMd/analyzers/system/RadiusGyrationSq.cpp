@@ -39,7 +39,6 @@ namespace McMd
       UTIL_CHECK(speciesId_ < system().simulation().nSpecies());
       speciesPtr_ = &system().simulation().species(speciesId_);
       nAtom_ = speciesPtr_->nAtom();
-
       positions_.allocate(nAtom_); 
    }
 
@@ -50,23 +49,27 @@ namespace McMd
    {
       AverageAnalyzer::loadParameters(ar);
       loadParameter<int>(ar, "speciesId", speciesId_);
-      ar & nAtom_;
-      ar & positions_;
-
-      // Validate
       UTIL_CHECK(speciesId_ >= 0);
       UTIL_CHECK(speciesId_ < system().simulation().nSpecies());
       speciesPtr_ = &system().simulation().species(speciesId_);
-      if (nAtom_ != speciesPtr_->nAtom()) {
-         UTIL_THROW("Inconsistent values for nAtom");
-      }
+      ar >> nAtom_;
+      UTIL_CHECK(nAtom_ > 0);
+      UTIL_CHECK(nAtom_ == speciesPtr_->nAtom());
+      positions_.allocate(nAtom_); 
+      ar >> positions_;
+
    }
 
    /*
    * Save state to archive.
    */
    void RadiusGyrationSq::save(Serializable::OArchive& ar)
-   { ar & *this; }
+   { 
+      AverageAnalyzer<System>::save(ar);
+      ar & speciesId_;
+      ar & nAtom_;
+      ar & positions_;
+   }
 
    /* 
    * Evaluate squared radii of gyration of all chains, add to ensemble.

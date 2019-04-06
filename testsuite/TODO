@@ -1,0 +1,8 @@
+
+mcMd:
+
+   - Fix problem with restarting MdEnergyAnalyzer in mdSim_m/A
+   - Add md and mc tests with external energy
+   - Add md and mc tests with angles and dihedrals
+   - Add md tests with multiple atom types (e.g., diblocks or blends)
+-

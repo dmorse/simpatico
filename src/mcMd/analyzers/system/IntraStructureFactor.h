@@ -135,15 +135,6 @@ namespace McMd
       */
       virtual void save(Serializable::OArchive& ar);
 
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
       /** 
       * Clear accumulators.
       */
@@ -173,26 +164,30 @@ namespace McMd
       *
       * First index denotes wavevector, second denotes an atom typeId pair.
       */
-      DMatrix<double>          structureFactors_;
+      DMatrix<double> structureFactors_;
 
       /**
        * Contribution of current time step to structure factor average.
        */
-      DMatrix<double>          structureFactorDelta_;
+      DMatrix<double> structureFactorDelta_;
 
       /**
       * Fourier modes. First index is wavevector, second is atom type.
       */
-      DMatrix< std::complex<double> >  fourierModes_;
+      DMatrix< std::complex<double> > fourierModes_;
 
-      // Array of miller index vectors for wavevectors
-      DArray<IntVector>  waveIntVectors_;
+      /**
+      * Array of miller index vectors for wavevectors.
+      */
+      DArray<IntVector> waveIntVectors_;
 
-      // Array of wave vectors
-      DArray<Vector>  waveVectors_;
+      /**
+      * Array of wave vectors.
+      */
+      DArray<Vector> waveVectors_;
 
       // Array of atom type indices (-1 indicates a sum of all types)
-      DArray< Pair<int> >  atomTypeIdPairs_;
+      DArray< Pair<int> > atomTypeIdPairs_;
 
       /// Index for molecular species.
       int  speciesId_;
@@ -220,25 +215,6 @@ namespace McMd
       void makeWaveVectors();
 
    };
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void IntraStructureFactor::serialize(Archive& ar, 
-                                        const unsigned int version)
-   {
-      Analyzer::serialize(ar, version);
-      ar & speciesId_;
-      ar & nAtomTypeIdPair_;
-      ar & atomTypeIdPairs_;
-      ar & nWave_;
-      ar & waveIntVectors_;
-      ar & nAtomType_;
-      ar & structureFactors_;
-      ar & fourierModes_;
-      ar & nSample_;
-   }
 
 }
 #endif

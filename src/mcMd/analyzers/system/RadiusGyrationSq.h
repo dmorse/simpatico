@@ -93,15 +93,6 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-      /**
       * Evaluate squared radii of gyration for all molecules, add to ensemble.
       */
       virtual void compute();
@@ -121,18 +112,6 @@ namespace McMd
       int nAtom_;
    
    };
-
-   /**
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void RadiusGyrationSq::serialize(Archive& ar, const unsigned int version)
-   {
-      Analyzer::serialize(ar, version);
-      ar & speciesId_;
-      ar & nAtom_;
-      ar & positions_;
-   }
 
 }
 #endif

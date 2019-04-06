@@ -6,7 +6,8 @@ if [ "$SMP_PROG" == "mcMd" ]; then
   cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run
   cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run
   cd $TRAVIS_BUILD_DIR/bld/serial/mdPp/tests && make run
-  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run nvt
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run nve
   cd $TRAVIS_BUILD_DIR/testsuite/mcSim/B && ./run
 fi
 

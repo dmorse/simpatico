@@ -56,12 +56,6 @@ MdSimulation{
       interval                           2000
     }
 
-    MdEnergyAnalyzer{
-      interval                           100
-      outputFileName                  energy 
-      nSamplePerBlock                     10
-    }
-
     MdPotentialEnergyAverage{
       interval                           100
       outputFileName               potential
@@ -119,4 +113,10 @@ MdSimulation{
   saveInterval             10000
   saveFileName           restart
 }
+
+    MdEnergyAnalyzer{
+      interval                           100
+      outputFileName                  energy 
+      nSamplePerBlock                     10
+    }
 
