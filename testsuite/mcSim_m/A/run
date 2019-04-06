@@ -9,7 +9,7 @@ rm -f 1/out/*
 rm -f 2/out/*
 
 # Run simulation, writing to out
-mpirun -np 3 mcSim_m -e -p param -c commands 
+mpirun -np 3 mcSim_m -e -p param -c command
 
 echo " "
 echo "Log file for testsuite/mcSim_m/A/1"
@@ -38,7 +38,7 @@ fi
 
 echo "Restarting testsuite/mcSim_m/A"
 
-mpirun -np 3 mcSim_m -e -r restart -c commands.rst -o rst/
+mpirun -np 3 mcSim_m -e -r restart -c commrst -o rst/
 
 echo " "
 echo "Log file for testsuite/mcSim_m/A/1 after restart"

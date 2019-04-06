@@ -114,6 +114,12 @@ McSimulation{
       nSamplePerBlock                      2
     }
 
+    McEnergyAverage{
+      interval                          1000
+      outputFileName                  energy
+      nSamplePerBlock                      2
+    }
+
     McBondEnergyAverage{
       interval                          1000
       outputFileName              bondEnergy
@@ -127,6 +133,19 @@ McSimulation{
       selector                           all  -1  -1
     }
 
+    McPairEnergyAnalyzer{
+      interval                          1000
+      outputFileName              pairEnergy
+      nSamplePerBlock                     10
+      selector                           all  -1  -1
+    }
+
+    McPressureAnalyzer{
+      interval                          1000
+      outputFileName                pressure
+      nSamplePerBlock                     10
+    }
+
     McPressureAverage{
       interval                          1000
       outputFileName                pressure
@@ -134,6 +153,13 @@ McSimulation{
     }
 
     RadiusGyration{
+      interval                          1000
+      outputFileName          radiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    RadiusGyrationSq{
       interval                          1000
       outputFileName          radiusGyration
       nSamplePerBlock                     10
@@ -177,7 +203,6 @@ McSimulation{
   }
   saveInterval            50000
   saveFileName          restart
-
 }
 
 
@@ -187,8 +212,7 @@ McSimulation{
     }
 
     DumpConfig{
-      interval                         10000
+      interval                        10000
       outputFileName            dump/config.
     }
-
 

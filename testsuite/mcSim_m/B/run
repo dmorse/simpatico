@@ -5,12 +5,12 @@ echo " "
 echo "Running testsuite/mcSim_m/B"
 
 # Clean out out directories
-rm -f 0/out/*
-rm -f 1/out/*
-rm -f 2/out/*
+rm -f 0/out/* 0/restart
+rm -f 1/out/* 1/restart
+rm -f 2/out/* 2/restart
 
 # Run simulation, writing to out
-mpirun -np 3 mcSim_m -e -f -p param -c commands 
+mpirun -np 3 mcSim_m -e -f -p param -c command
 
 echo " "
 echo "Log file for testsuite/mcSim_m/B/0"
@@ -40,7 +40,7 @@ else
    rm -f 2/rst/*
 fi
 
-mpirun -np 3 mcSim_m -e -r restart -c commands.rst -o rst/
+mpirun -np 3 mcSim_m -e -r restart -c commrst -o rst/
 
 echo " "
 echo "Log file for testsuite/mcSim_m/B/1 after restart"

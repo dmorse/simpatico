@@ -351,7 +351,6 @@ namespace McMd
       }
       #endif
       #ifdef SIMP_EXTERNAL
-      assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal() > 0) {
          assert(externalPotentialPtr_);
          externalPotentialPtr_->save(ar); 

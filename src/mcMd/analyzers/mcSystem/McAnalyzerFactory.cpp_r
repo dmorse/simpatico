@@ -10,6 +10,7 @@
 #include "McEnergyAnalyzer.h"
 #include "McEnergyAverage.h"
 #include "McPressureAverage.h"
+#include "McPressureAnalyzer.h"
 #include "McVirialStressTensorAverage.h"
 
 #ifndef SIMP_NOPAIR
@@ -69,6 +70,9 @@ namespace McMd
       if (className == "McEnergyAverage") {
          ptr = new McEnergyAverage(system());
       } else
+      if (className == "McPressureAnalyzer") {
+         ptr = new McPressureAnalyzer(system());
+      } else
       if (className == "McPressureAverage") {
          ptr = new McPressureAverage(system());
       } else
@@ -77,12 +81,11 @@ namespace McMd
       } 
 
       #ifndef SIMP_NOPAIR
-      else
-      if (className == "McPairEnergyAverage") {
-         ptr = new McPairEnergyAverage(system());
-      } else
       if (className == "McPairEnergyAnalyzer") {
          ptr = new McPairEnergyAnalyzer(system());
+      } else
+      if (className == "McPairEnergyAverage") {
+         ptr = new McPairEnergyAverage(system());
       } else
       if (className == "McMuExchange") {
          ptr = new McMuExchange(system());
@@ -90,7 +93,6 @@ namespace McMd
       #endif
 
       #ifdef SIMP_BOND
-      else 
       if (className == "McBondEnergyAverage") {
          ptr = new McBondEnergyAverage(system());
       } else
@@ -101,7 +103,6 @@ namespace McMd
          ptr = new McIntraBondTensorAutoCorr(system());
       } 
       #ifndef SIMP_NOPAIR
-      else
       if (className == "McNVTChemicalPotential") {
          ptr = new McNVTChemicalPotential(system());
       }

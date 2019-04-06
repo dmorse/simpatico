@@ -23,6 +23,7 @@
 
 #ifdef SIMP_BOND
 #include "RadiusGyration.h"
+#include "RadiusGyrationSq.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
 #include "IntraStructureFactor.h"
@@ -112,6 +113,9 @@ namespace McMd
       } else 
       if (className == "RadiusGyration") {
          ptr = new RadiusGyration(system());
+      } else 
+      if (className == "RadiusGyrationSq") {
+         ptr = new RadiusGyrationSq(system());
       } else 
       if (className == "BlockRadiusGyration") {
          ptr = new BlockRadiusGyration(system());

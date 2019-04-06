@@ -3,8 +3,6 @@ TODO:
 New analyzers:
 
   - Write AngleDistribution analyzer for bending angle
-  - Write McPairEnergyMatrixAnalyzer template
-  - Write MdPairEnergyMatrixAnalyzer template
 
 Documentation (need *.dox files):
 
@@ -13,10 +11,9 @@ Documentation (need *.dox files):
 
 Reimplement as subclasses of more generic base classes:
 
-  system/RadiusGyration
   system/BoundaryAverage (rename OrthoBoundaryAverage)
-  mcSystem/McPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
-  mcSystem/MdPairEnergyAnalyzer (and deprecate McPairEnergyAverage)
+  mcSystem/McPairEnergyMatrixAnalyzer 
+  mcSystem/MdPairEnergyMatrixAnalyzer 
   mdSystem/MdPotentialEnergyAverage (also rename and stash old version)
 
 Deprecate (redundant):

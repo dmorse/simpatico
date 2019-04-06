@@ -101,7 +101,23 @@ namespace McMd
    * Save state to archive.
    */
    void StructureFactor::save(Serializable::OArchive& ar)
-   {  ar & *this; }
+   {  
+      Analyzer::save(ar);
+      ar & nAtomType_;
+      ar & nMode_;
+      ar & modes_;
+      ar & nWave_;
+      ar & waveIntVectors_;
+
+      ar & structureFactors_;
+      ar & nSample_;
+
+      #if 0
+      ar & maximumValue_;
+      ar & maximumWaveIntVector_;
+      ar & maximumQ_;
+      #endif
+   }
 
    /*
    * Clear accumulators.
