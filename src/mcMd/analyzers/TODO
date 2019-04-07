@@ -18,8 +18,11 @@ Reimplement as subclasses of more generic base classes:
 
 Deprecate (redundant):
 
+  mcSystem/MdPressureAverage
   mcSystem/McEnergyAverage
   mcSystem/McPressureAverage
+  mcSystem/McPairEnergyAverage
+  system/RadiusGyration
 
 Rename / Rewrite:
 
@@ -27,18 +30,19 @@ Rename / Rewrite:
   mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
   mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
 
-More Generic Base Classes:
+  Retest, reconsider and use PairEnergyCoefficients
 
-  AutoCorrelation(Analyzer|Mixin)<class T>
-  MeanSqDisplacement(Analyzer|Mixin)<class T>
+  Replace MdVirialStressTensorAverage with MdStressAnalyzer
 
 Serialization:
  
   - Test serialization analyzers in perturb/ in multi-processor run.
 
-  - Make sure that all analyzers restart, preferably tested within 
-    the testsuite/ runs.
+  - Test that all analyzers restart, preferably tested within the 
+    testsuite/ tests.
 
-  Note: Checked 1/4/2013 with grep that all other analyzers have 
-  save / loadParameters functions.
+More Generic Base Classes:
+
+  AutoCorrelation(Analyzer|Mixin)<class T>
+  MeanSqDisplacement(Analyzer|Mixin)<class T>
 

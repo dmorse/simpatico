@@ -40,10 +40,33 @@ namespace McMd
    * Constructor.
    */
    MdEnergyAnalyzer::MdEnergyAnalyzer(MdSystem& system) 
-    : AverageListAnalyzer<MdSystem>(system)
+    : AverageListAnalyzer<MdSystem>(system),
       //#ifdef SIMP_COULOMB
       //coulombComponents_(false),
       //#endif
+      #ifndef SIMP_NOPAIR
+      pairId_(-1),
+      #endif
+      #ifdef SIMP_BOND
+      bondId_(-1),
+      #endif
+      #ifdef SIMP_ANGLE
+      angleId_(-1),
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      dihedralId_(-1),
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      coulombId_(-1),
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      externalId_(-1),
+      #endif
+      potentialId_(-1),
+      kineticId_(-1),
+      totalId_(-1)
    {  setClassName("MdEnergyAnalyzer"); }
 
    /*
@@ -143,6 +166,70 @@ namespace McMd
       setName(potentialId_, "potential");
       setName(kineticId_, "kinetic");
       setName(totalId_, "total");
+   }
+
+   /*
+   * Load parameters from archive when restarting. 
+   */
+   void MdEnergyAnalyzer::loadParameters(Serializable::IArchive& ar) 
+   {
+      AverageListAnalyzer<MdSystem>::loadParameters(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar >> pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar >> bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar >> angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar >> dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar >> coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar >> externalId_;
+      #endif
+      ar >> potentialId_;
+      ar >> kineticId_;
+      ar >> totalId_;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void MdEnergyAnalyzer::save(Serializable::OArchive& ar) 
+   {
+      AverageListAnalyzer<MdSystem>::save(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar << pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar << bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar << angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar << dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar << coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar << externalId_;
+      #endif
+      ar << potentialId_;
+      ar << kineticId_;
+      ar << totalId_;
    }
 
    /*

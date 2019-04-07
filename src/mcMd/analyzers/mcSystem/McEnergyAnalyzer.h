@@ -51,6 +51,20 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load parameters from archive when restarting. 
+      *
+      * \param ar loading/input archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar); 
+   
+      /**
+      * Save internal state to archive.
+      *
+      * \param ar saving/output archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+
    protected:
 
       /**

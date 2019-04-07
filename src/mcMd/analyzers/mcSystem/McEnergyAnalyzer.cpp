@@ -37,10 +37,24 @@ namespace McMd
    * Constructor.
    */
    McEnergyAnalyzer::McEnergyAnalyzer(McSystem& system) 
-    : AverageListAnalyzer<McSystem>(system)
-      //#ifdef SIMP_COULOMB
-      //coulombComponents_(false),
-      //#endif
+    : AverageListAnalyzer<McSystem>(system),
+      #ifndef SIMP_NOPAIR
+      pairId_(-1),
+      #endif
+      #ifdef SIMP_BOND
+      bondId_(-1),
+      #endif
+      #ifdef SIMP_ANGLE
+      angleId_(-1),
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      dihedralId_(-1),
+      #endif
+      #ifdef SIMP_EXTERNAL
+      externalId_(-1),
+      #endif
+      totalId_(-1)
+
    {  setClassName("McEnergyAnalyzer"); }
 
    /*
@@ -134,6 +148,68 @@ namespace McMd
       }
       #endif
       setName(totalId_, "total");
+   }
+
+
+
+   /*
+   * Load parameters from archive when restarting. 
+   */
+   void McEnergyAnalyzer::loadParameters(Serializable::IArchive& ar) 
+   {
+      AverageListAnalyzer<McSystem>::loadParameters(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar >> pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar >> bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar >> angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar >> dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar >> coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar >> externalId_;
+      #endif
+      ar >> totalId_;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void McEnergyAnalyzer::save(Serializable::OArchive& ar) 
+   {
+      AverageListAnalyzer<McSystem>::save(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar << pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar << bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar << angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar << dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar << coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar << externalId_;
+      #endif
+      ar << totalId_;
    }
 
    /*

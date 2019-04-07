@@ -101,19 +101,25 @@ namespace Simp
    {
       UTIL_CHECK(nSamplePerBlock_ >= 0);
       UTIL_CHECK(!hasAccumulators());
+      UTIL_CHECK(nValue_ == 0);
+
       int nValue;
       ar >> nValue;
       UTIL_CHECK(nValue > 0);
-      initializeAccumulators(nValue);
-      UTIL_CHECK(nValue_ == nValue);
-      UTIL_CHECK(accumulators_.capacity() == nValue_);
-      UTIL_CHECK(names_.capacity() == nValue_);
-      UTIL_CHECK(values_.capacity() == nValue_);
+      values_.allocate(nValue);
+
+      accumulators_.allocate(nValue);
       ar >> accumulators_;
-      ar >> names_;
+      UTIL_CHECK(accumulators_.capacity() == nValue);
       for (int i = 0; i < nValue_; ++i) {
          UTIL_CHECK(accumulator(i).nSamplePerBlock() == nSamplePerBlock_);
       }
+
+      ar >> names_;
+      UTIL_CHECK(names_.capacity() == nValue);
+
+      nValue_ = nValue;
+      hasAccumulators_ = true;
    }
 
    /*

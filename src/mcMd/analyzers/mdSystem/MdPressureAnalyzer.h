@@ -51,10 +51,17 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load parameters from archive when restarting. 
+      *
+      * \param ar loading/input archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar); 
+   
    protected:
 
       /**
-      * Compute values of pressure components, store in values_ array.
+      * Compute and store values of pressure components.
       */  
       void compute();
  

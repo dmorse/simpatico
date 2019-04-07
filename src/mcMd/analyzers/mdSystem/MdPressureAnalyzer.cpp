@@ -21,10 +21,11 @@ namespace McMd
    * Constructor.
    */
    MdPressureAnalyzer::MdPressureAnalyzer(MdSystem& system) 
-    : AverageListAnalyzer<MdSystem>(system)
-   {  
-      setClassName("MdPressureAnalyzer"); 
-   }
+    : AverageListAnalyzer<MdSystem>(system),
+      virialId_(-1),
+      kineticId_(-1),
+      totalId_(-1)
+   {  setClassName("MdPressureAnalyzer"); }
 
    /*
    * Read interval and outputFileName. 
@@ -43,6 +44,17 @@ namespace McMd
       setName(virialId_, "virial");
       setName(kineticId_, "kinetic");
       setName(totalId_, "total");
+   }
+
+   /*
+   * Load parameters from archive when restarting. 
+   */
+   void MdPressureAnalyzer::loadParameters(Serializable::IArchive& ar) 
+   {
+      AverageListAnalyzer<MdSystem>::loadParameters(ar);
+      virialId_ = 0;
+      kineticId_ = 1;
+      totalId_ = 2;
    }
 
    /*

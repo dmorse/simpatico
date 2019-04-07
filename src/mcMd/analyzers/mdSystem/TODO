@@ -1,5 +1,0 @@
-Retest, reconsider and use PairEnergyCoefficients
-
-Fix bug in MdVirialStressTensorAverage - it doesn't restart correctly
-
-Replace MdVirialStressTensorAverage with MdStressAverage

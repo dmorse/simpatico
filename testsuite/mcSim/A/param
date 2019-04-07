@@ -102,114 +102,109 @@ McSimulation{
 
   }
   AnalyzerManager{
-    baseInterval                        1000
+    baseInterval             1000
 
     LogProgress{
-      interval                         20000
+      interval               20000
     }
 
     McEnergyAnalyzer{
-      interval                          1000
-      outputFileName                  energy
-      nSamplePerBlock                      2
+      interval               1000
+      outputFileName         energy
+      nSamplePerBlock        2
     }
 
     McEnergyAverage{
-      interval                          1000
-      outputFileName                  energy
-      nSamplePerBlock                      2
+      interval               1000
+      outputFileName         energyAve
+      nSamplePerBlock        2
     }
 
     McBondEnergyAverage{
-      interval                          1000
-      outputFileName              bondEnergy
-      nSamplePerBlock                      2
-    }
-
-    McPairEnergyAverage{
-      interval                          1000
-      outputFileName              pairEnergy
-      nSamplePerBlock                     10
-      selector                           all  -1  -1
+      interval               1000
+      outputFileName         bondEnergy
+      nSamplePerBlock        2
     }
 
     McPairEnergyAnalyzer{
-      interval                          1000
-      outputFileName              pairEnergy
-      nSamplePerBlock                     10
-      selector                           all  -1  -1
+      interval               1000
+      outputFileName         pairEnergy
+      nSamplePerBlock        10
+      selector               all  -1  -1
+    }
+
+    McPairEnergyAverage{
+      interval               1000
+      outputFileName         pairEnergyAve
+      nSamplePerBlock        10
+      selector               all  -1  -1
     }
 
     McPressureAnalyzer{
-      interval                          1000
-      outputFileName                pressure
-      nSamplePerBlock                     10
+      interval               1000
+      outputFileName         pressure
+      nSamplePerBlock        10
     }
 
     McPressureAverage{
-      interval                          1000
-      outputFileName                pressure
-      nSamplePerBlock                     10
+      interval               1000
+      outputFileName         pressureAve
+      nSamplePerBlock        10
     }
 
     RadiusGyration{
-      interval                          1000
-      outputFileName          radiusGyration
-      nSamplePerBlock                     10
-      speciesId                            0
+      interval               1000
+      outputFileName         radiusGyration
+      nSamplePerBlock        10
+      speciesId              0
     }
 
     RadiusGyrationSq{
-      interval                          1000
-      outputFileName          radiusGyration
-      nSamplePerBlock                     10
-      speciesId                            0
+      interval               1000
+      outputFileName         radiusGyrationSq
+      nSamplePerBlock        10
+      speciesId              0
     }
 
     BondLengthDist{
-      interval                          1000
-      outputFileName          BondLengthDist
-      speciesId                            0
-      min                                0.0
-      max                                2.0
-      nBin                               400
+      interval               1000
+      outputFileName         BondLengthDist
+      speciesId              0
+      min                    0.0
+      max                    2.0
+      nBin                   400
     }
 
     RDF{
-      interval                         10000
-      outputFileName                     RDF
-      max                                5.0
-      nBin                               500
-      selector                         inter   -1    -1
+      interval               10000
+      outputFileName         RDF
+      max                    5.0
+      nBin                   500
+      selector               inter   -1    -1
     }
 
     AtomMSD{
-      interval                          1000
-      outputFileName                 AtomMSD
-      speciesId                            0
-      atomId                               5
-      capacity                           400
+      interval               1000
+      outputFileName         AtomMSD
+      speciesId              0
+      atomId                 5
+      capacity               400
     }
 
     IntraPairAutoCorr{
-      interval                         1000
-      outputFileName      IntraPairAutoCorr
-      speciesId                           0
-      atom1Id                             0
-      atom2Id                             7
-      capacity                         1000
+      interval               1000
+      outputFileName         IntraPairAutoCorr
+      speciesId              0
+      atom1Id                0
+      atom2Id                7
+      capacity               1000
     }
 
   }
   saveInterval            50000
-  saveFileName          restart
+  saveFileName            restart
 }
 
-
-    McEnergyOutput{
-      interval                          1000
-      outputFileName               energyOut
-    }
 
     DumpConfig{
       interval                        10000
