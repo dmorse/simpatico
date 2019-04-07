@@ -53,7 +53,13 @@ MdSimulation{
     baseInterval                         100
 
     LogProgress{
-      interval                           2000
+      interval                          2000
+    }
+
+    MdEnergyAnalyzer{
+      interval                           100
+      outputFileName                  energy 
+      nSamplePerBlock                     10
     }
 
     MdPotentialEnergyAverage{
@@ -113,12 +119,6 @@ MdSimulation{
   saveInterval              10000
   saveFileName            restart
 }
-
-    MdEnergyAnalyzer{
-      interval                           100
-      outputFileName                  energy 
-      nSamplePerBlock                     10
-    }
 
     DumpConfig{
       interval                           2000

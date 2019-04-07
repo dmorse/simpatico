@@ -4,13 +4,14 @@ mcMd:
    - Add md and mc tests with external energy (slit, diblock layer?)
    - Add md and mc tests with angles and dihedrals
    - Add md tests with multiple atom types (e.g., diblocks or blends)
-   - Make sure all analyzers are used in testsuite
-   - Make sure all non-specialized McMoves are invoked and restarted
+   - Make sure almost all analyzers are used in testsuite
+   - Make sure almost all McMoves are invoked and restarted 
+
+     (some exceptions for now for very specialized analyzers and moves)
 
 mcMd-mpi:
 
-   - Fix problem with restarting MdEnergyAnalyzer in mdSim_m/A
-   - Add test suite tests for replica exchange
+   - Add testsuite test of replica exchange
 
 ddMd:
 

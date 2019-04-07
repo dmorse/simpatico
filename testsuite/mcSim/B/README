@@ -12,8 +12,8 @@ Use run script to run and restart:
 
 MC simulation:
 
-    mcSim -e -p param.nve -c commands
+    mcSim -e -p param.nve -c command
 
 Restarting simulations
 
-    mcSim -e -r restart -c commands.rst -o rst/
+    mcSim -e -r restart -c commrst -o rst/
