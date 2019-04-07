@@ -16,7 +16,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Compute and analyze pair energies.
+   * Compute and analyze pair energies for a single pair of atom types.
    *
    * \sa \ref ddMd_analyzer_PairEnergyAnalyzer_page "param file format"
    *
