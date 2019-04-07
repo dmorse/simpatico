@@ -1,48 +1,65 @@
 TODO:
 
-New analyzers:
-
-  - Write AngleDistribution analyzer for bending angle
-
 Documentation (need *.dox files):
 
-  system/LinearRouseAutoCorr 
-  system/RingRouseAutoCorr 
-
-Reimplement as subclasses of more generic base classes:
-
-  system/BoundaryAverage (rename OrthoBoundaryAverage)
-  mcSystem/McPairEnergyMatrixAnalyzer 
-  mcSystem/MdPairEnergyMatrixAnalyzer 
-  mdSystem/MdPotentialEnergyAverage (also rename and stash old version)
+   system/LinearRouseAutoCorr 
+   system/RingRouseAutoCorr 
 
 Deprecate (redundant):
 
-  mcSystem/MdPressureAverage
-  mcSystem/McEnergyAverage
-  mcSystem/McPressureAverage
-  mcSystem/McPairEnergyAverage
-  system/RadiusGyration
+   system/RadiusGyration -> RadiusGyrationSq
+   mdSystem/MdPressureAverage  -> MdPressureAnalyzer
+   mdSystem/MdPotentialEnergyAverage -> MdEnergyAnalyzer
+   mcSystem/McEnergyAverage -> McEnergyAnalyzer
+   mcSystem/McBondEnergyAverage -> McEnergyAnalyzer
+   mcSystem/McPressureAverage -> McPressureAnalyzer
+   mcSystem/McPairEnergyAverage -> McPairEnergyAnalyzer
+
+Reimplement as subclasses of existing base classes:
+
+   system/BlockRadiusGyration (also rename BlockRadiusGyrationSq )
+   system/BoundaryAverage (rename OrthoBoundaryAnalyzer)
 
 Rename / Rewrite:
 
-  mdSystem/MdPressureAverage -> MdPressureAnalyzer
-  mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
-  mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
+   mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
+   mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
 
-  Retest, reconsider and use PairEnergyCoefficients
+   Retest, reconsider and use PairEnergyCoefficients
 
-  Replace MdVirialStressTensorAverage with MdStressAnalyzer
+   Replace MdVirialStressTensorAverage with MdStressAnalyzer
 
 Serialization:
  
-  - Test serialization analyzers in perturb/ in multi-processor run.
+ - Test serialization analyzers in perturb/ in multi-processor run.
 
-  - Test that all analyzers restart, preferably tested within the 
-    testsuite/ tests.
+ - Test that all analyzers restart, preferably tested within the 
+   testsuite/ tests.
+
+Analyzers not used in any McMd testsuite:
+
+   BlockRadiusAverage (need diblock test)
+   BoundaryAverage (need npt mcSim test)
+   CompositionProfile (need diblock lamellar with external potential)
+   ClusterHistogram (need test with clusters)
+
+New analyzers:
+
+ - AngleDistribution analyzer for bending angle (McMd and DdMD)
+ - mcSystem/McPairEnergyMatrixAnalyzer 
+ - mcSystem/MdPairEnergyMatrixAnalyzer 
 
 More Generic Base Classes:
 
-  AutoCorrelation(Analyzer|Mixin)<class T>
-  MeanSqDisplacement(Analyzer|Mixin)<class T>
+   AutoCorrelation(Analyzer|Mixin)<class T>
+   MeanSqDisplacement(Analyzer|Mixin)<class T>
+
+Reorganization idea:
+
+   Replace SystemAnalyzer template by a SystemMixIn class template to 
+   reduce use of hierarchies of class templates. This would reduce depth 
+   of template hierarchies only if it were added to final classes, rather
+   than to AverageAnalyzer template. Have the MixIn constructor take 
+   the Analyzer and the System as arguments, and have the constructor
+   call the Analyzer::setFileMaster() function to provide a filemaster.
 
