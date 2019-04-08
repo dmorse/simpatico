@@ -221,6 +221,7 @@ namespace McMd
       ar >> isCopy_;
       if (!isCopy_) {
          interaction().setNAtomType(simulation().nAtomType());
+         interaction().setBoundary(system().boundary());
          bool nextIndent = false;
          addParamComposite(interaction(), nextIndent);
          interaction().loadParameters(ar);

@@ -115,9 +115,8 @@ namespace Simp
    */
    void SlitExternal::loadParameters(Serializable::IArchive &ar)
    {
-      ar >> nAtomType_; 
-      if (nAtomType_ <= 0) {
-         UTIL_THROW( "nAtomType must be positive");
+      if (nAtomType_ == 0) {
+         UTIL_THROW("nAtomType must be set before readParam");
       }
       if (!boundaryPtr_) {
          UTIL_THROW("Boundary must be set before loadParameters");
@@ -135,7 +134,6 @@ namespace Simp
    */
    void SlitExternal::save(Serializable::OArchive &ar)
    {
-      ar << nAtomType_;
       ar << epsilon_;
       ar << sigma_;
       ar << cutoff_;
@@ -159,6 +157,8 @@ namespace Simp
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
+      sigmaCb_ = sigma_ * sigma_ * sigma_;
+      coeff_   = 4.0 * epsilon_ * acos(-1.0) / 45.0 * 0.7 * sigmaCb_;
    }
 
    /*
