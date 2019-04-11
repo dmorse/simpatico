@@ -5,16 +5,6 @@ Documentation (need *.dox files):
    system/LinearRouseAutoCorr 
    system/RingRouseAutoCorr 
 
-Deprecate (redundant):
-
-   system/RadiusGyration -> RadiusGyrationSq
-   mdSystem/MdPressureAverage  -> MdPressureAnalyzer
-   mdSystem/MdPotentialEnergyAverage -> MdEnergyAnalyzer
-   mcSystem/McEnergyAverage -> McEnergyAnalyzer
-   mcSystem/McBondEnergyAverage -> McEnergyAnalyzer
-   mcSystem/McPressureAverage -> McPressureAnalyzer
-   mcSystem/McPairEnergyAverage -> McPairEnergyAnalyzer
-
 Reimplement as subclasses of existing base classes:
 
    system/BlockRadiusGyration (also rename BlockRadiusGyrationSq )
@@ -24,6 +14,8 @@ Rename / Rewrite:
 
    mcSystem/McNVTChemicalPotential -> LinFlexMuAnalyzer
    mcSystem/McMuExchange -> McMuExchangeAnalyzer (rewrite)
+
+   mcSystem/McPairEnergyAverage -> McPairEnergyAnalyzer
 
    Retest, reconsider and use PairEnergyCoefficients
 

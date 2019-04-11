@@ -22,13 +22,12 @@ The following standard analyzers can be used in either Monte Carlo
   <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
   <li> \subpage mcMd_analyzer_ClusterHistogram_page </li>
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
-  <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
   <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
   <li> \subpage mcMd_analyzer_DihedralDist_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactorGrid_page </li>
-  <li> \subpage mcMd_analyzer_RadiusGyration_page </li>
+  <li> \subpage mcMd_analyzer_RadiusGyrationSq_page </li>
   <li> \subpage mcMd_analyzer_RDF_page </li>
   <li> \subpage mcMd_analyzer_StructureFactor_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
@@ -43,7 +42,6 @@ The following analyzers can only be used in Monte Carlo (MC)
 simulations:
 
 <ul style="list-style: none;">
-  <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
@@ -66,9 +64,7 @@ The following analyzers can only be used in MD simulations:
   <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPairEnergyCoefficients_page </li>
-  <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPressureAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_MdStressAutoCorr_page </li>
 </ul>
  
