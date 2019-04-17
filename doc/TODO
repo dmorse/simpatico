@@ -29,6 +29,8 @@ TODO:
    *3.14 - Perturbation (new)
    *3.15 - Class Documentation (new - explain where to find information)
 
+   Add RESTART to the list of commands in user_command_page
+
 2) Document all of the analyzers, with one *.dox file per interaction 
    in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.
 
@@ -38,3 +40,18 @@ TODO:
    subpages. Create lists in Source Code Overview and reference 
    elsewhere?
 
+
+Thoughts on commands:
+---------------------
+Rename OUTPUT_INTEGRATOR to OUTPUT_TIME.
+Rename CLEAR_INTEGRATOR to CLEAR
+
+Consider adding OUTPUT_MEMORY, OUTPUT_TIME, OUTPUT_ANALYSIS, and CLEAR 
+commands for mdSim and mcSim to make them more similar to ddSim. This 
+might make the "CONTINUE" command for mcSim and mdSim unnecessary -
+running a simulation multiple times would continue the simulation 
+unless one calls clear.
+
+Add default - if a simulation has been run and OUTPUT_ANALYSIS has not
+been called, output when FINISH is called.  This would require adding 
+a variable named something like areAnalyzersClear.
