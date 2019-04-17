@@ -1,6 +1,6 @@
-/*! \page ddMd_integrators_page Molecular Dynamics Integrators
+/*! \page ddMd_integrators_page ddSim Molecular Dynamics Integrators
 
-User documentation for classes that implement molecular dynamics integration algorithms:
+User documentation for classes that implement molecular dynamics integration algorithms for use with ddSim parallel MD program:
 <ul style="list-style: none;">
   <li> \subpage ddMd_integrator_NveIntegrator_page </li>
   <li> \subpage ddMd_integrator_NvtIntegrator_page </li>

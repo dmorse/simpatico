@@ -1,0 +1,17 @@
+/*! \page user_species_page 3.9 Molecular Species
+
+\ref user_mcmove_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_analysis_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Links to user documention for molecular species.
+
+<ul style="list-style: none;">
+  <li> \subpage simp_species_page </li>
+</ul>
+
+<BR>
+\ref user_mcmove_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_analysis_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+*/

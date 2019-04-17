@@ -1,7 +1,7 @@
-/*! \page user_analysis_page 3.6 Data Analysis
+/*! \page user_analysis_page 3.10 Data Analysis
 
- \ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_features_page  (Next) 
+ \ref user_species_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_restart_page  (Next) 
  <BR> 
 
 Simpatico provides extensible facilities for evaluating and analyzing a variety of physical properties. Several different
@@ -27,9 +27,15 @@ Each of the three simpatico simulation programs (mcSim, mdSim and ddSim) provide
 
 The choice of which analyzer operations (if any) should be executed during an simulation is specified for each type of simulation by the AnalyzerManager block of the parameter file. The AnalyzerManager block of the parameter file contains a "baseInterval" parameter (explained below), followed by a sequence of any number of (zero or more) polymorphic subbblocks. Each polymorphic subblock contains the parameter file block for an analyzer class that should be used during the simulation. Each such block begins with a line containing the name of the analyzer class and a opening curly bracket and ends with a line containing a closing bracket. Any number of analyzers may be added to a simulation.
 
-Different parameter file formats are required for different analyzer classes. All analyzer classes must read an interval parameter, which is usually the first parameter within the block. The interval parameter may have different values for different analyzers, but must always be a multiple of the "baseInterval" parameter that appears as the first line within the AnalyzerManager block. Most analyzers also write data to an associated output file, either during the simulation or as a summary at the end of a simulation, and thus require an output file name as a parameter, which is usually named "outputFileName". Some analyzers require other input parameters. See \ref user_features_page "here" for links to documentation of the parameter file formats for specific analyzers.
+Different parameter file formats are required for different analyzer classes. All analyzer classes must read an interval parameter, which is usually the first parameter within the block. The interval parameter may have different values for different analyzers, but must always be a multiple of the "baseInterval" parameter that appears as the first line within the AnalyzerManager block. Most analyzers also write data to an associated output file, either during the simulation or as a summary at the end of a simulation, and thus require an output file name as a parameter, which is usually named "outputFileName". Some analyzers require other input parameters. 
 
 Each subclass of either McMd::Analyzer or DdMd::Analyzer must re-implement a pure virtual function named sample(). The sample function is invoked periodically during a simulation, and implements the actual data analysis operation. This function normally evaluates a physical property, and may either write data to an associated file or update a statistical accumulator, or both.  
+
+Links to documentation of the parameter file formats for specific analyzers are given below:
+<ul style="list-style: none;">
+  <li> \subpage mcMd_analyzers_page </li>
+  <li> \subpage ddMd_analyzers_page </li>
+</ul>
 
 \section analysis_configWrite_section Writing a sequence of configuration files
 
@@ -79,8 +85,8 @@ The program mdPp is a single-processor program that is designed specifically for
 The motivation for the creation of the mdPp program is that mdPp uses data structures analogous to those used by ddSim, and can thus be used to analyze any type of system that can be simulated by ddSim. This includes some types of systems that cannot be naturally described by the data structures used by mcSim and mdSim, which require that the system contain a limited number of molecular species, in which all molecules within each species are identical. For example, ddSim can be used to simulate systems containing irregular covalent networks (e.g., a disordered polymer network) which cannot be conveniently described using the data structures used in mdSim and mcSim.
 
 <BR> 
- \ref user_examples_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_species_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_features_page  (Next) 
+ \ref user_restart_page  (Next) 
 
 */

@@ -3,30 +3,31 @@ TODO:
 1) Re-organize user guide to make it easier for users find what they 
    are looking for. Possible organization (think about this again):
 
-   - Running a Simulation (good)
-   - Parameter Files (good)
-   - Command Files (good)
-   - Configuration Files (good)
-   - Examples (pretty good, check if up to date)
-   * Potential Energies (new)
-   * Simulation Algorithms (list and explain options)
-      - ddSim integrators
-      - mdSim integrators
-      - mcSim McMoves 
-   * Analyzers
-      Explain use of analyzers, briefly postprocessing
-      - Analyzers for ddSim 
-      - Analyzers for mdSim or mcSim
-      - Analyzers for mdSim 
-      - Analyzers for mcSim 
-   * Postprocessing
-      - On the fly
-      - Post-processing
-   * Generating Initial Configurations  <- new, explain command syntax
-   - Perturbation (new)
-   - Restarting (check if up to date)
-   - Multi-System Simulations
-   * Guide to Documentation (new - explain where to find information)
+    3.1  - Running a Simulation (good)
+    3.2  - Parameter Files (good)
+    3.3  - Command Files (good)
+    3.4  - Configuration Files (good)
+    3.5  - Examples (good)
+   *3.6  - Interactions (Potential Energies)
+   *3.7  - Molecular Dynamics Integrators 
+         - ddSim integrators
+         - mdSim integrators
+   *3.8  - Monte Carlo Moves 
+         - mcSim McMoves 
+   *3.9  - Molecular Species
+   *3.10 - Data Analysis
+           Explain use of analyzers, briefly postprocessing
+           3.10.1 analyzers page
+                - Analyzers for mdSim or mcSim
+                - Analyzers for ddSim 
+           3.10.2 trajectories page
+           3.10.3 Postprocessing with mdSim or mcSim
+           3.10.4 Postprocessing with mdPp
+   *3.10 - Generating Initial Configurations  <- new, explain command syntax
+    3.12 - Restarting
+    3.13 - Multi-System Simulations
+   *3.14 - Perturbation (new)
+   *3.15 - Class Documentation (new - explain where to find information)
 
 2) Document all of the analyzers, with one *.dox file per interaction 
    in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.
