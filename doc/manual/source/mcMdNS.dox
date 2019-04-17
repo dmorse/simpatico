@@ -13,7 +13,7 @@ The McMd namespace contains most of the classes used to construct Monte Carlo an
 
 See also: \ref McMd_Module "McMd Module"
 
-\section McMd_chemistry_sec  Chemical Structure Classes
+\section McMd_chemistry_sec  Chemical structure classes
 
 The following classes represent entities that are used to describe the structure and configuration of a set of molecules:
 
@@ -66,7 +66,7 @@ The Molecule class provides methods to access its constituent Atom and Group < N
 See also: \ref McMd_Chemistry_Module "Chemistry Module"
 See also: \ref Simp_Species_Module   "Species Module"
 
-\section McMd_System_sec System Class
+\section McMd_System_sec System class
 
 A System object represents a set of interacting molecules within a region of space. The System class is a base class
 for McSystem and McSystem classes, which are discussed below.  An instance of the System base class has: 
@@ -83,7 +83,7 @@ A System provides methods to access and manage molecules.  It provides methods t
 
 See also: \ref McMd_System_Module "System Module"
 
-\section McMd_McMdSystem_sec McSystem and MdSystem Classes
+\section McMd_McMdSystem_sec McSystem and MdSystem classes
 
 McSystem and MdSystem are subclasses of System that are specialized for MD and MC simulations, respectively.
 
@@ -93,13 +93,13 @@ An MdSystem also has an associated molecular dynamics integrator, which is an in
 
 In MC simulations, the parent McSimulation (discussed below) has an McMoveManager container that holds a set of instances of McMove, which represent different Monte Carlo moves.
 
-\section McMd_PotentialBase_sec Potential Energy Base Classes
+\section McMd_PotentialBase_sec Potential energy base classes
 
 The McMd "potential" classes in the mcMd/potentials/ directory are polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System, as well as for small groups (e.g., pairs) of interacting atoms.  The classes BondPotential, AnglePotential, DihedralPotential provide interfaces for bond, angle, and dihedral potentials, respectively, which are used in both MD and MC simulations. The classes McPairPotential and MdPairPotential provide slightly different interfaces for nonbonded pair interactions for use in MC and MD simulations, respectively. 
 
 Every potential class provides an energy() method that returns the associated energy for the entire system. The covalent potential energy classes (BondPotential, AnglePotential, and DihedralPotential) and the MdPairPotential class all provide an addForces() method that adds the contribution of the associated type of interaction to the atomic forces for every atom in the system.  The covalent potential energy classes and McPairPotential all provide an atomEnergy() method that returns the value of a particular energy contribution (i.e., the nonbonded pair energy or covalent bond energy) for a specific atom, for use in MC algorithms that attempt to move, insert or remove individual atoms.
 
-\section McMd_PotentialImpl_sec Potential Energy Implementation Class Templates
+\section McMd_PotentialImpl_sec Potential energy class templates
 
 The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Simp namespace as a template argument, and has an instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, MdPairPotentialImpl<class Interaction> is a template that implements the interface of the MdPairPotential base class, and the template instantiation
 \code

@@ -175,7 +175,7 @@ The -o (output prefix) option takes a required string parameter, which is a pref
 
 Other command line options that are relevant only to multi-system simulations are discussed separately \ref user_multi_page "here". 
 
-\section usage_paths_section Specifying File Names and Path Prefixes
+\section usage_paths_section Specifying file names and path prefixes
 
 When a simulation program is executed, several file names or file paths must provided before the simulation can run. One of these must be provided as a command line argument, while others can provided either as command line arguments or in the parameter file. When a program is executed, the name of either a parameter file or a restart file (but not both) must be specified as an argument of the -p or -r command line option. In addition, the program needs the name of a command file and (optionally) values for the input and output prefix strings that are prepended to names of input and output files. The name of an input configuration file (excluding the input prefix, if any) must be specified in the command file, as an argument to a READ_CONFIG command.
 

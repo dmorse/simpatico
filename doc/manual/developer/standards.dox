@@ -19,7 +19,7 @@ in the source code of Simpatico:
 
   - Use header guards in all header files. 
 
-\section name_section Symbol Names
+\section name_section Symbol name conventions
 
   -  Names of functions and variables are lower case camel, as in "myVariable" or "myData".  
 
@@ -87,7 +87,7 @@ namespace Util
 #endif
 \endverbatim
 
-\section format_section Code Formatting:
+\section format_section Code formatting
 
   - Indent exactly 3 spaces per level. Do NOT use any tabs.
 
@@ -198,7 +198,7 @@ namespace Util
 #endif
 \endverbatim
 
-\section Dox_section Documentation (via doxygen):
+\section Dox_section Documentation (via doxygen)
 
 Simpatico uses the doxygen (www.doxygen.org) utility to create html documentation from documentations blocks that are extracted from the source code. Doxygen will extracts any multi-line comment that begin with a slash and two asterisks ("/**"), or single line comments that begin with three slashes ("///"), like this:
 \verbatim
@@ -265,7 +265,7 @@ Example:
 
 \endverbatim
 
-\section interface_section Interface Design
+\section interface_section Interface design
 
   - All nonstatic class member variables should be private or (occassionally) protected.  
 
@@ -321,7 +321,7 @@ These provide pseudo-public access to the position of an Atom (represented as a 
 
   - Write access to a class instance may sometimes instead be provided by an explicit "set" function. The use of a set function is preferable when one needs to check preconditions or carry out operations necessary to guarantee data validity.
 
-\section data_section Data Structures 
+\section data_section Data structures 
 
   - Use the C++ iostream classes for all file IO. For consistency, avoid the C fscan() and fprint() methods. Use the wrapper classes in the src/format directory to simplify coding of formatted output to ostreams.
 
@@ -336,7 +336,7 @@ These provide pseudo-public access to the position of an Atom (represented as a 
     </ul>
 The lack of resizability is essential for algorithms that store pointers to particular objects within an array, since the address of an object that is stored in resizable array such as a std::vector generally changes whenever the array is resized.
 
-\section header_section Header File Includes
+\section header_section Header file includes
 
   - In header files, use forward class declarations rather than including class headers when possible.  Forward declarations are sufficient for classes or class templates that used only in function declarations (as parameter or return types) or in the declaration of types for pointer member variables. Header files are generally necessary for base classes, member objects, and classes that are used in the implementation of inline functions. 
   
@@ -351,7 +351,7 @@ The lack of resizability is essential for algorithms that store pointers to part
 
   - Never use a "using std" statement to load the entire C++ standard library namespace into a header file.
 
-\section error_section Error Handling
+\section error_section Error handling
 
   - Include the file <util/global.h> in all files that use C assert() statements or that can throw exceptions. This automatically includes the "Exception.h" and "Log.h" header files, defines the UTIL_THROW(..) macro that is used to throw exceptions, and enables assert() statements if UTIL_DEBUG is defined, 
 

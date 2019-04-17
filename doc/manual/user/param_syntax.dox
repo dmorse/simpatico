@@ -140,11 +140,11 @@ Each parameter in a parameter file may be either required or optional. Most para
 
 The parameter nBondType in the above example is an optional parameter. This parameter specifies how many distinct types of covalent bond can exist in a simulation.  If the line containing the nBondType parameter were missing, nBondType would be set to zero by default. Setting nBondType to 0 de-activates the bond potential, which would be the appropriate setting for a simulation of point particles (e.g., liquid Argon). The bond potential can thus be disabled either by explicitly setting nBondType to zero, or by leaving this line out of the parameter file. In versions of the program that are compiled with angle and dihedral potentials enabled, the optional nBondType parameter may be followed by optional nAngleType and nDihedralType parameters. Each of these enables the corresponding angle or dihedral potential if it is assigned a nonzero values, and each of these is also set to zero by default, thus disabling the associated potential. In versions of the program that are compiled with external potential enabled, the optional parameters nBondType, nAngleType, and nDihedralType are followed by an optional boolean variable named hasExternal that is set false (0) by default. The hasExternal parameter thus enables the external potential if it is set to true (1) or disables the external potential when set to false (0) or absent. 
 
-\section user_param_syntax_conditional_section Conditional Parameters and Blocks
+\section user_param_syntax_conditional_section Conditional parameters and blocks
 
 Some parameters or blocks in a parameter file may be required only if parameters that have been read previously take on specific values. Generally, the format does not require or allow entry of parameters if it is already known that their values would be meaningless or irrelevent on the basis of parameter values that appear earlier in the parameter file. For example, the "bondStyle" parameter and the "BondPotential" block parameter are required if and only if nBondType has been assigned a positive value, nBondType > 0, thereby enabling the inclusion of bond potential. Similarly "angleStyle" and "AnglePotential" would be required immediately after "bondStyle" and "BondPotential", respectively, if and only if nAngleType > 0.
 
-\section user_param_syntax_polymorphic_section Polymorphic Blocks
+\section user_param_syntax_polymorphic_section Polymorphic blocks
 
 Some blocks in a simpatico parameter file are "polymorphic".  A polymorphic parameter file block is one that may contain the format appropriate to any of several possible subclasses of a particular base class. The desired subclass is identified by the class name label in the opening line of such a block.  The use of polymorphic blocks allows a user to choose at run time which elements of a simulation (e.g., which among several possible integration algorithms, analyzers, and file formats) should be used in a particular simulation. 
  
@@ -154,13 +154,13 @@ Links to user documentation of parameter file formats for a variety of polymorph
 
 The code required to parse a polymorphic block relies on an associated "Factory" class, which is responsible for recognizing all of the valid subclass names of an associated base class, and being able to construct a new instance of a specified subclass. Factory classes are discussed in more detail \ref extend_factory_page "here".
 
-\section user_param_syntax_manager_section Manager Classes
+\section user_param_syntax_manager_section Manager classes
 
 The above example file contains two blocks labelled "SpeciesManager" and "AnalyzerManager" that are examples of "Manager" classes.  The parameter block associated with each Manager class contains a sequence of polymorphic subblocks, separated by spaces. Each such subblock may contain the file format for any known subclass of the associated base class (e.g., any subclass of McMd::Species or McMd::Analyzer). A Manager block may contain any number of such subblocks, followed by a closing bracket on a line by itself. 
 
 A Manager class is used to allow a user to specify an arbitrary number of instances of different subclasses of a particular base class for use in a simulation. Thus for example, the sub-blocks of the SpeciesManager block lists all of the molecular species that may be present in a particular simulation. Each such sublock describes the chemical structure of a different species of molecule, each of which is represented by an instance of a subclass of McMd::Species. Each subblocks of the AnalyzerManager block instead specifies a subclasses of McMd::Analyzer that implements a data analysis and/or data output operation that should be invoked periodically during a simulation.  The parameter file format for an mcSim Monte Carlo (MC) simulation also has an McMoveManager block that contains subblocks associated with different Markov MC moves that should be chosen at random at each step of a Markov MC simulation.  
 
-\section user_param_syntax_potential_section Potential Energy Styles
+\section user_param_syntax_potential_section Potential energy "styles"
 
 In mcSim and mdSim simulations, the McMd::McSystem or McMd::MdSystem object has several associated types of potential energy. In a ddSim simulation, corresponding potential energies objects are members of the main DdMd::Simulation object. The default versions of all three programs implement only a non-bonded pair potential and a bond potential. Other types of potential energy, such as 3-body bond angle and 4-body dihedral potentials or an external one-bondy potential, may be enabled by invoking the configure script from the appropriate build directory and recompiling.
 

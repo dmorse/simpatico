@@ -50,7 +50,7 @@ the mcSim and mdSim single processor programs. The paralllel versions
 of mcSim and mdSim are trivially parallel programs that simply run 
 different variants or replicas of a system on different CPU cores.
 
-\section require_git_section Git Client
+\section require_git_section Git client
 
 The source code for simpatico is hosted on the github server, at
 <a href=http://github.com>github</a>, as project dmorse/simpatico.  
@@ -88,7 +88,7 @@ if the command
 \endcode
 returns a non-empty path.
 
-\section install_require_compiler_serial Compiler (Serial Programs)
+\section install_require_compiler_serial Compiler (serial programs)
 
 By default, the simpatico build system invokes the compiler used to create 
 serial programs by calling the compiler commnd "g++". On linux systems, 
@@ -121,7 +121,7 @@ modifying a compiler setup file that is read during initial setup
 of the build system. The setup process is described in more detail 
 \ref install_setup_page "here".
 
-\section install_require_compiler_parallel Compiler (Parallel Programs)
+\section install_require_compiler_parallel Compiler (parallel programs)
 
 The choice of an MPI library is related to the choice of compiler used 
 to compile simpatico: Generally, simpatico should be compiled using the 
@@ -154,7 +154,7 @@ The name of the command used to invoke the compiler when compiling
 C++ files for MPI programs can also be changed by modifying a compiler 
 setup file, as discussed \ref install_setup_page "here". 
 
-\section install_require_module Software Modules on Linux Clusters 
+\section install_require_module Software modules (linux clusters)
 
 On any multi-user linux cluster that is set up for use in computational 
 research, at least one MPI library should already be installed. At the 
@@ -199,7 +199,7 @@ There are also many modules on mesabi to load specific versions of
 OpenMPI and other MPI library implementations with specific versions of 
 several different compilers.
 
-\section install_require_mpi Installing MPI on a Desktop or Laptop
+\section install_require_mpi Installing MPI on a desktop or laptop
 
 It is possible for a user to install an MPI library on a desktop or laptop
 computer in order to parallel programs provided with simpatico to compiled

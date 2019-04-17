@@ -48,7 +48,7 @@ features), simply reissue the "make mcMd" command. The build system will
 detect if you have changed any of the relevant configuration files, and 
 will recompile any file that might be effected by such changes.
 
-\section compile_mdPp_section Compiling the mdPp MD Post-Processor
+\section compile_mdPp_section Compiling the mdPp MD post-processor
 
 The mdPp post-processor program is another a single-processor program that 
 you can compile before setting up your system to compile MPI programs.  To 
@@ -74,7 +74,7 @@ directory, place object, dependency and library files in the
 simpatico/bld/parallel directory tree, and install an executable named 
 ddSim in the simpatico/bin directory. 
 
-\section compile_multi_section Compiling mcSim and mdSim (Multi-processor Versions)
+\section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
 
 Multi-processor versions of mcSim and mdSim can be used to run:
 
@@ -98,7 +98,7 @@ and mdSim_m in the simpatico/bin/ directory. The suffix "_m" on these
 executable names denotes "MPI", and is used to distinguish multi-processor 
 versions of the mcSim and mdSim executables from single processor versions.
 
-\section compile_cleanup_section Cleaning Up
+\section compile_cleanup_section Cleaning up
 
 If, for any reason, you would like to clean up after compiling by removing 
 all of the object, dependency and library files that are generated during 
@@ -119,7 +119,7 @@ Entering "make clean" from a namespace level subdirectory of any build
 directory will instead remove all generated files from that subdirectory, 
 without effecting files in other subdirectories.
 
-\section compile_veryclean_section Reverting to Initial State
+\section compile_veryclean_section Reverting to initial state
 
 The "make clean" command discussed above removes files that are generated 
 by compilation, but does not remove the various makefile fragments and 

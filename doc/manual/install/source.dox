@@ -12,7 +12,7 @@ the public <a href=https://github.com/dmorse/simpatico>git repository</a>.
 The following instructions assume that a "git" client is installed on
 your computer.
 
-\section compile_getcode_section Cloning the Repository
+\section compile_getcode_section Cloning the repository
 
 To obtain a working copy of the simpatico git repository, you should first
 change directory (cd) to the directory you want to contain the simpatico 
@@ -44,7 +44,7 @@ a prefix "simpatico/" should be understood to be relative paths, relative
 to this directory. The directory structure of the simpatico repository is 
 explained \ref source_directory_page "here".
 
-\section compile_submodules_section On the Use of Git Submodules
+\section compile_submodules_section Use of git submodules
 
 Some subdirectories of the simpatico/src directory are maintained in 
 separate github repositories and are imported into simpatico as git
