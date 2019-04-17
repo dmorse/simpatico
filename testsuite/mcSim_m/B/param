@@ -132,7 +132,7 @@ McSimulation{
       parameterIndex                       0
     }
    
-    RadiusGyration{
+    RadiusGyrationSq{
       interval                          1000
       outputFileName          RadiusGyration
       nSamplePerBlock                      0

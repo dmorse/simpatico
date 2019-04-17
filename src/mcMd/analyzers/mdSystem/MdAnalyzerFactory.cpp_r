@@ -10,7 +10,6 @@
 // Analyzers for MdSystem only
 #include "MdEnergyAnalyzer.h"
 #include "MdKineticEnergyAverage.h"
-#include "MdPressureAverage.h"
 #include "MdPressureAnalyzer.h"
 #include "MdStressAutoCorr.h"
 #include "MdPairEnergyCoefficients.h"
