@@ -9,7 +9,8 @@ namespace McMd
    * McMove is an abstract base class. Each subclass represents a
    * specific MC moves algorithm.
    *
-   * \sa \ref mcMd_mcMoves_page "User documentation"
+   * \sa \ref user_mcmove_page "Mcmove classes - user documentation"
+   * \sa \ref mcMd_mcMove_McMoveManager_page "McMoveManager - user documentation"
    */
 
 }

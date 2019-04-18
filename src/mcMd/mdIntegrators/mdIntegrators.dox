@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page mcMd_mdIntegrators_page MdSim Molecular Dynamics Integrators
+/*! \page mcMd_mdIntegrators_page mdSim Molecular Dynamics Integrators
 
 User documentation for molecular dynamics integrator classes that 
 are available for use with mdSim (subclasses of McMd::MdIntegrator).

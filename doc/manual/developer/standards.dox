@@ -323,18 +323,19 @@ These provide pseudo-public access to the position of an Atom (represented as a 
 
 \section data_section Data structures 
 
-  - Use the C++ iostream classes for all file IO. For consistency, avoid the C fscan() and fprint() methods. Use the wrapper classes in the src/format directory to simplify coding of formatted output to ostreams.
+  - Use the C++ iostream classes for all file IO. For consistency, avoid the C fscan() and fprint() methods. Use the wrapper classes in the src/util/format directory to simplify coding of formatted output to ostreams.
 
   - Use std::string to represent character strings whenever possible.
 
   - Use Util::Vector objects to represent Cartesian positions and separations, or any array floating point numbers for which the number of elements must equal the dimensionality of space (e.g., the dimensions of the Boundary for a periodic orthorhombic unit cell). Use IntVector to represent corresponding arrays of integers.
 
-  - Prefer the array container templates in src/util/containers over bare C arrays and STL containers. STL containers such as std::vector should be used when their is a need for their resizability. Our preference for the home-made containers is based on the fact that: 
+  - Prefer the array container templates in src/util/containers over bare C arrays and C++ standard template library (STL) containers. 
+    STL containers such as std::vector should be used when their is a need for their resizability. Our preference for the home-made containers is based on the fact that: 
     <ul>
     <li> The Simpatico containers provide optional bounds checking, which is enabled only when NDEBUG is not defined. </li>
     <li> Unlike std::vector, Simpatico array classes are not automatically resizable, and so will never be silently moved to a new location in memory.
     </ul>
-The lack of resizability is essential for algorithms that store pointers to particular objects within an array, since the address of an object that is stored in resizable array such as a std::vector generally changes whenever the array is resized.
+The use of a container that is not automatically resized during use is essential to allow implementation of algorithms that store pointers to particular objects within an array: The address of an object that is stored in an automatically resizable array such as a std::vector may change when the array is resized in response to addition of new elements, invalidating any pointers to array elements.
 
 \section header_section Header file includes
 
@@ -353,11 +354,11 @@ The lack of resizability is essential for algorithms that store pointers to part
 
 \section error_section Error handling
 
-  - Include the file <util/global.h> in all files that use C assert() statements or that can throw exceptions. This automatically includes the "Exception.h" and "Log.h" header files, defines the UTIL_THROW(..) macro that is used to throw exceptions, and enables assert() statements if UTIL_DEBUG is defined, 
+  - Include the file <util/global.h> in all files that use C assert() statements or that can throw exceptions. This header includes the "Exception.h" and "Log.h" header files, defines the UTIL_THROW(..) macro that is used to throw exceptions, and enables assert() statements if UTIL_DEBUG is defined, 
 
-  - For checks that are intended only for debugging, use C assert() statements or enclose the test in a ifndef UTIL_DEBUG .... endif conditional compilation block. 
+  - For checks that are intended only for debugging, use C assert() statements, the UTIL_ASSERT(...) macro, or enclose the test in a ifndef UTIL_DEBUG .... endif conditional compilation block. 
 
-  - Use the UTIL_THROW macro defined in src/util/global.h to throw Exception objects for all errors, except those caught in debugging mode by C assert() statements.  Like the standard assert() macro, this macro prints a message and showing the file and line number from which an Exception is thrown, as an aid to debugging.
+  - Use the UTIL_THROW macro defined in src/util/global.h to throw Exception objects for all errors, except those caught in debugging mode by C assert() or UTIL_ASSERT( .... ) statements.  Like the standard assert() macro, this macro prints a message and showing the file and line number from which an Exception is thrown, as an aid to debugging.
 
   - Do not Exceptions for control flow. Exceptions should be used only for errors, and should normally cause the program to terminate.
 

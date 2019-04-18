@@ -1,0 +1,22 @@
+/*! \page user_analysis_trajectory_page 3.10.2 Writing Trajectories
+
+ \ref user_analysis_analyzers_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_postprocess_page  (Next) 
+ <BR> 
+
+\section user_analysis_trajectory_writer_sec Trajectory files
+
+The ddSim program provides analyzer classes that can write a sequence of configurations as frames within a single "trajectory" file. See the list of run-time features for ddSim for a list of classes that can write different file formats.
+ 
+\section user_analysis_config_writer_section Configuration files
+
+The McMd::WriteConfig (for mcSim and mdSim simulations) and DdMd::WriteConfig (for ddMd simulations) classes are analyzer classes that write system configurations to file at a specified interval, for later post-processing. These classes write each configuration to a separate file. The name of each file is constructed by concatenating the outputPrefix, a base name that is specified in the parameter file block for the DumpConfig or WriteConfig class, and a sequential integer counter that is incremented by 1 after each file is written.  
+
+The WriteConfig classes in the McMd and DdMd can each output configuration files in any of several file formats. The choice of configuration file format is a mutable property of a simulation that is initialized to a default format, which is different for different programs, and that can be reset in the command file. Each configuration file format is implemented by a subclass of McMd::ConfigIo (for mcSim or mdSim) or DdMd::ConfigIo (for ddSim). The choice of format may be reset within the command file by a SET_CONFIG_IO command with the appropriate ConfigIo subclass name as an argument. The format specified by a SET_CONFIG_IO command applies to all subsequent commands that read or write configuration files until it is reset by another SET_CONFIG_IO. Specifically, it specifies the format used by the READ_CONFIG command to read an initial configuration, by the SIMULATE command to write a sequence output files, or by the WRITE_CONFIG command to write a final output configuration after a simulation. 
+
+<BR> 
+ \ref user_analysis_analyzers_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_postprocess_page  (Next) 
+
+*/

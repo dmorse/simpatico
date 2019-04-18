@@ -1,0 +1,51 @@
+/*! \page user_analysis_postprocess_page 3.10.3 Postprocessing
+
+ \ref user_analysis_trajectory_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_restart_page  (Next) 
+ <BR> 
+
+\section analysis_postprocess_mcMd_sec Using mcSim and mdSim as postprocessors
+
+The mcSim and mdSim programs can both be used to postprocess configurations that have been written to file. These programs can postprocess outputs produced either by mcSim or mdSim or (with some restrictions on the form of the output) by ddSim.  To so, each program simply implements a main loop, analogous to the main simulation loop, in which a sequence of configurations are read from file, but in which the resulting set of configurations is treated exactly as if they were generated during a simulation. The same set of analyzer classes are available for use in this mode as those available for use on-the-fly. To use either of these programs in this mode, one must provide a parameter file very similar to that used for a simulation, with a AnalyzerManager that specifies a set of analyzers that should be applied, and a command file in which the "SIMULATE" command is replaced by either a "ANALYZE_CONFIGS" or "ANALYZE_TRAJECTORY" command. 
+
+The ANALYZE_CONFIGS command in the command file for mcSim or mdSim causes the program to read in and analyze a sequence of numbered configuration files. The names of the input configuration files are constructed by concatenating the inputPrefix parameter of the FileMaster, a base name that is specified as an argument to the ANALYZE_CONFIGS command and an integer in a range that is specified in the ANALYZE command. For example, if the inputPrefix of the FileMaster was set to out/ (because this was the output prefix used by a previous simulation), and the outputPrefix was set to analyze/, the command
+\code
+   ANALYZE_CONFIGS  0   19   dump/config
+\endcode
+would cause the main McSimulation or MdSimulation object to read in and apply all of the specified analyzers to configurations files with names out/dump/config.0 out/dump/config.1 ... in/dump/config.19, and write the results of the analysis to files in the analyze/ directory. 
+
+The ANALYZE_TRAJECTORY command in a command file for mcSim or mdSim causes the program to read and analyze a trajectory file that contains a sequence of system configurations ("frames"), in any of several file formats that can be written by ddSim. The syntax of the command is similar to that of the ANALYZE_CONFIGS command, except for the addition of a specified subclass of TrajectoryReader, which specifies the format of the trajectory file. For example,
+\code
+   ANALYZE_TRAJECTORY  0   19  DdMdTrajectoryReader trajectory.trj
+\endcode
+would cause the main object to create an instance of McMd::DdMdTrajectoryReader, use this to open and read a trajectory file named trajectory.trj, and analyze frames 0 to 19 in that file. This could be used to analyze a trajectory file that was created during a ddSim simulation by the DdMd::DdMdTrajectoryWriter analyzer.
+
+During postprocessing, the "interval" of each analyzer is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each analyzers should thus generally be set to 1 in the parameter file for a postprocessing run.
+
+\section analysis_postprocess_ddMd_section Postprocessing ddSim trajectories using mdSim or mcSim
+
+Unlike mcSim and mdSim, the ddSim program is not designed to be able to postprocess its own outputs. The reason for this is that ddSim is a parallel program, but many common types of analysis are easier to implement in a serial program. As noted above, configurations that have been dumped to file by a ddSim simulation can be postprocessed by using the serial mcSim or mdSim program as a postprocessor, if certain conventions are obeyed when constructing the ddSim configuration, as discussed below.
+
+The mcSim and mdSim programs can be used to postprocess configuration files output from ddSim simulations of molecular and atomic liquids if and only if the following conventions are respected in the ddSim configuration and output files. 
+   - The system may only contain molecules of the species specified in the mdSim or mcSim parameter file format.
+   - The number of molecules of each species must equal the capacity specified for that species in the mdSim or mcSim parameter file. 
+   - Atoms within each molecule must be listed consecutively, in the order assumed by the mcSim or mdSim species definition.
+   - Blocks of atoms representing molecules of the same species must appear consecutively, with all molecules of the first species listed first, followed by all molecules of the second species, etc. 
+   - The atom id of the first atom of the first molecule of the first species must be 0.
+   - Configurations must be output using the DdMd::DdMdOrderedConfigIo, which outputs atoms in order by their global atom id.
+In order for this to work, these constraints on the connectivity and numbering of atoms that must be satisfied by the input configuration file used to initialize the ddSim simulation. When mcSim or mdSim are used to analyze a ddSim simulation, the information about groups in a ddSim configuration file is ignored, and is simply assumed to yield the same topology as that specified by the species definitions in the parameter file.
+
+\section analysis_postprocess_mdPp_section Using the mdPp postprocessor 
+
+The program mdPp is a single-processor program that is designed specifically for postprocessing ddSim simulation trajectories, but that is much less mature than mcSim or mdSim. Unlike mcSim and mdSim, mdPp can read the sections of a ddim configuration file that specify molecular connectivity, and need not make any assumptions about molecular structure or the format of the configuration file. Classes that implement analysis algorithms for mdPp must be subclasses of MdPp::Analyzer base class. Currently, however, only a few analyzer classes have been written this program. For now, most processing is done using mcSim and mdSim as postprocessors.
+
+The motivation for the creation of the mdPp program is that mdPp uses data structures analogous to those used by ddSim, and can thus be used to analyze any type of system that can be simulated by ddSim. This includes some types of systems that cannot be naturally described by the data structures used by mcSim and mdSim, which require that the system contain a limited number of molecular species, in which all molecules within each species are identical. For example, ddSim can be used to simulate systems containing irregular covalent networks (e.g., a disordered polymer network) which cannot be conveniently described using the data structures used in mdSim and mcSim.
+
+\subpage user_analysis_mdPp_page
+
+<BR> 
+ \ref user_analysis_trajectory_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_restart_page  (Next) 
+
+*/

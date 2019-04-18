@@ -4,85 +4,21 @@
  \ref user_restart_page  (Next) 
  <BR> 
 
-Simpatico provides extensible facilities for evaluating and analyzing a variety of physical properties. Several different
-modes of operation are possible:
+Simpatico provides facilities for evaluating and analyzing a variety of physical properties. 
+Two modes of operation are possible:
 
- - <b> Analyze on-the-fly </b>: Many properties can be evaluated and analyzed and/or output to file during a simulation.
+ - <b> On-the-fly analysis </b>: Many physical properties can be evaluated, output to a file and analyzed during a simulation.
 
- - <b> Write trajectories </b>:  Simulation programs can write trajectories containing snapshots of the full system configuration for later postprocessing.
+ - <b> Postprocessing </b>: Trajectories written to file during a simulation can later be read by another program for "postprocessing".
 
- - <b> Postprocess with mcSim or mdSim </b>: The mdSim and mcSim programs be used to postprocess trajectories produced by any simpatico simulation program.
+Different aspects of data analysis are discussed in greater detail in the pages linked below.
 
- - <b> Postprocess with mdPp </b>: The mdPp postprocessing program can be used to post-process ddSim trajectories.
-
-The mcSim and mdSim programs currently have a much richer set of analysis algorithms than the mdPp postprocessor, which is still under development. Most postprocessing analysis is thus still done with mdSim or mcSim. 
-
-The use of mdSim or mcSim to postprocess ddSim trajectories does, however, impose some restrictions on the conventions used for ordering of atomic indices and the trajectory file format used by ddSim.
-
-Each of the above operatatons is discussed in greater detail below.
-
-\section analysis_onthefly_section On-the-fly Analysis
-
-Each of the three simpatico simulation programs (mcSim, mdSim and ddSim) provides an extensible set of "analyzer" classes that can be used for on-the-fly data analysis. Data analysis classes for ddSim are all subclasses of the DdMd::Analyzer base class. Data analysis classes for mcSim and mdSim are instead subclasses of McMd::Analyzer. A typical analyzer class, in either namespace, evaluates one or more physical properties of interest, and either outputs a sequence of values to an associated file for later analysis or updates one or more statistical accumulators in order to accumulate, e.g., averages, autocorrelation functions, histograms, etc. Source code for the analyzer classes that are distributed with Simpatico can be found in the src/mcMd/analyzers and src/ddMd/analyzer directories. Users may create new analyzer classes as needed.
-
-The choice of which analyzer operations (if any) should be executed during an simulation is specified for each type of simulation by the AnalyzerManager block of the parameter file. The AnalyzerManager block of the parameter file contains a "baseInterval" parameter (explained below), followed by a sequence of any number of (zero or more) polymorphic subbblocks. Each polymorphic subblock contains the parameter file block for an analyzer class that should be used during the simulation. Each such block begins with a line containing the name of the analyzer class and a opening curly bracket and ends with a line containing a closing bracket. Any number of analyzers may be added to a simulation.
-
-Different parameter file formats are required for different analyzer classes. All analyzer classes must read an interval parameter, which is usually the first parameter within the block. The interval parameter may have different values for different analyzers, but must always be a multiple of the "baseInterval" parameter that appears as the first line within the AnalyzerManager block. Most analyzers also write data to an associated output file, either during the simulation or as a summary at the end of a simulation, and thus require an output file name as a parameter, which is usually named "outputFileName". Some analyzers require other input parameters. 
-
-Each subclass of either McMd::Analyzer or DdMd::Analyzer must re-implement a pure virtual function named sample(). The sample function is invoked periodically during a simulation, and implements the actual data analysis operation. This function normally evaluates a physical property, and may either write data to an associated file or update a statistical accumulator, or both.  
-
-Links to documentation of the parameter file formats for specific analyzers are given below:
-<ul style="list-style: none;">
-  <li> \subpage mcMd_analyzers_page </li>
-  <li> \subpage ddMd_analyzers_page </li>
+<h2> Contents:</h2>
+ <ul style="list-style: none;">
+ <li> \subpage user_analysis_analyzers_page   "3.10.1 Analyzer Classes" </li>
+ <li> \subpage user_analysis_trajectory_page  "3.10.2 Writing Trajectories" </li>
+ <li> \subpage user_analysis_postprocess_page "3.10.3 Postprocessing" </li>
 </ul>
-
-\section analysis_configWrite_section Writing a sequence of configuration files
-
-The McMd::WriteConfig (for mcSim and mdSim simulations) and DdMd::WriteConfig (for ddMd simulations) classes are analyzer classes that write system configurations to file at a specified interval, for later post-processing. These classes write each configuration to a separate file. The name of each file is constructed by concatenating the outputPrefix, a base name that is specified in the parameter file block for the DumpConfig or WriteConfig class, and a sequential integer counter that is incremented by 1 after each file is written.  
-
-The WriteConfig classes in the McMd and DdMd can each output configuration files in any of several file formats. The choice of configuration file format is a mutable property of a simulation that is initialized to a default format, which is different for different programs, and that can be reset in the command file. Each configuration file format is implemented by a subclass of McMd::ConfigIo (for mcSim or mdSim) or DdMd::ConfigIo (for ddSim). The choice of format may be reset within the command file by a SET_CONFIG_IO command with the appropriate ConfigIo subclass name as an argument. The format specified by a SET_CONFIG_IO command applies to all subsequent commands that read or write configuration files until it is reset by another SET_CONFIG_IO. Specifically, it specifies the format used by the READ_CONFIG command to read an initial configuration, by the SIMULATE command to write a sequence output files, or by the WRITE_CONFIG command to write a final output configuration after a simulation. 
-
-\section analysis_trajectory_section Writing a trajectory file
-
-The ddSim program provides analyzer classes that can write a sequence of configurations as frames within a single "trajectory" file. See the list of run-time features for ddSim for a list of classes that can write different file formats.
- 
-\section analysis_mcMd_postprocess_section Using mcSim and mdSim as postprocessors
-
-The mcSim and mdSim programs can both be used to postprocess configurations that have been written to file. These programs can postprocess outputs produced either by mcSim or mdSim or (with some restrictions on the form of the output) by ddSim.  To so, each program simply implements a main loop, analogous to the main simulation loop, in which a sequence of configurations are read from file, but in which the resulting set of configurations is treated exactly as if they were generated during a simulation. The same set of analyzer classes are available for use in this mode as those available for use on-the-fly. To use either of these programs in this mode, one must provide a parameter file very similar to that used for a simulation, with a AnalyzerManager that specifies a set of analyzers that should be applied, and a command file in which the "SIMULATE" command is replaced by either a "ANALYZE_CONFIGS" or "ANALYZE_TRAJECTORY" command. 
-
-The ANALYZE_CONFIGS command in the command file for mcSim or mdSim causes the program to read in and analyze a sequence of numbered configuration files. The names of the input configuration files are constructed by concatenating the inputPrefix parameter of the FileMaster, a base name that is specified as an argument to the ANALYZE_CONFIGS command and an integer in a range that is specified in the ANALYZE command. For example, if the inputPrefix of the FileMaster was set to out/ (because this was the output prefix used by a previous simulation), and the outputPrefix was set to analyze/, the command
-\code
-   ANALYZE_CONFIGS  0   19   dump/config
-\endcode
-would cause the main McSimulation or MdSimulation object to read in and apply all of the specified analyzers to configurations files with names out/dump/config.0 out/dump/config.1 ... in/dump/config.19, and write the results of the analysis to files in the analyze/ directory. 
-
-The ANALYZE_TRAJECTORY command in a command file for mcSim or mdSim causes the program to read and analyze a trajectory file that contains a sequence of system configurations ("frames"), in any of several file formats that can be written by ddSim. The syntax of the command is similar to that of the ANALYZE_CONFIGS command, except for the addition of a specified subclass of TrajectoryReader, which specifies the format of the trajectory file. For example,
-\code
-   ANALYZE_TRAJECTORY  0   19  DdMdTrajectoryReader trajectory.trj
-\endcode
-would cause the main object to create an instance of McMd::DdMdTrajectoryReader, use this to open and read a trajectory file named trajectory.trj, and analyze frames 0 to 19 in that file. This could be used to analyze a trajectory file that was created during a ddSim simulation by the DdMd::DdMdTrajectoryWriter analyzer.
-
-During postprocessing, the "interval" of each analyzer is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each analyzers should thus generally be set to 1 in the parameter file for a postprocessing run.
-
-\section analysis_ddMd_postprocess_mcMd_section Postprocessing ddSim trajectories using mdSim or mcSim
-
-Unlike mcSim and mdSim, the ddSim program is not designed to be able to postprocess its own outputs. The reason for this is that ddSim is a parallel program, but many common types of analysis are easier to implement in a serial program. As noted above, configurations that have been dumped to file by a ddSim simulation can be postprocessed by using the serial mcSim or mdSim program as a postprocessor, if certain conventions are obeyed when constructing the ddSim configuration, as discussed below.
-
-The mcSim and mdSim programs can be used to postprocess configuration files output from ddSim simulations of molecular and atomic liquids if and only if the following conventions are respected in the ddSim configuration and output files. 
-   - The system may only contain molecules of the species specified in the mdSim or mcSim parameter file format.
-   - The number of molecules of each species must equal the capacity specified for that species in the mdSim or mcSim parameter file. 
-   - Atoms within each molecule must be listed consecutively, in the order assumed by the mcSim or mdSim species definition.
-   - Blocks of atoms representing molecules of the same species must appear consecutively, with all molecules of the first species listed first, followed by all molecules of the second species, etc. 
-   - The atom id of the first atom of the first molecule of the first species must be 0.
-   - Configurations must be output using the DdMd::DdMdOrderedConfigIo, which outputs atoms in order by their global atom id.
-In order for this to work, these constraints on the connectivity and numbering of atoms that must be satisfied by the input configuration file used to initialize the ddSim simulation. When mcSim or mdSim are used to analyze a ddSim simulation, the information about groups in a ddSim configuration file is ignored, and is simply assumed to yield the same topology as that specified by the species definitions in the parameter file.
-
-\section analysis_ddMd_postprocess_mdPp_section Postprocessing ddSim trajectories using mdPp
-
-The program mdPp is a single-processor program that is designed specifically for postprocessing ddSim simulation trajectories, but that is much less mature than mcSim or mdSim. Unlike mcSim and mdSim, mdPp can read the sections of a ddim configuration file that specify molecular connectivity, and need not make any assumptions about molecular structure or the format of the configuration file. Classes that implement analysis algorithms for mdPp must be subclasses of MdPp::Analyzer base class. Currently, however, only a few analyzer classes have been written this program. For now, most processing is done using mcSim and mdSim as postprocessors.
-
-The motivation for the creation of the mdPp program is that mdPp uses data structures analogous to those used by ddSim, and can thus be used to analyze any type of system that can be simulated by ddSim. This includes some types of systems that cannot be naturally described by the data structures used by mcSim and mdSim, which require that the system contain a limited number of molecular species, in which all molecules within each species are identical. For example, ddSim can be used to simulate systems containing irregular covalent networks (e.g., a disordered polymer network) which cannot be conveniently described using the data structures used in mdSim and mcSim.
 
 <BR> 
  \ref user_species_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 

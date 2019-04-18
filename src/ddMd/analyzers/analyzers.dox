@@ -1,4 +1,4 @@
-/*! \page ddMd_analyzers_page Data Analysis
+/*! \page ddMd_analyzers_page DdMd Analyzer Classes
 
 User documentation for classes that implement data analysis and/or data output operations for use with ddSim:
 <ul style="list-style: none;">
@@ -29,8 +29,5 @@ file.
 </ul>
 
 \sa DdMd_Analyzer_Module (developer information)
-
-<BR>
-\ref user_features_ddmd_page (Up) 
 
 */

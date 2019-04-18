@@ -11,7 +11,4 @@ User documentation for classes that implement molecular dynamics integration alg
 
 \sa DdMd_Integrator_Module (developer information)
 
-<BR>
-\ref user_features_ddmd_page (Up) 
-
 */
