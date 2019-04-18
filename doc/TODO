@@ -1,28 +1,26 @@
 TODO:
 
 1) Re-organize user guide to make it easier for users find what they 
-   are looking for. Possible organization (think about this again):
+   are looking for. New organization:
 
-    3.1  - Running a Simulation (good)
-    3.2  - Parameter Files (good)
-    3.3  - Command Files (good)
-    3.4  - Configuration Files (good)
-    3.5  - Examples (good)
-   *3.6  - Interactions (Potential Energies)
-   *3.7  - Molecular Dynamics Integrators 
-         - ddSim integrators
-         - mdSim integrators
-   *3.8  - Monte Carlo Moves 
-         - mcSim McMoves 
-   *3.9  - Molecular Species
+    3.1  - Running a Simulation 
+    3.2  - Parameter Files
+    3.3  - Command Files 
+    3.4  - Configuration Files 
+    3.5  - Examples 
+    3.6  - Potential Energy
+    3.7  - Molecular Dynamics Integrators 
+            - ddSim integrators
+            - mdSim integrators
+    3.8  - Monte Carlo Moves 
+   *3.9  - Molecular Species  <- edit this
    *3.10 - Data Analysis
-           Explain use of analyzers, briefly postprocessing
            3.10.1 analyzers page
-                - Analyzers for mdSim or mcSim
-                - Analyzers for ddSim 
-           3.10.2 trajectories page
-           3.10.3 Postprocessing with mdSim or mcSim
-           3.10.4 Postprocessing with mdPp
+                  - Analyzers for mdSim or mcSim
+                  - Analyzers for ddSim 
+           *3.10.2 trajectories page 
+           *3.10.3 Postprocessing with mdSim or mcSim
+           *3.10.4 Postprocessing with mdPp
    *3.10 - Generating Initial Configurations  <- new, explain command syntax
     3.12 - Restarting
     3.13 - Multi-System Simulations
@@ -40,6 +38,11 @@ TODO:
    subpages. Create lists in Source Code Overview and reference 
    elsewhere?
 
+4) In developer section of manual:
+
+    - Segregate and rewrite information specific to ddMd and mcMd
+    - Edit discussion of parameter file IO
+    - Add discussion of serialization
 
 Thoughts on commands:
 ---------------------
