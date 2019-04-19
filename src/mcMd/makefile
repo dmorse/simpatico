@@ -56,7 +56,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f potentials/pair/PairFactory.cpp
 	rm -f potentials/special/SpecialFactory.cpp
 	rm -f species/SpeciesFactory.cpp
-	rm -f trajectoryIos/TrajectoryIoFactory.cpp
+	rm -f trajectory/TrajectoryReaderFactory.cpp
 	rm -f generators/generatorFactory.cpp
 	rm -f mdSim.cpp
 	rm -f mcSim.cpp
