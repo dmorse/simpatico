@@ -8,10 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
-#include <mcMd/simulation/System.h>             // base class template parameter
-#include <util/accumulators/Average.h>          // member template 
-#include <util/misc/FileMaster.h>
+#include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
+#include <mcMd/simulation/System.h>           // base class parameter
+#include <util/accumulators/Average.h>        // member template
 
 namespace McMd
 {
@@ -19,23 +18,23 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Average of boundary lengths and volume of simulation cell.  
+   * Average of boundary lengths and volume of simulation cell.
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
    class BoundaryAverage : public SystemAnalyzer<System>
    {
-   
+
    public:
-  
+
       /**
       * Constructor.
       *
       * \param system reference to parent System
       */
       BoundaryAverage(System &system);
-  
-      /** 
+
+      /**
       * Read parameters from file.
       *
       * \param in input parameter stream
@@ -57,21 +56,21 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Serialize to/from an archive. 
+      * Serialize to/from an archive.
       *
       * \param ar      saving or loading archive
       * \param version archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
-  
-      /** 
+
+      /**
       * Clear accumulator.
       */
       virtual void setup();
-   
-      /** 
-      * Evaluate volume and lengths of simulation cell, 
+
+      /**
+      * Evaluate volume and lengths of simulation cell,
       * and add to ensemble.
       *
       * \param iStep counter for number of steps
@@ -84,11 +83,11 @@ namespace McMd
       virtual void output();
 
    private:
-   
+
       /// Output file stream.
       std::ofstream outputFile_;
 
-      /// (Dimension + 1) sized array of Average objects. 
+      /// (Dimension + 1) sized array of Average objects.
       DArray<Average>  accumulators_;
 
       /// Number of samples per block average object.
@@ -96,11 +95,11 @@ namespace McMd
 
       /// Has readParam been called?
       bool    isInitialized_;
-   
+
    };
 
    /*
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class Archive>
    void BoundaryAverage::serialize(Archive& ar, const unsigned int version)

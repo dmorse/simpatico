@@ -4,13 +4,13 @@ set -ev
 echo " "
 echo "Running testsuite/mdSim_m/A"
 
-# Clean out out directories
-rm -f 0/out/*
-rm -f 1/out/*
-rm -f 2/out/*
+# Clean directories
+rm -f 0/out/* 0/restart 0/log
+rm -f 1/out/* 1/restart 1/log
+rm -f 2/out/* 2/restart 2/log
 
 # Run simulation, writing to out
-mpirun -np 3 mdSim_m -e -p param -c commands 
+mpirun -np 3 mdSim_m -e -p param -c command
 
 echo " "
 echo "Log file for testsuite/mdSim_m/A/1"
@@ -37,7 +37,7 @@ else
    rm -f 2/rst/*
 fi
 
-mpirun -np 3 mdSim_m -e -r restart -c commands.rst -o rst/
+mpirun -np 3 mdSim_m -e -r restart -c commrst -o rst/
 
 echo " "
 echo "Log file for testsuite/mdSim_m/A/1 after restart"

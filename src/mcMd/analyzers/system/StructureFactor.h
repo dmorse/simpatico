@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>    // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
 #include <mcMd/simulation/System.h>               // base class template parameter
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template
@@ -90,15 +90,6 @@ namespace McMd
       */
       virtual void save(Serializable::OArchive& ar);
 
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
       /** 
       * Clear accumulators.
       */
@@ -179,29 +170,6 @@ namespace McMd
       /// Has readParam been called?
       bool isInitialized_;
    };
-
-   /**
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void StructureFactor::serialize(Archive& ar, const unsigned int version)
-   {
-      Analyzer::serialize(ar, version);
-      ar & nAtomType_;
-      ar & nMode_;
-      ar & modes_;
-      ar & nWave_;
-      ar & waveIntVectors_;
-
-      ar & structureFactors_;
-      ar & nSample_;
-
-      #if 0
-      ar & maximumValue_;
-      ar & maximumWaveIntVector_;
-      ar & maximumQ_;
-      #endif
-   }
 
 }
 #endif

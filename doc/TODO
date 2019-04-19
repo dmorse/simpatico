@@ -20,12 +20,13 @@ TODO:
       - Analyzers for mdSim 
       - Analyzers for mcSim 
    * Postprocessing
-      - One the fly
+      - On the fly
       - Post-processing
+   * Generating Initial Configurations  <- new, explain command syntax
    - Perturbation (new)
    - Restarting (check if up to date)
    - Multi-System Simulations
-   * Guide to Documentation (new - Where to find information)
+   * Guide to Documentation (new - explain where to find information)
 
 2) Document all of the analyzers, with one *.dox file per interaction 
    in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.

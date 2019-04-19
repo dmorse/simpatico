@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>  // base class template
 #include <util/accumulators/Average.h>          // member
 #include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>

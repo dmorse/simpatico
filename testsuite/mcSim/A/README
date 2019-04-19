@@ -1,4 +1,4 @@
-Description:
+System description:
 
     MC simulation of homopolymer melt.
     M=100 flexible homopolymer chains of N=8 atoms.
@@ -8,18 +8,18 @@ Usage:
 
 Use run script to run and restart:
 
-    ./run
+    > ./run
 
-    Places outputs of original run in out/, and of restart in rst/
+    This places outputs of original run in out/, and of restart in rst/
 
-To run an MC simulation:
+To manually run an MC simulation:
 
-    mcSim -e -p param.nve -c commands
+    > mcSim -e -p param.nve -c command
 
-To restart the above simulation:
+To manually restart the above simulation:
 
-    mcSim -e -r restart -c commands.rst -o rst/
+    > mcSim -e -r restart -c commrst -o rst/
 
-Cleaning up (empties out/ and rst/ directories)
+To clean up (empties out/ and rst/ directories)
 
     ./clean

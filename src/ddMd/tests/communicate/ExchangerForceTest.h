@@ -36,7 +36,7 @@
 #endif
 #ifdef SIMP_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
-#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/FourierDihedral.h>
 #include <simp/interaction/dihedral/CosineDihedral.h>
 #endif
 

@@ -284,7 +284,14 @@ namespace McMd
    * Save state to archive.
    */
    void StructureFactorGrid::save(Serializable::OArchive& ar)
-   {  ar & *this; }
+   {  
+      StructureFactor::save(ar);
+      ar & hMax_;
+      ar & lattice_;
+      ar & nStar_;
+      ar & starIds_;
+      ar & starSizes_;
+   }
 
    void StructureFactorGrid::setup() 
    {}
@@ -297,8 +304,6 @@ namespace McMd
         mode = std::ios_base::out | std::ios_base::app; 
       }
       fileMaster().openOutputFile(outputFileName(".dat"), logFile_, mode);
-
-      // fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
 
       StructureFactor::sample(iStep);
 

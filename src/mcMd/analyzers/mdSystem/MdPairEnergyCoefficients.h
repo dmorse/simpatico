@@ -9,7 +9,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>  // base class template
 #include <mcMd/mdSimulation/MdSystem.h>         // base template parameter
 #include <mcMd/analyzers/util/PairSelector.h>
 

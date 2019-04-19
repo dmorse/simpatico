@@ -98,7 +98,7 @@ McSimulation{
       interval                          1000
     }
 
-    McEnergyAverage{
+    McEnergyAnalyzer{
       interval                           200
       outputFileName               energyAve
       nSamplePerBlock                      5
@@ -231,11 +231,6 @@ McSimulation{
       length21                             1.0
       length10                             1.0
       kappa10                            800.0
-    }
-
-    McEnergyOutput{
-      interval                          1000
-      outputFileName                  energy
     }
 
 

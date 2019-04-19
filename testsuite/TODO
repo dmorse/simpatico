@@ -1,0 +1,20 @@
+
+mcMd:
+
+   - Add md and mc tests with external energy (slit, diblock layer?)
+   - Add md and mc tests with angles and dihedrals
+   - Add md tests with multiple atom types (e.g., diblocks or blends)
+   - Make sure almost all analyzers are used in testsuite
+   - Make sure almost all McMoves are invoked and restarted 
+
+     (some exceptions for now for very specialized analyzers and moves)
+
+mcMd-mpi:
+
+   - Add testsuite test of replica exchange
+
+ddMd:
+
+   - Make sure all analyzers are invoked and restarted in testsuite
+
+-

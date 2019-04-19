@@ -1,0 +1,64 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_McPairEnergyAnalyzer_page  McPairEnergyAnalyzer
+
+\section mcMd_analyzer_McPairEnergyAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes an average nonbonded pair energy, and optionally outputs block averages during the simulation.
+
+\sa McMd::McPairEnergyAnalyzer
+\sa McMd::PairSelector.
+
+\section mcMd_analyzer_McPairEnergyAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+  McPairEnergyAnalyzer{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+    selector           McMd::PairSelector
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>speciesId</td>
+     <td> integer index of molecule species</td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average</td>
+  </tr>
+  <tr> 
+     <td>selector</td>
+     <td>McMd::PairSelector object that specficies which types of pair should be included</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_McPairEnergyAnalyzer_output_sec Output
+
+If nSamplePerBlock > 0, block averages are output to the file {outputFileName}.dat
+during the simulation, and the format of the file (names of the columns) is specified
+in the file {outputFileName}.dfm. If nSamplePerBlock == 0, neither of these files are
+created.
+
+At the end of the simulation:
+
+  - parameters are echoed to file {outputFileName}.prm 
+
+  - the average is output to {outputFileName}.ave
+
+  - additional error analysis information is output to {outputFileName}.aer
+
+*/
+
+}

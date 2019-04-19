@@ -71,7 +71,7 @@ namespace Simp
       /**
       * Set pointer to Boundary.
       *
-      * \param boundary Boundary object (used to calculate length along perpendicular direction).
+      * \param boundary Boundary object 
       */
       void setBoundary(Boundary &boundary);
 
@@ -193,7 +193,8 @@ namespace Simp
    /* 
    * Calculate external potential energy for a single atom.
    */
-   inline double NucleationExternal::energy(const Vector& position, int type) const
+   inline 
+   double NucleationExternal::energy(const Vector& position, int type) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);

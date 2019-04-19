@@ -73,28 +73,37 @@ namespace McMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-
       loadParameter<int>(ar, "speciesId", speciesId_);
       loadParameter<int>(ar, "nAtomTypeIdPair", nAtomTypeIdPair_);
-      atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
+
+      //atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
       loadDArray< Pair<int> >(ar, "atomTypeIdPairs", atomTypeIdPairs_, 
                                                      nAtomTypeIdPair_);
-      loadParameter<int>(ar, "nWave", nWave_);
+      UTIL_CHECK(atomTypeIdPairs_.capacity() == nAtomTypeIdPair_);
 
+      loadParameter<int>(ar, "nWave", nWave_);
       //waveIntVectors_.allocate(nWave_);
       loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      UTIL_CHECK(waveIntVectors_.capacity() == nWave_);
 
-      ar & nAtomType_;
-      if (nAtomType_ != system().simulation().nAtomType()) {
-         UTIL_THROW("Inconsistent nAtomType");
-      }
+      ar >> nAtomType_;
+      UTIL_CHECK(nAtomType_ == system().simulation().nAtomType());
+
       // structureFactors_.allocate(nWave_, nAtomTypeIdPair_);
-      ar & structureFactors_;
+      ar >> structureFactors_;
+      UTIL_CHECK(structureFactors_.capacity1() == nWave_);
+      UTIL_CHECK(structureFactors_.capacity2() == nAtomTypeIdPair_);
+
       //fourierModes_.allocate(nWave_, nAtomType_ + 1);
       ar & fourierModes_;
+      UTIL_CHECK(fourierModes_.capacity1() == nWave_);
+      UTIL_CHECK(fourierModes_.capacity2() == nAtomType_ + 1);
+
       ar & nSample_;
 
+      // Work space that isn't saved, but must be allocated.
       waveVectors_.allocate(nWave_);
+      structureFactorDelta_.allocate(nWave_, nAtomTypeIdPair_);
       isInitialized_ = true; 
    }
 
@@ -103,7 +112,18 @@ namespace McMd
    * Save state to archive.
    */
    void IntraStructureFactor::save(Serializable::OArchive& ar)
-   { ar & *this; }
+   { 
+      Analyzer::save(ar);
+      ar & speciesId_;
+      ar & nAtomTypeIdPair_;
+      ar & atomTypeIdPairs_;
+      ar & nWave_;
+      ar & waveIntVectors_;
+      ar & nAtomType_;
+      ar & structureFactors_;
+      ar & fourierModes_;
+      ar & nSample_;
+   }
 
    /*
    * Set up before simulation.

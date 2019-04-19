@@ -1,54 +1,53 @@
 TODO:
 -----
 
-1) Write BoundaryAnalyzer, along with modifications of Boundary 
-   required to make the analyzer generic.
+1) Write OrthoBoundaryAnalyzer.
 
-2) Modify PairEnergyAnalyzer to allow averages for more than one
-   pair component.
+2) Modify PairEnergyAnalyzer to allow averages for more than one pair 
+   component.
 
 3) Modify StressAnalyzer so as to keep track of virial and kinetic
-   separately.
+   separately. Then stash class OutputStressTensor.
 
 4) Modify PressureAnalyzer so as to keep track of virial and kinetic
-   separately.
+   separately. Then stash class OutputPressure.
 
 5) Check atom shift flags, and design mean-squared displacement
    analyzers for individual atoms that makes use of them. (Center
    of mass of a molecule is harder, and still requires some
    post processing).
 
-6) Standardize analyzer outputs, write as subclasses of base class 
-when possible. Below is a list of analyzers grouped into types that 
-correspond to possible base classes.
+6) Standardize analyzer outputs, write as subclasses of base class when 
+   possible. Below is a list of analyzers grouped into types that 
+   correspond to possible base classes. Limitation: Don't bother to 
+   create a base class when very little code is required aside from
+   what is already in the accumulator. 
 
-7) Move output functions of base classes to classes in Simp
-namespace, to allow outputs to be standardized in both DdMd
-and McMd namespaces. Proposal: Do McMd after standardizing
-classes in DdMd and then moving some of functionality up the
-class hierarchy.
+7) Move some base classes to Simp namespace, to allow outputs to be 
+   standardized in both DdMd and McMd namespaces.  Proposal: Do McMd 
+   after standardizing classes in DdMd and then moving some of 
+   functionality up the class hierarchy.
 
 ------------------------------------------------------------
-OutputAnalyzer:
-OutputTemperature : public Analyzer   <- deprecate (to KineticEnergyAnalyzer)
-OutputEnergy : public Analyzer        <- deprecate (to EnergyAnalyzer)
-OutputPressure : public Analyzer      <- deprecate (to PressureAnalyzer)
 
 OutputsAnalyzer:
 OutputPairEnergies : public Analyzer
-OutputBoxdim : public Analyzer        <- write a BoxDimAnalyzer class
+OutputBoxdim : public Analyzer        <- write an OrthoBoundaryAnalyzer class
 
 OutputSymmTensor:
-OutputStressTensor : public Analyzer  <- deprecate (to StressAnalyzer)
+OutputStressTensor : public Analyzer  <- stash after modifying StressAnalyzer
 
 AverageAnalyzer:
 KineticEnergyAnalyzer : public AverageAnalyzer
 ExternalEnergyAnalyzer : public AverageAnalyzer
 PairEnergyAnalyzer : public AverageAnalyzer
 PressureAnalyzer : public AverageAnalyzer
+OutputPressure : public Analyzer      <- stash after modifying PressureAnalyzer
+OutputEnergy : public Analyzer        <- stash (?? replaced by EnergyAnalyzer)
 
-AveragesAnalyzer:
-EnergyAnalyzer : public Analyzer         
+AverageListAnalyzer:
+EnergyAnalyzer : public Analyzer
+
 StructureFactor : public Analyzer
 StructureFactorGrid : public StructureFactor
 
@@ -56,7 +55,7 @@ SymmTensorAverageAnalyzer:
 StressAnalyzer : public SymmTensorAverageAnalyzer
 VirialStressAnalyzer : public SymmTensorAverageAnalyzer
 
-SymmTensorAveragesAnalyzer:
+SymmTensorAverageListAnalyzer:
    Add variants that keep track of kinetic, virial stress separately
  
 AutoCorrAnalyzer:
@@ -76,7 +75,7 @@ ConfigWriter : public Analyzer
 LogEnergy : public Analyzer
 
 ------------------------------------------------------------
-Deprecated Analyzers (moved to attic)
+Deprecated Analyzers (already moved to attic)
 
 class ExternalEnergyAverage : public Analyzer      <- attic
 class VirialStressTensor : public Analyzer         <- attic

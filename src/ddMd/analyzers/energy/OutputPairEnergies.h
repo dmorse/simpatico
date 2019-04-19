@@ -18,7 +18,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write pair energies to file.
+   * Periodically write pair energies for all pair types to file.
    *
    * \sa \ref ddMd_analyzer_OutputPairEnergies_page "param file format"
    *

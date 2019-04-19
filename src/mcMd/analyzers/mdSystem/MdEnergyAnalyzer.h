@@ -51,14 +51,68 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load parameters from archive when restarting. 
+      *
+      * \param ar loading/input archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar); 
+   
+      /**
+      * Save internal state to archive.
+      *
+      * \param ar saving/output archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+
    protected:
 
       /**
-      * Compute values of energy components, store in values_ array.
+      * Compute and store values of energy components.
       */  
       void compute();
-  
  
+   private: 
+ 
+      #ifndef SIMP_NOPAIR
+      /// Array index for pair energy accumulator.
+      int pairId_;
+      #endif
+
+      #ifdef SIMP_BOND
+      /// Array index for bond energy accumulator.
+      int bondId_;
+      #endif
+
+      #ifdef SIMP_ANGLE
+      /// Array index for angle energy accumulator.
+      int angleId_;
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      /// Array index for dihedral energy accumulator.
+      int dihedralId_;
+      #endif
+
+      #ifdef SIMP_COULOMB
+      /// Array index for coulomb energy accumulator.
+      int coulombId_;
+      #endif
+
+      #ifdef SIMP_EXTERNAL
+      /// Array index for external energy accumulator.
+      int externalId_;
+      #endif
+
+      /// Array index for total potential energy accumulator.
+      int potentialId_;
+
+      /// Array index for kinetic energy accumulator.
+      int kineticId_;
+
+      /// Array index for total energy accumulator.
+      int totalId_;
+
    };
 
 }

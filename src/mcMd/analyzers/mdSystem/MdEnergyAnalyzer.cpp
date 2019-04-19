@@ -40,10 +40,33 @@ namespace McMd
    * Constructor.
    */
    MdEnergyAnalyzer::MdEnergyAnalyzer(MdSystem& system) 
-    : AverageListAnalyzer<MdSystem>(system)
+    : AverageListAnalyzer<MdSystem>(system),
       //#ifdef SIMP_COULOMB
       //coulombComponents_(false),
       //#endif
+      #ifndef SIMP_NOPAIR
+      pairId_(-1),
+      #endif
+      #ifdef SIMP_BOND
+      bondId_(-1),
+      #endif
+      #ifdef SIMP_ANGLE
+      angleId_(-1),
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      dihedralId_(-1),
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      coulombId_(-1),
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      externalId_(-1),
+      #endif
+      potentialId_(-1),
+      kineticId_(-1),
+      totalId_(-1)
    {  setClassName("MdEnergyAnalyzer"); }
 
    /*
@@ -54,15 +77,11 @@ namespace McMd
       AverageListAnalyzer<MdSystem>::readParameters(in);
 
       #if 0
-      readInterval(in);
-      readOutputFileName(in);
-      readNSamplePerBlock(in);
       //#ifdef SIMP_COULOMB
       //if (sys.hasCoulombPotential()) {
       //   coulombComponents_ = false;
       //   readOptional<bool>(in, "coulombComponents", coulombComponents_);
       //}
-      //#endif
       #endif
 
       MdSystem& sys = system();
@@ -70,75 +89,147 @@ namespace McMd
       // Count number of values
       int id = 0;
       #ifndef SIMP_NOPAIR
-      ++id;
-      #endif
-      #ifdef SIMP_BOND
-      if (sys.hasBondPotential()) ++id;
-      #endif
-      #ifdef SIMP_ANGLE
-      if (sys.hasAnglePotential()) ++id;
-      #endif
-      #ifdef SIMP_DIHEDRAL
-      if (sys.hasDihedralPotential()) ++id;
-      #endif
-      #if 0
-      #ifdef SIMP_COULOMB
-      if (sys.hasCoulombPotential()) ++id;
-      #endif
-      #endif
-      #ifdef SIMP_EXTERNAL
-      if (sys.hasExternalPotential()) ++id;
-      #endif
-      ++id; // potential
-      ++id; // kinetic
-      ++id; // total
-      initializeAccumulators(id);
-
-      // Set names
-      id = 0;
-      #ifndef SIMP_NOPAIR
-      setName(id, "pair");
+      pairId_ = id;
       ++id;
       #endif
       #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
-         setName(id, "bond");
+         bondId_ = id;
          ++id;
       }
       #endif
       #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
-         setName(id, "angle");
+         angleId_ = id;
          ++id;
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
-         setName(id, "dihedral");
+         dihedralId_ = id;
          ++id;
       }
       #endif
       #if 0
       #ifdef SIMP_COULOMB
       if (sys.hasCoulombPotential()) {
-         setName(id, "coulomb");
+         coulombId_ = id;
          ++id;
       }
       #endif
       #endif
       #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
-         setName(id, "external");
+         externalId_ = id;
          ++id;
       }
       #endif
-      setName(id,"potential");
+      potentialId_ = id;
+      ++id; 
+      kineticId_ = id;
       ++id;
-      setName(id,"kinetic");
-      ++id;
-      setName(id,"total");
-      ++id;
+      totalId_ = id;
+      ++id; 
+      initializeAccumulators(id);
 
+      // Set names
+      #ifndef SIMP_NOPAIR
+      setName(pairId_, "pair");
+      #endif
+      #ifdef SIMP_BOND
+      if (sys.hasBondPotential()) {
+         setName(bondId_, "bond");
+      }
+      #endif
+      #ifdef SIMP_ANGLE
+      if (sys.hasAnglePotential()) {
+         setName(angleId_, "angle");
+      }
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      if (sys.hasDihedralPotential()) {
+         setName(dihedralId_, "dihedral");
+      }
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      if (sys.hasCoulombPotential()) {
+         setName(coulombId_, "coulomb");
+      }
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      if (sys.hasExternalPotential()) {
+         setName(externalId_, "external");
+      }
+      #endif
+      setName(potentialId_, "potential");
+      setName(kineticId_, "kinetic");
+      setName(totalId_, "total");
+   }
+
+   /*
+   * Load parameters from archive when restarting. 
+   */
+   void MdEnergyAnalyzer::loadParameters(Serializable::IArchive& ar) 
+   {
+      AverageListAnalyzer<MdSystem>::loadParameters(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar >> pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar >> bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar >> angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar >> dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar >> coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar >> externalId_;
+      #endif
+      ar >> potentialId_;
+      ar >> kineticId_;
+      ar >> totalId_;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void MdEnergyAnalyzer::save(Serializable::OArchive& ar) 
+   {
+      AverageListAnalyzer<MdSystem>::save(ar);
+
+      #ifndef SIMP_NOPAIR
+      ar << pairId_;
+      #endif
+      #ifdef SIMP_BOND
+      ar << bondId_;
+      #endif
+      #ifdef SIMP_ANGLE
+      ar << angleId_;
+      #endif
+      #ifdef SIMP_DIHEDRAL
+      ar << dihedralId_;
+      #endif
+      #if 0
+      #ifdef SIMP_COULOMB
+      ar << coulombId_;
+      #endif
+      #endif
+      #ifdef SIMP_EXTERNAL
+      ar << externalId_;
+      #endif
+      ar << potentialId_;
+      ar << kineticId_;
+      ar << totalId_;
    }
 
    /*
@@ -148,85 +239,72 @@ namespace McMd
    {
       MdSystem& sys = system();
 
-      int id = 0;
       double potential = 0.0;
       #ifndef SIMP_NOPAIR
       double pair = sys.pairPotential().energy();
       //outputFile_ << Dbl(pair, 15);
-      setValue(id, pair);
-      ++id;
+      setValue(pairId_, pair);
       potential += pair;
       #endif
       #ifdef SIMP_BOND
       if (sys.hasBondPotential()) {
          double bond = sys.bondPotential().energy();
          //outputFile_ << Dbl(bond, 15);
+         setValue(bondId_, bond);
          potential += bond;
-         setValue(id, bond);
-         ++id;
       }
       #endif
       #ifdef SIMP_ANGLE
       if (sys.hasAnglePotential()) {
          double angle = sys.anglePotential().energy();
          //outputFile_ << Dbl(angle, 15);
+         setValue(angleId_, angle);
          potential += angle;
-         setValue(id, angle);
-         ++id;
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (sys.hasDihedralPotential()) {
          double dihedral  = sys.dihedralPotential().energy();
          // outputFile_ << Dbl(dihedral, 15);
-         setValue(id, dihedral);
-         ++id;
+         setValue(dihedralId_, dihedral);
          potential += dihedral;
       }
       #endif
       #if 0
       #ifdef SIMP_COULOMB
       if (sys.hasCoulombPotential()) {
-         if (coulombComponents_) {
-            // R-space contribution
-            double coulombRSpace = sys.coulombPotential().rSpaceEnergy();
-            // K-space contribution
-            double coulombKSpace = sys.coulombPotential().kSpaceEnergy();
-         }
-         // Total
+         //if (coulombComponents_) {
+         //   // R-space contribution
+         //   double coulombRSpace = sys.coulombPotential().rSpaceEnergy();
+         //   // K-space contribution
+         //   double coulombKSpace = sys.coulombPotential().kSpaceEnergy();
+         //}
          double coulomb = sys.coulombPotential().energy();
          // outputFile_ << Dbl(coulomb, 15);
-         setValue(id, coulomb);
-         ++id;
+         setValue(coulombId_, coulomb);
          potential += coulomb;
-         // outputFile_ << Dbl(dihedral, 15);
       }
       #endif
       #endif
       #ifdef SIMP_EXTERNAL
       if (sys.hasExternalPotential()) {
          double external = sys.externalPotential().energy();
-         potential += external;
-         setValue(id, external);
-         ++id;
          // outputFile_ << Dbl(external, 15);
+         setValue(externalId_, external);
+         potential += external;
       }
       #endif
 
       // outputFile_ << Dbl(potential, 20)
-      setValue(id, potential);
-      ++id;
+      setValue(potentialId_, potential);
 
       double kinetic = sys.kineticEnergy();
       // outputFile_ << Dbl(kinetic, 20)
-      setValue(id, kinetic);
-      ++id;
+      setValue(kineticId_, kinetic);
 
       double total = kinetic + potential;
-      // outputFile_ << Dbl(total, 20)
-      //             << std::endl;
-      setValue(id, total);
-      ++id;
+      // outputFile_ << Dbl(total, 20) << std::endl;
+      setValue(totalId_, total);
 
    }
 

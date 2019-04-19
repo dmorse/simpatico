@@ -15,9 +15,10 @@ if [ ! -d "out" ]; then
 else
    rm -f out/*
 fi
+rm -f restart
 
 # Run simulation, write output to out/
-mdSim -q -e -p $PARAM -c commands 
+mdSim -q -e -p $PARAM -c command
 
 # Make or clean directory rst
 if [ ! -d "rst" ]; then
@@ -27,5 +28,5 @@ else
 fi
 
 # Restart simulation, write outputs to rst/
-mdSim -q -e -r restart -c commands.rst -o rst/
+mdSim -q -e -r restart -c commrst -o rst/
 

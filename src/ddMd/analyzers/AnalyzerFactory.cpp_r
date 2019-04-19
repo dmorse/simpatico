@@ -20,7 +20,6 @@
 #include "energy/EnergyAnalyzer.h"
 #include "energy/OutputEnergy.h"
 #include "energy/KineticEnergyAnalyzer.h"
-#include "energy/OutputTemperature.h"
 #include "energy/PairEnergyAnalyzer.h"
 #include "energy/OutputPairEnergies.h"
 #ifdef SIMP_EXTERNAL
@@ -82,9 +81,6 @@ namespace DdMd
       if (className == "KineticEnergyAnalyzer") {
          ptr = new KineticEnergyAnalyzer(simulation());
       } else 
-      if (className == "OutputTemperature") {
-         ptr = new OutputTemperature(simulation());
-      } else
       if (className == "PairEnergyAnalyzer") {
          ptr = new PairEnergyAnalyzer(simulation());
       } else

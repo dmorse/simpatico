@@ -77,8 +77,8 @@ namespace McMd
       data_.allocate(speciesCapacity);
       accumulator_.setParam(speciesCapacity, capacity_);
 
-      // Delay initialization of AutoCorrArray until first call
-      // of sample(), when the number of molecules is known.
+      // Complete initialization of AutoCorrArray accumulator in
+      // function setup(), when the number of molecules is known.
 
       isInitialized_ = true;
    }
@@ -125,7 +125,7 @@ namespace McMd
    }
 
    /*
-   * Save internal state to an archive.
+   * Save internal state to an archive, by implicity calling serialize.
    */
    template <class SystemType> void 
    IntraBondStressAutoCorr<SystemType>::save(Serializable::OArchive &ar)
@@ -136,11 +136,9 @@ namespace McMd
    */
    template <class SystemType>
    void IntraBondStressAutoCorr<SystemType>::setup() 
-   { 
-
-      if (!isInitialized_) {
-         UTIL_THROW("Object is not intitialized");
-      }
+   {
+      // Precondition 
+      UTIL_CHECK(isInitialized_);
 
       // Get the actual number of molecules.
       nMolecule_ = system().nMolecule(speciesId_);
@@ -156,6 +154,8 @@ namespace McMd
    template <class SystemType>
    void IntraBondStressAutoCorr<SystemType>::sample(long iStep) 
    { 
+      UTIL_CHECK(isInitialized_);
+
       if (isAtInterval(iStep))  {
 
          Tensor    stress;
@@ -195,14 +195,16 @@ namespace McMd
 
             ++i;
          }
-      
-         accumulator_.sample(data_);
 
-      } // if isAtInterval
+         accumulator_.sample(data_);
+      } // if isAtInterval(iStep)
 
    }
 
-   /// Output results after simulation is completed.
+
+   /*
+   * Output results after simulation is completed.
+   */
    template <class SystemType>
    void IntraBondStressAutoCorr<SystemType>::output() 
    {  

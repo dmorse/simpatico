@@ -52,7 +52,7 @@ User documentation for each interaction class documents the format of the block 
   <li> \subpage simp_interaction_dihedral_page 
      <ul style="list-style: none;">
        <li> \ref simp_interaction_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
-       <li> \ref simp_interaction_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
+       <li> \ref simp_interaction_dihedral_FourierDihedral_page - Fourier cosine expansion in dihedral angle, up to n=4 (4-fold). </li>
      </ul>
   </li>
 </ul>

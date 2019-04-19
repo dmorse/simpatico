@@ -12,7 +12,7 @@
 
 // Dihedral interaction classes
 #include <simp/interaction/dihedral/CosineDihedral.h>
-#include <simp/interaction/dihedral/MultiHarmonicDihedral.h>
+#include <simp/interaction/dihedral/FourierDihedral.h>
 
 namespace McMd
 {
@@ -39,9 +39,9 @@ namespace McMd
       if (name == "CosineDihedral") {
          ptr = new DihedralPotentialImpl<CosineDihedral>(*systemPtr_);
       } else
-      if (name == "MultiHarmonicDihedral") {
-         ptr = new DihedralPotentialImpl<MultiHarmonicDihedral>(*systemPtr_);
-      }
+      if (name == "FourierDihedral") {
+         ptr = new DihedralPotentialImpl<FourierDihedral>(*systemPtr_);
+      } 
       return ptr;
    }
 
