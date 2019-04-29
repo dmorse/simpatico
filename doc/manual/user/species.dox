@@ -4,8 +4,16 @@
 \ref user_analysis_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Links to user documention for molecular species.
+The design of the mdSim and mcSim programs assumes that the system of interest is a mixture containing one or more species, or types, of molecules.
+A list of the species that can appear in a given simulation is 
+specified in the parameter file. 
+The block associated with each species specifies the structure of a molecule.
+This block also specifies a parameter "moleculeCapacity" that is the number of molecules of one species for which space is allocated during initialization of the program, which determines the maximum number of molecules of that species that may appear during the simulation. 
+The "moleculeCapacity" parameter is specified as a maximum, rather than a fixed number of molecules, in order to allow for implementation of open statistical mechanical ensembles in which the number of molecules of each species may vary. 
 
+Each Species in a simulation is represented by an instance of the McMd::Species class, or an instance of a specialized subclasses of Species. The parameter file format for the Species base class is flexible enought to allow the user to describe the structure of any molecule. Subclasses of Species instead represent specific subclasses of molecules (e.g., linear polymers, or block copolmers), or specific molecular species (e.g., butane or water). 
+
+Links to user documentation for particular species:
 <ul style="list-style: none;">
   <li> \subpage simp_species_page </li>
 </ul>
