@@ -4,19 +4,63 @@
 \ref user_analysis_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-The design of the mdSim and mcSim programs assumes that the system of interest is a mixture containing one or more species, or types, of molecules.
-A list of the species that can appear in a given simulation is 
-specified in the parameter file. 
-The block associated with each species specifies the structure of a molecule.
-This block also specifies a parameter "moleculeCapacity" that is the number of molecules of one species for which space is allocated during initialization of the program, which determines the maximum number of molecules of that species that may appear during the simulation. 
-The "moleculeCapacity" parameter is specified as a maximum, rather than a fixed number of molecules, in order to allow for implementation of open statistical mechanical ensembles in which the number of molecules of each species may vary. 
+The design of the mdSim and mcSim programs assumes that the system being
+simulated contains a mixture of one or more molecular species, or molecule
+types, in which molecules of the same species have the same structure.  
+All of the species that will appear in a given mcSim or mdSim simulation 
+must be listed in the parameter file, as subblocks within the 
+SpeciesManager block. The information about each species provided in
+the parameter file specifies the molecular structure of each species
+and the number of molecules of each species for which space will be
+allocated during initialization.
 
-Each Species in a simulation is represented by an instance of the McMd::Species class, or an instance of a specialized subclasses of Species. The parameter file format for the Species base class is flexible enought to allow the user to describe the structure of any molecule. Subclasses of Species instead represent specific subclasses of molecules (e.g., linear polymers, or block copolmers), or specific molecular species (e.g., butane or water). 
+The design of the ddSim program does not assume the existence of such
+sets of identical molecules. The parameter file format for ddSim thus
+does not contain any information about species or molecular structure,
+which must instead provided in an input configuration file.
 
-Links to user documentation for particular species:
+Each Species in an mdSim or mcSim simulation is represented by an instance 
+of the Simp::Species class, or an instance of a subclass of Simp::Species.  
+The parameter file block associated with each species class contains the 
+information necessary to specify the structure of a molecule. The Species 
+base class uses a parameter file format that is flexible (and verbose) 
+enough to allow a user to describe any molecular structure, by requiring
+the user to specify the types of all atoms and to list all covalent groups 
+(i.e., all bond, angle, and dihedral groups). Subclasses of Simp::Species 
+are used to represent specific subclasses of species (e.g., linear polymers, 
+or block copolymers), or even specific species (e.g., butane).  The 
+parameter file format for each such subclass requires the user to provide 
+any structural information that is not hard-coded into the class definition. 
+For example, the parameter file format for a class that represents 
+coarse-grained linear homopolymers (class Simp::Homopolymer) requires the 
+user to specify the type and number of particles in each polymer.
+
+The following species classes are distributed with simpatico:
+
 <ul style="list-style: none;">
-  <li> \subpage simp_species_page </li>
+  <li> \subpage simp_species_Species_page </li>
+  <li> \subpage simp_species_Point_page </li>
+  <li> \subpage simp_species_Homopolymer_page </li>
+  <li> \subpage simp_species_Diblock_page </li>
+  <li> \subpage simp_species_Multiblock_page </li>
+  <li> \subpage simp_species_HomoRing_page </li>
 </ul>
+
+The first line of the parameter file format for species class is a
+"moleculeCapacity" parameter. This is the number of molecules of this 
+species for which space is allocated during initialization, before reading
+any input configuration file or beginning a simulation.  The number of 
+molecules of each species in any input configuration file read by the 
+program must be less than or equal to the moleculeCapacity given for that
+species in the parameter file. For conventional NVE, NVT, or NPT molecular 
+dynamics or Monte Carlo simulations, moleculeCapacity is usually set equal
+to the known number of molecules of that species in the input configuration 
+file. In simulations in which the number of molecules of each species may 
+fluctuate, as in grand-canononical simulations, the moleculeCapcity must 
+be chosen large enough so that the fluctuating number never exceeds the 
+moleculeCapacity.
+
+\sa Simp_Species_Module (developer documentation)
 
 <BR>
 \ref user_mcmove_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
