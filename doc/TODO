@@ -13,7 +13,7 @@ TODO:
             - mdSim integrators
             - ddSim integrators
     3.8  - Monte Carlo Moves 
-   *3.9  - Molecular Species  <- edit this, add example block
+    3.9  - Molecular Species  <- add example block
    *3.10 - Data Analysis
            3.10.1 Analyzer Classes <- add example of AnalyzerManger block
              - Analyzers for mdSim or mcSim
@@ -27,12 +27,7 @@ TODO:
    *3.14 - Perturbation (new)
    *3.15 - Class Documentation (new - explain where to find information)
 
-   Add RESTART to the list of commands in user_command_page
-
-2) Document all of the analyzers, with one *.dox file per interaction 
-   in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.
-
-3) Document changes to the parameter file format caused by enabling 
+2) Document changes to the parameter file format caused by enabling 
    particular features. This requires creating a *.dox file for every
    subclass of ParamComposite and finding a place to list them all as
    subpages. Create lists in Source Code Overview and reference 

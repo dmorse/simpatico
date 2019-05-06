@@ -94,6 +94,15 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>X</b> </td>
   </tr>
   <tr> 
+    <td> RESTART </td>
+    <td> endStep [int] </td>
+    <td> Continue a restarted simulation until step counter endStep.
+         Use with "-r" command line option, as first command. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
     <td> SET_CONFIG_IO </td>
     <td> className [string] </td>
     <td> Choose a file format form reading and writing config files, by
