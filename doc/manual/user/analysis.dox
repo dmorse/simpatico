@@ -1,7 +1,7 @@
 /*! \page user_analysis_page 3.10 Data Analysis
 
  \ref user_species_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_restart_page  (Next) 
+ \ref user_generate_page  (Next) 
  <BR> 
 
 Simpatico provides facilities for evaluating and analyzing a variety of physical properties. 
@@ -23,6 +23,6 @@ Different aspects of data analysis are discussed in greater detail in the pages 
 <BR> 
  \ref user_species_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_restart_page  (Next) 
+ \ref user_generate_page  (Next) 
 
 */

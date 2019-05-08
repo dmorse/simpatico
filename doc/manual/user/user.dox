@@ -16,6 +16,7 @@
    <li> \subpage user_mcmove_page  </li>
    <li> \subpage user_species_page  </li>
    <li> \subpage user_analysis_page  </li>
+   <li> \subpage user_generate_page  </li>
    <li> \subpage user_restart_page   </li>
    <li> \subpage user_multi_page     </li>
    </ul>

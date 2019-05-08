@@ -39,6 +39,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref user_mcmove_page </li>
    <li> \ref user_species_page </li>
    <li> \ref user_analysis_page </li>
+   <li> \ref user_generate_page </li>
    <li> \ref user_restart_page  </li>
    <li> \ref user_multi_page    </li>
    </ul>

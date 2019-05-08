@@ -21,7 +21,7 @@ TODO:
            *3.10.2 Writing Trajectories <- Edit (barely exists)
            *3.10.3 Postprocessing with mdSim or mcSim
            *3.10.4 Postprocessing with mdPp <- To be written
-   *3.10 - Generating Initial Configurations  <- new, explain command syntax
+    3.11 - Generating Initial Configurations  <- new, explain command syntax
     3.12 - Restarting
     3.13 - Multi-System Simulations
    *3.14 - Perturbation (new)
@@ -39,8 +39,8 @@ TODO:
     - Edit discussion of parameter file IO
     - Add discussion of serialization
 
-Thoughts on commands:
----------------------
+Modifications of OUTPUT_ commands:
+----------------------------------
 Rename OUTPUT_INTEGRATOR to OUTPUT_TIME
 Rename CLEAR_INTEGRATOR to CLEAR (since it clears everything)
 
@@ -53,3 +53,12 @@ unless one calls clear.
 Add default - if a simulation has been run and OUTPUT_ANALYSIS has not
 been called, output when FINISH is called.  This would require adding 
 a variable named something like isClear to the analyzer manager.
+
+Modifications of GENERATOR commands:
+------------------------------------
+Break up commands into:
+
+GENERATOR_SET_BOUNDARY   .......
+GENERATOR_SET_DIAMETERS  .......
+GENERATE_SPECIES         speciesId  number [Algorithm]
+
