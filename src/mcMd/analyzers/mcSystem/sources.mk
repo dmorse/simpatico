@@ -1,7 +1,5 @@
 mcMd_analyzers_mcSystem_=\
     mcMd/analyzers/mcSystem/McEnergyAnalyzer.cpp \
-    mcMd/analyzers/mcSystem/McEnergyAverage.cpp \
-    mcMd/analyzers/mcSystem/McPressureAverage.cpp \
     mcMd/analyzers/mcSystem/McPressureAnalyzer.cpp \
     mcMd/analyzers/mcSystem/McVirialStressTensorAverage.cpp \
     mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp 
@@ -15,7 +13,6 @@ endif
 
 ifdef SIMP_BOND
 mcMd_analyzers_mcSystem_+=\
-mcMd/analyzers/mcSystem/McBondEnergyAverage.cpp \
     mcMd/analyzers/mcSystem/McIntraBondStressAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McIntraBondTensorAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McNVTChemicalPotential.cpp 

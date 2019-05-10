@@ -1,0 +1,22 @@
+/*! \page user_integrate_page 3.7 Molecular Dynamics Integrators
+
+\ref user_potential_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_mcmove_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+The mdSim and ddSim molecular dynamic simulation programs each
+can be used with any of several molecular dynamics integrators
+that implement constant energy, constant temperature and/or 
+constant pressure ensembles.  Links to user documention of 
+integrators for mdSim and ddSim are given below.
+
+<ul style="list-style: none;">
+  <li> \subpage mcMd_mdIntegrators_page </li>
+  <li> \subpage ddMd_integrators_page </li>
+</ul>
+
+<BR>
+\ref user_potential_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_mcmove_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+*/

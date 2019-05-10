@@ -31,11 +31,15 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <ul style="list-style: none;">
    <li> \ref user_usage_page    </li>
    <li> \ref user_param_page    </li>
-   <li> \ref user_commands_page </li>
+   <li> \ref user_command_page </li>
    <li> \ref user_cfgfile_page  </li>
-   <li> \ref user_examples_page </li>
+   <li> \ref user_example_page </li>
+   <li> \ref user_potential_page </li>
+   <li> \ref user_integrate_page </li>
+   <li> \ref user_mcmove_page </li>
+   <li> \ref user_species_page </li>
    <li> \ref user_analysis_page </li>
-   <li> \ref user_features_page </li>
+   <li> \ref user_generate_page </li>
    <li> \ref user_restart_page  </li>
    <li> \ref user_multi_page    </li>
    </ul>

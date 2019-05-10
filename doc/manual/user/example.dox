@@ -1,0 +1,160 @@
+/*! \page user_example_page 3.5 Examples
+
+\ref user_cfgfile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_potential_page (Next)
+<BR>
+
+A good way to become familiar with the simpatico simulation programs is to run a few example simulations and examine the associated input and output files.
+A set of examples containing input files for simpatico simulations are provided  on github, in a separate repository from the repository that contains the source code.
+To run these examples, one must first clone the relevant repository.
+
+\section examples_clone_sec Cloning the examples repository
+
+Before attempting to clone the examples repository, change directory (cd) to the directory in which you wish to install the examples as a subdirectory.
+The examples are entirely separate from the simpatico source code, and can be installed anywhere you wish.
+To clone the repository using the http protocol (recommended), then enter
+\code
+   git clone https://github.com/dmorse/simpatico-examples.git
+\endcode
+Users that prefer the ssh protocol, and have set up their computer to use it, may instead enter
+\code
+   git clone git@github.com/dmorse/simpatico-examples.git 
+\endcode
+Cloning the repository by either method will create a new directory containing the examples, which will initially be named simpatico-examples. 
+This directory is self-contained, and may be moved or renamed after it is created with no ill effects. 
+In what follows, we will refer to the resulting directory as the examples root directory.
+
+\section examples_subdirectories_sec Repository directory structure
+
+Once you have a local copy of the examples repository, inspect its contents.
+Each top level subdirectory of the examples root directory contains examples of simulations of a particular type of physical system. 
+The names of these top-level subdirectories indicate the type of system. 
+For example, the atomic/ subdirectory contains examples of simulations of simple atomic fluids, while the diblock/ directory contains simulations of diblock copolymer liquids. 
+Each such top-level directories contains a README file that gives a more detailed description of the relevant physical system.  
+Some of these top-level subdirectories also have subdirectories containing simulations of different but related physical systems (i.e., polymer liquids contains chains of different lengths), each of which also contains a README file. 
+Further down the directory tree, one finds sister subdirectories with names such as md/, mc/, or dd/ that contain simulations of the same system performed using different simulation programs. 
+Directories named mc/, mc/ and dd/ contain simulations performed with mcSim, mdSim or ddSim, respectively.
+
+\section examples_layout_sec Example directory structure
+
+The input files for each example are in a separate directory, which we will refer to as an example directory.  
+Each example directory contains a set of input files that include at least one parameter file, a command file and an input configuration file. 
+In the simplest examples, the parameter file is named "param" and the command file is named "command". 
+Each example directory also contain a second command file named "commrst" that can be used to restart the original simulation and run the simulation for some specified number of additional steps. 
+
+A typical example directory contains files and subdirectories with the following names:
+\code
+    param
+    commands
+    commrst
+    clean 
+    run
+    in/
+       config
+    out/
+    rst/
+\endcode
+Here, in/, out/ and rst/ are names of subdirectories. 
+The out/ and rst/ subdirectories are initially empty.
+The files in a simulation are intended to allow a user to run a simulation for some specified number of molecular dynamics or Monte Carlo steps (as specified in the command file), then restart the simulation and run for some specified number of additional steps (as specified in the commrst file).
+The purposes of these various files and subdirectories that are initially present in each example directory summarized below:
+<table>
+  <tr> 
+     <td> <b> item </b> </td> <td> <b> purpose </b> </td>
+  </tr>
+  <tr>
+     <td>param     </td><td> parameter file </td>
+  </tr>
+  <tr>
+     <td>command   </td><td> command file (initial simulation) </td>
+  </tr>
+  <tr>
+     <td>commrst   </td><td> command file (restarted simulation) </td>
+  </tr>
+  <tr>
+     <td>run       </td><td> bash script to run simulation </td>
+  </tr>
+  <tr>
+     <td>clean     </td><td> bash script to clean outputs </td>
+  </tr>
+  <tr>
+     <td>in/config </td><td> input configuration file </td>
+  </tr>
+  <tr>
+     <td>out/  </td>
+     <td> directory for output files (initial simulation)</td>
+  </tr>
+  <tr>
+     <td>rst/      </td>
+     <td> directory for output files (restarted simulation) </td>
+  </tr>
+</table>
+Some examples directories contain several parameter files with file names given by "param" followed followed by a suffixes, for which different suffixes are used to differentiaate variants of the same basic simulation.  For example, in molecular dynamics (MD) examples, parameter files named "param.nvt" and "param.nve" can be used to run constant temperature (nvt) and constant energy (nve) simulations of the same system.
+
+Running a simulation creates several types of output file. 
+Information about the progress of the simulation and other basic information that is written to standard out during a simulation can either be displayed on the users terminal or redirected to a file that we will refer to as a log file. 
+Data analysis classes that measure and analyze different physical properties write output to files, with file names that are specifiec in the parameter file. 
+Files created by data analysis classes during the initial simulation are written to subdirectory out/, while corresponding files created during the restarted simulation are created in subdirectory rst/.
+At the end of each simulation, a final configuration is written to a file named config in the out/ directory (for the initial simulation) or in the rst/ directory (for the restarted simulation). During each simulation, the program also periodically writes (and repeatedly overwrites) a binary restart file named "restart" in the example directory.
+
+\section examples_run_sec Usage: Invoking the "run" script
+
+The simplest way to run simulation is by invoking the bash script named "run" in the directory containing the example. To run an example and write all log output to the user's terminal, simply change directory (cd) to the relevant example directory and type 
+\code
+   > ./run
+\endcode
+Note the dot and backslash "./" before the name of the "run" command, which represents the name of the current directory. This must be included to allow the shell to find the run script in the current directory.
+The run script will run a simulation, during which it creates a set of output files in the out/ directory, then restart the simulation, and create another set of output files in rst/ directory. 
+
+Information about the progress of the simulation output can be redirected to a log file by invoking the "run" script with an argument containing the name of the desired file. This file name is interpreted as the name of the file in the out/ directory during the initial simulation and the name of a file in the rst/ simulation during the restarted simulation. For example, invoking
+\code
+   > ./run log
+\endcode
+from will normally run a simulation and write the log output to a file named out/log, then restart the simulation and write the log output of the restarted simulation to rst/log.
+
+In example directories that contain several parameter files with names with different suffixes (e.g., param.nve and param.nvt), a specific parameter file may be selected by using the parameter file suffix as a second argument of the run command. For example, for a molecular dynamics simulation containing parameter files named param.nve and param.nvt, one could invoke
+\code
+   > ./run log nve
+\endcode
+to run and restart the simulation using the parameter file param.nve, while writing the log output to files named out/log and rst/log. If no second argument is specified, the "run" command uses a default parameter file that is specified in the script. For MD simulations, the default simulation is usually an NVT simulation.
+
+In all, examples the simulation program must periodically write a binary checkpoint file during the simulation. All examples create a file named "restart" in the directory containing the command files and run script.
+
+The output files that are created in the out/ and rst/ directories always include configuration files written at the end of the original simulation and the restarted simulation. These are usually files named out/config and rst/config, respectively. Other files created in the out/ and rst/ directories are created by specific data analysis classes specified in the parameter file. Data analysis classes may output either raw sequences of values for specific variables (e.g., energies, pressures etc.) or the results of various types of on-the-flay statistical analysis (atomic mean-squared displacements, radial distribution functions, average values, etc).
+
+\section examples_simulate_sec Usage: Invoking the simulation program
+
+Users may also run example simulations by invoking the relevant simulation program directly from the command line. The relevant program name and command line options for a particular example can be determined, if needed, by reading the "run" script and finding the lines that run and restart the simulation.
+
+To run a simple MC example simulation with the above directory structure, while sending log output to the terminal, one must cd to the main directory for the example (the directory that contains the parameter and command files) and issue the command 
+\code
+    > mcSim -e -p param -c command 
+\endcode
+To run this simulation in background and redirect the log output to a file out/log one would instead type
+\code
+    > mcSim -e -p param -c command > out/log &
+\endcode
+Commands to run an MD simulation are similar except for the replacement of "mcSim" by "mdSim".
+
+The command to restart a simple MC simulation and write log output to log/rst is usually 
+\code
+    > mcSim -e -r restart -c command > rst/log &
+\endcode
+In this command, the -r option specifies the name of the binary restart file.
+
+To invoke a program such as ddSim that uses MPI one must normally precede program name by the command to run an MPI simulation (e.g., "mpirun") with an option that specifies the required number of processors. Each parallel example is designed to be run with a specified number of processors that is specified in the "run" script.
+
+\section examples_clean_sec Cleaning up
+
+Each example directory also contain an executable bash script named "clean" that can be used to clean up after a simulation. Executing the "clean" script, by typing
+\code
+   > ./clean
+\endcode
+after the example has run will remove all files that were created by the simulation. 
+
+<BR>
+\ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_potential_page (Next)
+
+*/

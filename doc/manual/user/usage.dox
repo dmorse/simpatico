@@ -20,7 +20,7 @@ Every simpatico simulation requires three types of input file:
    <li> a \ref usage_command_section "command" file </li>
    <li> a \ref usage_cfgfile_section "configuration" file </li>
 </ul>
-The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.
+The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_command_page and \ref user_cfgfile_page). All three programs use similar formats for the parameter and command files. Each program has a default configuration file format, but can also read and write several other formats.
 
 When a program simulation is executed, the parameter file is read first. The parameter file is used to initialize the state of the program and allocate memory. The name of the parameter file is specified when a program is invoked as a argument of a command line option.
 
@@ -122,7 +122,7 @@ SIMULATE          100000
 WRITE_CONFIG      out
 FINISH   
 \endcode
-This file instructs the program to read a configuration file named "in", run a simulation of 100000 attempted MC moves, write a final output configuration file to a file named "out", and then stop. The command file is read by a loop that terminates when a line containing only the command FINISH is encountered. A full list of valid commands and their arguments is given \ref user_commands_page "here".
+This file instructs the program to read a configuration file named "in", run a simulation of 100000 attempted MC moves, write a final output configuration file to a file named "out", and then stop. The command file is read by a loop that terminates when a line containing only the command FINISH is encountered. A full list of valid commands and their arguments is given \ref user_command_page "here".
 
 The relative paths to input and output configuration files are constructed by concatenating input and output prefix strings  (named inputPrefix and outputPrefix) that are specified in the parameter file to file names specified as arguments of the READ_CONFIG and WRITE_CONFIG commands in the command file.  By convention, the values of the inputPrefix and outputPrefix strings are often set to directory name strings, which end with a directory separator symbol "/", in order to place input and output files in different directories. Thus, for example, if the parameter file sets inputPrefix=in/ and outputPrefix=out/, then the command "READ_CONFIG config" would read the configuration file in/config, while "WRITE_CONFIG config" would write to the file out/config.
 
@@ -175,7 +175,7 @@ The -o (output prefix) option takes a required string parameter, which is a pref
 
 Other command line options that are relevant only to multi-system simulations are discussed separately \ref user_multi_page "here". 
 
-\section usage_paths_section Specifying File Names and Path Prefixes
+\section usage_paths_section Specifying file names and path prefixes
 
 When a simulation program is executed, several file names or file paths must provided before the simulation can run. One of these must be provided as a command line argument, while others can provided either as command line arguments or in the parameter file. When a program is executed, the name of either a parameter file or a restart file (but not both) must be specified as an argument of the -p or -r command line option. In addition, the program needs the name of a command file and (optionally) values for the input and output prefix strings that are prepended to names of input and output files. The name of an input configuration file (excluding the input prefix, if any) must be specified in the command file, as an argument to a READ_CONFIG command.
 

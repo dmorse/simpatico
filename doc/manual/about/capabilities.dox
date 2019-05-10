@@ -4,7 +4,7 @@
 \ref about_contributors_page (Next)
 <BR>
 
-\section features_potential_sec Potential Energy
+\section features_potential_sec Potential energy
 
 All simpatico programs use a potential energy that can contain:
 
@@ -20,7 +20,7 @@ Classes that represent particular potential energy functions, such as a Lennard-
 
 Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature.
 
-\section features_integrators_sec Molecular Dynamics Integrators
+\section features_integrators_sec Molecular dynamics integrators
 
 For single-processor MD simulations, mdSim currently provides the following integrators:
 <ul>
@@ -38,7 +38,7 @@ For parallel domain-decomposition Md simulations, ddSim currently provides:
 </ul>
 All of the MD integrators except the mdSim DPD integrator use reversible, symplectic algorithms.  The ddSim NPT integrator allows constant pressure simulations to be carried out in cubic, tetragonal or orthorhombic simulation cells, with one, two, or three independent cell dimensions.
 
-\section features_mcmoves_sec Monte Carlo Moves 
+\section features_mcmoves_sec Monte Carlo moves 
 
 For single-processor Monte-Carlo simulation, mcSim currently provides the following MC moves:
 <ul>
@@ -54,7 +54,7 @@ For single-processor Monte-Carlo simulation, mcSim currently provides the follow
 </ul>
 The configuration bias and rebridging move algorithms were all designed for use with flexible bead-spring models of polymers, and have been not modified for use with chemicall realistic models with strong angle potentials.
 
-\section features_analysis_sec Data Analysis
+\section features_analysis_sec Data analysis
 
 Simpatico is distributed with a collection of classes for statistical analysis, referred to as "analyzers".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:
 <ul>

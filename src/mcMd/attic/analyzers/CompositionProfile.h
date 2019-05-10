@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>   // base class template
 #include <mcMd/simulation/System.h>               // base class template parameter
-#include <util/accumulators/Distribution.h>      
+#include <util/accumulators/Distribution.h>
 #include <util/containers/DArray.h>               // member template
 
 #include <util/global.h>
@@ -21,15 +21,18 @@ namespace McMd
 {
 
    using namespace Util;
-   /**
-   * CompositionProfile evaluates the distribution of monomer 
-   * positions along several user-specified directions. A direction 
-   * vector is specified as an IntVector containing integer 
-   * Miller indices. 
 
-   * The dot product of monomer position vector and unit 
-   * direction vector is added to distribution function of 
-   * particular monomer type and direction vector. 
+   /**
+   * Distribution of monomer positions along one direction.
+   *
+   * A CompositionProfile evaluates the distribution of values for
+   * one component of the particle position vector. A direction
+   * vector is specified as an IntVector containing integer
+   * Miller indices.
+
+   * The dot product of monomer position vector and unit
+   * direction vector is added to distribution function of
+   * particular monomer type and direction vector.
    */
    class CompositionProfile : public SystemAnalyzer<System>
    {
@@ -53,7 +56,7 @@ namespace McMd
       *
       * Input format:
       *
-      *   - int               interval        sampling interval 
+      *   - int               interval        sampling interval
       *   - string            outputFileName  output file base name
       *   - int               nDirection      number of directions
       *   - DArray<IntVector> intVectors      IntVector directions
@@ -62,11 +65,11 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
-      /** 
+      /**
       * Clear accumulators.
       */
       virtual void setup();
-   
+
       /**
       * Add particle positions to histogram.
       *
@@ -97,7 +100,6 @@ namespace McMd
       template <class Archive>
       void serialize(Archive &ar, const unsigned int version);
 
-
       /**
       * Output results to predefined output file.
       */
@@ -110,7 +112,7 @@ namespace McMd
 
       /// Distribution statistical accumulators.
       DArray<Distribution> accumulators_;
-      
+
       /// Array of Miller index vectors for directions.
       DArray<IntVector> intVectors_;
 
@@ -131,7 +133,7 @@ namespace McMd
 
       /// Number of bins for density profile
       int nBins_;
-     
+
       /// True if this is the first step
       bool isFirstStep_;
 
@@ -146,11 +148,10 @@ namespace McMd
       */
       void makeWaveVectors();
 
-
    };
 
    /*
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class Archive>
    void CompositionProfile::serialize(Archive& ar, const unsigned int version)

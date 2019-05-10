@@ -16,13 +16,11 @@
 #include "StructureFactorPGrid.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
-#include "CompositionProfile.h"
 #include "VanHove.h"
 #include "BoundaryAverage.h"
 #include "ClusterHistogram.h"
 
 #ifdef SIMP_BOND
-#include "RadiusGyration.h"
 #include "RadiusGyrationSq.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
@@ -90,9 +88,6 @@ namespace McMd
       if (className == "BoundaryAverage") {
          ptr = new BoundaryAverage(system());
       } else 
-      if (className == "CompositionProfile") {
-         ptr = new CompositionProfile(system());
-      } else 
       if (className == "AtomMSD") {
          ptr = new AtomMSD(system());
       } else
@@ -110,9 +105,6 @@ namespace McMd
       } else 
       if (className == "IntraStructureFactorGrid") {
          ptr = new IntraStructureFactorGrid(system());
-      } else 
-      if (className == "RadiusGyration") {
-         ptr = new RadiusGyration(system());
       } else 
       if (className == "RadiusGyrationSq") {
          ptr = new RadiusGyrationSq(system());

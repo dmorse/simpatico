@@ -10,7 +10,7 @@ An SpeciesManager is a container for any number of species objects
 represents a species within a mixture. 
 
 \sa Simp::SpeciesManager   "Class Reference for Simp::SpeciesManager"
-\sa \ref simp_species_page "User documentation for subclasses of Species"
+\sa \ref user_species_page "User documentation for subclasses of Species"
 
 \section simp_species_SpeciesManager_param_sec Parameter File Format
 
@@ -48,7 +48,7 @@ the new object. If the name is not recognized, an Exception is thrown
 and execution halts. 
 
 User documention for available species classes, including parameter file
-formats, is available \ref simp_species_page "here"
+formats, is available \ref user_species_page "here"
 */
 
 }

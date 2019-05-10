@@ -12,7 +12,7 @@ extend the progam, and that are thus not stored in the repository.  It is
 only necessary to invoke the setup script once, before the first time you 
 compile.
 
-\section install_setup_default_sec Default Configuration 
+\section install_setup_default_sec Default configuration 
 
 To create configuration files appropriate for a generic unix-like 
 environment, in which it is assumed that you wil compile using the g++ 
@@ -26,7 +26,7 @@ shell to look for a script named setup in the current working directory,
 rather than searching the directories listed in the PATH environment 
 variable for a command with this name.
 
-\section install_setup_special_sec Specialized Configuration 
+\section install_setup_special_sec Specialized configuration 
 
 To create a more specialized configuration, the setup script may also be 
 invoked with a single argument that gives the name of a file containing 
@@ -53,12 +53,12 @@ When the the setup script is invoked with no argument, the script reads
 a file named "simpatico/make/gcc" by default. Invoking setup with no 
 argument is thus equivalent to invoking "./setup gcc". 
 
-\section install_setup_local_file_sec Creating a Custom Compiler Setup File
+\section install_setup_local_file_sec Customized configuration
 
 The "simpatico/src/make/compiler" directory initially contains only a 
 few compiler setup files, such "gcc" and "intel". If none of these is 
 exactly appropriate for a users system, the user should create a 
-specialized version as follows:
+local customized version as follows:
 
   - Create a copy of one of the files in the src/make compiler directory 
     with a new name such as "local", e.g., by entering 

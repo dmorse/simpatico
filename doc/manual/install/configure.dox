@@ -10,7 +10,7 @@ from the executable) when the program is compiled.  This page explains
 how a "configure" script may be used to enable or disable particular
 compile-time features before compiling or recompiling.
 
-\section install_configure_configure The "configure" Script
+\section install_configure_configure The "configure" script
 
 The root simpatico/ directory and the three standard build directories 
 (bld/parallel, bld/serial or src/) each contain a unix bash script named 
@@ -145,7 +145,7 @@ thus completely equivalent to calling the configure scripts in
 bld/serial and bld/parallel with the same set of options. Changes 
 made by invoking this script have no effect on in-source builds. 
 
-\section install_configure_features Optional Features
+\section install_configure_features Optional features
 
 The following table lists information about the most important compile 
 time options. The configure script enables or disables each such optional
@@ -277,7 +277,7 @@ The makefile system is designed to make it unnecessary for users to explicitly e
 
 The only time that users should have to explicitly invoke the configure script with the -m option is thus if they want to perform an in-source compilation of MPI-enabled or MPI-disabled versions of specific sets of source files by invoking "make all" from a subdirectory of the src/ directory.
 
-\section install_configure_build_directories_section Build Configuration Files
+\section install_configure_build_directories_section Build configuration files
 
 The directories bld/serial, bld/parallel and src/ each contain similar
 directory structures, and similar sets of makefiles and makefile fragments.

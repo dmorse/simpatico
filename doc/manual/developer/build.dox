@@ -312,7 +312,7 @@ The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variabl
 
 The MAKE_DEPS variable contains a list of build configuration files whose contents can effect compilation of source code in this namespace. This list always contains the main config.mk file from the parent build directory, the config.mk file for the namespace of interest, and config.mk files for any namespace(s) upon which this namespace depends. For the Simp namespace, MAKE_DEPS thus contains paths to the config.mk files in the simp/ and util/ subdirectories. These build configuration files are added to the list of dependencies for every object file in this namespace because changes to these config.mk files can change which preprocessor macros are defined or which compiler options are set, and thus can change the contents of the resulting object files.
 
-\section make_dependency Dependency Files (*.d Files)
+\section make_dependency Dependency files (*.d Files)
 
 If automatic dependency generation is not disabled, a dependency file will be generated for each source file whenever the file is compiled, as a side effect of compilation. Each dependency file defines a makefile rule for constructing the corresponding object file. This rule can be used to determine when the source file needs to be recompiled as a result of changes in header files or other files upon which it depends. The rule consists of the name of the object file target followed by a colon and list of files upon which it depends, of the form 
 \code
@@ -340,7 +340,7 @@ in which [directory] represents the mangled name of the directory containing the
 \endcode
 This command attempts to include a *.d dependency file for each *.o object file in the object file list. The dash in front of "include" instructs "make" to continue quietly if no dependency file is found for any object file target.
 
-\section make_makefile Example: A Namespace Directory makefile
+\section make_makefile Example: A namespace directory makefile
 
 As an example of how the system works, here are the essential parts of the namespace level makefile from the directory bld/serial/simp. The actual makefile also includes "clean" and "veryclean" targets" that have been excluded for clarity. Corresponding makefiles in bld/parallel/simp and src/simp are identical:
 \code
@@ -369,7 +369,7 @@ The first time "make all" is invoked in this directory, neither the object file 
 
 The target rule for library simp_LIB lists all of the object files in simp_OBJS as dependencies. The library will thus be built only after the object files are all built, and will automatically be rebuilt if any object file in the Simp namespace is rebuilt.
 
-\section make_makefile_executable Namespace Directory makefiles with Executable Targets
+\section make_makefile_executable Namespace directory makefiles with executable targets
 
 The makefile for the simp/ namespace level directory, which we used above as an example, does not build any executable files. Corresponding makefiles for the mcMd/, ddMd/, and mdPp/ subdirectories of each build directory, however, also contain targets that that build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the main program source files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and then linking the resulting object files to static libraries from the mcMd/, simp/ and util/ build directories. The target rules for the final executables list the required static libraries as dependencies.
 
@@ -381,7 +381,7 @@ The fact that executable targets depend on libraries that are defined in other n
 
 Thus, for example, the mcMd/makefile in each build directory must include the sources.mk files from the simp/ and util/ subdirectories of the src/ directory, and must include all dependency files from corresponding subdirectories of BLD_DIR, in addition to files from the mcMd/ subdirectory. Inclusion of these additional files from other namespace level directories allows make to decide when any required library needs to be rebuilt, and provides instructions how to rebuild any required source file or library if necessary.
 
-\section make_subdirectory Subdirectory Makefiles
+\section make_subdirectory Subdirectory makefiles
 
 As a convenience for developers, every subdirectory src/ at the namespace level and below contains a makefile. The "all" target of each such src/ subdirectory makefile executes an in-source build of the files in that subdirectory and any descendant subdirectories. The structure of the makefiles in subdirectories of the namespace level directories is very similar to that of the namespace level makefiles, except for the absence of targets to build a library or executables. 
 

@@ -9,7 +9,7 @@ namespace McMd
 
 A module is a set of classes that were designed for a specific application area, packaged in a manner that is designed to facilitate use by people other than the developer. 
 
-\section extend_module_writing_sec Writing a Module
+\section extend_module_writing_sec Writing a module
 
 By convention, each module should be installed in a separate subdirectory of the modules/ directory of the relevant namespace level directory. A module named "stuff" that adds features to the mcSim and/or mdSim programs should thus installed in a directory src/mcMd/modules/stuff, and should contain source files for classes that are defined in the McMd namespace. 
 
@@ -29,7 +29,7 @@ The module defined in src/mcMd/modules/slipLink contains source files that defin
 
 The sliplink module also contains a module wrapper class named SliplinkMcModule that is designed to integrates the module into an mcSim Monte Carlo simulation. This class has instances of SliplinkMcAnalyzerFactory and SliplinkMcMoveFactory as member variables. The constructor for this class, implemented in the file src/mcMd/moduless/sliplink/SliplinkMcModule.cpp, takes a reference to the parent McSimulation object as an argument and includes statements that register instances of the factory classes defined in the module as subfactories of the corresponding default factory classes.
 
-\section extend_module_use_sec Using a Module
+\section extend_module_use_sec Using a module
 
 To compile a simpatico program that uses a particular module, a user must generally go 
 through the following set of steps:
@@ -55,7 +55,7 @@ through the following set of steps:
    - Compile all the code in the namespace containing the relevant simpatico program or 
      programs, by entering "make mcMd" or "make ddMd".
 
-\section extend_module_main_sec Adding a Module to the Main Program
+\section extend_module_main_sec Adding a module to the main program
 
 In order to use the slipLink module, which is designed to be used with the mcSim program,
 the user would have to modify the main MC program, in file src/mcMd/mcSim.cpp, by adding

@@ -1,19 +1,19 @@
 namespace McMd
 {
 
-/*! \page mcMd_analyzers_page  McMd Analyzers
+/*! \page mcMd_analyzers_page  3.10.1.1 McMd Analyzers
 
+ \ref user_analysis_analyzers_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ <BR> 
 
-Lists of analyzers available for use with either mcSim 
-(Monte Carlo) or mdSim (molecular dynamics) simulations
-are given below. Separate lists are given for analyzers
-that can be used with either mcSim or mdSim simulations 
-and of analyzers that work with only one of these programs.
+ 
+Lists of analyzers available for use with either mcSim (Monte Carlo) or mdSim (molecular dynamics) simulations are given below. 
+Separate lists are given for analyzers that can be used with either mcSim or mdSim simulations and of analyzers that work with only one of these programs.
+The analyzer classes that will be used during a simulation are specified in the \subpage mcMd_analyzer_AnalyzerManager_page block of the parameter file that is used to initialize the simulation.
 
 \section mcMd_analyzer_analyzers_McMd_sec MC/MD Analyzers
 
-The following standard analyzers can be used in either Monte Carlo 
-(MC) with mcSim or molecular dynamics (MD) simulations with mdSim:
+The following standard analyzers can be used for data analysis in either Monte Carlo (MC) with mcSim or molecular dynamics (MD) simulations with mdSim:
 
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_AtomMSD_page </li>
@@ -22,13 +22,11 @@ The following standard analyzers can be used in either Monte Carlo
   <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
   <li> \subpage mcMd_analyzer_ClusterHistogram_page </li>
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
-  <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
-  <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
   <li> \subpage mcMd_analyzer_DihedralDist_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactorGrid_page </li>
-  <li> \subpage mcMd_analyzer_RadiusGyration_page </li>
+  <li> \subpage mcMd_analyzer_RadiusGyrationSq_page </li>
   <li> \subpage mcMd_analyzer_RDF_page </li>
   <li> \subpage mcMd_analyzer_StructureFactor_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
@@ -37,13 +35,18 @@ The following standard analyzers can be used in either Monte Carlo
   <li> \subpage mcMd_analyzer_VanHove_page </li>
 </ul>
 
+The following analyzers are used to output trajectories for later postprocessing, and can also be used with either mdSim or mcSim.
+The ConfigWriter class outputs a sequence of configurations in separate numbered files.
+<ul style="list-style: none;">
+  <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
+  <li> \subpage mcMd_analyzer_LammpsDumpWriter_page </li>
+</ul>
+
 \section mcMd_analyzer_analyzers_McAnalyzers_sec MC Analyzers
 
-The following analyzers can only be used in Monte Carlo (MC) 
-simulations:
+The following data analysis classes can only be used with the mcSim Monte Carlo (MC) program:
 
 <ul style="list-style: none;">
-  <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
@@ -58,7 +61,7 @@ simulations:
 
 \section mcMd_analyzer_analyzers_MdAnalyzers_sec MD Analyzers
 
-The following analyzers can only be used in MD simulations:
+The following classes can only be used by the mdSim MD program:
 
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_MdEnergyAnalyzer_page </li>
@@ -66,17 +69,15 @@ The following analyzers can only be used in MD simulations:
   <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPairEnergyCoefficients_page </li>
-  <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPressureAnalyzer_page </li>
   <li> \subpage mcMd_analyzer_MdStressAutoCorr_page </li>
 </ul>
  
 
-Parameter file blocks for analyzer classes appear as subblocks
-of a \subpage mcMd_analyzer_AnalyzerManager_page block.
-
 \sa McMd_Analyzer_Module (developer documentation)
+
+<BR> 
+ \ref user_analysis_analyzers_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
 
 */
 }

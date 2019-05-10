@@ -89,12 +89,6 @@ McSimulation{
       nSamplePerBlock                     10
     }
 
-    McPressureAverage{
-      interval                          1000
-      outputFileName                pressure
-      nSamplePerBlock                     10
-    }
-
     IntraPairAutoCorr{
       interval                         1000
       outputFileName      IntraPairAutoCorr

@@ -1,0 +1,39 @@
+/*! \page user_analysis_trajectory_page 3.10.2 Writing Trajectories
+
+ \ref user_analysis_analyzers_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_postprocess_page  (Next) 
+ <BR> 
+
+Each of the simpatico simulation programs is distributed with classes than write system trajectories for later postprocessing. 
+A trajectory contains a series of "snapshots" that are written at regular interval during a simulation. 
+A snapshot is a description of the system configuration at an instant during the simulation, including all particle positions and boundary dimensions. 
+A trajectory may be written either as a trajectory file, which is a single file containing a series of many snapshots, or as a series of numbered configuration files, each of which contains a single snapshot. 
+The classes used to write trajectories are analyzer classes, which must specified as items within the AnalyzerManager block of the simulation parameter file. 
+Different classes provide output in a different file formats.
+
+\section user_analysis_trajectory_writer_sec Trajectory files
+
+Analyzer classes that can write trajectory files in any of several different file formats are provided for use with either ddSim or for use with mdSim or mcSim.  Different classes are used to output different file formats. These classes are listed among the analyzer classes listed for use with \ref mcMd_analyzers_page "mcSim or mdSim" or with \ref ddMd_analyzers_page "ddSim".
+
+\section user_analysis_config_writer_section Configuration files
+
+The McMd::WriteConfig (for mcSim and mdSim simulations) and DdMd::WriteConfig (for ddMd simulations) classes are analyzer classes that write system configurations to file at a specified interval, for later post-processing. 
+These classes write each configuration to a separate file, with file names that contain an automatically incremented integer index. 
+
+The parameter file format for each of these classes requires an interval parameter, which determines the number of MD or MC steps between configuration files, and a base file name.
+The name of each file in a sequence of configuration file written by a WriteConfig class is constructed by concatenating the outputPrefix, the base name specified in the parameter file, and a sequential integer counter that is incremented by 1 after each file is written.  
+
+The choice of output file format used by either WriteConfig class is determined by the current choice of a configuration file format, which is the format that would be used by a WRITE_CONFIG command.
+The choice of configuration file format is a mutable property of a simulation that is initialized to a default format, which is different for different simulation programs, and that can be reset in the command file by issuing a SET_CONFIG_IO command.
+
+Each avaiable configuration file format is implemented by a subclass of McMd::ConfigIo (for mcSim or mdSim) or DdMd::ConfigIo (for ddSim). 
+The choice of format may be reset in the command file by a SET_CONFIG_IO command with the appropriate ConfigIo subclass name as an argument.
+The format specified by a SET_CONFIG_IO command applies to all subsequent commands that read or write configuration files until it is reset by another SET_CONFIG_IO command.
+Specifically, it specifies the format used by the READ_CONFIG command to read an initial configuration, by the SIMULATE command to write a sequence output files, or by the WRITE_CONFIG command to write a final output configuration after a simulation. 
+
+<BR> 
+ \ref user_analysis_analyzers_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_postprocess_page  (Next) 
+
+*/

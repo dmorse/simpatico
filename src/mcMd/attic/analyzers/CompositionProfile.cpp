@@ -199,24 +199,24 @@ namespace McMd
             }
          }
 
-      ++nSample_;
+         ++nSample_;
 
-      // Output to log files
-      for (int i = 0; i < nDirection_; ++i) {
-         for (int j = 0; j < nAtomType_; ++j){
-            currentAccumulators_[i+j*nDirection_].output(logFiles_[i+j*nDirection_]);
-            logFiles_[i+j*nDirection_] << std::endl;
+         // Output to log files
+         for (int i = 0; i < nDirection_; ++i) {
+            for (int j = 0; j < nAtomType_; ++j){
+               currentAccumulators_[i+j*nDirection_].output(logFiles_[i+j*nDirection_]);
+               logFiles_[i+j*nDirection_] << std::endl;
+            }
          }
-      }
-
-      // Close log files
-      for (int i = 0; i < nDirection_; ++i) {
-         for (int j = 0; j < nAtomType_; ++j){
-            logFiles_[i+j*nDirection_].close();
+   
+         // Close log files
+         for (int i = 0; i < nDirection_; ++i) {
+            for (int j = 0; j < nAtomType_; ++j){
+               logFiles_[i+j*nDirection_].close();
+            }
          }
-      }
-
-      isFirstStep_ = false;
+   
+         isFirstStep_ = false;
       }
 
    }

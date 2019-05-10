@@ -77,7 +77,7 @@ DdMd molecular dynamics integration algorithms are represented by subclasses of 
 
 The src/ddMd/modifier directory contains a set of classes that can be used to modify the basic integration algorithm by periodically modifying the state of the system during integration. Modifier is an abstract base class for classes that implement such algorithms. ModifierManager is a container for Modifier objects. Modifiers are disabled by default, but may be enabled by invoking ./configure -u1. 
 
-\section DdMd_Analyzer_sec Data Analysis 
+\section DdMd_Analyzer_sec Data analysis 
 
 The src/ddMd/analyzer directory contains a set of classes that are used for data analysis. DdMd::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for all of the Analyzer objects associated with a particular simulation. 
 
