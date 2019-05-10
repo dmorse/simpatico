@@ -11,13 +11,13 @@ This command attempts to place molecules in a random configuration in which ther
 
 The syntax of the GENERATE_MOLECULES command is:
 \code
-  GENERATE_MOLECULES <Boundary> Capacities: <int list> Diameters: <real list>
+  GENERATE_MOLECULES (Boundary) Capacities: (int list) Diameters: (real list)
 \endcode
-Here, the strings "GENERATE_MOLECULES", "Capacities:" and "Diameters:" are required labels. The symbols <Boundary>, <int list> and <real list> instead denote required input parameters, as discussed below.
+Here, the strings "GENERATE_MOLECULES", "Capacities:" and "Diameters:" are required labels. The symbols (Boundary), (int list) and (real list) instead denote input parameter values, as discussed below.
 
-The <Boundary> parameter specifies the dimensions of the periodic unit cell using the text file format specified by the ">>" operator for the boundary class. For the default Simp::OrthorhombicBoundary class, this format contains a lattice system string chosen from among "cubic", "tetragonal" and "orthorhombic", followed by an appropriate number of independent unit cell dimensions (i.e., one for cubic, two for tetragonal, and three for orthorhombic). 
+The (Boundary) parameter specifies the dimensions of the periodic unit cell using the text file format specified by the "))" operator for the boundary class. For the default Simp::OrthorhombicBoundary class, this format contains a lattice system string chosen from among "cubic", "tetragonal" and "orthorhombic", followed by an appropriate number of independent unit cell dimensions (i.e., one for cubic, two for tetragonal, and three for orthorhombic). 
 
-The label "Capacities:" is followed by a list of integers, denoted above by <int list>.  Each value in this list specifies how many molecules of the corresponding species should be generated, listed in the same order as the order in which species are listed in the parameter file.  The number of values in this list must thus be equal to the number of species listed in the SpeciesManager block of the parameter file.
+The label "Capacities:" is followed by a list of integers, denoted above by (int list).  Each value in this list specifies how many molecules of the corresponding species should be generated, listed in the same order as the order in which species are listed in the parameter file.  The number of values in this list must thus be equal to the number of species listed in the SpeciesManager block of the parameter file.
 
 The label "Diameters:" is follows by a list of real numbers.  Each value in this list specifies the hard core diameter for a corresponding atom type, listed in the order in which atom types are listed in the parameter file. The number of diameter values must thus equal the number of atom types in the parameter file. The diameter values specified in this command are only used during generation of initialconfigurations, and have no effect on the pair potential used during any subsequent simulation. 
 

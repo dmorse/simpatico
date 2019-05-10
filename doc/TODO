@@ -14,14 +14,14 @@ TODO:
             - ddSim integrators
     3.8  - Monte Carlo Moves 
     3.9  - Molecular Species  <- add example block
-   *3.10 - Data Analysis
+    3.10 - Data Analysis
            3.10.1 Analyzer Classes <- add example of AnalyzerManger block
              - Analyzers for mdSim or mcSim
              - Analyzers for ddSim 
-           *3.10.2 Writing Trajectories <- Edit (barely exists)
-           *3.10.3 Postprocessing with mdSim or mcSim
+           3.10.2 Writing Trajectories 
+           *3.10.3 Postprocessing with mdSim or mcSim <- edit
            *3.10.4 Postprocessing with mdPp <- To be written
-    3.11 - Generating Initial Configurations  <- new, explain command syntax
+    3.11 - Generating Initial Configurations
     3.12 - Restarting
     3.13 - Multi-System Simulations
    *3.14 - Perturbation (new)

@@ -5,11 +5,11 @@
  <BR> 
 
 Simpatico provides facilities for evaluating and analyzing a variety of physical properties. 
-Two modes of operation are possible:
-
- - <b> On-the-fly analysis </b>: Many physical properties can be evaluated, output to a file and analyzed during a simulation.
-
- - <b> Postprocessing </b>: Trajectories written to file during a simulation can later be read by another program for "postprocessing".
+Simulations can be analyzed either by evaluating physical properties "on-the-fly" during a simulation, or by postprocessing of trajectories (i.e., sequences of system configuration snapshots) written to file during a simulation. 
+On-the-fly analysis is performed by an extendable set of "analyzer" classes that are provided for use with each simulation program. 
+Trajectories produced by any simulation program (including ddSim) can be analyzed by using the single-processor mcSim or mdSim programs as postprocessing analysis tools.
+When used as a postprocessor, mcSim or mdSim reads a sequence of system configurations ("snapshots"), and analyzes the sequence the same way it would if performing an on-the-fly of analysis of configurations generating during a simulation, using the same set of analyzer classes as those available for on-the-fly analysis.
+A separate postprocessing analysis program, called mdPp, is also available for this purpose, but the set of analyzer classes provided for use with mdPp is still much smaller than the set provided for use with mcSim or mdSim. 
 
 Different aspects of data analysis are discussed in greater detail in the pages linked below.
 
