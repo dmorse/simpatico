@@ -173,14 +173,14 @@ The command
 \code
   > module avail
 \endcode
-should give a listing of all softwared modules available for use on a 
+should give a listing of all software modules available for use on a 
 particular system. The syntax for the command to load a particular module 
 is
 \code
  > module load  module-name
 \endcode
 where module-name represents the name of a particular software module, as 
-listed by the module avail command.
+listed by the "module avail" command.
 
 On the mesabi cluster at MSI, to load a version of the OpenMPI library 
 that was compiled with the curent default version of the intel compiler, 

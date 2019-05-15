@@ -26,15 +26,14 @@ and then enter:
 \code
 > make mcMd
 \endcode
-This will:
+This command will:
 
-  - C compile a large number *.cpp files from the util/, simp/ and mcMd/ 
+  - Compile a large number *.cpp files in the util/, simp/ and mcMd/ 
     namespace-level subdirectories of the simpatico/src/ source code 
     directory.
 
   - Install corresponding object (*.o) and dependency (*.d) files in 
-    corresponding subdiectories of the simpatico/bld/serial build 
-    directory.
+    corresponding locations within the simpatico/bld/serial directory.
 
   - Create a static library (with file extension *.a) in each of these 
     three namespace-level subdirectories of the bld/serial directory.
@@ -125,8 +124,8 @@ The "make clean" command discussed above removes files that are generated
 by compilation, but does not remove the various makefile fragments and 
 C++ files that are installed prior to compilation by the "setup" script. 
 To remove these files as well, and thus return the simpatico/ directory 
-tree to a state as close as possible to the  state it had immediately 
-after the repository was cloned, instead enter 
+tree to a state close to the  state it had immediately after the repository 
+was cloned, instead enter 
 \code
 > make veryclean
 \endcode
@@ -135,10 +134,11 @@ from the simpatico/ root directory.
 Because the "make veryclean" command removes files that are created 
 by the setup script, you will need to rerun the setup script after
 "make veryclean" before attempting to compile any code.  The "veryclean" 
-target does not, however, erase any local compiler configuration files 
-that users may have created in the src/make/compiler directory. After 
+target does not, however, erase any local compiler setup files that
+the user may have created in the make/compiler directory. After 
 invoking "make veryclean", a user can thus invoke setup with the name 
-of a previously created compiler configuration file as an argument. 
+of a previously created compiler configuration file as an argument in
+order to recreate the same configuration.
 
 After invoking "make veryclean" and then calling the setup script, 
 but before compiling, the user may also need to invoke the configure 
