@@ -9,7 +9,7 @@
 */
 
 #include "IntraStructureFactor.h"
-#include <util/crystal/LatticeSystem.h>
+#include <simp/crystal/LatticeSystem.h>
 
 namespace McMd
 {

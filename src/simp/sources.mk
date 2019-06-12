@@ -4,6 +4,7 @@ include $(SRC_DIR)/simp/species/sources.mk
 include $(SRC_DIR)/simp/ensembles/sources.mk
 include $(SRC_DIR)/simp/boundary/sources.mk
 include $(SRC_DIR)/simp/analysis/sources.mk
+include $(SRC_DIR)/simp/crystal/sources.mk
 
 # Concatenate source file lists from subdirectories
 simp_=\
@@ -11,7 +12,8 @@ simp_=\
     $(simp_species_) \
     $(simp_ensembles_) \
     $(simp_boundary_) \
-    $(simp_analysis_) 
+    $(simp_analysis_) \
+    $(simp_crystal_) 
 
 # Create lists of src and object files, with absolute paths
 simp_SRCS=\

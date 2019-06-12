@@ -8,8 +8,8 @@
 #include "IntraStructureFactorGrid.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/crystal/PointGroup.h>
-#include <util/crystal/PointSymmetry.h>
+#include <simp/crystal/PointGroup.h>
+#include <simp/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -51,7 +51,7 @@ namespace McMd
       readDArray< Pair<int> >(in, "atomTypeIdPairs", atomTypeIdPairs_, 
                               nAtomTypeIdPair_);
       read<int>(in, "hMax", hMax_);
-      read<Util::LatticeSystem>(in, "lattice", lattice_);
+      read<Simp::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
       nWave_  = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
@@ -226,7 +226,7 @@ namespace McMd
       // Load additional from IntraStructureFactorGrid::save
       loadParameter<int>(ar, "hMax", hMax_);
       UTIL_CHECK(nWave_  == (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1));
-      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      loadParameter<Simp::LatticeSystem>(ar, "lattice", lattice_);
       ar & nStar_;
       ar & starIds_;
       ar & starSizes_;

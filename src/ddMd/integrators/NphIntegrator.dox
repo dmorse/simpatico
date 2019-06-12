@@ -17,7 +17,7 @@ The parameter file format is:
   NphIntegrator{ 
     dt                 double
     W                  double
-    mode               Util::LatticeSystem
+    mode               Simp::LatticeSystem
   }
 \endcode
 in which

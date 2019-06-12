@@ -8,8 +8,8 @@
 #include "StructureFactorGrid.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/crystal/PointGroup.h>
-#include <util/crystal/PointSymmetry.h>
+#include <simp/crystal/PointGroup.h>
+#include <simp/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -42,7 +42,7 @@ namespace McMd
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
       read<int>(in, "hMax", hMax_);
-      read<Util::LatticeSystem>(in, "lattice", lattice_);
+      read<Simp::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
       nWave_  = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
@@ -249,7 +249,7 @@ namespace McMd
 
       // Load additional from StructureFactorGrid::serialize
       loadParameter<int>(ar, "hMax", hMax_);
-      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      loadParameter<Simp::LatticeSystem>(ar, "lattice", lattice_);
       ar & nStar_;
       starIds_.allocate(nStar_);
       starSizes_.allocate(nStar_);
