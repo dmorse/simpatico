@@ -6,7 +6,6 @@ branches:
   only:
    - master
    - devel
-   - crystal
 
 matrix:
   include:
