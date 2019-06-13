@@ -25,6 +25,8 @@ clean:
 	rm -f $(simp_tests_OBJS:.o=.d) 
 	rm -f log count
 ifeq ($(BLD_DIR),$(SRC_DIR))
+	cd analysis; $(MAKE) clean
+	cd boundary; $(MAKE) clean
 	cd interaction; $(MAKE) clean
 	cd species; $(MAKE) clean
 else

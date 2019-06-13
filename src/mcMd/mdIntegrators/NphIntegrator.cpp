@@ -16,7 +16,7 @@
 #include <simp/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>
-#include <util/crystal/LatticeSystem.h>
+#include <simp/crystal/LatticeSystem.h>
 
 namespace McMd
 {
