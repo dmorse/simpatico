@@ -14,14 +14,6 @@ namespace Simp
 
    using namespace Util; 
 
-   #ifdef UTIL_MPI
-   /**
-   * Initialize LatticeSystem:: MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<Simp::LatticeSystem>::type = MPI::INT;
-   bool MpiTraits<Simp::LatticeSystem>::hasType = true;
-   #endif
-
    /* 
    * Extract a LatticeSystem from an istream as a string.
    */
@@ -106,3 +98,17 @@ namespace Simp
    }
 
 }
+
+#ifdef UTIL_MPI
+namespace Util 
+{
+
+   /**
+   * Initialize LatticeSystem:: MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<Simp::LatticeSystem>::type = MPI::INT;
+   bool MpiTraits<Simp::LatticeSystem>::hasType = true;
+
+}
+#endif
+

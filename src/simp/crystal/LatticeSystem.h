@@ -59,7 +59,12 @@ namespace Simp
    void serialize(Archive& ar, LatticeSystem& lattice, const unsigned int version)
    {  serializeEnum(ar, lattice, version); }
 
-   #ifdef UTIL_MPI
+}
+
+#ifdef UTIL_MPI
+namespace Util 
+{
+
    /**
    * Explicit specialization MpiTraits<LatticeSystem>.
    */
@@ -70,7 +75,8 @@ namespace Simp
       static MPI::Datatype type;  ///< MPI Datatype
       static bool hasType;        ///< Is the MPI type initialized?
    };
-   #endif
 
 }
+#endif
+
 #endif
