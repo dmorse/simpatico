@@ -1,61 +1,72 @@
-# ==============================================================================
-.PHONY: util simp mcMd mcMd-mpi ddMd mdPp clean veryclean
+# ==========================================================================
+.PHONY: help util simp mcMd mcMd-mpi ddMd mdPp clean clean-tests veryclean
 
-# Compile util directory only (MPI not set automatically)
-util: 
+# -----------------------------------------------------------------------
+# Generate help dialog 
+
+help: ## This help dialog.
+	@IFS=$$'\n' ; \
+        help_lines=(`fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//'`); \
+        for help_line in $${help_lines[@]}; do \
+           IFS=$$'#' ; \
+           help_split=($$help_line) ; \
+           help_command=`echo $${help_split[0]} | sed -e 's/^ *//' -e 's/ *$$//'` ; \
+           help_info=`echo $${help_split[2]} | sed -e 's/^ *//' -e 's/ *$$//'` ; \
+           printf "%-18s %s\n" $$help_command $$help_info ; \
+        done
+
+# -----------------------------------------------------------------------
+# Main makefile targets
+
+util:        ## Compile src/util directory (MPI state unchanged)
 	cd util; $(MAKE) all
 
-# Compile util and simp directories only (MPI not set automatically)
-simp: 
+simp:        ## Compile src/util, src/simp directories (MPI state unchanged)
 	cd util; $(MAKE) all
 	cd simp; $(MAKE) all
 
-# Serial versions of mdSim and mcSim MD and MC programs (MPI disabled)
-mcMd: 
+mcMd:        ## Build serial versions of mdSim and mcSim (disables MPI)
 	./configure -m0
 	cd util; $(MAKE) all
 	cd simp; $(MAKE) all
 	cd mcMd; $(MAKE) all
 
-# Embarassingly parallel mdSim and mcSim MD and MC programs (MPI enabled)
-mcMd-mpi: 
+mcMd-mpi:    ## Build parallel versions of mdSim and mcSim (enables MPI)
 	./configure -m1
 	cd util; $(MAKE) all
 	cd simp; $(MAKE) all
 	cd mcMd; $(MAKE) all
  
-# Domain-decomposition ddSim molecular dynamics program (MPI enabled)
-ddMd:
+ddMd:        ## Build ddSim parallel MD program (enables MPI) 
 	./configure -m1
 	cd util; $(MAKE) all
 	cd simp; $(MAKE) all
 	cd ddMd; $(MAKE) all
 
-# Single-processor analysis program (MPI disabled)
-mdPp:
+mdPp:        ## Build mdPp analysis program (disables MPI)
 	./configure -m0
 	cd util; $(MAKE) all
 	cd simp; $(MAKE) all
 	cd mdPp; $(MAKE) all
 
-# Remove object (*.o), dependency (*.d) and library (*.a) files
-clean:
+# -----------------------------------------------------------------------
+# Clean-up targets
+
+clean:       ## Remove all intermediate build files (*.o, *.d, *.a files)
 	cd util; $(MAKE) clean
 	cd simp; $(MAKE) clean
 	cd mcMd; $(MAKE) clean
 	cd mdPp; $(MAKE) clean
 	cd ddMd; $(MAKE) clean
 
-# Clean unit tests
-clean-tests:
+clean-tests: ## Clean unit test directories (remove files created by tests)
 	cd util/tests; $(MAKE) clean
 	cd simp/tests; $(MAKE) clean
 	cd mcMd/tests; $(MAKE) clean
 	cd mdPp/tests; $(MAKE) clean
 	cd ddMd/tests; $(MAKE) clean
 
-# Remove all automatically generated files, return to as-distributed state
-veryclean:
+veryclean:  ## Remove all generated files, revert to as-distributed state
 	cd util; $(MAKE) veryclean
 	cd simp; $(MAKE) veryclean
 	cd mcMd; $(MAKE) veryclean
@@ -77,4 +88,4 @@ endif
 	rm -f mdPp/config.mk
 	rm -f config.mk
 
-# ==============================================================================
+# =========================================================================

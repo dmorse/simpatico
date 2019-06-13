@@ -198,6 +198,9 @@ cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 # Install configure script
 cp src/configure bld/parallel/configure
 
+# Enable angles, dihedrals and external by default
+./configure -a1 -d1 -e1
+
 # Enable UTIL_MPI by default in bld/parallel (silently).
 # (Run in subprocess to avoid permanentaly changing directory)
 (cd ./bld/parallel; ./configure -m1 &> /dev/null)

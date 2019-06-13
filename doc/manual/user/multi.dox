@@ -1,4 +1,4 @@
-/*! \page user_multi_page 3.9 Multi-System Simulations
+/*! \page user_multi_page 3.13 Multi-System Simulations
 
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page   (Next) 
@@ -10,8 +10,8 @@ The discussion of multi-system simulations in mcSim and mdSim also discusses the
 
 <h2> Contents:</h2> 
    <ul style="list-style: none;">
-   <li> \subpage user_multi_McMd_page "2.11.1 mcSim and mdSim" </li>
-   <li> \subpage user_multi_DdMd_page "2.11.2 ddSim" </li> 
+   <li> \subpage user_multi_McMd_page "3.12.1 mcSim and mdSim" </li>
+   <li> \subpage user_multi_DdMd_page "3.12.2 ddSim" </li> 
    </ul>
 
 <BR>

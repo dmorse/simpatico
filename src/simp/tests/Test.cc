@@ -12,6 +12,7 @@
 #include "species/SpeciesTestComposite.h"
 #include "boundary/BoundaryTestComposite.h"
 #include "analysis/AnalysisTestComposite.h"
+#include "crystal/CrystalTestComposite.h"
 #include <test/CompositeTestRunner.h>
 
 using namespace Simp;
@@ -21,6 +22,7 @@ addChild(new InteractionTestComposite, "interaction/");
 addChild(new SpeciesTestComposite, "species/");
 addChild(new BoundaryTestComposite, "boundary/");
 addChild(new AnalysisTestComposite, "analysis/");
+addChild(new CrystalTestComposite, "crystal/");
 TEST_COMPOSITE_END
 
 

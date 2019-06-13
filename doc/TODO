@@ -1,39 +1,64 @@
 TODO:
 
 1) Re-organize user guide to make it easier for users find what they 
-   are looking for. Possible organization (think about this again):
+   are looking for. New organization:
 
-   - Running a Simulation (good)
-   - Parameter Files (good)
-   - Command Files (good)
-   - Configuration Files (good)
-   - Examples (pretty good, check if up to date)
-   * Potential Energies (new)
-   * Simulation Algorithms (list and explain options)
-      - ddSim integrators
-      - mdSim integrators
-      - mcSim McMoves 
-   * Analyzers
-      Explain use of analyzers, briefly postprocessing
-      - Analyzers for ddSim 
-      - Analyzers for mdSim or mcSim
-      - Analyzers for mdSim 
-      - Analyzers for mcSim 
-   * Postprocessing
-      - On the fly
-      - Post-processing
-   * Generating Initial Configurations  <- new, explain command syntax
-   - Perturbation (new)
-   - Restarting (check if up to date)
-   - Multi-System Simulations
-   * Guide to Documentation (new - explain where to find information)
+    3.1  - Running a Simulation 
+    3.2  - Parameter Files
+    3.3  - Command Files 
+    3.4  - Configuration Files 
+    3.5  - Examples 
+    3.6  - Potential Energy
+    3.7  - Molecular Dynamics Integrators 
+            - mdSim integrators
+            - ddSim integrators
+    3.8  - Monte Carlo Moves 
+    3.9  - Molecular Species  <- add example block
+    3.10 - Data Analysis
+           3.10.1 Analyzer Classes <- add example of AnalyzerManger block
+             - Analyzers for mdSim or mcSim
+             - Analyzers for ddSim 
+           3.10.2 Writing Trajectories 
+           *3.10.3 Postprocessing with mdSim or mcSim <- edit
+           *3.10.4 Postprocessing with mdPp <- To be written
+    3.11 - Generating Initial Configurations
+    3.12 - Restarting
+    3.13 - Multi-System Simulations
+   *3.14 - Perturbation (new)
+   *3.15 - Class Documentation (new - explain where to find information)
 
-2) Document all of the analyzers, with one *.dox file per interaction 
-   in new directories doc/analyzers/ddMd and doc/analyzers/mcMd.
-
-3) Document changes to the parameter file format caused by enabling 
+2) Document changes to the parameter file format caused by enabling 
    particular features. This requires creating a *.dox file for every
    subclass of ParamComposite and finding a place to list them all as
    subpages. Create lists in Source Code Overview and reference 
    elsewhere?
+
+4) In developer section of manual:
+
+    - Segregate and rewrite information specific to ddMd and mcMd
+    - Edit discussion of parameter file IO
+    - Add discussion of serialization
+
+Modifications of OUTPUT_ commands:
+----------------------------------
+Rename OUTPUT_INTEGRATOR to OUTPUT_TIME
+Rename CLEAR_INTEGRATOR to CLEAR (since it clears everything)
+
+Consider adding OUTPUT_MEMORY, OUTPUT_TIME, OUTPUT_ANALYSIS, and CLEAR 
+commands for mdSim and mcSim to make them more similar to ddSim. This 
+might make the "CONTINUE" command for mcSim and mdSim unnecessary -
+running a simulation multiple times would continue the simulation 
+unless one calls clear.
+
+Add default - if a simulation has been run and OUTPUT_ANALYSIS has not
+been called, output when FINISH is called.  This would require adding 
+a variable named something like isClear to the analyzer manager.
+
+Modifications of GENERATOR commands:
+------------------------------------
+Break up commands into:
+
+GENERATOR_SET_BOUNDARY   .......
+GENERATOR_SET_DIAMETERS  .......
+GENERATE_SPECIES         speciesId  number [Algorithm]
 

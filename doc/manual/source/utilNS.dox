@@ -80,7 +80,7 @@ pattern in Simpatico.
 
 See also: \ref Container_Module "Container Module"
 
-\section param_sec Parameter File IO
+\section param_sec Parameter file IO
 
 The src/util/containers directory contains a set of classes that are used 
 to read and write parameter file blocks. Every class that needs to read 

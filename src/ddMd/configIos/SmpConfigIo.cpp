@@ -32,6 +32,8 @@
 #include <simp/species/Species.h>
 
 #include <util/space/Vector.h>
+#include <util/param/Label.h>
+#include <util/param/OptionalLabel.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -222,8 +224,8 @@ namespace DdMd
 
       // Optionally read SPECIES block
       if (domain().isMaster()) {  
-         Label speciesLabel("SPECIES", false); // optional label
-         if (speciesLabel.match(file)) {
+         OptionalLabel speciesBlockLabel("SPECIES"); 
+         if (speciesBlockLabel.match(file)) {
             file >> Label("nSpecies") >> nSpecies;
             UTIL_CHECK(nSpecies > 0);
          }
@@ -245,10 +247,10 @@ namespace DdMd
             int j, nMolecule;
             firstAtomIds[0] = 0;
             for (int i = 0; i < nSpecies; ++i) {
-               file >> Label("species") >> j;
+               file >> speciesLabel >> j;
                UTIL_CHECK(j == i);
                firstAtomIds[i] = nAtomTot;
-               file >> Label("nMolecule") >> nMolecule;
+               file >> nMoleculeLabel >> nMolecule;
                UTIL_CHECK(nMolecule > 0);
                Species& species = simulation().species(i);
                species.readStructure(file);
@@ -280,7 +282,7 @@ namespace DdMd
          file >> Label("ATOMS");
 
          // Optionally read "ordered" flag
-         Label orderedLabel("ordered", false); // optional label
+         OptionalLabel orderedLabel("ordered"); 
          bool isOrdered = orderedLabel.match(file);
 
          // Default format settings
@@ -288,7 +290,7 @@ namespace DdMd
          bool hasAtomVelocity = true;
 
          // Optionally read atom format string
-         Label formatLabel("format", false); // optional label
+         OptionalLabel formatLabel("format"); 
          bool hasFormat = formatLabel.match(file);
          if (hasFormat) {
             std::string formatString;

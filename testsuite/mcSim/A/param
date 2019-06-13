@@ -114,18 +114,6 @@ McSimulation{
       nSamplePerBlock        2
     }
 
-    McEnergyAverage{
-      interval               1000
-      outputFileName         energyAve
-      nSamplePerBlock        2
-    }
-
-    McBondEnergyAverage{
-      interval               1000
-      outputFileName         bondEnergy
-      nSamplePerBlock        2
-    }
-
     McPairEnergyAnalyzer{
       interval               1000
       outputFileName         pairEnergy
@@ -144,19 +132,6 @@ McSimulation{
       interval               1000
       outputFileName         pressure
       nSamplePerBlock        10
-    }
-
-    McPressureAverage{
-      interval               1000
-      outputFileName         pressureAve
-      nSamplePerBlock        10
-    }
-
-    RadiusGyration{
-      interval               1000
-      outputFileName         radiusGyration
-      nSamplePerBlock        10
-      speciesId              0
     }
 
     RadiusGyrationSq{

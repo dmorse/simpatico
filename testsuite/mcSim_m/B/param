@@ -104,21 +104,21 @@ McSimulation{
       nSamplePerBlock                      5
     }
 
-    McPairEnergyAverage{
+    McPairEnergyAnalyzer{
       interval                           100
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           inter  -1  -1
     }
    
-    McPairEnergyAverage{
+    McPairEnergyAnalyzer{
       interval                           100
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           inter   0  1
     }
    
-    McPairEnergyAverage{
+    McPairEnergyAnalyzer{
       interval                           100
       outputFileName              pairEnergy
       nSamplePerBlock                     10
@@ -132,7 +132,7 @@ McSimulation{
       parameterIndex                       0
     }
    
-    RadiusGyration{
+    RadiusGyrationSq{
       interval                          1000
       outputFileName          RadiusGyration
       nSamplePerBlock                      0

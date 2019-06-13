@@ -1,4 +1,4 @@
-/*! \page user_commands_page 3.3 Command Files
+/*! \page user_command_page 3.3 Command Files
 
  \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_cfgfile_page (Next) 
@@ -89,6 +89,15 @@ The following table shows a list of available commands for all three programs.  
     <td> WRITE_PARAM </td>
     <td> filename [string] </td>
     <td> Write parameter file block to file filename, with output prefix </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> RESTART </td>
+    <td> endStep [int] </td>
+    <td> Continue a restarted simulation until step counter endStep.
+         Use with "-r" command line option, as first command. </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>

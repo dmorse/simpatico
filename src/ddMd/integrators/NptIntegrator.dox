@@ -19,7 +19,7 @@ The parameter file format is:
     dt                 double
     tauT               double
     tauP               double
-    mode               Util::LatticeSystem
+    mode               Simp::LatticeSystem
   }
 \endcode
 in which

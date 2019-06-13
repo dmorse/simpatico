@@ -6,7 +6,7 @@ namespace Simp {
    *
    * Classes that represent molecular species.
    *
-   * \sa \ref simp_species_page "User documention"
+   * \sa \ref user_species_page "User documention"
    */
 
 }

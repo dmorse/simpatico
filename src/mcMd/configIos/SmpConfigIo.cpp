@@ -62,8 +62,8 @@ namespace McMd
       Species* speciesPtr;
       int nAtomSpecies, nAtomMolecule;
       int nAtomTot = 0;
-      Label speciesLabel("SPECIES", false); // optional label
-      if (speciesLabel.match(in)) {
+      OptionalLabel speciesBlockLabel("SPECIES"); 
+      if (speciesBlockLabel.match(in)) {
 
          /*
          * If SPECIES block is present, check consistency with data
@@ -76,12 +76,13 @@ namespace McMd
          in >> Label("nSpecies") >> nSpeciesIn;
          UTIL_CHECK(nSpeciesIn > 0);
          UTIL_CHECK(nSpeciesIn == nSpecies);
+
          Label speciesLabel("species");
          Label nMoleculeLabel("nMolecule");
          for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-            in >> Label("species") >> iSpeciesIn;
+            in >> speciesLabel>> iSpeciesIn;
             UTIL_CHECK(iSpeciesIn == iSpecies);
-            in >> Label("nMolecule") >> nMoleculeSpecies[iSpecies];
+            in >> nMoleculeLabel >> nMoleculeSpecies[iSpecies];
             UTIL_CHECK(nMoleculeSpecies[iSpecies] >= 0);
             speciesPtr = &simulation().species(iSpecies);
             UTIL_CHECK(nMoleculeSpecies[iSpecies] <= 
@@ -121,7 +122,7 @@ namespace McMd
 
       // Read ATOMs block header
       in >> Label("ATOMS");
-      Label orderedLabel("ordered", false); // optional label
+      OptionalLabel orderedLabel("ordered"); // optional label
       bool isOrdered = orderedLabel.match(in);
       std::string formatString;
       in >> Label("format") >> formatString;
@@ -141,6 +142,7 @@ namespace McMd
       bool hasAtomShift = atomFormat.isActive('s');
       UTIL_CHECK(hasAtomPosition);
       UTIL_CHECK(isOrdered);
+
       // TODO: Add ability to read unordered atoms with context.
       // if (!isOrdered) {
       //   UTIL_CHECK(hasAtomContext);

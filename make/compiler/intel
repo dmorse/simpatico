@@ -1,7 +1,7 @@
 # -- Settings for Intel ICC compiler ---
 
-# --------------------------------------------
-# Miscellaneous definitions
+# ---------------------------------------------------------------
+# General definitions
 
 # Path to search for header files (must include SRC_DIR)
 INCLUDES= -I$(SRC_DIR)
@@ -13,43 +13,45 @@ else
    CXX_STD = --std=c++98
 endif
 
-# --------------------------------------------
-# Compiler used for serial programs 
+# ---------------------------------------------------------------
+# Compiler and options used for serial programs 
 
-# Serial C++ compiler command
+# Command to invoke C++ compiler for serial (non-MPI) code
 CXX_SER=icpc
 
-# Flags passed when debugging is enabled
+# Flags passed to compiler when debugging is enabled
 CXXFLAGS_SER_DEBUG= -ansi $(CXX_STD)
 
-# Flags passed when debugging is disabled (production code)
+# Flags passed to compiler when debugging is disabled (production code)
 CXXFLAGS_SER_FAST= -ansi $(CXX_STD) +fast
 
 # Compiler flags used in unit tests
 TESTFLAGS= -ansi $(CXX_STD)
 
-# --------------------------------------------
-# Compiler and execution for parallel programs 
+# ---------------------------------------------------------------
+# Compiler, options and execution command for parallel programs 
 
-# Parallel MPI C++ compiler command (or wrapper script)
+# Command to invoke the C++ compiler for compiling MPI code.
+# Note: This is often name of a wrapper script provided by the 
+# MPI implementation
 CXX_PAR=mpicxx
 
-# Flags passed when debugging is enabled
+# Flags passed to compiler when debugging is enabled
 CXXFLAGS_PAR_DEBUG= -ansi $(CXX_STD)
 
-# Flags passed when debugging is disabled (production)
+# Flags passed to compiler when debugging is disabled (production)
 CXXFLAGS_PAR_FAST= -ansi $(CXX_STD) +fast
 
 # MPI execution command (followed by integer number of processors)
 MPIRUN=mpirun -np
 
-# --------------------------------------------
+# ---------------------------------------------------------------
 # Linker / Loader 
 
 # Flags passed to compiler for linking and loading
 LDFLAGS=
 
-# --------------------------------------------
+# ---------------------------------------------------------------
 # Archiver
 
 # Library archiver command (for creating static libraries)

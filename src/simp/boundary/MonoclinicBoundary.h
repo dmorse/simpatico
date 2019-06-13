@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/crystal/LatticeSystem.h> // member
+#include <simp/crystal/LatticeSystem.h> // member
 #include <util/containers/FSArray.h>    // member template
 #include <util/space/Vector.h>          // member template argument
 #include <util/space/IntVector.h>       // inline methods

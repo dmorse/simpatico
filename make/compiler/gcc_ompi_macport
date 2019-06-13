@@ -1,7 +1,7 @@
 
 # -- Settings for Mac OS X + Open-MPI, Open-MPI Installed by MacPorts --
 
-# These settigns are designed to work for code that is compiled on Mac
+# These settings are designed to work for code that is compiled on Mac
 # OS X using the gcc compiler and a copy of the Open-MPI library that 
 # was installed  using the MacPort package manager. The MacPort manager 
 # places header and  library files in non-standard locations within 
@@ -18,7 +18,6 @@
 # Includes location of open-mpi header (*.h) files
 INCLUDES= -I$(SRC_DIR)
 INCLUDES+= -I/opt/local/include/openmpi-mp
-
 
 # Compiler option to specify ANSI C++ standard
 ifdef UTIL_CXX11

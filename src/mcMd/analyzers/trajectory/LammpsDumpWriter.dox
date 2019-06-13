@@ -1,0 +1,38 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_LammpsDumpWriter_page LammpsDumpWriter
+
+\section mcMd_analyzer_LammpsDumpWriter_synopsis_sec Synopsis
+
+This analyzer outputs a single trajectory file using the Lammps dump format for each configuration.
+
+\section mcMd_analyzer_LammpsDumpWriter_param_sec Parameters
+
+The parameter file format is:
+\code
+  LammpsDumpWriter{ 
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_LammpsDumpWriter_output_sec Output
+
+The Lammps dump output consists of a sequence of configuration snapshots in a single file. 
+A system configuration is output every interval time steps.
+
+*/
+
+}

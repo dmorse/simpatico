@@ -62,21 +62,15 @@ MdSimulation{
       nSamplePerBlock                     10
     }
 
-    MdPotentialEnergyAverage{
-      interval                           100
-      outputFileName               potential
-      nSamplePerBlock                     10
-    }
-
     MdKineticEnergyAverage{
       interval                           100
       outputFileName                 kinetic
       nSamplePerBlock                     10
     }
 
-    RadiusGyration{
+    RadiusGyrationSq{
       interval                           100
-      outputFileName          RadiusGyration
+      outputFileName                    RgSq
       nSamplePerBlock                     10
       speciesId                            0
     }

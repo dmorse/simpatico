@@ -9,7 +9,7 @@
 */
 
 #include "OrthoRegion.h"                // base class
-#include <util/crystal/LatticeSystem.h> // member
+#include <simp/crystal/LatticeSystem.h> // member
 #include <util/containers/FSArray.h>    // member template
 #include <util/space/Vector.h>          // member template argument
 #include <util/space/IntVector.h>       // inline functions

@@ -75,7 +75,7 @@ namespace McMd
    }
   
    /*
-   * Read interval and outputFileName. 
+   * Close output file. 
    */
    void LammpsDumpWriter::output() 
    {  outputFile_.close(); }

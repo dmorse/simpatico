@@ -9,7 +9,7 @@ namespace McMd
 
 Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined, and where the code should be placed within a directory tree.
 
-\section extend_overview_namespace Namespaces and Directories
+\section extend_overview_namespace Namespaces and directories
 Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Simp, McMd, DdMd and MdPp. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
 <table>
   <tr> 
@@ -56,7 +56,7 @@ The DdMd, McMd, and MdPp namespaces are mutually exclusive. Classes defined in t
 
 As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next \ref extend_base_page "page".
 
-\section extend_overview_location User File Directories
+\section extend_overview_location User directories
 
 Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree, in directories that are provided for this purpose.  Each namespace level directory contains two subdirectories named user/ and modules/ that are intended as locations for user files.  Thus, for example, user classes that are defined in the DdMd namespace should be placed in either src/ddMd/user or src/ddMd/modules directory subtree. 
 

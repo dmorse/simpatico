@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>   // base class template
 #include <mcMd/simulation/System.h>               // base class template parameter
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template

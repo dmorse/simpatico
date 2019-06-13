@@ -1,21 +1,21 @@
 /*! \page user_param_page 3.2 Parameter Files
 
 \ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_commands_page (Next) 
+\ref user_command_page (Next) 
 <BR>
 
 The parameter files required by the three programs mcSim, mdSim and ddSim use a similar syntax, but contain somewhat different contents. The following three sections discuss elements of the parameter file syntax that are common to all three types of simulation, the parameter file formats for mcSim and mdSim (which are very similar), and the parameter file format for ddSim simulations.
 
 <h2> Contents:</h2>
    <ul style="list-style: none;">
-   <li> \subpage user_param_syntax_page  "2.4.1 Syntax" </li>
-   <li> \subpage user_param_mcmd_page    "2.4.2 mdSim and mcSim" </li>
-   <li> \subpage user_param_ddmd_page    "2.4.3 ddSim" </li>
+   <li> \subpage user_param_syntax_page  "3.2.1 Syntax" </li>
+   <li> \subpage user_param_mcmd_page    "3.2.2 mdSim and mcSim" </li>
+   <li> \subpage user_param_ddmd_page    "3.2.3 ddSim" </li>
    </ul>
 
 <BR>
 \ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_commands_page (Next) 
+\ref user_command_page (Next) 
 
 */

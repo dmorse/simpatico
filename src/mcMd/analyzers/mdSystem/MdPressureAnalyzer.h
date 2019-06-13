@@ -23,10 +23,8 @@ namespace McMd
    /**
    * Compute averages and output block averages of pressure components.
    *
-   * This class computes separate averages for each component of the
-   * total simulation pressure (kinetic, pair, bond, etc.) as well as
-   * for the total, and periodically outputs block averages of each
-   * to a file.
+   * This class computes separate averages for the virial, kinetic and
+   * total pressure, and periodically outputs block averages of each.
    *
    * \sa \ref mcMd_analyzer_MdPressureAnalyzer_page "param file format"
    *

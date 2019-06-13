@@ -82,21 +82,9 @@ MdSimulation{
       nSamplePerBlock          10
     }
 
-    MdPotentialEnergyAverage{
-      interval                 100
-      outputFileName           potential
-      nSamplePerBlock          10
-    }
-
     MdPressureAnalyzer{
       interval                 100
       outputFileName           pressure
-      nSamplePerBlock          10
-    }
-
-    MdPressureAverage{
-      interval                 100
-      outputFileName           pressureAve
       nSamplePerBlock          10
     }
 
@@ -178,13 +166,6 @@ MdSimulation{
       lattice                  Cubic
     }
 
-    RadiusGyration{
-      interval                 100
-      outputFileName           radiusGyration
-      nSamplePerBlock          10
-      speciesId                0
-    }
-
     RadiusGyrationSq{
       interval                 100
       outputFileName           radiusGyrationSq
@@ -241,11 +222,4 @@ MdSimulation{
   saveInterval                5000
   saveFileName                restart
 }
-
-    // Doesn't restart correctly - put back in when fixed
-    MdVirialStressTensorAverage{
-      interval                 100
-      outputFileName           virial
-      nSamplePerBlock          10
-    }
 
