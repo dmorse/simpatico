@@ -224,8 +224,8 @@ namespace DdMd
 
       // Optionally read SPECIES block
       if (domain().isMaster()) {  
-         OptionalLabel speciesLabel("SPECIES"); 
-         if (speciesLabel.match(file)) {
+         OptionalLabel speciesBlockLabel("SPECIES"); 
+         if (speciesBlockLabel.match(file)) {
             file >> Label("nSpecies") >> nSpecies;
             UTIL_CHECK(nSpecies > 0);
          }

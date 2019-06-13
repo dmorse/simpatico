@@ -62,8 +62,8 @@ namespace McMd
       Species* speciesPtr;
       int nAtomSpecies, nAtomMolecule;
       int nAtomTot = 0;
-      OptionalLabel speciesLabel("SPECIES"); 
-      if (speciesLabel.match(in)) {
+      OptionalLabel speciesBlockLabel("SPECIES"); 
+      if (speciesBlockLabel.match(in)) {
 
          /*
          * If SPECIES block is present, check consistency with data
@@ -76,10 +76,11 @@ namespace McMd
          in >> Label("nSpecies") >> nSpeciesIn;
          UTIL_CHECK(nSpeciesIn > 0);
          UTIL_CHECK(nSpeciesIn == nSpecies);
+
          Label speciesLabel("species");
          Label nMoleculeLabel("nMolecule");
          for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-            in >>  speciesLabel>> iSpeciesIn;
+            in >> speciesLabel>> iSpeciesIn;
             UTIL_CHECK(iSpeciesIn == iSpecies);
             in >> nMoleculeLabel >> nMoleculeSpecies[iSpecies];
             UTIL_CHECK(nMoleculeSpecies[iSpecies] >= 0);
