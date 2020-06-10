@@ -1,34 +1,33 @@
 Goal:
 
-To create an independent serialization system, in which the entire internal state 
-is stored in a single binary file. 
+To create an independent serialization system, in which the entire internal 
+state is stored in a single binary file. 
 
 Serialization methods: save and load vs. serialize template
 -----------------------------------------------------------
 
-Which classes will use the serialize method template and which will use save and 
-load virtual functions?
+Which classes will use the serialize method template and which will use save 
+and load virtual functions?
 
-i) Polymorphic classes, which are accessed through a base class pointer, must all 
-be Serializable, and must use the virtual save and load methods. This includes all 
-of the Species, Analyzer, McMove, MdIntegrator and Potential classes in McMd, 
-and all Analyzer, Integrator, and Potential classes in DdMd.
+i) Polymorphic classes, which are accessed through a base class pointer, must 
+all be Serializable, and must use the virtual save and load methods. This 
+includes all of the Species, Analyzer, McMove, MdIntegrator and Potential 
+classes in McMd, and all Analyzer, Integrator, and Potential classes in DdMd.
 
-ii) Classes that own polymorphic classes will generally also need to be Serializable,
-and implement save and load methods, since they require substantially different 
-interfaces for saving and loading. This includes all of the Manager, System, and 
-Simulation classes.
+ii) Classes that own polymorphic classes will generally also need to be 
+Serializable, and implement save and load methods, since they require 
+substantially different interfaces for saving and loading. This includes 
+all of the Manager, System, and Simulation classes.
 
 ii) Other Classes that read and write to the parameter file could use either 
-the save and load methods, implemented using saveParam() and loadParam() methods, 
-or a serialize() method template, implemented using serializeParam() methods.
-Such classes include: ensembles, PairList and CellList, and FileMaster.
+the save and load methods, implemented using saveParam() and loadParam() 
+methods, or a serialize() method template, implemented using serializeParam() 
+methods.  Such classes include: ensembles, PairList and CellList, and 
+FileMaster.
 
-Conclusion: It is probably simplest to just use save and load for all subclasses 
-of ParamComposite. Do not make ParamComposite a subclass of Serializable, just 
-add as an additional base class for subclasses.
-
-Since Serializable is a pure interface, perhaps rename as ISerializable.
+Conclusion: It is probably simplest to just use save and load for all 
+subclasses of ParamComposite. Do not make ParamComposite a subclass of 
+Serializable, just add as an additional base class for subclasses.
 
 ParamComposite:
 ---------------
@@ -71,10 +70,9 @@ FileMaster     -> needs save and load methods.
 Random         -> has serialize method. save and load methods could call this.
 ensembles      -> need save and load methods.
 containers     -> pointer arrays need serialize method to allocate arrays.
-
 Boundary       -> already have serialize methods
 
-Inter Classes
--------------
+Interaction Classes
+-------------------
 
 All interactions should have serialize methods.

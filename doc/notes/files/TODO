@@ -1,9 +1,11 @@
 For configuration files:
 
-   1) For reading of configuration files, allow Species block to be
-   optional in McMd programs, allow allocation to be deferred until 
-   reading of the configuration file or the preamble of the trajectory 
-   file that contains species information.
+   1) See comments in file "progress"
+
+   2) For reading of configuration files, allow Species block to be
+   optional in McMd parameter files, allow allocation to be deferred 
+   until reading of the configuration file or the preamble of the 
+   trajectory file that contains species information.
 
 For trajectory files:
 
