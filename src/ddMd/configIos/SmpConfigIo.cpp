@@ -7,24 +7,24 @@
 
 #include "SmpConfigIo.h"
 
-#include <ddMd/simulation/Simulation.h>                 
-#include <ddMd/communicate/Domain.h>   
+#include <ddMd/simulation/Simulation.h>
+#include <ddMd/communicate/Domain.h>
 
-#include <ddMd/storage/AtomStorage.h>               
+#include <ddMd/storage/AtomStorage.h>
 #ifdef SIMP_BOND
-#include <ddMd/storage/BondStorage.h>               
+#include <ddMd/storage/BondStorage.h>
 #endif
 #ifdef SIMP_ANGLE
-#include <ddMd/storage/AngleStorage.h>               
+#include <ddMd/storage/AngleStorage.h>
 #endif
 #ifdef SIMP_DIHEDRAL
-#include <ddMd/storage/DihedralStorage.h>               
+#include <ddMd/storage/DihedralStorage.h>
 #endif
 
-#include <ddMd/communicate/GroupCollector.tpp> 
-#include <ddMd/communicate/GroupDistributor.tpp> 
+#include <ddMd/communicate/GroupCollector.tpp>
+#include <ddMd/communicate/GroupDistributor.tpp>
 
-#include <ddMd/communicate/Buffer.h> 
+#include <ddMd/communicate/Buffer.h>
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
 #include <ddMd/chemistry/MaskPolicy.h>
@@ -56,12 +56,12 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   void SmpConfigIo::readGroups(std::ifstream& file, 
+   void SmpConfigIo::readGroups(std::ifstream& file,
                   const char* sectionLabel,
                   const char* nGroupLabel,
-                  GroupDistributor<N>& distributor) 
+                  GroupDistributor<N>& distributor)
    {
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          int nGroup = 0;  // Total number of groups in file
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
@@ -84,7 +84,7 @@ namespace DdMd
    * Private method to replicate and send Group<N> objects for a species.
    */
    template <int N>
-   void 
+   void
    SmpConfigIo::sendSpeciesGroups(int& groupId, int& firstAtomId,
                                   int  nMolecule, int  nAtom, int  nGroup,
                                   const DArray<SpeciesGroup<N> >& groups,
@@ -107,29 +107,29 @@ namespace DdMd
                //Log::file() << *groupPtr << std::endl;
                distributor.add();
                ++groupId;
-            } // end loop over groups 
+            } // end loop over groups
             firstAtomId += nAtom;
          } // end loop over molecules
       }
    }
 
    #ifdef SIMP_BOND
-   void SmpConfigIo::makeBonds() 
+   void SmpConfigIo::makeBonds()
    {
       GroupDistributor<2>& distributor = bondDistributor();
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          int nSpecies = simulation().nSpecies();
          int groupId = 0;
          int firstAtomId = 0;
          distributor.setup();
          for (int is = 0; is < nSpecies; ++is) {
             Species& species = simulation().species(is);
-            sendSpeciesGroups(groupId, 
+            sendSpeciesGroups(groupId,
                               firstAtomId,
-                              species.capacity(), 
-                              species.nAtom(), 
-                              species.nBond(), 
-                              species.speciesBonds(), 
+                              species.capacity(),
+                              species.nAtom(),
+                              species.nBond(),
+                              species.speciesBonds(),
                               distributor);
          }
          // Send any groups not sent previously.
@@ -141,22 +141,22 @@ namespace DdMd
    #endif
 
    #ifdef SIMP_ANGLE
-   void SmpConfigIo::makeAngles() 
+   void SmpConfigIo::makeAngles()
    {
       GroupDistributor<3>& distributor = angleDistributor();
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          int nSpecies = simulation().nSpecies();
          int groupId = 0;
          int firstAtomId = 0;
          distributor.setup();
          for (int is = 0; is < nSpecies; ++is) {
             Species& species = simulation().species(is);
-            sendSpeciesGroups(groupId, 
+            sendSpeciesGroups(groupId,
                               firstAtomId,
-                              species.capacity(), 
-                              species.nAtom(), 
-                              species.nAngle(), 
-                              species.speciesAngles(), 
+                              species.capacity(),
+                              species.nAtom(),
+                              species.nAngle(),
+                              species.speciesAngles(),
                               distributor);
          }
          // Send any groups not sent previously.
@@ -168,22 +168,22 @@ namespace DdMd
    #endif
 
    #ifdef SIMP_DIHEDRAL
-   void SmpConfigIo::makeDihedrals() 
+   void SmpConfigIo::makeDihedrals()
    {
       GroupDistributor<4>& distributor = dihedralDistributor();
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          int nSpecies = simulation().nSpecies();
          int groupId = 0;
          int firstAtomId = 0;
          distributor.setup();
          for (int is = 0; is < nSpecies; ++is) {
             Species& species = simulation().species(is);
-            sendSpeciesGroups(groupId, 
+            sendSpeciesGroups(groupId,
                               firstAtomId,
-                              species.capacity(), 
-                              species.nAtom(), 
-                              species.nDihedral(), 
-                              species.speciesDihedrals(), 
+                              species.capacity(),
+                              species.nAtom(),
+                              species.nDihedral(),
+                              species.speciesDihedrals(),
                               distributor);
          }
          // Send any groups not sent previously.
@@ -210,11 +210,11 @@ namespace DdMd
          UTIL_THROW("Error: Atom storage is set for Cartesian coordinates");
       }
       if (domain().isMaster()) {
-         if (!file.is_open()) {  
-            UTIL_THROW("Error: File is not open for reading on master"); 
+         if (!file.is_open()) {
+            UTIL_THROW("Error: File is not open for reading on master");
          }
          if (!Label::isClear()) {
-            UTIL_THROW("Error: Label buffer is not clear on master"); 
+            UTIL_THROW("Error: Label buffer is not clear on master");
          }
       }
 
@@ -223,8 +223,8 @@ namespace DdMd
       DArray<int> firstAtomIds;
 
       // Optionally read SPECIES block
-      if (domain().isMaster()) {  
-         OptionalLabel speciesBlockLabel("SPECIES"); 
+      if (domain().isMaster()) {
+         OptionalLabel speciesBlockLabel("SPECIES");
          if (speciesBlockLabel.match(file)) {
             file >> Label("nSpecies") >> nSpecies;
             UTIL_CHECK(nSpecies > 0);
@@ -235,7 +235,7 @@ namespace DdMd
       bcast(domain().communicator(), nSpecies, 0);
       #endif
       if (nSpecies > 0) {
-  
+
          // Set nSpecies in parent Simulation.
          // If a Species array was allocated previously, reallocate.
          simulation().setNSpecies(nSpecies);
@@ -257,14 +257,15 @@ namespace DdMd
                species.setCapacity(nMolecule);
                nAtomTot += nMolecule * species.nAtom();
             }
-            // Note: Species information is not replicated,
-            // and is stored only on master. All processors,
-            // however, have the same value of nSpecies.
+            // Note: Species information is only stored on the master
+            // processor and is not broadcast or replicated. The value
+            // of nSpecies, however, is broadcast and stored on all
+            // processors.
          }
       }
 
       // BOUNDARY block
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          file >> Label("BOUNDARY");
          file >> boundary();
       }
@@ -282,7 +283,7 @@ namespace DdMd
          file >> Label("ATOMS");
 
          // Optionally read "ordered" flag
-         OptionalLabel orderedLabel("ordered"); 
+         OptionalLabel orderedLabel("ordered");
          bool isOrdered = orderedLabel.match(file);
 
          // Default format settings
@@ -290,13 +291,13 @@ namespace DdMd
          bool hasAtomVelocity = true;
 
          // Optionally read atom format string
-         OptionalLabel formatLabel("format"); 
+         OptionalLabel formatLabel("format");
          bool hasFormat = formatLabel.match(file);
          if (hasFormat) {
             std::string formatString;
             file >> formatString;
             UTIL_CHECK(formatString.size() > 0);
-   
+
             // Parse and validate atom format string
             FlagSet atomFormat("itmpvs");
             atomFormat.setActualOrdered(formatString);
@@ -345,7 +346,7 @@ namespace DdMd
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
-            // Atom index            
+            // Atom index
             file >> id;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
@@ -417,7 +418,7 @@ namespace DdMd
          #ifdef SIMP_BOND
          if (bondStorage().capacity()) {
             readGroups<2>(file, "BONDS", "nBond", bondDistributor());
-            bondStorage().isValid(atomStorage(), domain().communicator(), 
+            bondStorage().isValid(atomStorage(), domain().communicator(),
                                   hasGhosts);
             // Set atom "mask" values
             if (maskPolicy == MaskBonded) {
@@ -428,25 +429,25 @@ namespace DdMd
          #ifdef SIMP_ANGLE
          if (angleStorage().capacity()) {
             readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
-            angleStorage().isValid(atomStorage(), domain().communicator(), 
+            angleStorage().isValid(atomStorage(), domain().communicator(),
                                    hasGhosts);
          }
          #endif
          #ifdef SIMP_DIHEDRAL
          if (dihedralStorage().capacity()) {
-            readGroups<4>(file, "DIHEDRALS", "nDihedral", 
+            readGroups<4>(file, "DIHEDRALS", "nDihedral",
                           dihedralDistributor());
-            dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+            dihedralStorage().isValid(atomStorage(), domain().communicator(),
                                       hasGhosts);
          }
          #endif
 
-      } else {
+      } else {     // if simulation().hasSpecies()
 
          #ifdef SIMP_BOND
          if (bondStorage().capacity()) {
             makeBonds();
-            bondStorage().isValid(atomStorage(), domain().communicator(), 
+            bondStorage().isValid(atomStorage(), domain().communicator(),
                                   hasGhosts);
             // Set atom "mask" values
             if (maskPolicy == MaskBonded) {
@@ -457,14 +458,14 @@ namespace DdMd
          #ifdef SIMP_ANGLE
          if (angleStorage().capacity()) {
             makeAngles();
-            angleStorage().isValid(atomStorage(), domain().communicator(), 
+            angleStorage().isValid(atomStorage(), domain().communicator(),
                                    hasGhosts);
          }
          #endif
          #ifdef SIMP_DIHEDRAL
          if (dihedralStorage().capacity()) {
             makeDihedrals();
-            dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+            dihedralStorage().isValid(atomStorage(), domain().communicator(),
                                    hasGhosts);
          }
          #endif
@@ -472,7 +473,7 @@ namespace DdMd
       }
 
       // Postcondition: Label buffer should be clear on exit
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
          UTIL_CHECK(Label::isClear());
       }
    }
@@ -481,11 +482,11 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int SmpConfigIo::writeGroups(std::ofstream& file, 
+   int SmpConfigIo::writeGroups(std::ofstream& file,
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,
-                  GroupCollector<N>& collector) 
+                  GroupCollector<N>& collector)
    {
 
       // Compute total total number of groups on all processors
@@ -513,14 +514,14 @@ namespace DdMd
       return nGroup;
    }
 
-   /* 
+   /*
    * Write the configuration file.
    */
    void SmpConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (domain().isMaster() && !file.is_open()) {  
-            UTIL_THROW("Error: File is not open on master"); 
+      if (domain().isMaster() && !file.is_open()) {
+            UTIL_THROW("Error: File is not open on master");
       }
       using std::endl;
 
@@ -550,16 +551,19 @@ namespace DdMd
       // WRITE ATOMS block
       bool hasAtomContext = Atom::hasAtomContext();
       atomStorage().computeNAtomTotal(domain().communicator());
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) {
 
          file << "ATOMS" << endl;
+
+         // Note: No "ordered" flag is written, because this function
+         // writes unordered atoms.
 
          // Write format string "it[m]pv"
          std::string format = "format  it";
          if (hasAtomContext) format += "m";
          format += "pv";
          file << format << endl;
-         file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) 
+         file << "nAtom" << Int(atomStorage().nAtomTotal(), 10)
               << endl;
 
          // Collect and write atoms
@@ -571,7 +575,7 @@ namespace DdMd
             file << Int(atomPtr->id(), 10);
             file << Int(atomPtr->typeId(), 6);
             if (hasAtomContext) {
-               file << Int(atomPtr->context().speciesId, 6) 
+               file << Int(atomPtr->context().speciesId, 6)
                     << Int(atomPtr->context().moleculeId, 10)
                     << Int(atomPtr->context().atomId, 6);
             }
@@ -580,12 +584,12 @@ namespace DdMd
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
             }
-            file << "\n" << r 
+            file << "\n" << r
                  << "\n" << atomPtr->velocity() << "\n";
             atomPtr = atomCollector().nextPtr();
          }
 
-      } else { 
+      } else {
          atomCollector().send();
       }
 
@@ -593,24 +597,24 @@ namespace DdMd
          // Write the covalent groups
          #ifdef SIMP_BOND
          if (bondStorage().capacity()) {
-            writeGroups<2>(file, "BONDS", "nBond", bondStorage(), 
+            writeGroups<2>(file, "BONDS", "nBond", bondStorage(),
                            bondCollector());
          }
          #endif
          #ifdef SIMP_ANGLE
          if (angleStorage().capacity()) {
-            writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), 
+            writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(),
                            angleCollector());
          }
          #endif
          #ifdef SIMP_DIHEDRAL
          if (dihedralStorage().capacity()) {
-            writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), 
+            writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(),
                            dihedralCollector());
          }
          #endif
       }
 
    }
- 
+
 }
