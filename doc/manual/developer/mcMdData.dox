@@ -25,7 +25,7 @@ Molecule. Particular Group<NAtom> objects within a molecule, which
 represent covalent bonds (NAtom=2), angle groups and torsion groups 
 can be accessed by patterns similar to those used for access Atoms. 
 
-The implementation of Simpatico actually uses a set of large 
+The implementation of simpatico actually uses a set of large 
 arrays of Molecule, Atom, and Group objects, each of which acts
 as a sort of memory pool. Each of these arrays is a private 
 member of the main Simulation object, and is allocated during 
@@ -111,7 +111,7 @@ the appropriate reservoir. In Gibbs ensemble, a Molecule may be
 transferred from one System to another by invoking the addMolecule() 
 and removeMolecule() methods of the two System.
 
-The organization of data in Simpatico is a result of the desire 
+The organization of data in simpatico is a result of the desire 
 to: (1) Avoid dynamical allocation of memory after initialization 
 of the simulation, (2) Arrange memory as much as possible in 
 contiguous arrays, and (3) Allow for eventual extension to open 
@@ -178,7 +178,7 @@ Group within each molecule of the associated species.
 
 All required initialization of a simulation is done within the
 readParam() method of the main Simulation object. More generally,
-the initialization of each object in Simpatico is, as much as 
+the initialization of each object in simpatico is, as much as 
 possible, carried out entirely within its readParam method. The 
 readParam methods of McSimulation and MdSimulation subclasses 
 both call Simulation::readParam() to carry out the initialization 

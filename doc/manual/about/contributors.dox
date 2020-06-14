@@ -14,7 +14,7 @@ been:
   <li> Taher Ghasimakbari (analyzers, interactions, improvements to ddMd) </li>
 </ul>
 
-Simpatico was written as a rewrite of a code named PMC that was used at the University of Minnesota from 2006-2009 by Jun Chung and Jian Qin. PMC was not distributed outside of our research group. Many of the MC algorithms for flexible polymers available in mcSim were written by these two contributors and then ported to Simpatico by Jian Qin.
+Simpatico was written as a rewrite of a code named PMC that was used at the University of Minnesota from 2006-2009 by Jun Chung and Jian Qin. PMC was not distributed outside of our research group. Many of the MC algorithms for flexible polymers available in mcSim were written by these two contributors and then ported to simpatico by Jian Qin.
 
 <BR>
 \ref about_capabilities_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 

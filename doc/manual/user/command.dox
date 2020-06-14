@@ -4,7 +4,7 @@
  \ref user_cfgfile_page (Next) 
 <BR>
 
-For any Simpatico simulation program, after the parameter file is processed by the readParam() method, the progress of a simulation is controlled by a command file, which is processed by a readCommand() method. The name of the command file is usually specified in command line argument that invokes the program, as an argument of the -c command line option. If the name of the command file is not specified in the command line, it can instead by given in the parameter file as the value of the optional commandFileName parameter in the FileMaster block of the parameter file. 
+For any simpatico simulation program, after the parameter file is processed by the readParam() method, the progress of a simulation is controlled by a command file, which is processed by a readCommand() method. The name of the command file is usually specified in command line argument that invokes the program, as an argument of the -c command line option. If the name of the command file is not specified in the command line, it can instead by given in the parameter file as the value of the optional commandFileName parameter in the FileMaster block of the parameter file. 
 
 If the command file name given by the special string "paramfile", the program will assume that command file has been appended to the end of the parameter file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to read commands from the parameter file rather than from a separate command file.
 

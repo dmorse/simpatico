@@ -5,7 +5,7 @@
 <BR>
 
 This file documents programming and formatting conventions that should be used
-in the source code of Simpatico:
+in the source code of simpatico:
 
 \section file_section Files
 
@@ -332,8 +332,8 @@ These provide pseudo-public access to the position of an Atom (represented as a 
   - Prefer the array container templates in src/util/containers over bare C arrays and C++ standard template library (STL) containers. 
     STL containers such as std::vector should be used when their is a need for their resizability. Our preference for the home-made containers is based on the fact that: 
     <ul>
-    <li> The Simpatico containers provide optional bounds checking, which is enabled only when NDEBUG is not defined. </li>
-    <li> Unlike std::vector, Simpatico array classes are not automatically resizable, and so will never be silently moved to a new location in memory.
+    <li> The simpatico containers provide optional bounds checking, which is enabled only when NDEBUG is not defined. </li>
+    <li> Unlike std::vector, simpatico array classes are not automatically resizable, and so will never be silently moved to a new location in memory.
     </ul>
 The use of a container that is not automatically resized during use is essential to allow implementation of algorithms that store pointers to particular objects within an array: The address of an object that is stored in an automatically resizable array such as a std::vector may change when the array is resized in response to addition of new elements, invalidating any pointers to array elements.
 

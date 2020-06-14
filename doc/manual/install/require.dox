@@ -7,10 +7,10 @@
 Simpatico is designed to be compiled and run in a unix-like environment. 
 The package has been compiled and used on systems running either linux 
 or a recent version of Mac OS X operating systems.  Compilation is 
-controlled by a system of unix makefiles. In order to compile on a
-MacIntosh computer running Mac OS X, the computer must first be configured 
-for development by installing both the XCode integrated development 
-environment and the command line tools for XCode. 
+controlled by the unix "make" utility, using a system of unix makefiles. 
+In order to compile on a MacIntosh computer running Mac OS X, the computer 
+must first be configured for C++ development by installing both the XCode 
+integrated development environment and the command line tools for XCode. 
 
 Simpatico is distributed only as source code, and must be compiled 
 by the user.  All source code is written in ANSI standard C++.  By 
@@ -27,14 +27,15 @@ system on which the code is compiled must have:
 
    - a ``git" version control client
    - A C++ compiler
-   - A python interpreter
+   - A python 2.7 interpreter
    - A Message Pasing Interface (MPI) library
 
 A git client is needed to obtain (clone) the source code, which is 
-maintained in a git repository. A python interpreter is needed during 
-compilation (but not during execution) because the build system that 
-compiles the simpatico source codes uses a few python scripts that
-are provided with the package.
+maintained in a git repository. 
+
+A python interpreter is needed during compilation (but not during 
+execution) because the build system that compiles simpatico uses 
+a few python scripts that are provided with the package.
 
 A Message Passing Interface (MPI) library is required to compile and 
 run parallel programs. The simpatico package contains code to construct 
@@ -57,7 +58,8 @@ The source code for simpatico is hosted on the github server, at
 The source code may be obtained by using the git version control 
 manager program to clone the public 
 <a href=https://github.com/dmorse/simpatico>git repository</a>. 
-In order to this, a "git" client must be installed on your computer.
+In order to this, a "git" client must first be installed on your 
+computer.
 
 Before attempting to use git to clone the source code, check whether a 
 "git" client is installed on your machine, by entering 
@@ -65,24 +67,27 @@ Before attempting to use git to clone the source code, check whether a
 > which git
 \endcode 
 from the command line. If git is installed, this should return a valid 
-path, such as "/usr/bin/git".  If this command does not return a valid 
-path, you need to install a git client before proceeding.
+path to the "git" executable file, such as "/usr/bin/git".  If this 
+command does not return such a path, you need to install a git client 
+before proceeding.
 
 Instructions for installing git on different platforms are given in the 
 documentation on the <a href=http://git-scm.com>git web page</a>, in 
 chapter 1.5 of the Pro Git book by Scott Chacon.  If you are using linux, 
 and git is not already installed, you should use the preferred package 
 manager on your linux distribution to install a git client.  If you are 
-using a Macintosh, a client should be installed as a component of the 
-XCode app and command line tools, which are needed for other purposes.  
+using a Macintosh, a client will be installed as a component of the 
+XCode development environment and command line tools, which are also
+needed for other purposes.  
 
 Once you have confirmed that a git client is available, you may clone
-a copy of the source code.
+a copy of the source code, as described in more detail
+\ref install_source_page "here".
 
 \section install_require_python Python 
 
-Similarly, one can check if a python interpreter is accessible by checking
-if the command
+One can check if a python interpreter is accessible by checking if the 
+command
 \code
   \> which python
 \endcode
@@ -92,13 +97,12 @@ returns a non-empty path.
 
 By default, the simpatico build system invokes the compiler used to create 
 serial programs by calling the compiler commnd "g++". On linux systems, 
-this command invokes the gnu compiler collection (gcc) C++ compiler. 
-On a machine running Mac OS X that is set up for C++ developent (see 
-above), the "g++" command is normally a link to the clang compiler, 
-which is the default 
-compiler for the XCode development environment. The clang compiler accepts 
-almost all of the same command line options as the compiler, and thus 
-functions as a drop-in replacement for the gcc compiler.
+this command invokes the gnu compiler collection (gcc) C++ compiler. On a 
+machine running Mac OS X that is set up for C++ developent (see above), 
+the "g++" command is normally a link to the clang compiler, which is the 
+default compiler for the XCode development environment. The clang compiler 
+accepts almost all of the same command line options as the compiler, and 
+thus functions as a drop-in replacement for the gcc compiler.
 
 It is possible to instead configure the build system during the initial 
 setup process so as to use another compiler is invoked with a different
@@ -121,12 +125,12 @@ modifying a compiler setup file that is read during initial setup
 of the build system. The setup process is described in more detail 
 \ref install_setup_page "here".
 
-\section install_require_compiler_parallel Compiler (parallel programs)
+\section install_require_compiler_parallel Compiler (parallel MPI programs)
 
-The choice of an MPI library is related to the choice of compiler used 
-to compile simpatico: Generally, simpatico should be compiled using the 
-same compiler as that used to compile the MPI library to which simpatico 
-will be linked.
+For parallel MPI programs, the choice of a compiler to be used to compile
+simpatico is related to the choice of an MPI library: Generally, simpatico 
+should be compiled using the same compiler as that used to compile the MPI 
+library to which simpatico will be linked.
 
 By default, when compiling programs that require MPI, the simpatico build 
 system invokes the C++ compiler through a wrapper script named "mpicxx". 
@@ -156,12 +160,11 @@ setup file, as discussed \ref install_setup_page "here".
 
 \section install_require_module Software modules (linux clusters)
 
-On any multi-user linux cluster that is set up for use in computational 
-research, at least one MPI library should already be installed. At the 
-University of Minnesota, simpatico is often run on a cluster provided by 
-the Minnesota Supercomputer Institute (MSI). Clusters at MSI allow the 
-users to choose from among several different choices of MPI library and 
-compiler.
+On any multi-user linux cluster that is set up for scientific computation,
+at least one MPI library should already be installed. At the University of 
+Minnesota, simpatico is often run on a cluster provided by the Minnesota 
+Supercomputing Institute (MSI). Clusters at MSI allow the users to choose 
+from among several different choices of MPI library and compiler.
 
 The computer clusters at MSI, like many similar clusters, use the linux 
 "module" command to allow users to load particular software packages, 
