@@ -1,7 +1,6 @@
 /*! \page install_overview_page 2.3 Installation Overview
 
-\ref install_source_page (Prev) 
-\ref install_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_environment_page (Next) 
 <BR>
 
@@ -78,7 +77,7 @@ instructions through the instruction to invoke "make mcMd".
 Each of the above steps is discussed in more detail in the following pages.
 
 <BR>
-\ref install_source_page (Prev) 
+\ref install_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref install_environment_page (Next) 
 

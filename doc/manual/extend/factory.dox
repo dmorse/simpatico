@@ -22,7 +22,7 @@ The implementation of a Factory class associated with a base class defines the s
 Simpatico provides a Factory class for each base class that is associated with polymorphic block or blocks in the parameter file. 
 The name of the factory class is usually given by the name of the base class followed by the word "Factory". 
 For example, McMd::McMoveFactory is the factory class for McMove objects. 
-The default factory implementation will recognize the names of any subclass that is distributed with Simpatico. 
+The default factory implementation will recognize the names of any subclass that is distributed with simpatico. 
 
 To allow a user-defined subclass to be included in the parameter file, the developer must thus add the new class to the list of classes that are recognized by the associated Factory. 
 This can be done by adding a few lines to the Factory implementation (*.cpp) file, as discussed below.
@@ -30,9 +30,9 @@ This can be done by adding a few lines to the Factory implementation (*.cpp) fil
 In order to allow users to modify the factory implementation files, but to avoid changing files that are under version control, their are two versions of the implementation file for each factory. 
 The file whose name ends with the file extension ".cpp_r" (for example, MdIntegratorFactory.cpp_r)is a default version that is stored in the git repository, but that is never actually compiled. 
 The file whose name ends with ".cpp" (e.g., MdIntegrator.cpp) is a user version that is actually compiled and linked, but that is not stored in the repository. 
-The initial version of each such *.cpp file is created by the "setup" script by simply copying the *.cpp_r file, when Simpatico is first setup. 
+The initial version of each such *.cpp file is created by the "setup" script by simply copying the *.cpp_r file, when simpatico is first setup. 
 Users should modify the *Factory.cpp files in order to add new subclasses that are intended for their own use, and should avoid modifying the *Factory.cpp_r files. 
-The *.cpp_r files should be modified only to add new classes that are intended to be distributed with Simpatico. 
+The *.cpp_r files should be modified only to add new classes that are intended to be distributed with simpatico. 
 After modifying one or more Factory implementation files, users must also be careful to not rerun the setup script, since this would overwrite their changes.
 
 \section factory_structure_sec factory() member functions
@@ -51,7 +51,7 @@ If the classname string is not recognized, the factory method returns a null poi
 The function that calls this method should throw an Exception if a null pointer is returned. 
 
 
-As an example, consider the class McMd::MdIntegratorFactory that is distributed with Simpatico, which is a subclass of Util::Factory<McMd::MdIntegrator>. 
+As an example, consider the class McMd::MdIntegratorFactory that is distributed with simpatico, which is a subclass of Util::Factory<McMd::MdIntegrator>. 
 Here is the default implementation of the MdIntegratorFactory::factory() method:
 \code
 #include "MdIntegratorFactory.h"

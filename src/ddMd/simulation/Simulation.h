@@ -615,31 +615,39 @@ namespace DdMd
       //@{
 
       /**
-      * Allocate space for an array of Species objects.
+      * Set nSpecies_ and allocate array of Species objects on master.
       *
-      * An array of Species object is allocated only on the master 
-      * processor. All processors store the value of nSpecies, but do
-      * not allocate such an array. Each Species object on the master
-      * processor can store a description of the structure of one
-      * molecular species, along with a "capacity" giving the number
-      * of molecules of that species.
+      * This function should be called on all processors after the value 
+      * of nSpecies is known on all processors. All processors store the 
+      * value of nSpecies, but only the master processor allocates an array 
+      * of nSpecies Simp::Species objects.  Each Species object on the 
+      * master can store a description of the structure of one molecular
+      * species, along with a "capacity" giving the number of molecules 
+      * of that species. If this function has not been called, then 
+      * nSpecies_ == 0 by default.
       *
       * \param nSpecies number of Species objects.
       */
       void setNSpecies(int nSpecies);
 
       /**
-      * Does this simulation have an array of Species objects?
-      */
-      bool hasSpecies() const;
-
-      /**
-      * Return the number of species (returns 0 if there are none).
+      * Return the number of molecular species (returns 0 none exist).
+      *
+      * May be called on any processor.
       */
       int nSpecies() const;
 
       /**
+      * Does this simulation have an array of Species objects?
+      *
+      * May be called on an processor. Returns true iff nSpecies() > 0.
+      */
+      bool hasSpecies() const;
+
+      /**
       * Access a specific Species object by reference.
+      *
+      * May only be called on the master processor, with 0 <= i < nSpecies.
       * 
       * \param i index of desired molecular species.
       */
@@ -1253,13 +1261,13 @@ namespace DdMd
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
-   /// Get maximum number of atom types.
-   inline bool Simulation::hasSpecies() const
-   {  return bool(nSpecies_ > 0); }
-
-   /// Get maximum number of atom types.
+   /// Get the number of molecular species.
    inline int Simulation::nSpecies() const
    {  return nSpecies_; }
+
+   /// Return true iff nSpecies > 0.
+   inline bool Simulation::hasSpecies() const
+   {  return bool(nSpecies_ > 0); }
 
    #ifdef SIMP_BOND
    /// Get maximum number of bond types.

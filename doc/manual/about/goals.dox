@@ -1,6 +1,6 @@
 /*! \page about_goals_page 1.1 Goals
 
-The design of Simpatico was motivated by the following goals: 
+The design of simpatico was motivated by the following goals: 
 
 - Extensibility: New algorithms may be added for most elements of a simulation via C++ class inheritance, without modifying the core source code.  Extensible elements include: Monte Carlo moves, molecular dynamics integrators, potential energy functions, molecular species, data analysis algorithms, and configuration file formats.
 
