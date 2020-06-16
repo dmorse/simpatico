@@ -61,9 +61,10 @@ public:
          }
          #endif
    
-      // std::cout << std::endl;
-      // std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-      // std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
+         // std::cout << std::endl;
+         // std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
+         // std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
+      }
 
    }
 
