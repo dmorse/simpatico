@@ -60,9 +60,9 @@ public:
       }
       #endif
 
-      std::cout << std::endl;
-      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
+      // std::cout << std::endl;
+      // std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
+      // std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
 
    }
 
@@ -78,8 +78,8 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      // std::cout << std::endl;
+      // std::cout << boundary << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -108,8 +108,8 @@ public:
       in >> boundary;
       in.close();
 
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
+      // std::cout << std::endl;
+      // std::cout << boundary << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -124,7 +124,7 @@ public:
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
       Vector Lp = boundary.lengths();
-      std::cout << "Lp = " << Lp << std::endl;
+      // std::cout << "Lp = " << Lp << std::endl;
       TEST_ASSERT(eq(Lp[0], 2.0));
       TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));
@@ -186,8 +186,8 @@ public:
       OrthorhombicBoundary clone;
       iar >> clone;
 
-      std::cout << std::endl;
-      std::cout << clone << std::endl;
+      // std::cout << std::endl;
+      // std::cout << clone << std::endl;
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -533,7 +533,7 @@ public:
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
       Vector Lp = boundary.lengths();
-      std::cout << "Lp = " << Lp << std::cout;
+      //std::cout << "Lp = " << Lp << std::endl;
       TEST_ASSERT(eq(Lp[0], 2.0));
       TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));
