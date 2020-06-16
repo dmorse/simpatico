@@ -174,9 +174,14 @@ for automating changes in a users unix shell environment that are required
 in order to use particular software packages. 
 The command
 \code
+  > module list
+\endcode
+gives a listing of currently loaded modules.
+The command
+\code
   > module avail
 \endcode
-should give a listing of all software modules available for use on a 
+gives a listing of all software modules available for use on a 
 particular system. The syntax for the command to load a particular module 
 is
 \code
@@ -185,18 +190,10 @@ is
 where module-name represents the name of a particular software module, as 
 listed by the "module avail" command.
 
-On the mesabi cluster at MSI, to load a version of the OpenMPI library 
-that was compiled with the curent default version of the intel compiler, 
-one enters the command:
+On the mesabi cluster at MSI, to load a version of the OpenMPI library that
+was compiled with the gnu compiler, we currently use the command:
 \code
- > module load ompi/intel
-\endcode
-This command also makes the intel compiler the default compiler for use 
-when compiling code that uses MPI.  To instead use OpenMPI with the gnu 
-gcc compiler, and make the gcc compiler the default for MPI code, one
-must instead enter
-\code
- > module load ompi/gnu
+ > module load ompi/3.0.0/gnu-7.2.0-centos7
 \endcode
 There are also many modules on mesabi to load specific versions of 
 OpenMPI and other MPI library implementations with specific versions of 

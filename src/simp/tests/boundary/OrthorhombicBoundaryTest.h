@@ -61,121 +61,47 @@ public:
          }
          #endif
    
-         std::cout << std::endl;
-         std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-         std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
-      }
+      // std::cout << std::endl;
+      // std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
+      // std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
 
    }
 
-   void testStreamIO1() 
+   void testStreamIoOrthorhombic() 
    {
-      printMethod(TEST_FUNC);
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/OrthorhombicBoundary", in);
-      in >> boundary;
-      in.close();
-
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-      for (i = 0; i < 3; i++) {
-         TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
-         TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
-      }
-
-      // Verbose output
-      if (verbose() > 1) {
-         if (isIoProcessor()) {
-            std::cout << boundary << std::endl;
+      if (isIoProcessor()) {
+         printMethod(TEST_FUNC);
+   
+   
+         // Read parameters from file
+         std::ifstream in;
+         openInputFile("in/OrthorhombicBoundary", in);
+         in >> boundary;
+         in.close();
+   
+         // std::cout << std::endl;
+         // std::cout << boundary << std::endl;
+   
+         // Assertions
+         TEST_ASSERT(boundary.isValid());
+         for (int i = 0; i < 3; i++) {
+            TEST_ASSERT(eq(boundary.minima_[i], 0.0));
+            TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
+            TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
          }
-      }
-
-   }
-
-   void testStreamIO2() 
-   {
-      printMethod(TEST_FUNC);
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/TetragonalBoundary", in);
-      in >> boundary;
-      in.close();
-
-      if (isIoProcessor()) {
-         std::cout << std::endl;
-         std::cout << boundary << std::endl;
-      }
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-      for (i = 0; i < 3; i++) {
-         TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
-         TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
-      }
-
-      TEST_ASSERT(eq(boundary.length(0), 2.0));
-      TEST_ASSERT(eq(boundary.length(1), 3.0));
-      TEST_ASSERT(eq(boundary.length(2), 3.0));
-
-      Vector Lp = boundary.lengths();
-      // std::cout << "Lp = " << Lp << std::endl;
-      TEST_ASSERT(eq(Lp[0], 2.0));
-      TEST_ASSERT(eq(Lp[1], 3.0));
-      TEST_ASSERT(eq(Lp[2], 3.0));
-
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
-      }
-
-   }
-
-   void testStreamIO3() 
-   {
-      printMethod(TEST_FUNC);
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/CubicBoundary", in);
-      in >> boundary;
-      in.close();
-
-      if (isIoProcessor()) {
-         std::cout << std::endl;
-         std::cout << boundary << std::endl;
-      }
-
-      // Assertions
-      for (i = 0; i < 3; i++) {
-         TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
-         TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
-      }
-
-      // Verbose output
-      if (verbose() > 1 && isIoProcessor()) {
-         std::cout << boundary << std::endl;
+   
+         // Verbose output
+         if (verbose() > 1) {
+               std::cout << boundary << std::endl;
+         }
       }
 
    }
 
    void testSerialize() 
    {
-         if (isIoProcessor()) {
+      if (isIoProcessor()) {
+
          printMethod(TEST_FUNC);
    
          MemoryOArchive oar;
@@ -195,8 +121,8 @@ public:
          OrthorhombicBoundary clone;
          iar >> clone;
    
-         std::cout << std::endl;
-         std::cout << clone << std::endl;
+         // std::cout << std::endl;
+         // std::cout << clone << std::endl;
    
          // Assertions
          TEST_ASSERT(boundary.isValid());
@@ -208,14 +134,12 @@ public:
             TEST_ASSERT(clone.lengths_[i] > 1.0E-8);
          }
    
-         #if 0
          // Verbose output
          if (verbose() > 1) {
             std::cout << boundary << std::endl;
          }
-         #endif
-      }
 
+      }
    }
 
    void testShift()
@@ -383,36 +307,44 @@ public:
 
    }
 
-   void testStreamIO1Cubic() 
+   void testStreamIoCubic() 
    {
-      printMethod(TEST_FUNC);
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/CubicBoundary", in);
-      in >> boundary;
-      in.close();
-
-      //std::cout << std::endl;
-      //std::cout << boundary << std::endl;
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-
-      Vector Lp = boundary.lengths();
-      TEST_ASSERT(eq(Lp[0], 3.0));
-      TEST_ASSERT(eq(Lp[1], 3.0));
-      TEST_ASSERT(eq(Lp[2], 3.0));
-
-      TEST_ASSERT(eq(boundary.length(0), 3.0));
-      TEST_ASSERT(eq(boundary.length(1), 3.0));
-      TEST_ASSERT(eq(boundary.length(2), 3.0));
-
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
+      if (isIoProcessor()) {
+         printMethod(TEST_FUNC);
+   
+         // Read parameters from file
+         std::ifstream in;
+         openInputFile("in/CubicBoundary", in);
+         in >> boundary;
+         in.close();
+   
+         //std::cout << std::endl;
+         //std::cout << boundary << std::endl;
+   
+         // Assertions
+         TEST_ASSERT(boundary.isValid());
+   
+         // Assertions
+         for (int i = 0; i < 3; i++) {
+            TEST_ASSERT(eq(boundary.minima_[i], 0.0));
+            TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
+            TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
+         }
+   
+         Vector Lp = boundary.lengths();
+         TEST_ASSERT(eq(Lp[0], 3.0));
+         TEST_ASSERT(eq(Lp[1], 3.0));
+         TEST_ASSERT(eq(Lp[2], 3.0));
+   
+         TEST_ASSERT(eq(boundary.length(0), 3.0));
+         TEST_ASSERT(eq(boundary.length(1), 3.0));
+         TEST_ASSERT(eq(boundary.length(2), 3.0));
+   
+         // Verbose output
+         if (verbose() > 1) {
+            std::cout << boundary << std::endl;
+         }
       }
-
    }
 
    void testShiftCubic()
@@ -523,7 +455,49 @@ public:
 
    }
 
-   void testStreamIOTetragonal() 
+   void testStreamIoTetragonal() 
+   {
+      if (isIoProcessor()) {
+         printMethod(TEST_FUNC);
+   
+         // Read parameters from file
+         std::ifstream in;
+         openInputFile("in/TetragonalBoundary", in);
+         in >> boundary;
+         in.close();
+   
+         // std::cout << std::endl;
+         // std::cout << boundary << std::endl;
+   
+         // Assertions
+         TEST_ASSERT(boundary.isValid());
+         int i;
+         for (i = 0; i < 3; i++) {
+            TEST_ASSERT(eq(boundary.minima_[i], 0.0));
+            TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
+            TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
+         }
+   
+         TEST_ASSERT(eq(boundary.length(0), 2.0));
+         TEST_ASSERT(eq(boundary.length(1), 3.0));
+         TEST_ASSERT(eq(boundary.length(2), 3.0));
+   
+         Vector Lp = boundary.lengths();
+         // std::cout << "Lp = " << Lp << std::endl;
+         TEST_ASSERT(eq(Lp[0], 2.0));
+         TEST_ASSERT(eq(Lp[1], 3.0));
+         TEST_ASSERT(eq(Lp[2], 3.0));
+   
+         // Verbose output
+         if (verbose() > 1) {
+            std::cout << boundary << std::endl;
+         }
+      }
+
+   }
+
+   #if 0
+   void testStreamIoTetragonal() 
    {
       printMethod(TEST_FUNC);
 
@@ -543,7 +517,7 @@ public:
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
       Vector Lp = boundary.lengths();
-      //std::cout << "Lp = " << Lp << std::cout;
+      //std::cout << "Lp = " << Lp << std::endl;
       TEST_ASSERT(eq(Lp[0], 2.0));
       TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));
@@ -554,6 +528,7 @@ public:
       }
 
    }
+   #endif
 
    void testShiftTetragonal()
    {
@@ -641,23 +616,22 @@ public:
 };
 
 TEST_BEGIN(OrthorhombicBoundaryTest)
+
 TEST_ADD(OrthorhombicBoundaryTest, testInitialize)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO1)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO2)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO3)
+TEST_ADD(OrthorhombicBoundaryTest, testStreamIoOrthorhombic)
 TEST_ADD(OrthorhombicBoundaryTest, testSerialize)
 TEST_ADD(OrthorhombicBoundaryTest, testShift)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq1)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq2)
 
 TEST_ADD(OrthorhombicBoundaryTest, testInitializeCubic)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO1Cubic)
+TEST_ADD(OrthorhombicBoundaryTest, testStreamIoCubic)
 TEST_ADD(OrthorhombicBoundaryTest, testShiftCubic)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq1Cubic)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq2Cubic)
 
 TEST_ADD(OrthorhombicBoundaryTest, testInitializeTetragonal)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIOTetragonal)
+TEST_ADD(OrthorhombicBoundaryTest, testStreamIoTetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testShiftTetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq1Tetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq2Tetragonal)
