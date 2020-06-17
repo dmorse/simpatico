@@ -1,5 +1,5 @@
-#ifndef MCMD_LAMMPS_DUMP_WRITER_H
-#define MCMD_LAMMPS_DUMP_WRITER_H
+#ifndef MCMD_DDMD_TRAJECTORY_WRITER_H
+#define MCMD_DDMD_TRAJECTORY_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,11 +16,11 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Periodically write snapshots to a lammps dump (i.e., trajectory) file
+   * Write a DdMd trajectory file. 
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
-   class ConfigDumpWriter : public TrajectoryWriter
+   class DdMdTrajectoryWriter : public TrajectoryWriter
    {
 
    public:
@@ -30,12 +30,12 @@ namespace McMd
       *
       * \param system parent MdSystem object.
       */
-      ConfigDumpWriter(MdSystem& system);
+      DdMdTrajectoryWriter(MdSystem& system);
 
       /**
       * Destructor.
       */
-      virtual ~ConfigDumpWriter();
+      virtual ~DdMdTrajectoryWriter();
 
       /**
       * Serialize to/from an archive.
@@ -60,13 +60,18 @@ namespace McMd
       */
       virtual void writeFrame(long iStep);
 
+   private:
+
+      int nAtomTot_;
+
    };
 
    /*
    * Serialize to/from an archive.
    */
    template <class Archive>
-   void ConfigDumpWriter::serialize(Archive& ar, const unsigned int version)
+   void DdMdTrajectoryWriter::serialize(Archive& ar, 
+                                        const unsigned int version)
    {  TrajectoryWriter::serialize(ar, version); }
 
 }

@@ -20,23 +20,24 @@ namespace McMd
    /*
    * Constructor.
    */
-   TrajectoryWriter::TrajectoryWriter(System& system) 
-    : SystemAnalyzer<System>(system),
+   TrajectoryWriter::TrajectoryWriter(MdSystem& system, bool isBinary)
+    : SystemAnalyzer<MdSystem>(system),
       nSample_(0),
-      isInitialized_(false)
+      simulationPtr_(&system.simulation()),
+      isInitialized_(false),
+      isBinary_(isBinary)
    {  setClassName("TrajectoryWriter"); }
 
-  
    /*
    * Destructor.
    */
-   TrajectoryWriter::~TrajectoryWriter() 
+   TrajectoryWriter::~TrajectoryWriter()
    {}
 
    /*
-   * Read interval and outputFileName. 
+   * Read interval and outputFileName.
    */
-   void TrajectoryWriter::readParameters(std::istream& in) 
+   void TrajectoryWriter::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);
@@ -57,35 +58,40 @@ namespace McMd
    * Save state to archive.
    */
    void TrajectoryWriter::save(Serializable::OArchive& ar)
-   { ar & *this; }
+   {  ar & *this; }
 
    /*
-   * Read interval and outputFileName. 
+   * Read interval and outputFileName.
    */
-   void TrajectoryWriter::setup() 
-   {  
-      nSample_ = 0; 
+   void TrajectoryWriter::setup()
+   {
+      nSample_ = 0;
       std::string filename;
       filename  = outputFileName();
-      fileMaster().openOutputFile(filename, outputFile_);
+      if (isBinary()) {
+         fileMaster().openOutputFile(filename, outputFile_,
+                                     std::ios::out | std::ios::binary);
+      } else {
+         fileMaster().openOutputFile(filename, outputFile_);
+      }
       writeHeader();
    }
 
    /*
    * Dump configuration to file
    */
-   void TrajectoryWriter::sample(long iStep) 
+   void TrajectoryWriter::sample(long iStep)
    {
       if (isAtInterval(iStep)) {
          writeFrame(iStep);
          ++nSample_;
       }
    }
-  
+
    /*
-   * Read interval and outputFileName. 
+   * Read interval and outputFileName.
    */
-   void TrajectoryWriter::output() 
+   void TrajectoryWriter::output()
    {  outputFile_.close(); }
 
 }

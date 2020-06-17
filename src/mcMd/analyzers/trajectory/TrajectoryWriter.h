@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/analyzers/base/SystemAnalyzer.h>
-#include <mcMd/simulation/System.h>
+#include <mcMd/mdSimulation/MdSystem.h>
 
 namespace McMd
 {
@@ -21,7 +21,7 @@ namespace McMd
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
-   class TrajectoryWriter : public SystemAnalyzer<System>
+   class TrajectoryWriter : public SystemAnalyzer<MdSystem>
    {
 
    public:
@@ -29,9 +29,10 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param system parent System object.
+      * \param system parent MdSystem object.
+      * \param isBinary Is the file type binary (rather than text)?
       */
-      TrajectoryWriter(System& system);
+      TrajectoryWriter(MdSystem& system, bool isBinary = false);
 
       /**
       * Destructor.
@@ -110,11 +111,24 @@ namespace McMd
       */
       virtual void writeFrame(long iStep) = 0;
 
-      // Output file stream
+      /**
+      * Return parent simulation by reference.  
+      */
+      Simulation& simulation()
+      {  return *simulationPtr_; }
+
+      // Protected member variables
+      
+      /// Output file stream.
       std::ofstream outputFile_;
 
       /// Number of frames written thus far.
       long nSample_;
+
+   private:
+
+      // Pointer to parent simulation
+      Simulation* simulationPtr_;
 
       /// Has readParam been called?
       bool isInitialized_;

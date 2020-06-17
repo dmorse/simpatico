@@ -1,0 +1,38 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_ConfigDumpWriter_page ConfigDumpWriter
+
+\section mcMd_analyzer_ConfigDumpWriter_synopsis_sec Synopsis
+
+This analyzer outputs a single trajectory file using the current configuration file format for each frame.
+
+\section mcMd_analyzer_ConfigDumpWriter_param_sec Parameters
+
+The parameter file format is:
+\code
+  ConfigDumpWriter{ 
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_ConfigDumpWriter_output_sec Output
+
+The output consists of a concatenated sequence of configuration files.
+A system configuration is output every interval time steps.
+
+*/
+
+}

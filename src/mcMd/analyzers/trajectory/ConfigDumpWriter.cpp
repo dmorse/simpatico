@@ -15,7 +15,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   ConfigDumpWriter::ConfigDumpWriter(System& system) 
+   ConfigDumpWriter::ConfigDumpWriter(MdSystem& system) 
     : TrajectoryWriter(system)
    {  setClassName("ConfigDumpWriter"); }
 
