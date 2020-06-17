@@ -132,21 +132,16 @@ namespace McMd
       UTIL_CHECK(nAtom == nAtomTot);
 
       // Parse atom format string
-      FlagSet atomFormat("itmpvs");
+      FlagSet atomFormat("imtpvs");
       atomFormat.setActualOrdered(formatString);
       bool hasAtomIndex = atomFormat.isActive('i');
-      bool hasAtomTypeId = atomFormat.isActive('t');
       bool hasAtomContext = atomFormat.isActive('m');
+      bool hasAtomTypeId = atomFormat.isActive('t');
       bool hasAtomPosition = atomFormat.isActive('p');
       bool hasAtomVelocity = atomFormat.isActive('v');
       bool hasAtomShift = atomFormat.isActive('s');
       UTIL_CHECK(hasAtomPosition);
       UTIL_CHECK(isOrdered);
-
-      // TODO: Add ability to read unordered atoms with context.
-      // if (!isOrdered) {
-      //   UTIL_CHECK(hasAtomContext);
-      // }
 
       // Read all atoms
       Molecule* molPtr;
@@ -156,6 +151,7 @@ namespace McMd
       int cSpeciesId, cMoleculeId, cAtomId;
       IntVector shift;
       if (isOrdered) {
+         // Read ordered atoms
          count = 0;
          for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             speciesPtr = &simulation().species(iSpecies);
@@ -178,14 +174,7 @@ namespace McMd
                      in >> atomIndex;
                      UTIL_CHECK(atomIndex == count);
                   }
-                  if (hasAtomTypeId) {
-                     in >> atomTypeId;
-                     UTIL_CHECK(atomTypeId 
-                                == speciesPtr->atomTypeId(iAtom));
-                  } else {
-                     atomTypeId = speciesPtr->atomTypeId(iAtom);
-                  }
-                  atomIter->setTypeId(atomTypeId);
+
                   if (hasAtomContext) {
                      in >> cSpeciesId;
                      UTIL_CHECK(cSpeciesId == iSpecies);
@@ -194,6 +183,15 @@ namespace McMd
                      in >> cAtomId;
                      UTIL_CHECK(cAtomId == iAtom);
                   }
+
+                  if (hasAtomTypeId) {
+                     in >> atomTypeId;
+                     UTIL_CHECK(atomTypeId 
+                                == speciesPtr->atomTypeId(iAtom));
+                  } else {
+                     atomTypeId = speciesPtr->atomTypeId(iAtom);
+                  }
+                  atomIter->setTypeId(atomTypeId);
 
                   in >> atomIter->position();
                   if (hasAtomVelocity) {
@@ -215,10 +213,15 @@ namespace McMd
 
                   iAtom++;
                   count++;
-               }  // atom loop
+               }  // atom loop (intra-molecule)
             }  // molecule loop
          }  // species loop
       }  // if (isOrdered)
+      else { 
+         UTIL_THROW("Reading of unordered atoms not yet implemented");
+         //   UTIL_CHECK(hasAtomContext);
+         // Read unordered atoms (to be written) ....
+      }
 
       #ifdef MCMD_LINK
       if (OptionalLabel("LINKS").match(in)) { 
@@ -312,23 +315,23 @@ namespace McMd
       // Write ATOMS block
       out << endl << "ATOMS";
       out << endl << "ordered";
-      out << endl << "format itmpv";
+      out << endl << "format imtpv";
       out << endl << "nAtom " << nAtomTot;
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator atomIter;
       int atomId, iAtom;
-      atomId = 0;
+      atomId = 0; // Global atom index
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
          system().begin(iSpecies, molIter); 
          iMolecule = 0;
          for ( ; molIter.notEnd(); ++molIter) {
-            iAtom = 0;
+            iAtom = 0; // Intramolecule atom index
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                out << endl;
                out << atomId << "  ";
-               out << atomIter->typeId() << "  ";
-               out << iSpecies << " " << iMolecule << " " << iAtom;
+               out << iSpecies << " " << iMolecule << " " << iAtom << " ";
+               out << atomIter->typeId();
                out << endl << atomIter->position();
                out << endl << atomIter->velocity();
                ++iAtom;
@@ -337,7 +340,6 @@ namespace McMd
             ++iMolecule;
          }
       }
-
 
       #ifdef MCMD_LINK
       { // Scope for local variables
@@ -350,7 +352,7 @@ namespace McMd
          out << std::endl;
          out << "LINKS" << endl << endl;
          nLink = system().linkMaster().nLink();
-         out << Label("nLink") << nLink << std::endl;
+         out << "nLink  " << nLink << std::endl;
          for (iLink = 0; iLink < nLink; ++iLink) {
             linkPtr  = &(system().linkMaster().link(iLink));
 
@@ -376,9 +378,8 @@ namespace McMd
          }
 
       }
-      #endif
+      #endif // ifdef MCMD_LINK
 
-      UTIL_CHECK(Label::isClear());
    }
 
 } 

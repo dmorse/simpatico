@@ -555,13 +555,13 @@ namespace DdMd
 
          file << "ATOMS" << endl;
 
-         // Note: No "ordered" flag is written, because this function
-         // writes unordered atoms.
+         // Note: No "ordered" flag is written, because this function 
+         // writes atoms in the order received from multiple processors.
 
-         // Write format string "it[m]pv"
-         std::string format = "format  it";
+         // Write format string "i[m]tpv"
+         std::string format = "format  i";
          if (hasAtomContext) format += "m";
-         format += "pv";
+         format += "tpv";
          file << format << endl;
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10)
               << endl;
@@ -573,12 +573,12 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10);
-            file << Int(atomPtr->typeId(), 6);
             if (hasAtomContext) {
                file << Int(atomPtr->context().speciesId, 6)
                     << Int(atomPtr->context().moleculeId, 10)
                     << Int(atomPtr->context().atomId, 6);
             }
+            file << Int(atomPtr->typeId(), 6);
             if (isCartesian) {
                r = atomPtr->position();
             } else {
@@ -593,8 +593,8 @@ namespace DdMd
          atomCollector().send();
       }
 
+      // If no species exist, write all covalent groups
       if (!simulation().hasSpecies()) {
-         // Write the covalent groups
          #ifdef SIMP_BOND
          if (bondStorage().capacity()) {
             writeGroups<2>(file, "BONDS", "nBond", bondStorage(),
@@ -609,8 +609,8 @@ namespace DdMd
          #endif
          #ifdef SIMP_DIHEDRAL
          if (dihedralStorage().capacity()) {
-            writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(),
-                           dihedralCollector());
+            writeGroups<4>(file, "DIHEDRALS", "nDihedral", 
+                           dihedralStorage(), dihedralCollector());
          }
          #endif
       }
