@@ -37,42 +37,38 @@ FORMAT:
 
    Header (if any):
 
-      headerFormat - bitfield indicating which optional info follows
-          Boolean fields:
-            hasAtomTypes - Is an AtomType block present ?
-            hasSpecies - Is a SPECIES block present (is data molecular?)
-            hasMass - Is atomic mass specified ?
-            hasCharge - Is atomic charge specified ?
-            hasAtoms - Is per atom info specified
       [ATOMTYPE] 
-         Default values for mass and/or charge must be specified for
-         types, but can be overridden by information about atoms.
-         For each atom{
-            typeId, [mass], [charge]
+      ar >> hasAtomTypes;
+      if (hasAtomTypes) {
+         hasMass
+         hasCharge
+         nAtomType
+         For each atom type{
+            [mass], [charge]
          }
-      [SPECIES] - topology and nMolecule per species, iff isMolecular 
-      [nAtom int] - Include iff SPECIES block is absent.
-      [ATOM]
-         nAtom (# of atoms listed here)
-         format - bitfield with flags hasMass and hasCharge
-         For each listed atom {
-            atomId, typeId, [mass], [charge]
+      }
+
+      Note: Default values for mass and/or charge must be specified 
+      for types, but can be overridden by information about atoms.
+
+      [SPECIES]
+      ar >> hasSpecies;
+      if (hasSpecies) {
+         ar >> nSpecies
+         for each species {
+            read species
+            increment nAtom
          }
+      }
+      ar >> nAtom_;
+
       [BOND] - optional, allowed only if SPECIES is absent
       [ANGLE] - optional, allowed only if SPECIES is absent
       [DIHEDRAL] - optional, allowed only if SPECIES is absent
 
       Notes:
 
-         1) If ATOMTYPE block and ATOM block are both present, set
-         any masses or charge to those specified in the ATOMTYPES,
-         and then alter using any specified in the [ATOM] block. 
-         More specific data is processed later, and has priority.
-
-         2) The [ATOM] block need not include all atoms - some can
-         use defaults.
-
-         3) Topology should either be specified by a [SPECIES] block
+         1) Topology should either be specified by a [SPECIES] block
          or by a subset of [BOND], [ANGLE] and [DIHEDRAL] blocks.
          Use of both is an error.
 
@@ -82,43 +78,33 @@ FORMAT:
 
          - A frame should be self-describing
          - A frame can contain as little as atomic positions
-         - Info about atomtype, charge or mass that is given in a
-           frame has priority over that given in the header to allow
+         - Info about atomtype that is given in a frame has 
+           priority over that given in the header to allow
            mutability of these properties in some simulation types.
 
-      iStep
+      ar >> iStep
+      ar >> boundary
+      ar >> isOrdered
+      ar >> hasAtomId
+      ar >> hasAtomContext
+      ar >> hasAtomTypeId
+      ar >> hasAtomVelocity
+      ar >> asAtomShift
 
-      boundary -> Need to develop binary format. Serialize format?
-      nAtom int
-      frameFormat - bitfield with flags that include:
-                    isOrdered, hasType, hasVelocity, hasShift
-      ATOMS
-         For each atom {
-           [id] [type] position [velocity] [shift]
-         }
+      ar >> nAtom (total number of atoms)
+      For each atom {
+         [id] [context] [type] position [velocity] [shift]
+      }
 
       Remarks:
 
       1) No id if atoms are declared isOrdered
-      2) By default, position is stored in scaled coordinates, as 3 x uint
-      3) By default, velocity is 3 x single precision float
-      4) Shift, if present, is 3 x small int
+      2) Position is stored in scaled coordinates, as 3 x uint
+      3) Velocity, if any, is 3 x single precision float
+      4) Shift, if any, is 3 x small int
 
-      Question: Should the frame format specify the resolution used to 
-      store position and velocity values ?
-
-      Comment: The format allows type mutability to allow semi-grand
-      algorithms. Changes in type can be used to create changes in
+      Comment: The format allows type mutability to allow semi-grand 
+      algorithms. Changes in type can be used to create changes in 
       charge, mass, interaction parameters, etc. Atom type id should
       be not be include in a frame otherwise.
 
-      Comment: The class that implements the format can have functions
-      that allow a user to set format choices before writing, or should
-      allow users to create a bitfield that is passed to the writer.
-
-      Comment: Create classes for SmtHeaderFormat and SmtFrameFormat?
-      Or are these simply instances of BitField?
-
-      Comment: Create a SmpTrajectoryBase base class in Simp with virtual 
-      functions to extract and store information ?
- 

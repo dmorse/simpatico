@@ -36,15 +36,13 @@ namespace McMd
    */
    void DdMdTrajectoryWriter::writeHeader()
    {
-      // Count atoms
-      Species* speciesPtr;
+      // Count and output total number of atoms, nAtomTot_
       int nMolecule;
       int nSpecies = simulation().nSpecies();
       nAtomTot_ = 0;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          nMolecule = system().nMolecule(iSpecies);
-         speciesPtr = &simulation().species(iSpecies);
-         nAtomTot_ += nMolecule*speciesPtr->nAtom();
+         nAtomTot_ += nMolecule*simulation().species(iSpecies).nAtom();
       }
 
       BinaryFileOArchive ar(outputFile_);
@@ -57,35 +55,34 @@ namespace McMd
       BinaryFileOArchive ar(outputFile_);
 
       ar << iStep;
-      ar << system().boundary();
+      ar << boundary();
 
       // Write ATOMS block
       // ar << endl << "ordered";
       // ar << endl << "format imtpv";
       // ar << endl << "nAtom " << nAtomTot;
-     
-      // Species* speciesPtr;
+
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator atomIter;
       Vector r;
-      int atomId, iAtom, iMolecule, typeId, j;
+      int atomId, j;
+      // int iAtom, iMolecule, typeId;
+      int nSpecies = simulation().nSpecies();
       unsigned int ir;
       atomId = 0; // Global atom index
-      int nSpecies = simulation().nSpecies();
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         // speciesPtr = &simulation().species(iSpecies);
-         iMolecule = 0;
-         system().begin(iSpecies, molIter); 
+         // iMolecule = 0;
+         system().begin(iSpecies, molIter);
          for ( ; molIter.notEnd(); ++molIter) {
-            iAtom = 0; // Intramolecule atom index
+            // iAtom = 0; // Intramolecule atom index
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                ar << atomId;
-               ar << iSpecies; 
-               ar << iMolecule;
-               ar << iAtom;
-               typeId = atomIter->typeId();
-               ar << typeId;
-               system().boundary().transformCartToGen(atomIter->position(), r);
+               // ar << iSpecies;
+               // ar << iMolecule;
+               // ar << iAtom;
+               // typeId = atomIter->typeId();
+               // ar << typeId;
+               boundary().transformCartToGen(atomIter->position(), r);
                for (j = 0; j < Dimension; ++j) {
                   if (r[j] >= 1.0) r[j] -= 1.0;
                   if (r[j] <  0.0) r[j] += 1.0;
@@ -93,10 +90,10 @@ namespace McMd
                   ar << ir;
                }
                // ar << atomIter->velocity();
-               ++iAtom;
+               // ++iAtom;
                ++atomId;
             } // atom loop
-            ++iMolecule;
+            // ++iMolecule;
          } // molecule loop
       } // species loop
 

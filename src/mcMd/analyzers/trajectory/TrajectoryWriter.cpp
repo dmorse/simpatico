@@ -24,6 +24,7 @@ namespace McMd
     : SystemAnalyzer<MdSystem>(system),
       nSample_(0),
       simulationPtr_(&system.simulation()),
+      boundaryPtr_(&system.boundary()),
       isInitialized_(false),
       isBinary_(isBinary)
    {  setClassName("TrajectoryWriter"); }
@@ -65,15 +66,15 @@ namespace McMd
    */
    void TrajectoryWriter::setup()
    {
-      nSample_ = 0;
-      std::string filename;
-      filename  = outputFileName();
+      UTIL_CHECK(isInitialized_);
+      std::string filename = outputFileName();
       if (isBinary()) {
          fileMaster().openOutputFile(filename, outputFile_,
                                      std::ios::out | std::ios::binary);
       } else {
          fileMaster().openOutputFile(filename, outputFile_);
       }
+      nSample_ = 0;
       writeHeader();
    }
 
@@ -82,6 +83,7 @@ namespace McMd
    */
    void TrajectoryWriter::sample(long iStep)
    {
+      UTIL_CHECK(isInitialized_);
       if (isAtInterval(iStep)) {
          writeFrame(iStep);
          ++nSample_;

@@ -117,6 +117,12 @@ namespace McMd
       Simulation& simulation()
       {  return *simulationPtr_; }
 
+      /**
+      * Return Boundary object by reference.  
+      */
+      Boundary& boundary()
+      {  return *boundaryPtr_; }
+
       // Protected member variables
       
       /// Output file stream.
@@ -129,6 +135,9 @@ namespace McMd
 
       // Pointer to parent simulation
       Simulation* simulationPtr_;
+
+      // Pointer to Boundary object.
+      Boundary* boundaryPtr_;
 
       /// Has readParam been called?
       bool isInitialized_;
