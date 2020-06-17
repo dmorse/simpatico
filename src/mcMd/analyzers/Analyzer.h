@@ -217,7 +217,7 @@ namespace McMd
       std::string outputFileName_;
 
       /// Number of simulation steps between subsequent actions.
-      long   interval_;
+      long interval_;
 
    private:
 

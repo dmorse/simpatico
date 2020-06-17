@@ -1,5 +1,5 @@
-#ifndef MCMD_CONFIG_WRITER_H
-#define MCMD_CONFIG_WRITER_H
+#ifndef MCMD_LAMMPS_DUMP_WRITER_H
+#define MCMD_LAMMPS_DUMP_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/base/SystemAnalyzer.h>
-#include <mcMd/simulation/System.h>
+#include "TrajectoryWriter.h"
 
 namespace McMd
 {
@@ -21,47 +20,25 @@ namespace McMd
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
-   class LammpsDumpWriter : public SystemAnalyzer<System>
+   class LammpsDumpWriter : public TrajectoryWriter
    {
-   
+
    public:
-   
+
       /**
       * Constructor.
       *
-      * \param system parent System object. 
+      * \param system parent System object.
       */
       LammpsDumpWriter(System& system);
-   
+
       /**
       * Destructor.
       */
-      virtual ~LammpsDumpWriter()
-      {} 
-   
-      /**
-      * Read interval.
-      *
-      * \param in input parameter file
-      */
-      virtual void readParameters(std::istream& in);
-   
-      /**
-      * Save state to archive.
-      *
-      * \param ar saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
+      virtual ~LammpsDumpWriter();
 
       /**
-      * Load state from an archive.
-      *
-      * \param ar loading (input) archive.
-      */
-      virtual void loadParameters(Serializable::IArchive& ar);
-
-      /**
-      * Serialize to/from an archive. 
+      * Serialize to/from an archive.
       *
       * \param ar      saving or loading archive
       * \param version archive version id
@@ -69,45 +46,28 @@ namespace McMd
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
+   protected:
+
       /**
-      * Clear nSample counter.
+      * Open file and write header.
       */
-      virtual void setup();
-  
+      virtual void writeHeader();
+
       /**
-      * Write a frame/snapshot to file
+      * Write data that should appear in every frame.
       *
-      * \param iStep MC step index
+      * \param iStep MD time step index
       */
-      virtual void sample(long iStep);
- 
-      /**
-      * Close file.
-      */ 
-      virtual void output(); 
+      virtual void writeFrame(long iStep);
 
-   private:
-      
-      // Output file stream
-      std::ofstream outputFile_;
-
-      /// Number of configurations dumped thus far (first dump is zero).
-      long nSample_;
-   
-      /// Has readParam been called?
-      long isInitialized_;
-   
    };
 
    /*
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class Archive>
    void LammpsDumpWriter::serialize(Archive& ar, const unsigned int version)
-   {
-      Analyzer::serialize(ar, version);
-      ar & nSample_;
-   }
+   {  TrajectoryWriter::serialize(ar, version); }
 
 }
-#endif 
+#endif

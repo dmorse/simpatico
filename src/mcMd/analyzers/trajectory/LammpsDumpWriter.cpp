@@ -6,11 +6,6 @@
 */
 
 #include "LammpsDumpWriter.h"
-#include <util/misc/FileMaster.h>
-#include <util/archives/Serializable_includes.h>
-#include <util/misc/ioUtil.h>
-
-#include <sstream>
 
 namespace McMd
 {
@@ -21,63 +16,25 @@ namespace McMd
    * Constructor.
    */
    LammpsDumpWriter::LammpsDumpWriter(System& system) 
-    : SystemAnalyzer<System>(system),
-      nSample_(0),
-      isInitialized_(false)
+    : TrajectoryWriter(system)
    {  setClassName("LammpsDumpWriter"); }
 
    /*
-   * Read interval and outputFileName. 
+   * Destructor.
    */
-   void LammpsDumpWriter::readParameters(std::istream& in) 
-   {
-      readInterval(in);
-      readOutputFileName(in);
-      isInitialized_ = true;
-   }
+   LammpsDumpWriter::~LammpsDumpWriter()
+   {}
+   
+   /*
+   * Write data that should appear once, at beginning of the file.
+   */
+   void LammpsDumpWriter::writeHeader()
+   {};
 
    /*
-   * Load state from an archive.
+   * Write data that should appear in every frame.
    */
-   void LammpsDumpWriter::loadParameters(Serializable::IArchive& ar)
-   {
-      Analyzer::loadParameters(ar);
-      ar & nSample_;
-      isInitialized_ = true;
-   }
-
-   /*
-   * Save state to archive.
-   */
-   void LammpsDumpWriter::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
-   /*
-   * Read interval and outputFileName. 
-   */
-   void LammpsDumpWriter::setup() 
-   {  
-      nSample_ = 0; 
-      std::string filename;
-      filename  = outputFileName();
-      fileMaster().openOutputFile(filename, outputFile_);
-   }
-
-   /*
-   * Dump configuration to file
-   */
-   void LammpsDumpWriter::sample(long iStep) 
-   {
-      if (isAtInterval(iStep))  {
-         system().writeConfig(outputFile_);
-         ++nSample_;
-      }
-   }
-  
-   /*
-   * Close output file. 
-   */
-   void LammpsDumpWriter::output() 
-   {  outputFile_.close(); }
+   void LammpsDumpWriter::writeFrame(long iStep)
+   {  system().writeConfig(outputFile_); }
 
 }

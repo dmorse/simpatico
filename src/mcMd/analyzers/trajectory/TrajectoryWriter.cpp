@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LammpsDumpWriter.h"
+#include "TrajectoryWriter.h"
 #include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/misc/ioUtil.h>
@@ -20,16 +20,23 @@ namespace McMd
    /*
    * Constructor.
    */
-   LammpsDumpWriter::LammpsDumpWriter(System& system) 
+   TrajectoryWriter::TrajectoryWriter(System& system) 
     : SystemAnalyzer<System>(system),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("LammpsDumpWriter"); }
+   {  setClassName("TrajectoryWriter"); }
+
+  
+   /*
+   * Destructor.
+   */
+   TrajectoryWriter::~TrajectoryWriter() 
+   {}
 
    /*
    * Read interval and outputFileName. 
    */
-   void LammpsDumpWriter::readParameters(std::istream& in) 
+   void TrajectoryWriter::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -39,7 +46,7 @@ namespace McMd
    /*
    * Load state from an archive.
    */
-   void LammpsDumpWriter::loadParameters(Serializable::IArchive& ar)
+   void TrajectoryWriter::loadParameters(Serializable::IArchive& ar)
    {
       Analyzer::loadParameters(ar);
       ar & nSample_;
@@ -49,27 +56,28 @@ namespace McMd
    /*
    * Save state to archive.
    */
-   void LammpsDumpWriter::save(Serializable::OArchive& ar)
+   void TrajectoryWriter::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Read interval and outputFileName. 
    */
-   void LammpsDumpWriter::setup() 
+   void TrajectoryWriter::setup() 
    {  
       nSample_ = 0; 
       std::string filename;
       filename  = outputFileName();
       fileMaster().openOutputFile(filename, outputFile_);
+      writeHeader();
    }
 
    /*
    * Dump configuration to file
    */
-   void LammpsDumpWriter::sample(long iStep) 
+   void TrajectoryWriter::sample(long iStep) 
    {
-      if (isAtInterval(iStep))  {
-         system().writeConfig(outputFile_);
+      if (isAtInterval(iStep)) {
+         writeFrame(iStep);
          ++nSample_;
       }
    }
@@ -77,7 +85,7 @@ namespace McMd
    /*
    * Read interval and outputFileName. 
    */
-   void LammpsDumpWriter::output() 
+   void TrajectoryWriter::output() 
    {  outputFile_.close(); }
 
 }

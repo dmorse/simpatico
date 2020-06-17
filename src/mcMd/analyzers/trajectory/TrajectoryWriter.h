@@ -1,5 +1,5 @@
-#ifndef MCMD_CONFIG_WRITER_H
-#define MCMD_CONFIG_WRITER_H
+#ifndef MCMD_TRAJECTORY_WRITER_H
+#define MCMD_TRAJECTORY_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -23,29 +23,28 @@ namespace McMd
    */
    class TrajectoryWriter : public SystemAnalyzer<System>
    {
-   
+
    public:
-   
+
       /**
       * Constructor.
       *
-      * \param system parent System object. 
+      * \param system parent System object.
       */
       TrajectoryWriter(System& system);
-   
+
       /**
       * Destructor.
       */
-      virtual ~TrajectoryWriter()
-      {} 
-   
+      virtual ~TrajectoryWriter();
+
       /**
       * Read interval.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
-   
+
       /**
       * Save state to archive.
       *
@@ -61,7 +60,7 @@ namespace McMd
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Serialize to/from an archive. 
+      * Serialize to/from an archive.
       *
       * \param ar      saving or loading archive
       * \param version archive version id
@@ -73,62 +72,60 @@ namespace McMd
       * Clear nSample counter.
       */
       virtual void setup();
-  
+
       /**
       * Write a frame/snapshot to trajectory file.
       *
       * \param iStep step index
       */
       virtual void sample(long iStep);
-  
+
       /**
       * Close trajectory file after run.
       */
       virtual void output();
-  
-   protected:
-      
-      // Output file stream
-      std::ofstream outputFile_;
-
-      /// Number of configurations dumped thus far (first dump is zero).
-      long nSample_;
-   
-      /// Has readParam been called?
-      long isInitialized_;
-
-   protected:
 
       /**
       * Is the file format binary (true) or text (false)?
       */
       bool isBinary() const;
 
+   protected:
+
       /**
-      * Write data that should appear once, at beginning of the file. 
+      * Write data that should appear once, at beginning of the file.
       *
       * Called by sample on first invocation. Default implementation is empty.
       *
       * \param out output file stream
       */
-      virtual void writeHeader(std::ofstream& out)
+      virtual void writeHeader()
       {};
 
       /**
       * Write data that should appear in every frame.
-      * 
+      *
       * \param out output file stream
       * \param iStep MD time step index
       */
-      virtual void writeFrame(std::ofstream& out, long iStep) = 0;
+      virtual void writeFrame(long iStep) = 0;
 
-      /// Is the trajectory file a binary file? 
+      // Output file stream
+      std::ofstream outputFile_;
+
+      /// Number of frames written thus far.
+      long nSample_;
+
+      /// Has readParam been called?
+      bool isInitialized_;
+
+      /// Is the trajectory file a binary file?
       bool isBinary_;
 
    };
 
    /*
-   * Serialize to/from an archive. 
+   * Serialize to/from an archive.
    */
    template <class Archive>
    void TrajectoryWriter::serialize(Archive& ar, const unsigned int version)
@@ -138,4 +135,4 @@ namespace McMd
    }
 
 }
-#endif 
+#endif
