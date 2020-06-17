@@ -96,7 +96,7 @@ namespace DdMd
             fileMaster.openOutputFile(outputFileName(), outputFile_);
          }
       }
-      writeHeader(outputFile_);
+      writeHeader();
    }
 
    /*
@@ -105,7 +105,7 @@ namespace DdMd
    void TrajectoryWriter::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
-         writeFrame(outputFile_, iStep);
+         writeFrame(iStep);
       }
    }
 

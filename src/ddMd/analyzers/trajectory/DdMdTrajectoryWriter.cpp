@@ -32,24 +32,25 @@ namespace DdMd
    DdMdTrajectoryWriter::~DdMdTrajectoryWriter()
    {}
 
-   void DdMdTrajectoryWriter::writeHeader(std::ofstream &file)
+   void DdMdTrajectoryWriter::writeHeader()
    {
-      BinaryFileOArchive ar(file);
 
       // Compute and write total number of atoms
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
          nAtom_ = atomStorage().nAtomTotal();
+         BinaryFileOArchive ar(outputFile_);
          ar << nAtom_;
       }
 
    }
 
-   void DdMdTrajectoryWriter::writeFrame(std::ofstream &file, long iStep)
+   void DdMdTrajectoryWriter::writeFrame(long iStep)
    {
-      BinaryFileOArchive ar(file);
 
       if (domain().isMaster()) {  
+
+         BinaryFileOArchive ar(outputFile_);
 
          ar << iStep;
          ar << boundary();
@@ -79,7 +80,7 @@ namespace DdMd
             atomPtr = atomCollector().nextPtr();
          }
 
-      } else { 
+      } else {
          atomCollector().send();
       }
 

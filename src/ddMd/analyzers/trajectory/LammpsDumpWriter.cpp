@@ -34,7 +34,7 @@ namespace DdMd
    /*
    *  Write a configuration snapshot. 
    */
-   void LammpsDumpWriter::writeFrame(std::ofstream &file, long iStep)
+   void LammpsDumpWriter::writeFrame(long iStep)
    {
 
       // Compute total number of atoms
@@ -44,6 +44,9 @@ namespace DdMd
       }
 
       if (domain().isMaster()) {
+
+         std::ostream& file = outputFile_;
+
          file << "ITEM: TIMESTEP" << "\n";
          file << iStep << "\n";
 

@@ -110,19 +110,16 @@ namespace DdMd
       * Write data that should appear once, at beginning of the file. 
       *
       * Called by sample on first invocation. Default implementation is empty.
-      *
-      * \param out output file stream
       */
-      virtual void writeHeader(std::ofstream& out)
+      virtual void writeHeader()
       {};
 
       /**
       * Write data that should appear in every frame.
       * 
-      * \param out output file stream
       * \param iStep MD time step index
       */
-      virtual void writeFrame(std::ofstream& out, long iStep) = 0;
+      virtual void writeFrame(long iStep) = 0;
 
       /**
       * Get the Domain by reference.
@@ -180,11 +177,11 @@ namespace DdMd
       GroupCollector<4>& dihedralCollector();
       #endif
 
-   private:
- 
       // Output file stream
       std::ofstream outputFile_;
 
+   private:
+ 
       /// Has readParam been called?
       long isInitialized_;
   

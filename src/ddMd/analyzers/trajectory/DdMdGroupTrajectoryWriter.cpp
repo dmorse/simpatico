@@ -61,10 +61,10 @@ namespace DdMd
       ar << groupId_;
    }
 
-   void DdMdGroupTrajectoryWriter::writeHeader(std::ofstream &file)
+   void DdMdGroupTrajectoryWriter::writeHeader()
    {
       if (domain().isMaster()) {  
-         BinaryFileOArchive ar(file);
+         BinaryFileOArchive ar(outputFile_);
          Bit bit(groupId_);
 
          atomCollector().setup();
@@ -83,10 +83,10 @@ namespace DdMd
       }
    }
 
-   void DdMdGroupTrajectoryWriter::writeFrame(std::ofstream &file, long iStep)
+   void DdMdGroupTrajectoryWriter::writeFrame(long iStep)
    {
       if (domain().isMaster()) {  
-         BinaryFileOArchive ar(file);
+         BinaryFileOArchive ar(outputFile_);
          Bit bit(groupId_);
 
          ar << iStep;

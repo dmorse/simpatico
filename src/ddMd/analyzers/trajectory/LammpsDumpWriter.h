@@ -40,10 +40,9 @@ namespace DdMd
       /**
       * Read a single frame. Frames are assumed to be read consecutively.
       *
-      * \param file output file stream
       * \param iStep MD time step index
       */
-      void writeFrame(std::ofstream &file, long iStep);
+      void writeFrame(long iStep);
 
    private:
 

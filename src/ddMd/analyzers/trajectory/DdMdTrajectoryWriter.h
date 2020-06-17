@@ -39,18 +39,15 @@ namespace DdMd
 
       /**
       * Write trajectory file header.
-      *
-      * \param file output file stream
       */
-      void writeHeader(std::ofstream &file);
+      void writeHeader();
 
       /**
       * Write a single frame. 
       *
-      * \param file output file stream
       * \param iStep MD time step index
       */
-      void writeFrame(std::ofstream &file, long iStep);
+      void writeFrame(long iStep);
 
    private:
 
