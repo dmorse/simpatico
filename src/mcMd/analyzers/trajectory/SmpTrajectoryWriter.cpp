@@ -58,6 +58,7 @@ namespace McMd
       #if 0
       bool hasSpecies = true;
       ar << hasSpecies;
+      ar << nSpecies;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
       }
       #endif
@@ -85,14 +86,12 @@ namespace McMd
       bool hasAtomId = false;
       bool hasAtomContext = false;
       bool hasAtomTypeId = false;
-      bool hasAtomPosition = true;
       bool hasAtomVelocity = false;
       bool hasAtomShift = false;
       ar << isOrdered;
       ar << hasAtomId;
       ar << hasAtomContext;
       ar << hasAtomTypeId;
-      ar << hasAtomPosition;
       ar << hasAtomVelocity;
       ar << hasAtomShift;
 
