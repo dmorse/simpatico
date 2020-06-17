@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LammpsDumpWriter.h"
+#include "ConfigDumpWriter.h"
 
 namespace McMd
 {
@@ -15,26 +15,26 @@ namespace McMd
    /*
    * Constructor.
    */
-   LammpsDumpWriter::LammpsDumpWriter(System& system) 
+   ConfigDumpWriter::ConfigDumpWriter(System& system) 
     : TrajectoryWriter(system)
-   {  setClassName("LammpsDumpWriter"); }
+   {  setClassName("ConfigDumpWriter"); }
 
    /*
    * Destructor.
    */
-   LammpsDumpWriter::~LammpsDumpWriter()
+   ConfigDumpWriter::~ConfigDumpWriter()
    {}
    
    /*
    * Write data that should appear once, at beginning of the file.
    */
-   void LammpsDumpWriter::writeHeader()
+   void ConfigDumpWriter::writeHeader()
    {};
 
    /*
    * Write data that should appear in every frame.
    */
-   void LammpsDumpWriter::writeFrame(long iStep)
+   void ConfigDumpWriter::writeFrame(long iStep)
    {  system().writeConfig(outputFile_); }
 
 }

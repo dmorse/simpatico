@@ -20,7 +20,7 @@ namespace McMd
    *
    * \ingroup McMd_Analyzer_McMd_Module
    */
-   class LammpsDumpWriter : public TrajectoryWriter
+   class ConfigDumpWriter : public TrajectoryWriter
    {
 
    public:
@@ -30,12 +30,12 @@ namespace McMd
       *
       * \param system parent System object.
       */
-      LammpsDumpWriter(System& system);
+      ConfigDumpWriter(System& system);
 
       /**
       * Destructor.
       */
-      virtual ~LammpsDumpWriter();
+      virtual ~ConfigDumpWriter();
 
       /**
       * Serialize to/from an archive.
@@ -66,7 +66,7 @@ namespace McMd
    * Serialize to/from an archive.
    */
    template <class Archive>
-   void LammpsDumpWriter::serialize(Archive& ar, const unsigned int version)
+   void ConfigDumpWriter::serialize(Archive& ar, const unsigned int version)
    {  TrajectoryWriter::serialize(ar, version); }
 
 }
