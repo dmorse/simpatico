@@ -1,7 +1,9 @@
 
 simp_species_= \
     simp/species/Species.cpp \
-    simp/species/Point.cpp 
+    simp/species/Point.cpp \
+    simp/species/SpeciesFinder.cpp
+
 
 ifdef SIMP_BOND
 simp_species_+= \

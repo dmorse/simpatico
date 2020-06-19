@@ -301,7 +301,7 @@ namespace McMd
       readParamComposite(in, random_);
 
       // Allocate, initialize arrays that require Species data.
-      initializeSpeciesData();
+      initializeStorage();
 
       UTIL_ASSERT(hasSpecies());
    }
@@ -375,7 +375,7 @@ namespace McMd
       loadParamComposite(ar, random_);
 
       // Allocate and initialize all private arrays.
-      initializeSpeciesData();
+      initializeStorage();
 
       UTIL_ASSERT(hasSpecies());
    }
@@ -422,41 +422,47 @@ namespace McMd
    }
 
    /*
-   * Allocate, initialize private arrays that require Species data (private).
+   * Allocate, initialize private data structures (private).
    *
-   * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
-   * arrays first<class>Ids_ of integers to species blocks. Initializes:
+   * Requires nAtomType, Species data (private), n(Group)Type values.
    *
-   *   - Capacity values and first<class>Ptr_ addresses.
-   *   - Integer ids for Species and Molecule objects.
+   * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and 
+   * the arrays first<class>Ids_ of integers to species blocks. 
+   * Initializes:
+   *
+   *   - Capacity values and first<class>Ptr_ addresses
+   *   - Integer ids for Species and Molecule objects
    *   - Pointers between Species, Molecule, and Atom objects
-   *   - Atom typeIds and all Bond and Angle objects.
+   *   - Atom typeIds for all atoms
+   *   - Group (Bond, Angle, ...) objects.
    */
-   void Simulation::initializeSpeciesData()
+   void Simulation::initializeStorage()
    {
       //Preconditions
-      assert(nSpecies() > 0);
+      if (nAtomType_ <= 0) {
+         UTIL_THROW("Error: nAtomType <= 0 in Simulation::initialize");
+      }
       if (nSpecies() <= 0) {
-         UTIL_THROW("Error: nSpecies() <= 0 in Simulation::initialize()");
+         UTIL_THROW("Error: nSpecies <= 0, Simulation::initialize");
       }
       #ifdef SIMP_BOND
       if (nBondType_ < 0) {
-         UTIL_THROW("Error: nBondType < 0 in Simulation::initialize()");
+         UTIL_THROW("Error: nBondType < 0 in Simulation::initialize");
       }
       #endif
       #ifdef SIMP_ANGLE
       if (nAngleType_ < 0) {
-         UTIL_THROW("Error: nAngleType < 0 in Simulation::initialize()");
+         UTIL_THROW("Error: nAngleType < 0 in Simulation::initialize");
       }
       #endif
       #ifdef SIMP_DIHEDRAL
       if (nDihedralType_ < 0) {
-         UTIL_THROW("Error: nDihedralType < 0 in Simulation::initialize()");
+         UTIL_THROW("Error: nDihedralType < 0 in Simulation::initialize");
       }
       #endif
       #ifdef MCMD_LINK
       if (nLinkType_ < 0) {
-         UTIL_THROW("Error: nLinkType_ < 0 in Simulation::initialize()");
+         UTIL_THROW("Error: nLinkType_ < 0 in Simulation::initialize");
       }
       #endif
       if (hasSpecies_) {
@@ -515,7 +521,6 @@ namespace McMd
          if (speciesPtr->id() != iSpecies) {
             UTIL_THROW("Inconsistent species ids");
          }
-         //speciesPtr->setId(iSpecies);
 
          // Allocate reservoir for this species
          reservoirs_[iSpecies].allocate(speciesPtr->capacity());
@@ -567,7 +572,7 @@ namespace McMd
       // Allocate global array of atoms (static member of Atom class).
       Atom::allocate(atomCapacity_, atoms_);
 
-      // Allocate other global arrays (members of Simulation).
+      // Allocate array of molecules (member of Simulation).
       molecules_.allocate(moleculeCapacity_);
 
       // Initialize all Molecule and atom objects.
@@ -575,6 +580,8 @@ namespace McMd
          speciesPtr = &species(iSpecies);
          initializeSpeciesMolecules(iSpecies);
       }
+
+      // Initialize group data structures
 
       #ifdef SIMP_BOND
       // Initialize bonds.
@@ -987,7 +994,7 @@ namespace McMd
       // Loop over molecular species
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
 
-         // Declare / initialize variables for this Species
+         // Declare and initialize local variables for this Species
          const Species* speciesPtr = &(species(iSpecies));
          const int capacity = speciesPtr->capacity();
          const int nAtom = speciesPtr->nAtom();

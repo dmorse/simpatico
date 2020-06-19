@@ -58,11 +58,12 @@ namespace McMd
    * The main object in a simulation, which coordinates others.
    *
    * A Simulation object is the main object in a simulation. Which is 
-   * instantiated in the main program, and coordinates creation and actions 
-   * of other objects. Simulation is a base class, which has subclasses 
-   * McSimulation and MdSimulation designed for MC and MD simulations. 
+   * instantiated in the main program, and coordinates creation and 
+   * actions of other objects. Simulation is a base class, which has 
+   * subclasses McSimulation and MdSimulation designed for MC and MD 
+   * simulations. 
    *
-   * A Simulation has the following publicly accessible members:
+   * A Simulation has the following publicly accessible member objects:
    *
    *  - An array of AtomType descriptor objects.
    * 
@@ -78,7 +79,7 @@ namespace McMd
    *
    *  - An MPI communicator (if compiled with UTIL_MPI defined).
    *
-   * A Simulation also contains several global data structures.
+   * A Simulation also contains several global data structures:
    *
    *  - An array of all allocated Atom objects.
    *
@@ -86,9 +87,9 @@ namespace McMd
    *
    *  - Arrays of all Bond, Angle, and Dihedral Group objects.
    *
-   * Each Molecule is associated with a block of Atom objects, and blocks 
-   * of Group objects (Bond, Angle, and Dihedral). These associations are
-   * created during initialization, and are permanent. 
+   * Each Molecule is associated with a block of Atom objects, and 
+   * blocks of Group objects (Bond, Angle, and Dihedral). These 
+   * associations are created during initialization, and are permanent. 
    *
    * Each subclass of Simulation also has one or more System objects.
    * An MdSimulation has one MdSystem. An McSimulation has one McSystem.
@@ -496,8 +497,9 @@ namespace McMd
       /**
       * Array containing indices to the first Molecule of each species.
       *
-      * Element firstAtomIds[i] is an integer index for the first Molecule 
-      * of the block of the molecules_ Array associated with species i.
+      * Element firstAtomIds[i] is an integer index for the first 
+      * Molecule of the block of the molecules_ Array associated with 
+      * species number i.
       */
       DArray<int> firstMoleculeIds_;
 
@@ -512,9 +514,9 @@ namespace McMd
       /**
       * Number of molecules allocated.
       *
-      * The number of Molecule objects allocated in the molecules_ Array, 
-      * for all Species in all Systems. This should be equal to the sum 
-      * of values of capacity() for each Species.
+      * The number of Molecule objects allocated in the molecules_ 
+      * array, for all Species in all Systems. This should be equal 
+      * to the sum of values of capacity() for each Species.
       */
       int moleculeCapacity_;
 
@@ -528,21 +530,23 @@ namespace McMd
       /**
       * Array of all Atom objects.
       *
-      * The atoms_ Array contains all Atom objects available in a simulation.
-      * The Atoms associated with one Molecule form a sequential block. Blocks
-      * of Atoms associated with Molecules of the same Species are also stored
-      * sequentially within a larger block of Atoms allocated for that Species.
+      * The atoms_ Array contains all Atom objects available in a 
+      * simulation.  The Atom objects associated with one Molecule form
+      * a sequential block. Blocks of Atoms associated with Molecules 
+      * of the same Species are also stored sequentially within a 
+      * larger block of Atoms allocated for that Species.
       *
-      * This RArray is an alias (i.e., a shallow copy) of a DArray that is a
-      * private static member of the Atom class.
+      * This RArray is an alias (i.e., a shallow copy) of a DArray 
+      * that is a private static member of the Atom class.
       */
       RArray<Atom> atoms_;
 
       /**
       * Array containing indices to the first Atom of each species.
       *
-      * Element firstAtomIds[i] is an integer index for the first Atom of the
-      * block of the atoms_ Array associated with species number i.
+      * Element firstAtomIds[i] is an integer index for the first 
+      * Atom of the block of the atoms_ Array associated with species 
+      * number i.
       */
       DArray<int> firstAtomIds_;
 
@@ -554,9 +558,9 @@ namespace McMd
       /**
       * Number of atoms allocated.
       *
-      * The number of Atom objects allocated in the atoms_ Array, for all 
-      * Species in all Systems.  The atomCapacity should be equal to the
-      * sum of values of capacity()*nAtom() for each Species.
+      * The number of Atom objects allocated in the atoms_ Array, for 
+      * all Species in all Systems.  The atomCapacity should be equal 
+      * to the sum of values of capacity()*nAtom() for each Species.
       */
       int atomCapacity_;
 
@@ -576,18 +580,19 @@ namespace McMd
       /**
       * Array of all Bond objects.
       *
-      * The organization of bonds_ is closely anologous to of atoms_: The 
-      * Bonds associated with a Molecule are stored in a contiguous block, 
-      * and blocks associated with molecules are of the same Species are 
-      * stored sequentially within a larger block.
+      * The organization of bonds_ is closely anologous to of atoms_: 
+      * The Bonds associated with a Molecule are stored in a contiguous
+      * block, and blocks associated with molecules are of the same 
+      * Species are stored sequentially within a larger block.
       */
       DArray<Bond> bonds_;
 
       /**
       * Array containing indices to the first Bond of each species.
       *
-      * Element firstBondIds[i] is an integer index for the first Bond of
-      * the block of the bonds_ Array associated with species number i.
+      * Element firstBondIds_[i] is an integer index for the first 
+      * Bond of the block of the bonds_ Array associated with species 
+      * number i.
       */
       DArray<int> firstBondIds_;
 
@@ -610,17 +615,18 @@ namespace McMd
       * Array of all Angle objects.
       *
       * The organization of angles_ is analogous to that of bonds_: The 
-      * angle associated with a Molecule are stored in a contiguous block, 
-      * and blocks associated with molecules are of the same Species are 
-      * stored sequentially within a larger block.
+      * angle associated with a Molecule are stored in a contiguous 
+      * block, and blocks associated with molecules are of the same 
+      * Species are stored sequentially within a larger block.
       */
       DArray<Angle> angles_;
 
       /**
       * Array containing indices to the first Angle of each species.
       *
-      * Element firstAngleIds[i] is an integer index for the first Angle 
-      * of the block of the angles_ Array associated with species number i.
+      * Element firstAngleIds[i] is an integer index for the first 
+      * Angle of the block of the angles_ Array associated with 
+      * species number i.
       */
       DArray<int> firstAngleIds_;
 
@@ -632,8 +638,8 @@ namespace McMd
       /**
       * Number of angles allocated.
       *
-      * The number of Angle objects allocated in the DArray angles_, for all
-      * Species in all Systems.
+      * The number of Angle objects allocated in the DArray angles_, 
+      * for all Species in all Systems.
       */
       int angleCapacity_;
       #endif
@@ -643,9 +649,9 @@ namespace McMd
       * Array of all Dihedral objects.
       *
       * The organization of dihedrals_ is anologous to that of angles_:
-      * The Dihedrals associated with a Molecule are stored in a contiguous
-      * block, and blocks associated with molecules are of the same Species 
-      * are stored sequentially within a larger block.
+      * The Dihedrals associated with a Molecule are stored in a 
+      * contiguous block, and blocks associated with molecules of the
+      * same Species are stored sequentially within a larger block.
       */
       DArray<Dihedral> dihedrals_;
 
@@ -666,8 +672,8 @@ namespace McMd
       /**
       * Number of dihedrals allocated.
       *
-      * The number of Dihedral objects allocated in the DArray dihedrals_, 
-      * for all Species in all Systems.
+      * The number of Dihedral objects allocated in the DArray 
+      * dihedrals_, for all Species in all Systems.
       */
       int dihedralCapacity_;
       #endif
@@ -717,11 +723,11 @@ namespace McMd
       //@}
 
       /**
-      * Initialize all private data structures that require Species data.
+      * Allocate and initialize all private data storage structures.
       *
       * Calls other private "initialize..." functions.
       */
-      void initializeSpeciesData();
+      void initializeStorage();
 
       /**
       * Initialize all Molecule and Atom objects for one Species.
