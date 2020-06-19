@@ -37,8 +37,8 @@ public:
       nParts[1]     = 7;
       nMolecules[2] = 9;
       nParts[2]     = 3;
-      nMolecules[3] = 0;
-      nParts[3]     = 6;
+      nMolecules[3] = 6;
+      nParts[3]     = 0;
       nMolecules[4] = 5;
       nParts[4]     = 8;
 
@@ -82,12 +82,19 @@ public:
       int is, im, ip, j;
       j = 0;
       for (is = 0; is < nSpecies; ++is) {
+         // std::cout << "Species " << is 
+         //          << " nMolecule " << nMolecules[is]
+         //          << " nPart " << nParts[is] << "\n";
          for (im = 0; im < nMolecules[is]; ++im) {
             for (ip = 0; ip < nParts[is]; ++ip) {
                finder.findPart(j, context);
                TEST_ASSERT(context.speciesId == is);
                TEST_ASSERT(context.moleculeId == im);
                TEST_ASSERT(context.partId == ip);
+               // std::cout << j << "  "
+               //          << context.speciesId << "  "
+               //          << context.moleculeId << "  "
+               //          << context.partId << "\n";
                ++j;
             }
          }
