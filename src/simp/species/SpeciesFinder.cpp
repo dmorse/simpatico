@@ -53,8 +53,8 @@ namespace Simp
       firstPartId_[0] = 0;
       for (int i = 0; i < nSpecies_; ++i) {
          nMolecule = nMolecule_[i];
-         nPart = nPart_[i];
          firstMoleculeId_[i+1] = firstMoleculeId_[i] + nMolecule;
+         nPart = nPart_[i];
          firstPartId_[i+1] = firstPartId_[i] + nMolecule*nPart;
       }
    }
@@ -78,8 +78,7 @@ namespace Simp
       --i;
       int diff = moleculeId - firstMoleculeId_[i];
       UTIL_CHECK(diff >= 0);
-      int nMolecule = nMolecule_[i];
-      UTIL_CHECK(diff < nMolecule);
+      UTIL_CHECK(diff < nMolecule_[i]);
       context.speciesId  = i;
       context.moleculeId = diff;
    }
@@ -103,11 +102,14 @@ namespace Simp
       --i;
       int diff = partId - firstPartId_[i];
       UTIL_CHECK(diff >= 0);
+      int nPart = nPart_[i];
+      UTIL_CHECK(nPart > 0);
       int nMolecule = nMolecule_[i];
-      UTIL_CHECK(diff < nMolecule*nPart_[i]);
+      UTIL_CHECK(nMolecule > 0);
+      UTIL_CHECK(diff < nMolecule*nPart);
       context.speciesId  = i;
-      context.moleculeId  = diff/nMolecule;
-      context.partId  = diff - nMolecule*context.moleculeId;
+      context.moleculeId  = diff/nPart;
+      context.partId  = diff - nPart*context.moleculeId;
    }
 
 } 

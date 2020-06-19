@@ -11,6 +11,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <simp/species/Species.h>
+#include <simp/species/SpeciesFinder.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/param/Label.h>
@@ -49,8 +50,8 @@ namespace McMd
       // Calculate atom and bond capacities for entire simulation
       int atomCapacity = 0;
       int bondCapacity = 0;
-      int nSpecies = simulation().nSpecies();
       int speciesCapacity = 0;
+      int nSpecies = simulation().nSpecies();
       int iSpec;
       Species* speciesPtr;
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
@@ -61,6 +62,19 @@ namespace McMd
          bondCapacity += speciesCapacity*speciesPtr->nBond();
          #endif
       }
+
+      #if 0 
+      // Initialize species finder for atoms (for testing only)
+      SpeciesFinder finder;
+      finder.allocate(nSpecies);
+      for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
+         speciesPtr = &simulation().species(iSpec);
+         speciesCapacity = speciesPtr->capacity();
+         finder.setSpecies(iSpec, speciesCapacity, speciesPtr->nAtom());
+      }
+      finder.initialize();
+      SpeciesFinder::Part context;
+      #endif
 
       // Read boundary
       in >> Label("BOUNDARY");
@@ -106,6 +120,26 @@ namespace McMd
                      UTIL_THROW("Invalid local atom id");
                   }
                }
+
+               #if 0
+               // Test SpeciesFinder
+               finder.findPart(atomId, context);
+               UTIL_CHECK(context.speciesId == iSpec);
+               if (context.moleculeId != iMol) {
+                  std::cout << "Incorrect molecule id\n";
+                  std::cout << "atomid" << atomId << " \n";
+                  std::cout << "context  " 
+                            << context.speciesId  << " "
+                            << context.moleculeId << " "
+                            << context.partId << "\n";
+                  std::cout << "counters " 
+                            << iSpec << " " 
+                            << iMol << " "
+                            << iAtom << "\n";
+                  UTIL_THROW("Incorrect moleculeId");
+               }
+               UTIL_CHECK(context.partId == iAtom);
+               #endif
 
                in >> atomIter->position();
                in >> atomIter->velocity();
