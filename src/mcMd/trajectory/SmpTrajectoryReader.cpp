@@ -80,7 +80,7 @@ namespace McMd
             UTIL_CHECK(speciesIn.capacity() == speciesPtr->capacity());
          }
       } else {
-         UTIL_THROW("Trajectory Species info is required in McMd")
+         UTIL_THROW("Trajectory Species info is required in McMd");
       }
 
       // Add all molecules to system, set nAtomTotal_
