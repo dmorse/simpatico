@@ -59,8 +59,9 @@ namespace McMd
       int nMolecule;
       ar << nSpecies;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         ar << system().nMolecule(iSpecies);
-         ar << simulation().species(i);
+         nMolecule = system().nMolecule(iSpecies);
+         ar << nMolecule;
+         ar << simulation().species(iSpecies);
       }
 
       // Count and output nAtom_, total number of atoms
