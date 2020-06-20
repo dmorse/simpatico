@@ -40,9 +40,9 @@ namespace McMd
 
       // Write Atom Types
       bool hasAtomTypes = true;
+      ar << hasAtomTypes;
       bool hasMass = true;
       bool hasCharge = false;
-      ar << hasAtomTypes;
       ar << hasMass;
       ar << hasCharge;
       int nAtomType = simulation().nAtomType();
@@ -52,16 +52,16 @@ namespace McMd
          ar << mass;
       }
 
-      int nSpecies = simulation().nSpecies();
-      int nMolecule;
-
-      #if 0
+      // Write species information
       bool hasSpecies = true;
       ar << hasSpecies;
+      int nSpecies = simulation().nSpecies();
+      int nMolecule;
       ar << nSpecies;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         ar << system().nMolecule(iSpecies);
+         ar << simulation().species(i);
       }
-      #endif
 
       // Count and output nAtom_, total number of atoms
       nAtom_ = 0;
@@ -69,7 +69,6 @@ namespace McMd
          nMolecule = system().nMolecule(iSpecies);
          nAtom_ += nMolecule*simulation().species(iSpecies).nAtom();
       }
-
       ar << nAtom_;
    }
 

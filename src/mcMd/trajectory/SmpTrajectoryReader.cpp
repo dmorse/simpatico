@@ -64,23 +64,23 @@ namespace McMd
          }
       }
 
-      // Read and check molecular species data (optional)
+      // Read and check molecular species data (required)
       bool hasSpecies;
       ar >> hasSpecies;
-      if (hasSpecies) {
-         int nSpecies;
-         ar >> nSpecies;
-         UTIL_CHECK(nSpecies = simulation().nSpecies());
-         Species  speciesIn;  // species read from file
-         Species* speciesPtr; // species in parent simulation
-         for (int i = 0; i < nSpecies; ++i) {
-            ar >> speciesIn;
-            speciesPtr = &simulation().species(i);
-            UTIL_CHECK(speciesIn.nAtom() == speciesPtr->nAtom());
-            UTIL_CHECK(speciesIn.capacity() == speciesPtr->capacity());
-         }
-      } else {
-         UTIL_THROW("Trajectory Species info is required in McMd");
+      UTIL_CHECK(hasSpecies);
+      int nSpecies;
+      ar >> nSpecies;
+      UTIL_CHECK(nSpecies = simulation().nSpecies());
+      nMolecules_.allocate(nSpecies);
+      Species  speciesIn;  // species read from file
+      Species* speciesPtr; // species in parent simulation
+      for (int i = 0; i < nSpecies; ++i) {
+         ar >> nMolecules_[i];
+         ar >> speciesIn;
+         speciesPtr = &simulation().species(i);
+         UTIL_CHECK(speciesIn.nAtom() == speciesPtr->nAtom());
+         UTIL_CHECK(nMolecules_[i] == speciesPtr->capacity());
+         UTIL_CHECK(nMolecules_[i] <= speciesIn.capacity());
       }
 
       // Add all molecules to system, set nAtomTotal_
@@ -137,7 +137,7 @@ namespace McMd
       int nMolecule, nAtomMol;
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
-         nMolecule = speciesPtr->capacity();
+         nMolecule = nMolecules_[iSpecies];
          nAtomMol  = speciesPtr->nAtom();
          finder.setSpecies(iSpecies, nMolecule, nAtomMol);
       }
@@ -170,9 +170,13 @@ namespace McMd
             UTIL_CHECK(iMolecule == context.moleculeId);
             ar >> iAtom;
             UTIL_CHECK(iAtom == context.partId);
+         } else {
+            iSpecies = context.speciesId;
+            iMolecule = context.moleculeId;
+            iAtom = context.partId;
          }
-         molPtr = &(system().molecule(context.speciesId, context.moleculeId));
-         atomPtr = &(molPtr->atom(context.partId));
+         molPtr = &(system().molecule(iSpecies, iMolecule));
+         atomPtr = &(molPtr->atom(iAtom));
          if (hasAtomTypeId) {
             ar >> typeId;
             atomPtr->setTypeId(typeId);

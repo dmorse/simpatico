@@ -67,6 +67,9 @@ namespace McMd
       /// Trajectory file.
       std::ifstream file_;
 
+      /// Array containing number of molecules per species
+      DArray<int> nMolecules_;
+
    }; 
 
 } 
