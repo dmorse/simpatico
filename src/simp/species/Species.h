@@ -393,7 +393,7 @@ namespace Simp
       DArray<SpeciesDihedral> speciesDihedrals_;
       #endif
 
-      // Methods
+      // Protected member functions
 
       /**
       * Define chemical structure for this Species.
@@ -414,12 +414,15 @@ namespace Simp
       virtual void readSpeciesParam(std::istream &in);
 
       /**
-      * Define chemical structure for this Species.
+      * Load chemical structure for this Species from an archive.
       *
-      * Analogous to readSpeciesParam, but reads data from a
-      * Serializable::IArchive rather than an input stream.
-      * This function must define the same parameter file format 
-      * as readSpeciesParam.
+      * This function is called by loadParameters, and loads the data
+      * required to define a chemical structure. It does not load the
+      * moleculeCapacity member, which is instead loaded explicitly by
+      * Species::loadParameters. This function is closely analogous to
+      * readSpeciesParam, but inputs from a Serializable::IArchive 
+      * rather than an input file stream. This function must define 
+      * the same parameter file format as readSpeciesParam. 
       *
       * \param ar input parameter file stream.
       */
