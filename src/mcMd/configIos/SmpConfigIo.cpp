@@ -53,10 +53,10 @@ namespace McMd
       int nSpecies = simulation().nSpecies();
       UTIL_CHECK(nSpecies > 0);
       DArray<int> nMoleculeSpecies;
-      DArray<int> firstAtomIds;
+      // DArray<int> firstAtomIds;
       nMoleculeSpecies.allocate(nSpecies);
-      firstAtomIds.allocate(nSpecies);
-      firstAtomIds[0] = 0;
+      // firstAtomIds.allocate(nSpecies);
+      // firstAtomIds[0] = 0;
 
       // Read SPECIES block
       Species* speciesPtr;
@@ -91,7 +91,7 @@ namespace McMd
             if (!match) {
                UTIL_THROW("Structure mismatch");
             }
-            firstAtomIds[iSpecies] = nAtomTot;
+            // firstAtomIds[iSpecies] = nAtomTot;
             nAtomMolecule = speciesPtr->nAtom();
             nAtomSpecies = nMoleculeSpecies[iSpecies]*nAtomMolecule;
             nAtomTot += nAtomSpecies;
@@ -109,7 +109,7 @@ namespace McMd
          for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             speciesPtr = &simulation().species(iSpecies);
             nMoleculeSpecies[iSpecies] = speciesPtr->capacity();
-            firstAtomIds[iSpecies+1] = nAtomTot;
+            // firstAtomIds[iSpecies+1] = nAtomTot;
             nAtomMolecule = speciesPtr->nAtom();
             nAtomSpecies = nMoleculeSpecies[iSpecies]*nAtomMolecule;
             nAtomTot += nAtomSpecies;
