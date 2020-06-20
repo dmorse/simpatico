@@ -42,38 +42,53 @@ namespace McMd
    */
    void SmpTrajectoryReader::open(std::string filename)
    {
-      // Open trajectory file
+      // Open trajectory file for reading
       simulation().fileMaster().openInputFile(filename, file_);
+
+      // Assocate a binary file input archive with file_
       BinaryFileIArchive ar(file_);
 
-      // Read atom type data
+      // Read atom type data (optional)
       bool hasAtomTypes;
-      bool hasMass;
-      bool hasCharge;
       ar >> hasAtomTypes;
-      ar >> hasMass;
-      ar >> hasCharge;
-      int nAtomType = simulation().nAtomType();
-      ar >> nAtomType;
-      double mass, charge;
-      for (int i = 0; i < nAtomType; ++i) {
-          if (hasMass) ar >> mass;
-          if (hasCharge) ar >> charge;
+      if (hasAtomTypes) {
+         double mass, charge;
+         int nAtomType = simulation().nAtomType();
+         bool hasMass, hasCharge;
+         ar >> hasMass;
+         ar >> hasCharge;
+         ar >> nAtomType;
+         for (int i = 0; i < nAtomType; ++i) {
+             if (hasMass) ar >> mass;
+             if (hasCharge) ar >> charge;
+         }
       }
 
-      #if 0
-      bool hasSpecies = true;
+      // Read and check molecular species data (optional)
+      bool hasSpecies;
       ar >> hasSpecies;
-      ar >> nSpecies;
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+      if (hasSpecies) {
+         int nSpecies;
+         ar >> nSpecies;
+         UTIL_CHECK(nSpecies = simulation().nSpecies());
+         Species  speciesIn;  // species read from file
+         Species* speciesPtr; // species in parent simulation
+         for (int i = 0; i < nSpecies; ++i) {
+            ar >> speciesIn;
+            speciesPtr = &simulation().species(i);
+            UTIL_CHECK(speciesIn.nAtom() == speciesPtr->nAtom());
+            UTIL_CHECK(speciesIn.capacity() == speciesPtr->capacity());
+         }
+      } else {
+         UTIL_THROW("Trajectory Species info is required in McMd")
       }
-      #endif
 
+      // Add all molecules to system, set nAtomTotal_
+      addMolecules();
+
+      // Read and check total number of atoms
       int nAtom;
       ar >> nAtom;
-      
-      // Add all molecules to system and check consistency of nAtom.
-      addMolecules();
       UTIL_CHECK(nAtom == nAtomTotal_);
      
    }
@@ -83,8 +98,7 @@ namespace McMd
    */
    bool SmpTrajectoryReader::readFrame()
    {
-      // Preconditions
-
+      // Associate binary file input archive with file_
       BinaryFileIArchive ar(file_);
 
       // Attempt to read iStep
@@ -96,22 +110,23 @@ namespace McMd
          return false;
       }
 
-      // Read boundary dimensions
+      // Read boundary dimensions (period unit cell)
       ar >> boundary();
 
-      // Read atom format
-      bool isOrdered = true;
-      bool hasAtomId = false;
-      bool hasAtomContext = false;
-      bool hasAtomTypeId = false;
-      bool hasAtomVelocity = false;
-      bool hasAtomShift = false;
-      ar >> isOrdered;
-      ar >> hasAtomId;
-      ar >> hasAtomContext;
-      ar >> hasAtomTypeId;
-      ar >> hasAtomVelocity;
-      ar >> hasAtomShift;
+      // Read atom data format
+      bool isOrdered;
+      bool hasAtomId;
+      bool hasAtomContext;
+      bool hasAtomTypeId;
+      bool hasAtomVelocity;
+      bool hasAtomShift;
+      ar >> isOrdered;        // Are atom ids in consecutive order
+      ar >> hasAtomId;        // Is the global atom id included
+      ar >> hasAtomContext;   // Is molecular context included
+      ar >> hasAtomTypeId;    // Is the atom type Id included
+      ar >> hasAtomVelocity;  // Is the velocity included
+      ar >> hasAtomShift;     // Is an atom shift included
+      if (!isOrdered) UTIL_CHECK(hasAtomId);
 
       // Set up SpeciesFinder 
       Species *speciesPtr;
@@ -143,6 +158,7 @@ namespace McMd
       for (int i = 0; i < nAtomTotal_; ++i) {
          if (hasAtomId) {
             ar >> atomId;
+            if (isOrdered) UTIL_CHECK(atomId == i);
          } else {
             atomId = i;
          }
