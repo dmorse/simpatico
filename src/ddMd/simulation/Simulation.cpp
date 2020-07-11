@@ -97,6 +97,7 @@ namespace DdMd
       exchanger_(),
       random_(),
       maxBoundary_(),
+      configIoClassName_(),
       kineticEnergy_(0.0),
       pairPotentialPtr_(0),
       #ifdef SIMP_BOND
@@ -609,14 +610,15 @@ namespace DdMd
       readEnsembles(in);
 
       // Integrator
-      std::string className;
+      std::string integratorClassName;
       bool isEnd;
       assert(integratorPtr_ == 0);
       integratorPtr_ =
-         integratorFactory().readObject(in, *this, className, isEnd);
+         integratorFactory().readObject(in, *this, 
+                                        integratorClassName, isEnd);
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
-         msg += className;
+         msg += integratorClassName;
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
@@ -798,14 +800,14 @@ namespace DdMd
 
       loadEnsembles(ar);
 
-      // Integrator
+      // Integrator, modifiers, random and analyzers
       assert(integratorPtr_ == 0);
-      std::string className;
+      std::string integratorClassName;
       integratorPtr_ =
-         integratorFactory().loadObject(ar, *this, className);
+         integratorFactory().loadObject(ar, *this, integratorClassName);
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
-         msg += className;
+         msg += integratorClassName;
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
@@ -813,6 +815,15 @@ namespace DdMd
       #endif
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *analyzerManagerPtr_);
+
+      // Load configIoClassName_ 
+      int hasConfigIoClassName;
+      ar >> hasConfigIoClassName;
+      if (hasConfigIoClassName) {
+         std::string configIoClassName;
+         ar >> configIoClassName;
+         setConfigIo(configIoClassName);
+      }
 
       // Finished loading data from archive. Now finish initialization:
 
@@ -857,6 +868,7 @@ namespace DdMd
       // There are no ghosts yet, so exchange.
       exchanger_.exchange();
       isValid();
+
    }
 
    // ---- Serialization -----------------------------------------------
@@ -967,6 +979,14 @@ namespace DdMd
       #endif
       random_.save(ar);
       analyzerManager().save(ar);
+
+      // Save configIoClassName_ if any
+      int hasConfigIoClassName = 1;
+      if (configIoClassName_.empty()) hasConfigIoClassName = 0;
+      ar << hasConfigIoClassName;
+      if (hasConfigIoClassName) {
+         ar << configIoClassName_;
+      }
    }
 
    /*
@@ -1364,9 +1384,9 @@ namespace DdMd
             if (command == "SET_CONFIG_IO") {
                // Create a ConfigIo object of specified subclass.
                // This gives file format for later reads and writes.
-               std::string classname;
-               inBuffer >> classname;
-               setConfigIo(classname);
+               std::string configIoClassName;
+               inBuffer >> configIoClassName;
+               setConfigIo(configIoClassName);
             } else
             if (command == "SET_INPUT_PREFIX") {
                // Set the FileMaster inputPrefix, which is used to
@@ -2003,6 +2023,7 @@ namespace DdMd
    ConfigIo& Simulation::configIo()
    {
       if (configIoPtr_ == 0) {
+         UTIL_CHECK(configIoClassName_.empty());
          if (Atom::hasAtomContext()) {
             // DdMdConfigIo format with hasMolecules = true
             configIoPtr_ = new DdMdConfigIo(*this, true);
@@ -2187,9 +2208,9 @@ namespace DdMd
    /*
    * Set the ConfigIo, identified by subclass name.
    */
-   void Simulation::setConfigIo(std::string& classname)
+   void Simulation::setConfigIo(std::string& configIoClassName)
    {
-      ConfigIo* ptr = configIoFactory().factory(classname);
+      ConfigIo* ptr = configIoFactory().factory(configIoClassName);
       if (!ptr) {
          UTIL_THROW("Unrecognized ConfigIo subclass name");
       }
@@ -2197,6 +2218,7 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
+      configIoClassName_ = configIoClassName;
    }
 
    // --- Group Management ---------------------------------------------

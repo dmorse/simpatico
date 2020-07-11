@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>        // base class
+
 #include <ddMd/communicate/Domain.h>          // member
 #include <ddMd/communicate/Buffer.h>          // member
 #include <ddMd/communicate/Exchanger.h>       // member
@@ -29,6 +30,7 @@
 #include <util/archives/Serializable.h>       // typedef in interface
 
 #include <fstream>
+#include <string>
 
 namespace Util {
    class FileMaster;
@@ -920,10 +922,13 @@ namespace DdMd
       /// Maximum boundary (used to allocate memory for the cell list).
       Boundary maxBoundary_;
 
-      // Value of kinetic energy. Only valid on master.
+      /// Name of ConfigIo class
+      std::string configIoClassName_;
+
+      /// Value of kinetic energy. Only valid on master.
       Setable<double> kineticEnergy_;
 
-      // Value of kinetic stress. Only valid on master.
+      /// Value of kinetic stress. Only valid on master.
       Setable<Tensor> kineticStress_;
 
       /// Pointer to force/energy evaluator.
