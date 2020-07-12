@@ -878,6 +878,20 @@ namespace DdMd
       */
       void saveEnsembles(Serializable::OArchive& ar);
 
+      /**
+      * Load configIoName.
+      *
+      * \param ar input/loading archive
+      */
+      void loadConfigIo(Serializable::IArchive& ar);
+
+      /**
+      * Save configIoName.
+      *
+      * \param ar output/saving archive
+      */
+      void saveConfigIo(Serializable::OArchive& ar);
+
    private:
 
       /// Container for all atoms and ghosts.

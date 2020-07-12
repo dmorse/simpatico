@@ -800,7 +800,7 @@ namespace DdMd
 
       loadEnsembles(ar);
 
-      // Integrator, modifiers, random and analyzers
+      // Integrator, modifiers, random, analyzers and configIoClassName
       assert(integratorPtr_ == 0);
       std::string integratorClassName;
       integratorPtr_ =
@@ -815,15 +815,7 @@ namespace DdMd
       #endif
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *analyzerManagerPtr_);
-
-      // Load configIoClassName_ 
-      int hasConfigIoClassName;
-      ar >> hasConfigIoClassName;
-      if (hasConfigIoClassName) {
-         std::string configIoClassName;
-         ar >> configIoClassName;
-         setConfigIo(configIoClassName);
-      }
+      loadConfigIo(ar);
 
       // Finished loading data from archive. Now finish initialization:
 
@@ -871,8 +863,6 @@ namespace DdMd
 
    }
 
-   // ---- Serialization -----------------------------------------------
-
    /*
    * Load state from a restart file (open file, call load, close file)
    */
@@ -897,6 +887,8 @@ namespace DdMd
       }
 
    }
+
+   // ---- Serialization -----------------------------------------------
 
    /*
    * Serialize internal state to an archive.
@@ -969,7 +961,7 @@ namespace DdMd
       }
       #endif
 
-      // Save ensembles, integrator, modifiers, random, analyzers
+      // Save ensembles, integrator, modifiers, random, analyzers, configIo
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
@@ -979,14 +971,8 @@ namespace DdMd
       #endif
       random_.save(ar);
       analyzerManager().save(ar);
+      saveConfigIo(ar);
 
-      // Save configIoClassName_ if any
-      int hasConfigIoClassName = 1;
-      if (configIoClassName_.empty()) hasConfigIoClassName = 0;
-      ar << hasConfigIoClassName;
-      if (hasConfigIoClassName) {
-         ar << configIoClassName_;
-      }
    }
 
    /*
@@ -1183,6 +1169,43 @@ namespace DdMd
    {
       energyEnsemblePtr_->save(ar);
       boundaryEnsemblePtr_->save(ar);
+   }
+
+   /*
+   * Load configIoClassName_ string.
+   */
+   void Simulation::loadConfigIo(Serializable::IArchive& ar)
+   {
+
+      // Load and broadcast isDefaultConfigIo flag
+      bool isDefaultConfigIo;
+      if (isIoProcessor()) {
+         ar >> isDefaultConfigIo;
+      }
+      bcast<bool>(domain_.communicator(), isDefaultConfigIo, 0);
+
+      // If not default, read and broadcast configIoClassName 
+      if (!isDefaultConfigIo) {
+         std::string configIoClassName;
+         if (isIoProcessor()) {
+            ar >> configIoClassName;
+         }
+         bcast<std::string>(domain_.communicator(), configIoClassName, 0);
+         setConfigIo(configIoClassName);
+      }
+
+   }
+
+   void Simulation::saveConfigIo(Serializable::OArchive& ar)
+   {
+      bool isDefaultConfigIo = configIoClassName_.empty();
+      ar << isDefaultConfigIo;
+      std::cout << "isDefaultConfigIo =" << isDefaultConfigIo << "\n";
+      if (!isDefaultConfigIo) {
+         ar << configIoClassName_;
+         std::cout << "configIoClassName_ = |" 
+                   << configIoClassName_ << "|\n";
+      }
    }
 
    // --- readCommands and run-time actions  ---------------------------
