@@ -1184,7 +1184,7 @@ namespace DdMd
       }
       bcast<bool>(domain_.communicator(), isDefaultConfigIo, 0);
 
-      // If not default, read and broadcast configIoClassName 
+      // If not isDefaultConfigIo, read and broadcast configIoClassName 
       if (!isDefaultConfigIo) {
          std::string configIoClassName;
          if (isIoProcessor()) {
@@ -1200,11 +1200,8 @@ namespace DdMd
    {
       bool isDefaultConfigIo = configIoClassName_.empty();
       ar << isDefaultConfigIo;
-      std::cout << "isDefaultConfigIo =" << isDefaultConfigIo << "\n";
       if (!isDefaultConfigIo) {
          ar << configIoClassName_;
-         std::cout << "configIoClassName_ = |" 
-                   << configIoClassName_ << "|\n";
       }
    }
 
