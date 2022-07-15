@@ -36,10 +36,13 @@ with parameters
 
 \section mcMd_analyzer_McEnergyAnalyzer_output_sec Output
 
-During the simulation, if nSamplePerBlock > 0, block averages are output to the 
+If nSamplePerBlock > 0, block averages are output during the simulation to the
 file {outputFileName}.dat. In this case a description of the format of this *.dat
 file, indicating a label for the data in each column, is output to the file 
-{outputFileName}.fmt. If nSamplePerBlock == 0, this file is not created.
+{outputFileName}.dfm. 
+
+If nSamplePerBlock == 0, neither of the data *.dat or data format *.dfm file is 
+created.
 
 At the end of the simulation:
 

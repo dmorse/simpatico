@@ -1,5 +1,4 @@
-ddMd_analyzers_misc_=\
-     ddMd/analyzers/misc/OrderParamNucleation.cpp
+ddMd_analyzers_misc_=
 
 ifdef SIMP_BOND
 ddMd_analyzers_misc_+=\

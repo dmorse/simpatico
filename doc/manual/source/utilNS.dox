@@ -1,13 +1,18 @@
 namespace Util 
 {
 
-/*! \page Util_NS_page 3.3 Util namespace
+/*! \page Util_NS_page 4.3 Util namespace
 
 \ref source_namespace_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref Simp_NS_page (Next)  
 <BR>
 
-The Util namespace contains a varity of general utility classes for scientific computation. Here we list only a few of the most important classes. 
+The Util namespace contains a varity of general utility classes for scientific computation. 
+Here we list only a few of the most important classes. 
+
+All source files for entitites in the Util namespace are located in the simpatico/src/util
+directory. This directory is maintained as a separate repository and imported into simpatico
+as a git submodule in order to allow reuse of this code in other projects.
 
 See also: \ref Util_NS_Module "Util Namespace Module"
 
@@ -16,7 +21,7 @@ See also: \ref Util_NS_Module "Util Namespace Module"
 The dimensionality of space is defined by the int const Dimension = 3.
 
 Cartesian vectors, such as atomic positions, are represented throughout 
-Simpatico by Vector objects. The elements of a Vector can be manipulated 
+simpatico by Vector objects. The elements of a Vector can be manipulated 
 exactly as if they were elements of a normal C array: If v is a 
 three-dimensional Vector, v[0], v[1], and v[2] are its Cartesian 
 components, which are all double precision floating point.
@@ -37,7 +42,7 @@ See also: \ref Space_Module "Space Module"
 \section containers_sec Container templates
 
 The src/util/containers directory provides a set of container class 
-templates that are used throughout Simpatico. These containers are used 
+templates that are used throughout simpatico. These containers are used 
 in preference to either bare C arrays or to standard library containers,
 with few exceptions. 
 
@@ -76,11 +81,11 @@ std::vector can be automatically reallocated and copied to a new
 location in response to addition of new elements. This makes 
 std::vector containers unsuitable for designs in which objects are 
 allocated in arrays, but are accessed via pointers, which is a common 
-pattern in Simpatico. 
+pattern in simpatico. 
 
 See also: \ref Container_Module "Container Module"
 
-\section param_sec Parameter File IO
+\section param_sec Parameter file IO
 
 The src/util/containers directory contains a set of classes that are used 
 to read and write parameter file blocks. Every class that needs to read 

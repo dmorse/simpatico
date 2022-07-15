@@ -1,37 +1,30 @@
 For configuration files:
 
-   1) Add Simp::Species::writeStructure function to write structure 
-      for a species to file in format used by SmpConfigIo.
-      (Done)
+   1) See comments in file "progress"
 
-   2) SmpConfigIo for McMd. (Done)
-
-   3) Add Simp::Species::readStructure function to read information 
-      in the same format and initialize a new species.
-
-   4) Add an array of Simp::Species objects to DdMd::Simulation, and
-      int nSpecies() and bool hasSpecies() functions.
-
-   5) Write SmpConfigReader in DdMd that optionally reads Species
-      information. This class should also generate bond information
-      from the Species information and send this all processors.
-
-   6) Write a SmpConfigWriter in DdMd that writes Species information
-      if available.
+   2) For reading of configuration files, allow Species block to be
+   optional in McMd parameter files, allow allocation to be deferred 
+   until reading of the configuration file or the preamble of the 
+   trajectory file that contains species information.
 
 For trajectory files:
 
    1) Write SmpTrajectoryWriter class for DdMd.
 
-   2) Write trajectory file reader and writer classes for McMd.
+   2) Write Smp trajectory file reader and writer classes for McMd.
 
-   Issues: How to deal with molecular format that only includes
-   a subset of the atoms in the simulation.
-
+   In trajectory reading in McMd, initially use allocation of all species
+   during reading of the parameter file, and check consistency with 
+   information in the SPECIES block of the trajectory file, if any.
+   When deferred allocation is enabled, allow deferred allocation.
+   `
 For topology / species structure file, if any:
 
    Proposal: Topology file format is identical to that used in SPECIES 
-   block of a configuration file.
+   block of a configuration file. Alternative: It could be the entire
+   header of a trajectory file. Questions: Where is atom type 
+   information, and can it handle non-molecular systems using [BOND], 
+   [ANGLE] etc. 
 
 Force field file:
 

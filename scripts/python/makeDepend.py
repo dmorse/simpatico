@@ -63,7 +63,7 @@ def editDepend(pfile, dfile, blddir, extraDependencies):
            text.append(target + ': ')
        deps = line.split()
        for dep in deps:
-           path = os.path.abspath(dep)
+           path = os.path.abspath(dep) + ' '
            text.append(path)
 
    # Process extraDependencies (if any)

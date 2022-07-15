@@ -150,6 +150,7 @@ namespace DdMd
       externalStyle_(),
       #endif
       nAtomType_(0),
+      nSpecies_(0),
       #ifdef SIMP_BOND
       nBondType_(0),
       #endif
@@ -1971,31 +1972,6 @@ namespace DdMd
       return pressure;
    }
 
-   #ifdef UTIL_MPI
-   /*
-   * Compute all pair energy contributions.
-   */
-   void Simulation::computePairEnergies()
-   {  pairPotential().computePairEnergies(domain_.communicator()); }
-   #else
-   /*
-   * Compute all pair energy contributions.
-   */
-   void Simulation::computePairEnergies()
-   {  pairPotential().computePairEnergies(); }
-   #endif
-
-   /*
-   * Return pair energies contributions.
-   */
-   DMatrix<double> Simulation::pairEnergies() const
-   {
-      DMatrix<double> pairEnergies;
-      pairEnergies.allocate(nAtomType_, nAtomType_);
-      pairEnergies = pairPotential().pairEnergies();
-      return pairEnergies;
-   }
-
    /*
    * Mark all potential energies as unknown.
    */
@@ -2330,6 +2306,27 @@ namespace DdMd
       #else
       out << "-s Special     OFF" << std::endl;
       #endif
+   }
+
+   /*
+   * Set parameter NSpecies on all processors, allocate array on master.
+   */
+   void Simulation::setNSpecies(int nSpecies) 
+   {
+      UTIL_CHECK(nSpecies > 0);
+      if (domain().isMaster()) {
+         if (species_.isAllocated()) {
+            UTIL_CHECK(species_.capacity() == nSpecies_);
+            species_.deallocate();
+         } else {
+            UTIL_CHECK(nSpecies_ == 0);
+         }
+         if (!species_.isAllocated()) {
+            species_.allocate(nSpecies);
+         }
+      }
+      UTIL_CHECK(species_.capacity() == nSpecies);
+      nSpecies_ = nSpecies;
    }
 
    /*

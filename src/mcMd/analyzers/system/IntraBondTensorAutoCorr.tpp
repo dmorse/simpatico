@@ -137,9 +137,7 @@ namespace McMd
    template <class SystemType>
    void IntraBondTensorAutoCorr<SystemType>::setup() 
    { 
-      if (!isInitialized_) {
-         UTIL_THROW("Object is not intitialized");
-      }
+      UTIL_CHECK(isInitialized_); 
 
       // Get number of molecules and initialize the accumulator
       nMolecule_ = system().nMolecule(speciesId_);
@@ -153,6 +151,7 @@ namespace McMd
    template <class SystemType>
    void IntraBondTensorAutoCorr<SystemType>::sample(long iStep) 
    { 
+      UTIL_CHECK(isInitialized_); 
       if (isAtInterval(iStep))  {
          Boundary& boundary = system().boundary();
          System::ConstMoleculeIterator  molIter;
@@ -189,10 +188,10 @@ namespace McMd
                data_[i](j, j) -= trace;
             }
             ++i;
-         }
-
+         } // end molecule loop
          accumulator_.sample(data_);
-      } 
+
+      } // end if isAtInterval(iStep) 
    }
 
    /*

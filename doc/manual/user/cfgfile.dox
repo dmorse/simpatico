@@ -1,7 +1,7 @@
-/*! \page user_cfgfile_page 2.6 Configuration Files
+/*! \page user_cfgfile_page 3.4 Configuration Files
 
- \ref user_commands_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_examples_page  (Next) 
+ \ref user_command_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_example_page  (Next) 
  <BR>
 
 The instantaneous state of a system is recorded in a configuration file.  Each of the simpatico programs has a default configuration file format, and is also able to read and write several other formats. 
@@ -210,7 +210,7 @@ Because the data structures used in the ddSim parallel MD program are signficant
 An mdSim MD simulation can be instructed to read an output file created by an earlier mcSim MC simulation by adding a command "SET_CONFIG_IO McConfigIo" before the READ_CONFIG command.  Because the default MC file format does not contain any information about velocities, however, this pair of commands would normally be followed in the file for an MdSimulation by a THERMALIZE command, to generate random velocities chosen from a Maxwell-Boltzmann distribution.
  
  <BR>
- \ref user_commands_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_command_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page     (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_examples_page  (Next) 
+ \ref user_example_page   (Next) 
 */

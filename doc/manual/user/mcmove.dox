@@ -1,0 +1,33 @@
+/*! \page user_mcmove_page 3.8 Monte Carlo Moves
+
+\ref user_integrate_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_species_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+The mcSim program can use any combination of several different types of Monte Carlo move. 
+Classes that implement Monte Carlo (MC) moves are subclasses of McMd::McMove. 
+Monte Carlo moves that will be used in a particular simulation are listed within the \subpage mcMd_mcMove_McMoveManager_page block of the parameter file. 
+The block associated with each MC move contains a "probability" parameter. 
+At the beginning of each step of the main loop of the mcSim program, the program chooses one of these moves to attempt at random, with the relative probabilities specified in the parameter file.  
+(If the probability specified in the parameter file do not add to unity, they are normalized by multiplying by a common factor during initialization)
+
+Monte Carlo move classes:
+
+<ul style="list-style: none;">
+  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
+  <li> \subpage mcMd_mcMove_EndSwapMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbLinearEndMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbReptateMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbRebridgeMove_page </li>
+</ul>
+
+\sa McMd_McMove_Module (developer documentation)
+
+<BR>
+\ref user_integrate_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_species_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+*/

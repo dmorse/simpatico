@@ -34,6 +34,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd mdIntegrators; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
 	cd simulation; $(MAKE) clean
+	cd perturb; $(MAKE) clean
 else
 	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 endif

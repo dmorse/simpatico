@@ -12,23 +12,39 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref about_contributors_page </li>
    </ul>
  </li>
- <li> \subpage user_page "2. User Guide"
+ <li> \subpage install_page "2. Installation"
    <ul style="list-style: none;">
-   <li> \ref user_source_page  </li>
-   <li> \ref user_compile_page  </li>
-   <li> \ref user_usage_page    </li>
-   <li> \ref user_param_page    </li>
-   <li> \ref user_commands_page </li>
-   <li> \ref user_cfgfile_page  </li>
-   <li> \ref user_examples_page </li>
-   <li> \ref user_analysis_page </li>
-   <li> \ref user_features_page </li>
-   <li> \ref user_restart_page  </li>
-   <li> \ref user_multi_page    </li>
-   <li> \ref user_options_page  </li>
+   <li> \ref install_require_page  </li>
+   <li> \ref install_source_page  </li>
+   <li> \ref install_overview_page  </li>
+   <li> \ref install_environment_page  </li>
+   <li> \ref install_setup_page  </li>
+   <li> \ref install_inout_page  </li>
+   <li> \ref install_compile_out_page  </li>
+   <li> \ref install_compile_in_page  </li>
+   <li> \ref install_configure_page  </li>
+   <li> \ref install_boundary_page  </li>
+   <li> \ref install_doc_page  </li>
    </ul>
  </li>
- <li> \subpage source_page "3. Source Code Overview"
+ <li> \subpage user_page "3. User Guide"
+   <ul style="list-style: none;">
+   <li> \ref user_usage_page    </li>
+   <li> \ref user_param_page    </li>
+   <li> \ref user_command_page </li>
+   <li> \ref user_cfgfile_page  </li>
+   <li> \ref user_example_page </li>
+   <li> \ref user_potential_page </li>
+   <li> \ref user_integrate_page </li>
+   <li> \ref user_mcmove_page </li>
+   <li> \ref user_species_page </li>
+   <li> \ref user_analysis_page </li>
+   <li> \ref user_generate_page </li>
+   <li> \ref user_restart_page  </li>
+   <li> \ref user_multi_page    </li>
+   </ul>
+ </li>
+ <li> \subpage source_page "4. Source Code Overview"
    <ul style="list-style: none;">
    <li> \subpage source_directory_page </li>
    <li> \subpage source_namespace_page </li>
@@ -36,10 +52,10 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage Simp_NS_page </li>
    <li> \subpage McMd_NS_page  </li>
    <li> \subpage DdMd_NS_page  </li>
-   <li> \subpage Tools_NS_page  </li>
+   <li> \subpage MdPp_NS_page  </li>
    </ul>
  </li>
- <li> \subpage extend_page  "4. Extending Simpatico" </li>
+ <li> \subpage extend_page  "5. Extending Simpatico" </li>
    <ul style="list-style: none;">
    <li> \ref extend_overview_page  </li>
    <li> \ref extend_base_page  </li>
@@ -50,7 +66,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref extend_module_page   </li>
    </ul>
  </li>
- <li> \subpage developer_page "5. Developer Information"
+ <li> \subpage developer_page "6. Developer Information"
    <ul style="list-style: none;">
    <li> \ref developer_build_page </li>
    <li> \ref developer_standards_page </li>

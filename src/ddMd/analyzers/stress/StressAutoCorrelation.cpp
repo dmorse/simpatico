@@ -6,7 +6,7 @@
 */
 
 #include <ddMd/analyzers/stress/StressAutoCorrelation.h>
-#include <ddMd/analyzers/AutoCorrAnalyzer.tpp>
+#include <ddMd/analyzers/base/AutoCorrAnalyzer.tpp>
 
 #include <sstream>
 

@@ -25,56 +25,116 @@ namespace DdMd
       atom2Ptrs_(),
       first_(),
       cutoff_(0.0),
-      atomCapacity_(0),
-      pairCapacity_(0),
       maxNAtomLocal_(0),
       maxNPairLocal_(0),
       buildCounter_(0),
       maxNAtom_(0),
-      maxNPair_(0),
-      isAllocated_(false)
+      maxNPair_(0)
    {}
-   
+
    /*
    * Destructor.
    */
-   PairList::~PairList() 
+   PairList::~PairList()
    {}
-   
-   /*
-   * Allocate CellList and PairList arrays, initialize to empty state.
-   */
-   void PairList::allocate(int atomCapacity, int pairCapacity , double cutoff) 
-   {
-      atomCapacity_ = atomCapacity;
-      pairCapacity_ = pairCapacity;
-      cutoff_       = cutoff;
 
-      atom1Ptrs_.reserve(atomCapacity_);
-      atom2Ptrs_.reserve(pairCapacity_);
-      first_.reserve(atomCapacity_ + 1);
-  
-      isAllocated_ = true;
+   void PairList::setCutoff(double cutoff)
+   {  cutoff_  = cutoff; }
+
+   void PairList::reserveAtoms(int atomCapacity)
+   {
+      if (atomCapacity > atom1Ptrs_.capacity()) {
+         atom1Ptrs_.reserve(atomCapacity);
+         first_.reserve(atomCapacity + 1);
+      }
+   }
+
+   void PairList::reservePairs(int pairCapacity)
+   {
+      if (pairCapacity > atom2Ptrs_.capacity()) { 
+         atom2Ptrs_.reserve(pairCapacity);
+      }
    }
 
    /*
    * Clear the PairList.
    */
    void PairList::clear()
-   { 
+   {
       atom1Ptrs_.clear();
       atom2Ptrs_.clear();
       first_.clear();
    }
- 
+
+   /*
+   * CountPairs - compute the number of pairs without creating a pairList.
+   */
+   int PairList::countPairs(CellList& cellList, bool reverseUpdateFlag)
+   {
+      // Precondition
+      UTIL_CHECK(cellList.isBuilt());
+
+      // Make copies of atomic positions and ids in cell list
+      cellList.update();
+
+      Cell::NeighborArray neighbors;
+      const Cell* cellPtr;    // pointer to current primary cell
+      CellAtom* atom1Ptr;     // pointer to primary atom
+      CellAtom* atom2Ptr;     // pointer to secondary atom
+      Mask* maskPtr;          // pointer to primary atom Mask
+      Vector dr;              // pair separation vector
+      double cutoffSq;        // square of cutoff distance
+      int na;                 // number of atoms in primary cell
+      int nn;                 // number of neighbor atoms for a cell
+      int i, j;               // dummy indices for atoms in cell
+      int nPair = 0;          // pair counter (return value)
+      cutoffSq = cutoff_*cutoff_;
+
+      // Iterate through linked list of primary cells
+      cellPtr = cellList.begin();
+      while (cellPtr) {
+         na = cellPtr->nAtom(); // # of atoms in primary cell
+         if (na) {
+            cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
+            nn = neighbors.size();
+
+            // Loop over primary atoms (atom1) in primary cell
+            for (i = 0; i < na; ++i) {
+               atom1Ptr = neighbors[i];
+               maskPtr  = atom1Ptr->maskPtr();
+
+               // Loop over secondary neighbor atoms
+               for (j = i + 1; j < nn; ++j) {
+                  atom2Ptr = neighbors[j];
+                  dr.subtract(atom2Ptr->position(), atom1Ptr->position());
+                  if (dr.square() < cutoffSq) {
+                     if (!maskPtr->isMasked(atom2Ptr->id())) {
+                        ++nPair;
+                     }
+                  }
+               }
+
+            } // for ia
+         } // if (na)
+
+         // Advance to next cell in a linked list
+         cellPtr = cellPtr->nextCellPtr();
+      }
+
+      // Return total number of pairs
+      return nPair;
+   }
+
    /*
    * Build the PairList, i.e., populate it with atom pairs.
    */
    void PairList::build(CellList& cellList, bool reverseUpdateFlag)
    {
       // Precondition
-      assert(isAllocated());
- 
+      UTIL_CHECK(cellList.isBuilt());
+      UTIL_CHECK(atomCapacity() > 0);
+      UTIL_CHECK(pairCapacity() > 0);
+
       Cell::NeighborArray neighbors;
       double cutoffSq;
       const Cell* cellPtr;
@@ -86,10 +146,10 @@ namespace DdMd
       int nn;                 // number of neighbors for a cell
       int i, j;
       bool hasNeighbor;
-  
+
       // Set maximum squared-separation for pairs in Pairlist
       cutoffSq = cutoff_*cutoff_;
-   
+
       // Initialize counters for primary atoms and neighbors
       atom1Ptrs_.clear();
       atom2Ptrs_.clear();
@@ -98,7 +158,7 @@ namespace DdMd
 
       // Copy positions and ids into cell list
       cellList.update();
-   
+
       // Find all neighbors (cell list)
       cellPtr = cellList.begin();
       while (cellPtr) {
@@ -107,17 +167,17 @@ namespace DdMd
          if (na) {
             cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
             nn = neighbors.size();
-   
+
             // Loop over primary atoms (atom1) in primary cell
             for (i = 0; i < na; ++i) {
                atom1Ptr = neighbors[i];
                maskPtr  = atom1Ptr->maskPtr();
-   
+
                // Loop over secondary atoms
                hasNeighbor = false;
                for (j = i + 1; j < nn; ++j) {
                   atom2Ptr = neighbors[j];
-                  dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+                  dr.subtract(atom2Ptr->position(), atom1Ptr->position());
                   if (dr.square() < cutoffSq && !maskPtr->isMasked(atom2Ptr->id())) {
                      atom2Ptrs_.append(atom2Ptr->ptr());
                      hasNeighbor = true;
@@ -130,7 +190,7 @@ namespace DdMd
                   first_.append(atom2Ptrs_.size());
                }
 
-            } // for ia 
+            } // for ia
          } // if (na)
 
          // Advance to next cell in a linked list
@@ -152,7 +212,7 @@ namespace DdMd
 
       // Increment buildCounter_= number of times the list has been built.
       ++buildCounter_;
- 
+
       // Increment maxima
       if (atom1Ptrs_.size() > maxNAtomLocal_) {
          maxNAtomLocal_ = atom1Ptrs_.size();
@@ -186,13 +246,13 @@ namespace DdMd
    #else
    void PairList::computeStatistics()
    #endif
-   { 
+   {
       #ifdef UTIL_MPI
       int maxNAtomGlobal;
       int maxNPairGlobal;
-      communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
+      communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1,
                              MPI::INT, MPI::MAX);
-      communicator.Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1, 
+      communicator.Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1,
                              MPI::INT, MPI::MAX);
       maxNAtom_.set(maxNAtomGlobal);
       maxNPair_.set(maxNPairGlobal);
@@ -207,7 +267,7 @@ namespace DdMd
    /*
    * Clear all statistics.
    */
-   void PairList::clearStatistics() 
+   void PairList::clearStatistics()
    {
       maxNAtomLocal_ = 0;
       maxNPairLocal_ = 0;
@@ -224,14 +284,14 @@ namespace DdMd
 
       out << std::endl;
       out << "PairList" << std::endl;
-      out << "NPair: max, capacity     " 
+      out << "NPair: max, capacity     "
                   << Int(maxNPair_.value(), 10)
-                  << Int(pairCapacity_, 10)
+                  << Int(pairCapacity(), 10)
                   << std::endl;
-      out << "NAtom: max, capacity     " 
+      out << "NAtom: max, capacity     "
                   << Int(maxNAtom_.value(), 10)
-                  << Int(atomCapacity_, 10)
+                  << Int(atomCapacity(), 10)
                   << std::endl;
    }
 
-} 
+}

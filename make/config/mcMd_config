@@ -1,0 +1,94 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#  - A variable $(MCMD_DEFS) that is passed to the processor to define
+#    preprocessor flags that effect only code in the mcMd/ directory.
+#
+#  - A variable $(MCMD_SUFFIX) that is appended to the name of the mcMd
+#    library and (by default) to the mcSim and mdSim executables.
+#
+#  - Variables that define file names for the mcMd library and the mcSim
+#    and mdSim executables.
+#
+# This file is included by every makefile in the mcMd directory.  It
+# should be included after the file src/config.mk, after the files
+# src/util/config.mk and src/simp/config.mk, and before the file
+# src/mcmd/patterns.mk.
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros
+
+# Define MCMD_PERTURB, enable free energy perturbation
+ifeq ($(UTIL_MPI),1)
+#MCMD_PERTURB=1
+endif
+
+# Define MCMD_LINK, enable Link (mutable bond) potentials
+#MCMD_LINK=1
+
+# Define MCMD_SHIFT, enable recording of shifts of atomic coordinates
+# into primary periodic unit cell in MD simulations.
+#MCMD_SHIFT=1
+
+#-----------------------------------------------------------------------
+# Define MCMD_DEFS and MCMD_SUFFIX:
+#
+# The variable MCMD_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option. If not empty, it must
+# consist of a list of zero or more preprocessor macro names, each
+# preceded by the compiler flag "-D".
+#
+# The variable MCMD_SUFFIX is appended to the base name mcMd.a of the 
+# mcMd library and (by default) to the base names of the executables
+# mcSim and mdSim in the $(BIN_DIR).
+#
+# Initialize to empty strings: 
+
+MCMD_DEFS=
+MCMD_SUFFIX:=
+
+# The variable MCMD_DEFS is a recursive (normal) makefile variable, and
+# is extended using the += operator, e.g., MCMD_DEFS+=-DMCMD_PERTURB.
+# The MCMD_SUFFIX is a non-recursive makefile variable, which may be
+# extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
+
+# Enable free energy perturbation 
+ifdef MCMD_PERTURB
+MCMD_DEFS+= -DMCMD_PERTURB
+endif
+
+# Enable Link (mutable bond) potentials
+ifdef MCMD_LINK
+MCMD_DEFS+= -DMCMD_LINK
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
+endif
+
+# Enable recording of shifts of atomic coordinates into
+# primary periodic unit cell in MD simulations.
+ifdef MCMD_SHIFT
+MCMD_DEFS+= -DMCMD_SHIFT
+#MCMD_SUFFIX:=$(MCMD_SUFFIX)_r
+endif
+
+#-----------------------------------------------------------------------
+# Path to mcMd static library file
+#
+# Note: 
+#   BLD_DIR is defined in src/config.mk (main config file)
+#   *_SUFFIX variables are defined in namespace config.mk files
+
+# Suffix added to name of library and executables
+MCMD_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(SIMP_SUFFIX)$(MCMD_SUFFIX)
+
+# Name of library file
+mcMd_LIBNAME=mcMd$(MCMD_ALL_SUFFIX)
+
+# Path to library file
+mcMd_LIB=$(BLD_DIR)/mcMd/lib$(mcMd_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Paths to executable files
+# Note: BIN_DIR is defined in src/config.mk (main config file)
+
+mcSim_EXE=$(BIN_DIR)/mcSim$(MCMD_ALL_SUFFIX)
+mdSim_EXE=$(BIN_DIR)/mdSim$(MCMD_ALL_SUFFIX)
+#-----------------------------------------------------------------------

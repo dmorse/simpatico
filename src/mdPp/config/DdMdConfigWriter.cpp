@@ -1,0 +1,114 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2017, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "DdMdConfigWriter.h"
+
+#include <mdPp/chemistry/Atom.h>
+#include <mdPp/chemistry/Group.h>
+//#include <mdPp/chemistry/MaskPolicy.h>
+//#include <mdPp/storage/SpeciesStorage.h>
+#include <mdPp/storage/Configuration.h>
+
+#include <util/space/Vector.h>
+#include <util/format/Int.h>
+#include <util/format/Dbl.h>
+
+namespace MdPp
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   DdMdConfigWriter::DdMdConfigWriter(Configuration& configuration, bool writeAtomContexts)
+    : ConfigWriter(configuration),
+      writeAtomContexts_(writeAtomContexts)
+   {  setClassName("DdMdConfigWriter"); }
+
+   /*
+   * Private method to write Group<N> objects.
+   */
+   template <int N>
+   int DdMdConfigWriter::writeGroups(std::ofstream& file, const char* sectionLabel,
+                  const char* nGroupLabel, GroupStorage<N>& groups)
+   {
+      ArrayIterator< Group<N> > iter;
+      int nGroup = configuration().bonds().size();
+
+      file << std::endl;
+      file << sectionLabel << std::endl;
+      file << nGroupLabel << Int(nGroup, 10) << std::endl;
+      for (groups.begin(iter); iter.notEnd(); ++iter) {
+         file << *iter << std::endl;
+      }
+      return nGroup;
+   }
+
+   /* 
+   * Write the configuration file.
+   */
+   void DdMdConfigWriter::writeConfig(std::ofstream& file)
+   {
+      // Precondition
+      if (!file.is_open()) {  
+         UTIL_THROW("Error: File is not open"); 
+      }
+
+      // Write boundary box dimensions
+      file << "BOUNDARY" << std::endl << std::endl;
+      file << configuration().boundary() << std::endl;
+      file << std::endl;
+
+      // Decide whether to write atom context data
+      bool writeAtomContexts = false;
+      if (configuration().hasAtomContexts()) {
+         writeAtomContexts = writeAtomContexts_;
+      }
+
+      // Write atom data
+      file << "ATOMS" << std::endl;
+      int nAtom = configuration().atoms().size();
+      file << "nAtom" << Int(nAtom, 10) << std::endl;
+      Vector r;
+      AtomStorage::Iterator iter;
+      configuration().atoms().begin(iter);
+      for (; iter.notEnd(); ++iter) {
+         file << Int(iter->id, 10) 
+              << Int(iter->typeId, 6);
+         r = iter->position;
+         if (writeAtomContexts) {
+            file << Int(iter->speciesId, 6) 
+                 << Int(iter->moleculeId, 10)
+                 << Int(iter->atomId, 6);
+         }
+         file << "\n" << r 
+              << "\n" << iter->velocity << "\n";
+      }
+
+      // Write the groups
+      #ifdef SIMP_BOND
+      if (configuration().bonds().capacity()) {
+         writeGroups(file, "BONDS", "nBond", configuration().bonds());
+      }
+      #endif
+
+      #ifdef SIMP_ANGLE
+      if (configuration().angles().capacity()) {
+         writeGroups(file, "ANGLES", "nAngle", configuration().angles());
+      }
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      if (configuration().dihedrals().capacity()) {
+         writeGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
+      }
+      #endif
+
+   }
+ 
+}

@@ -16,8 +16,9 @@
 #include <ddMd/storage/BondStorage.h>         // member
 #include <ddMd/storage/AngleStorage.h>        // member
 #include <ddMd/storage/DihedralStorage.h>     // member
-#include <ddMd/chemistry/AtomType.h>          // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>        // member
+#include <ddMd/chemistry/AtomType.h>          // member (template param)
+#include <simp/species/Species.h>             // member (template param)
 #include <simp/boundary/Boundary.h>           // member
 #include <util/random/Random.h>               // member
 #include <util/space/Tensor.h>                // member (template param)
@@ -401,22 +402,6 @@ namespace DdMd
       void unsetPotentialEnergies();
 
       /**
-      * Compute pair energies for each pair of atom types.
-      *
-      * Reduce operation: Must be called on all nodes.
-      */
-      void computePairEnergies();
-
-      /**
-      * Return precomputed pair energies.
-      *
-      * Call only on master processor, after computePairEnergies.
-      *
-      * \return total pair energies (only correct on master node).
-      */
-      DMatrix<double> pairEnergies() const;
-
-      /**
       * Calculate and store kinetic stress.
       *
       * Reduce operation: Must be called on all nodes.
@@ -624,6 +609,49 @@ namespace DdMd
       */
       DihedralStorage& dihedralStorage();
       #endif
+
+      //@}
+      /// \name Molecular Species 
+      //@{
+
+      /**
+      * Set nSpecies_ and allocate array of Species objects on master.
+      *
+      * This function should be called on all processors after the value 
+      * of nSpecies is known on all processors. All processors store the 
+      * value of nSpecies, but only the master processor allocates an array 
+      * of nSpecies Simp::Species objects.  Each Species object on the 
+      * master can store a description of the structure of one molecular
+      * species, along with a "capacity" giving the number of molecules 
+      * of that species. If this function has not been called, then 
+      * nSpecies_ == 0 by default.
+      *
+      * \param nSpecies number of Species objects.
+      */
+      void setNSpecies(int nSpecies);
+
+      /**
+      * Return the number of molecular species (returns 0 none exist).
+      *
+      * May be called on any processor.
+      */
+      int nSpecies() const;
+
+      /**
+      * Does this simulation have an array of Species objects?
+      *
+      * May be called on an processor. Returns true iff nSpecies() > 0.
+      */
+      bool hasSpecies() const;
+
+      /**
+      * Access a specific Species object by reference.
+      *
+      * May only be called on the master processor, with 0 <= i < nSpecies.
+      * 
+      * \param i index of desired molecular species.
+      */
+      Species& species(int i);
 
       //@}
       /// \name Miscellaneous Accessors (return members by reference)
@@ -874,6 +902,9 @@ namespace DdMd
       /// Array of AtomType objects for all atoms in a simulation.
       DArray<AtomType> atomTypes_;
 
+      /// Array of Species molecule structure descriptors
+      DArray<Species> species_;
+
       /// Processor grid.
       Domain domain_;
 
@@ -998,6 +1029,9 @@ namespace DdMd
 
       /// Number of distinct atom types.
       int nAtomType_;
+
+      /// Number of species (0 if none)
+      int nSpecies_;
 
       #ifdef SIMP_BOND
       /// Number of distinct bond types.
@@ -1227,6 +1261,14 @@ namespace DdMd
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
+   /// Get the number of molecular species.
+   inline int Simulation::nSpecies() const
+   {  return nSpecies_; }
+
+   /// Return true iff nSpecies > 0.
+   inline bool Simulation::hasSpecies() const
+   {  return bool(nSpecies_ > 0); }
+
    #ifdef SIMP_BOND
    /// Get maximum number of bond types.
    inline int Simulation::nBondType()
@@ -1254,6 +1296,14 @@ namespace DdMd
    /// Get an AtomType descriptor for a specific type by reference.
    inline AtomType& Simulation::atomType(int i)
    {  return atomTypes_[i]; }
+
+   /// Get an AtomType descriptor for a specific type by reference.
+   inline Species& Simulation::species(int i)
+   {
+      UTIL_CHECK(nSpecies_ > 0); 
+      UTIL_CHECK(domain().isMaster());  
+      return species_[i]; 
+   }
 
    /// Get the masked pair policy.
    inline MaskPolicy Simulation::maskedPairPolicy() const

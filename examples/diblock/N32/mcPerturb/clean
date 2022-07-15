@@ -1,6 +1,0 @@
-#!/bin/bash
-rm -f */log
-rm -f */param
-rm -f */restart
-rm -f */out/*
-rm -fR */rst

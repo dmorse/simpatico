@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>           // base class templ
+#include <mcMd/analyzers/base/SystemAnalyzer.h>           // base class templ
 #include <mcMd/simulation/System.h>                  // class templ param
 #include <mcMd/analyzers/system/ClusterIdentifier.h> // member
 #include <util/accumulators/IntDistribution.h>       // member

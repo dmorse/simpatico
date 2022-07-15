@@ -9,13 +9,11 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>   // base class template
-#include <mcMd/mcSimulation/McSystem.h>          // base template parameter
-#include <util/accumulators/Average.h>           // member
-#include <mcMd/neighbor/CellList.h>              // member
+#include <mcMd/analyzers/base/SystemAnalyzer.h>     // base class template
+#include <mcMd/mcSimulation/McSystem.h>        // base class parameter
+#include <util/accumulators/Average.h>         // member
+#include <mcMd/neighbor/CellList.h>            // member
 #include <mcMd/analyzers/util/PairSelector.h>  // member
-
-#include <cstdio> 
 
 namespace McMd
 {
@@ -23,7 +21,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * McPairEnergyAverage averages of total potential energy.
+   * McPairEnergyAverage averages pair energy for one type of pair.
    *
    * See \ref mcMd_analyzer_McPairEnergyAverage_page "here" for 
    * the parameter file format and any other user documentation.

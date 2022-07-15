@@ -1,52 +1,84 @@
-Housekeeping:
-------------
+Analyzers (housekeeping):
+------------------------
 
-- Move DdMd::Simulation::computePairEnergies() and pairEnergies()
-  to PairPotential class, modify PairEnergy(ies) analyzer classes.
+- Review analyzers - try to further standardize outputs.
 
-- Clean up PairEnergyAverage class (e.g., pairs_ class apears to be one pair,
-  accumulator_ used as name for pointer, not derived from AverageAnalyzer).
+Memory Management (avoiding user specified memory limits)
+----------------------------------------------------------
 
-Avoiding User Specified Memory Limits
--------------------------------------
+- Add public allocate(int nTotal) function to ech storage class.
+  It can call the current private function internally. This 
+  should decide how much memory to allocate, based on any
+  information provided in the parameter file along with knownledge
+  of the number of processors and total number of atoms or groups.
+  Decision can be based on homogeneous distribution along with 
+  some generous room for error. 
+ 
+- Modify all configIo objects so as to allocate storage objects
+  if not allocated previously. Then comment out, and ultimately
+  remove, invocation of private allocate() function in readParam
+  and loadParam.  
 
-- Change CellList to self-allocate and re-allocate as needed. This
-  is already implemented in McMd). Get rid of maxBoundary_ parameter.
+- Create a function that can be used create a default allocation
+  of a GroupStorage when reading the configuration file.
 
-- Change PairList so that it can re-allocate on overflow, to avoid
-  crash on exceeding pairCapacity. Allow different processors to have
-  different capacities - no communication is needed. 
+- Create a function estimate the buffer size required during a
+  ghost exchange, based on the number of atoms, the slab thickness, 
+  and an assumption of homogeneous distribution. 
 
-- Change PairList so that if pairCapacity has not been set previously,
-  it does a dry run to count the number of pairs, allocates, and then
-  goes through again to actually file required data structures. 
+- Create function to reallocate the AtomArray and AtomStorage.
 
-- Change AtomStorage so it can reallocate if atomCapacity is exceeded.
-  Then create a default based on an assumption of a homogeneous 
-  distribution. 
+- Create a reallocateSignal within the AtomStorage, and create a 
+  public function of AtomStorage that allows functions to be 
+  registered as observers of this signal.
 
-- Apply similar changes to GroupStorage containers. 
+- Create a function of the GroupStorage template that re-sets 
+  pointers to atoms. Add code to register this with the 
+  reallocateSignal of the AtomStorage. 
 
-Species
--------
+- Register a function to clear and rebuild the pair list with 
+  the modifyAtomPointers signal. 
 
-- Add an array of Species, which is optionally allocated. 
+- Add code to reallocate AtomArray when the number of atoms is
+  too large.
 
-- Add a SmpConfig read/writer that can read Species topology information.
-  This can simply call the readStructure method of Species, but will 
-  need to add code to read the moleculeCapacity.
+- Finish getting rid of maxBoundary_ parameter of PairPotential
+  (currently optional)
 
-- Add a SmpTrajectory writer. Decide whether this should optionally
-  include a Species block in the header.
+- Finish getting rid of atomCapacity_ and pairCapacity_ parameters 
+  of PairPotential (currently optional)
 
-Coulomb
+- Add code to increase buffer size as needed.
+
+Communicators in Potential Energies
+-----------------------------------
+
+  Consider: All computeEnergy and computeStress operations on 
+  potential energies (reduce operations) require a communicator
+  as an argument. Because the potential energies don't store 
+  the address of a communicator, they can't throw exceptions if 
+  energy(), pressure(), or stress() query functions are called 
+  on slave processors. The BondPotential class (for example) does 
+  store pointers to the boundary and associated GroupStorage<2>. 
+  Why not have it also store a pointer to the appropriate 
+  communicator? The implementation has a pointer to the parent
+  Simulation, and thus could get a pointer to the domain, and 
+  from that the communicator. Why not have the potential energy 
+  object also store a pointer to the associated communicator, 
+  when compiled with MPI? Admittedly, this is not needed to 
+  compute forces, without reverse communication, but it is 
+  needed to compute energy or stress.
+  
+   
+Coulomb:
 --------
 
-- Add framework for coulomb interactions
+- Add framework for coulomb interactions, similar to the one developed
+  for McMd.
 
-- Implement Ewald coulomb interactions
+- Implement Ewald coulomb interactions in DdMd.
 
-- Implement PPPM Ewald coulomb interactions
+- Implement PPPM Ewald coulomb interactions.
 
 Exchanger:
 ----------
@@ -58,13 +90,16 @@ Exchanger:
   exchange or ghost exchange) uses the most memory
 
 - Improve error checking of conditions that can lead to incomplete groups.
-  Under what conditions can a group span two boundaries in the same direction ?
-  Is there a bound to how far a ghost can move without causing a possible error ?
+  Under what conditions can a group span two boundaries in the same 
+  direction ?  Is there a bound to how far a ghost can move without 
+  causing a possible error ?
 
 Atom Sorting:
 -------------
 
-- Implement periodic sorting of atoms
+- Implement periodic sorting of atoms. Note: Like re-allocation, this will
+  require resetting of all pointers stored in Group objects, and rebuilding
+  of the pairlist. 
 
 Non-orthogonal boundaries:
 --------------------------
@@ -94,12 +129,6 @@ AtomStorage:
 
 - Consider adding mechanism to increase capacity as needed.
 
-GroupStorage
-------------
-
-- Consider adding mechanism to increase capacity as needed.
-
-
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
@@ -110,8 +139,8 @@ Moving GroupStorage to Potential class:
 Perturbation:
 -------------
 
-- Add perturbation class and class hierarchy for use with multi-system
-  parallel simulations
+- Add perturbation class and class hierarchy for use with 
+  multi-system parallel simulations
 
 Hybrid MD
 ---------
@@ -121,10 +150,12 @@ Hybrid MD
 - Add transactions to GroupStorage (in transactions branch)
 
 
-Single Processor Operation (necessary or pipe dream?)
+Single Processor Operation 
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes, to enable single 
-  processor operation with no MPI
+- Is this necessary, or is it a pipe dream? We already have mdSim.
+
+- If we do this: Modify Distributor, Collector, ConfigIo, and Exchanger 
+  classes to work ifndef UTIL_MPI, continue with other classes, to enable 
+  single processor operation with no MPI
 

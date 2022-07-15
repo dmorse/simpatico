@@ -1,0 +1,8 @@
+Add *.dox file documentation for:
+
+    IntraBondStressAutoCorr
+    IntraBondTensorAutoCorr
+    LinearRouseAutoCorr
+    LinearRingAutoCorr
+
+    Also change names for bond tensor autocorr classes, removing "Intra"

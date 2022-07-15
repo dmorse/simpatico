@@ -5,7 +5,8 @@ mcMd_species_= \
 
 ifdef SIMP_BOND
 mcMd_species_+= \
-    mcMd/species/HomopolymerSG.cpp 
+    mcMd/species/HomopolymerSG.cpp \
+    mcMd/species/LinearSG.cpp
 endif
 
 mcMd_species_SRCS=\

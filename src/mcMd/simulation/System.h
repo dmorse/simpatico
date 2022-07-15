@@ -149,7 +149,7 @@ namespace McMd
       * has a Perturbation or Replica Exchange move will, however, 
       * not have pointers to these objects.
       *
-      * \param system System object being copied.
+      * \param other System object being copied.
       */
       System(const System& other);
  

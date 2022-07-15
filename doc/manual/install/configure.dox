@@ -1,0 +1,319 @@
+/*! \page install_configure_page 2.9 Optional Features
+
+\ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_boundary_page (Next) 
+<BR>
+
+The source code for all of the simpatico programs contain some features 
+that may be enabled (included in the executable) or disabled (excluded 
+from the executable) when the program is compiled.  This page explains 
+how a "configure" script may be used to enable or disable particular
+compile-time features before compiling or recompiling.
+
+\section install_configure_configure The "configure" script
+
+The root simpatico/ directory and the three standard build directories 
+(bld/parallel, bld/serial or src/) each contain a unix bash script named 
+"configure" that can be used to enable or disable particular compile
+time features.  The configure script in the simpatico/ root directory 
+must be invoked from the root directory, and can be used to simultaneously 
+enable or disable features in both the bld/serial and bld/parallel 
+directories (i.e., to both serial and parallel programs that were 
+build out-of-source). The configure script in each build directory 
+must be invoked from the root directory of the build directory tree 
+(i.e., the directory that contains the script), and can be used enable 
+or disable features of code built in that build directory, without 
+effecting code built in other directories. 
+
+\subsection install_configure_query_sub The "query" option
+
+The -q command line option of a configure script may be used to query 
+which optional features are currently set to be enabled or disabled, and
+the current values of variables that specify the choice of compiler and
+environment. To see how this works, after the setup script has been run, 
+changed directory (cd) to the bld/serial directory and then enter
+\code
+> ./configure -q
+\endcode
+The -q command line option cause the script to print a list of which 
+optional features are currently enabled, and the name of the current 
+choice of compiler. The resulting output for the default configuration 
+should look something like this:
+\code
+-m  OFF - MPI
+-g  OFF - debugging
+-p  ON  - pair potential
+-b  ON  - bond potential
+-a  OFF - angle potential
+-d  OFF - dihedral potential
+-e  OFF - external potential
+-s  OFF - special potential
+-l  OFF - McMd links (mutable bonds)
+-s  OFF - McMd shift
+-u  OFF - DdMd modifiers
+\endcode
+
+Each line of this output before the last two shows whether an optional 
+feature is currently set to be enabled (ON) or disabled (OFF). Note 
+that only the nonbonded pair potential and bond potential are enabled 
+by default, and that the angle, dihedral and other potentials are
+disabled by default. If you need to run a simulation that uses any 
+of these other types of potential, you will need to use the configure
+script to enable the relevant features before compiling.
+
+The output produced by running the configure script in the bld/parallel 
+directory after setup looks similiar to that shown above, except that 
+it should indicate that MPI is ON (enabled) by default in that 
+directory.
+
+Invoking the configure script from the simpatico/ root directory
+with the -q option produces a output that first shows the current 
+settings in both the bld/serial directory, which control the 
+configuration of single-processor programs, and then the current
+setting in the bld/parallel directory, which control the 
+configuration of MPI programs.  If all changes have been applied
+using the configure script in the root directory, the settings in
+these two directories should be the same, except that MPI should 
+be disabled in bld/serial and enabled in bld/parallel. 
+
+\subsection install_configure_help_sub The "help" option
+
+If the configure script is invoked with the -h ("help") option, by entering
+\code
+  > ./configure -h
+\endcode
+this will cause list of all command line options accepted by the configure 
+script to be printed to the terminal. The output also includes some information
+about what C++ preprocessor macros are defined or undefined by specific commands.  
+
+\subsection install_configure_change_sub Enabling/disabling optional features
+
+In the output produced by invoking configure with the -q option, each line 
+of the output before the last two begins with the name of the command 
+line option for the configure script (a dash followed by a letter) 
+that can be used to enable or disable an associated feature.  This
+information is also output by the invoking configure with -h option.
+For example, the "debugging" feature is enabled or disabled using the 
+"-g" option.  Each compile-time feature can be enabled by using the 
+associated command line option followed by "1" (ON), or disabled by 
+using the option followed by "0" (OFF), and then compiling or 
+recompiling the desired programs.
+
+For example, to enable debugging (which enables extensive run-time sanity 
+checks, at a slight cost in speed) in code built in one build directory, 
+one would enter
+\code 
+> ./configure -g1
+\endcode
+either from the root of the relevant build directory or from the
+simpatico/ root directory. Invoking this command from a particular build 
+directory enables debugging in that build directory, whereas invoking it 
+from the simpatico/ root directory enables debugging in both the bld/serial 
+and bld/parallel directories, thus applying the change to all code that 
+is compiled out-of-source. Running "./configure -q" again after this 
+change should confirm that debugging is now set to be enabled by the 
+makefile system. To disable debugging before compiling, one would instead 
+enter
+\code 
+> ./configure -g0
+\endcode
+These and any other desired changes in compile-time configuration must 
+be made before invoking make to compile a program.  
+
+Several features may be enabled and/or disabled in a single command.
+For example, to disable debugging and enable the use of angle and 
+dihedral potentials (which are disabled by default), one could invoke
+\code
+> ./configure -g0 -a1 -d1
+\endcode
+either from a specific build directory or from the simpatico root 
+directory.
+
+The configure script in the simpatico root directory can be used to 
+apply the same set of changes simultaneously to configuration files
+in the bld/serial and bld/parallel directories. This version of the 
+script should be invoked from the root directory. It accepts the same 
+options as the configure scripts in the build directories, with one 
+exception: The configure script in the root directory does not accept 
+the "-m" option, which enables or disables MPI. This is because MPI 
+should normally always be enabled in the bld/parallel directory and 
+always be disabled in bld/serial.  The configure script in the 
+simpatico root directory works by simply calling the configure 
+scripts in the bld/serial and bld/parallel directories. Calling the 
+configure script in the root directory with some set of options is 
+thus completely equivalent to calling the configure scripts in 
+bld/serial and bld/parallel with the same set of options. Changes 
+made by invoking this script have no effect on in-source builds. 
+
+\section install_configure_features Optional features
+
+The following table lists information about the most important compile 
+time options. The configure script enables or disables each such optional
+feature by commenting out or uncommenting the definition of a particular 
+makefile variable that is defined (or not) within a particular config.mk
+configuration file within the relevant build directory. Each row of the 
+table lists (in order):
+ 
+  - description: description of the feature 
+
+  - option: the associated command line option for the configure script
+
+  - default: whether the feature is ON or OFF by default
+
+  - variable: the name of the associated makefile variable 
+
+  - file: path to the config.mk configuration file that contains the 
+    definition of the makefile variable.
+
+All paths to configuration files are given relative to the root of the 
+build directory. The file name "config.mk" thus refers to the main
+configuration file in the root directory of a build directory, while
+
+The optional features are:
+<table>
+  <tr> 
+    <td> <b>description</b> </td>
+    <td> <b>option </b> </td>
+    <td> <b>default </b> </td>
+    <td> <b>variable</b> </td>
+    <td> <b>file  </b> </td>
+  </tr>
+  <tr>
+    <td> Message Passing Interface (MPI) </td>
+    <td> -m  </td>
+    <td> OFF / ON </td>
+    <td> UTIL_MPI </td>
+    <td> config.mk </td>
+  </tr>
+  <tr> 
+    <td> Debugging - additional error checks </td>
+    <td> -g </td>
+    <td> OFF </td>
+    <td> UTIL_DEBUG </td>
+    <td> config.mk </td>
+  </tr>
+  <tr> 
+    <td> Bond potentials </td>
+    <td> -b </td>
+    <td> ON </td>
+    <td> SIMP_BOND </td>
+    <td> simp/config.mk </td>
+  </tr>
+  <tr> 
+    <td> Angle potentials </td>
+    <td> -a </td>
+    <td> OFF </td>
+    <td> SIMP_ANGLE </td>
+    <td> simp/config.mk </td>
+  </tr>
+  <tr> 
+    <td> Dihedral potentials </td>
+    <td> -d </td>
+    <td> OFF </td>
+    <td> SIMP_DIHEDRAL </td>
+    <td> simp/config.mk </td>
+  </tr>
+  <tr> 
+    <td> External potentials </td>
+    <td> -e </td>
+    <td> OFF </td>
+    <td> SIMP_EXTERNAL </td>
+    <td> simp/config.mk </td>
+  </tr>
+  <tr> 
+    <td> Links (mutable bonds) </td>
+    <td> -l </td>
+    <td> OFF </td>
+    <td> MCMD_LINKS </td>
+    <td> mcMd/config.mk </td>
+  </tr>
+  <tr> 
+    <td> Free energy perturbation </td>
+    <td> -f </td>
+    <td> OFF </td>
+    <td> MCMD_PERTURB </td>
+    <td> mcMd/config.mk </td>
+  </tr>
+  <tr> 
+    <td> Modifiers </td>
+    <td> -u </td>
+    <td> OFF </td>
+    <td> DDMD_MODIFIERS </td>
+    <td> ddMd/config.mk </td>
+  </tr>
+</table>
+
+\subsection install_configure_features_discuss Discussion of specific features
+
+We now discuss each optional feature other than MPI in a bit more detail. The MPI feature is discussed separately below.
+
+- Debugging (UTIL_DEBUG): The debugging feature enables a variety of optional run-time sanity checks. Among other things, it turns on automatic run time checking of array bounds in the container classes that are used throughout the code. These additional checks slows down execution very slightly, but are often extremely helpful in tracking down bugs or building confidence in correctness during development and debugging of new features. 
+
+- Bond potentials (SIMP_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.
+
+- Angle potentials (SIMP_ANGLE): This option enables the inclusion of covalent three-body bending potentials in all programs. This is currently disabled by default.
+
+- Dihedral potentials (SIMP_DIHEDRAL): This option enables the inclusion of covalent four-body dihedral potentials in all programs. This is currently disabled by default.
+
+- External potentials (SIMP_EXTERNAL): This option enables the inclusion of one-particle external potentials in all programs. These are potential energies that depend on the position and type of an atom. This is disabled by default.
+
+- Links (MCMD_LINK): This feature enables the inclusion of mutable bonds, that can be created or destroyed during the course of a simulation, within mcSim and mdSim programs. Mutable links can use the same set of interaction potentials as covalent bonds, but require a different set of data structures to keep track of their creation and destruction. They were introduced to allow simulation of transient network models with reactions that create or destroy bonds. Links are disabled by default.
+
+- Free energy perturbation (MCMD_PERTURB): This feature allows a user to use a single parameter file to initialize embarassingly simulations of multiple systems with slightly different values for one or more parameters. This arrangement is used in algorithms such as free energy perturbation calculations and replica exchange simulations. This feature is only available in the McMd namespace, for use in parallel versions of mcSim and mdSim. There is no analogous feature in the DdMd namespace or ddSim program. This feature is disabled by default, and is functional only if MPI is also enabled.
+
+- Modifiers (DDMD_MODIFIERS): This feature enables the addition of modifiers (subclasses of DdMd::Modifier) to a ddSim program. Modifiers are classes that can take essentially arbitrary actions modify the state of the system within the main integration loop of a simulation, and thereby change its time evolution. When modifiers are enabled, the parameter file may contain an optional ModifierManager{...} block immediately after the Integrator block. If this feature is enabled at compile time but this block is absent from the parameter file, it will be assumed that there are no modifiers. 
+
+- Molecules (DDMD_MOLECULES): This feature enables data structures that associate each atom with a parent molecule. This information is not used or required by the force or integration algorithms, but is useful for some types of data analysis. Defining DDMD_MOLECULES associates a DdMd::AtomContext struct with each atom. This struct contains an integer id for the molecule to which the atom belongs, and id for the species of molecule, and an index for the position of the atom within the molecule. Meaningful values are set for these indices only if this information is included in the input configuration file. File formats that include this information may be selected by passing the SET_CONFIG_IO command is passed an argument "DdMdConfig_Molecule" or "DdMdOrderedConfigIo_Molecule" before invoking the READ_CONFIG command.
+
+\subsection install_configure_features_mpi_sub The MPI feature
+
+The MPI feature is different from other optional compile-time features in that:
+
+   - MPI is not really optional, in that it actually must be enabled in order to compile some programs and must be disabled to compile others.
+
+   - MPI is automatically enabled or disabled as appropriate by the main makefile targets that control compilation of specific programs. 
+
+The makefile system is designed to make it unnecessary for users to explicitly enable or disable MPI when code is built using the main makefile targets (i.e., mcMd, mdPp, mcMd-mpi, and ddMd) by invoking make with one of these targets from either the simpatico root directory or any of the build directories (i.e., from the bld/parallel, bld/serial, and src/ directories). The main targets all explicitly enable or disable MPI, as appropriate, before compiling any code. For example, "make mcMd" explicitly disables MPI and "make ddMd" explicitly enables MPI in the relevant build directory before attempting to compile any source files.
+
+The only time that users should have to explicitly invoke the configure script with the -m option is thus if they want to perform an in-source compilation of MPI-enabled or MPI-disabled versions of specific sets of source files by invoking "make all" from a subdirectory of the src/ directory.
+
+\section install_configure_build_directories_section Build configuration files
+
+The directories bld/serial, bld/parallel and src/ each contain similar
+directory structures, and similar sets of makefiles and makefile fragments.
+In what follows, we will refer to these three directories collectively as 
+build directories.  Each of these three build directories contains a set 
+of five subdirectories named util/, simp/, mcMd/, ddMd/, and mdPp/ that 
+each contain all of the C++ source files in a single C++ namespace. In 
+what follows, we will refer to these five subdirectories as 
+"namespace-level" subdirectories of a build directory.
+
+The setup script installs a set of makefiles and makefile fragments in
+each build directory.  After setup (i.e., after the setup script has 
+been run), each of these three build directories will contain a set of 
+6 makefile fragments that we refer to as configuration files. The build
+configuration are all files named "config.mk" that are located either in 
+the root of the build directory (i.e., in bld/serial, bld/parallel, or 
+src/) or in one the 5 namespace-level subdirectories of the build directory 
+(i.e., in the util/, simp/, mcMd/ and ddMd/, and mdPp/ subdirectories). 
+These config.mk configuration files are makefile fragments that are 
+included by other makefiles during compilation process.
+
+The config.mk file in the root directory of the build directory tree 
+(e.g., in the src/ directory) is the main build configuration file. 
+This file controls the choice of compiler and general options that are 
+applied to all code.  The config.mk files in the namespace level control 
+more specialized options that are only relevant for code in specific 
+namespaces.  The six config.mk files in each build directory together 
+specify the configuration of any code compiled in that directory. 
+
+Users may change the configuration of code built in a particular build 
+directory before compiling either by using a text editor to edit the 
+config.mk configuration files , or by using the configure script to
+to enable or disable specific features from the command line.
+
+<BR>
+\ref install_compile_in_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_boundary_page (Next) 
+*/

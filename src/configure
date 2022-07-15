@@ -28,7 +28,7 @@
 #
 # Call "./configure -h" to print a full list of command line options.
 #-----------------------------------------------------------------------
-while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
+while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:qh" opt; do
 
   if [ -n "$MACRO_ON" ]; then 
     MACRO_ON=""
@@ -130,20 +130,6 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
         ;;
       esac
       ;;
-    j)
-      FILE=config.mk
-      cp "$FILE" temp
-      sed "s/COMPILER=.*$/COMPILER=$OPTARG/" temp > "$FILE"
-      echo "Setting COMPILER = $OPTARG in file $FILE" >&2
-      rm temp
-      ;;
-    o)
-      FILE=config.mk
-      cp "$FILE" temp
-      sed "s/OS=.*$/OS=$OPTARG/" temp > "$FILE"
-      echo "Setting OS = $OPTARG in file $FILE" >&2
-      rm temp
-      ;;
     q)
       if [ `grep "^ *UTIL_MPI *= *1" config.mk` ]; then
          echo "-m  ON  - MPI" >&2
@@ -219,8 +205,6 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
       else
          echo "-k  OFF - automatic dependency tracking" >&2
       fi
-      echo `grep "^ *COMPILER *=" config.mk` >&2
-      echo `grep "^ *OS *=" config.mk` >&2
       ;;
     h)
       echo "The configure script may be called prior to compiling to enable or"
@@ -232,13 +216,11 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
       echo "Command Line Options:"
       echo "-h           help: prints explanation of options (this command)"
       echo "-q           query: lists options that are enabled / disabled."
-      echo "-j compiler  Choose a compiler: sets COMPILER=compiler in config.mk"
-      echo "-j os        Choose an operating system: sets OS=os in config.mk"
       echo " "
-      echo "Each of the following options enables or disables a feature by defining"
-      echo "or undefining a corresponding preprocessor macro. Each such option"
-      echo "takes 0 or 1 as a required argument, using 1 to enable the feature"
-      echo "or 0 to disable." 
+      echo "Each of the following options enables or disables a feature by"
+      echo "defining or undefining a corresponding preprocessor macro. Each"
+      echo "such option echo takes 0 or 1 as a required argument, using 1 to"
+      echo "enable a feature or 0 to disable one." 
       echo " "
       echo "-m (0|1)   mpi parallelization         (undefines/defines UTIL_MPI)"
       echo "-g (0|1)   debugging                   (undefines/defines UTIL_DEBUG)"
@@ -260,10 +242,6 @@ while getopts "m:g:p:b:a:d:e:s:l:f:r:u:k:c:j:o:qh" opt; do
       echo ">  ./configure -q"
       echo "To disable debugging and enable angle and dihedral potentials:"
       echo ">  ./configure -g0 -a1 -d1"
-      echo "To set COMPILER=intel in config.mk"
-      echo ">  ./configure -j intel"
-      echo "To set OS=mac-port in config.mk"
-      echo ">  ./configure -o mac-port"
       echo "  "
       ;;
     esac

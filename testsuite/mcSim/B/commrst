@@ -1,0 +1,7 @@
+RESTART          120000
+FINISH
+
+WRITE_PARAM      param
+READ_CONFIG      config
+SIMULATE         100000
+WRITE_CONFIG     config

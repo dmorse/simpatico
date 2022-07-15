@@ -183,11 +183,13 @@ namespace DdMd
       }
 
       // Validate atom distribution
-      // Checks that all are account for and on correct processor
+      // Checks that all are accounted for and on correct processor
       int nAtomAll;
       nAtomAll = atomDistributor().validate();
       if (domain().isMaster()) {
          if (nAtomAll != nAtom) {
+            // nAtom is number of atoms read from file
+            // nAtomAll is number found after distribution
             UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }

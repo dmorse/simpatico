@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/AverageAnalyzer.h>
+#include <ddMd/analyzers/base/AverageAnalyzer.h>
 //#include <ddMd/simulation/Simulation.h>
 //#include <util/accumulators/Average.h>
 

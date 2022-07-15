@@ -12,6 +12,7 @@
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 

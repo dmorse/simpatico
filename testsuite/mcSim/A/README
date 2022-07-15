@@ -1,0 +1,25 @@
+System description:
+
+    MC simulation of homopolymer melt.
+    M=100 flexible homopolymer chains of N=8 atoms.
+    WCA and Harmonic potentials. Combination of MC moves.
+
+Usage:
+
+Use run script to run and restart:
+
+    > ./run
+
+    This places outputs of original run in out/, and of restart in rst/
+
+To manually run an MC simulation:
+
+    > mcSim -e -p param.nve -c command
+
+To manually restart the above simulation:
+
+    > mcSim -e -r restart -c commrst -o rst/
+
+To clean up (empties out/ and rst/ directories)
+
+    ./clean

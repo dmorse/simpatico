@@ -73,9 +73,11 @@ public:
       }
 
       // Setup CellList
-      cellList.allocate(nAtom, lower, upper, cutoffs, nCutCell);
+      cellList.setAtomCapacity(nAtom);
       cellList.makeGrid(lower, upper, cutoffs, nCutCell);
-      pairList.allocate(nAtom, pairCapacity, cutoff);
+      pairList.setCutoff(cutoff);
+      pairList.reserveAtoms(nAtom);
+      pairList.reservePairs(pairCapacity);
 
       #if 0
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
@@ -279,7 +281,8 @@ public:
             for (j = 0; j < na; ++j) {
                cellAtom2Ptr = neighbors[j];
                if (cellAtom2Ptr > cellAtom1Ptr) {
-                  dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
+                  dr.subtract(cellAtom2Ptr->position(), 
+                              cellAtom1Ptr->position()); 
                   if (dr.square() <= cutoffSq) {
                      ++np;
                   }
@@ -287,7 +290,8 @@ public:
             }
             for (j = na; j < nn; ++j) {
                cellAtom2Ptr = neighbors[j];
-               dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
+               dr.subtract(cellAtom2Ptr->position(), 
+                           cellAtom1Ptr->position()); 
                if (dr.square() <= cutoffSq) {
                   ++np;
                }

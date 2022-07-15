@@ -29,33 +29,35 @@ namespace DdMd
    * containing ghost particles, into a grid of cells, such that the length
    * of each cell in each direction is greater than a specified cutoff
    * distance. The algorithm works with either generalized or Cartesian
-   * coordinates, if used consistently.
+   * coordinates, if used consistently. The usage example given below
+   * assumes atomic coordinates are in generalized/scaled form on entry.
    *
    * All operations of this class are local (no MPI).
    *
-   * Building a CellList (Cartesian coordinates);
+   * Usage: 
    * \code
    *
    *    AtomStorage storage;
+   *    Boundary boundary;
    *    CellList cellList;
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    int      atomCapacity  // max number of atoms on this processor
    *
-   *    // Set elements of cutoffs vector to same value
+   *    // Allocate space for structures that store atom info
+   *    cellList.setAtomCapacity(atomCapacity);
+   *  
+   *    // Set elements of cutoffs vector (scaled coordinate)
    *    for (int i = 0; i < Dimension; ++i) {
-   *       cutoffs[i] = cutoff;
+   *       cutoffs[i] = cutoff/boundary.length(i);
    *    } 
    *
-   *    // Bounds on lower and upper used here to allocate memory.
-   *    cellList.allocate(atomCapacity, lower, upper, cutoffs);
-   *  
-   *    // Make the actual grid and clear it.
+   *    // Setup the grid of cells, and clear all cells
    *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
    *
-   *    // Place all local atoms.
+   *    // Place all local atoms (compute and store cell indices)
    *    AtomStorage::AtomIterator  atomIter;
    *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
@@ -70,6 +72,12 @@ namespace DdMd
    *    // Build cell list
    *    cellList.build();
    *
+   *    // Transform atomic positions back to Cartesian coordinates
+   *    storage.transformGenToCart(boundary);
+   *
+   *    // Update atomic positions stored in CellList.
+   *    cellList.update();
+   *
    * \endcode
    *
    * The atomCapacity parameter should be set equal to the sum of atomCapacity 
@@ -77,11 +85,11 @@ namespace DdMd
    * total number of atoms that can exist on this processor.
    *
    * If the upper and lower bounds and atom coordinates are all expressed in
-   * generalized coordinates, which span 0.0 - 1.0 over the primitive periodic
-   * cell in each direction, each element of the cutoffs vector is given by a
-   * ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
-   * distance across the unit cell along a direciton parallel to reciprocal 
-   * basis vector i. 
+   * generalized coordinates, which span [0,1] over the primitive periodic
+   * cell in each direction, each element of the cutoffs vector is given by
+   * a ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
+   * distance across the unit cell along a direction parallel to reciprocal 
+   * basis vector i, or perpendicular to a surface of the unit cell.
    *
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
@@ -108,56 +116,34 @@ namespace DdMd
       virtual ~CellList();
 
       /**
-      * Allocate memory for this CellList (generalized coordinates).
+      * Set atomCapacity, and (re)allocate arrays that hold atoms.
       *
-      * This function:
+      * This function can be called more than once, and only allocates
+      * memory as necessary. When called the first time, the function:
       *
       *   - Allocates an array of atomCapacity CellList::Tag objects.
       *   - Allocates an array of atomCapacity CellAtom objects.
-      *   - Allocates an array of Cell objects sized for this boundary.
       *
-      * The elements of the lower, upper, and cutoffs parameters should 
-      * contain the lower and upper coordinate bounds for this processor, 
-      * and cutoff values in each direction, for a boundary was chosen to
-      * be larger than any that will be encountered during the simulation
-      * These parameters are used only to allocate memory.
+      * Subsequent calls reallocate these arrays iff passed an
+      * atomCapacity parameter larger than the current value, and
+      * do nothing otherwise.  This function does not allocate
+      * the array of Cell objects, which is allocated and reallocated
+      * as needed by the makeGrid function.
       *
-      * This version of the function is designed for use with generalized
-      * coordinates. See the makeGrid() method for a discussion of the
-      * parameter values in generalized coordinates.
-      *
-      * \param atomCapacity dimension of global array of atoms
-      * \param lower        lower coordinate bounds for this processor
-      * \param upper        upper coordinate bounds for this processor
-      * \param cutoffs      pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
+      * \param atomCapacity maximum number of atoms on this processor
       */
-      void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs, int nCellCut = 1);
-
-      /**
-      * Allocate memory for this CellList (Cartesian coordinates).
-      *
-      * This function is designed for use with Cartesian coordinates, for which
-      * the lower, upper and cutoff parameters all have dimensions of length.
-      * The function calls the allocate() method with a Vector of cutoffs
-      * internally, after setting every element of the Vector to the same value.
-      *
-      * \param atomCapacity dimension of global array of atoms
-      * \param lower        lower bound for this processor in maximum boundary
-      * \param upper        upper bound for this processor in maximum boundary
-      * \param cutoff       pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
-      */
-      void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff, int nCellCut = 1);
+      void setAtomCapacity(int atomCapacity);
 
       /**
       * Make the cell grid (using generalized coordinates).
       *
-      * This method makes a Cell grid in which the number of cells in each
-      * direction i is chosen such that the dimension of each cell that 
-      * direction is greater than or equal to cutoff[i].
+      * This function makes a Cell grid in which the number of cells in 
+      * each direction i is chosen such that the dimension of each cell 
+      * that direction is greater than or equal to cutoff[i]. The 
+      * function may be called repeatedly to create grids of different
+      * dimensions, as required in simulations with flexible boundaries.
+      * Memory required for an array of Cell objects is reserved and
+      * resized as needed. 
       *
       * The elements of lower and upper should be upper and lower bounds 
       * for coordinates of local atoms on this processor, in generalized
@@ -166,28 +152,40 @@ namespace DdMd
       * cell length in direction i in generalized coordinates. This is given
       * by the ratio cutoff[i] = pairCutoff/length[i], where pairCutoff is 
       * the maximum range of nonbonded interactions, and length[i] is the 
-      * distance across the primitive unit cell along the direction parallel 
-      * to reciprocal lattice basis vector i.
+      * distance across the primitive unit cell along the direction 
+      * parallel to reciprocal lattice basis vector i.  This function 
+      * creates a grid that includes nCellCut layers of cells for ghost
+      * atoms along each face of the region owned by this processor.
       *
-      * \param lower    lower bound of local atom coordinates.
-      * \param upper    upper bound of local atom coordinates.
+      * \param lower  lower bound of local atom coordinates.
+      * \param upper  upper bound of local atom coordinates.
       * \param cutoffs  pair cutoff length in each direction
-      * \param nCellCut number of cells per cutoff length
+      * \param nCellCut  number of cells per cutoff length
       */
-      void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
-               int nCellCut = 1);
+      void makeGrid(const Vector& lower, 
+                    const Vector& upper, const Vector& cutoffs, 
+                    int nCellCut = 1);
 
       /**
       * Determine the appropriate cell for an Atom, based on its position.
       *
-      * This method does not place the atom in a cell, but calculates a cell
-      * index and retains the value, which is used to place atoms in the build() 
-      * method.
+      * This function should be called within a loop over all atoms in the
+      * system, which should be completed before invoking the build()
+      * function. The placeAtom function does not actually place the atom 
+      * in a cell, but calculates and retains a record of the cell index.
+      * Computing indices for all atoms before placing them in cells
+      * allows the class to compute the amount of memory required for 
+      * each cell. The stored cell index for each atom is used to build 
+      * the cell list in the build() method.
       *
-      * The method quietly does nothing if the atom is outside the expanded 
+      * The method quietly does nothing if the atom is outside the expanded
       * domain for nonbonded ghosts, which extends one cutoff length beyond
       * the domain boundaries the domain boundaries in each direction.
+      *
+      * Implementation: This function stores the cell index and a pointer 
+      * to the Atom in the appropriate element of the tags_ array, and 
+      * calls Cell:incrementCapacity() to increment a counter for the
+      * number of atoms in the associated Cell. 
       *
       * \param atom  Atom object to be added.
       */
@@ -196,10 +194,18 @@ namespace DdMd
       /**
       * Build the cell list.
       *
-      * This method must be called after completing a loop over atoms,
-      * in which placeAtom() is called for each atom. The build() method
+      * This function must be called after completing a loop over atoms,
+      * in which placeAtom() is called for each atom. The build() function
       * uses information gathered in this loop to build and fill all of
       * the cells. 
+      *
+      * Implementation details: This function adds every atom to a Cell,
+      * but does not call the CellAtom::update() function to set values 
+      * for the atom position and id. The CellAtom::update() function 
+      * is instead later called by CellList::update(). This allows the
+      * CellList::build() to be called when atomic coordinates are in
+      * scaled [0,1] form, and update() to be called after the positions
+      * positions are transformed back to Cartesian coordinates.
       */
       void build();
 
@@ -227,6 +233,11 @@ namespace DdMd
       * \param i Cartesian index i = 0, 1, 2
       */
       double cellLength(int i) const;
+
+      /**
+      * Return number of cells that span the cutoff length.
+      */
+      int nCellCut() const;
 
       /**
       * Return the index of the cell that contains a position Vector. 
@@ -276,11 +287,6 @@ namespace DdMd
       * Number of cells for which space has been allocated.
       */
       int cellCapacity() const;
-
-      /**
-      * Has memory been allocated for this CellList?
-      */
-      bool isAllocated() const;
 
       /**
       * Has this CellList been built?
@@ -345,6 +351,9 @@ namespace DdMd
       /// Number of atoms that were not placed in cells.
       int nReject_;
 
+      /// Number of cells to span cutoff length
+      int nCellCut_;
+
       #ifdef UTIL_DEBUG
       /// Maximum number of atoms in one cell. 
       int maxNAtomCell_;
@@ -353,29 +362,9 @@ namespace DdMd
       /// Has this CellList been built?
       bool isBuilt_;
 
-      /**
-      * Calculate required dimensions for cell grid and resize cells_ array.
-      *
-      * Called internally by allocate and makeGrid. Resizes cells_ array to 
-      * match size of new grid. Does not link cells or calculate offsets to 
-      * neighbors.
-      *
-      * \param lower  lower bound used to allocate array of cells.
-      * \param uppper  upper bound used to allocate array of cells.
-      * \param cutoffs  minimum dimension of a cell in each direction
-      * \param nCellCut  number of cells per cutoff length
-      */
-      void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs, int nCellCut);
-
-      /**
-      * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
-      */
-      bool isValidAtomId(int atomId);
-
    }; 
 
-   // Public inline method definitions:
+   // Public inline member function definitions
 
    /*
    * Identify the cell for an Atom, based on its position.
@@ -397,7 +386,7 @@ namespace DdMd
    }
 
    /*
-   * Add an Atom to the appropriate cell, based on its position.
+   * Compute atomic cell index, append pointer and index to tags_ array.
    */
    inline void CellList::placeAtom(Atom &atom)
    {
@@ -414,12 +403,6 @@ namespace DdMd
          ++nReject_;
       }
    }
-
-   /*
-   * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
-   */
-   inline bool CellList::isValidAtomId(int atomId)
-   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
 
    /*
    * Return associated Grid object.
@@ -449,10 +432,22 @@ namespace DdMd
    {  return begin_; }
 
    /*
-   * Is this CellList allocated?
+   * Get the maximum number of atoms for which space has been allocated.
    */
-   inline bool CellList::isAllocated() const
-   {  return (cells_.capacity() > 0); }
+   inline int CellList::atomCapacity() const
+   {  return atoms_.capacity(); }
+
+   /*
+   * Get the number of cells for which space has been allocated.
+   */
+   inline int CellList::cellCapacity() const
+   {  return cells_.capacity(); }
+
+   /*
+   * Is this CellList built (i.e., full of atoms)?
+   */
+   inline bool CellList::isBuilt() const
+   {  return isBuilt_; }
 
 }
 #endif

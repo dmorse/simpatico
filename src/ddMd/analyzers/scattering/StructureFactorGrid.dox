@@ -12,7 +12,7 @@ The DdMd::StructureFactorGrid class is a subsclass of DdMd::Structure factor. Li
 
 \sa DdMd::StructureFactor
 \sa DdMd::StructureFactorGrid
-\sa Util::LatticeSystem
+\sa Simp::LatticeSystem
 
 \section ddMd_analyzer_StructureFactorGrid_param_sec Parameters
 The parameter file format is:
@@ -23,7 +23,7 @@ The parameter file format is:
       nMode              int
       modes              Matrix<double> [nMode x nAtomType]
       hMax               int
-      lattice            Util::LatticeSystem
+      lattice            Simp::LatticeSystem
    }
 \endcode
 in which
@@ -52,7 +52,7 @@ in which
   </tr>
   <tr> 
      <td> lattice </td>
-     <td> Util::LatticeSystem object that specifies the symmetry of the
+     <td> Simp::LatticeSystem object that specifies the symmetry of the
           simulation unit cell. This can take values "cubic", 
           "tetragonal", "orthorhombic", etc.</td>
   </tr>

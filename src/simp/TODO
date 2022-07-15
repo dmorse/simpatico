@@ -3,6 +3,12 @@ Species
 
 - Add mechanism to set moleculeCapacity programmatically, or read it from file. 
 
+Housekeeping / Documentation
+----------------------------
+
+- Check if *.dox files exist to document param file formats for all
+  ParamComposite subclasses in Simp namespace
+
 Boundary classes - non-orthogonal
 ---------------------------------
 

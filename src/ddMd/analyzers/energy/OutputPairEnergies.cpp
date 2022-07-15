@@ -6,6 +6,7 @@
 */
 
 #include "OutputPairEnergies.h"
+#include <ddMd/potentials/pair/PairPotential.h>
 #include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
@@ -78,25 +79,27 @@ namespace DdMd
    void OutputPairEnergies::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         Simulation& sys = simulation();
-         sys.computePairEnergies();
-         if (sys.domain().isMaster()) {
-            DMatrix<double> pair = sys.pairEnergies();
-            for (int i = 0; i < simulation().nAtomType(); ++i){
-               for (int j = 0; j < simulation().nAtomType(); ++j){
+         Simulation& sim = simulation();
+         PairPotential& potential = sim.pairPotential();
+         MPI::Intracomm& communicator = sim.domain().communicator();
+         potential.computePairEnergies(communicator);
+         if (sim.domain().isMaster()) {
+            int nAtomType = simulation().nAtomType();
+            DMatrix<double> pair = potential.pairEnergies();
+            for (int i = 0; i < nAtomType; ++i){
+               for (int j = 0; j < nAtomType; ++j){
                   pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
                   pair(j,i) = pair(i,j);
                }
             }
             outputFile_ << Int(iStep, 10);
-            for (int i = 0; i < simulation().nAtomType(); ++i){
-               for (int j = 0; j < simulation().nAtomType(); ++j){
+            for (int i = 0; i < nAtomType; ++i){
+               for (int j = 0; j < nAtomType; ++j){
                   outputFile_ << Dbl(pair(i,j), 20);
                }
             }
             outputFile_  << std::endl;
          }
-
          ++nSample_;
       }
    }

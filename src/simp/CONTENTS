@@ -1,7 +1,7 @@
 The classes in the directory tree root at src/simp/ are defined in the
 namespace Simp, and are accessible to the single-processor programs in 
 src/mcMd, the parallel MD program in src/ddMd/, and the analysis tools
-in src/tools.
+in src/mdPp.
 
 
 Subdirectories:

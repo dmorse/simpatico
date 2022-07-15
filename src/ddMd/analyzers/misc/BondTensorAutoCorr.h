@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/AutoCorrAnalyzer.h>
+#include <ddMd/analyzers/base/AutoCorrAnalyzer.h>
 #include <util/space/Tensor.h>
 
 namespace DdMd

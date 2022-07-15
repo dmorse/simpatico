@@ -1,0 +1,24 @@
+#!/bin/bash
+set -ev
+
+# Make or clean directory out
+if [ ! -d "out" ]; then
+   mkdir out
+else
+   rm -f out/*
+fi
+rm -f restart
+
+# Run simulation, write output to out/
+mcSim -q -e -p param -c command
+
+# Make or clean directory rst, if necessary
+if [ ! -d "rst" ]; then
+   mkdir rst
+else
+   rm -f rst/*
+fi
+
+# Restart simulation, write outputs to rst/
+mcSim -q -e -r restart -c commrst -o rst/
+

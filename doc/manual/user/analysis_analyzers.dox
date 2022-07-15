@@ -1,0 +1,37 @@
+/*! \page user_analysis_analyzers_page 3.10.1 Analyzer Classes
+
+ \ref user_analysis_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_trajectory_page  (Next) 
+ <BR> 
+
+Each of the three simpatico simulation programs (mcSim, mdSim and ddSim) provides an extensible set of classes that can be used for on-the-fly data analysis. 
+Data analysis classes for ddSim are all subclasses of the DdMd::Analyzer base class. 
+Data analysis classes for mcSim and mdSim are instead subclasses of McMd::Analyzer. 
+In what follows, we refer to these data analysis classes generically as "analyzer" classes. 
+A typical analyzer class evaluates one or more physical properties of interest, and either outputs a sequence of values to an associated file for later analysis or evaluates some statistical property of the resulting sequence (e.g., an averages, autocorrelation function, or histogram), or both. 
+Analyzer classes for mcSim and mdSim are also available for use during use of these programs as postprocessors.
+
+The choice of which analyzer operations (if any) should be executed during an simulation is specified for each type of simulation by the AnalyzerManager block of the parameter file. 
+The AnalyzerManager block of the parameter file contains a "baseInterval" parameter (explained below), followed by a sequence of any number (zero or more) subbblocks, each of which contains the parameter file block for a specific analyzer class. 
+Each such block begins with a line containing the name of the analyzer class and a opening curly bracket and ends with a line containing a closing bracket. 
+Any number of analyzers may be added to a simulation.
+
+Different parameter file formats are required for different analyzer classes. 
+Every analyzer class must read an interval parameter, which is always the first parameter within the associated parameter block. 
+The interval parameter for each analyzer, must always be an integer multiple of the "baseInterval" parameter.
+Most analyzers write data to an associated output file, either during the simulation or as a summary at the end of a simulation, and thus require an output file name as a parameter, which is usually named "outputFileName". 
+Each subclass of either McMd::Analyzer or DdMd::Analyzer implements a virtual function named sample(). 
+The sample function implements the actual data analysis operation, and is invoked only when the molecular dynamics or Monte Carlo step counter is a multiple of the interval parameter.
+
+Links to user documentation of the parameter file formats for specific analyzers are given in the following pages:
+<ul style="list-style: none;">
+  <li> \subpage mcMd_analyzers_page </li>
+  <li> \subpage ddMd_analyzers_page </li>
+</ul>
+ 
+<BR> 
+ \ref user_analysis_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_analysis_trajectory_page  (Next) 
+
+*/

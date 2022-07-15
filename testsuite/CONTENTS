@@ -1,0 +1,4 @@
+Each subdirectory of testsuite/ contains a directory of one or
+more tests for a specific program (mcSim, mdSim, etc.), indicated by 
+the name of the executable. Directories mcSim_m/ and mdSim_m/ contain
+tests for the MPI multi-processor versions of mcSim and mdSim.

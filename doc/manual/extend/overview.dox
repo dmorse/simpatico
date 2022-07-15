@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_overview_page 4.1 Source Files: Directories and Namespaces
+/*! \page extend_overview_page 5.1 Source File Locations
 
 \ref extend_page  (Prev/Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_base_page  (Next)  &nbsp; &nbsp; &nbsp; &nbsp;
@@ -9,8 +9,8 @@ namespace McMd
 
 Before writing a user class, one must decide where the new class fits within the structure of the existing source code. Specifically, one must first choose in which namespace it should be defined, and where the code should be placed within a directory tree.
 
-\section extend_overview_namespace Namespaces and Directories
-Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Simp, McMd, DdMd and Tools. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
+\section extend_overview_namespace Namespaces and directories
+Every class and function in the simpatico source code is defined within one of five C++ namespaces, named Util, Simp, McMd, DdMd and MdPp. The source code for each namespace is located within a corresponding corresponding subdirectory of the simpatico/src directory, as indicated in the following table:
 <table>
   <tr> 
     <td> <b>Namespace</b> </td>
@@ -38,8 +38,8 @@ Every class and function in the simpatico source code is defined within one of f
     <td> Classes used in ddSim parallel MD simulation program. </td>
   </tr>
   <tr> 
-    <td> Tools </td>
-    <td> src/tools </td>
+    <td> MdPp </td>
+    <td> src/mdPp </td>
     <td> Classes used in ppMd analysis program (under development). </td>
   </tr>
 </table>
@@ -50,13 +50,13 @@ Every new user class must also be defined within one of these namespaces. The ch
 <li> Classes that provide new simulation algorithms, analysis algorithms or file formats for use with the ddSim parallel program should be in namespace DdMd. </li>
 <li> Classes that provide new simulation algorithms (MC moves or Monte Carlo integrators), analysis algorithms, or file formats for the mdSim and/or mcSim program should be in namespace McMd. </li>
 <li> Classes that define potential energy functions or molecular species definitions should be placed namespace Simp. </li>
-<li> Classes that provide new features for the ppMd postprocessor should be defined in namespace Tools. </li>
+<li> Classes that provide new features for the ppMd postprocessor should be defined in namespace MdPp. </li>
 </ul>
-The DdMd, McMd, and Tools namespaces are mutually exclusive. Classes defined in the DdMd namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs, or the ppMd postprocessor. Classes defined in the McMd namespace are accessible for use in either mcSim or mdSim, but not in ddSim in ppMd. Classes defined in the Simp namespace can, however, be made accessible for use in any simulation or analysis program.
+The DdMd, McMd, and MdPp namespaces are mutually exclusive. Classes defined in the DdMd namespace are available for use in the ddSim program, but are not accessible in the mcSim or mdSim single processor programs, or the ppMd postprocessor. Classes defined in the McMd namespace are accessible for use in either mcSim or mdSim, but not in ddSim in ppMd. Classes defined in the Simp namespace can, however, be made accessible for use in any simulation or analysis program.
 
 As already noted, most types of user classes must be derived from a base class that represents a particular element of a simulation, such as an analysis or simulation algorithm. All of the relevant base classes are listed and discussed on the next \ref extend_base_page "page".
 
-\section extend_overview_location User File Directories
+\section extend_overview_location User directories
 
 Header and source files for user classes must be placed in specific locations within the simpatico src/ directory tree, in directories that are provided for this purpose.  Each namespace level directory contains two subdirectories named user/ and modules/ that are intended as locations for user files.  Thus, for example, user classes that are defined in the DdMd namespace should be placed in either src/ddMd/user or src/ddMd/modules directory subtree. 
 

@@ -8,8 +8,8 @@
 #include "StructureFactorPGrid.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/crystal/PointGroup.h>
-#include <util/crystal/PointSymmetry.h>
+#include <simp/crystal/PointGroup.h>
+#include <simp/crystal/PointSymmetry.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -42,7 +42,7 @@ namespace McMd
       readDArray< Pair<int> >(in, "atomTypeIdPairs", atomTypeIdPairs_, 
                                                      nAtomTypeIdPair_);
       read<int>(in, "hMax", hMax_);
-      read<Util::LatticeSystem>(in, "lattice", lattice_);
+      read<Simp::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
       nWave_     = (2*hMax_ +1 )*(2*hMax_ + 1)*(2*hMax_ + 1);
@@ -144,7 +144,7 @@ namespace McMd
 
       // Load addition parameters in StructureFactorPGrid::serialize()
       loadParameter<int>(ar, "hMax", hMax_);
-      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      loadParameter<Simp::LatticeSystem>(ar, "lattice", lattice_);
 
       // Validate
       if (nWave_  != (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1)) {

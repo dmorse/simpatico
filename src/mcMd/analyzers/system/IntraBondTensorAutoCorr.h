@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>    // base class template
+#include <mcMd/analyzers/base/SystemAnalyzer.h>    // base class template
 #include <util/accumulators/AutoCorrArray.h>  // member template 
 #include <util/space/Tensor.h>                // member template parameter
 #include <util/containers/DArray.h>           // member template
@@ -27,7 +27,7 @@ namespace McMd
    using namespace Simp;
 
    /**
-   * Autocorrelation for bond stress of a molecule.
+   * Autocorrelation for bond orientation tensor of a molecule.
    *
    * The bond orientation tensor for each molecule is defined as a sum
    * \f[ 
@@ -74,14 +74,14 @@ namespace McMd
       virtual void readParameters(std::istream& in);
    
       /**
-      * Load internal state from file.
+      * Load internal state from an archive.
       *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
    
       /**
-      * Save internal state to file. 
+      * Save internal state to an archive.
       *
       * \param ar output/saving archive
       */
@@ -102,7 +102,7 @@ namespace McMd
       virtual void setup();
   
       /** 
-      * Evaluate end-to-end vectors of all chains, add to ensemble.
+      * Evaluate orientation tensors for all chains, add to ensemble.
       *
       * \param iStep counter for number of steps
       */
@@ -151,7 +151,7 @@ namespace McMd
       /// Maximum length of each sequence in AutoCorrArray.
       int capacity_;
    
-      /// Has readParam been called?
+      /// Has readParam or loadParam been called?
       bool isInitialized_;
 
    };

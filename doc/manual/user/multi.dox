@@ -1,7 +1,7 @@
-/*! \page user_multi_page 2.11 Multi-System Simulations
+/*! \page user_multi_page 3.13 Multi-System Simulations
 
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_options_page   (Next) 
+\ref source_page   (Next) 
 <BR>
 
 These pages discuss how to run simultaneous simulations of more than one system with various programs. Multi-simulations can be carried out either using the multi-processor (MPI-enabled) versions of mcSim or mdSim, in which each system is simulated on a single processor, or using ddSim, which can assign different groups of processors to different simulations. 
@@ -10,13 +10,13 @@ The discussion of multi-system simulations in mcSim and mdSim also discusses the
 
 <h2> Contents:</h2> 
    <ul style="list-style: none;">
-   <li> \subpage user_multi_McMd_page "2.11.1 mcSim and mdSim" </li>
-   <li> \subpage user_multi_DdMd_page "2.11.2 ddSim" </li> 
+   <li> \subpage user_multi_McMd_page "3.12.1 mcSim and mdSim" </li>
+   <li> \subpage user_multi_DdMd_page "3.12.2 ddSim" </li> 
    </ul>
 
 <BR>
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_options_page   (Next) 
+\ref source_page   (Next) 
 
 */

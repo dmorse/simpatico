@@ -1,0 +1,57 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdPressureAnalyzer_page  MdPressureAnalyzer
+
+\section mcMd_analyzer_MdPressureAnalyzer_synopsis_sec Synopsis
+
+This analyzer computes the time average of the pressure, and optionally outputs block averages over the course of the simulation, if nSamplePerBlock > 0.
+
+\sa McMd::MdPressureAnalyzer
+
+\section mcMd_analyzer_MdPressureAnalyzer_param_sec Parameters
+The parameter file format is:
+\code
+  MdPressureAnalyzer{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of data samples per block average, if nSamplePerBlock > 0.
+         If nSamplePerBlock == 0, no block averages are output.
+     </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_MdPressureAnalyzer_output_sec Output
+
+If nSamplePerBlock > 0, block averages of the pressure are output during the
+simulation to {outputFileName}.dat every nSamplePerBlock*interval time steps.
+A description of the data file format (column names) is written to the file
+{outputFileName}.dfm. If nSamplePerBlock == 0, neither of these files is
+created.
+
+At the end of the simulation:
+
+  - parameters are echoed to file {outputFileName}.prm 
+
+  - the average virial, kinetic and total pressure are output to {outputFileName}.ave
+
+  - information about blocking error analysis is output to {outputFileName}.aer
+
+*/
+
+}

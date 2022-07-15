@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/SystemAnalyzer.h>
+#include <mcMd/analyzers/base/AverageListAnalyzer.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 
 namespace Util{
@@ -32,7 +32,7 @@ namespace McMd
    *
    * \ingroup McMd_MdAnalyzer_Module
    */
-   class MdEnergyAnalyzer : public SystemAnalyzer<MdSystem>
+   class MdEnergyAnalyzer : public AverageListAnalyzer<MdSystem>
    {
 
    public:
@@ -45,95 +45,74 @@ namespace McMd
       MdEnergyAnalyzer(MdSystem& system);
    
       /**
-      * Destructor.
-      */
-      virtual ~MdEnergyAnalyzer()
-      {} 
-   
-      /**
       * Read interval and output file name.
       *
       * \param in  input parameter file
       */
       virtual void readParameters(std::istream& in);
+
+      /**
+      * Load parameters from archive when restarting. 
+      *
+      * \param ar loading/input archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar); 
    
       /**
-      * Load internal state from an input archive.
+      * Save internal state to archive.
       *
-      * \param ar  input/loading archive
+      * \param ar saving/output archive
       */
-      virtual void loadParameters(Serializable::IArchive &ar);
+      virtual void save(Serializable::OArchive& ar);
+
+   protected:
 
       /**
-      * Save internal state to an output archive.
-      *
-      * \param ar  output/saving archive
-      */
-      virtual void save(Serializable::OArchive &ar);
-  
-      /**
-      * Clear nSample counter and all accumulators.
-      */
-      virtual void clear();
-  
-      /**
-      * Setup before main loop.
-      *
-      * Open all files required for output during simulation.
-      */
-      virtual void setup();
-
-      /**
-      * Write energy to file
-      *
-      * \param iStep MD time step index
-      */
-      virtual void sample(long iStep);
-
-      /**
-      * Write file averages and error analysis to file
-      */
-      virtual void output();
-
-   private:
+      * Compute and store values of energy components.
+      */  
+      void compute();
  
-      // Output file stream
-      std::ofstream outputFile_;
-
-      // Pointers to average accumulators for energy and components
-      Average* totalAveragePtr_;
-      Average* kineticAveragePtr_;
-      Average* potentialAveragePtr_;
+   private: 
+ 
       #ifndef SIMP_NOPAIR
-      Average* pairAveragePtr_;
+      /// Array index for pair energy accumulator.
+      int pairId_;
       #endif
+
       #ifdef SIMP_BOND
-      Average* bondAveragePtr_;
+      /// Array index for bond energy accumulator.
+      int bondId_;
       #endif
+
       #ifdef SIMP_ANGLE
-      Average* angleAveragePtr_;
+      /// Array index for angle energy accumulator.
+      int angleId_;
       #endif
+
       #ifdef SIMP_DIHEDRAL
-      Average* dihedralAveragePtr_;
+      /// Array index for dihedral energy accumulator.
+      int dihedralId_;
       #endif
+
       #ifdef SIMP_COULOMB
-      Average* coulombRSpaceAveragePtr_;
-      Average* coulombKSpaceAveragePtr_;
-      Average* coulombAveragePtr_;
-
-      /// Compute rSpace and kSpace coulomb component averages?
-      bool coulombComponents_;
+      /// Array index for coulomb energy accumulator.
+      int coulombId_;
       #endif
+
       #ifdef SIMP_EXTERNAL
-      Average* externalAveragePtr_;
+      /// Array index for external energy accumulator.
+      int externalId_;
       #endif
 
-      // Number of sample per block average
-      int nSamplePerBlock_;
+      /// Array index for total potential energy accumulator.
+      int potentialId_;
 
-      /// Has readParam been called?
-      bool isInitialized_;
-   
+      /// Array index for kinetic energy accumulator.
+      int kineticId_;
+
+      /// Array index for total energy accumulator.
+      int totalId_;
+
    };
 
 }

@@ -44,61 +44,61 @@ SPECIES:
    nSpecies int
    [hasAtomCharge]
 
-   species 1 {
+   species 0
      nMolecule int
      nAtom int
-       0 atomType [charge]
-       1 atomType [charge]
+     0 atomType [charge]
+     1 atomType [charge]
        ...
      [nBond int]
-       id  atomId0 atomId1 typeId
+     id  atomId0 atomId1 typeId
        .....
      [nAngle int]
-       id  atomId0 atomId1 atomId2 typeId
+     id  atomId0 atomId1 atomId2 typeId
        ...
      [nDihedral int]
-       id  atomId0 atomId1 atomId2 typeId
+     id  atomId0 atomId1 atomId2 typeId
      ...
-   }
 
-   species 2 {
+   species 1 
      ....
-   }
 
    ------------------
 
    Comments: 
    
    1) This section is optional. Its appearance is a declaration that 
-   the system is molecular. This means that the ids of atoms in the 
-   TOMS section must be in molecular order, and that bonded groups 
-   that are declared in this section should not appear in separate 
-   BOND, ANGLE, or DIHEDRAL sections.
+   the system is molecular. This means that if this section appears,
+   the ids of atoms in the ATOMS section must be in molecular order, 
+   and that bonded groups that are declared in this section should 
+   not appear in separate BOND, ANGLE, or DIHEDRAL sections.
 
    2) The mcSim and mdSim programs will always output in molecular 
    format, and thus always output a SPECIES block.
 
-   3) The ddSim program will output in molecular format if the input file 
-   was in molecular format. The program needs an isMolecular variable to
-   preserve this information.
+   3) The ddSim program will output in molecular format if the input 
+   file was in molecular format. The program needs an isMolecular 
+   variable to preserve this information.
 
    4) The mcSim and mdSim programs may check information in the SPECIES
    block with information in the parameter file for consistency (but 
    this choice is not part of the file format definition).
 
-   5) If this block is present, corresponding BONDS, ANGLES, DIHEDRALS 
-   groups should normally not be present, since this information would 
-   be redundant.
-
-   6) The BONDS, ANGLES, or DIHEDRALS are optional. The absence of such
-   a label indicates that there is no such block. The Parameters nBond, 
-   nAngle, nDihedral must be present if the labels are present, and must
-   be assigned a non-negative value, but may be assigned a zero value.
-   Lines describing individual groups must be present iff nBond > 0, etc. 
-
-   7) ddSim must be able to read a SPECIES block, and will replicate all 
+   5) ddSim must be able to read a SPECIES block, and will replicate all 
    groups (bonds, angles, etc.) to create corresponding group objects for
    every molecule in each species. 
+
+   6) If the SPECIES block is present, for a purely molecular system,
+   corresponding BONDS, ANGLES, DIHEDRALS groups should not be present, 
+   since this information would be redundant. 
+
+   7) The BONDS, ANGLES, or DIHEDRALS sections are always optional. The 
+   absence of such a section indicates that there is no such block. If
+   there is also no SPECIES block, absence of such a group section implies
+   that there are no groups of the specified type. The Parameters nBond, 
+   nAngle, nDihedral must be present if the labels are present, and must 
+   be assigned a non-negative value, but may be assigned a zero value.
+   Lines describing individual groups must be present iff nBond > 0, etc. 
 
 BOUNDARY:
 
@@ -135,19 +135,26 @@ ATOMS:
    2) The ordered flag is optional, and is assumed false if absent, and
    true if and only if present.
 
-   3) All programs (mcSim, mdSim, ddSim an ppMd) should be able to handle 
-   either ordered or unordered files.
+   3) All programs (mcSim, mdSim, ddSim an ppMd) should eventually be able 
+   to handle either ordered or unordered files.
 
    4) If information that is input here repeats information given in the 
    SPECIES section, priority is given to the per atom data given here.
+   This allows, for example, atom types to be set to values different 
+   from those implied by the species definition.
 
    5) By default, all programs should output atom ids for readability
   
-   6) By default, if molecular, programs should output context for readability
- 
+   6) By default, if molecular, programs should output context for readability.
+
    7) Molecular dynamics programs (mdSim and ddSim) will outut velocities,
    and shifts if possible.
    
+   8) Initially, mcSim and mdSim should both output in the format "imtpv". 
+   After both MD programs are taught to set velocities to zero when the "v"
+   flag is absent, we could consider allowing mcSim to output in a format 
+   with no velocities.
+ 
 BONDS, ANGLES, or DIHEDRALS:
    
    [ordered]
@@ -158,16 +165,16 @@ BONDS, ANGLES, or DIHEDRALS:
 
    Remarks:
 
-   1) In a molecular system with no intramolecular bonding, the BONDS,
+   1) In a molecular system with no inter-molecular bonding, the BONDS,
    ANGLES and DIHEDRALS blocks should be absent.
 
    2) In a molecular system, these blocks may be used to describe covalent
    interactions that are not already specified by the topology block. 
 
    3) Each of these blocks is optional. In a non-molecular system, the 
-   absence of sucha  block means that there are no groups of the specified 
+   absence of such  block means that there are no groups of the specified 
    type. In a molecular system, the absence of a block means that all such
-   groups are accounted for by the TOPOLOGY block.
+   groups are accounted for by the SPECIES block.
 
    4) The format is essentially the same for each type of covalent bond, 
    except for the block label BONDS, ANGLES, or DIHEDRALS and the number

@@ -9,10 +9,8 @@
 
 // Analyzers for MdSystem only
 #include "MdEnergyAnalyzer.h"
-#include "MdEnergyOutput.h"
-#include "MdPotentialEnergyAverage.h"
 #include "MdKineticEnergyAverage.h"
-#include "MdPressureAverage.h"
+#include "MdPressureAnalyzer.h"
 #include "MdStressAutoCorr.h"
 #include "MdPairEnergyCoefficients.h"
 #ifdef SIMP_BOND
@@ -52,17 +50,11 @@ namespace McMd
       if (className == "MdEnergyAnalyzer") {
          ptr = new MdEnergyAnalyzer(system());
       } else
-      if (className == "MdEnergyOutput") {
-         ptr = new MdEnergyOutput(system());
-      } else
-      if (className == "MdPotentialEnergyAverage") {
-         ptr = new MdPotentialEnergyAverage(system());
-      } else
       if (className == "MdKineticEnergyAverage") {
          ptr = new MdKineticEnergyAverage(system());
       } else
-      if (className == "MdPressureAverage") {
-         ptr = new MdPressureAverage(system());
+      if (className == "MdPressureAnalyzer") {
+         ptr = new MdPressureAnalyzer(system());
       } else 
       if (className == "MdStressAutoCorr") {
          ptr = new MdStressAutoCorr(system());
@@ -76,7 +68,6 @@ namespace McMd
       #endif
 
       #ifdef SIMP_BOND
-      else 
       if (className == "MdIntraBondStressAutoCorr") {
          ptr = new MdIntraBondStressAutoCorr(system());
       } else 

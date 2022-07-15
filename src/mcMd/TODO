@@ -4,8 +4,41 @@ Housekeeping
 - Add *.dox files to document file format of all interaction classes
   (done?), potential classes, and other ParamComposite subclasses.
 
+- Add guide to class-level documentation to end of user manual. 
+  
+- Add pages listing *.dox files to namespace level discussions in
+  source code guide in manual.
+
+- Existing classes requiring param file documentation:
+
+   McSimulation {
+      Util::FileMaster
+      SpeciesManager
+      Random
+      MdSystem{
+        PairPotential
+        BondPotential
+        AnglePotential
+        DihedralPotential
+        ExternalPotential
+        EnergyEnsemble
+        BoundaryEnsemble
+        Integrators
+        AnalyzerManager
+      }
+    }
+
+    McSimulation {
+       McSystem{ 
+          (most of above, as well as...)
+          McMoveManager
+       }
+    }
+
+     
 - Add *.dox files for coulomb potential classes, which are not yet
   documented in main manual pages. 
+
 
 Constant Pressure MD 
 --------------------

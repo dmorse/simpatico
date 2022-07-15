@@ -1,0 +1,20 @@
+System:
+
+    melt of 100 flexible homopolymer chains of 8 atoms
+
+Usage:
+
+Use bash script to run and restart:
+
+    ./run
+
+Independent NVE MD simulations on 3 processors:
+
+    mpirun -np 3 mdSim_m -e -p param -c command
+
+    (See files n/log, n=0,1, 2 for log output)
+
+Restarting above:
+
+    mpirun -np 3 mdSim_m -e -p param -c commrst
+

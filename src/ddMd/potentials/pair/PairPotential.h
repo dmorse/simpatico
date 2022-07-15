@@ -336,7 +336,7 @@ namespace DdMd
       AtomStorage& storage();
 
       /**
-      * Set values for pair energies.
+      * Set values for the matrix of pair energies.
       */
       void setPairEnergies(DMatrix<double> pairEnergies);
 
@@ -351,14 +351,17 @@ namespace DdMd
       /// Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
 
+      /// Pair energies.
+      Setable< DMatrix<double> > pairEnergies_;
+
       /// Index for method used to calculate forces / energies.
       int methodId_;
 
       /// Number of pairs within specified cutoff.
       int nPair_;
 
-      /// Pair energies.
-      Setable< DMatrix<double> > pairEnergies_;
+      /// Does this potential have a stored maxBoundary?
+      bool hasMaxBoundary_;
 
       /// Private methods used to compute number of pairs
       int nPairList(double cutoffSq);
@@ -366,9 +369,9 @@ namespace DdMd
       int nPairNSq(double cutoffSq);
 
       /**
-      * Allocate memory for the cell list and pair list.
+      * Reserve memory for the cell list and pair list.
       */
-      void allocate();
+      void reserve();
 
    };
 

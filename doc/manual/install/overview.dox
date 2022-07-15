@@ -1,0 +1,84 @@
+/*! \page install_overview_page 2.3 Installation Overview
+
+\ref install_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_environment_page (Next) 
+<BR>
+
+Below is a brief summary of instructions for compiling all of the simpatico 
+programs using default settings:
+
+   - **Set environment variables:**
+     Modify the users PATH and PYTHONPATH unix environment variables,
+     as discussed \ref install_environment_page "here".
+
+   - **Navigate to root directory:**
+     Change directory (cd) to the simpatico/ root directory (i.e., the root
+     directory of the tree created by cloning the simpatico repository).
+
+   - **Setup:**
+     Invoke the "setup" script from the simpatico root directory.  Enter 
+     the command
+     \code 
+     > ./setup
+     \endcode
+     to setup the build system with default compiler options. Alternatively,
+     invoke the setup with a filename argument for non-default compiler
+     options (as discussed \ref install_setup_page "here").
+
+   - **Compile mcSim and mdSim:** Compile and install the single-processor 
+     mcSim and mdSim Monte Carlo and molecular dynamics programs by 
+     invoking
+     \code
+     > make mcMd
+     \endcode
+     from the simpatico root directory. This will install executables 
+     named "mdSim" and "mcSim" in the simpatico/bin directory.
+
+   - **Compile the postprocessor:** Compile and install the "mdPp" MD 
+     post-processing analysis program, by invoking
+     \code
+     > make mdPp 
+     \endcode
+     from the simpatico root directory. This will install the mdPp
+     executable in the simpatico/bin directory.
+
+   - **Compile mcSim_m and mdSim_m:** Compile and install the 
+     multi-processor versions of "mcSim" and "mdSim", which peform
+     embarassingly parallel simulations of multiple systems with one 
+     system per processor. To do so, invoke
+     \code
+     > make mcMd-mpi
+     \endcode
+     from the simpatico root directory. If compilation succeeds (i.e.,
+     if MPI is configured correctly), this will install executables named 
+     "mcSim_m" and "mdSim_m" in the simpatico/bin directory. 
+
+   - **Compile ddSim**: Compile and install the ddSim parallel domain 
+     decomposition MD program by invoking
+     \code
+     > make ddMd
+     \endcode
+     from the simpatico root directory. This will install the "ddSim" 
+     executable in the simpatico/bin directory.
+
+   - **Configure optional features and recompile (optional):** Use the configure 
+     script in the simpatico/ root directory to enable any desired optional 
+     compile-time features that are disabled by default, and then recompile 
+     any programs that are affected by the change (as discussed in detail
+     \ref install_configure_page "here").
+
+The most potentially complicated part of compiling simpatico is the need to
+set up the compiler options to link correctly to an MPI library. The MPI library 
+is only needed by the ddSim program and the multi-processor versions of mcSim 
+and mdSim. Users who would like to compile the single-processor mcSim and 
+mdSim programs and begin experimenting with those can simply follow the above 
+instructions through the instruction to invoke "make mcMd". 
+
+Each of the above steps is discussed in more detail in the following pages.
+
+<BR>
+\ref install_source_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_environment_page (Next) 
+
+*/

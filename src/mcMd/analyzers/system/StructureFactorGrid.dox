@@ -8,7 +8,7 @@ namespace McMd
 This analyzer calculates the structure factor for all wavevectors within
 a grid, for all integer wavevector indices up to some maximum value. It also groups together values from "stars" of wavevectors that are related by symmetry, such as the {100} family of 6 wavevectors, and outputs a single average value for the entire star.
 
-The McMd::StructureFactorGrid class is a subsclass of McMd::Structure factor. Like McMd::StructureFactor, it calculates the structure factor at a set of wavevectors, using a specified set of "modes" for each wavevector. See the documentation of McMd::Structure factor for an explanation of the notation of "modes", and the parameter file format for specifying modes.
+The McMd::StructureFactorGrid class is a subsclass of McMd::StructureFactor. Like McMd::StructureFactor, it calculates the structure factor at a set of wavevectors, using a specified set of "modes" for each wavevector. The difference is that StructureFactorGrid generates all wavevectors on a grid, and then outputs results in a manner that averages over wavevectors that are related by symmetry. See the documentation of McMd::StructureFactor for an explanation of the concept of "modes", and the parameter file format for specifying modes.
 
 \sa McMd::StructureFactor
 \sa McMd::StructureFactorGrid

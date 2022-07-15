@@ -32,9 +32,10 @@ namespace DdMd
       domainPtr_(0),
       boundaryPtr_(0),
       storagePtr_(0),
+      pairEnergies_(),
       methodId_(0),
       nPair_(0),
-      pairEnergies_()
+      hasMaxBoundary_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -47,9 +48,10 @@ namespace DdMd
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
+      pairEnergies_(),
       methodId_(0),
       nPair_(0),
-      pairEnergies_()
+      hasMaxBoundary_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -70,17 +72,18 @@ namespace DdMd
    {}
 
    /*
-   * Allocate memory for the cell list.
+   * Allocate memory for the cell list (for use during testing)
    */
    void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
                                   int pairCapacity)
    {
+      maxBoundary_ = maxBoundary;
       skin_ = skin;
       pairCapacity_ = pairCapacity;
-      maxBoundary_ = maxBoundary;
       cutoff_ = maxPairCutoff() + skin;
-
-      allocate();
+      hasMaxBoundary_ = true;
+      pairList_.setCutoff(cutoff_);
+      reserve();
    }
 
    /*
@@ -88,13 +91,25 @@ namespace DdMd
    */
    void PairPotential::readParameters(std::istream& in)
    {
+      // Read skin
       read<double>(in, "skin", skin_);
-      nCellCut_ = 1; // Default value for optional parameter
-      readOptional<int>(in, "nCellCut", nCellCut_); 
-      read<int>(in, "pairCapacity", pairCapacity_);
-      read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
-      allocate();
+      pairList_.setCutoff(cutoff_);
+
+      // Optionally read nCellCut
+      nCellCut_ = 1; // Default value 
+      readOptional<int>(in, "nCellCut", nCellCut_); 
+
+      // Optionally read pairCapacity
+      pairCapacity_ = 0; // Default value
+      readOptional<int>(in, "pairCapacity", pairCapacity_);
+
+      // Optionally read maxBoundary
+      hasMaxBoundary_ = 
+        readOptional<Boundary>(in, "maxBoundary", maxBoundary_).isActive();
+
+      // Reserve memory for cell and pair lists.
+      reserve();
    }
 
    /*
@@ -102,16 +117,20 @@ namespace DdMd
    */
    void PairPotential::loadParameters(Serializable::IArchive& ar)
    {
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
   
       loadParameter<double>(ar, "skin", skin_);
       loadParameter<int>(ar, "nCellCut", nCellCut_, false);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
-      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(hasMaxBoundary_);
+      if (hasMaxBoundary_) {
+         loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+      }
       loader.load(cutoff_);
       loader.load(methodId_);
-      allocate();
+
+      pairList_.setCutoff(cutoff_);
+      reserve();
    }
 
    /*
@@ -121,36 +140,52 @@ namespace DdMd
    {
       ar << skin_;
       Parameter::saveOptional(ar, nCellCut_, true);
+      pairCapacity_ = pairList_.pairCapacity();
       ar << pairCapacity_;
-      ar << maxBoundary_;
+      ar << hasMaxBoundary_;
+      if (hasMaxBoundary_) {
+         ar << maxBoundary_;
+      }
       ar << cutoff_;
       ar << methodId_;
    }
 
    /*
-   * Allocate memory for the cell list and pair list.
-   *
-   * On entry, cutoff_, pairCapacity_, and maxBoundary_ must be defined.
+   * Reserve memory for the cell list and pair list.
    */
-   void PairPotential::allocate()
+   void PairPotential::reserve()
    {
-      // Allocate PairList
       int localCapacity = storage().atomCapacity();
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+      int totalCapacity = localCapacity + storage().ghostCapacity();
 
-      // Calculate cell list cutoff lengths for all directions
-      Vector cutoffs;
-      Vector lower;
-      Vector upper;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         cutoffs[i] = cutoff_/maxBoundary_.length(i);
+      // Set CellList atomCapacity
+      if (totalCapacity > 0) {
+         cellList_.setAtomCapacity(totalCapacity);
       }
 
-      // Allocate CellList
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs, nCellCut_);
+      // Optionally make cell list grid
+      if (hasMaxBoundary_) {
+         UTIL_CHECK(cutoff_ > 0.0);
+         Vector cutoffs;
+         Vector lower;
+         Vector upper;
+         for (int i = 0; i < Dimension; ++i) {
+            lower[i] = domain().domainBound(i, 0);
+            upper[i] = domain().domainBound(i, 1);
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
+         }
+         cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
+      }
+
+      // Optionally reserve memory for PairList
+      if (localCapacity > 0) {
+         pairList_.reserveAtoms(localCapacity);
+      }
+      if (pairCapacity_ > 0) {
+         pairList_.reservePairs(pairCapacity_);
+         pairCapacity_ = pairList_.pairCapacity();
+      }
+
    }
 
    /*
@@ -162,7 +197,24 @@ namespace DdMd
          UTIL_THROW("Coordinates are Cartesian entering buildCellList");
       }
 
-      // Set cutoff and domain bounds.
+      // Check CellList atomCapacity - resize if necessary.
+      int totalCapacity = storage().atomCapacity() 
+                        + storage().ghostCapacity();
+      if (totalCapacity > cellList().atomCapacity()) {
+         cellList().setAtomCapacity(totalCapacity);
+      }
+
+      /*
+      * Note: Components of the vectors lower, upper and cutoff are in 
+      * scaled [0,1] coordinates, while cutoff_ and boundaryPtr_-length(i)
+      * have dimensions of length. The length boundaryPtr_->length(i) 
+      * is the distance across the periodic unit cell along direction
+      * parallel to the reciprocal vector number i, so that length(i)
+      * is distance between planes corresponding to scaled coordinates
+      * position(i) = 0.0 and position(i) = 1.0
+      */
+
+      // Set vectors of cutoffs and domain bounds.
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -171,33 +223,34 @@ namespace DdMd
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
       }
+
+      // Make cell list grid and clear all cells.
+      // Note: Memory to store cells is allocated as needed.
       cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
       cellList_.clear();
 
-      // Add all atoms to the cell list. 
+      // Compute and store cell indices for all local atoms.
       AtomIterator atomIter;
       storage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
-      // Add all ghosts to the cell list. 
+      // Compute and store cell indices for all ghost atoms.
       GhostIterator ghostIter;
       storage().begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
 
-      // Finalize cell list
+      // Build the cell list
       cellList_.build();
      
       // Postconditions
-      assert(cellList_.isValid());
-      assert(cellList_.nAtom() + cellList_.nReject() 
-             == storage().nAtom() + storage().nGhost());
-      if (storage().isCartesian()) {
-        UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
-      }
+      UTIL_ASSERT(cellList_.isValid());
+      UTIL_CHECK(cellList_.nAtom() + cellList_.nReject() 
+                 == storage().nAtom() + storage().nGhost());
+      UTIL_CHECK(!storage().isCartesian());
    }
 
    /*
@@ -205,20 +258,41 @@ namespace DdMd
    */
    void PairPotential::buildPairList()
    {
-      if (!storage().isCartesian()) {
-         UTIL_THROW("Coordinates not Cartesian entering buildPairList");
+      // Precondition
+      UTIL_CHECK(storage().atomCapacity() > 0);
+      UTIL_CHECK(storage().isCartesian());
+      UTIL_CHECK(cellList_.isBuilt());
+      pairList_.setCutoff(cutoff_);
+
+      // Reserve space in pairList_ to accomodate primary local atoms.
+      // Require that pairlist_.atomCapacity() >= storage.atomCapacity() 
+      if (storage().atomCapacity() > pairList_.atomCapacity()) {
+         pairList_.reserveAtoms(storage().atomCapacity());
       }
+
+      // If pairList_ has not been built previously, reserve memory for
+      // pairs by counting pairs, then reserving 50% more than needed.
+      if (pairList_.pairCapacity() == 0) {
+         int nPair = pairList_.countPairs(cellList_, reverseUpdateFlag());
+         if (nPair > 0) {
+            nPair = 1.5*nPair;  // Note: Allocate 50% more than needed
+            pairList_.reservePairs(nPair);
+            pairCapacity_ = pairList_.pairCapacity();
+         }
+      } 
+
+      // Build the pair list.
       pairList_.build(cellList_, reverseUpdateFlag());
    }
 
    /*
-   * Return value of pair energies.
+   * Return the value of the pairEnergies matrix.
    */
    DMatrix<double> PairPotential::pairEnergies() const
    {  return pairEnergies_.value(); }
 
    /*
-   * Set a value for pair energies.
+   * Set a value for the pair energies matrix.
    */
    void PairPotential::setPairEnergies(DMatrix<double> pairEnergies)
    {  pairEnergies_.set(pairEnergies); }
@@ -258,7 +332,7 @@ namespace DdMd
    }
 
    /*
-   * Return twice the number of pairs within the specified cutoff.
+   * Return twice the global number of pairs, on all processors.
    * 
    * This method should only be called on the rank 0 processor. The
    * return value is computed by a previous call to computeNPair.

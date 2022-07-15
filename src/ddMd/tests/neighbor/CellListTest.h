@@ -51,7 +51,8 @@ public:
          upper[i] = upper[i]/lengths[i]; 
          cutoffs[i] = cutoff/lengths[i]; 
       }
-      cellList.allocate(10, lower, upper, cutoffs);
+      cellList.setAtomCapacity(10);
+      cellList.makeGrid(lower, upper, cutoffs);
 
       TEST_ASSERT(cellList.atomCapacity() == 10);
       TEST_ASSERT(cellList.cellCapacity() == 60);
@@ -71,7 +72,8 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
       }
       int nCellCut = 3;
-      cellList.allocate(10, lower, upper, cutoffs, nCellCut);
+      cellList.setAtomCapacity(10);
+      cellList.makeGrid(lower, upper, cutoffs, nCellCut);
 
       TEST_ASSERT(cellList.atomCapacity() == 10);
       TEST_ASSERT(cellList.cellCapacity() == 11*13*16);
@@ -90,7 +92,7 @@ public:
          upper[i] = upper[i]/lengths[i]; 
          cutoffs[i] = cutoff/lengths[i]; 
       }
-      cellList.allocate(10, lower, upper, cutoffs);
+      cellList.setAtomCapacity(10);
       cellList.makeGrid(lower, upper, cutoffs);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
@@ -123,7 +125,7 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
       }
       int nCellCut = 3;
-      cellList.allocate(10, lower, upper, cutoffs, nCellCut);
+      cellList.setAtomCapacity(10);
       cellList.makeGrid(lower, upper, cutoffs, nCellCut);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 11);
@@ -162,7 +164,7 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
          r[i] = r[i]/lengths[i];
       }
-      cellList.allocate(10, lower, upper, cutoffs);
+      cellList.setAtomCapacity(10);
       cellList.makeGrid(lower, upper, cutoffs);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
@@ -229,7 +231,7 @@ public:
             r[j][i] = r[j][i]/lengths[i];
          }
       }
-      cellList.allocate(10, lower, upper, cutoffs);
+      cellList.setAtomCapacity(10);
       cellList.makeGrid(lower, upper, cutoffs);
 
       // Allocate and initialize an array of nAtom atoms
@@ -277,7 +279,7 @@ public:
          upper[i] = upper[i]/lengths[i]; 
          cutoffs[i] = cutoff/lengths[i]; 
       }
-      cellList.allocate(nAtom, lower, upper, cutoffs);
+      cellList.setAtomCapacity(nAtom);
       cellList.makeGrid(lower, upper, cutoffs);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
@@ -296,7 +298,7 @@ public:
           upperGhost[i] = upper[i] + cutoffs[i];
       }
 
-      // Allocate Atom 
+      // Allocate atoms array
       AtomArray atoms;
       atoms.allocate(nAtom);
 
@@ -380,7 +382,7 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
       }
       int nCellCut = 3;
-      cellList.allocate(nAtom, lower, upper, cutoffs, nCellCut);
+      cellList.setAtomCapacity(nAtom);
       cellList.makeGrid(lower, upper, cutoffs, nCellCut);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 11);
@@ -487,7 +489,7 @@ public:
 
       // Setup cell list grid
       const int nAtom = 200;
-      cellList.allocate(nAtom, lower, upper, cutoffs);
+      cellList.setAtomCapacity(nAtom);
       cellList.makeGrid(lower, upper, cutoffs);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
@@ -671,11 +673,17 @@ public:
          cutoffs[i] = cutoff/lengths[i]; 
       }
 
-      // Setup cell list grid
-      const int nAtom = 200;
+      // Setup incorrect cell list array dimensions
+      cellList.makeGrid(lower, upper, cutoffs, 1);
+      cellList.setAtomCapacity(10);
+
+      // Setup correct cell list grid
       int nCellCut = 3;
-      cellList.allocate(nAtom, lower, upper, cutoffs, nCellCut);
       cellList.makeGrid(lower, upper, cutoffs, nCellCut);
+
+      // Set correct atomCapacity
+      const int nAtom = 200;
+      cellList.setAtomCapacity(nAtom);
 
       TEST_ASSERT(cellList.grid().dimension(0) == 11);
       TEST_ASSERT(cellList.grid().dimension(1) == 13);
@@ -793,7 +801,8 @@ public:
             for (j = 0; j < na; ++j) {
                cellAtomPtr2 = neighbors[j];
                if (cellAtomPtr2 > cellAtomPtr1) {
-                  dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
+                  dr.subtract(cellAtomPtr2->position(), 
+                              cellAtomPtr1->position()); 
                   if (dr.square() < pairCutoffSq) {
                      ++np;
                   }

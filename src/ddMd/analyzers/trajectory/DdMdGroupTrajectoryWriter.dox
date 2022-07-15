@@ -1,0 +1,48 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_DdMdGroupTrajectoryWriter_page DdMdGroupTrajectoryWriter
+
+\section ddMd_analyzer_DdMdGroupTrajectoryWriter_synopsis_sec Synopsis
+
+This analyzer writes the MD trajectory of a selected group of atoms to file, using the default DdMd binary file format. 
+
+\sa DdMd::DdMdGroupTrajectoryWriter
+
+\section ddMd_analyzer_DdMdGroupTrajectoryWriter_param_sec Parameters
+
+
+The parameter file format is:
+\code
+  DdMdGroupTrajectoryWriter{
+    interval           int
+    outputFileName     string
+    groupId            int
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between snapshots </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> groupId </td>
+     <td> integer index of a group of atoms </td>
+  </tr>
+</table>
+
+The group of atoms for which data should be output is identified by the groupId parameter, which must be the integer index a group that has been defined previously.
+A group of atoms can be defined by a SET_GROUP command, which must appear earlier in the command file than that command that runs a simulation. 
+
+\section ddMd_analyzer_DdMdGroupTrajectoryWriter_output_sec Output
+
+Configurations are periodically output to file, with multiple configurations in a single large file, using the default DdMd binary file format.
+
+*/
+
+}

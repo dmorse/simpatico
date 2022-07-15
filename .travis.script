@@ -2,23 +2,25 @@
 set -ev
 
 if [ "$SMP_PROG" == "mcMd" ]; then 
-   cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run
-   cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run
-   cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run
-   cd $TRAVIS_BUILD_DIR/bld/serial/tools/tests && make run
-   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/md && ./run && ./clean
-   cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mc/combine && ./run && ./clean
-   cd $TRAVIS_BUILD_DIR/examples/semigrand && ./run && ./clean
+  cd $TRAVIS_BUILD_DIR/bld/serial/util/tests && make run
+  cd $TRAVIS_BUILD_DIR/bld/serial/simp/tests && make run
+  cd $TRAVIS_BUILD_DIR/bld/serial/mcMd/tests && make run
+  cd $TRAVIS_BUILD_DIR/bld/serial/mdPp/tests && make run
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run nvt
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim/A && ./run nve
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim/B && ./run
 fi
 
 if [ "$SMP_PROG" == "ddMd" ]; then
-   cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
-   cd $TRAVIS_BUILD_DIR/examples/diblock/N32/dd && ./run && ./clean
+  cd $TRAVIS_BUILD_DIR/bld/parallel/ddMd/tests && make run 
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run nvt
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run npt
+  cd $TRAVIS_BUILD_DIR/testsuite/ddSim/A && ./run nve
 fi
 
 if [ "$SMP_PROG" == "mcMdMpi" ]; then 
   cd $TRAVIS_BUILD_DIR/bld/parallel/mcMd/tests && make run 
-  cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mdMulti   && ./run && ./clean
-  cd $TRAVIS_BUILD_DIR/examples/homopolymer/N8/mcMulti   && ./run && ./clean
-  cd $TRAVIS_BUILD_DIR/examples/blend/N8/mcPerturb && ./run && ./clean
+  cd $TRAVIS_BUILD_DIR/testsuite/mdSim_m/A && ./run 
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/A && ./run
+  cd $TRAVIS_BUILD_DIR/testsuite/mcSim_m/B && ./run
 fi

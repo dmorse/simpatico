@@ -1,6 +1,0 @@
-    RadiusGyration{
-      interval                            1000
-      outputFileName            RadiusGyration
-      nSamplePerBlock                       10
-      speciesId                              0
-    }

@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/analyzers/SystemAnalyzer.h>
+#include <mcMd/analyzers/base/SystemAnalyzer.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <util/space/Tensor.h>
 #include <util/accumulators/Average.h>

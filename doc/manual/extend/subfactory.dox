@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_subfactory_page 4.5 Sub-Factories
+/*! \page extend_subfactory_page 5.5 Sub-Factories
 
 \ref extend_potential_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_module_page  (Next)
@@ -27,7 +27,7 @@ A factory and its subfactories (if any) form a tree that is searched in a depth 
 \endcode
 The value of the "classname" parameter is the name of a subclass of Base. This method should be called by the factory() method of every factory class (including subfactories), near the beginning of the method. It calls the factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each subfactory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a match is found by any subfactory, trySubfactories() immediately stops the search and returns a Base* pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
 
-As an example, imagine that you have written an NvtLangevinIntegrator subclass of McMd::MdIntegrator, because no Langevin integrator is (thus far) distributed with Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called "MyMdIntegratorFactory", with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this new class.  Here is an example of the required class definition:
+As an example, imagine that you have written an NvtLangevinIntegrator subclass of McMd::MdIntegrator, because no Langevin integrator is (thus far) distributed with simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called "MyMdIntegratorFactory", with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this new class.  Here is an example of the required class definition:
 \code
 #include <src/mcMd/mdIntegrators/MdIntegratorFactory.h>
 #include <src/mcMd/user/NvtLangevinIntegrator.h>

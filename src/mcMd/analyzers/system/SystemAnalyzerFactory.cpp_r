@@ -16,13 +16,12 @@
 #include "StructureFactorPGrid.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
-#include "CompositionProfile.h"
 #include "VanHove.h"
 #include "BoundaryAverage.h"
 #include "ClusterHistogram.h"
 
 #ifdef SIMP_BOND
-#include "RadiusGyration.h"
+#include "RadiusGyrationSq.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
 #include "IntraStructureFactor.h"
@@ -31,6 +30,10 @@
 #include "IntraPairAutoCorr.h"
 #include "RingRouseAutoCorr.h"
 #include "LinearRouseAutoCorr.h"
+#endif
+
+#ifdef SIMP_DIHEDRAL
+#include "DihedralDist.h"
 #endif
 
 #ifdef MCMD_PERTURB
@@ -85,9 +88,6 @@ namespace McMd
       if (className == "BoundaryAverage") {
          ptr = new BoundaryAverage(system());
       } else 
-      if (className == "CompositionProfile") {
-         ptr = new CompositionProfile(system());
-      } else 
       if (className == "AtomMSD") {
          ptr = new AtomMSD(system());
       } else
@@ -106,8 +106,8 @@ namespace McMd
       if (className == "IntraStructureFactorGrid") {
          ptr = new IntraStructureFactorGrid(system());
       } else 
-      if (className == "RadiusGyration") {
-         ptr = new RadiusGyration(system());
+      if (className == "RadiusGyrationSq") {
+         ptr = new RadiusGyrationSq(system());
       } else 
       if (className == "BlockRadiusGyration") {
          ptr = new BlockRadiusGyration(system());
@@ -126,6 +126,13 @@ namespace McMd
       } else
       if (className == "RingRouseAutoCorr") {
          ptr = new RingRouseAutoCorr(system());
+      } 
+      #endif
+
+      #ifdef SIMP_DIHEDRAL
+      else
+      if (className == "DihedralDist") {
+         ptr = new DihedralDist(system());
       } 
       #endif
 

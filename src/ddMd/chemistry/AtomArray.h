@@ -98,7 +98,7 @@ namespace DdMd
       Plan* plans_; 
 
       /**
-      * C-array of Atom global ids (tags).
+      * C-array of unique global atom ids (tags).
       */
       int* ids_;
 
@@ -112,8 +112,10 @@ namespace DdMd
       */
       AtomContext* contexts_;
 
+      // Prohibited functions (to suppress compilier generated default)
+
       /**
-      * Copy ctor (prohibited - private and not implemented).
+      * Copy constructort (prohibited - private and not implemented).
       */
       AtomArray(const AtomArray& other);
    
@@ -122,7 +124,7 @@ namespace DdMd
       */
       AtomArray& operator = (const AtomArray& other); 
 
-   //friends:
+   // friends:
 
       friend class Atom;
 

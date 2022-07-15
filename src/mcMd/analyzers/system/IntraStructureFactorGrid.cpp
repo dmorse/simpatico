@@ -8,8 +8,8 @@
 #include "IntraStructureFactorGrid.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <util/crystal/PointGroup.h>
-#include <util/crystal/PointSymmetry.h>
+#include <simp/crystal/PointGroup.h>
+#include <simp/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -48,9 +48,10 @@ namespace McMd
       read<int>(in, "nAtomTypeIdPair", nAtomTypeIdPair_);
       nAtomType_ = system().simulation().nAtomType();
       atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
-      readDArray< Pair<int> >(in, "atomTypeIdPairs", atomTypeIdPairs_, nAtomTypeIdPair_);
+      readDArray< Pair<int> >(in, "atomTypeIdPairs", atomTypeIdPairs_, 
+                              nAtomTypeIdPair_);
       read<int>(in, "hMax", hMax_);
-      read<Util::LatticeSystem>(in, "lattice", lattice_);
+      read<Simp::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
       nWave_  = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
@@ -190,40 +191,45 @@ namespace McMd
    */
    void IntraStructureFactorGrid::loadParameters(Serializable::IArchive& ar)
    {
-      // Load from IntraStructureFactor::serialize
-      Analyzer::loadParameters(ar);
-      ar & nAtomType_;
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
       loadParameter<int>(ar, "nAtomTypeIdPair", nAtomTypeIdPair_);
-      loadDArray< Pair<int> >(ar, "atomTypeIdPairs", atomTypeIdPairs_, nAtomType_);
-      ar & nWave_;
-      ar & waveIntVectors_;
+      atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
+      loadDArray< Pair<int> >(ar, "atomTypeIdPairs", atomTypeIdPairs_, 
+                                                     nAtomTypeIdPair_);
+      UTIL_CHECK(atomTypeIdPairs_.capacity() == nAtomTypeIdPair_);
+
+      ar >> nWave_;
+      //waveIntVectors_.allocate(nWave_);
+      ar >> waveIntVectors_;
+      //loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      UTIL_CHECK(waveIntVectors_.capacity() == nWave_);
+
+      ar & nAtomType_;
+      UTIL_CHECK(nAtomType_ == system().simulation().nAtomType());
+
+      // structureFactors_.allocate(nWave_, nAtomTypeIdPair_);
       ar & structureFactors_;
+      UTIL_CHECK(structureFactors_.capacity1() == nWave_);
+      UTIL_CHECK(structureFactors_.capacity2() == nAtomTypeIdPair_);
+
+      //fourierModes_.allocate(nWave_, nAtomType_ + 1);
+      ar & fourierModes_;
+      UTIL_CHECK(fourierModes_.capacity1() == nWave_);
+      UTIL_CHECK(fourierModes_.capacity2() == nAtomType_ + 1);
       ar & nSample_;
 
-      // Load additional from IntraStructureFactorGrid::serialize
+      waveVectors_.allocate(nWave_);
+      structureFactorDelta_.allocate(nWave_, nAtomTypeIdPair_);
+
+      // Load additional from IntraStructureFactorGrid::save
       loadParameter<int>(ar, "hMax", hMax_);
-      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      UTIL_CHECK(nWave_  == (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1));
+      loadParameter<Simp::LatticeSystem>(ar, "lattice", lattice_);
       ar & nStar_;
       ar & starIds_;
       ar & starSizes_;
-
-      // Validate
-      if (nWave_  != (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1)) {
-         UTIL_THROW("Inconsistent value of nWave_");
-      }
-      if (nAtomType_ != system().simulation().nAtomType()) {
-         UTIL_THROW("Inconsistent values of nAtomType_");
-      }
-      if (atomTypeIdPairs_.capacity() != nAtomTypeIdPair_) {
-         UTIL_THROW("Inconsistent capacity1 for atomTypeIdPairs array");
-      }
-      if (waveIntVectors_.capacity() != nWave_) {
-         UTIL_THROW("Inconsistent capacity for waveIntVector");
-      }
-
-      // Allocate temporary data structures (defined in IntraStructureFactor)
-      waveVectors_.allocate(nWave_);
-      fourierModes_.allocate(nWave_, nAtomTypeIdPair_);
 
       isInitialized_ = true;
    }
@@ -232,7 +238,15 @@ namespace McMd
    * Save state to archive.
    */
    void IntraStructureFactorGrid::save(Serializable::OArchive& ar)
-   {  ar & *this; }
+   {  
+      IntraStructureFactor::save(ar);
+      ar & hMax_;
+      //serializeEnum(ar, lattice_);
+      ar & lattice_;
+      ar & nStar_;
+      ar & starIds_;
+      ar & starSizes_;
+   }
 
    void IntraStructureFactorGrid::setup() 
    {

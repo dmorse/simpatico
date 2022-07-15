@@ -1,6 +1,6 @@
-/*! \page user_restart_page 2.10 Restarting
+/*! \page user_restart_page 3.12 Restarting
 
-\ref user_features_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_generate_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_multi_page (Next)
 <BR>
 
@@ -81,7 +81,7 @@ To continue a ddSim simulation, the number of processors must be the same as tha
 The -r option may be combined with the -e option. This causes parameters that would normally be read from the parameter file to be echoed to standard output as they are read from the restart file.
 
 <BR>
-\ref user_features_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_generate_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_multi_page (Next)
 

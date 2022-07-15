@@ -1,0 +1,120 @@
+MdSimulation{
+  FileMaster{
+    inputPrefix                          in/
+    outputPrefix                        out/ 
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                              A       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                              10732192
+  }
+  MdSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond
+    MdPairPotential{
+      epsilon               1.000000000000e+00 
+      sigma                 1.000000000000e+00 
+      cutoff                1.122460000000e+00 
+      PairList{
+        atomCapacity                        1000
+        pairCapacity                        4000
+        skin                  3.000000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                           adiabatic
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    NveVvIntegrator{
+       dt                   1.000000000000e-03
+    }
+  }
+  AnalyzerManager{
+    baseInterval                         100
+
+    LogProgress{
+      interval                          2000
+    }
+
+    MdEnergyAnalyzer{
+      interval                           100
+      outputFileName                  energy
+      nSamplePerBlock                      2
+    }
+
+    MdKineticEnergyAverage{
+      interval                           100
+      outputFileName        kineticEnergyAve
+      nSamplePerBlock                     10
+    }
+
+    MdPressureAnalyzer{
+      interval                           100
+      outputFileName             pressureAve
+      nSamplePerBlock                     10
+    }
+
+    RadiusGyrationSq{
+      interval                           100
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      min                                0.0
+      max                                2.0
+      nBin                               400
+    }
+
+    RDF{
+      interval                         10000
+      outputFileName                     RDF
+      max                                5.0
+      nBin                               500
+      selector                         inter   -1    -1
+    }
+
+    AtomMSD{
+      interval                          1000
+      outputFileName                 AtomMSD
+      speciesId                            0
+      atomId                               5
+      capacity                           400
+    }
+
+    IntraPairAutoCorr{
+      interval                         1000
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                             7 
+      capacity                         1000
+    }
+
+  }
+  saveInterval           5000
+  saveFileName        restart
+}
+

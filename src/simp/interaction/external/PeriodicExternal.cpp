@@ -152,6 +152,8 @@ namespace Simp
    void PeriodicExternal::loadParameters(Serializable::IArchive &ar)
    {
       UTIL_CHECK(nAtomType_ > 0);
+      UTIL_CHECK(boundaryPtr_);
+
       prefactor_.allocate(nAtomType_);
       loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_);
       loadParameter<double>(ar, "externalParameter", externalParameter_);

@@ -11,6 +11,13 @@ namespace McMd
    */
 
    /**
+   * \defgroup McMd_Analyzer_Base_Module Analyzer Base Classes
+   * \ingroup McMd_Analyzer_Module
+   *  
+   * Base classes for specific types of analyzer classes.
+   */
+
+   /**
    * \defgroup McMd_Analyzer_Md_Module MD Analyzers
    * \ingroup McMd_Analyzer_Module
    *  

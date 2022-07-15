@@ -1,0 +1,78 @@
+/*! \page install_source_page 2.2 Source Code
+
+\ref install_require_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_overview_page (Next) 
+<BR>
+
+
+The source code for simpatico is hosted on the github server, at
+<a href=http://github.com>github</a>, as project dmorse/simpatico.  The 
+source code may be obtained by using a git version control manager to clone 
+the public <a href=https://github.com/dmorse/simpatico>git repository</a>. 
+The following instructions assume that a "git" client is installed on
+your computer.
+
+\section compile_getcode_section Cloning the repository
+
+To obtain a working copy of the simpatico git repository, you should first
+change directory (cd) to the directory you want to contain the simpatico 
+root directory. From there, then enter the command
+\code
+> git clone --recursive https://github.com/dmorse/simpatico.git
+\endcode
+This should create a complete working copy of the simpatico source code in 
+a new subdirectory named "simpatico/" of the directory from which you invoked 
+the above command. Note the use of the --recursive option, which is required 
+for reasons that are explained \ref compile_submodules_section "below".
+
+Herefafter, we assume that the root directory of the simpatico working copy 
+is named simpatico/.  References to paths that do not start explicitly with 
+a prefix "simpatico/" should be understood to be relative paths, relative to 
+this directory. The directory structure of the simpatico repository is 
+explained \ref source_directory_page "here".
+
+\section compile_fork_section Forking the repository
+
+The above instructions are for users who simply want to get a copy of 
+simpatico their own use, but who are not (or not yet) interested in sharing 
+modifications of the code with others. Users that want to be able to 
+contribute to the project or share their extensions or improvements of 
+simpatico with others should go through a slightly more complicated 
+procedure. Such users should instead:
+<ul>
+<li> Create a user account on github.com, if they do not already have one.</li>
+<li> Create a fork (i.e., a personal version) of the simpatico repository in their github user account</li>
+<li> Clone their own fork of simpatico from their personal github account to 
+a computer on which they can compile and edit the code, using the --recursive option 
+and using a communication protocol that is set up to allow them write access. </li>
+</ul>
+Changes that such users make to the code can be contributed to the project by
+pushing changes to the user's fork of simpatico and then sending a github
+pull request. Potential contributors should usually discuss proposed changes 
+with David Morse by email to morse012@umn.edu before sending a pull request. 
+
+\section compile_submodules_section Use of git submodules
+
+Some subdirectories of the simpatico/src directory are maintained in 
+separate github repositories and are imported into simpatico as git
+"submodules". (See chapter 7.11 of the Pro Git online book). Specifically, 
+the src/util and src/tests directories are submodules that contain clones 
+of the dmorse/util and dmorse/test repositories on github, respectively. 
+
+The use of the "--recursive" option of the git clone command given above will 
+automatically create clones of these submodules in the appropriate locations 
+within the simpatico source directory tree, thereby creating a complete 
+functional copy of the source code. Cloning a copy of simpatico without 
+using the "--recursive" option, however, would create a version of the 
+simpatico directory tree in which the src/util and src/tests directories 
+are empty. If you find yourself with a repository clone in which one or 
+both of these repositories is empty, you can either clone simpatico again 
+with the recursive option, or read chapter 7.11 of the online Pro Git 
+book for instructions on how to manually fetch and update these submodules.
+
+<BR>
+\ref install_require_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref install_overview_page (Next) 
+
+*/

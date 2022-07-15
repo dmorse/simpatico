@@ -1,5 +1,5 @@
-#ifndef MCMD_HOMORING_TEST_H
-#define MCMD_HOMORING_TEST_H
+#ifndef SIMP_HOMO_RING_TEST_H
+#define SIMP_HOMO_RING_TEST_H
 
 #include <test/UnitTest.h>
 

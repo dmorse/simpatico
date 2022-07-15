@@ -10,20 +10,20 @@
 # 
 # This script:
 #
-# 1) Copies default or repository versions of several build configuration 
-# files, named config.mk_r, to modifiable user versions, named config.mk. 
-# A separate set of build configuration files is created in the src/
-# directory (for in-source build) and in the bld/serial and bld/parallel
-# object directories. The makefile variables $(ROOT_DIR) and $(BLD_DIR)
-# are defined in the main config.mk file each build directory (i.e., in 
-# the src/, bld/serial and bld/parallel) are set to the absolute paths
-# of the simpatico root directory and of the specific build directory.
+# 1) Installs several build configuration files, all of which are named
+# config.mk  A separate set of build configuration files is created in 
+# the src/ directory (for in-source build) and in the bld/serial and 
+# bld/parallel build directories. The makefile variables $(ROOT_DIR) 
+# and $(BLD_DIR) are defined in the main config.mk file each build 
+# directory (i.e., in the src/, bld/serial and bld/parallel) are set 
+# to the absolute paths of the simpatico root directory and of the 
+# relevant build directory.
 #
-# 2) Installs all required makefiles in the bld/serial and bld/parallel 
-# directories, by copying corresponding makefiles from the src/ directory.
+# 2) Installs makefiles in the bld/serial and bld/parallel directories, 
+# by copying corresponding makefiles from the src/ directory.
 #
-# 3) Installs copies of the config configuration script in the bld/serial
-# and bld/parallel directories, by copying the file scr/config.
+# 3) Installs copies of the "configure" configuration script in the 
+# bld/serial and bld/parallel directories, by copying file scr/configure.
 #
 # 4) In the src/ file tree, the script installs user modifiable copies of 
 # default versions of some C++ source files and makefile fragments that 
@@ -39,12 +39,13 @@
 # the same name without the _r suffix that is created by copying the
 # default version.
 #
-# 5) Install the makeDep dependency-maker script in the bin/ directory
+# 5) Installs the makeDep dependency-maker script in the bin/ directory
 #
 # 6) Sets and exports the SIMPATICO_DIR shell environment variable
 #
 #========================================================================
-# Set working directory to directory containing script, if not already.
+# Set working directory to the directory containing this script, if not 
+# already set to this.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 if [ "$SCRIPT_DIR" != "$PWD" ]; then
@@ -60,29 +61,49 @@ SIMPATICO_DIR=$PWD
 export SIMPATICO_DIR
 
 #=======================================================================
+# Choose file to use for compiler settings
+
+if [ "$#" -gt 0 ]; then
+  VARFILE=$1
+else
+  VARFILE="gcc"
+fi
+VARFILE="make/compiler/$VARFILE"
+
+#=======================================================================
 # Setup src/ source file directory tree
 
-
-# Install main configuration file src/config.mk, by copying src/config.mk_r
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
+# Construct and install main configuration file src/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" make/config/main_config.1 > src/temp
+cat src/temp "$VARFILE" make/config/main_config.2 > src/config.mk
+rm src/temp
 
 # Note: Stream editor (sed) is used here to:
-#   - Set $(ROOT_DIR) to absolute path of directory from which script invoked
+#   - Set $(ROOT_DIR) to absolute path of directory from which this
+#      script is invoked (i.e., the simpatico root directory).
 #   - Set $(BLD_DIR) to absolute path to src/ directory (in-source-build)
 
-# Setup src/util/ directory
+# Install namespace level configuration files
+cp make/config/util_config src/util/config.mk
+cp make/config/simp_config src/simp/config.mk
+cp make/config/mcMd_config src/mcMd/config.mk
+cp make/config/ddMd_config src/ddMd/config.mk
+cp make/config/mdPp_config src/mdPp/config.mk
 
-# Namespace config.mk in src/ directory (for in-source builds)
-cp ./src/util/config.mk_r src/util/config.mk
-
-# Copy typedef for the class that defines boundary conditions
+# Install typedef for the class that defines boundary conditions
 cp src/simp/boundary/Boundary.h_r src/simp/boundary/Boundary.h
+
+# Invoke namespace level setup scripts. These make changes to the
+# src/ directory that are not also applied to the bld/serial and
+# bld/parallel directories. Such changes include installation of 
+# default versions of factory classes and of sources.mk files in 
+# user/ subdirectories.
 
 (cd ./src/simp; ./setup)
 (cd ./src/mcMd; ./setup)
 (cd ./src/ddMd; ./setup)
-(cd ./src/tools; ./setup)
-
+(cd ./src/mdPp; ./setup)
+ 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=src/util/config.mk
 if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
@@ -94,17 +115,19 @@ fi
 #========================================================================
 # Setup bld/serial directory tree (out-of-source builds with MPI disabled)
 
-# Copy and edit config file in bld/serial
+# Construct and install main config file in bld/serial directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/serial directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" make/config/main_config.1 > bld/serial/temp
+cat bld/serial/temp "$VARFILE" make/config/main_config.2 > bld/serial/config.mk
+rm bld/serial/temp
 
-# Namespace level config.mk files 
-cp src/util/config.mk_r bld/serial/util/config.mk
-cp src/simp/config.mk_r bld/serial/simp/config.mk
-cp src/mcMd/config.mk_r bld/serial/mcMd/config.mk
-cp src/ddMd/config.mk_r bld/serial/ddMd/config.mk
-cp src/tools/config.mk_r bld/serial/tools/config.mk
+# Install namespace level config.mk files 
+cp make/config/util_config bld/serial/util/config.mk
+cp make/config/simp_config bld/serial/simp/config.mk
+cp make/config/mcMd_config bld/serial/mcMd/config.mk
+cp make/config/ddMd_config bld/serial/ddMd/config.mk
+cp make/config/mdPp_config bld/serial/mdPp/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/serial/util/config.mk
@@ -114,36 +137,40 @@ if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
    rm temp
 fi
 
-# Makefiles
+# Install main and namespace level makefiles
 cp src/makefile bld/serial/makefile
 cp src/util/makefile bld/serial/util/makefile
 cp src/simp/makefile bld/serial/simp/makefile
 cp src/mcMd/makefile bld/serial/mcMd/makefile
-cp src/tools/makefile bld/serial/tools/makefile
+cp src/mdPp/makefile bld/serial/mdPp/makefile
 cp src/ddMd/makefile bld/serial/ddMd/makefile
+
+# Install makefiles in test directories
 cp src/util/tests/makefile bld/serial/util/tests/makefile
 cp src/simp/tests/makefile bld/serial/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/serial/tools/tests/makefile
+cp src/mdPp/tests/makefile bld/serial/mdPp/tests/makefile
 cp src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
 
-# Configure script
+# Install configure script
 cp src/configure bld/serial/configure
 
 #========================================================================
 # Setup bld/parallel (out-of-source builds with MPI enabled)
 
-# Copy and edit config file in bld/parallel
+# Construct and install main config file in bld/parallel directory
 # Set $(ROOT_DIR) to absolute path of directory from which script is invoked
 # Set $(BLD_DIR) to absolute path to bld/parallel directory
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" make/config/main_config.1 > bld/parallel/temp
+cat bld/parallel/temp "$VARFILE" make/config/main_config.2 > bld/parallel/config.mk
+rm bld/parallel/temp
 
-# Namespace level config.mk files
-cp src/util/config.mk_r bld/parallel/util/config.mk
-cp src/simp/config.mk_r bld/parallel/simp/config.mk
-cp src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
-cp src/tools/config.mk_r bld/parallel/tools/config.mk
-cp src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+# Install namespace level config.mk files
+cp make/config/util_config bld/parallel/util/config.mk
+cp make/config/simp_config bld/parallel/simp/config.mk
+cp make/config/mcMd_config bld/parallel/mcMd/config.mk
+cp make/config/ddMd_config bld/parallel/ddMd/config.mk
+cp make/config/mdPp_config bld/parallel/mdPp/config.mk
 
 # Comment out UTIL_BOUND definition in util/config.mk
 UTIL_CONFIG=bld/parallel/util/config.mk
@@ -153,23 +180,26 @@ if [ `grep "^ *UTIL_BOUND *= *1" "$UTIL_CONFIG"` ]; then
    rm temp
 fi
 
-# Makefiles 
+# Install main and namespace level makefiles 
 cp src/makefile bld/parallel/makefile
 cp src/util/makefile bld/parallel/util/makefile
 cp src/simp/makefile bld/parallel/simp/makefile
 cp src/mcMd/makefile bld/parallel/mcMd/makefile
 cp src/ddMd/makefile bld/parallel/ddMd/makefile
-cp src/tools/makefile bld/parallel/tools/makefile
+cp src/mdPp/makefile bld/parallel/mdPp/makefile
 
-# Makefiles in test directories
+# Install makefiles in test directories
 cp src/util/tests/makefile bld/parallel/util/tests/makefile
 cp src/simp/tests/makefile bld/parallel/simp/tests/makefile
 cp src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
-cp src/tools/tests/makefile bld/parallel/tools/tests/makefile
+cp src/mdPp/tests/makefile bld/parallel/mdPp/tests/makefile
 cp src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 
-# Configure script
+# Install configure script
 cp src/configure bld/parallel/configure
+
+# Enable angles, dihedrals and external by default
+./configure -a1 -d1 -e1
 
 # Enable UTIL_MPI by default in bld/parallel (silently).
 # (Run in subprocess to avoid permanentaly changing directory)

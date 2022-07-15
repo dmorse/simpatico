@@ -1,0 +1,71 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_IntraStructureFactorGrid_page IntraStructureFactorGrid
+
+\section mcMd_analyzer_IntraStructureFactorGrid_overview_sec Synopsis
+
+This analyzer calculates partial structure factor for a specified species of molecule, for a one or more types of pairs of atom types. See class documentation for a precise definition, and explanation of conventions for specifying types of pairs of atom type indices.
+
+This class computes structure factor for all reciprocal wavevectors on a grid in reciprocal space, and averages over results for sets of wavevectors ("stars") that are related by symmetry, outputing one value for each such star of wavevectors. The symmetry to assume for this purpose (cubic, tetragonal, or orthorhombic) is specified by the "lattice" Util::LatticeSystem parameter.
+
+\sa McMd::IntraStructureFactorGrid
+
+\section mcMd_analyzer_IntraStructureFactorGrid_param_sec Parameters
+The parameter file format is:
+\code
+   IntraStructureFactorGrid{ 
+      interval           int
+      outputFileName     string
+      speciesId          int
+      nAtomTypeIdPair    int
+      atomTypeIdPairs    Array< Pair<int> > [nAtomTypeIdPair]
+      hMax               int
+      lattice            Util::LatticeSystem
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> nAtomTypeIdPair</td>
+     <td> number of pairs of atom type ids </td>
+  </tr>
+  <tr> 
+     <td> atomTypeIdPairs</td>
+     <td> Array in which each element is pair of atom types for which the 
+          structure factor should be calculated. Negative values of the
+          type id can be used to indicate a sum over all atom types. </td>
+  </tr>
+  <tr> 
+     <td> hMax </td>
+     <td> Maximum Miller index for reciprocal lattice wavevectors. </td>
+  </tr>
+  <tr> 
+     <td> lattice </td>
+     <td> Util::LatticeSystem object, to specify symmetry (cubic, orthorhombic, etc). </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_IntraStructureFactorGrid_out_sec Output Files
+
+At the end of the simulation:
+
+- Parameters are echoed to {outputFileName}.prm
+
+- Final values are output to {outputFileName}.dat.
+
+*/
+
+}

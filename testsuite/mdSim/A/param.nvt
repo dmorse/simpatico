@@ -1,0 +1,225 @@
+MdSimulation{
+  FileMaster{
+    inputPrefix                   in/
+    outputPrefix                  out/
+  }
+  nAtomType                    1
+  nBondType                    1
+  atomTypes                    A       1.0
+  maskedPairPolicy             MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity            100
+      nAtom                       8
+      atomType                    0
+      bondType                    0
+    }
+
+  }
+  Random{
+    seed                       10732192
+  }
+  MdSystem{
+    pairStyle                  LJPair
+    bondStyle                  HarmonicBond
+    MdPairPotential{
+      epsilon               1.000000000000e+00
+      sigma                 1.000000000000e+00
+      cutoff                1.122460000000e+00
+      PairList{
+        atomCapacity           1000
+        pairCapacity           5000
+        skin                   2.500000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                    2.000000000000e+03
+      length                   1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                     isothermal
+      temperature              1.0000000000000
+    }
+    BoundaryEnsemble{
+      type                     rigid
+    }
+    NvtNhIntegrator{
+       dt                      5.000000000000e-03
+       tauT                    1.00000000e+00
+    }
+  }
+  AnalyzerManager{
+    baseInterval                         10
+
+    LogProgress{
+      interval                 2000
+    }
+
+    MdEnergyAnalyzer{
+      interval                 100
+      outputFileName           energy
+      nSamplePerBlock          1
+    }
+
+    MdIntraBondStressAutoCorr{
+      interval                 100
+      outputFileName           intraBondStressAutoCorr
+      speciesId                0
+      capacity                 100
+    }
+
+    MdIntraBondTensorAutoCorr{
+      interval                 100
+      outputFileName           intraBondTensorAutoCorr
+      speciesId                0
+      capacity                 100
+    }
+
+    MdKineticEnergyAverage{
+      interval                 100
+      outputFileName           kinetic
+      nSamplePerBlock          10
+    }
+
+    MdPressureAnalyzer{
+      interval                 100
+      outputFileName           pressure
+      nSamplePerBlock          10
+    }
+
+    MdStressAutoCorr{
+      interval                 100
+      outputFileName           stressAutoCorr
+      capacity                 1000
+    }
+
+    AtomMSD{
+      interval                 100
+      outputFileName           atomMSD
+      speciesId                0
+      atomId                   5
+      capacity                 100
+    }
+
+    BondLengthDist{
+      interval                 100
+      outputFileName           bondDist
+      speciesId                0
+      min                      0.0
+      max                      2.0
+      nBin                     100
+    }
+
+    ComMSD{
+      interval                 100
+      outputFileName           comMSD
+      speciesId                0
+      capacity                 100
+    }
+
+    IntraPairAutoCorr{
+      interval                 100
+      outputFileName           intraPairAutoCorr
+      speciesId                0
+      atom1Id                  0
+      atom2Id                  7
+      capacity                 100
+    }
+
+    IntraStructureFactor{
+      interval                 100
+      outputFileName           intraSq
+      speciesId                0
+      nAtomTypeIdPair          1
+      atomTypeIdPairs          0   0
+      nWave                    20
+      waveIntVectors           1 0 0
+                               2 0 0
+                               3 0 0
+                               4 0 0
+                               5 0 0
+                               6 0 0
+                               7 0 0
+                               8 0 0
+                               9 0 0
+                               10 0 0
+                               11 0 0
+                               12 0 0
+                               13 0 0
+                               14 0 0
+                               15 0 0
+                               16 0 0
+                               17 0 0
+                               18 0 0
+                               19 0 0
+                               20 0 0
+    }
+
+    IntraStructureFactorGrid{
+      interval                 500
+      outputFileName           intraSqGrid
+      speciesId                0
+      nAtomTypeIdPair          1
+      atomTypeIdPairs          0   0
+      hMax                     5
+      lattice                  Cubic
+    }
+
+    RadiusGyrationSq{
+      interval                 100
+      outputFileName           radiusGyrationSq
+      nSamplePerBlock          10
+      speciesId                0
+    }
+
+    RDF{
+      interval                 1000
+      outputFileName           RDF
+      max                      4.0
+      nBin                     400
+      selector                 inter   -1    -1
+    }
+
+    StructureFactor{
+      interval                 100
+      outputFileName           structureFactor 
+      nMode                    1
+      modes                    1.0
+      nWave                    20
+      waveIntVectors           1 0 0
+                               2 0 0
+                               3 0 0
+                               4 0 0
+                               5 0 0
+                               6 0 0
+                               7 0 0
+                               8 0 0
+                               9 0 0
+                               10 0 0
+                               11 0 0
+                               12 0 0
+                               13 0 0
+                               14 0 0
+                               15 0 0
+                               16 0 0
+                               17 0 0
+                               18 0 0
+                               19 0 0
+                               20 0 0
+    }
+
+    StructureFactorGrid{
+      interval                 400
+      outputFileName           structureFactorGrid
+      nMode                    1
+      modes                    1.0
+      hMax                     5
+      lattice                  Cubic
+    }
+
+  }
+  saveInterval                5000
+  saveFileName                restart
+}
+

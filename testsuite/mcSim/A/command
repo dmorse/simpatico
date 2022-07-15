@@ -1,0 +1,7 @@
+WRITE_PARAM      param
+READ_CONFIG      config
+SIMULATE          60000
+SET_CONFIG_IO    McConfigIo
+WRITE_CONFIG     config
+FINISH
+

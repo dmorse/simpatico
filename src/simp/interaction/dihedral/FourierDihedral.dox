@@ -1,0 +1,25 @@
+namespace Simp
+{
+
+/*! \page simp_interaction_dihedral_FourierDihedral_page FourierDihedral 
+
+The FourierDihedral interaction implements a potential that can be
+expressed as a Fourier expansion of the dihedral angle \f$\phi\f$ defined 
+in \ref Simp_Interaction_Dihedral_Module. The energy is given by
+\f[
+   V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m\phi) 
+\f]
+The coefficients in this expansion are held in a data structure named
+coeffs. The input format is a set of rows, in which each row contains 
+the K0, ..., K4 for a particular dihedral type. The format is thus
+\code
+   coeffs    K0   K1   K2  K3   K4
+             K0   K1   K2  K3   K4 
+             ....
+\endcode
+where the first row contains the coefficients for dihedrals of type id
+0, the second contains coefficients for type 1, etc. The number of rows
+must be equal to the number of dihedral types, nDihedralType.
+*/
+
+}

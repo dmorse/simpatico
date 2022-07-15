@@ -1,0 +1,5 @@
+MockAverage{
+  interval             2
+  outputFileName       tmp/average
+  nSamplePerBlock      2
+}
